@@ -8,7 +8,7 @@
 #	header("Location: http://pqrs.minsalud.gov.co/formulario");
 #}
 #else{
-	header("Location: https://orfeo.minsalud.gov.co/orfeo/login.php");
+	header("Location: login.php");
 #}
 
 ?>
