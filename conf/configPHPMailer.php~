@@ -1,0 +1,12 @@
+<?
+ $admPHPMailer = "sgdorfeo@minsalud.gov.co";
+ $userPHPMailer = "sgdorfeo";
+ $passwdPHPMailer = 'or123456';
+ $hostPHPMailer = "minps38.minproteccionsocial.gov.co";      // Para fuera Gmail es "ssl://smtp.gmail.com"
+ $portPHPMailer = "25";                         // Para Gmail el Puerto es "465"       
+ $debugPHPMailer = "1";  // Si esta en 2 mostrara una depuracion al enviar correo.  En 1 los evita.
+ $asuntoMailReasignado = "Llegada de Radicado $radicadosSelText";
+ $asuntoMailRadicado = "Llegada de Radicado nuevo $radicadosSelText";
+ $asuntoMailInformado = "Lo han informado de un radicado $radicadosSelText";
+ $servidorOrfeoBodega = "http://orfeo.minsalud.gov.co/orfeo/bodega/";
+?>

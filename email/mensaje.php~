@@ -1,0 +1,335 @@
+<?php 
+session_start();
+
+foreach ($_GET  as $key => $val){ ${$key} = $val;}
+foreach ($_POST as $key => $val){ ${$key} = $val;}
+
+$ruta      = '/include';
+$ruta_raiz = "..";  
+if (!$_SESSION['dependencia'])
+    header ("Location: $ruta_raiz/cerrar_session.php");
+
+include_once($ruta_raiz.'/config.php');
+include_once("connectIMAP2.php");
+
+$codusuario  = $_SESSION["codusuario"];
+$dependencia = $_SESSION["dependencia"];
+?>
+
+<html>
+
+<head>
+  <link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
+  <style type="text/css">
+    #flotante { position: absolute; top:100; left: 550px; visibility: visible;}
+  </style>
+
+<script>
+function asociarMail(){
+    numeroRad = parent.frames['formulario'].document.getElementById('numeroRadicado').value;
+    if(numeroRad>=1){
+        document.getElementById('numeroRadicado').value = numeroRad;
+        document.getElementById('formAsociarMail').submit();
+    }else{
+        alert(" ? No se generado un Radicado ! ");
+    }
+}
+</script>
+
+</head>
+
+<body>
+  <form method=get name=formasociarmail id=formAsociarMail action='mensaje.php'>
+    <input type=hidden name=numeroRadicado id=numeroRadicado>
+    <input type=hidden name=passwdEmail value=<?=$passwdEmail?> >
+    <input type=hidden name=usuaEmail  	value=<?=$usuaEmail?> >
+    <input type=hidden name=msgNo  		value=<?=$msgNo?> >
+    <input type=hidden name=krd  		value=<?=$krd?> >
+    <input type=hidden name=PHPSESSID  	value=<?=$PHPSESSID?> >
+    <input type=hidden name=dependencia value=<?=$dependencia?> >
+  </form>
+
+<?
+//-------Funcion Suprime caracteres no imprimibles------------------------//
+function sup_tilde($str){
+
+    $stdchars= array("@","a","e","i","o","u","n"
+        ,"A","E","I","O","U","N"," "
+        ," ");
+
+    $tildechars= array("@","=E1","=E9","=ED","=F3"
+        ,"=FA","=F1","=C1","=C9","=CD"
+        ,"=D3","=DA","=D1","=?iso-8859-1?Q?","?=");
+
+    return str_replace($tildechars,$stdchars, $str);
+
+}
+
+if($msgNo){
+    $datos   = $msg->getHeaders($msgNo);
+    $msgPid  = $msg->structure[$msgNo]["pid"];
+    $pidMail = "";
+
+    //---Encabezado de email------------------------------------------------------
+    $contenidoEmail = $head;
+
+    $datos = $msg->getHeaders($msgNo,$pidMail);
+    //print_r($msg);
+    $eMailRemitente = sup_tilde($msg->header[$msgNo]['from'][0]);
+    $eMailNombreRemitente = sup_tilde($msg->header[$msgNo]['from_personal'][0]);
+    $_SESSION['eMailRemitente']=$eMailRemitente;
+    $_SESSION['eMailNombreRemitente']=$eMailNombreRemitente;
+
+
+
+    $mailAsunto="";
+    $mailFecha="";
+    $pop3->RetrieveMessage($msgNo,$headers,$body,100);
+    //print_r($headers);
+    for($iK=0; $iK<=count($headers);$iK++){
+        if(substr(trim($headers[$iK]),0,8)=="Subject:") {
+            $mailAsunto = $headers[$iK];
+            $mailAsunto = str_replace("Subject:","",$mailAsunto);
+            $mailAsunto = iconv_mime_decode($mailAsunto,0, "ISO-8859-1");
+        }
+        if(substr(trim($headers[$iK]),0,5)=="Date:") {
+            $mailDate = $headers[$iK];
+            $mailDate = str_replace("Date:","",$mailAsunto);
+            $mailDate = iconv_mime_decode($mailDate,0, "ISO-8859-1");
+        }
+        if(substr(trim($headers[$iK]),0,5)=="From:") {
+            $mailFrom = substr($headers[$iK],0,150);
+            $mailFrom = htmlentities(str_replace("From:","",$mailFrom));
+        }
+        if(substr(trim($headers[$iK]),0,9)=="Received:") {
+            $mailReceived = substr($headers[$iK],0,150);
+            $mailReceived = htmlentities(str_replace("Received:","",$mailReceived));
+        }
+        if(substr(trim($headers[$iK]),0,3)=="To:") {
+            $mailTo = iconv_mime_decode($headers[$iK],0, "ISO-8859-1");
+            $mailToArray = array();
+            $mailToArray= explode(", ",$mailTo,100);
+            $mailto = "";
+            $value="";
+
+            foreach ($mailToArray as $key =>$value) {
+                if($key>=0) { $mailToF .= htmlentities($mailToArray[$key] ) ."<br>" ;}
+            }
+            $mailToF = substr($mailToF,0,150);
+            $mailToF = str_replace("To:","",$mailToF);
+        }
+
+    }
+
+    $html = "<b>texto en negrita</b><a href=hola.html>Haz clic sobre m?</a>";
+    $headRadicado = "
+        <TABLE width=\"100%\" cellspacing=\"7\" border=\"0\" cellpadding=\"0\" class=\"borde_tab\" >
+        <tr><td width=60%>&nbsp;</td>
+        <td >
+        <FONT face='free3of9,FREE3OF9, FREE3OF9X,Free 3 of 9' SIZE=12>*$numeroRadicado*</FONT><br>
+        Radicado No. $numeroRadicado<br>
+        Fecha : ".date("Y/m/d")."
+        </td></tr>
+        </TABLE>";
+    $mailFromD = split(' ', $mailFrom);
+    $countC = count($mailFromD);
+    if( $countC >=2 ) {
+        $mailFromD = $mailFromD[($countC-1)];
+        $mailFromD = str_replace("<","",trim($mailFromD));
+        $mailFromD = str_replace(">","",$mailFromD);
+    }else{
+        $mailFromD = trim($mailFrom);
+    }
+
+    $encabezado = "krd=$krd&PHPSESSID=".session_id()."&eMailMid=$msgNo&ent=2&eMailMid=$msgNo&datoP=".md5($krd)."&rtb=".md5("aa22")."&tipoMedio=eMail&usuaEmail=$usuaEmail&passwdEmail=$passwdEmail&mailFrom=$mailFromD?>&mailAsunto=".str_replace("#"," ",htmlentities($mailAsunto));
+?>
+
+    <table width="100%" class="borde_tab">
+      <TR class=titulos2><TD align=right>
+      <font size=1>
+      <a href='../radicacion/chequear.php?<?=$encabezado?>' target='formulario'>
+      Radicar Este Correo</a> ?
+      <a href='#' onClick="asociarMail();">
+      Asociar Mail a Radicado</a> ?
+      <a href='#' onClick="window.open('deleteMail.php?<?=$encabezado?>','Borrando_Mail','menubar=1,resizable=1,width=200,height=150'); ">
+      Borrar Email</a> ?
+      <a href='browse_mailbox.php?<?="krd=$krd&PHPSESSID=".session_id()?>' target='formulario'>
+      Volver a Inbox</a></font>  
+    </td></TR></table>
+<?
+
+
+    $head .=$headRadicado;
+
+    $head .="<table><tr><td></td></tr></table><table class=borde_tab width=100%>
+        <TD CLASS=titulos2 width=15%>De </TD>
+        <TD CLASS=LISTADO2>$mailFrom</TD></TR>
+        <TR>
+        <TD CLASS=titulos2>Asunto </TD>
+        <TD CLASS=LISTADO2>$mailAsunto</TD></TR>
+        <tr><TD CLASS=titulos2>Para </TD>
+        <td CLASS=LISTADO2>$mailToF</td></tr>
+        <tr><TD CLASS=titulos2>Datos Envio </TD>
+        <td CLASS=LISTADO2>$mailReceived</td></tr></table>";
+    //----------------------------------------------------------------------------//
+    $cuerpoMail = "";
+    $MailAdjuntos = "";
+    $iAnexo = 0;
+    foreach($msgPid as $key => $value){
+        $entro = 2;
+        $body =$msg->getBody($msgNo,$value);
+        //print_r($body);
+        if($body["ftype"]=="text/html" and !$cuerpoMail) {
+            $cuerpoMail = $body["message"];
+            $entro = 1;
+        }
+        if($body["ftype"]=="text/plain") {
+            $cuerpoMailPlain = $body["message"];
+
+        }
+        if($body["ftype"]=="image/jpeg" or $body["ftype"]=="image/gif" or $body["ftype"]=="image/png"){
+            //$mailAsunto = iconv_mime_decode($mailAsunto,0, "ISO-8859-1");
+            $fname = explode('.',$body["fname"],2);
+            $buscarReg = '/cid:'.$fname[0].'(.*[a-z0-9])@(.*)"/';
+            preg_match($buscarReg, "<br>".$cuerpoMail, $parts);
+
+            $imagen = "../bodega/tmp/".iconv_mime_decode($body["fname"],0, "ISO-8859-1");
+            $imagenMail = $parts[0];
+            $imagenMailX = explode('"',$imagenMail,2);
+            $imagenMail = $imagenMailX[0];
+            $cuerpoMail = str_replace(str_replace('"','',$imagenMail),$imagen, $cuerpoMail);
+            $file = fopen($imagen,"w");
+            if(!fputs($file,$body["message"])) echo "<hr> No se guardo Imagen.  $imagen";;
+            fclose($file);
+        }
+        if($numeroRadicado){
+            include_once "../include/db/ConnectionHandler.php";
+            $db = new ConnectionHandler("..");
+            $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+        }
+        if($entro==2 and $body["fname"]){
+            $iAnexo++;
+            $fname = iconv_mime_decode($body["fname"],                   0, "ISO-8859-1");
+            $imagen = "../bodega/tmp/".$fname;
+            if(!$numeroRadicado){
+                $file = fopen($imagen,"w");
+                if(!fputs($file,$body["message"])) echo "<hr> No se guardo Archivo.  $imagen";;
+                fclose($file);
+                $mailAdjuntos .= "<a href='$imagen'>".$fname."</a><br>";
+            }else{
+                $sqll = "SELECT 
+                            USUA_LOGIN 
+                         FROM 
+                            USUARIO 
+                         WHERE 
+                             USUA_CODI = $codusuario 
+                             AND DEPE_CODI = $dependencia";
+                $rss    = $db->conn->query($sqll);
+                $usulog = $rss->fields["USUA_LOGIN"];
+
+                $aExtension = substr($fname,-5,5);
+                $aExt = split(".",$fname,2);
+                $codigoAnexo = $numeroRadicado."000$iAnexo";
+                $fina = explode(".", $aExt[1]); 
+                $bExt = $fina[count($fina)-1]; 
+                $iSql = "SELECT ANEX_TIPO_CODI FROM ANEXOS_TIPO WHERE ANEX_TIPO_EXT='".$bExt."'";
+                $rs = $db->conn->query($iSql);
+                $anexTipo = $rs->fields["ANEX_TIPO_CODI"];
+                if(!$anexTipo) $anexTipo = 0;
+                $nomcort      = substr($aExt[1],-30);
+                $tmpNameEmail = $numeroRadicado."_000".$iAnexo.$nomcort;
+                $directorio   = substr($numeroRadicado,0,4) ."/". substr($numeroRadicado,4,$digitosDependencia)."/docs/";
+                $fileEmailMsg = "../bodega/$directorio".$tmpNameEmail;
+                $file         = fopen($fileEmailMsg,"w");
+                if(!fputs($file,$body["message"])) echo "<hr> No se guardo Archivo.  $imagen";;
+                fclose($file);
+                $mailAdjuntos .= "<a href='$fileEmailMsg'>".$fname."</a><br>";
+                $cuerpoMail =  str_ireplace($imagen,$fileEmailMsg,$cuerpoMail);
+                $fecha_hoy = Date("Y-m-d");
+                if(!$db->conn) echo "No hay conexion";
+                $sqlFechaHoy=$db->conn->DBDate($fecha_hoy);
+                $record["ANEX_RADI_NUME"]    = $numeroRadicado;
+                $record["ANEX_CODIGO"]       = $codigoAnexo;
+                $record["ANEX_SOLO_LECT"]    = "'S'";
+                $record["ANEX_CREADOR"]      = "'$usulog'";
+                $record["ANEX_DESC"]         = "' Archivo:.". $fname."'";
+                $record["ANEX_NUMERO"]       = $iAnexo;
+                $record["ANEX_NOMB_ARCHIVO"] = "'".$tmpNameEmail."'";
+                $record["ANEX_BORRADO"]      = "'N'";
+                $record["ANEX_DEPE_CREADOR"] = $dependencia;
+                $record["SGD_TPR_CODIGO"]    = '0';
+                $record["ANEX_TIPO"]         = $anexTipo;
+                $record["ANEX_FECH_ANEX"]    = $sqlFechaHoy;
+                $db->insert("anexos", $record, "true");
+            }
+
+        }
+
+        if(sup_tilde($msg->header[$msgNo]['from'][0]) and !$pidMail) $pidMail=$value;
+
+    }
+    echo $head;
+    $cuerpoMail =  "<TABLE class=borde_tab WIDTH=100%><tr><td>".$cuerpoMail."</td></tr></table>";
+    if($cuerpoMail) echo $cuerpoMail; else $cuerpoMailPlain;
+    //$pidMail = "4";
+    if($mailAdjuntos){
+        $adjuntosHtml =  "
+            <table><tr><td></td></tr></table><table class=borde_tab width=100%><tr><td class=titulos2>
+            Archivos Adjuntos
+            </td></tr><tr><td class=listado2>$mailAdjuntos
+
+            </td></tr></table>";
+        echo $adjuntosHtml;
+    }
+    if($numeroRadicado){
+        $archivoRadicado = "";
+        $tmpNameEmail = $numeroRadicado.".html";
+        $directorio = substr($numeroRadicado,0,4) ."/". substr($numeroRadicado,4,$digitosDependencia)."/";
+
+        $fileRadicado = "../bodega/$directorio".$tmpNameEmail;
+        $archivoRadicado = "<HTML>
+            <HEAD>
+            <link rel='stylesheet' href='../estilos/orfeo.css'>
+            </HEAD>
+            <BODY>".
+            $head .
+            "".
+            $cuerpoMail.
+            ""
+            ."<hr>".$adjuntosHtml
+            ."</BODY></HTML>";
+        $archivoRadicado = str_replace("../","../../../",$archivoRadicado);
+        $file1=fopen($fileRadicado,'w');
+        fputs($file1,$archivoRadicado);
+        fclose($file1);
+        str_replace('..','',$fileRadicado);
+        $isqlRadicado = "update radicado set RADI_PATH = '$fileRadicado' where radi_nume_radi = $numeroRadicado";
+        $rs=$db->conn->query($isqlRadicado);
+        //print("Ha efectuado la transaccion($isql)($dependencia)");
+        if (!$rs)	//Si actualizo BD correctamente
+        {	
+            echo "Fallo la Actualizacion del Path en radicado < $isqlRadicado >";
+        }else{
+            $radicadosSel[] = $numeroRadicado;
+            $codTx = 42;	//C?digo de la transacci?n
+            $noRadicadoImagen = $numeroRadicado;
+            $observa = "Mail(".utf8_decode($mailAsunto).")";
+            include "$ruta_raiz/include/tx/Historico.php";
+
+            $hist        = new Historico($db);
+            $codusuario  = $_SESSION["codusuario"];
+            $dependencia = $_SESSION["dependencia"];
+
+            $hist->insertarHistorico($radicadosSel,  $dependencia , $codusuario, $dependencia, $codusuario, $observa, $codTx);
+            include "enviarMail.php";
+        }
+    }
+
+}else{
+    print("No hay Correo disponible");
+}
+//--Variable con la Cabecera en formato html----------------------------------//
+
+?>
+</body>
+</html>

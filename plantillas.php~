@@ -1,0 +1,110 @@
+<?php 
+session_start();
+
+    $ruta_raiz = ".";
+    if (!$_SESSION['dependencia'])
+        header ("Location: $ruta_raiz/cerrar_session.php");
+
+foreach ($_POST as $key => $valor) ${$key} = $valor;
+
+$direcTor = "$ruta_raiz/bodega/plantillas/";
+$archivo1 = $direcTor."combiSencilla.xml";
+$archivo2 = $direcTor."combiMasiva.xml";
+$archivo3 = $direcTor."plantillas.xml";
+
+$doc    = new DOMDocument();
+
+if(file_exists($archivo3)){
+    $doc->load($archivo3);
+    $campos     = $doc->getElementsByTagName("campo");
+    foreach($campos as $campo){
+        $campTemp1 = $campo->getElementsByTagName("nombre");
+        $campTemp2 = $campo->getElementsByTagName("ruta");
+        $temp1     = $campTemp1->item(0)->nodeValue;
+        $temp2     = $campTemp2->item(0)->nodeValue;
+        
+        $plantill  .= "&nbsp; &nbsp;<a href='".$direcTor.$temp2."'>".$temp1."</a><br/>";
+    }
+}else{
+    $msg  .= " No se abrio el archivo $archivo3 generado desde la administracion de plantillas</br>";
+}
+
+if(file_exists($archivo2)){
+    $doc->load($archivo2);
+    $campos     = $doc->getElementsByTagName("campo");
+    foreach($campos as $campo){
+        $campTemp = $campo->getElementsByTagName("nombre");
+        $valor    = $campTemp->item(0)->nodeValue;
+        $nombMa   .= empty($nombSe)? " &nbsp; &nbsp; $valor" : "&nbsp; &nbsp;  &nbsp; &nbsp; $valor ";
+    }
+}else{
+    $msg  .= " No se abrio el archivo $archivo2 generado desde la administracion de plantillas</br>";
+}
+
+if(file_exists($archivo1)){
+    $doc->load($archivo1);
+    $campos     = $doc->getElementsByTagName("campo");
+    foreach($campos as $campo){
+        $campTemp = $campo->getElementsByTagName("nombre");
+        $valor    = $campTemp->item(0)->nodeValue;
+        $nombSe   .= empty($nombSe)? "&nbsp; &nbsp;$valor" : " &nbsp; &nbsp; $valor ";
+    }
+}else{
+    $msg  .= " No se abrio el archivo $archivo1 generado desde la administracion de plantillas</br>";
+}
+
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+    <title> :) Plantillas A Usar en Orfeo :)</title>
+    <link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
+    </head>
+    <body>
+        <table width="100%" border="0" cellspacing="5" cellpadding="0" align="center" class="borde_tab">
+            <tr align="center"  class="titulos4"> 
+                <td height="25">
+                   CAMPOS DE MASIVA COMBINACI&Oacute;N Y PLANTILLAS 
+                </td>
+            </tr>
+            <tr align="left"> 
+                <td>
+                    <?=$msg?>
+                </td>
+            </tr>
+            <tr align="left" class='titulos2'> 
+                <td height="12">
+                    <b> Campos de combinaci&oacute;n Masiva</b>
+                </td>
+            </tr>
+            <tr align="center" class="etextomenu"> 
+                <td class='listado2'>
+                    <?=$nombSe?>
+                </td>
+            </tr>
+            <tr class='titulos2'> 
+                <td align="justify" height="12">
+                    <b> Campos que se pueden usar en una combinaci&oacute;n sencilla</b>
+                </td>
+            </tr>
+            <tr align="center" class="etextomenu"> 
+                <td  class='listado2'>
+                    <p><?=$nombMa?></p>
+                </td>
+            </tr>
+            <tr align="left" class='titulos2'> 
+                <td height="12">
+                    <b> Listado de plantillas</b>
+                </td>
+            </tr>
+            <tr align="center" class="etextomenu"> 
+                <td class='listado2'>
+                    <?=$plantill?>
+                </td>
+            </tr>
+
+        </table>
+    </body>
+</html>
+
