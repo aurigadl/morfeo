@@ -1,7 +1,6 @@
  <?php
 //ini_set("display_errors",1);
 session_start();
-
 /*************************************************************************************/
 /* ORFEO GPL:Sistema de Gestion Documental		http://www.orfeogpl.org	             */
 /*	Idea Original de la SUPERINTENDENCIA DE SERVICIOS PUBLICOS DOMICILIARIOS         */
