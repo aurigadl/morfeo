@@ -1,6 +1,5 @@
 <?php
 //session_start();
-//echo "Entro akaaaa";
 $ruta_raiz = "."; 
 $ln          = $_SESSION["digitosDependencia"];
 //empieza Anexos   por  Julian Rolon
@@ -54,16 +53,22 @@ $isql = "select anex_codigo AS DOCU
 			,SGD_APLI_CODI
 			,SGD_TRAD_CODIGO
 			,SGD_TPR_CODIGO
-			,ANEX_TIPO
-			,ANEX_FECH_ANEX
+			,a.ANEX_TIPO
+			,CASE WHEN a.ANEX_FECH_ANEX IS NULL THEN (SELECT a2.ANEX_FECH_ANEX FROM ANEXOS A2 WHERE A2.RADI_NUME_SALIDA=A.RADI_NUME_SALIDA AND A2.ANEX_FECH_ANEX IS NOT NULL)
+            ELSE a.ANEX_FECH_ANEX
+       END as AANEX_FECH_ANEX
+			,a.ANEX_FECH_ANEX
+			,a.ANEX_RADI_NUME
 			,$sqlFechaDocto as FECDOC
 			,$sqlFechaAnexo as FEANEX
-			,ANEX_TIPO as NUMEXTDOC
-		   from anexos, anexos_tipo,usuario
-           where anex_radi_nume=$verrad and anex_tipo=anex_tipo_codi
+			,a.ANEX_TIPO as NUMEXTDOC
+			,(SELECT d.sgd_dir_nomremdes from sgd_dir_drecciones d where (d.sgd_anex_codigo=a.anex_codigo  or d.radi_nume_radi=a.radi_nume_salida) AND (a.sgd_dir_tipo=d.sgd_dir_tipo )) destino 
+		from anexos a, anexos_tipo at ,usuario u
+      where anex_radi_nume=$verrad and anex_tipo=anex_tipo_codi
 		   and anex_creador=usua_login and anex_borrado='N'
-	   order by anex_codigo,radi_nume_salida, sgd_dir_tipo, anex_numero ";
+	   order by AANEX_FECH_ANEX,a.anex_radi_nume,a.radi_nume_salida";
      error_reporting(7);
+
 ?>
 <script>
 swradics=0;
@@ -255,10 +260,11 @@ function regresar(){
 	<th width='10%' class="titulos2" align="left">
 		<img src="<?=$ruta_raiz?>/imagenes/estadoDoc.gif" width="120" height="32">
 	</th>
-    <th width='15%'  class="titulos2">RADICADO</th>
+    <th width='10%'  class="titulos2">RADICADO</th>
     <th  width='5%' class="titulos2">TIPO</th>
 	 <th  width='5%' class="titulos2">TRD</font></th>
-     <th  width='1%' class="titulos2"></th>
+    <th  width='1%' class="titulos2"></th>
+    <th  width='10%' class="titulos2">DESTINO</th>
     <th  width='5%' class="titulos2" >TAMA&Ntilde;O (Kb)</th>
     <th  width='5%' class="titulos2" >SOLO LECTURA</th>
     <th  width='20%' class="titulos2" >CREADOR</th>
@@ -327,7 +333,7 @@ if($anex_estado==4) {$img_estado = "<img src=$ruta_raiz/imagenes/docEnviado.gif>
 ?>
 <TD height="21" class="listado2"> <font size=1> <?=$img_estado?> </font>
 </TD>
- <TD><font size=1>
+ <TD><font size=1> 
 <?php
     /*
      * Ajuste validacion permisos unificados
@@ -365,7 +371,7 @@ if($anex_estado==4) {$img_estado = "<img src=$ruta_raiz/imagenes/docEnviado.gif>
 		{
 			echo $msg;
 		}
-    if($rs->fields["SGD_DIR_TIPO"]==7) $msg = "Otro Destinatario"; else $msg="Otro Destinatario";
+    if($rs->fields["SGD_DIR_TIPO"]==7) $msg = " - "; else $msg=" - ";
 	?> 
 </font> 
 </td>
@@ -431,6 +437,7 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
 		?>
 	</font>
 </TD>
+ <td><font size=1> <?=substr($rs->fields["DESTINO"],0,18)?> </font></td>
  <td><font size=1> <?=$rs->fields["TAMA"]?> </font></td>
  <td><font size=1> <?=$rs->fields["RO"]?> </font></td>
  <td><font size=1> <?=$rs->fields["CREA"]?> </font></td>

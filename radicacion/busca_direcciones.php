@@ -109,8 +109,7 @@
 	   $telUsX = trim($rs->fields["SGD_DIR_TELEFONO"]); 
 	   $emailUsX = trim($rs->fields["SGD_DIR_MAIL"]); 
 
-           
-	   
+
 	//	 print("IK VALE($ik)");
 	   if($ik==1)  
 	      {
@@ -224,9 +223,9 @@
 			$otro_us2 = $otro;	
                         	
 		 }
-	   if($rem_isql)
+	   if($ik==7)
 		  {
-		    $tipo_emp_us7=$tipo_emp;
+		  $tipo_emp_us7=$tipo_emp;
 			$nombre_us7=$nombre;
 			$documento_us7 = $documento;
 			$prim_apel_us7 =$papel ;
