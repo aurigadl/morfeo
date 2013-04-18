@@ -681,7 +681,6 @@ if($codigo or $_FILES['userfile1']['size'])
 						 sgd_anex_codigo='$codigo'
 						order by sgd_dir_tipo desc";
 // -- cast(sgd_dir_tipo as varchar(3)) like '7%' and
-  echo $isql;
 			$rs=$db->conn->Execute($isql);
 			if (!$rs->EOF)	$num_anexos = substr($rs->fields["NUM"],1,2);
 			if(!$nurad) $nurad = $numrad;
