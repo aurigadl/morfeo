@@ -1,2 +1,5 @@
+bodega/*
 config.php
 conf/configPHPMailer.php
+.svn
+*~
