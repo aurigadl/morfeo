@@ -28,8 +28,8 @@ include('./formulario_sql.php');
 include('./captcha/simple-php-captcha.php');
 $_SESSION['captcha_formulario'] = captcha();
 
-//TamaNo mAximo del todos los archivos en bytes 20MB = 20(MB)*1024(KB)*1024(B) =  20971520 bytes
-$max_file_size  = 20971520;
+//TamaNo mAximo del todos los archivos en bytes 10MB = 10(MB)*1024(KB)*1024(B) =  10485760 bytes
+$max_file_size  = 10485760;
 
 if(!isset($isFacebook)){
 	$isFacebook = 0;
