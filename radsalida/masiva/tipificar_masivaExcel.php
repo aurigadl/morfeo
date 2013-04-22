@@ -2,6 +2,7 @@
 $paramsTRD=$phpsession."&krd=$krd&codiTRD=$codiTRD&tsub=$tsub&codserie=$codserie&tipo=$tipo&dependencia=$dependencia&depe_codi_territorial=$depe_codi_territorial&usua_nomb=$usua_nomb&"
 				."depe_nomb=$depe_nomb&usua_doc=$usua_doc&codusuario=$codusuario";
 
+echo $tipoRad;
 ?>
 <form name = formaTRD action="upload2PorExcel.php?<?=$paramsTRD?>" method="post">
 <table width="70%" align="center" border="0" cellpadding="0" cellspacing="5" class="borde_tab">
@@ -12,7 +13,6 @@ $paramsTRD=$phpsession."&krd=$krd&codiTRD=$codiTRD&tsub=$tsub&codserie=$codserie
 		<td width="36%" class="titulos2">SERIE</td>
 		<td width="64%" height="35" class="listado2">
 <?
-//echo "<hr>$tipoRad";
 $coddepe=$_SESSION['dependencia'];
 if($codserie!=0 and $tipo !=0 and $tsub !=0)
 {	$queryTRD = "select SGD_MRD_CODIGO AS CLASETRD from sgd_mrd_matrird m
@@ -109,11 +109,15 @@ print $rsTip->GetMenu2("tipo", $tipo, "0:-- Seleccione --", false,"","onChange='
 
                     reset($Vec_Perm);
                     ?>
-                    <select name="tipoRad" id="Slc_Trd" class="select">
+                    <select name="tipoRad" id="Slc_Trd" class="select" onChange='submit()'>
                     <option value="0">Seleccione una opci&oacute;n</option>
                     <?
                     while (list($id, $val) = each($Vec_Perm)){
-                        echo " <option value=".$id." $datoss>$val</option>";
+                        if($tipoRad == $id){
+                          echo " <option selected=selected value=".$id." $datoss>$val</option>";
+                        }else{
+                          echo " <option value=".$id." $datoss>$val</option>";
+                        }
                     }
                     ?>
                     </select>
