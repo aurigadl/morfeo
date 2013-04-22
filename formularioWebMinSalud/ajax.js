@@ -6,7 +6,7 @@ var fileCountLimit = 100;
 // Cantidad de archivos subidos.
 var addedFiles = 0;
 // Limite de subida de los archivos, en total.
-var fileLimit = 20*1024*1024;
+var fileLimit = 10*1024*1024;
 // Arregloq ue contiene los archivos subidos.
 var fileNamesTmpDir  = new Array();
 var uploader;
@@ -574,7 +574,7 @@ validation: {
 	    	jQuery('.qq-upload-drop-area').hide();
 	    }
 	    }else{
-	    	alert('Ocurrió un error subiendo el archivo. Por favor valida que no supere los 5.0MB y en total 20.0MB');
+	    	alert('Ocurrió un error subiendo el archivo. Por favor valida que no supere los 5.0MB y en total 10.0MB');
 	    }
 	    },
 	    onError: function(id, fileName, errorReason) {
