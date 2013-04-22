@@ -1,5 +1,4 @@
- <?php
-//ini_set("display_errors",1);
+<?php
 session_start();
 /*************************************************************************************/
 /* ORFEO GPL:Sistema de Gestion Documental		http://www.orfeogpl.org	             */
@@ -7,7 +6,7 @@ session_start();
 /*	orfeogpl@gmail.com                   */
 /* ===========================                                                       */
 /*                                                                                   */
-/* Este programa es software libre.usted puede redistribuirlo y/o modificarlo       */
+/* Este programa es software libre. usted puede redistribuirlo y/o modificarlo       */
 /* bajo los terminos de la licencia GNU General Public publicada por                 */
 /* la "Free Software Foundation"; Licencia version 2. 			                     */
 /*                                                                                   */
@@ -715,7 +714,7 @@ if(is_file($linkArchivoTxt)){
 
 fputs ($fp,"archivoInicial=$linkArchSimple"."\n");
 fputs ($fp,"archivoFinal=$archivoFinal"."\n");
-//fputs ($fp,"*RAD_S*=$rad_salida\n");
+fputs ($fp,"*RAD_S*=$rad_salida\n");
 fputs ($fp,"<Radicado>=$rad_salida\n");
 
 $arr         = explode("\n",$documentosFaltantes);
@@ -738,7 +737,6 @@ fputs ($fp,"*CTA_INT*=$cuentai\n");
 fputs ($fp,"*ASUNTO*=$ra_asun\n");
 fputs ($fp,"*F_RAD_E*=$fecha_e\n");
 fputs ($fp,"*SAN_FECHA_RADICADO*=$fecha_e\n");
-fputs ($fp,"*RA_ASUN=$ra_asun\n");
 fputs ($fp,"*NOM_R*=$nombret_us1_u\n");
 fputs ($fp,"<USUARIO>=$nombret_us1_u\n");
 fputs ($fp,"*DIR_R*=$direccion_us1\n");
@@ -794,17 +792,6 @@ fputs ($fp,"*DEPE_CODI*=$dependencia\n");
 fputs ($fp,"*DEPENDENCIA*=$dependencia\n");
 fputs ($fp,"*DEPENDENCIA_NOMBRE*=$dependencia_nombre\n");
 
-fputs ($fp,"NOM_R=$nombret_us1_u\n");
-fputs ($fp,"F_RAD=$fecha_hoy_corto\n");
-fputs ($fp,"RAD_S=$rad_salida\n");
-fputs ($fp,"DEPTO_R=$dpto_nombre_us1\n");
-fputs ($fp,"MPIO_R=$muni_nombre_us1\n");
-fputs ($fp,"RAD_ASUNTO=$ra_asun\n");
-fputs ($fp,"LOGINORFEO=$krd\n");
-fputs ($fp,"DIR_R=$direccion_us1\n");
-fputs ($fp,"DEPENDENCIAORFEO=$dependencia\n");
-fputs ($fp,"DEPE_CODI=$dependencia\n");
-
 for ($i_count=0;$i_count<count ($camposSanc);$i_count++){
 	fputs ($fp,trim($camposSanc[$i_count])."=".trim($datosSanc[$i_count])."\n");
 }
@@ -838,7 +825,7 @@ if($ext=="ODT" || $ext=="odt"){
 
     $accion = false;
     $odt    = new OpenDocText();
-    //$odt->debug = true;
+    $odt->debug = true;
 
     //Se carga el archivo odt Original 
     $archivoACargar = str_replace('../','',$linkarchivo);
@@ -909,7 +896,6 @@ if($ext=="ODT" || $ext=="odt"){
     $docx->cargarOdt( "$archivoACargar", $nombreArchivo );
     $docx->setWorkDir( WORKDIR );
     $accion = $docx->abrirOdt();
-    //$docx->debug = true;
     if(!$accion)
     {
         die( "<CENTER><table class=borde_tab><tr><td class=titulosError>Problemas en el servidor abriendo archivo DOCX para combinaci&oacute;n.</td></tr></table>" );

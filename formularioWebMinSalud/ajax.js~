@@ -1,0 +1,437 @@
+// JavaScript Document
+function trae_municipio() {
+	document.getElementById('loader1').style.display = "block";
+	var url = "municipio.php";
+	var pars = "depto=" + document.quejas.depto.value;
+	var ajax = new Ajax.Request(url, {
+		parameters : pars,
+		method : "get",
+		onComplete : procesaRespuesta
+	});
+	function procesaRespuesta(resp) {
+		$("div-contenidos").innerHTML = resp.responseText;
+		document.getElementById('loader1').style.display = "none";
+	}
+}
+
+// Validacion captcha en JavaScript
+// @author Sebastian Ortiz V.
+
+function validar_captcha() {
+	var url = "captcha.php";
+	var valido = true;
+	var pars = "captcha="
+			+ document.getElementById('contactoOrfeo').captcha.value;
+	var ajax = new Ajax.Request(url, {
+		parameters : pars,
+		method : "get",
+		asynchronous : false,
+		onComplete : procesaRespuesta		
+	});
+	function procesaRespuesta(resp) {
+		var text = resp.responseText;
+		if (text == "true") {
+			valido = true;
+		} else {
+			valido = false;
+		}
+
+	}
+	return valido;
+}
+
+// Validacion segun tipo de solicitud, tipo de documento y con captcha
+// @author Sebastian Ortiz V.
+
+function valida_form() {
+
+	mensaje = "";
+	error = 0;
+	var formulario = document.getElementById('contactoOrfeo');
+
+	if (esQueja()) {
+		// Valida solamente que tenga asunto, comentario, y codigo de
+		// verificacion
+		mensaje += "Una queja puede ser anonima, si no diligencia informacion de contacto o esta incompleta, no se podra dar respuesta personalizada. Pero se debe diligencia los campos Asunto, Comentario y Codigo de verificacion.\n\n";
+		/*
+		 * Validar los siguientes campos
+		 * 
+		 * tipoSolicitud > 10 y < 14 Depende de los que se tengan habilitados en
+		 * sgd_tpr_tpdcumento para radicacion web.
+		 */
+
+		/*
+		 * tipoDocumento > 0 y < 5
+		 */
+		if ((formulario.tipoDocumento.value.length == 0)
+				|| (formulario.tipoDocumento.value < 1)
+				|| (formulario.tipoDocumento.value > 5)) {
+			mensaje += '\n-Tipo de documento invalido.';
+			error = 2;
+		}
+
+		/*
+		 * numid depende de tipo documento, 1 = >= 6 <= 10, 2=10, 3(igual que
+		 * 1), 4=11, 5 = 10
+		 */
+
+		if ((formulario.numid.value.length < 6)
+				|| (formulario.numid.value.length > 11)
+				|| !(alphaField(formulario.numid.value, numbers))) {
+			mensaje += '\n-NUmero de documento invalido.';
+			error = 2;
+		}
+
+		/*
+		 * campo_nombre
+		 */
+
+		if (formulario.nombre_remitente.value.length == 0) {
+			mensaje += '\n-Nombre remitente invalido.';
+			error = 2;
+		}
+
+		/*
+		 * campo_apellidos (Puede ser valido se es un tipoDocumento=2 (NIT))
+		 */
+
+		if (formulario.apellidos_remitente.value.length == 0) {
+			mensaje += '\n-Apellidos remitente invalido.';
+			error = 2;
+		}
+
+		/*
+		 * campo_direccion
+		 */
+
+		if (formulario.direccion.value.length == 0) {
+			mensaje += '\n-Dirección remitente invalido.';
+			error = 2;
+		}
+
+		/*
+		 * campo_telefono
+		 */
+
+		if (formulario.telefono.value.length == 0) {
+			mensaje += '\n-Telefono remitente invalido.';
+			error = 2;
+		}
+
+		/*
+		 * campo_email
+		 */
+
+		if (!isEmailAddress(formulario.email)) {
+			mensaje += '\n-Direccion de correo electronico invalida.';
+			error = 2;
+		}
+
+		/*
+		 * slc_depto > 0
+		 */
+
+		if ((formulario.depto.value < 1) || (formulario.depto.value > 99)) {
+			mensaje += '\n-Departamento invalida.';
+			error = 2;
+		}
+
+		/*
+		 * slc_muncipio > 0
+		 */
+
+		if ((formulario.muni.value < 1) || (formulario.muni.value > 999)) {
+			mensaje += '\n-Municipio invalido.';
+			error = 2;
+		}
+		/*
+		 * campo_mediorespuesta 0 >= y 1<=
+		 */
+		if ((formulario.mediorespuesta.value < 0)
+				|| (formulario.mediorespuesta.value > 1)) {
+			mensaje += '\n-Medio de respuesta invalido.';
+			error = 2;
+		}
+
+		/*
+		 * tipoPoblacion 0 <= y 5 <=
+		 */
+		if ((formulario.tipoPoblacion.value < 0)
+				|| (formulario.tipoPoblacion.value > 5)) {
+			mensaje += '\n-Tipo de poblacion invalido.';
+			error = 2;
+		}
+
+		/*
+		 * campo_asunto
+		 */
+
+		if ((formulario.asunto.value.length == 0)
+				|| (formulario.asunto.value.length > 600)) {
+			mensaje += '\n-Asunto invalido.';
+			error = 1;
+		}
+		/*
+		 * campo_comentario
+		 */
+		if ((formulario.comentario.value.length == 0)
+				|| (formulario.comentario.value.length > 10000)) {
+			mensaje += '\n-Comentario invalido.';
+			error = 1;
+		}
+
+		/*
+		 * campo_captcha = 5
+		 */
+
+		if (formulario.captcha.value.length != 5 || !validar_captcha()) {
+			mensaje += '\n-Código de verificación invalido.';
+			error = 1;
+		}
+
+	} else {
+
+		/*
+		 * Validar los siguientes campos
+		 * 
+		 * tipoSolicitud > 10 y < 14 Depende de los que se tengan habilitados en
+		 * sgd_tpr_tpdcumento para radicacion web.
+		 */
+
+		mensaje = 'Se han encontrado los siguientes errores:\n\n';
+
+		if ((formulario.tipoSolicitud.value.length == 0)
+				|| (formulario.tipoSolicitud.value < 10)
+				|| (formulario.tipoSolicitud.value > 14)) {
+			mensaje += '\n-Tipo de Solicitud invalida.';
+			error = 1;
+		}
+
+		/*
+		 * tipoDocumento > 0 y < 5
+		 */
+		if ((formulario.tipoDocumento.value.length == 0)
+				|| (formulario.tipoDocumento.value < 1)
+				|| (formulario.tipoDocumento.value > 5)) {
+			mensaje += '\n-Tipo de documento invalido.';
+			error = 1;
+		}
+
+		/*
+		 * numid depende de tipo documento, 1 = >= 6 <= 10, 2=10, 3(igual que
+		 * 1), 4=11, 5 = 10
+		 */
+
+		if ((formulario.numid.value.length < 6)
+				|| (formulario.numid.value.length > 11)
+				|| !(alphaField(formulario.numid.value, numbers))) {
+			mensaje += '\n-NUmero de documento invalido.';
+			error = 1;
+		}
+
+		/*
+		 * campo_nombre
+		 */
+
+		if (formulario.nombre_remitente.value.length == 0) {
+			mensaje += '\n-Nombre remitente invalido.';
+			error = 1;
+		}
+
+		/*
+		 * campo_apellidos (Puede ser valido se es un tipoDocumento=2 (NIT))
+		 */
+
+		if (formulario.apellidos_remitente.value.length == 0) {
+			mensaje += '\n-Apellidos remitente invalido.';
+			error = 1;
+		}
+
+		/*
+		 * campo_direccion
+		 */
+
+		if (formulario.direccion.value.length == 0) {
+			mensaje += '\n-Dirección remitente invalido.';
+			error = 1;
+		}
+
+		/*
+		 * campo_telefono
+		 */
+
+		if (formulario.telefono.value.length == 0) {
+			mensaje += '\n-Telefono remitente invalido.';
+			error = 1;
+		}
+
+		/*
+		 * campo_email
+		 */
+
+		if (!isEmailAddress(formulario.email)) {
+			mensaje += '\n-Direccion de correo electronico invalida.';
+			error = 1;
+		}
+
+		/*
+		 * slc_depto > 0
+		 */
+
+		if ((formulario.depto.value < 1) || (formulario.depto.value > 99)) {
+			mensaje += '\n-Departamento invalida.';
+			error = 1;
+		}
+
+		/*
+		 * slc_muncipio > 0
+		 */
+
+		if ((formulario.muni.value < 1) || (formulario.muni.value > 999)) {
+			mensaje += '\n-Municipio invalido.';
+			error = 1;
+		}
+		/*
+		 * campo_mediorespuesta 0 >= y 1<=
+		 */
+		if ((formulario.mediorespuesta.value < 0)
+				|| (formulario.mediorespuesta.value > 1)) {
+			mensaje += '\n-Medio de respuesta invalido.';
+			error = 1;
+		}
+
+		/*
+		 * tipoPoblacion 0 <= y 5 <=
+		 */
+		if ((formulario.tipoPoblacion.value < 0)
+				|| (formulario.tipoPoblacion.value > 5)) {
+			mensaje += '\n-Tipo de poblacion invalido.';
+			error = 1;
+		}
+
+		/*
+		 * campo_asunto
+		 */
+
+		if ((formulario.asunto.value.length == 0)
+				|| (formulario.asunto.value.length > 600)) {
+			mensaje += '\n-Asunto invalido.';
+			error = 1;
+		}
+		/*
+		 * campo_comentario
+		 */
+		if ((formulario.comentario.value.length == 0)
+				|| (formulario.comentario.value.length > 10000)) {
+			mensaje += '\n-Comentario invalido.';
+			error = 1;
+		}
+
+		/*
+		 * campo_captcha = 5
+		 */
+
+		if (formulario.captcha.value.length != 5 || !validar_captcha()) {
+			mensaje += '\n-Código de verificación invalido.';
+			error = 1;
+		}
+
+	}
+
+	if (error == 1) {
+		alert(mensaje);
+		return false;
+	} else if (error == 2) {
+		alert(mensaje)
+		return true;
+	} else {
+		return true;
+	}
+}
+
+function pasa_nit() {
+	var i
+	for (i = 0; i < document.busqueda.nit.length; i++) {
+		if (document.busqueda.nit[i].checked)
+			break;
+	}
+	valor_nit = document.busqueda.nit[i].value;
+	window.opener.document.quejas.nit.value = valor_nit;
+	window.opener.trae_entidad();
+	window.close();
+
+}
+
+// validacion caracteres
+
+/*
+ * <input type="text" onkeypress="return alpha(event,numbers)" /> <input
+ * type="text" onkeypress="return alpha(event,letters)" /> <input type="text"
+ * onkeypress="return alpha(event,numbers+letters+signs)" />
+ */
+
+var letters = ' ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyzáéíóúü\u0008'
+var numbers = '1234567890\u0008'
+var signs = ',.:;@-\''
+var mathsigns = '+-=()*/'
+var custom = '<>#$%&?'
+
+function alpha(e, allow) {
+	var k;
+	k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+	return (allow.indexOf(String.fromCharCode(k)) != -1);
+}
+
+function alphaField(e, allow) {
+	var k;
+	r = true;
+	for ( var i = 0; i < e.length; i++) {
+		if (allow.indexOf(e.charAt(i)) == -1)
+			return false;
+	}
+	return r;
+}
+
+// validacion email
+function isEmailAddress(theElement) {
+	var s = theElement.value;
+	var filter = /^[A-Za-z][A-Za-z0-9_]*@[A-Za-z0-9_]+\.[A-Za-z0-9_.]+[A-za-z]$/;
+	if (s.length == 0)
+		return true;
+	if (filter.test(s))
+		return true;
+	else
+		return false;
+}
+
+// Adicion de campos para adjuntos
+// @author Sebastian Ortiz V.
+
+function addInputFile() {
+	var container = document.getElementById('adjuntos');
+	var pf = document.createElement('p');
+	var ifile = document.createElement('input');
+	ifile.type = 'file';
+	ifile.name = 'userfile[]';
+	ifile.id = 'campo_adjuntos';
+	// ifile.class ='large';
+	pf.appendChild(ifile);
+	container.appendChild(pf);
+}
+
+function esQueja() {
+	var tipo = document.getElementById('tipoSolicitud');
+	// Ojo este tiene que corresponder con la queja en la consulta de sql para
+	// $tipo en formulario_sql.php
+	if (tipo.selectedIndex == 2)
+		return true;
+	else
+		return false;
+
+}
+
+function campoObligatorio() {
+	if (isQueja())
+		return "*";
+
+}
