@@ -119,7 +119,8 @@ if($generar_informe or $aceptarAnular){
     <TD height="26" class='titulos2'>Tipo Radicacion</TD>
     <TD valign="top" align="left"  class='listado2'>
 		<?
-		$sqlTR ="select upper(sgd_trad_descr),sgd_trad_codigo from sgd_trad_tiporad 
+		$sqlTR ="select upper(sgd_trad_descr),sgd_trad_codigo from sgd_trad_tiporad
+                                 where sgd_trad_codigo != 2
 				order by sgd_trad_codigo";
 		$rsTR = $db->conn->Execute($sqlTR);
 		print $rsTR->GetMenu2("tipoRadicado","$tipoRadicado",false, false, 0," class='select'>");
@@ -283,11 +284,10 @@ if($generar_informe){
           $radAnulados = join(",", $radAnularE);
           error_reporting(7);
           $radicadosPdf = "<table>
-              <tr><td><b>Radicado</b>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; 
-          </td><td><b>Observacion Solicitante</b></td></tr>";
+              <tr><td><b>Radicado&nbsp;&nbsp;&nbsp;&nbsp;</b></td><td><b>;&nbsp;&nbsp;Observacion Solicitante</b></td></tr>";
           foreach($radAnularE as $id=>$noRadicado)
           {
-              $radicadosPdf .= "<tr><td>".$radAnularE[$id] ."&nbsp;&nbsp; &nbsp;</td><td>". $radObservaE[$id] ."</td></tr>";
+              $radicadosPdf .= "<tr><td>".$radAnularE[$id] ."</td>&nbsp;&nbsp;&nbsp;&nbsp;<td>". $radObservaE[$id] ."</td></tr>";
           }
           $anoActual = date("Y");
           $radicadosPdf .= "</table>";
@@ -302,37 +302,35 @@ if($generar_informe){
           $date =  date("m/d/Y");
           $fecha_hoy =  $b->traducefecha($date);
           $html = "
-              <p><p>
+              <p>
               <br><br><br>
-              <b><center> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-          &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-          ACTA DE ANULACI&Oacute;N No.  $actaNo </center></b><p><br>
-              <CENTER><B>
-              &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-          NUMEROS DE RADICACI&Oacute;N DE CORRESPONDENCIA ENVIADA A&Ntilde;O $anoActual</B></CENTER><p>
-              <CENTER><B>
-              &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          CENTRO DE DOCUMENTACION </B></CENTER><p>
-              <br>
-              En cumplimiento a lo establecido en el  Acuerdo No. 060 del 30 de octubre de 2001  expedido <br>
-              por el Archivo General de la Naci&oacute;n, en el cual se establecen pautas para la administraci&oacute;n de<br>
-              las  comunicaciones  oficiales en las entidades  p&uacute;blicas  y  privadas que cumplen  funciones<br>
-              p&uacute;blicas, y con base especialmente en el par&aacute;grafo del Art&iacute;culo Quinto, el cual establece que <br>
-              Cuando existan errores en la radicaci&oacute;n y  se  anulen  los n&uacute;meros, se debe dejar constancia <br>
-              por escrito, con la respectiva justificaci&oacute;n y firma del Jefe de la unidad de correspondencia; el <br>
-              Coordinador de Gesti&oacute;n  Documental y  Correspondencia de $entidad_largo procede a anular los siguientes n&uacute;meros de radicaci&oacute;n de $TituloActam que no fueron tramitados por las dependencias radicadoras:<br><br>
-              1.- N&uacute;meros de radicaci&oacute;n de $TituloActam a anular: <br></center>
+              <b><center>ACTA DE ANULACI&Oacute;N  No.  $actaNo </center></b><br>
+              <center><b>NUMEROS DE RADICACI&Oacute;N DE CORRESPONDENCIA ENVIADA A&Ntilde;O $anoActual</center></b><br>
+              <center><b>CENTRO DE DOCUMENTACION </center></b></p><br>
+              <p>
+              En cumplimiento a lo establecido en el Acuerdo No.060 del 30 de octubre de 2001 expedido<br>
+              por el Archivo General de la Naci&oacute;n, en el cual se establecen pautas para la  administraci&oacute;n<br>
+              de las comunicaciones oficiales en las entidades p&uacute;blicas y privadas que cumplen funciones<br>
+              p&uacute;blicas,y con base especialmente en el par&aacute;grafo del Articulo Quinto, el cual establece que:<br>
+              Cuando existan errores en la radicaci&oacute;n y se anulen los n&uacute;meros, se  debe dejar  constancia<br>
+              por escrito, con la respectiva justificaci&oacute;n y firma del  Jefe de la unidad  de  correspondencia.<br>
+              El    Coordinador   de    Gesti&oacute;n   Documental   y   Correspondencia de<br>
+              $entidad_largo procede a anular los siguientes n&uacute;meros<br>
+              de  radicaci&oacute;n de $TituloActam que no fueron tramitados por las dependencias radicadoras:</p>
+              <p>
+              1.- N&uacute;meros de radicaci&oacute;n de $TituloActam a anular:<br></p>
               $radicadosPdf
               <br><br>
-              2.- Se deja  copia  de la presente acta en el archivo central de la  Entidad  para  el tr&aacute;mite <br>
-              respectivo de la organizaci&oacute;n f&iacute;sica de los archivos.<p>
-              Se firma la presente el $fecha_hoy
-              <p><p>
-              ______________________________________________________ <br>
-
-              Coordinador  de Archivo.";
-          $html = 	'<img src="../png/cabeceraEntidad.png" width="520">' . $html;
+              <p>
+              2.- Se deja copia de la presente acta en el archivo central de la Entidad para el tr&aacute;mite<br>
+              respectivo de la organizaci&oacute;n f&iacute;sica de los archivos.
+              <br>
+              <br> 
+              Se firma la presente el $fecha_hoy.</p>
+              <br><br>
+              <br> ____________________________________________________ <br>
+              Coordinador.";
+          $html = 	'<img src="../png/cabeceraActa.jpg" width="220">' . $html;
           $ruta_raiz = "..";
           $pdf=new PDF();
           $pdf->Open();
@@ -340,7 +338,7 @@ if($generar_informe){
           $pdf->SetTitle("Acta de Anulacion de Radicados");
           $pdf->SetSubject("Anulacion radicados");
           $pdf->SetAuthor("Correspondencia");
-          $pdf->SetFont('Arial','',12);
+          $pdf->SetFont('Arial','',11);
           $pdf->AddPage();
           if(ini_get('magic_quotes_gpc')=='1')
               $html=stripslashes($html);

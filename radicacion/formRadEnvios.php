@@ -60,6 +60,11 @@ $datos_enviar = session_name()."=".session_id();
 		    Otras Devoluciones
           </a>
 		</td>
+         <td class='listado2' height="25">
+		  <a href='../devolucion/cuerpoDevGestion.php?<?=$datos_enviar?>&estado_sal=3&estado_sal_max=3&devolucion=1&krd=<?=$krd?>' class='vinculos'>
+		    Devoluciones para gestion
+          </a>
+		</td>
         <td class='listado2' height="25"><a href='../radsalida/dev_corresp2.php?<?=$datos_enviar?>&estado_sal=4&estado_sal_max=4'>
           </a>
 		</td>

@@ -104,13 +104,34 @@ if($_GET["codus"])
 	    //$whereTipoRadicado.=" AND b.USUA_CODI = $codusuario ";
 	}
 
-if($tipoDocumento and ($tipoDocumento!='9999' and $tipoDocumento!='9998' and $tipoDocumento!='9997'))
+//Ajuste por seleccion multiple
+$tipoDocumentos=$_GET["tipoDocumento"]; 
+//var_dump ($tipoDocumentos);
+$lista_tipos = '(';
+if (count($tipoDocumentos) > 1)
+{
+for ($i=0;$i<count($tipoDocumentos);$i++)    
+{     
+ $lista_tipos .= $tipoDocumentos[$i] . ',';
+}
+   $lista_tipos .= '9999)';
+} else
+{
+ if (count($tipoDocumentos) == 1)
+  $lista_tipos .= $tipoDocumentos[0] . ')';
+ else
+   $lista_tipos =  '()';
+}
+ 
+//echo "<br> Eligieron " . $lista_tipos; 
+if($lista_tipos != '()' and ($lista_tipos!='(9999)' and $lista_tipos!='(9998)' and $lista_tipos!='(9997)'))
 	{
-		$whereTipoRadicado.=" AND t.SGD_TPR_CODIGO = $tipoDocumento ";
-	}elseif ($tipoDocumento=="9997")	
+		$whereTipoRadicado.=" AND t.SGD_TPR_CODIGO in $lista_tipos ";
+	}elseif ($lista_tipos=="(9997)")	
 	{
 		$whereTipoRadicado.=" AND t.SGD_TPR_CODIGO = 0 ";
 	}
+        //echo "CONDICION ES " .$whereTipoRadicado;
 
 	include_once($ruta_raiz."/include/query/busqueda/busquedaPiloto1.php");
 	
