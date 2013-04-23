@@ -678,8 +678,10 @@ if($codigo or $_FILES['userfile1']['size'])
 			$isql = "select sgd_dir_tipo NUM
 					from sgd_dir_drecciones
 					where
-						cast(sgd_dir_tipo as varchar(3)) like '7%' and sgd_anex_codigo='$codigo'
+						 sgd_anex_codigo='$codigo'
 						order by sgd_dir_tipo desc";
+// -- cast(sgd_dir_tipo as varchar(3)) like '7%' and
+  echo $isql;
 			$rs=$db->conn->Execute($isql);
 			if (!$rs->EOF)	$num_anexos = substr($rs->fields["NUM"],1,2);
 			if(!$nurad) $nurad = $numrad;
@@ -712,9 +714,10 @@ if($codigo or $_FILES['userfile1']['size'])
     $isql = "select SGD_CIU_CODIGO, SGD_ESP_CODI, SGD_OEM_CODIGO, SGD_DOC_FUN, SGD_DIR_TIPO, SGD_DIR_NOMBRE
 	  from sgd_dir_drecciones
 	  where
-		  cast(sgd_dir_tipo as varchar(3)) like '7%' and sgd_anex_codigo='$codigo'
+		   sgd_anex_codigo='$codigo'
 		  order by sgd_dir_tipo desc";
     //$db->conn->debug = true;
+    // cast(sgd_dir_tipo as varchar(3)) like '7%' and   Se elimina para mostrarlo siempre....
     $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
     $rs=$db->conn->Execute($isql);
 
