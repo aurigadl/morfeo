@@ -200,14 +200,14 @@ $rs = $db->query($isql);
 
 <table width="100%" align="center" border="0" cellpadding="0" cellspacing="0" class="borde_tab">
 <?
-  if ((strtoupper($_SESSION["entidad"]) == "MINSALUD") and ($radi_fech_radi < '2012-10-13' )){
+  if ((strtoupper($_SESSION["entidad"]) == "correlibre") and ($radi_fech_radi < '2012-10-13' )){
 ?>
   <tr>
-    <td height="50" class="titulos4"><a href="tx/historicoMelbaMinSalud.php?verradicado=<?=$verradicado?>" target="Historico<?=$verradicado?>" > 
-    Ver Historico de Melba(MinSalud)-MOVIMIENTOS</a>
+    <td height="50" class="titulos4"><a href="tx/historicoMelbacorrelibre.php?verradicado=<?=$verradicado?>" target="Historico<?=$verradicado?>" > 
+    Ver Historico de Melba(correlibre)-MOVIMIENTOS</a>
     </td>
     <td height="50" class="titulos4"><a href="tx/historicoCambiosMelba.php?verradicado=<?=$verradicado?>" target="HistoricoCambios<?=$verradicado?>" > 
-    Ver Historico de Melba(MinSalud)-TRANSACCIONES</a>
+    Ver Historico de Melba(correlibre)-TRANSACCIONES</a>
     </td>
    </tr>
 <?

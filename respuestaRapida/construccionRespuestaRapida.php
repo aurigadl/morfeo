@@ -310,7 +310,7 @@ $fecha1      = time();
 $fecha       = FechaFormateada($fecha1);
 $lugar       = "Bogota DC";
 //variables para generar el pdf con l no olvidar \n para dividir filas
-$pie         = "Calle 26 # 13 - 19 Bogotá, D.C., Colombia     PBX 381 5000     www.dnp.gov.co";
+$pie         = "Calle 26 # 13 - 19 Bogotá, D.C., Colombia     PBX 381 5000     www.correlibre.org";
 $mensaje     = "Atentamente";
 
 if(trim($_POST["destinatario"])){
@@ -437,7 +437,7 @@ $mail = new PHPMailer();
 $cuerpo = "<br>El Departamento Nacional de Planeacion
                 <br> ha dado respuesta a su solicitud No. " . $nurad . " mediante el oficio No." . $verradicado2 . ", la cual tambien puede ser consultada en el portal Web del DNP.</p>
                  <br><br><b><center>Si no puede visualizar bien el correo, o no llegaron bien los Adjuntos, puede Consultarlos en :
-                 <a href='http://orfeo.dnp.gov.co/pqr/consulta.php?rad=$nurad'>http://orfeo.dnp.gov.co/pqr/consulta.php</a><br><br><br>".htmlspecialchars($respuesta)."</b></center><BR>
+                 <a href='http://orfeo.correlibre.org/pqr/consulta.php?rad=$nurad'>http://orfeo.correlibre.org/pqr/consulta.php</a><br><br><br>".htmlspecialchars($respuesta)."</b></center><BR>
                  ";
 $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);                 

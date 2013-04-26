@@ -18,7 +18,7 @@ echo  $cuerpo = "<br>$texto
 		$numeroRadicado, el cual tambien puede ser consultado en 
 		el portal Web del DNP.</p>
                 <br><br><b><center>Puede Consultarlos el estado en:
-                <a href='http://www.minsalud.gov.co'>
+                <a href='http://www.correlibre.org'>
 
                  <hr>Documento Recibido<hr>
                  <table>

@@ -8,9 +8,9 @@ ini_set("display_errors",1);
 define('ADODB_ASSOC_CASE', 1);
 $ruta_raiz= "..";
 $usuario = "postgres";
-$contrasena= "0rfe0gplMSalud";
+$contrasena= "0rfe0gplMcorrelibre";
 $contrasena= "G3Ssoporte2o12pg";
-$servidor = "orfeo.minsalud.gov.co:5432";
+$servidor = "orfeo.correlibre.org:5432";
 //This would by the Database Name
 //$base = "bd_lgv0109";
 $servicio = "orfeo382_produccion";

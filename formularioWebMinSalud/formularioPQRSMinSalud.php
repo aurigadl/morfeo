@@ -208,7 +208,7 @@ codigo de verificaci&oacute;n son obligatorios (<font color="#FF0000">*</font>).
 		class="field select maximun" tabindex="11">
 		<option value="0" selected="selected">Seleccione</option>
 		<option value="1">Acerca del Ministerio</option>
-		<option value="2">Salud</option>
+		<option value="2">correlibre</option>
 		<option value="3">Protecci&oacute;n Social</option>
 		<option value="4">Atenci&oacute;n al Ciudadano</option>
 		<option value="5">Centro de Comunicaciones</option>

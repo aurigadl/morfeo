@@ -35,7 +35,7 @@ $pdf->Text(110,41,textoPDF(date('d')." - ".date('m')." - ".date('Y')." ".date('h
 $pdf->SetFont('Arial','',8);
 $pdf->Text(110,45,textoPDF("Destino: ". $depeNomb ." - Rem/D: ". textoPDF(substr($_SESSION['nombre_remitente'],0,10))." ".textoPDF(substr($_SESSION['apellidos_remitente'],0,10))));
 $pdf->SetFont('Arial','',7);
-$pdf->Text(110,48,textoPDF("Consulte el estado de su trámite en nuestra página web http://www.minsalud.gov.co"));
+$pdf->Text(110,48,textoPDF("Consulte el estado de su trámite en nuestra página web http://www.correlibre.org"));
 $pdf->Text(135,51,textoPDF("Código de verificación: " . $_SESSION['codigoverificacion']));
 //$pdf->Text(110,51,textoPDF(strtoupper($_SESSION['nombre_remitente'])." ".strtoupper($_SESSION['apellidos_remitente'])));
 //$pdf->Text(110,55,$_SESSION['cedula']!='0'?$_SESSION['cedula']:$_SESSION['nit']);

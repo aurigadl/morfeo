@@ -6,7 +6,7 @@ include "../envios/class.phpmailer.php";
   $cuerpo = "<br>$texto
                 <br> ha dado respuesta a su solicitud No. " . $nurad . " mediante el oficio No." . $verradicado2 . ", la cual también puede ser consultada en el portal Web del DNP.</p>
                  <br><br><b><center>Si no puede visualizar bien el correo, o no llegaron bien los Adjuntos, puede Consultarlos en :
-                 <a href='http://orfeo.dnp.gov.co/pqr/consulta.php?rad=$nurad'>http://orfeo.dnp.gov.co/pqr/consulta.php</a><br><br><br>".$respuesta."</b></center><BR>
+                 <a href='http://orfeo.correlibre.org/pqr/consulta.php?rad=$nurad'>http://orfeo.correlibre.org/pqr/consulta.php</a><br><br><br>".$respuesta."</b></center><BR>
                  ";
   $mail->Mailer = "smtp";
   $mail->From = $destinatario;

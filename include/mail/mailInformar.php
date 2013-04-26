@@ -45,7 +45,7 @@ $mail->Password   = $passwdPHPMailer;        // SMTP account password
 //  $mail->AddReplyTo('name@yourdomain.com', 'First Last');
 $mail->AddAddress($mailDestino, "$mailDestino");
 $mail->SetFrom($admPHPMailer, $admPHPMailer);
-$mail->AddReplyTo('sgdorfeo@minsalud.gov.co', 'sgdorfeo');
+$mail->AddReplyTo('sgdorfeo@correlibre.org', 'sgdorfeo');
   $mensaje = file_get_contents($ruta_raiz."/conf/MailRadicado.html");
 
   $asuntoMail =  $asuntoMailRadicado;
