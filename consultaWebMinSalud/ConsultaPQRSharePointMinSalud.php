@@ -186,14 +186,14 @@ if($isCaptchaOK){
 		}
 		for($j=1;$j<sizeof($adjuntos);$j++){
 			if (!empty($adjuntos["ADJUNTO" . $j])){
-				$str_adjuntos = $str_adjuntos . "<a href=\"https://orfeo.minsalud.gov.co/orfeo/bodega/pqrs_sharepoint/" .(string)("" . $adjuntos["ADJUNTO" . $j] . "\" target=\"_blank\">".
+				$str_adjuntos = $str_adjuntos . "<a href=\"https://orfeo.correlibre.org/orfeo/bodega/pqrs_sharepoint/" .(string)("" . $adjuntos["ADJUNTO" . $j] . "\" target=\"_blank\">".
 				 $adjuntos["ADJUNTO" . $j] . "</a> &nbsp;") ;
 			}
 		}
 		echo $str_adjuntos;
 		echo "</td>";
 		echo "<td>";
-		//$radicado = $respuestas[$i][0]=="No"?"No":"<a href=\"https://orfeo.minsalud.gov.co/orfeo/bodega/".$respuestas[$i][1] ."\" target=\"_blank\">".$respuestas[$i][0].+"</a>";
+		//$radicado = $respuestas[$i][0]=="No"?"No":"<a href=\"https://orfeo.correlibre.org/orfeo/bodega/".$respuestas[$i][1] ."\" target=\"_blank\">".$respuestas[$i][0].+"</a>";
 		$radicado = $respuestas[$i][0]=="No"?"No":"<a href=\"index_web.php?numeroRadicado=".$respuestas[$i][0]."&codigoverificacion=" .$respuestas[$i][2]. "&dontcare=oks&captcha=notengo\" target=\"_self\">".$respuestas[$i][0]."</a>";
 		echo $radicado;
 		echo "</td>";

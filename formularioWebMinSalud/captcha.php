@@ -2,7 +2,7 @@
 session_start();
 /**
   * @autor Sebastian Ortiz V.
-  * @Ministerio de Salud y  Proteccion Social 2012
+  * @correlibre
   * @licencia GNU/GPL V 3
   */
 

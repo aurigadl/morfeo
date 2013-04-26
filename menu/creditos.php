@@ -159,7 +159,7 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 	<td width="50%">
 	<table width="100%">
 	<tr>
-  		<td class="titulos2"><a href="http://www.dnp.gov.co" target="_blank">Departamento Nacional de Planeaci&oacute;n</a></td>
+  		<td class="titulos2"><a href="http://www.correlibre.org" target="_blank">Departamento Nacional de Planeaci&oacute;n</a></td>
   	</tr>
   	<tr>
    		<td align="right" height="25" class="listado2_no_identa">
@@ -168,7 +168,7 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 	</tr>
 	<tr>
 		<td align="right" height="25" class="listado2_no_identa">
-		Carlos Eduardo Campos --- ccampos@dnp.gov.co<br>An&aacute;lisis dise&ntilde;o y desarrollo.
+		Carlos Eduardo Campos --- ccampos@correlibre.org<br>An&aacute;lisis dise&ntilde;o y desarrollo.
 		</td>
 	</tr>
 	</table>
@@ -293,7 +293,7 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 	</tr>
 	<tr>
 		<td align="right"  height="25" class="listado2_no_identa" >
-			Brayan Gabriel Plazas Ria&ntilde;o --- bplazas@dnp.gov.co<br>An&aacute;lisis dise&ntilde;o y desarrollo
+			Brayan Gabriel Plazas Ria&ntilde;o --- bplazas@correlibre.org<br>An&aacute;lisis dise&ntilde;o y desarrollo
 		</td>
 	</tr>
 	<tr>

@@ -143,8 +143,8 @@
                                 <td width="50%">
                                     <select class="select_resp" name="usMailSelect" id="usMailSelect">
                                     <!--{if $depecodi == '4240'  or $depecodi == '900' }-->
-                                        <option selected value="atencionpqrs@minsalud.gov.co"> 
-                                            atencionpqrs@minsalud.gov.co 
+                                        <option selected value="atencionpqrs@correlibre.org"> 
+                                            atencionpqrs@correlibre.org 
                                         </option>
                                     <!--{/if}-->
                                     <!--{foreach key=key item=item from=$emails}-->

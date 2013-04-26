@@ -157,8 +157,8 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'counter', '
                                 <td width="50%">
                                     <select class="select_resp" name="usMailSelect" id="usMailSelect">
                                     <?php if ($this->_tpl_vars['depecodi'] == '4240' || $this->_tpl_vars['depecodi'] == '900'): ?>
-                                        <option selected value="atencionpqrs@minsalud.gov.co"> 
-                                            atencionpqrs@minsalud.gov.co 
+                                        <option selected value="atencionpqrs@correlibre.org"> 
+                                            atencionpqrs@correlibre.org 
                                         </option>
                                     <?php endif; ?>
                                     <?php $_from = $this->_tpl_vars['emails']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
