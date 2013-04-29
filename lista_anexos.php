@@ -25,7 +25,7 @@ $objCtrlAplInt = new ControlAplIntegrada($db);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 //$db2->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $num_archivos=0;
-
+//$db->conn->debug = true;
 $anex = & new Anexo($db);
 $sqlFechaDocto = $db->conn->SQLDate("Y-m-D H:i:s A","sgd_fech_doc");
 $sqlFechaAnexo = $db->conn->SQLDate("Y-m-D H:i:s A","anex_fech_anex");
@@ -62,11 +62,11 @@ $isql = "select anex_codigo AS DOCU
 			,$sqlFechaDocto as FECDOC
 			,$sqlFechaAnexo as FEANEX
 			,a.ANEX_TIPO as NUMEXTDOC
-			,(SELECT d.sgd_dir_nomremdes from sgd_dir_drecciones d where (d.sgd_anex_codigo=a.anex_codigo  or d.radi_nume_radi=a.radi_nume_salida) AND (a.sgd_dir_tipo=d.sgd_dir_tipo )) destino 
+			,(SELECT d.sgd_dir_nomremdes from sgd_dir_drecciones d where (d.sgd_anex_codigo=a.anex_codigo  or d.radi_nume_radi=a.radi_nume_salida) AND (a.sgd_dir_tipo=d.sgd_dir_tipo ) limit 1) destino 
 		from anexos a, anexos_tipo at ,usuario u
       where anex_radi_nume=$verrad and anex_tipo=anex_tipo_codi
 		   and anex_creador=usua_login and anex_borrado='N'
-	   order by AANEX_FECH_ANEX,a.anex_radi_nume,a.radi_nume_salida";
+	   order by AANEX_FECH_ANEX,sgd_dir_tipo,a.anex_radi_nume,a.radi_nume_salida";
      error_reporting(7);
 
 ?>
