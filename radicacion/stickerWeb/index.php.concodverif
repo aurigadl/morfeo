@@ -83,7 +83,7 @@ $noRad = $_REQUEST['nurad'];
                 <span  align="left"><b>
                     <?=substr($radi_fech_radi,0,16). " "?>  &nbsp;&nbsp; C&oacute;d veri: <?=$sgd_rad_codigoverificacion?> </b>
                 </span>
-                 <p><span><b>Consulte su tr&aacute;mite en http://www.minsalud.gov.co</b></span></p>
+                 <p><span><b>Consulte su tr&aacute;mite en http://www.correlibre.org</b></span></p>
             </td>                     
         </tr>
 <!--

@@ -186,7 +186,7 @@ el código de verificación que se le asignó cuando envió su consulta
 <div id="formularioConsultaPQRSP">
 <form id="consultaPQRSP" class="wufoo topLabel" autocomplete="on"
 	enctype="multipart/form-data" method="post"
-	action="ConsultaPQRSharePointMinSalud.php" name="consultaPQRSP">
+	action="ConsultaPQRSharePointcorrelibre.php" name="consultaPQRSP">
 <ul>
 	<li><label class="desc" id="lbl_id" for="ID">ID
 	(s&oacute;lo n&uacute;meros) </label>
