@@ -87,7 +87,7 @@ SELECT distinct r.radi_nume_radi radicado ,
 	envand.sgd_renv_fech fech_envio_as, 
 	ad.anex_radi_fech-r.RADI_FECH_RADI dias_proyecto_as , 
 	envand.sgd_renv_fech - r.RADI_FECH_RADI dias_envio_as , 
-	CASE WHEN envand.sgd_renv_fech IS NULL THEN ( now() - r.RADI_FECH_RADI) ELSE (envand.sgd_renv_fech_sal- r.RADI_FECH_RADI) 
+	CASE WHEN envand.sgd_renv_fech IS NULL THEN ( now() - r.RADI_FECH_RADI) ELSE (envand.sgd_renv_fech - r.RADI_FECH_RADI) 
         END tramite_as,
 	h.depe_codi as depe_origen,
 	h.hist_fech,
