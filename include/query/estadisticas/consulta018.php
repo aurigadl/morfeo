@@ -35,6 +35,16 @@ $whereTipoRadicado  = str_replace("t."," ",$whereTipoRadicado);
 $whereTipoRadicado  = str_replace("b."," ",$whereTipoRadicado);
 $whereTipoRadicado  = str_replace("B."," ",$whereTipoRadicado);
 
+if($_GET["tipoDocumentos"]) $tipoDocumentos=$_GET["tipoDocumentos"];
+
+$whereTipoDocumento = "";
+if(!empty($tipoDocumentos) and $tipoDocumentos!='9999' and $tipoDocumentos!='9998' and $tipoDocumentos!='9997')
+	{
+		$whereTipoDocumento.=" AND SGD_TPR_CODIGO in ( ". $tipoDocumentos . ")";
+	}elseif ($tipoDocumentos=="9997")	
+	{
+		$whereTipoDocumento.=" AND SGD_TPR_CODIGO = 0 ";
+	}
 
 //*$condiRep Esta condicion permite que se genere la estadistica con solo una respuesta por radicado
 //$db->conn->debug = true;
@@ -122,6 +132,7 @@ switch($db->driver)
           TO_CHAR(hist_fech,'yyyy/mm/dd') BETWEEN '$fecha_ini'  AND '$fecha_fin' 
         $condicionE
         $whereTipoRadicado
+        $whereTipoDocumento
         $condicionEDes
         ";
         
@@ -182,6 +193,7 @@ switch($db->driver)
           TO_CHAR(hist_fech,'yyyy/mm/dd') BETWEEN '$fecha_ini'  AND '$fecha_fin' 
         $condicionE
         $whereTipoRadicado
+        $whereTipoDocumento
         $condicionEDes
         ";
        //$agrupamiento = "GROUP BY radicado ";
@@ -224,7 +236,7 @@ function pintarEstadistica($fila,$indice,$numColumna)
       $salida=$fila['USUARIO'];
       break;
     case 2:
-      $datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;usua_doc=".urlencode($fila['HID_USUA_DOC'])."&amp;dependencia_busq=".$_GET['dependencia_busq']."&amp;dependencia_busqOri=".$_GET['dependencia_busqOri']."&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumento=".$_GET['tipoDocumento']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;depeUs=".$fila['HID_DEPE_USUA'];
+      $datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;usua_doc=".urlencode($fila['HID_USUA_DOC'])."&amp;dependencia_busq=".$_GET['dependencia_busq']."&amp;dependencia_busqOri=".$_GET['dependencia_busqOri']."&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumentos=".$GLOBALS['tipoDocumentos']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;depeUs=".$fila['HID_DEPE_USUA'];
       $datosEnvioDetalle=(isset($_GET['usActivos']))?$datosEnvioDetalle."&codExp=$codExp&amp;usActivos=".$_GET['usActivos']:$datosEnvioDetalle;
       $datosEnvioDetalle=(isset($_GET['conSinRep']))?$datosEnvioDetalle."&condiRep=SI":$datosEnvioDetalle."&condiRep=NO";
       $salida="<a href=\"genEstadistica.php?{$datosEnvioDetalle}&codEsp=".$_GET["codEsp"]."&amp;krd={$krd}\"  target=\"detallesSec\" >".$fila['RADICADOS']."</a>";

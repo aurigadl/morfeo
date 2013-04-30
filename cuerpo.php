@@ -89,7 +89,7 @@ if($orden_cambio==1){
             $whereFiltro .= "and ( $busqRadicadosTmp ) ";
         }    
     }
-    $linkPagina     = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo&carpeta=$carpeta";
+    $linkPagina     = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo&carpeta=$carpeta&tipo_carp=$tipo_carp&busqRadicados=$busqRadicados&nomcarpeta=$nomcarpeta";
     $encabezado     = session_name()."=".session_id()."&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion&carpeta=$carpeta&tipo_carp=$tipo_carp&adodb_next_page=1&busqRadicados=$busqRadicados&nomcarpeta=$nomcarpeta&agendado=$agendado&orderTipo=$orderTipo&chkCarpeta=$chkCarpeta&orderNo=";
     ?>
   <table width="100%" align="center" cellspacing="1" cellpadding="0" class="borde_tab">

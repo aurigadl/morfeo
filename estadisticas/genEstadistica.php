@@ -41,6 +41,10 @@ if($_GET["genDetalle"])   $genDetalle=$_GET["genDetalle"];
 if($_GET["generarOrfeo"]) $generarOrfeo=$_GET["generarOrfeo"];
 if($_GET["dependencia_busqOri"]) $dependencia_busqOri=$_GET["dependencia_busqOri"];
 
+if($_GET["tipoDocumento"]) $tipoDocumentos=$_GET["tipoDocumento"];
+
+if($_GET["tipoDocumentos"]) $tipoDocumentos=$_GET["tipoDocumentos"];
+
 if(!$tipoEstadistica) $tipoEstadistica = $_SESSION["tipoEstadistica"];
 
 
@@ -65,10 +69,10 @@ if(!$db){
 
 	$objUsuario = new Usuario($db);
 	
-	$datosaenviar = "fechaf=$fechaf&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&condiRep=$condiRep"; 
+	$datosaenviar = "fechaf=$fechaf&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&codUs=$codUs&fecSel=$fecSel&condiRep=$condiRep&tipoDocumentos=$tipoDocumentos"; 
 
 }
-$datosaenviar = "fechaf=$fechaf&genDetalle=$genDetalle&tipoEstadistica=".$_GET['tipoEstadistica']."&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&condiRep=$condiRep"; 
+$datosaenviar = "fechaf=$fechaf&genDetalle=$genDetalle&tipoEstadistica=".$_GET['tipoEstadistica']."&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&codUs=$codUs&fecSel=$fecSel&condiRep=$condiRep&tipoDocumentos=$tipoDocumentos"; 
 
 $seguridad =",R.SGD_SPUB_CODIGO,B.CODI_NIVEL as  USUA_NIVEL";
 $whereTipoRadicado = "";
@@ -105,42 +109,21 @@ if($_GET["codus"])
 	}
 
 //Ajuste por seleccion multiple
-$tipoDocumentos=$_GET["tipoDocumento"]; 
-//var_dump ($tipoDocumentos);
-$lista_tipos = '(';
-if (count($tipoDocumentos) > 1)
-{
-for ($i=0;$i<count($tipoDocumentos);$i++)    
-{     
- $lista_tipos .= $tipoDocumentos[$i] . ',';
-}
-   $lista_tipos .= '9999)';
-} else
-{
- if (count($tipoDocumentos) == 1)
-  $lista_tipos .= $tipoDocumentos[0] . ')';
- else
-   $lista_tipos =  '()';
-}
- 
-//echo "<br> Eligieron " . $lista_tipos; 
-if($lista_tipos != '()' and ($lista_tipos!='(9999)' and $lista_tipos!='(9998)' and $lista_tipos!='(9997)'))
+//$tipoDocumentos=lista de tipos documentales seleccionados
+$tipoDocumentos = implode(",", $tipoDocumento);
+       if(!empty($tipoDocumentos) and $tipoDocumentos!='9999' and $tipoDocumentos!='9998' and $tipoDocumentos!='9997')
 	{
-		$whereTipoRadicado.=" AND t.SGD_TPR_CODIGO in $lista_tipos ";
-	}elseif ($lista_tipos=="(9997)")	
+		$whereTipoRadicado.=" AND t.SGD_TPR_CODIGO in ( ". $tipoDocumentos . ")";
+	}elseif ($tipoDocumentos=="9997")	
 	{
 		$whereTipoRadicado.=" AND t.SGD_TPR_CODIGO = 0 ";
 	}
-        //echo "CONDICION ES " .$whereTipoRadicado;
-
 	include_once($ruta_raiz."/include/query/busqueda/busquedaPiloto1.php");
 	
 	$whereDependencia = "AND DEPE_CODI=$dependencia_busq";
 	if($dependencia_busq == "99999"){
 		$whereDependencia = "";
 	}
-
-
 
 switch($tipoEstadistica)
 	{
@@ -226,6 +209,7 @@ switch($tipoEstadistica)
 	  break;
         case "18";
 	  include "$ruta_raiz/include/query/estadisticas/consulta018.php";
+           $titulo="Seguimiento a Tramites";
 	  $generar = "ok";
 	  break;
     }
