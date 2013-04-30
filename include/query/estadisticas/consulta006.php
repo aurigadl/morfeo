@@ -27,6 +27,12 @@ if(!$orno) $orno=1;
    * @var string
    * @access public
    */
+
+
+if($_GET["tipoDocumentos"]) $tipoDocumentos=$_GET["tipoDocumentos"];
+
+$whereTipoDocumento = "";
+
 switch($db->driver)
 {
 	case 'oracle':
@@ -38,7 +44,7 @@ switch($db->driver)
 			{	$condicionE = "	AND b.DEPE_CODI=$dependencia_busq AND r.RADI_DEPE_ACTU=$dependencia_busq ";	
                         }
 			
-			if($tipoDocumento=='9999')
+			if($tipoDocumentos=='9999')
 			{
 				$queryE = "SELECT  b.USUA_NOMB USUARIO,b.DEPE_CODI HID_DEPE_USUA,
 			 						count(r.RADI_NUME_RADI) RADICADOS
@@ -52,7 +58,8 @@ switch($db->driver)
 			else
 			{
 				$queryE = "SELECT  b.USUA_NOMB USUARIO, t.SGD_TPR_DESCRIP TIPO_DOCUMENTO, 
-								count(r.RADI_NUME_RADI) RADICADOS, MIN(b.USUA_CODI)	HID_COD_USUARIO, 
+								count(r.RADI_NUME_RADI) RADICADOS, MIN(b.USUA_CODI) HID_COD_USUARIO,
+                                                                MIN(b.depe_codi) as HID_DEPE_USUA 
 								MIN(SGD_TPR_CODIGO) HID_TPR_CODIGO
 							FROM RADICADO r, USUARIO b, SGD_TPR_TPDCUMENTO t
 							WHERE 
@@ -67,9 +74,13 @@ switch($db->driver)
 			/** CONSULTA PARA VER DETALLES 
 	 		*/
 			$condicionE = " AND b.USUA_CODI= $codUs  AND b.depe_codi = $depeUs ";
-
-			if($tipoDocumento=='9998')
-			{	$condicionE .= " AND t.SGD_TPR_CODIGO = $tipoDOCumento ";	}
+			if(!empty($tipoDocumentos) and $tipoDocumentos!='9999' and $tipoDocumentos!='9998' and $tipoDocumentos!='9997')
+			  {
+			       $condicionE .= " AND t.SGD_TPR_CODIGO in ( ". $tipoDocumentos . ")";
+			  }elseif ($tipoDocumentos=="9998")	
+			    {
+			      $condicionE .= " AND t.SGD_TPR_CODIGO = $tipoDOCumento ";
+			  }
 			$queryEDetalle = "SELECT DISTINCT
 								r.RADI_NUME_RADI RADICADO,
 								TO_CHAR(r.RADI_FECH_RADI, 'DD/MM/YYYY HH24:MI:SS') FECHA_RADICACION,
@@ -108,7 +119,7 @@ switch($db->driver)
 			if ( $dependencia_busq != 99999)
 			{	$condicionE = "	AND b.DEPE_CODI=$dependencia_busq AND r.RADI_DEPE_ACTU=$dependencia_busq ";
 			}
-			if($tipoDocumento=='9999')
+			if($tipoDocumentos=='9999')
 			{	$queryE = "SELECT  b.USUA_NOMB AS USUARIO, b.DEPE_CODI AS HID_DEPE_USUA,
 								count($radi_nume_radi) AS RADICADOS, 
 								MIN(b.USUA_CODI) AS HID_COD_USUARIO
@@ -136,8 +147,12 @@ switch($db->driver)
 			 */
 		
 			if (!is_null($codUs))	$condicionE = " AND b.USUA_CODI= $codUs AND b.depe_codi = $depeUs";
-			if (!is_null($tipoDOCumento))
-			{	$condicionE .= " AND t.SGD_TPR_CODIGO = $tipoDOCumento ";
+			if(!empty($tipoDocumentos) and $tipoDocumentos!='9999' and $tipoDocumentos!='9998' and $tipoDocumentos!='9997')
+			  {
+			       $condicionE .= " AND t.SGD_TPR_CODIGO in ( ". $tipoDocumentos . ")";
+			}elseif ($tipoDocumentos=="9998")	
+			  {
+			    $condicionE .= " AND t.SGD_TPR_CODIGO = $tipoDOCumento ";
 			}
 			$queryEDetalle = "SELECT DISTINCT $radi_nume_radi AS RADICADO,
 									t.SGD_TPR_DESCRIP AS TIPO_DE_DOCUMENTO, 
@@ -161,12 +176,13 @@ switch($db->driver)
 			$queryEDetalle .= $condicionE . $orderE;
 		}break;
 	case 'postgres':	
-	{	if ( $dependencia_busq != 99999)
+	{	
+               if ( $dependencia_busq != 99999)
 		{	$condicionE = "	b.DEPE_CODI=$dependencia_busq AND r.RADI_DEPE_ACTU=$dependencia_busq ";
 		}else {
 			$condicionE = "	r.radi_depe_actu=b.depe_codi";	
 		}
-		if($tipoDocumento=='9999')
+		if($tipoDocumentos=='9999')
 		{	
 				$queryE = "SELECT  b.USUA_NOMB 	as USUARIO,b.DEPE_CODI HID_DEPE_USUA,
 				count($radi_nume_radi) 			as RADICADOS
@@ -185,7 +201,8 @@ switch($db->driver)
 			$queryE = "SELECT b.USUA_NOMB 		as USUARIO,
 						t.SGD_TPR_DESCRIP 		as TIPO_DOCUMENTO,
 						count($radi_nume_radi) 	as RADICADOS,
-						MIN(b.USUA_CODI) 		as HID_COD_USUARIO, 
+						MIN(b.USUA_CODI) 		as HID_COD_USUARIO,
+                                                MIN(b.depe_codi) as HID_DEPE_USUA ,
 						MIN(SGD_TPR_CODIGO) 	as HID_TPR_CODIGO			
 			FROM RADICADO r 
 			INNER JOIN USUARIO b ON r.RADI_USUA_ACTU=b.USUA_CODI AND r.RADI_DEPE_ACTU=b.DEPE_CODI  
@@ -198,10 +215,15 @@ switch($db->driver)
 		*/
 
 		if (!is_null($codUs))	$condicionE .= " and b.depe_codi = r.radi_depe_actu ";
-		if (!is_null($tipoDOCumento))
-		{	$condicionE .= " AND t.SGD_TPR_CODIGO = $tipoDOCumento ";
-		}
-    $redondeo="date_part('days', r.radi_fech_radi-".$db->conn->sysTimeStamp.")+floor(t.sgd_tpr_termino * 7/5)+(select count(1) from sgd_noh_nohabiles where NOH_FECHA between r.radi_fech_radi and ".$db->conn->sysTimeStamp.")";
+		if(!empty($tipoDocumentos) and $tipoDocumentos!='9999' and $tipoDocumentos!='9998' and $tipoDocumentos!='9997')
+		   {
+		       $condicionE .= " AND t.SGD_TPR_CODIGO in ( ". $tipoDocumentos . ")";
+		   }elseif ($tipoDocumentos=="9998")	
+		    {
+		      $condicionE .= " AND t.SGD_TPR_CODIGO = $tipoDOCumento ";
+		   } 
+                  
+        $redondeo="date_part('days', r.radi_fech_radi-".$db->conn->sysTimeStamp.")+floor(t.sgd_tpr_termino * 7/5)+(select count(1) from sgd_noh_nohabiles where NOH_FECHA between r.radi_fech_radi and ".$db->conn->sysTimeStamp.")";
 	$queryEDetalle = "SELECT DISTINCT 
 			$radi_nume_radi	as RADICADO
 			,t.SGD_TPR_DESCRIP 			as TIPO_DE_DOCUMENTO
@@ -227,7 +249,6 @@ switch($db->driver)
                          */ 
                        $queryETodosDetalle = $queryEDetalle . $orderE;
                        $queryEDetalle .= $condicionUS . $orderE;
-                 //echo  $queryETodosDetalle;
 		}break;
 }
 		
@@ -237,7 +258,7 @@ if(isset($_GET['genDetalle'])&& $_GET['denDetalle']=1)
 }
 else
 {
-	$titulos=($tipoDocumento=='9999')?array("#","1#Usuario","2#Radicados"):array("#","1#Usuario","3#TIPO DE DOCUMENTO","2#Radicados");
+	$titulos=($tipoDocumentos=='9999')?array("#","1#Usuario","2#Radicados"):array("#","1#Usuario","3#TIPO DE DOCUMENTO","2#Radicados");
 }
 		
 function pintarEstadistica($fila,$indice,$numColumna)
@@ -259,14 +280,14 @@ function pintarEstadistica($fila,$indice,$numColumna)
 	}else
 	{
 	 $dependecia=isset($fila['HID_DEPE_USUA'])?$fila['HID_DEPE_USUA']:$_GET['dependencia_busq'];
-	 $datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;usua_doc=".urlencode($fila['HID_USUA_DOC'])."&amp;depeUs=".$fila['HID_DEPE_USUA']."&amp;dependencia_busq=".$dependecia."&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumento=".$_GET['tipoDocumento']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;";
+	 $datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;usua_doc=".urlencode($fila['HID_USUA_DOC'])."&amp;depeUs=".$fila['HID_DEPE_USUA']."&amp;dependencia_busq=".$dependecia."&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumentos=".$GLOBALS['tipoDocumentos']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;tipoDOCumento=".$fila['HID_TPR_CODIGO'];
 	 $datosEnvioDetalle=(isset($_GET['usActivos']))?$datosEnvioDetalle."&amp;usActivos=".$_GET['usActivos']:$datosEnvioDetalle;
 	 $salida="<a href=\"genEstadistica.php?{$datosEnvioDetalle}&amp;krd={$krd} \"  target=\"detallesSec\" >".$fila['RADICADOS']."</a>";
 	}
 	break;
 	case 3:
 	 $dependecia=isset($fila['HID_DEPE_USUA'])?$fila['HID_DEPE_USUA']:$_GET['dependencia_busq'];
-	 $datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;usua_doc=".urlencode($fila['HID_USUA_DOC'])."&amp;depeUs=".$fila['HID_DEPE_USUA']."&amp;dependencia_busq=".$dependecia."&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumento=".$_GET['tipoDocumento']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;tipoDOCumento=".$fila['HID_TPR_CODIGO'];
+	 $datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;usua_doc=".urlencode($fila['HID_USUA_DOC'])."&amp;depeUs=".$fila['HID_DEPE_USUA']."&amp;dependencia_busq=".$dependecia."&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumentos=".$GLOBALS['tipoDocumentos']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;tipoDOCumento=".$fila['HID_TPR_CODIGO'];
 	$datosEnvioDetalle=(isset($_GET['usActivos']))?$datosEnvioDetalle."&amp;usActivos=".$_GET['usActivos']:$datosEnvioDetalle;
 	$salida="<a href=\"genEstadistica.php?{$datosEnvioDetalle}&amp;krd={$krd}\"  target=\"detallesSec\" >".$fila['RADICADOS']."</a>";
 	break;

@@ -29,6 +29,8 @@ if($_GET["genDetalle"]) $genDetalle             = $_GET["genDetalle"];
 if($_GET["generarOrfeo"]) $generarOrfeo         = $_GET["generarOrfeo"];
 if($_GET["dependencia_busqOri"]) $dependencia_busqOri = $_GET["dependencia_busqOri"];
 
+
+
 $dependencia           = $_SESSION["dependencia"];
 $usua_doc              = $_SESSION["usua_doc"];
 $codusuario            = $_SESSION["codusuario"];
@@ -142,7 +144,6 @@ $objUsuario = new Usuario($db);
 <body bgcolor="#ffffff" onLoad="comboUsuarioDependencia(document.formulario,document.formulario.elements['dependencia_busq'].value,'codus');" topmargin="0">
 <div id="spiffycalendar" class="text"></div>
 <form name="formulario"  method="GET" action='./vistaFormConsulta.php?<?=session_name()."=".trim(session_id())."&fechah=$fechah"?>'>
-
 <table width="100%"  border="0" cellpadding="0" cellspacing="5" class="borde_tab">
   <tr>
     <td colspan="2" class="titulos4">POR RADICADOS  -  <A href='vistaFormProc.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>' style="color: #FFFFCC">POR PROCESOS </A> </td>
@@ -219,7 +220,7 @@ if ($tipoEstadistica==18)
     <select name=dependencia_busq  class="select"  onChange="formulario.submit();">
     <?php
 
-      $encabezado = "&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&"; 
+      $encabezado = "&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&codUs=$codUs&fecSel=$fecSel&"; 
       if($usua_perm_estadistica>1)  {
 	if($dependencia_busq==99999)  {
 	  $datoss= " selected ";
@@ -355,8 +356,8 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
 		//echo "--->".$isqlus;
 		$rs1=$db->query($isqlTD);
 		$datoss = "";
-
-		if($tipoDocumento!='9998'){
+                
+		if($tipoDocumento[0]!='9998'){
 			$datoss= " selected ";
 			$selecUs = " b.USUA_NOMB USUARIO, ";
 			$groupUs = " b.USUA_NOMB, ";
@@ -364,27 +365,26 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
 
 		$datoss = "";
 
-		if($tipoDocumento=='9999'){
+		if($tipoDocumento[0]=='9999'){
                         $datoss= " selected ";
                 }
                 ?>
                 <option value='9999'  <?=$datoss?>>-- No Agrupar Por Tipo de Documento</option>
                 <?   $datoss = "";
 
-
-		if($tipoDocumento=='9997'){
-			$datoss= " selected ";
-		}
 		if($tipoEstadistica==6)
 		{
-			if($tipoDocumento=='9998'){
+			if($tipoDocumento[0]=='9998'){
                         	$datoss= " selected ";
                 	}
 
 		?>
 			<option value='9998'  <?=$datoss?>>-- Agrupar Por Tipo de Documento</option>
-		<?
+		 <?   $datoss = "";
 		}
+                if($tipoDocumento[0]=='9997'){
+                        $datoss= " selected ";
+                }
 		?>
 
 		<option value='9997'  <?=$datoss?>>-- Tipos Documentales No Definidos</option>
@@ -394,10 +394,17 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
 			$vecDeps[]=$codigo;
 			$selNombre = $rs1->fields["SGD_TPR_DESCRIP"];
 			$datoss="";
-		if($tipoDocumento==$codigo){
+                  if (count($tipoDocumento) > 0 and ($tipoDocumento[0] !='9997' and $tipoDocumento[0] !='9998' and $tipoDocumento[0] !='9999'))
+                   {
+                   for ($i=0;$i<count($tipoDocumento);$i++) 
+                    {   
+	  	     if($tipoDocumento[$i]==$codigo){
 				$datoss= " selected ";
 			}
-			echo "<option value=$codigo  $datoss>$selNombre</option>";		
+                       }
+                    }
+			echo "<option value=$codigo  $datoss>$selNombre</option>";
+		
 			$rs1->MoveNext();
 		}while(!$rs1->EOF);
 		?>
@@ -470,7 +477,6 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
 </form>
 <?php
 $datosaenviar = "fechaf=$fechaf&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento";
-
 
 //
 if (isset($generarOrfeo) && $tipoEstadistica == 12) {
