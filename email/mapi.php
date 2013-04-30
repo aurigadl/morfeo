@@ -5,7 +5,7 @@ require_once("class_http.php");
 require_once("class_xml.php");
 
 // Change these values for your Exchange Server.
-$exchange_server = "https://ilpostimo.dnp.gov.co/owa";
+$exchange_server = "https://ilpostimo.correlibre.org/owa";
 $exchange_username = "dnp\jlosada";
 $exchange_password = "Jhlc11726";
 

@@ -18,7 +18,7 @@ $db->SetFetchMode(ADODB_FETCH_ASSOC);
 //$db->charSet="UTF-8";<
 if($db->Connect($myServer, $myUser, $myPass, 'p_correspondencia')==false){echo "<br>No se conecto a Melba";} else echo("<br>Si se conecto a Melba<br>");
 $usuario = "postgres";
-$contrasena= "0rfe0gplMSalud";
+$contrasena= "0rfe0gplMcorrelibre";
 $servidor = "172.17.21.31:5432";
 $base= "orfeoMelba"; //This would by the Database Name
 include('../include/class/adodb/adodb.inc.php'); 

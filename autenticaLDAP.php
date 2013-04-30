@@ -17,7 +17,7 @@ function checkldapuser($username,$password,$ldap_server){
 
    // busca el usuario
    if (($res_id = ldap_search( $connect,
-	"OU=usuarios,OU=MINSALUD,DC=minproteccionsocial,DC=gov,DC=co",
+	"OU=usuarios,OU=correlibre,DC=correlibre,DC=gov,DC=co",
         "(cn=jrolon)")) == false) {
     	$mensajeError = "No encontrado el usuario en el árbol LDAP";
      return $mensajeError;
@@ -43,12 +43,12 @@ function checkldapuser($username,$password,$ldap_server){
    //$username=$_SESSION[""];
    //$password=$drd;
    $username = strtolower($username);
-   $user_dn="cn=$username,OU=usuarios,OU=MINSALUD,DC=minproteccionsocial,DC=gov,DC=co";
-   $user_dn = "$username@minproteccionsocial.gov.co";
+   $user_dn="cn=$username,OU=usuarios,OU=correlibre,DC=correlibre,DC=gov,DC=co";
+   $user_dn = "$username@correlibre.gov.co";
    if (($link_id = ldap_bind($connect, $user_dn, $password)) == false) {
 
-      $user_dn="cn=$username,OU=Directivos,OU=MINSALUD,DC=minproteccionsocial,DC=gov,DC=co";
-      $user_dn = "$username@minsalud.gov.co";      
+      $user_dn="cn=$username,OU=Directivos,OU=correlibre,DC=correlibre,DC=gov,DC=co";
+      $user_dn = "$username@correlibre.org";      
       if (($link_id = ldap_bind($connect, $user_dn, $password)) == false) {
        error_reporting( 0 );
        $mensajeError = "USUARIO O CONTRASE&Ntilde;A INCORRECTOS - D";
@@ -71,9 +71,9 @@ function checkldapuser($username,$password,$ldap_server){
 
 /**
 
-DC=minproteccionsocial,DC=gov,DC=co
--rama donde estan los usuarios del Directorio Activo                         OU=usuarios,OU=MINSALUD,DC=minproteccionsocial,DC=gov,DC=co
-OU=Directivos,OU=MINSALUD,DC=minproteccionsocial,DC=gov,DC=co
+DC=correlibre,DC=gov,DC=co
+-rama donde estan los usuarios del Directorio Activo                         OU=usuarios,OU=correlibre,DC=correlibre,DC=gov,DC=co
+OU=Directivos,OU=correlibre,DC=correlibre,DC=gov,DC=co
 
 */
 ?>

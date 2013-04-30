@@ -104,7 +104,7 @@ $datos_enviar = session_name()."=".session_id();
 		  Anulaciones
           </a></td>
           <?
-             if (strtoupper($entidad) == 'MINSALUD'){
+             if (strtoupper($entidad) == 'correlibre'){
               ?>
           <td class='listado2' height="25">
 	       <a href='../reportes/generar_listado_entrega.php?<?=$datos_enviar?>&estado_sal=4&krd=<?=$krd?>' class='vinculos'>

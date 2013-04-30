@@ -50,7 +50,7 @@ include_once 'Net/POP3.php';
 
 $user='cgonzalezj';
 $pass='cg12345';
-$host='minps38.minproteccionsocial.gov.co';
+$host='minps38.correlibre.gov.co';
 $port="110";
 
 // you can create a file called passwords.php and store your $user,$pass,$host and $port values in it

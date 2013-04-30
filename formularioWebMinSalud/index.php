@@ -9,5 +9,5 @@ session_start();
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
-include "formularioPQRSMinSaludFineUploader.php";
+include "formularioPQRScorrelibreFineUploader.php";
 ?>

@@ -1,5 +1,5 @@
 <?php
-//$connection = "pop3s://$usuario_mail:$passwdEmail@dnp.gov.co:995/$buzon_mail#$opciones_mail";
+//$connection = "pop3s://$usuario_mail:$passwdEmail@correlibre.org:995/$buzon_mail#$opciones_mail";
     $imap = imap_open("{poseidon.dnp.ad:995/pop3/ssl/novalidate-cert}INBOX", "jlosada", "Jhlc11726"); 
     $message_count = imap_num_msg($imap);
 		echo "Numero de Mensajes -->".$message_count;

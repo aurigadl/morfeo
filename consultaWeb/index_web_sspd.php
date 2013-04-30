@@ -9,7 +9,7 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
  *@autor Jairo Losada - SuperSolidaria
  *@fecha 2009/06
  *Modificado
- *Sebastian Ortiz Vasquez Ministerio de Salud y Proteccion Social 2012
+ *Sebastian Ortiz VasquezcorrelibreSocial 2012
  */
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

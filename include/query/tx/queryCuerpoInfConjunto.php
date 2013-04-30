@@ -2,7 +2,7 @@
 /**
   * Modificado Postgres Por Correlibre.org 2011-12
   * @autor Jairo Losada Correlibre.org
-  *        Modificado Ministerio de Salud 2012
+  *        Modificado correlibre
   * @licencia gpl v3
   *
   */

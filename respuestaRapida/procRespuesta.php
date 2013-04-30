@@ -543,7 +543,7 @@
 			// Position at 15 mm from bottom
 			$this->SetY(-20);
 			// Page number
-            $txt = "<div align='center'> Carrera 13 No. 32- 76 Bogot&aacute;, D.C., Colombia PBX (57-1) 330 50 00 www.minsalud.gov.co";
+            $txt = "<div align='center'> Carrera 13 No. 32- 76 Bogot&aacute;, D.C., Colombia PBX (57-1) 330 50 00 www.correlibre.org";
             $this->writeHTMLCell($w=0, $h=3, $x='32', $y='', $txt, $border=0, $ln=1, $fill=0, $reseth=true);
 		}
 	}
@@ -667,7 +667,7 @@
 
     $mail->IsSMTP(); // telling the class to use SMTP
     $mail->AddReplyTo($usMailSelect);
-    $mail->SetFrom($emailPQRS, "PQRS Ministerio de Salud");
+    $mail->SetFrom($emailPQRS, "PQRS correlibre");
 
     $mail->Host       = $hostPHPMailer;
     $mail->Port       = $portPHPMailer;
@@ -677,13 +677,13 @@
     $mail->AuthType   = $tipoAutenticacion;
     $mail->Username   = $usuarioEmailPQRS;   // SMTP account username
     $mail->Password   = $passwordEmailPQRS; // SMTP account password
-    $mail->Subject    = "Respuesta al radicado " . $numRadicadoPadre . " Ministerio de Salud y Proteccion ";
+    $mail->Subject    = "Respuesta al radicado " . $numRadicadoPadre . "correlibre";
     $mail->AltBody    = "Para ver el mensaje, por favor use un visor de E-mail compatible!";
 
     //$mail->From       = $usMailSelect;
     //$mail->FromName   = $usuario;
 
-    $asu .= "<hr>Sistema de gestion Orfeo. http://www.minsalud.gov.co";
+    $asu .= "<hr>Sistema de gestion Orfeo. http://www.correlibre.org";
     $mail->MsgHTML($asu);
 
     $intentos=1;
