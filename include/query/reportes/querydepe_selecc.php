@@ -23,7 +23,7 @@
                 // Modificado el 20 nov 2012 para poder determinar la dependencia que genero el radicado en el listado de devoluciones
                  
                   $where_depe = "and cast(".$db->conn->substr."(cast(a.radi_nume_sal as varchar(20)), 5, $ln) as integer) in ($lista_depcod)";
-                  if ($_SESSION["entidad"] = 'MINSALUD' )
+                  if ($_SESSION["entidad"] = 'correlibre' )
                      {
                        //$lista_depcod  = str_replace("1310","1400",$lista_depcod);
                        $lista_depcod  = str_replace("1400","1310,1400",$lista_depcod);

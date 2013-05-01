@@ -42,7 +42,7 @@
 		    if (confirm('Seguro de cerrar sesion ?')){
                         <?$fechah = date("Ymdhms"); ?>
                         document.form_cerrar.submit;
-                        url="http://www.minsalud.gov.co";	              
+                        url="http://www.correlibre.org";	              
 			window.location.href=url;
 		    }
 		}

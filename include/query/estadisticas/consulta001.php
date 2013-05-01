@@ -32,12 +32,20 @@ $tmp_substr = $db->conn->substr;
 
 $ln=$_SESSION["digitosDependencia"];
 
+if($_GET["tipoDocumentos"]) $tipoDocumentos=$_GET["tipoDocumentos"];
 
+$whereTipoDocumento = "";
+if(!empty($tipoDocumentos) and $tipoDocumentos!='9999' and $tipoDocumentos!='9998' and $tipoDocumentos!='9997')
+	{
+		$whereTipoDocumento.=" AND t.SGD_TPR_CODIGO in ( ". $tipoDocumentos . ")";
+	}elseif ($tipoDocumentos=="9997")	
+	{
+		$whereTipoDocumento.=" AND t.SGD_TPR_CODIGO = 0 ";
+	}
 if(!empty($depeUs)){
     $condicionDep = "AND b.depe_codi = $depeUs";
     $condicionE   = "AND b.USUA_CODI = $codUs $condicionDep ";
 }
-
 
 
 switch($db->driver)
@@ -45,7 +53,7 @@ switch($db->driver)
 	case 'mssql':
 	case 'postgresql':	
 	case 'postgres':	
-	{	if($tipoDocumento=='9999')
+	{	if($tipoDocumentos=='9999')
 		{ $queryE = "SELECT b.USUA_NOMB as USUARIO, count(1) as RADICADOS, MIN(USUA_CODI) as HID_COD_USUARIO
 		, MIN(b.depe_codi) as HID_DEPE_USUA 
 		FROM RADICADO r 
@@ -64,6 +72,7 @@ switch($db->driver)
 						$whereDependencia $whereActivos $whereTipoRadicado 
 					GROUP BY b.USUA_NOMB,t.SGD_TPR_DESCRIP ORDER BY $orno $ascdesc";		
 		}
+                
  		/** CONSULTA PARA VER DETALLES 
          * Se incluye una nueva restriccion para que en el detalle unicamente 
          * muestre la direccion remitente/destinatario
@@ -93,11 +102,12 @@ switch($db->driver)
 			r.radi_usua_actu=ua.usua_codi AND
 			r.RADI_DEPE_RADI=df.DEPE_CODI AND	
             ".$db->conn->SQLDate('Y/m/d', 'r.radi_fech_radi')." BETWEEN '$fecha_ini' AND '$fecha_fin'  
-            $whereTipoRadicado ";
+            $whereTipoRadicado $whereTipoDocumento ";
 		$orderE = "	ORDER BY $orno $ascdesc";
 
 		$queryETodosDetalle = $queryEDetalle . $whereDependencia . $orderE;
 		$queryEDetalle .= $condicionE . $orderE;
+
                  
 	}break;
 	case 'oracle':
@@ -105,7 +115,7 @@ switch($db->driver)
 	case 'oci805':
 	case 'ocipo':
 	{
-		if($tipoDocumento=='9999')
+		if($tipoDocumentos=='9999')
 		{
 			$queryE = 
 			"SELECT b.USUA_NOMB USUARIO, 
@@ -166,7 +176,7 @@ switch($db->driver)
 			AND r.tdoc_codi=t.SGD_TPR_CODIGO 
 			AND r.depe_codi=b.depe_codi
 			AND TO_CHAR(r.radi_fech_radi,'yyyy/mm/dd') BETWEEN '$fecha_ini' AND '$fecha_fin'
-		$whereTipoRadicado";
+		$whereTipoRadicado $whereTipoDocumento";
 		$orderE = "	ORDER BY $orno $ascdesc";			
 
 		/** CONSULTA PARA VER TODOS LOS DETALLES 
@@ -176,7 +186,6 @@ switch($db->driver)
                 
 	}break;
 }
-
 if(isset($_GET['genDetalle'])&& $_GET['denDetalle']=1){
 	$titulos=array("#","1#RADICADO","2#FECHA RADICADO","3#TIPO DOCUMENTO","4#ASUNTO","5#NO HOJAS","6#USUARIO","7#REMITENTE","8#DEPENDENCIA_INICIAL","9#DEPENDENCIA_ACTUAL","10#USUARIO ACTUAL","11#USUARIO ANTERIOR");
 }
@@ -185,7 +194,7 @@ else
 		
 function pintarEstadistica($fila,$indice,$numColumna)
 {
-	global $ruta_raiz,$_POST,$_GET,$krd,$usua_doc;
+	global $ruta_raiz,$_POST,$_GET,$krd,$usua_doc,$tipoDocumentos;
 	$salida="";
 	switch ($numColumna)
 	{
@@ -196,7 +205,7 @@ function pintarEstadistica($fila,$indice,$numColumna)
 		$salida=$fila['USUARIO'];
 		break;
 	case 2:
-	$datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;dependencia_busq=".$_GET['dependencia_busq']."&amp;usua_doc=$usua_doc&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumento=".$_GET['tipoDocumento']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;depeUs=".$fila['HID_DEPE_USUA'];
+	$datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;dependencia_busq=".$_GET['dependencia_busq']."&amp;usua_doc=$usua_doc&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumentos=".$GLOBALS['tipoDocumentos']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;depeUs=".$fila['HID_DEPE_USUA'];
 	$datosEnvioDetalle=(isset($_GET['usActivos']))?$datosEnvioDetalle."&amp;usActivos=".$_GET['usActivos']:$datosEnvioDetalle;
 	$salida="<a href=\"genEstadistica.php?{$datosEnvioDetalle}&amp;krd={$krd}\"  target=\"detallesSec\" >".$fila['RADICADOS']."</a>";
 	break;

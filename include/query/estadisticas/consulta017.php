@@ -27,6 +27,18 @@ if(!$orno) $orno=2;
    * @var string
    * @access public
    */
+
+
+if($_GET["tipoDocumentos"]) $tipoDocumentos=$_GET["tipoDocumentos"];
+
+$whereTipoDocumento = "";
+if(!empty($tipoDocumentos) and $tipoDocumentos!='9999' and $tipoDocumentos!='9998' and $tipoDocumentos!='9997')
+	{
+		$whereTipoDocumento.=" AND t.SGD_TPR_CODIGO in ( ". $tipoDocumentos . ")";
+	}elseif ($tipoDocumentos=="9997")	
+	{
+		$whereTipoDocumento.=" AND t.SGD_TPR_CODIGO = 0 ";
+	}
 $whereTipoRadicado  = str_replace("A.","r.",$whereTipoRadicado);
 $whereTipoRadicado  = str_replace("a.","r.",$whereTipoRadicado);
 switch($db->driver)
@@ -113,7 +125,7 @@ $queryE = "
           AND h.SGD_TTR_CODIGO in(2,9,12,16)
 
           AND TO_CHAR(r.radi_fech_radi,'yyyy/mm/dd') BETWEEN '$fecha_ini'  AND '$fecha_fin' 
-        $whereTipoRadicado ";
+        $whereTipoRadicado $whereTipoDocumento";
     if($codEsp) $queryEDetalle .= " AND r.EESP_CODI = $codEsp ";
     $condicionUS = " AND b.USUA_CODI=$codUs
                      AND b.depe_codi = $depeUs "; 
@@ -124,6 +136,7 @@ $queryE = "
     $queryEDetalle .= $condicionUS . $orderE; 
     }break;
 }
+
 if(isset($_GET['genDetalle'])&& $_GET['denDetalle']=1)
   $titulos=array("#","1#RADICADO","2#USUARIO","3#ASUNTO","4#REF","5#FECHA RADICACION","6#FECHA DIGITALIZACION","7#RADICADO_SALIDA","8#FECHA_ANEX_SALIDA","9#FECHA ENVIO","10#TIPO DOCUMENTO","11#TERMINO","12#DIAS DE RESPUESTA","13#DIAS A ENVIO","14#DIAS DESDE RADICACION","15#DATO_1","16#MUNICIPIO_1","17#DATO_2","18#ANEX_CREADOR",);
 else    
@@ -142,7 +155,7 @@ function pintarEstadistica($fila,$indice,$numColumna)
       $salida=$fila['USUARIO'];
       break;
     case 2:
-      $datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;usua_doc=".urlencode($fila['HID_USUA_DOC'])."&amp;dependencia_busq=".$_GET['dependencia_busq']."&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumento=".$_GET['tipoDocumento']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;depeUs=".$fila['HID_DEPE_USUA'];
+      $datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;usua_doc=".urlencode($fila['HID_USUA_DOC'])."&amp;dependencia_busq=".$_GET['dependencia_busq']."&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumentos=".$GLOBALS['tipoDocumentos']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;depeUs=".$fila['HID_DEPE_USUA'];
       $datosEnvioDetalle=(isset($_GET['usActivos']))?$datosEnvioDetalle."&codExp=$codExp&amp;usActivos=".$_GET['usActivos']:$datosEnvioDetalle;
       $salida="<a href=\"genEstadistica.php?{$datosEnvioDetalle}&codEsp=".$_GET["codEsp"]."&amp;krd={$krd}\"  target=\"detallesSec\" >".$fila['RADICADOS']."</a>";
       break;

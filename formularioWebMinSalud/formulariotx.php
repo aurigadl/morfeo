@@ -316,7 +316,7 @@ $pdf->Text(110,41,textoPDF(date('d')." - ".date('m')." - ".date('Y')." ".date('h
 $pdf->SetFont('Arial','',8);
 $pdf->Text(110,45,textoPDF("Destino: ". $depeRadicaFormularioWeb . " " . substr($depeNomb, 0,10) ." - Rem/D: ". substr($_SESSION['nombre_remitente'],0,10)." ".substr($_SESSION['apellidos_remitente'],0,10)));
 $pdf->SetFont('Arial','',7);
-$pdf->Text(110,48,textoPDF("Consulte el estado de su trámite en nuestra página web http://www.minsalud.gov.co"));
+$pdf->Text(110,48,textoPDF("Consulte el estado de su trámite en nuestra página web http://www.correlibre.org"));
 $pdf->Text(135,51,textoPDF("Código de verificación: " . $_SESSION['codigoverificacion']));
 //$pdf->Text(110,51,textoPDF(strtoupper($_SESSION['nombre_remitente'])." ".strtoupper($_SESSION['apellidos_remitente'])));
 //$pdf->Text(110,55,$_SESSION['cedula']!='0'?$_SESSION['cedula']:$_SESSION['nit']);
@@ -352,10 +352,10 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $db->conn->Execute($sqlu);
 
 
-    $usMailSelect  = "atencionpqrs@minsalud.gov.co"; 
+    $usMailSelect  = "atencionpqrs@correlibre.org"; 
     $mail->IsSMTP(); // telling the class to use SMTP
     $mail->AddReplyTo($usMailSelect);
-    $mail->SetFrom($usMailSelect,"PQRS MinSalud");
+    $mail->SetFrom($usMailSelect,"PQRS correlibre");
     $mail->Host       = $hostPHPMailer;
     $mail->Port       = $portPHPMailer;
     $mail->SMTPDebug  = "0";  // 1 = errors and messages // 2 = messages only 
@@ -364,13 +364,13 @@ $db->conn->Execute($sqlu);
     $mail->AuthType   = $tipoAutenticacion;
     $mail->Username   = $usuarioEmailPQRS;   // SMTP account username
     $mail->Password   = $passwordEmailPQRS; // SMTP account password
-    $mail->Subject    = "Radicado " .$numeroRadicado . " Ministerio de Salud y Proteccion ";
+    $mail->Subject    = "Radicado " .$numeroRadicado . "correlibre";
     $mail->AltBody    = "Para ver el mensaje, por favor use un visor de E-mail compatible!";
     $url=true;
     $mail->AddAttachment("../bodega/$rutaPdf");
     $mail->AddAddress($_SESSION['email']);
 
-    $asu .= "<hr>Sistema de gestion Orfeo. http://www.minsalud.gov.co";
+    $asu .= "<hr>Sistema de gestion Orfeo. http://www.correlibre.org";
     $mail->MsgHTML("Se adjunta el archivo radicado");
 
     while ((!$exito) && ($intentos < 5) && $_SESSION['email']!="") {
@@ -433,7 +433,7 @@ $db->conn->Execute($sqlu);
 			onclick="window.open('../bodega/<?=$rutaPdf?>')" />
 			<input type="button" name="Cerrar"
 			value="Cerrar"
-			onclick="window.location='http://www.minsalud.gov.co'" />
+			onclick="window.location='http://www.correlibre.org'" />
 	</tr>
 	<tr>
 		<td align="center">&nbsp;</td>

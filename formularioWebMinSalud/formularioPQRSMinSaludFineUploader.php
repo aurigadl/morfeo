@@ -28,8 +28,8 @@ include('./formulario_sql.php');
 include('./captcha/simple-php-captcha.php');
 $_SESSION['captcha_formulario'] = captcha();
 
-//TamaNo mAximo del todos los archivos en bytes 20MB = 20(MB)*1024(KB)*1024(B) =  20971520 bytes
-$max_file_size  = 20971520;
+//TamaNo mAximo del todos los archivos en bytes 10MB = 10(MB)*1024(KB)*1024(B) =  10485760 bytes
+$max_file_size  = 10485760;
 
 if(!isset($isFacebook)){
 	$isFacebook = 0;
@@ -209,7 +209,7 @@ por parte de este Ministerio. Los campos con (<font color="#FF0000">*</font>
 		class="field select maximun" tabindex="11">
 		<option value="0" selected="selected">Seleccione</option>
 		<option value="1">Acerca del Ministerio</option>
-		<option value="2">Salud</option>
+		<option value="2">correlibre</option>
 		<option value="3">Protecci&oacute;n Social</option>
 		<option value="4">Atenci&oacute;n al Ciudadano</option>
 		<option value="5">Centro de Comunicaciones</option>

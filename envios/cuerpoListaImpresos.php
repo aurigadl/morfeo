@@ -71,6 +71,16 @@ function Marcar()
 		alert("Debe marcar un elemento");
 	}
 }
+<!-- Funcion que activa el sistema de marcar o desmarcar todos los check  -->
+function markAll()
+ {
+   if(document.gen_lisDefi.elements['checkAll'].checked)
+     for(i=1;i<document.gen_lisDefi.elements.length;i++)
+	document.gen_lisDefi.elements[i].checked=1;
+       else
+	for(i=1;i<document.gen_lisDefi.elements.length;i++)
+		document.gen_lisDefi.elements[i].checked=0;
+}
 </script>
 
 <?

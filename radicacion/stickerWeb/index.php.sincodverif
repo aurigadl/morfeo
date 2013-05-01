@@ -85,7 +85,7 @@ $noRad = $_REQUEST['nurad'];
                     <?=substr($radi_fech_radi,0,16). " "?> <!--- Us <?=$krd?> &nbsp;&nbsp;&nbsp;&nbsp; C&oacute;d veri: <?=$sgd_rad_codigoverificacion?>--> </b>
                 </span>
                 <!-- Asunto: <?=substr(trim($ra_asun),0,40); ?></b></span>
-                 <p><span><b>Consulte su tr&aacute;mite en orfeo.minsalud.gov.co/consulta.php</b></span></p>-->
+                 <p><span><b>Consulte su tr&aacute;mite en orfeo.correlibre.org/consulta.php</b></span></p>-->
             </td>                     
         </tr>
 <!--

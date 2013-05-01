@@ -61,10 +61,10 @@ switch($db->driver)
 	$whereDependencia = ($dependencia_busq != 99999) ? "AND h.DEPE_CODI = " . $dependencia_busq : '';
 	$whereUsua = ($codus != 0) ? "AND b.USUA_CODI = " . $codus : '';
 	$whereTipoRadicado = ($tipoRadicado != '') ? "AND r.RADI_NUME_RADI LIKE '%" . $tipoRadicado . "'": '';
-	$whereTipoRadicado.= ($tipoDocumento && 
-							($tipoDocumento!='9999' and $tipoDocumento!='9998')) 
-							? "AND s.SGD_TPR_CODIGO = $tipoDocumento " : '';
-	
+	if($lista_tipos != '()' and ($lista_tipos!='(9999)' and $lista_tipos!='(9998)' and $lista_tipos!='(9997)'))
+	   {
+	     $whereTipoRadicado.=" AND s.SGD_TPR_CODIGO in $lista_tipos ";                       
+	    }	
 	$queryE = "SELECT b.USUA_NOMB NOMBRE, COUNT(r.RADI_NUME_RADI) TOTAL_MODIFICADOS,b.USUA_DOC HID_COD_USUARIO
 				  FROM USUARIO b, RADICADO r, HIST_EVENTOS h, DEPENDENCIA d, SGD_TPR_TPDCUMENTO s
 				  WHERE b.USUA_DOC = h.USUA_DOC
@@ -90,9 +90,10 @@ switch($db->driver)
  	$whereDependencia = (isset($dependencia_busq) &&  ($dependencia_busq != 99999)) ?
  							'AND h.DEPE_CODI =' . $dependencia_busq : '';
  	$whereUsua = ($codUs != 0) ? "AND b.USUA_DOC = '" . $codUs . "'" : '';
-	$whereTipoRadicado = ($tipoDocumento && 
-					($tipoDocumento!='9999' and $tipoDocumento!='9998')) 
-					? "AND r.TDOC_CODI = s.SGD_TPR_CODIGO (+) AND s.SGD_TPR_CODIGO = $tipoDocumento " : '';
+        if($lista_tipos != '()' and ($lista_tipos!='(9999)' and $lista_tipos!='(9998)' and $lista_tipos!='(9997)'))
+	  {
+	       $whereTipoRadicado =" AND r.TDOC_CODI = s.SGD_TPR_CODIGO (+) AND s.SGD_TPR_CODIGO in $lista_tipos ";                       
+	    }
 	
 	$queryEDetalle = "SELECT $radiNumeRadi RADICADO, r.RADI_FECH_RADI FECHA_RADICACION,
 		s.SGD_TPR_DESCRIP TIPO_DOCUMENTO, 
@@ -122,9 +123,10 @@ switch($db->driver)
 	$whereDependencia = ($dependencia_busq != 99999) ? "AND h.DEPE_CODI = " . $dependencia_busq : '';
 	$whereUsua = ($codus != 0) ? "AND b.USUA_CODI = " . $codus : '';
 	$whereTipoRadicado = ($tipoRadicado != '') ? "AND r.RADI_NUME_RADI LIKE '%" . $tipoRadicado . "'": '';
-	$whereTipoRadicado.= ($tipoDocumento && 
-							($tipoDocumento!='9999' and $tipoDocumento!='9998')) 
-							? "AND s.SGD_TPR_CODIGO = $tipoDocumento " : '';
+	if($lista_tipos != '()' and ($lista_tipos!='(9999)' and $lista_tipos!='(9998)' and $lista_tipos!='(9997)'))
+	           {
+		       $whereTipoRadicado.=" AND s.SGD_TPR_CODIGO in $lista_tipos ";                       
+		    }
 	
 	$queryE = "SELECT b.USUA_NOMB NOMBRE, COUNT(r.RADI_NUME_RADI) TOTAL_MODIFICADOS
 				  FROM USUARIO b, RADICADO r, HIST_EVENTOS h, DEPENDENCIA d, SGD_TPR_TPDCUMENTO s
@@ -151,9 +153,10 @@ switch($db->driver)
  	$whereDependencia = (isset($dependencia_busq) &&  ($dependencia_busq != 99999)) ?
  							'AND h.DEPE_CODI =' . $dependencia_busq : '';
  	$whereUsua = ($codUs != 0) ? "AND b.USUA_DOC = '" . $codUs . "'" : '';
-	$whereTipoRadicado = ($tipoDocumento && 
-					($tipoDocumento!='9999' and $tipoDocumento!='9998')) 
-					? "AND r.TDOC_CODI = s.SGD_TPR_CODIGO (+) AND s.SGD_TPR_CODIGO = $tipoDocumento " : '';
+        if($lista_tipos != '()' and ($lista_tipos!='(9999)' and $lista_tipos!='(9998)' and $lista_tipos!='(9997)'))
+          {
+             $whereTipoRadicado =" AND r.TDOC_CODI = s.SGD_TPR_CODIGO (+) AND s.SGD_TPR_CODIGO in $lista_tipos ";                       
+	  }
 	
 	$queryEDetalle = "SELECT r.RADI_NUME_RADI RADICADO, r.RADI_FECH_RADI FECHA_RADICACION,
 		s.SGD_TPR_DESCRIP TIPO_DOCUMENTO, 
