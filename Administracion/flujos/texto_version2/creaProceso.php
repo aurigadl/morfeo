@@ -1,7 +1,12 @@
 <?
 session_start();
 
-print_r($_POST);
+/**
+* Pagina de Creacion de Procesos en Orfeo
+* @autor Correlibre 2013 / Jairo Losada 2009-05
+* @licencia GNU/GPL V3
+*/
+
 if($_POST["nombreProceso"]) $nombreProceso = $_POST["nombreProceso"];
 if($_POST["codserie"]) $codserie = $_POST["codserie"];
 if($_POST["tsub"]) $tsub = $_POST["tsub"];
@@ -65,7 +70,7 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler( "$ruta_raiz" );
 if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-$db->conn->debug = true;
+//$db->conn->debug = true;
 //<form name='frmCrear' action='<?=$action
 	$resultadoInsercion = 1;
 //		include "$ruta_raiz/debugger.php";
