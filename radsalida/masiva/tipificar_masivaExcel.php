@@ -2,7 +2,6 @@
 $paramsTRD=$phpsession."&krd=$krd&codiTRD=$codiTRD&tsub=$tsub&codserie=$codserie&tipo=$tipo&dependencia=$dependencia&depe_codi_territorial=$depe_codi_territorial&usua_nomb=$usua_nomb&"
 				."depe_nomb=$depe_nomb&usua_doc=$usua_doc&codusuario=$codusuario";
 
-echo $tipoRad;
 ?>
 <form name = formaTRD action="upload2PorExcel.php?<?=$paramsTRD?>" method="post">
 <table width="70%" align="center" border="0" cellpadding="0" cellspacing="5" class="borde_tab">
