@@ -5,17 +5,6 @@ session_start();
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
 
-// Modificado 2010 aurigadl@gmail.com
-
-/**
-* Paggina Cuerpo.php que muestra el contenido de las Carpetas
-* Creado en la SSPD en el año 2003
-* Se añadio compatibilidad con variables globales en Off
-* @autor Jairo Losada 2009-05
-* @licencia GNU/GPL V 3
-*/
-
-
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
@@ -176,23 +165,31 @@ if($orden_cambio==1){
   $sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_RADI");                
   
   include "$ruta_raiz/include/query/queryCuerpo.php";
+
+  if($usua_doc === '999000999' and $dependencia === '999'){
+      echo "<hr><center><b><span class='alarmas'>No se mostrarn los 
+          radicados para el usuario de salida <br> 
+          realiza las busquedas en el modulo de consultas</b></hr>";
+      die;
+  }
+
   $rs     =$db->conn->Execute($isql);
   if ($rs->EOF and $busqRadicados)  {
-      echo "<hr><center><b><span class='alarmas'>No se encuentra ningun radicado con el criterio de busqueda</span></center></b></hr>";
+      echo "<hr><center><b><span class='alarmas'>
+              No se encuentra ningun radicado con el 
+              criterio de busqueda
+              </span></center></b></hr>";
+  }else{
+      $pager                  = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);
+      $pager->checkAll        = false;
+      $pager->checkTitulo     = true;
+      $pager->toRefLinks      = $linkPagina;
+      $pager->toRefVars       = $encabezado;
+      $pager->descCarpetasGen = $descCarpetasGen;
+      $pager->descCarpetasPer = $descCarpetasPer;
+      if($_GET["adodb_next_page"]) $pager->curr_page = $_GET["adodb_next_page"];
+      $pager->Render($rows_per_page=50,$linkPagina,$checkbox=chkAnulados);
   }
-  else{
-  $pager                  = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);
-  $pager->checkAll        = false;
-  $pager->checkTitulo     = true;
-  $pager->toRefLinks      = $linkPagina;
-  $pager->toRefVars       = $encabezado;
-  $pager->descCarpetasGen = $descCarpetasGen;
-  $pager->descCarpetasPer = $descCarpetasPer;
-  if($_GET["adodb_next_page"]) $pager->curr_page = $_GET["adodb_next_page"];
-  $pager->Render($rows_per_page=50,$linkPagina,$checkbox=chkAnulados);
-
-
-}
   ?>
   </form>    
 </body>
