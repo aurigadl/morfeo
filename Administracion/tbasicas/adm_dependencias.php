@@ -1,6 +1,6 @@
 <?php 
 session_start();
-
+// ini_set("display_errors",1);
     $ruta_raiz = "../..";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
@@ -72,7 +72,7 @@ if ($db)
 					 	$record['DEPE_RAD_TP'.$tmp1] = 'null';
 				}	}
 				$tabla = 'DEPENDENCIA';
-				$sql = $db->conn->GetInsertSQL(&$tabla,$record,true,null);
+				$sql = $db->conn->GetInsertSQL($tabla,$record,true,null);
 				//creamos registro en la tabla dependencia
 				$ok1 = $db->conn->Execute($sql);
 				//Crear estructura en bodega
