@@ -38,7 +38,6 @@ require_once("$ruta_raiz/class_control/Radicado.php");
 require_once("$ruta_raiz/class_control/CombinaError.php");
 
 $db = new ConnectionHandler("$ruta_raiz");	
-//$db->conn->debug=true;
 $objFirma = new  FirmaRadicado($db);
 $radObjeto = new Radicado($db);
 $servBodega = $servWebOrfeo . "/bodega"; 

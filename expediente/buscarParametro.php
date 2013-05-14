@@ -12,7 +12,6 @@ if (!$db)
 	$db = new ConnectionHandler("$ruta_raiz");
 //$db->conn->StartTrans(); 
 $db->conn->SetFetchMode( ADODB_FETCH_ASSOC );
-//$db->conn->debug= true;
 error_reporting(0);
 	// $db->conn->SetFetchMode(ADODB_FETCH_NUM);
     

@@ -158,7 +158,6 @@ src="imagenes/informar_R.gif" border=0 id=informar_r></a><font color="#0000ff">&
 	$dependencianomb=substr($dependencianomb,0,35);
 	$datoPersonal = "(Personal)";
 	$nombreCarpeta = $db->conn->Concat('nomb_carp',"' $datoPersonal'");
-	$db->conn->debug = false;
 	$sql = "select carp_desc  as nomb_carp, carp_codi as codi_carp,0 as orden 
 	        from carpeta
 	        union

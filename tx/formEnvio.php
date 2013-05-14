@@ -503,7 +503,6 @@ else
 				<TD width='30%' class="titulos4">DEPENDENCIA:<br><br><?=$_SESSION['depe_nomb']?><br></TD>
 				<td class="titulos4">
 <?
-//$db->conn->debug = true;
 switch ($codTx)
 {	case 7:
 		{	print "Borrar Informados ";
@@ -574,7 +573,6 @@ switch ($codTx)
 						$whereDep
 						$usuario_publico
 						ORDER BY USUA_NOMB";
-        //$db->conn->debug = true;
 				$rs = $db->conn->Execute($sql);
 				$usuario = $codUsuario;
 				//print $rs->GetMenu2('usCodSelect',$usDefault,false,false,0," id ='usCodSelect' class='select' ");
@@ -801,7 +799,6 @@ switch ($codTx)
 
 	$sqlFecha = $db->conn->SQLDate("d-m-Y H:i A","b.RADI_FECH_RADI");
 	include_once "../include/query/tx/queryFormEnvio.php";
-	//$db->conn->debug = true;
 	switch ($codTx)
 	{	case 12:
 			{	$isql = str_replace("Enviado Por" ,"Devolver a",$isql);

@@ -11,7 +11,6 @@ function reasignarRadicado($numeroRadicado,$usuarioOrigen,$usuarioDestino,$comen
 		//consulta si el radicado existe
 		$consultaRad ="select radi_nume_radi,radi_path,radi_usua_actu, radi_depe_actu  from radicado where radi_nume_radi=".$numeroRadicado;
 		$db = new ConnectionHandler($ruta_raiz);
-//$db->conn->debug=true;
 		$rs2=$db->query( $consultaRad );
 		if(!$rs2->EOF){	
 			include "../include/tx/Tx.php";

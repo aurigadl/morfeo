@@ -16,7 +16,6 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_NUM);	
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);	
-//$db->conn->debug = true;
 error_reporting(7);
 define('ADODB_ASSOC_CASE', 1);
 //echo "$usuario " . md5($drd);

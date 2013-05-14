@@ -273,7 +273,6 @@ function comboUsDepGrp($dependencias) {
 				echo "i=0;";
 			//	 echo " o[i++]=new Option('----- seleccione -----', 'null',true,true); ";
 
-     // $this->cursor->conn->debug=true;
      $dbsql2=" SELECT usuario.*,dependencia.depe_nomb  FROM usuario,dependencia where usuario.depe_codi = dependencia.depe_codi and usuario.depe_codi in($stringDeps)";
 		 $rs=$this->cursor->query($dbsql2);
 
@@ -332,7 +331,6 @@ if (count($dependencias) > 0){
 				echo "i=0;";
 			//	 echo " o[i++]=new Option('----- seleccione -----', 'null',true,true); ";
 
-     // $this->cursor->conn->debug=true;
      $dbsql2=" SELECT usuario.*,dependencia.depe_nomb  FROM usuario,dependencia where 
                 
      			usuario.depe_codi = dependencia.depe_codi  $whereDeps $whereFilt";

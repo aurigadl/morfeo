@@ -33,7 +33,6 @@ if ( !$nurad )
 
 include_once( "$ruta_raiz/include/db/ConnectionHandler.php" );
 $db = new ConnectionHandler( "$ruta_raiz" );
-//$db->conn->debug = true;
 include_once( "$ruta_raiz/include/tx/Historico.php" );
 include_once( "$ruta_raiz/include/tx/Expediente.php" );
 
@@ -254,7 +253,6 @@ else{
 			WHERE SGD_SEXP_PAREXP1 LIKE '%$sgd_sexp_parexp1%'"; // OR SGD_SEXP_PAREXP2 LIKE '%$sgd_sexp_parexp2%'";
 		}
 	}
- //  $db->conn->debug = true;
 //echo $sql_Fin;
 /*
 	$campos = array("NIT" => "SGD_SEXP_PAREXP1",

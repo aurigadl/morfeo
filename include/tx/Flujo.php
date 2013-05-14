@@ -123,7 +123,6 @@ class Flujo{
 					WHERE SGD_FEXP_CODIGO=$nodo";// and SGD_PEXP_CODIGO=$tProc";
 				//Se pone comentario a esta parte porque ese valor no estaba llegando, además no es necesario para obtener el nombre de la etapa
 				//porque el codigo de la etapa es único.
-//		$this->db->conn->debug = true;
 		$rs = $this->db->conn->query($query);
 		if($rs)
 		{
@@ -177,7 +176,6 @@ class Flujo{
 	 * @return number  retorna o si fallo y 1 si ejecuto bien la operacion.
 	 */
 	function cambioNodoExpediente($expNume,$radiNume,$nodoNuevo,$aristaCodi,$fldAutomatico,$observa,$proc = null){
-//		$this->db->conn->debug = true;
 		$recordSet2["SGD_FEXP_CODIGO"] = $nodoNuevo;		
 		$recordWhere2["SGD_EXP_NUMERO"] = "'".$expNume."'";					
 		$recordWhere2["SGD_PEXP_CODIGO"] = $proc;
@@ -212,7 +210,6 @@ class Flujo{
 		return $realizado;
 	}
 		function getAristaTipoDoc($tipoDoc, $codProceso,$codSerie,$codSbrd){
-//		$this->db->conn->debug = true;
 		$query = "SELECT * FROM SGD_FARS_FARISTAS 
 		WHERE 
 		SGD_TPR_CODIGO=$tipoDoc 

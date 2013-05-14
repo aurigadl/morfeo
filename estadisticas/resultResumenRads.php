@@ -7,7 +7,6 @@ require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 if (!$db)
 		$db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);	 
-//$db->conn->debug=true;	
 
 // var que almacena la hora de la fecha actual
 $hora=date("H")."_".date("i")."_".date("s");

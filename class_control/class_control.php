@@ -183,7 +183,6 @@ function consulta_per_arch($nombusuario){
 			WHERE
 			SGD_EXP_NUMERO='$num_expediente' and sgd_exp_estado=1
 			";
-			//$this->cursor->conn->debug=true;
 		$rs=$this->cursor->conn->Execute($query);
 		$this->cursor->conn->Execute($query);
 	  if (!$rs->EOF){

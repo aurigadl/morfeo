@@ -2,19 +2,11 @@
 session_start();
 
 /**
-  * Paggina Cuerpo.php que muestra el contenido de las Carpetas
-	* Modificaciones y Adaptciones por www.correlibre.org 
-  * 
-	* Se añadio compatibilidad con variables globales en Off
-  * Arreglo de Funcionalidad
-  *
+  * Pagina que crea las aristas de un proceso
   * @autor Jairo Losada 2009-08
+  *        Correlibre.org 2013
   * @licencia GNU/GPL V 3
   */
-echo "Post<hr>";
-print_r($_POST);
-echo "Get<hr>";
-print_r($_GET);
 
 if($_GET["crear"]) $crear = $_GET["crear"];
 if($_GET["proceso"]) $proceso = $_GET["proceso"];
@@ -58,7 +50,6 @@ if ( $tipificacion ) $deshabilitado =  ""; else $deshabilitado =  "disabled=true
     $db = new ConnectionHandler( "$ruta_raiz" );
     if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-	//$db->conn->debug = true;
 	if( $_GET['proceso'] != '' ){
 		$procesoSelected = $_GET['proceso'];
 	}elseif ( $_POST['proceso'] != ''){

@@ -17,7 +17,6 @@ $params=$phpsession."&krd=$krd";
 require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 if (!$db)	$db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug=true;
 
 include_once("$ruta_raiz/jh_class/funciones_sgd.php");
 include_once("$ruta_raiz/class_control/Contactos.php");

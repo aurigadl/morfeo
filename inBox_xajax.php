@@ -155,7 +155,6 @@
 			  *  (Por. SIXTO 20040302)
 			*/
 			$sqlFechaHoy=$db->conn->DBTimeStamp(time());
-			//$db->conn->debug = true;
 			$sqlAgendado=" and (agen.SGD_AGEN_FECHPLAZO >= ".$sqlFechaHoy.")";
 			$isql="select count(1) as CONTADOR from SGD_AGEN_AGENDADOS agen
 							where  usua_doc=$usua_doc

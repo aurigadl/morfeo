@@ -110,7 +110,6 @@ include "$ruta_raiz/envios/paEncabeza.php";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 include("$ruta_raiz/class_control/usuario.php");
 $db = new ConnectionHandler($ruta_raiz);	
-//$db->conn->debug=true; 
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $objUsuario = new Usuario($db);
 ?>
@@ -231,7 +230,6 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or $tipoEst
 					   order by u.USUA_NOMB";
 			//if($codusuario!=1) $isqlus .= " and a.usua_codi=$codusuario "; 
 			//echo "--->".$isqlus;
-	//		$db->conn->debug = true;
 			$rs1=$db->query($isqlus);
 			while(!$rs1->EOF)  {
 				$codigo = $rs1->fields["USUA_CODI"]; 

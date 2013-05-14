@@ -47,7 +47,6 @@ session_destroy();
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-$db->conn->debug = false;
 session_start();
 $fechah = date("dmy") . "_" . time("hms");
 $usua_nuevo=3;
@@ -86,7 +85,6 @@ $varQuery = $query;
 $comentarioDev = ' Busca Permisos de Usuarios ...';
 //include "$ruta_raiz/include/tx/ComentarioTx.php";
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 $rs = $db->query($query);
 //Si no se autentica por LDAP según los permisos de DB
 $flag=0; //.....se activa si la validacion es exitosa..............................

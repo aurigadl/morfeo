@@ -18,7 +18,6 @@ $numrad = $verrad;
 error_reporting(7);
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(3);
-//$db->conn->debug = true;
 include "$ruta_raiz/ver_datosrad.php";
 ?>
 <html><head><title>.: ORFEO - DATOS DEL RADICADO GENERADO :.</title>

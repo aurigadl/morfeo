@@ -170,7 +170,6 @@ break;
 		$tm4="select sgd_eit_sigla from sgd_eit_items where sgd_eit_codigo=$zona";
 		$tm5="select sgd_eit_sigla from sgd_eit_items where sgd_eit_codigo=$caja";
 		$tm6="select sgd_eit_sigla from sgd_eit_items where sgd_eit_codigo=$piso";
-	//$db->conn->debug = true;
 	break;
 	}
 ?>

@@ -8,7 +8,6 @@ require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 if (!$db)
 		$db = new ConnectionHandler($ruta_raiz);
 $db->conn->BeginTrans();
-//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);	
 
 if (!$krd or !$dependencia)   include "$ruta_raiz/rec_session.php";
@@ -33,7 +32,6 @@ if  (count($recordWhere)>0)
 	array_splice($recordWhere, 0);
 	
 $fecha_hoy = Date("Y-m-d");
-//$db->conn->debug=true;
 $sqlFechaHoy=$db->conn->DBDate($fecha_hoy);
 $values["sgd_tres_codigo"] = $resol;
 $recordWhere["radi_nume_radi"] = $verrad;

@@ -79,7 +79,6 @@ function regresar(){
 	$consecutivoExp = substr("00000".$secExp,-5);
 	$numeroExpediente = $anoExp . $dependencia . $trdExp . $consecutivoExp . $digCheck;
 
-	//	$db->conn->debug = true;
 
 	/**  Procedimiento que Crea el Numero de  Expediente
 	  *  @param $numeroExpediente String  Numero Tentativo del expediente, Hya que recordar que en la creacion busca la ultima secuencia creada.

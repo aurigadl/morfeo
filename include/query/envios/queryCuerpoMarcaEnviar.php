@@ -101,5 +101,4 @@ switch ($_GET["orno"])
 				or c.SGD_EANU_CODIGO IS NULL)
                                 order by a.radi_nume_salida ';
 	}
-//$db->conn->debug = true;
 ?>

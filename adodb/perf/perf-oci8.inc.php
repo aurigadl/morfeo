@@ -246,7 +246,6 @@ CREATE TABLE PLAN_TABLE (
 		}
 		
 		$rs->Close();
-	//	$this->conn->debug=1;
 	
 		if ($partial) {
 			$sqlq = $this->conn->qstr($sql.'%');

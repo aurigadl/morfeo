@@ -106,7 +106,6 @@ if ($Rs_pais)
 }
 unset($sql_pais);
 $Rs_pais->Move(0);
-//$db->conn->debug = true;
 if($db->driver=="mssql")
 {
  $cad = $db->conn->Concat("cast(DEPARTAMENTO.ID_PAIS as varchar) ","'-'","cast(DEPARTAMENTO.DPTO_CODI as varchar)");

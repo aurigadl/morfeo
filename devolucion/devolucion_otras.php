@@ -6,10 +6,8 @@ if (!is_object($db))
 {
 	include_once($ruta_raiz.'/include/db/ConnectionHandler.php');
 	$db = new ConnectionHandler("$ruta_raiz");
-	//$db->conn->debug=true;
 
 }
-//$db->conn->debug=true;
 $dependencia=$_SESSION['dependencia'];
 $codusuario =$_SESSION['codusuario'];
 $krd            = $_SESSION["krd"];
@@ -167,7 +165,6 @@ if ($hay_seleccionados)
 	<tr>
 		<td bgcolor="White">
 		    <?
-			$db->conn->debug = false;
 			$pager = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);
 			$pager->toRefLinks = $linkPagina;
 			$pager->toRefVars = $encabezado;

@@ -29,6 +29,8 @@ if($_GET["genDetalle"]) $genDetalle             = $_GET["genDetalle"];
 if($_GET["generarOrfeo"]) $generarOrfeo         = $_GET["generarOrfeo"];
 if($_GET["dependencia_busqOri"]) $dependencia_busqOri = $_GET["dependencia_busqOri"];
 
+
+
 $dependencia           = $_SESSION["dependencia"];
 $usua_doc              = $_SESSION["usua_doc"];
 $codusuario            = $_SESSION["codusuario"];
@@ -131,17 +133,17 @@ function noPermiso(){
 
 <table><tr><TD></TD></tr></table>
 <?php
+$ruta_raiz = "..";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 include("$ruta_raiz/class_control/usuario.php");
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-
 $objUsuario = new Usuario($db);
+
 ?>
 <body bgcolor="#ffffff" onLoad="comboUsuarioDependencia(document.formulario,document.formulario.elements['dependencia_busq'].value,'codus');" topmargin="0">
 <div id="spiffycalendar" class="text"></div>
 <form name="formulario"  method="GET" action='./vistaFormConsulta.php?<?=session_name()."=".trim(session_id())."&fechah=$fechah"?>'>
-
 <table width="100%"  border="0" cellpadding="0" cellspacing="5" class="borde_tab">
   <tr>
     <td colspan="2" class="titulos4">POR RADICADOS  -  <A href='vistaFormProc.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>' style="color: #FFFFCC">POR PROCESOS </A> </td>
@@ -165,53 +167,6 @@ $objUsuario = new Usuario($db);
 		</select>
 	</td>
 	</tr>
-	<tr>
-    <td width="30%" class="titulos2">Dependencia</td>
-    <td class="listado2">
-	<select name=dependencia_busq  class="select"  onChange="formulario.submit();">
-<?php
-
-$encabezado = "&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&"; 
-
-
-
-	if($usua_perm_estadistica>1)  {
-		if($dependencia_busq==99999)  {
-                   $datoss= " selected ";
-		}
-		?>
-			<option value=99999  <?=$datoss?>>-- Todas las Dependencias --</option>
-		<?php
-	}
-
-$whereDepSelect=" DEPE_CODI = $dependencia ";
-if ($usua_perm_estadistica==1){
-	$whereDepSelect="( $whereDepSelect or depe_codi_padre = $dependencia )";	
-}
-if ($usua_perm_estadistica==2) {
-	$isqlus = "select a.DEPE_CODI,a.DEPE_NOMB,a.DEPE_CODI_PADRE from DEPENDENCIA a ORDER BY a.DEPE_NOMB";
-}else {
-	$isqlus = "select a.DEPE_CODI,a.DEPE_NOMB,a.DEPE_CODI_PADRE from DEPENDENCIA a 
-						where $whereDepSelect ";
-}
-
-$rs1=$db->query($isqlus);
-
-do{
-	$codigo = $rs1->fields["DEPE_CODI"]; 
-	$vecDeps[]=$codigo;
-	$depnombre = $rs1->fields["DEPE_NOMB"];
-	$datoss="";
-	if($dependencia_busq==$codigo){
-		$datoss= " selected ";
-	}
-	echo "<option value=$codigo  $datoss>$depnombre</option>";		
-	$rs1->MoveNext();
-}while(!$rs1->EOF);
-	?>
-	</select>
-</td>
-</tr>
 <?php
 if ($tipoEstadistica==18)
    {
@@ -220,49 +175,90 @@ if ($tipoEstadistica==18)
      <td width="30%" class="titulos2">Dependencia ORIGEN</td>
 	  <td class="listado2">
 	      <select name=dependencia_busqOri  class="select"  onChange="formulario.submit();">
-      <?php
+		<?php
+		$encabezado = "&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&"; 
+		if($usua_perm_estadistica>1)  {
+		  if($dependencia_busqOri==99999)  {
+		      $datossOri= " selected ";
+		    }
+		  ?>
+			<option value=99999  <?=$datossOri?>>-- Todas las Dependencias --</option>
+		  <?php
+		  }
+		$whereDepSelectOri=" DEPE_CODI = $dependencia ";
+		if ($usua_perm_estadistica==1){
+			$whereDepSelectOri="( $whereDepSelectOri or depe_codi_padre = $dependencia )";	
+		}
+		if ($usua_perm_estadistica==2) {
+			$isqlusOri = "select a.DEPE_CODI,a.DEPE_NOMB,a.DEPE_CODI_PADRE from DEPENDENCIA a ORDER BY a.DEPE_NOMB";
+		}else {
+			$isqlusOri = "select a.DEPE_CODI,a.DEPE_NOMB,a.DEPE_CODI_PADRE from DEPENDENCIA a 
+								where $whereDepSelectOri ";
+		}
+		$rsO=$db->query($isqlusOri);
 
-      $encabezado = "&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&"; 
-
-      if($usua_perm_estadistica>1)  {
-		      if($dependencia_busqOri==99999)  {
-			 $datossDes= " selected ";
-		      }
-		      ?>
-			      <option value=99999  <?=$datossDes?>>-- Todas las Dependencias --</option>
-		      <?php
-	      }
-
-      $whereDepSelectDes=" DEPE_CODI = $dependencia ";
-      if ($usua_perm_estadistica==1){
-	      $whereDepSelectDes="( $whereDepSelectDes or depe_codi_padre = $dependencia )";	
-      }
-      if ($usua_perm_estadistica==2) {
-	      $isqlusDes = "select a.DEPE_CODI,a.DEPE_NOMB,a.DEPE_CODI_PADRE from DEPENDENCIA a ORDER BY a.DEPE_NOMB";
-      }else {
-	      $isqlusDes = "select a.DEPE_CODI,a.DEPE_NOMB,a.DEPE_CODI_PADRE from DEPENDENCIA a 
-						      where $whereDepSelectDes ";
-      }
-      echo $isqlusDes;
-      $rsD=$db->query($isqlusDes);
-
-      do{
-	      $codigoDes = $rsD->fields["DEPE_CODI"]; 
-	      $vecDeps[]=$codigoDes;
-	      $depnombreDes = $rsD->fields["DEPE_NOMB"];
-	      $datossDes="";
-	      if($dependencia_busqOri==$codigoDes){
-		      $datossDes = " selected ";
-	      }
-	      echo "<option value=$codigoDes  $datossDes>$depnombreDes</option>";		
-	      $rsD->MoveNext();
-      }while(!$rsD->EOF);
-	      ?>
-	      </select>
+		do{
+			$codigoOri = $rsO->fields["DEPE_CODI"]; 
+			$vecDeps[]=$codigoOri;
+			$depnombreOri = $rsO->fields["DEPE_NOMB"];
+			$datossOri="";
+			if($dependencia_busqOri==$codigoOri){
+				$datossOri = " selected ";
+			}
+			echo "<option value=$codigoOri  $datossOri>$depnombreOri</option>";		
+		      $rsO->MoveNext();
+		}while(!$rsO->EOF);
+		  ?>
+	    </select>
       </td>
       </tr>
       <?
-}
+  }
+  ?>	<tr>
+    <td width="30%" class="titulos2">Dependencia</td>
+    <td class="listado2">
+    <select name=dependencia_busq  class="select"  onChange="formulario.submit();">
+    <?php
+
+      $encabezado = "&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&codUs=$codUs&fecSel=$fecSel&"; 
+      if($usua_perm_estadistica>1)  {
+	if($dependencia_busq==99999)  {
+	  $datoss= " selected ";
+	}
+      ?>
+	  <option value=99999  <?=$datoss?>>-- Todas las Dependencias --</option>
+      <?php
+      }
+
+      $whereDepSelect=" DEPE_CODI = $dependencia ";
+      if ($usua_perm_estadistica==1){
+	      $whereDepSelect="( $whereDepSelect or depe_codi_padre = $dependencia )";	
+      }
+      if ($usua_perm_estadistica==2) {
+	      $isqlus = "select a.DEPE_CODI,a.DEPE_NOMB,a.DEPE_CODI_PADRE from DEPENDENCIA a ORDER BY a.DEPE_NOMB";
+      }else {
+	      $isqlus = "select a.DEPE_CODI,a.DEPE_NOMB,a.DEPE_CODI_PADRE from DEPENDENCIA a 
+						      where $whereDepSelect ";
+      }
+
+      $rs1=$db->query($isqlus);
+
+      do{
+	      $codigo = $rs1->fields["DEPE_CODI"]; 
+	      $vecDeps[]=$codigo;
+	      $depnombre = $rs1->fields["DEPE_NOMB"];
+	      $datoss="";
+	      if($dependencia_busq==$codigo){
+		      $datoss= " selected ";
+	      }
+	      echo "<option value=$codigo  $datoss>$depnombre</option>";		
+	      $rs1->MoveNext();
+      }while(!$rs1->EOF);
+	      ?>
+     </select>
+     </td>
+</tr>
+<?php
 if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or 
 	$tipoEstadistica==4 or $tipoEstadistica==5 or $tipoEstadistica==6 or 
 	$tipoEstadistica==7 or $tipoEstadistica==11 or $tipoEstadistica==12 or 
@@ -324,7 +320,6 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
   <?
   }
    $condiRep =  (!isset($_GET['conSinRep']) )? "NO":"SI";
-
   if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or 
   		$tipoEstadistica==4 or $tipoEstadistica==6 or $tipoEstadistica==11 or 
   		$tipoEstadistica==12 or $tipoEstadistica==17  or $tipoEstadistica==18)
@@ -348,9 +343,10 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
   	$tipoEstadistica==12 or $tipoEstadistica == 14 or $tipoEstadistica==17  or $tipoEstadistica==18 ) {
   ?>
   <tr>
-    <td width="30%" height="40" class="titulos2">Agrupar por Tipo de Documento </td>
+    <td width="30%" height="40" class="titulos2" >Agrupar por Tipo de Documento 
+     (Presione Ctrl para seleccionar varios) </td>
     <td class="listado2">
-	<select name=tipoDocumento  class="select" >
+	<select name=tipoDocumento[] class="select"  multiple="multiple">
         <?
  		$isqlTD = "SELECT SGD_TPR_DESCRIP, SGD_TPR_CODIGO 
 					from SGD_TPR_TPDCUMENTO
@@ -360,8 +356,8 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
 		//echo "--->".$isqlus;
 		$rs1=$db->query($isqlTD);
 		$datoss = "";
-
-		if($tipoDocumento!='9998'){
+                
+		if($tipoDocumento[0]!='9998'){
 			$datoss= " selected ";
 			$selecUs = " b.USUA_NOMB USUARIO, ";
 			$groupUs = " b.USUA_NOMB, ";
@@ -369,27 +365,26 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
 
 		$datoss = "";
 
-		if($tipoDocumento=='9999'){
+		if($tipoDocumento[0]=='9999'){
                         $datoss= " selected ";
                 }
                 ?>
                 <option value='9999'  <?=$datoss?>>-- No Agrupar Por Tipo de Documento</option>
                 <?   $datoss = "";
 
-
-		if($tipoDocumento=='9997'){
-			$datoss= " selected ";
-		}
 		if($tipoEstadistica==6)
 		{
-			if($tipoDocumento=='9998'){
+			if($tipoDocumento[0]=='9998'){
                         	$datoss= " selected ";
                 	}
 
 		?>
 			<option value='9998'  <?=$datoss?>>-- Agrupar Por Tipo de Documento</option>
-		<?
+		 <?   $datoss = "";
 		}
+                if($tipoDocumento[0]=='9997'){
+                        $datoss= " selected ";
+                }
 		?>
 
 		<option value='9997'  <?=$datoss?>>-- Tipos Documentales No Definidos</option>
@@ -399,10 +394,17 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
 			$vecDeps[]=$codigo;
 			$selNombre = $rs1->fields["SGD_TPR_DESCRIP"];
 			$datoss="";
-		if($tipoDocumento==$codigo){
+                  if (count($tipoDocumento) > 0 and ($tipoDocumento[0] !='9997' and $tipoDocumento[0] !='9998' and $tipoDocumento[0] !='9999'))
+                   {
+                   for ($i=0;$i<count($tipoDocumento);$i++) 
+                    {   
+	  	     if($tipoDocumento[$i]==$codigo){
 				$datoss= " selected ";
 			}
-			echo "<option value=$codigo  $datoss>$selNombre</option>";		
+                       }
+                    }
+			echo "<option value=$codigo  $datoss>$selNombre</option>";
+		
 			$rs1->MoveNext();
 		}while(!$rs1->EOF);
 		?>
@@ -475,7 +477,6 @@ if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
 </form>
 <?php
 $datosaenviar = "fechaf=$fechaf&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento";
-
 
 //
 if (isset($generarOrfeo) && $tipoEstadistica == 12) {

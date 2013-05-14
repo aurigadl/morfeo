@@ -10,7 +10,6 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $db = new ConnectionHandler($ruta_raiz);
 $objHistorico= new Historico($db);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug=true;
 ?>
 
 <html>
@@ -127,15 +126,12 @@ if(
 	  $ruta_raiz = "..";
 	  require "$ruta_raiz/class_control/class_control.php";
 	  $btt = new CONTROL_ORFEO($db);
-	  //$db->conn->debug = true;
 	  if($Archivar)
 	  {
 	    $observa = " Almacenado en Fisico ";
 	    $observa2 = " Almacenado en Fisico del radicado ".$numrad;
 	    $sqlrad="select RADI_NUME_RADI FROM SGD_EXP_EXPEDIENTE WHERE SGD_EXP_NUMERO LIKE '$num_expediente' order by RADI_NUME_RADI";
-      //$db->conn->debug = true;
 	    $rsrad=$db->query($sqlrad);
-      //$db->conn->debug = false;
 	    $j=1;
 	    $sqm="select sgd_eit_sigla from sgd_eit_items where sgd_eit_codigo like '$exp_piso2'";
 	    $rs=$db->conn->Execute($sqm);
@@ -265,7 +261,6 @@ if(
   }else{
   echo "<br>Datos de expediente Grabados Correctamente<br>";
   $objHistorico->insertarHistorico($arrayRad,$dep_sel ,$codusuario, $dep_sel,$codusuario, $observa, 57);
-//$this->db->conn->debug=true;
   }
 
 //$objHistorico->insertarHistoricoExp($num_expediente,$arrayRad,$dep_sel ,$codusuario, $observa2, 57,1);
@@ -319,7 +314,6 @@ if(
     if($eti5!="")$etiquetas.=",".$eti5;
 
     $queryed = "select CODI_DPTO,CODI_MUNI from SGD_EIT_ITEMS where SGD_EIT_CODIGO LIKE '$exp_edificio'";
-    //$db->conn->debug=true;
     $rsed = $db->conn->Execute($queryed);
     if (!$rsed->EOF){
       $codDpto=$rsed->fields['CODI_DPTO'];
@@ -440,7 +434,6 @@ if(
       
       $sql="select SGD_EIT_NOMBRE,SGD_EIT_CODIGO from SGD_EIT_ITEMS
             where SGD_EIT_COD_PADRE like '".$itemCodigoPadr[$iK]."' order by SGD_EIT_NOMBRE";
-            $db->conn->debug = false;
       $rs=$db->query($sql);
       print $rs->GetMenu2('itemMenu'. $iK,$itemPadre,true,false,""," id=itemMenu$iK onChange='submit()' class=select");
       $iCol++;
@@ -727,7 +720,6 @@ if(
 	    $sqlrad1="select e.RADI_NUME_RADI,e.SGD_EXP_ESTADO,r.RADI_NUME_HOJA FROM SGD_EXP_EXPEDIENTE e, RADICADO r WHERE SGD_EXP_NUMERO LIKE '$num_expediente' and r.RADI_NUME_RADI=e.RADI_NUME_RADI";
 	      if($exp_carpeta!="" and $car)$sqlrad1.=" and e.SGD_EXP_CARPETA LIKE '$exp_carpeta'";
 	      $sqlrad1.=" ORDER BY e.RADI_NUME_RADI";
-	      //$db->conn->debug=true;
 	      $rsrad=$db->query($sqlrad1);
 	      $ce=1;
 	      while(!$rsrad->EOF){

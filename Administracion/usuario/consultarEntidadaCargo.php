@@ -94,7 +94,6 @@ session_start();
 	
 	$encabezado = "".session_name()."=".session_id()."&krd=$krd&estado_sal=$estado_sal&estado_sal_max=$estado_sal_max&accion_sal=$accion_sal&coddepe=$coddepe&verempresa=$verempresa&usuario=$funcionario&dep_sel=$dep_sel&busqBodegaEmpresas=$busqBodegaEmpresas&orderTipo=$orderTipo&orderNo=";
 	$linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo";
-	$db->conn->debug = true;
 	if ($mensaje!='')
 	{
 		echo "<center><b>NO se encontro nada con el criterio de busqueda</center></b></hr>";

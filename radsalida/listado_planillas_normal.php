@@ -35,7 +35,6 @@ if($generar_listado)
 	$pdf->dependencia = $dependencianomb;	
 	$pdf->depe_municipio = $depe_municipio;
 	$pdf->entidad_largo = $db->entidad_largo;
-	//	$db->conn->debug = true;
 	$total_registros = 0;
 	$pdf->lmargin = 0.2;
 	$i_total3 = 0;

@@ -194,7 +194,6 @@ $isql = "select $sqlFechaEnvio AS SGD_RENV_FECH,
 		AND a.sgd_fenv_codigo = c.sgd_fenv_codigo
 		and cast(a.usua_doc as varchar(12))=u.usua_doc
 		order by a.SGD_RENV_FECH desc ";
-//$db->conn->debug = true;
 $rs = $db->query($isql);
 ?>
 

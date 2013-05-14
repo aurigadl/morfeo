@@ -171,7 +171,6 @@ function adicionarOp (forma,combo,desc,val,posicion){
 			<? 
 
 			$isqlt = $isqlc ;
-			//$db->conn->debug=true;
 			 $rs1=$db->query($isqlt);
 			 
 			 if ($rs1)

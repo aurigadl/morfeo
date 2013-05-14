@@ -9,7 +9,6 @@ $tipoMed = $_SESSION['tipoMedio'];
 $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
-//$db->conn->debug =true;
 //$sqlFechaHoy=$db->conn->query("select * from usuario");
 echo "<hr>$nurad<hr>";
 $tmpNameEmail = $_SESSION['tmpNameEmail']; 

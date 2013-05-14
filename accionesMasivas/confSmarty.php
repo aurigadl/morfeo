@@ -20,7 +20,6 @@ include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 require_once    ("$ruta_raiz/class_control/Mensaje.php");
 if (!$db) $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 $fecha_hoy 		= 	Date("Y-m-d");
 $sqlFechaHoy	=	$db->conn->DBDate($fecha_hoy);
 //echo SMARTY_DIR . 'Smarty.class.php';	

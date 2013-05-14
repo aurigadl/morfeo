@@ -62,7 +62,6 @@ where EXTRACT('day' from (current_date - r.fech_vcmto)) >=$diasAlarma
 and tpr.sgd_tpr_codigo=r.tdoc_codi
 and r.tdoc_codi=$tipoDocumental
 and r.sgd_trad_codigo=2 and r.radi_depe_actu<>999 and r.radi_depe_actu<>205 ";
-$db->conn->debug=true;
 $rs = $db->conn->Execute("$iSql");
 $codTx = 98;
 ?>
@@ -100,7 +99,6 @@ $mail = new PHPMailer(true); // the true param means it will throw exceptions on
   $query = "select u.USUA_EMAIL
                 from usuario u
                 where u.USUA_CODI ='$usuaCodiMail' and  u.depe_codi='$depeCodiMail'";
-//$db->conn->debug = true;
   $rs2=$db->conn->query($query);
   $mailDestino = $rs2->fields["USUA_EMAIL"];
   // SMTP account password

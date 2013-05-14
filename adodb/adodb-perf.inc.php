@@ -66,12 +66,9 @@ global $HTTP_SERVER_VARS;
 			$tracer = '';
 			$errM = '';
 			$errN = 0;
-			$dbg = $conn->debug;
-			$conn->debug = false;
 			if (!is_object($rs) || $rs->dataProvider == 'empty') 
 				$conn->_affected = $conn->affected_rows(true);
 			$conn->lastInsID = @$conn->Insert_ID();
-			$conn->debug = $dbg;
 		}
 		if (isset($HTTP_SERVER_VARS['HTTP_HOST'])) {
 			$tracer .= '<br>'.$HTTP_SERVER_VARS['HTTP_HOST'];
@@ -97,8 +94,6 @@ global $HTTP_SERVER_VARS;
 		$arr = array('b'=>trim(substr($sql,0,230)),
 					'c'=>substr($sql,0,3900), 'd'=>$params,'e'=>$tracer,'f'=>adodb_round($time,6));
 		//var_dump($arr);
-		$saved = $conn->debug;
-		$conn->debug = 0;
 		
 		$d = $conn->sysTimeStamp;
 		if (empty($d)) $d = date("'Y-m-d H:i:s'");
@@ -121,7 +116,6 @@ global $HTTP_SERVER_VARS;
 		}
 
 		$ok = $conn->Execute($isql,$arr);
-		$conn->debug = $saved;
 		
 		if ($ok) {
 			$conn->_logsql = true; 
@@ -382,7 +376,6 @@ Committed_AS:   348732 kB
 			
 			$save = $ADODB_FETCH_MODE;
 			$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
-			//$this->conn->debug=1;
 			$rs =& $this->conn->SelectLimit(
 			"select avg(timer) as avg_timer,$sql1,count(1),max(timer) as max_timer,min(timer) as min_timer
 				from $perf_table
@@ -637,7 +630,6 @@ Committed_AS:   348732 kB
 		default:
 		case 'stats':
 			echo $this->HealthCheck();
-			//$this->conn->debug=1;
 			echo $this->CheckMemory();
 			break;
 		case 'poll':
@@ -674,7 +666,6 @@ Committed_AS:   348732 kB
 	function Poll($secs=5)
 	{
 		$this->conn->fnExecute = false;
-		//$this->conn->debug=1;
 		if ($secs <= 1) $secs = 1;
 		echo "Accumulating statistics, every $secs seconds...\n";flush();
 		$arro =& $this->PollParameters();

@@ -340,7 +340,6 @@ function newRadicado($tpRad, $tpDepeRad)
       if($this->dirNombre) $record['SGD_DIR_NOMBRE'] = $this->dirNombre;
 	  
       $ADODB_COUNTRECS = true;
-          //$db->conn->debug = true;
       //$insertSQL = $this->db->insert("SGD_DIR_DRECCIONES", $record, "true");
 	  if($tipoAccion==0){
       $insertSQL = $this->db->conn->Replace("SGD_DIR_DRECCIONES",

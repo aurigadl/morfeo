@@ -25,7 +25,6 @@ $tip3desc = $_SESSION["tip3desc"];
 $tip3img =$_SESSION["tip3img"];
 include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug = true;
 switch ($_GET['var'])
 {	case 'tar'	:
 		{	$titulo = "LISTADO GENERAL DE TARIFAS";

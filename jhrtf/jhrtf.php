@@ -874,7 +874,6 @@ class jhrtf{
 	* Confirma  una la transacci�n de correspondencia masiva en caso de terminar satisfactoriamente
 	*/
 	function confirmarMasiva()
-	{	//$this->conexion->conn->debug = true;
 		return ($this->conexion->conn->CompleteTrans());	}
 
 	}

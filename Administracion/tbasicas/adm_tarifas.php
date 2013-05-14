@@ -111,7 +111,6 @@ if ($db)
 	      Case 'Eliminar':
 			{	$record = array_slice($record, 0, 3);
 				$db->conn->BeginTrans();
-				$db->conn->debug=true;
 				$ADODB_COUNTRECS = true;
 				$query = "SELECT sgd_renv_codigo from sgd_renv_regenvio where sgd_fenv_codigo = (";
 				$query.= 'SELECT SGD_FENV_CODIGO FROM SGD_CLTA_CLSTARIF WHERE SGD_FENV_CODIGO='.$record['SGD_FENV_CODIGO'].' AND SGD_TAR_CODIGO='.$record['SGD_TAR_CODIGO'].' AND SGD_CLTA_CODSER='.$record['SGD_CLTA_CODSER'].')';

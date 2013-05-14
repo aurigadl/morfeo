@@ -18,7 +18,6 @@ $iTpRad = 10;
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);	 
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug  = true;
 $llave = date("YmdH") . "$verrad";
 $password =md5($llave);
 if($cmp==$password)

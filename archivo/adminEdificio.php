@@ -9,7 +9,6 @@ define('ADODB_ASSOC_CASE',1);
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler( "$ruta_raiz" );
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 //$db->debug = true;
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia";
 ?>

@@ -91,7 +91,6 @@ class buscarDir{
 		$iSql .= " ORDER BY SGD_CIU_CEDULA, SGD_CIU_NOMBRE ";
 		//return $iSql;
 		//ECHO "$isql";
-		//$this->db->conn->debug = true;
 		$rsUs = $this->db->conn->Execute($iSql);
 		$j=0;
     $cadena = 'valor = "<table width=550>";';

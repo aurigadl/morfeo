@@ -69,7 +69,6 @@ if( $_GET['excluir'] == 1 && $_GET['radExcluido'] != "" && $_GET['expedienteExcl
 
 {
     include "$ruta_raiz/include/query/expediente/queryExcluirRadicado.php";
-	//$db->conn->debug = true;
     $rsExcluirRadicado = $db->conn->query( $sqlExcluirRadicado );
 }
 
@@ -286,7 +285,6 @@ if($tipo_archivo==2){$img7=" <img src='../iconos/flechanoleidos.gif' border=0 al
 	$fecha_hoy = Date("Y-m-d");
 	$sqlFechaHoy=$db->conn->DBDate($fecha_hoy);
 	include "$ruta_raiz/include/query/expediente/queryCuerpo_exp.php";
-	//$db->conn->debug = true;
 	$rs=$db->conn->query($isql);
 	$nombusuario = $rs->fields["usua_nomb"];
 	$dependencianomb = $rs->fields["depe_nomb"];
@@ -501,7 +499,6 @@ if($Buscar=='Buscar'){
 	if($edifi=="" and $estan=="" and $entre=="" and $caja=="" and $carro=="" and $zona=="")$ubicacion="";
 	else{
 		$ubicacion=$ed."-".$pi;
-		//$db->conn->debug=true;
 		$rs5=$db->conn->Execute($tm4);
 		if($zona!=""){$zo=$rs5->fields['SGD_EIT_SIGLA'];$ubicacion.="-".$zo;}
 		$rs4=$db->conn->Execute($tm3);
@@ -514,7 +511,6 @@ if($Buscar=='Buscar'){
 		if($caja!=""){$cj=$rs6->fields['SGD_EIT_SIGLA'];$ubicacion.="-".$cj;}
 	}
 	include "$ruta_raiz/include/query/expediente/queryCuerpo_exp.php";
-	//$db->conn->debug=true;
 	$rsd=$db->query($sqlr);
 	$tipoDoc=$rsd->fields['SGD_TPR_DESCRIP'];
         

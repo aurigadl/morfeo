@@ -36,7 +36,6 @@ if($_SESSION["Radicado"]) {
 $ruta_raiz = "..";
 require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler($ruta_raiz);
-//$db->conn->debug=true;
 error_reporting(7);
 $verrad = "";
 /** PROGRAMA DE CARGA DE IMAGENES DE RADICADOS
@@ -105,7 +104,6 @@ if($Buscar AND $busq_radicados_tmp)
 	include "$ruta_raiz/include/query/uploadFile/queryUploadFileRad.php";
 	$rs=$db->conn->Execute($query);
 
-	//$db->conn->debug=true;
 	if ($rs->EOF)  {
 		echo "<hr><center><b><span class='alarmas'>No se encuentra ningun radicado con el criterio de busqueda</span></center></b></hr>";
 	}

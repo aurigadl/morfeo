@@ -59,7 +59,6 @@ $c=0;
 $cp=0;
 
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$cod'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $sql="select * from sgd_eit_items where sgd_eit_cod_padre like '$cod'";
@@ -83,7 +82,6 @@ $cp++;
 $tm=$c;
 for($i=0;$i<$tm;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codi[$i]'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codi[$i];
@@ -109,7 +107,6 @@ $cp++;
 $tm1=$c;
 for($i=$tm;$i<$tm1;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codi[$i]'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codi[$i];
@@ -135,7 +132,6 @@ $cp++;
 $tm2=$c;
 for($i=$tm1;$i<$tm2;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codi[$i]'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codi[$i];
@@ -161,7 +157,6 @@ $cp++;
 $tm3=$c;
 for($i=$tm2;$i<$tm3;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codi[$i]'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codi[$i];
@@ -187,7 +182,6 @@ $cp++;
 $tm4=$c;
 for($i=$tm3;$i<$tm4;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codi[$i]'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codi[$i];

@@ -18,7 +18,6 @@ $checkValue = $_POST['checkValue'];
 if(!$dependencia) include_once "$ruta_raiz/rec_session.php";
 error_reporting(7);
  
-//$db->conn->debug=true;
 $objCtrlAplInt = new ControlAplIntegrada($db);
 
 ?>

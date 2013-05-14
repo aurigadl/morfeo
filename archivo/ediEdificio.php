@@ -9,7 +9,6 @@ include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 include_once "$ruta_raiz/include/tx/Historico.php";
 $db = new ConnectionHandler( "$ruta_raiz" );
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 //$db->debug = false;
 import_request_variables("gp", "");
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&codig=$codig&cod=$cod";
@@ -69,7 +68,6 @@ $cp=0;
 $conD=$db->conn->Concat(" cast(sgd_eit_codigo as varchar(20))","'-'","sgd_eit_nombre");
 //$sqli="select ($conD) as detalle,sgd_eit_codigo from sgd_eit_items where sgd_eit_codigo='$cod'";
 $sqli="select ($conD) as detalle,sgd_eit_codigo from sgd_eit_items where sgd_eit_cod_padre='$cod'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 print $rsi->GetMenu2('codig',$codig,true,false,"","class='select'; onchange=submit();");
 /*if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
@@ -114,7 +112,6 @@ $cp++;
 $tm=$c;
 for($i=0;$i<$tm;$i++){
         $sqli="select sgd_eit_nombre from sgd_eit_items where cast(sgd_eit_cod_padre as varchar(20)) like '$codig'";
-        //$db->conn->debug=true;
         $rsi=$db->conn->Execute($sqli);
         if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
         $codigo=$codig;
@@ -140,7 +137,6 @@ for($i=0;$i<$tm;$i++){
 $tm1=$c;
 for($i=$tm;$i<$tm1;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo=$codi[$i]";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codi[$i];
@@ -166,7 +162,6 @@ $cp++;
 $tm2=$c;
 for($i=$tm1;$i<$tm2;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codi[$i]'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
   $codigo=$codi[$i];
@@ -193,7 +188,6 @@ $cp++;
 $tm3=$c;
 for($i=$tm2;$i<$tm;$i++){
   $sqli="select sgd_eit_nombre from sgd_eit_items where cast(sgd_eit_codigo as varchar(20))='$codi[$i]'";
-  //$db->conn->debug=true;
   $rsi=$db->conn->Execute($sqli);
   if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
   $codigo=$codi[$i];
@@ -226,7 +220,6 @@ for($i=$tm3;$i<$tm4;$i++){
 
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo=$codi[$i]";
 
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
   $codigo=$codi[$i];

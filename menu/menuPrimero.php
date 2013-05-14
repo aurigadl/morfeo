@@ -105,20 +105,6 @@ if($_SESSION["usua_perm_modifica"] >=1)
 <?php
 }
 
-if($_SESSION["dependencia"] ==4220 || $_SESSION["dependencia"] ==900)
-{
-?>
-   <tr valign="middle">
-
-     <td width="125">
-      <span class="Estilo12"><a href="radicacion/edtradicado.php?<?=$phpsession ?>&fechah=<?=$fechah?>&primera=1&ent=2" target='mainFrame' class="menu_princ">
-       Mod ATC </a>
-      </span>
-     </td>
-   </tr>
-<?php
-}
-
 if($_SESSION["usua_perm_intergapps"]==1 )
 {
 ?>

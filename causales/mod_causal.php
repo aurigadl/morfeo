@@ -30,7 +30,6 @@ $db = new ConnectionHandler("$ruta_raiz");
 if(!$verrad and $_GET["verrad"]) $verrad = $_GET["verrad"];
 define('ADODB_ASSOC_CASE', 2);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 ?>
 <html>
 <head>
@@ -236,7 +235,6 @@ while(!$rs->EOF)
 	<td class="titulos2">Sector</td>
 	<td>
 <?php
-//$db->conn->debug = true;
 //include_once($ruta_raiz."/sector/mod_sector.php");
 ?>
 	</td>

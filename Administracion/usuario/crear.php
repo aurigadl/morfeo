@@ -99,7 +99,6 @@ include "$ruta_raiz/config.php";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug=true;
 ?>
 <form name='frmCrear' action='validar.php' method="POST">
 <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 

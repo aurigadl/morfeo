@@ -8,7 +8,6 @@
 	  * @param $query String Almacena Consulta que se enviara
 	  * @param $sqlFecha String  Almacena fecha en  formato Y-m-d que devuelve ADODB para la base de datos escogida
 	  */
-	//$db->conn->debug = true;
 	$sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","RADI_FECH_RADI");
 	switch($db->driver)
 	{

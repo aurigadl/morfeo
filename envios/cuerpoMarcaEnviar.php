@@ -57,7 +57,6 @@ include_once "$ruta_raiz/class_control/firmaRadicado.php";
 
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 //Se crea el objeto de an�lisis de firmas
 $objFirma = new  FirmaRadicado($db);
 
@@ -383,7 +382,6 @@ function marcar()
 			    
 			    
 			    $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-			   // $db->conn->debug=true;
 	      		$rs=$db->query($isql); 
 	      		
 	      		if ($usua_perm_firma==2 || $usua_perm_firma==3){

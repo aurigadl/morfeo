@@ -28,7 +28,6 @@ $depDireccion = $_SESSION["depDireccion"];
   }
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug = true;
 include_once "$ruta_raiz/include/tx/Historico.php";
 include_once ("$ruta_raiz/class_control/TipoDocumental.php");
 include_once "$ruta_raiz/include/tx/Expediente.php";
@@ -107,7 +106,6 @@ function Start(URL, WIDTH, HEIGHT)
       *  Modificado: 09-Junio-2006 Supersolidaria
       *  La funcion crearExpediente() recibe los parametros $codiPROC y $arrParametro
 	  */
-//$db->conn->debug = true;
 		$numeroExpedienteE = $expediente->crearExpediente( $numeroExpediente,$nurad,$dependencia,$codusuario,$usua_doc,$usuaDocExp,$codiSRD,$codiSBRD,'false',$fechaExp, $_POST['codProc'], $arrParametro );
 		if($numeroExpedienteE==0)
 		{
@@ -420,7 +418,6 @@ if ( !isset( $Actualizar ) ) //Inicio if( $Actualizar )
     $sqlParExp .= " WHERE PE.DEPE_CODI = ".$dependencia;
     $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN";
     // print $sqlParExp;
-    //$db->conn->debug = true;
     $rsParExp = $db->conn->Execute( $sqlParExp );
     while ( !$rsParExp->EOF )
     {
@@ -496,7 +493,6 @@ if ( !isset( $Actualizar ) ) //Inicio if( $Actualizar )
 	  and d.Depe_Codi=$dependencia
   	order by d.depe_codi, u.usua_nomb";
   	//  -- And D.Dep_Direccion In (Select Dep_Direccion From Dependencia Where Depe_Codi=$dependencia)
-  	//$db->conn->debug = true;
 	$rsUs = $db->conn->Execute($queryUs);//var_dump($rsUS);
 	print $rsUs->GetMenu2("usuaDocExp", "$usuaDocExp", "0:-- Seleccione --", false,""," class='select' onChange='submit()'");
 

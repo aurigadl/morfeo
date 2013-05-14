@@ -20,7 +20,6 @@ $sql = "SELECT
 	,SGD_TRAD_DESCR 
 	FROM SGD_TRAD_TIPORAD ORDER BY SGD_TRAD_CODIGO";
 $ADODB_COUNTRECS = true;
-//$db->conn->debug=true;
 $rs_trad = $db->query($sql);
 if ($rs_trad->RecordCount() >= 0)
 {	

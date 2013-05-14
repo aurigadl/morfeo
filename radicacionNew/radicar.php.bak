@@ -51,7 +51,6 @@ include_once "../include/db/ConnectionHandler.php";
 include_once "../class_control/AplIntegrada.php";
 $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 include "crea_combos_universales.php";
 $objApl = new AplIntegrada($db);
 if($nurad)
@@ -1314,7 +1313,6 @@ unset($municodi);
 	$fechaHoy = date("Y-m-d");
 	$fechaHoy = $fechaHoy . "";
 	$ADODB_COUNTRECS = true;
-	//$db->conn->debug=true;
 	$rs=$db->conn->query($query);
 	if ($rs && !$rs->EOF )
 	{	$numRegs = "!".$rs->RecordCount();
@@ -1446,7 +1444,6 @@ if($tipoanexo==0 and $radicadopadre and !$radicadopadreseg and (!$Submit3  and !
 	{
 		$query= "select USUA_NOMB, USUA_CODI from usuario where depe_codi=$radi_depe_actu_padre and usua_codi=$radi_usua_actu_padre";
 		$ADODB_COUNTRECS = true;
-    //$db->conn->debug = true;
 		$rs=$db->conn->query($query);
 		$numRegs = "!".$rs->RecordCount();
 		$ADODB_COUNTRECS = false;
@@ -1562,7 +1559,6 @@ if($Submit3=="Radicar")
 
 		// Buscamos Nivel de Usuario Destino
 		error_reporting(7);
-		//$db->conn->debug = true;
 		$tmp_mun = new Municipio($db);
 		$tmp_mun->municipio_codigo($codep_us1,$muni_us1);
 		$rad = new Radicacion($db);
@@ -1728,7 +1724,6 @@ if(( ($Submit4 and $coddepeinf!=$coddepe)) )
 		$radicadoSel[0] = $nurad;
 		// Modificado SGD 11-Jul-2007
 		//$txSql = $Tx->informar($radicadoSel, $krd,$coddepeinf,$dependencia, $cod_usuario_inf,$codusuario, $observa, $_SESSION['usua_doc']);
-//$db->conn->debug = true;
 
 		// Modificado Infométrika 18-Septiembre-2009
 		// Se pasa el valor $ruta_raiz a la función informar. Requerido por implementación de alertas. Soluciona el error generado al informar a una
@@ -1816,7 +1811,6 @@ if($Submit4 and !$Buscar)
 		$codTx = 11;
 		$hist->insertarHistorico($radicadosSel,  $dependencia , $codusuario, $coddepe, $radi_usua_actu, "Modificacion Documento.", $codTx);
 	}
-//$db->conn->debug = true;
 if($borrarradicado)
 {
 	$flag=0;

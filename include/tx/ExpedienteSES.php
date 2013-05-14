@@ -227,14 +227,12 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
         }
     }
     
-	//$this->db->conn->debug = true; 200590012345
 	$estado_expediente =0;
 	$query="select SGD_EXP_NUMERO
 			from SGD_SEXP_SECEXPEDIENTES
 			WHERE
 			SGD_EXP_NUMERO='$numExpediente'
 			";
-    // $this->db->conn->debug = true;	
 	if($expOld=="false")
 	{
 	$rs = $this->db->conn->query($query);

@@ -87,7 +87,6 @@ function newRadicado($tpRad, $tpDepeRad)
 		$whereNivel = "";
 		$sql = "SELECT CODI_NIVEL FROM USUARIO WHERE USUA_CODI = ".$this->radiUsuaActu." AND DEPE_CODI=".$this->radiDepeActu;
 		# Busca el usuairo Origen para luego traer sus datos.
-		$this->db->conn->debug = true;
 		$rs = $this->db->conn->query($sql); # Ejecuta la busqueda
 		$usNivel = $rs->fields["CODI_NIVEL"];
 		# Busca el usuairo Origen para luego traer sus datos.

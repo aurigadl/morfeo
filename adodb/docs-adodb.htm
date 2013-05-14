@@ -758,7 +758,6 @@ $sql = "SELECT * FROM ADOXYZ WHERE id = -1";
 # Select an empty record from the database
 
 $conn = &ADONewConnection("mysql");  # create a connection
-$conn->debug=1;
 $conn->PConnect("localhost", "admin", "", "test"); # connect to MySQL, testdb
 $rs = $conn->Execute($sql); # Execute the query and get the empty recordset
 

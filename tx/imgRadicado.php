@@ -1,5 +1,4 @@
 <?
-	$db->conn->debug = false;
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 		$sql = "SELECT 

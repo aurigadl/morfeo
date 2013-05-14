@@ -1423,7 +1423,6 @@ if($tipoMedio=="eMail"){
 	$fechaHoy = date("Y-m-d");
 	$fechaHoy = $fechaHoy . "";
 	$ADODB_COUNTRECS = true;
-	//$db->conn->debug=true;
 	$rs=$db->conn->query($query);
 	if ($rs && !$rs->EOF )
 	{	$numRegs = "!".$rs->RecordCount();
@@ -1576,7 +1575,6 @@ if($tipoanexo==0 and $radicadopadre and !$radicadopadreseg and (!$Submit3  and !
              where depe_codi=$radi_depe_actu_padre
              and usua_codi=$radi_usua_actu_padre";
 		$ADODB_COUNTRECS = true;
-    //$db->conn->debug = true;
 		$rs=$db->conn->query($query);
 		$numRegs = "!".$rs->RecordCount();
 		$ADODB_COUNTRECS = false;
@@ -1715,7 +1713,6 @@ if(!$Submit3 and !$Submit4){
 </form>
 <?php
     if ($debugUsr == "CARLOS") {
-       //$db->conn->debug = false;
     }
     $verrad = $nurad;
     $radi = $nurad;

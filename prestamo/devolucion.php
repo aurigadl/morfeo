@@ -14,7 +14,6 @@ include_once ("./encabezado.php");
 // devolucion CustomIncludes end
 //-------------------------------
 
-//$db->conn->debug=true;
 
 //===============================
 // Save Page and File Name available into variables

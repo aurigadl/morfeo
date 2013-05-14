@@ -308,7 +308,6 @@ function crearRadicado(){
 
 	//Aqui busco la informacion necesaria del usuario para la creacion de expedientes
 	$sql= "select * from SGD_OEM_OEMPRESAS ";
-	$dbGPL->conn->debug = false;
 	$rs=$dbGPL->conn->query($sql);
 	
 	

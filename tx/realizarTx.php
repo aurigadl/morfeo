@@ -102,7 +102,6 @@ switch ($codTx){
 		break;
 	case 8:
 		{
-		 // $db->conn->debug = true;
 		  echo "> $chkConjunto";
 		  if(is_array($_POST['usCodSelect']))
 			while (list(,$var)=each($_POST['usCodSelect']))

@@ -72,7 +72,6 @@ require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler($ruta_raiz);
 $error = 0;
 
-//$db->conn->debug=true;
 
 if ($db) {
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);

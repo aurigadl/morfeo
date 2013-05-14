@@ -33,7 +33,6 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 require_once("$ruta_raiz/class_control/CombinaError.php");
 
 (!$db) ? $conexion = new ConnectionHandler($ruta_raiz) : $conexion = $db;
-//$conexion->conn->debug = true;
 $conexion->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $hora=date("H")."_".date("i")."_".date("s");
 // var que almacena el dia de la fecha

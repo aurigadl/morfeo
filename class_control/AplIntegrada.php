@@ -142,7 +142,6 @@ class  AplIntegrada{
 				echo "j=1;";
 			//	 echo " o[i++]=new Option('----- seleccione -----', 'null',true,true); ";
 
-     // $this->cursor->conn->debug=true;
      $dbsql2 = "SELECT u.SGD_TRAD_CODIGO, a.SGD_APLI_DESCRIP, a.SGD_APLI_CODI, u.SGD_APLUS_PRIORIDAD
 				FROM SGD_APLI_APLINTEGRA a, SGD_APLUS_PLICUSUA u
 				WHERE a.SGD_APLI_CODI = u.SGD_APLI_CODI AND (u.USUA_DOC = '$usua_doc') AND (a.SGD_APLI_CODI <> 0)";
@@ -212,7 +211,6 @@ class  AplIntegrada{
 				echo "j=1;";
 			//	 echo " o[i++]=new Option('----- seleccione -----', 'null',true,true); ";
 
-     // $this->cursor->conn->debug=true;
      $dbsql2=  "select a.SGD_APLI_DESCRIP,a.SGD_APLI_CODI from SGD_APLI_APLINTEGRA a where
 		               a.SGD_APLI_CODI<> 0  ";
 		 $rs=$this->cursor->query($dbsql2);

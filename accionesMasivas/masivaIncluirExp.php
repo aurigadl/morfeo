@@ -12,7 +12,6 @@ include_once	("confSmarty.php");
 	/**
 	 * Select para mostrar todas las dependencias
 	 */	
-	//b->conn->debug = true; 
 	$sql_depe = "SELECT
 				      DE.DEPE_CODI AS CODIGO
 				      ,(cast(DE.DEPE_CODI as varchar(10))||' - '||DE.DEPE_NOMB) AS NOMBRE

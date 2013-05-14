@@ -506,7 +506,6 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 	$dependencianomb=substr($dependencianomb,0,35);
 	$datoPersonal = "(Personal)";
 	$nombreCarpeta = $db->conn->Concat("' $datoPersonal'",'nomb_carp');
-	//$db->conn->debug = true;
 	$codigoCarpetaGen = $db->conn->Concat("10000","cast(carp_codi as varchar(10))");
 	$codigoCarpetaPer = $db->conn->Concat("11000","cast(codi_carp as varchar(10))");
 	$sql = "select carp_desc  as nomb_carp

@@ -10,7 +10,6 @@ if(!isset($_SESSION['dependencia'])) include "$ruta_raiz/rec_session.php";
 include_once("$ruta_raiz/include/combos.php");
  
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-$db->conn->debug = false; 
 ?>
 <script>
 function abrirSancionados()
@@ -40,7 +39,6 @@ document.form_decision.submit();
 		<select name="decis" class="select">
 		<?php
 		// Arma la lista desplegable con los tipos de documento a anexar
-		//$db->conn->debug=true;
 		$a = new combo($db);
 		if (!strlen(trim ($sgd_tdes_codigo)))	$sgd_tdes_codigo = "null";
 		$s =  "select * from SGD_TDEC_TIPODECISION where SGD_APLI_CODI=1 and (SGD_TDEC_SHOWMENU=1 or SGD_TDEC_CODIGO = $sgd_tdes_codigo)";

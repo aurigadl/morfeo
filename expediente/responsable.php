@@ -26,7 +26,6 @@ if (!$ruta_raiz) $ruta_raiz = "..";
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 include_once "$ruta_raiz/include/tx/Historico.php";
 include_once "$ruta_raiz/include/tx/Expediente.php";
-	//$db->conn->debug=true;
 	$db = new ConnectionHandler("$ruta_raiz");
 	$objHistorico= new Historico($db); 
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&numeroExpediente=$numeroExpediente&dependencia=$dependencia&krd=$krd&numRad=$numRad&coddepe=$coddepe&codusua=$codusua&depende=$depende&codserie=$codserie";
@@ -58,7 +57,6 @@ $depe=substr($numeroExpediente,4,3);
 
 	$queryUs = "select usua_nomb, usua_doc from usuario where depe_codi=$depe AND USUA_ESTA='1'
 							order by usua_nomb";
-//$db->conn->debug=true;
 	$rsUs = $db->conn->Execute($queryUs);
 	print $rsUs->GetMenu2("usuaDocExp", "$usuaDocExp", "0:-- Seleccione --", false,""," class='select' ");
 		$observa = "Se modifico el responsable  ";

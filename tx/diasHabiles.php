@@ -29,7 +29,6 @@ function diasHabiles($fechaIni,$fechaFin)
 			where to_char(noh_fecha,'YYYY/MM/DD') >= '$fechaIni'
 			and to_char(noh_fecha,'YYYY/MM/DD') <= '$fechaFin'
 		";
-		//$this->db->conn->debug = true;
 		$rs = $this->db->query($isql_busca);
 	$diasFestivos = 0;
 	if(!$rs->EOF )
@@ -91,7 +90,6 @@ function diaFinHabil($fechaIni,$diasTermino)
 			where to_char(noh_fecha,'YYYY/MM/DD') >= '$fechaIni'
 			and to_char(noh_fecha,'YYYY/MM/DD') <= '$fechaFin'
 		";
-		//$this->db->conn->debug = true;
 		$rs = $this->db->query($isql_busca);
 	$diasFestivos = 0;
 	if(!$rs->EOF )

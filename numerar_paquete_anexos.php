@@ -10,7 +10,6 @@ require_once("$ruta_raiz/class_control/TipoDocumento.php");
 if (!$db)
 		$db = new ConnectionHandler($ruta_raiz);
 $db->conn->BeginTrans();
-//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);	 
 $anex = & new Anexo($db);
 $anex->anexoRadicado($numrad,$anexo);

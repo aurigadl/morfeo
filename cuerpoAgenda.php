@@ -58,7 +58,6 @@ include "./envios/paEncabeza.php";
    include_once "./include/db/ConnectionHandler.php";
    require_once("$ruta_raiz/class_control/Mensaje.php");
    if (!$db) $db = new ConnectionHandler($ruta_raiz);
-	 //$db->conn->debug = true;
    $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
    $objMensaje= new Mensaje($db);
    $mesajes = $objMensaje->getMsgsUsr($_SESSION['usua_doc'],$_SESSION['dependencia']);
@@ -182,7 +181,6 @@ if ($swLog==1)
 	//$sqlFecha = $db->conn->DBDate("b.RADI_FECH_RADI", "d-m-Y H:i A");
 	//$sqlFecha = $db->conn->DBTimeStamp("b.RADI_FECH_RADI","" ,"Y-m-d H:i:s");
   //$db->SQLDate('Y-\QQ');
-	//$db->conn->debug = true;
 	include "$ruta_raiz/include/query/queryCuerpoAgenda.php";
 	$rs=$db->conn->Execute($isql);
 	if ($rs->EOF and $busqRadicados)  {

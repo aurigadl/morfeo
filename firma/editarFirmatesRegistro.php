@@ -30,7 +30,6 @@ $objUsuario =  new Usuario($db);
 //Se crea el objeto de gestion de historicos
 $objHist = new Historico($db);
 	
-//$db->conn->debug=true;
 //Almacena la cantidad de firmas solicitadas para borrado
 $num = count($checkValue);
 //Iterador 

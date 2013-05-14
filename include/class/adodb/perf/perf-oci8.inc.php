@@ -264,7 +264,6 @@ CREATE TABLE PLAN_TABLE (
 		}
 		
 		$rs->Close();
-	//	$this->conn->debug=1;
 	
 		if ($partial) {
 			$sqlq = $this->conn->qstr($sql.'%');
@@ -525,7 +524,6 @@ order by
 	
 	function clearsql() 
 	{
-	$this->conn->debug=1;
 		$perf_table = adodb_perf::table();
 	// using the naive "delete from $perf_table where created<".$this->conn->sysTimeStamp will cause the table to lock, possibly
 	// for a long time

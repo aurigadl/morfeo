@@ -350,7 +350,6 @@ $this->page = $maxpage;
 
 function query($query,$db){
 	error_reporting(7);
- //   $db->conn->debug = true;
 	$this->rs = $db->query($query);
 	$this->numFields = $this->rs->FieldCount();
 

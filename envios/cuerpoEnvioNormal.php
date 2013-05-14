@@ -39,7 +39,6 @@ if (!$dep_sel) $dep_sel = $dependencia;
  include_once "$ruta_raiz/js/funtionImage.php";
  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
  $db = new ConnectionHandler("$ruta_raiz");	 
-// $db->conn->debug=true;
  if(!$carpeta) $carpeta=0;
  if(!$estado_sal)   {$estado_sal=2;}
  if(!$estado_sal_max) $estado_sal_max=3;

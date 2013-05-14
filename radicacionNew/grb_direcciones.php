@@ -1,5 +1,4 @@
 <?php
-//$conexion->conn->debug = true;
     /**
      * Modulo en el cual se inserta y actualizan datos de los remitentes y destinatarios de los radicados
      * @autor JAIRO LOSASDA
@@ -176,7 +175,6 @@
         $record['SGD_DIR_TIPO']   = 1;
         $record['SGD_DIR_CODIGO'] = $nextval;
         $record['SGD_DIR_NOMBRE'] = $otro_us1;
-        //$db->conn->debug = true;
         $insertSQL = $conexion->conn->Replace("SGD_DIR_DRECCIONES",
                                                 $record,
                                                 array('RADI_NUME_RADI','SGD_DIR_TIPO'),

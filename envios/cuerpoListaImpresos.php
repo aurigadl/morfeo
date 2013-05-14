@@ -33,7 +33,6 @@ $depeBuscada =$dep_sel;
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 include_once "$ruta_raiz/js/funtionImage.php";
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug = true;
 if(!$dep_sel) $dep_sel = $dependencia;
 $depeBuscada = $dep_sel;
 
@@ -70,6 +69,16 @@ function Marcar()
 	{
 		alert("Debe marcar un elemento");
 	}
+}
+<!-- Funcion que activa el sistema de marcar o desmarcar todos los check  -->
+function markAll()
+ {
+   if(document.gen_lisDefi.elements['checkAll'].checked)
+     for(i=1;i<document.gen_lisDefi.elements.length;i++)
+	document.gen_lisDefi.elements[i].checked=1;
+       else
+	for(i=1;i<document.gen_lisDefi.elements.length;i++)
+		document.gen_lisDefi.elements[i].checked=0;
 }
 </script>
 

@@ -1,6 +1,5 @@
 <?php
 include_once('dataCommon.php');
-//$db->conn->debug = true;
 	/*
 	 * dataCommon.php comparte los datos mas relevantes y los 
 	 * objetos mas utilizados como session,adodb, etc.

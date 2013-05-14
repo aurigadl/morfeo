@@ -32,5 +32,4 @@
 
 	break;
 	}
-      // $db->conn->debug = true;
 ?>

@@ -23,7 +23,6 @@ $tpDepeRad = $_SESSION["tpDepeRad"];
 $usuaPermExpediente = $_SESSION["usuaPermExpediente"];
 
 $ruta_raiz = ".."; 	
- //$db->conn->debug = true;
 	if (!$nurad) $nurad= $rad;
 	if($nurad)
 	{
@@ -95,7 +94,6 @@ function Start(URL, WIDTH, HEIGHT)
     }
 		
 		
-		//$db->conn->debug = true;
 		$expediente = new Expediente($db);
 		$anoExp = substr($numExpediente,0,4);
 		//$secExp = $expediente->secExpediente($dependencia,$codiSRD,$codiSBRD);
@@ -103,11 +101,9 @@ function Start(URL, WIDTH, HEIGHT)
 	  *  @param $numeroExpediente String  Numero Tentativo del expediente, Hya que recordar que en la creacion busca la ultima secuencia creada.
 	  *  @param $nurad  Numeric Numero de radicado que se insertara en un expediente.
 	  */
-		//$db->conn->debug = true;
 		//$numeroExpedient = $expediente->crearExpediente( $numeroExpediente,$nurad,$dependencia,$codusuario,$usua_doc,$codiSRD,$codiSBRD,'true',$fechaExp);
 		//$numeroExpediente = $expediente->modificarExpediente($numeroExpediente,$nurad,$dependencia,$codusuario,$usua_doc,$codiSRD,$codiSBRD,'true',$fechaExp);
 		//$numeroExpediente = $expediente->modificarExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_doc,$usuaDocExp,$codiSRD,$codiSBRD,$expOld=null,$fechaExp=null, $codiPROC=null, $arrParametro=null )
-		//$db->conn->debug = true;
 		$numeroExpediente = $expediente->modificarTRDExpediente($radicado,$numeroExpediente,$codiSRD,$codiSBRD,$codProc,$arrParametro,$usuaDocExp);
 //echo $codProc;
 		if($numeroExpediente==0)
@@ -326,7 +322,6 @@ function Start(URL, WIDTH, HEIGHT)
     $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN";
     // print $sqlParExp;
     $rsParExp = $db->conn->query( $sqlParExp );
-    //$db->conn->debug=true;
     while ( !$rsParExp->EOF )
     {
   ?>

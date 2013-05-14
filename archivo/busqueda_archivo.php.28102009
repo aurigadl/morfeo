@@ -515,7 +515,6 @@ $rsr->MoveNext();
 
 else{
 	include("$ruta_raiz/include/query/archivo/queryBusqueda_exp.php");
-	//$db->conn->debug=true;
 	$rs=$db->query($sql);
 	while(!$rs->EOF){
 		$expnum=$rs->fields['SGD_EXP_NUMERO'];

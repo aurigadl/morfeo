@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 /**
   * Se añadio compatibilidad con variables globales en Off
@@ -42,14 +42,6 @@ require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler($ruta_raiz);
 error_reporting(7);
 $verrad = "";
-/** PROGRAMA DE CARGA DE IMAGENES DE RADICADOS
-  *@author JAIRO LOSADA - DNP - SSPD
-  *@version Orfeo 3.5.1
-  *
-  *@param $varBuscada sTRING Contiene el nombre del campo que buscara
-  *@param $krd  string Trae el Login del Usuario actual
-  *@param $isql string Variable temporal que almacena consulta
-  */
 ?>
 <HTML>
 <head>
@@ -77,11 +69,7 @@ $verrad = "";
 <BODY>
 <FORM ACTION="<?=$_SERVER['PHPSELF']?>?<?=session_name()?>=<?=session_id()?>" method="POST">
 <?
-/**
-  *@param $varBuscada string Contiene el nombre del campo que buscara
-  *@param $busq_radicados_tmp string Almacena cadena de busqueda de radicados generada por pagina paBuscar.php
-  */
-$varBuscada = "cast(RADI_NUME_RADI as varchar(15))";
+$varBuscada = "RADI_NUME_RADI";
 include "$ruta_raiz/envios/paEncabeza.php";
 include "$ruta_raiz/envios/paBuscar.php";
 $encabezado = "".session_name()."=".session_id()."&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion&carpeta=$carpeta&tipo_carp=$tipo_carp&chkCarpeta=$chkCarpeta&busqRadicados=$busqRadicados&nomcarpeta=$nomcarpeta&agendado=$agendado&";
@@ -109,7 +97,6 @@ if($Buscar AND $busq_radicados_tmp)
 
 	$rs=$db->conn->Execute($query);
 
-	//$db->conn->debug=true;
 	if ($rs->EOF)  {
 		echo "<hr><center><b><span class='alarmas'>No se encuentra ningun radicado con el criterio de busqueda</span></center></b></hr>";
 	}

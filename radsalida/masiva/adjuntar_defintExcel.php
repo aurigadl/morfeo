@@ -14,11 +14,9 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 require_once("$ruta_raiz/class_control/CombinaError.php");
 $conexion = new ConnectionHandler($ruta_raiz);
 $conexion->conn->StartTrans();
-//$conexion->conn->debug = true;
 $conexion->conn->SetFetchMode(ADODB_FETCH_ASSOC);	 
 //Si no llega la dependencia recupera la sesi�n
 $phpsession = session_name()."=".session_id();
-//$conexion->conn->debug=true;
 //variable con elementos de sesion
 $params=$phpsession."&krd=$krd&codiTRD=$codiTRD&dependencia=$dependencia&depe_codi_territorial=$depe_codi_territorial&usua_nomb=$usua_nomb&depe_nomb=$depe_nomb&tipo=$tipo";
 //print ("luego de sesion");

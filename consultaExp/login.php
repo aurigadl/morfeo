@@ -16,7 +16,6 @@ if($_SERVER['HTTP_HOST']=='orfeo38.supersolidaria.gov.co')
 			$db = new ConnectionHandler("$ruta_raiz");
 			$db->conn->SetFetchMode(ADODB_FETCH_NUM);	
 			$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-			//$db->conn->debug = true;
 			//consulta para verificar si el usuario tiene acceso publico
 			$sql_usu_ext ="select PERMISO_USU_EXTERNO from SES_PERMISOS where USUA_LOGIN='".strtoupper($_POST['krd'])."'";	
 			$rs_usu_ext = $db->query($sql_usu_ext);
@@ -63,7 +62,6 @@ if($_SERVER['HTTP_HOST']=='orfeo38.supersolidaria.gov.co')
 
 				include "$ruta_raiz/session_orfeo.php";
 				require_once("$ruta_raiz/class_control/Mensaje.php");
-				$db->conn->debug = true;
 
 				if($usua_nuevo==0)
 				{

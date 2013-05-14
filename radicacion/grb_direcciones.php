@@ -115,7 +115,6 @@ if ($nextval==-1)
 	echo "<span class='etextomenu'>No se encontr&oacute; la secuencia sec_dir_direcciones ";
 }
 global $ADODB_COUNTRECS;
-//$db->conn->debug = true;
 if($documento_us1 and !$cc)
 {
 	$sgd_ciu_codigo='null';

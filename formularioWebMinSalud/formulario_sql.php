@@ -47,7 +47,6 @@ while (!$rs_depto->EOF)
 if(isset($_GET['depto']))
 {
 	$sql_muni="select distinct * from municipio where dpto_codi=".$_GET['depto']." order by muni_nomb";
-	//$db->conn->debug = true;
 	$rs_muni=$db->conn->Execute($sql_muni);
 	$muni="<select name='muni' id ='slc_municipio' class='field select medium' tabindex='19'>";
 	while (!$rs_muni->EOF)

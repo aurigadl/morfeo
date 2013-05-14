@@ -153,7 +153,6 @@ $radSelec = "";
 	$sqlConcat = $db->conn->Concat("a.radi_nume_sal","'-'","a.sgd_renv_codigo","'-'","a.sgd_fenv_codigo","'-'","a.sgd_renv_peso");
 	include "$ruta_raiz/include/query/administracion/queryCuerpoConsulta.php";
 
-//$db->conn->debug = true;
 
     $rs=$db->conn->Execute($isql);
 	$nregis = $rs->fields["NOMBRE"];		

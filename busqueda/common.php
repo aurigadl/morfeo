@@ -138,7 +138,6 @@ function db_fill_array($sql_query)
 {
   global  $ruta_raiz;
   $db = new ConnectionHandler($ruta_raiz);
-  //$db->conn->debug=true;
   $rs=$db->query($sql_query);
   if ($rs && !$rs->EOF  )
   {

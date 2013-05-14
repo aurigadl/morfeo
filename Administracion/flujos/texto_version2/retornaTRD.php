@@ -10,7 +10,6 @@ include "$ruta_raiz/config.php";
     $db = new ConnectionHandler( "$ruta_raiz" );
     if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-	$db->conn->debug = true;    
 
 $serie = isset( $_GET['serie'] )? $_GET['serie'] : null;
 $subserie = isset( $_GET['subserie'] )? $_GET['subserie'] : null;

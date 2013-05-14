@@ -17,7 +17,6 @@ include ("./encabezado.php");
 //-------------------------------
 $sFileName = "pedidos.php";
 //===============================
-//$db->conn->debug=true;
 
 //===============================
 // pedidos PageSecurity begin
@@ -368,7 +367,6 @@ $sWhere .= " AND P.PRES_ESTADO = 1 AND PRES_DEPE_ARCH=".$depe;
 //-------------------------------
 // Execute SQL statement
 //-------------------------------
-//$db->conn->debug=true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $rs=$db->query($sSQL);
 $db->conn->SetFetchMode(ADODB_FETCH_NUM);  

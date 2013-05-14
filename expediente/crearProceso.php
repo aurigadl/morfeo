@@ -1,5 +1,12 @@
 <?php
-	session_start();
+session_start();
+
+/**
++ * Pagina que adiciona un proceso a Un Expediente
++ * @autor Fundacion Correlibre 2013 / Jairo Losada 2011
++ * @licencia GNU/GPL v3
++ */
+
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 $krd = $_SESSION["krd"];
@@ -12,7 +19,6 @@ $tip3img =$_SESSION["tip3img"];
 $ruta_raiz= "..";
 	include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 	$db = new ConnectionHandler("$ruta_raiz");
-	$db->conn->debug=true;
 	include_once "$ruta_raiz/include/tx/Historico.php";
 	include_once ("$ruta_raiz/class_control/TipoDocumental.php");
 	include_once "$ruta_raiz/include/tx/Expediente.php";
@@ -262,7 +268,7 @@ function validar(){
 	</TD>
 	<td class=listado2>
 <?
-	$queryUs = "select usua_nomb, usua_doc from usuario where depe_codi=$dependencia AND USUA_ESTA=1
+	$queryUs = "select usua_nomb, usua_doc from usuario where depe_codi=$dependencia AND USUA_ESTA='1'
 							order by usua_nomb";
 	$rsUs = $db->conn->Execute($queryUs);
 	print $rsUs->GetMenu2("usuaDocExp", "$usuaDocExp", "0:-- Seleccione --", false,""," class='select' onChange='submit()'");

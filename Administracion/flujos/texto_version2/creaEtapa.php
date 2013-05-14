@@ -1,6 +1,12 @@
 <?
 session_start();
 
+/**
+  * Pagina que administra las etapas de un Proceso
+  * @autor Fundacion Correlibre 2013 / Jairo Losada 2011
+  * @licencia GNU/GPL v3
+  */
+
 if($_POST["nombreEtapa"]) $nombreEtapa = $_POST["nombreEtapa"];
 if($_POST["terminoEtapa"]) $terminoEtapa = $_POST["terminoEtapa"];
 if($_POST["proceso"]) $proceso = $_POST["proceso"];
@@ -8,8 +14,8 @@ if($_POST["etapaAEliminar"]) $etapaAEliminar = $_POST["etapaAEliminar"];
 if($_POST["clickboton"]) $clickboton = $_POST["clickboton"];
 if($_GET["crear"]) $crear = $_GET["crear"];
 
-
-import_request_variables("gp", "");
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
 $ruta_raiz = "../../..";
 
@@ -18,7 +24,6 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler( "$ruta_raiz" );
 if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-//$db->conn->debug = true;    
 $entrada = 0;
 $modificaciones = 0;
 $salida = 0;

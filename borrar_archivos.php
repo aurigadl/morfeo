@@ -10,7 +10,6 @@ $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);		
 //$db->conn->SetTransactionMode("SERIALIZABLE");
 //$db->conn->BeginTrans();
-//b->conn->debug = true;
 $isql = "select usua_login,usua_pasw,codi_nivel, USUA_NOMB from usuario ".
 				"where usua_login ='$usua'";
 $rs=$db->query($isql);

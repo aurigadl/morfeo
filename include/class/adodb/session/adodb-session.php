@@ -268,7 +268,6 @@ class ADODB_Session {
 
 			$conn = ADODB_Session::_conn();
 			if ($conn) {
-				$conn->debug = $_debug;
 			}
 			$set = true;
 		} elseif (!$set) {
@@ -542,7 +541,6 @@ class ADODB_Session {
 		$conn =& ADONewConnection($driver);
 
 		if ($debug) {
-			$conn->debug = true;
 //			ADOConnection::outp( " driver=$driver user=$user pwd=$password db=$database ");
 		}
 

@@ -182,7 +182,6 @@ class radicacionAjax extends Radicacion{
 			  $fecha_gen_doc_YMD = substr($radiFechOficio,6 ,4)."-".substr($radiFechOficio,3 ,2)."-".substr($radiFechOficio,0 ,2);
 			  $this->radiFechOfic =  $fecha_gen_doc_YMD;
 			}
-			//$this->db->conn->debug = true;
 			$respuestaUpdate = $this->updateRadicado($radiNumeRadi, $radPathUpdate = null);
 			
 			//return "Entro.".$respuestaUpdate . ">". $this->db->conn->query;

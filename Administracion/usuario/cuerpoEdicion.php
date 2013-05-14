@@ -151,7 +151,6 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
     }
 	$sqlChar = $db->conn->SQLDate("d-m-Y H:i A","SGD_RENV_FECH");
 	$sqlConcat = $db->conn->Concat("a.radi_nume_sal","'-'","a.sgd_renv_codigo","'-'","a.sgd_fenv_codigo","'-'","a.sgd_renv_peso");
-	//$db->conn->debug =true;
 	include "$ruta_raiz/include/query/administracion/queryCuerpoEdicion.php";
   
   $rs=$db->conn->Execute($isql);

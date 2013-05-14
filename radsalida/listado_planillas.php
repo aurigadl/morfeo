@@ -1,10 +1,9 @@
 <?
 session_start();
 define('ADODB_ASSOC_CASE', 0);
-//$db->conn->debug = true;
 //Limite de registros establecidos en cada entidad
 $nregisEntidad = 32;
-if ((strtoupper($_SESSION["entidad"]) == "correlibre"))
+if ((strtoupper($_SESSION["entidad"]) == "MINSALUD"))
 {
    $nregisEntidad = 500;
  }
@@ -83,7 +82,6 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
                 
                 $isqlUp = "select sgd_renv_codigo  from SGD_RENV_REGENVIO a,  SGD_FENV_FRMENVIO d $where_isql $order_isql";
 		$rsParaUp = $db->conn->Execute($isqlUp);
-                $db->conn->debug = true;
 		$nregis = 0 ;
 		$rvCodigo = $rsParaUp->fields["sgd_renv_codigo"] ;
 		if ($rvCodigo)  {
@@ -130,7 +128,7 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 		<TR><TD class="listado2"  align="center"><center>
 Se han Generado <b><?=$total_registros?> </b>Registros para Imprimir en <?=$paginas?> Planillas. <br>
 <?
-if ((strtoupper($_SESSION["entidad"]) != "correlibre")){
+if ((strtoupper($_SESSION["entidad"]) != "MINSALUD")){
 ?>
 <a href='<?=$arpdf_tmp?>' target='<?=date("dmYh").time("his")?>'>Abrir Archivo PDF</a></center>
 <? }

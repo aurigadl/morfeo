@@ -39,7 +39,6 @@ $numrad = $verrad;
 //error_reporting(7);
 $db = new ConnectionHandler(".");
 $db->conn->SetFetchMode(3);
-//$db->conn->debug = true;
 // verificacion si el radicado se encuentra en el usuario Actual
 include "$ruta_raiz/tx/verifSession.php";
 ?>

@@ -184,7 +184,6 @@ class perf_mysql extends adodb_perf{
 	function FindDBHitRatio()
 	{
 		// first find out type of table
-		//$this->conn->debug=1;
 		$rs = $this->conn->Execute('show table status');
 		if (!$rs) return '';
 		$type = strtoupper($rs->fields[1]);

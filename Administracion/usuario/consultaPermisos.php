@@ -72,7 +72,6 @@ while ($tmp = $rs_depvis->FetchRow())
 </head>
 <body>
 <?
-//	$db->conn->debug = false;
 $encabezado = "krd=$krd&usModo=$usModo&perfil=$perfil&dep_sel=$dep_sel&cedula=$cedula&usuLogin=$usuLogin&nombre=$nombre&dia=$dia&mes=$mes&ano=$ano&ubicacion=$ubicacion&piso=$piso&extension=$extension&email=$email&usuDocSel=$usuDocSel&usuLoginSel=$usuLoginSel";
 ?>
 <table width="80%" align="center">

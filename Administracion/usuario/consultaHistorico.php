@@ -47,7 +47,6 @@ if (!$dependencia)   include "../../rec_session.php";
  $db = new ConnectionHandler("$ruta_raiz");	 
  $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
-//$db->conn->debug=true;
 
  $nomcarpeta = "Consulta Historico";
 
@@ -122,7 +121,6 @@ Nombre: <?=$nombre?>
 //	$sqlChar = $db->conn->SQLDate("d-m-Y H:i A","SGD_RENV_FECH");
 	include "$ruta_raiz/include/query/administracion/queryConsultaHistorico.php";
 
-	//$db->conn->debug = true;
     $rs=$db->conn->Execute($isql);
 
 	$nregis = $rs->fields["ADMINISTRADOR"];		

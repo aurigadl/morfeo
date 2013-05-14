@@ -122,7 +122,6 @@ switch($entidad)
     $rs=$db->conn->Execute($isql);
 //    $pagEdicion="../entidad/modificarbodegaempresa.php";
 //   $pagConsulta="../entidad/consultarbodegaempresa.php";
-	$db->conn->debug = false;
 	$pager = new ADODB_Pager($db,$isqlC,'adodb', true,$orderNo,$orderTipo);
 	$pager->checkAll = false;
 	$pager->checkTitulo = true;

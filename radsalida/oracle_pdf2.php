@@ -385,7 +385,6 @@ function query($query,$db){
 
  error_reporting(7);
 		
-	$db->conn->debug = false;
 	$this->rs = $db->query($query);
 
 //    $this->results = ora_parse($this->cursor,$query);

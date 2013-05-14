@@ -2,7 +2,6 @@
 $ruta_raiz = "../../..";
 include_once ("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler($ruta_raiz);
-//$db->conn->debug = true;
 $id = (isset($_GET['id']) && !empty($_GET['id'])) ? $_GET['id'] : 0;
 //if ($deta_causal and $sector) {
 	$isql = "SELECT u.USUA_NOMB, u.USUA_LOGIN, u.SGD_ROL_CODIGO, u.USUA_CODI FROM USUARIO u

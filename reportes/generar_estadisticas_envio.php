@@ -17,7 +17,6 @@ error_reporting(7);
 $ruta_raiz = "..";
 include_once  "../include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("..");
-//$db->conn->debug = true;
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;

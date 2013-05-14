@@ -21,7 +21,6 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$depen
 <?
 if($grabar){
 $squ="update sgd_eit_items set SGD_EIT_COD_PADRE='$cod_pa',SGD_EIT_NOMBRE='$nombre',SGD_EIT_SIGLA='$sigla' WHERE SGD_EIT_CODIGO LIKE '$cod'";
-//$db->conn->debug=true;
 $rs=$db->conn->Execute($squ);
 if($rs->EOF)echo "Achivo Modificado";
 else echo "No se pudo modificar";

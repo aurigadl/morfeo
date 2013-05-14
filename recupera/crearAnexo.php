@@ -12,7 +12,6 @@
   include_once("buscarFila.php");
 	if (!$db) $db = new ConnectionHandler("$ruta_raiz");
 	error_reporting(7);
-	$db->conn->debug = true;
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$objTipoDocto = new TipoDocumento($db);
 

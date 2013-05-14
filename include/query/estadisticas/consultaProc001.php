@@ -118,7 +118,6 @@ switch($db->driver)
 	$queryEDetalle .= $condicionE . $orderE;
 	break;
 	}
-	//$db->conn->debug = true;
   	function pintarEstadProc($fila,$indice,$numColumna){
         	global  $ubicacion,$titulos,$ruta_raiz,$_POST,$_GET,$db,$whereAnno;
         	$salida="";

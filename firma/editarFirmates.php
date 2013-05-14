@@ -17,7 +17,6 @@ if (!$dependencia)   include "$ruta_raiz/rec_session.php";
  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 error_reporting(7);
  $db = new ConnectionHandler("$ruta_raiz");	 
- //$db->conn->debug = true;
  $accion_sal = "Borrar Solicitud de Firma";
  $nomcarpeta = "Firmas solicitadas para el radicado $radicado";
  $pagina_sig = "editarFirmatesRegistro.php";

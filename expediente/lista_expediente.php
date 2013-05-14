@@ -88,7 +88,6 @@ function Responsable(numeroExpediente) {
 	$isql = "SELECT USUA_DOC_RESPONSABLE, SGD_EXP_PRIVADO
 			FROM SGD_SEXP_SECEXPEDIENTES
 			WHERE SGD_EXP_NUMERO = '$numeroExpediente'";
-	//$db->conn->debug = true;
 	$rs = $db->conn->Execute($isql);
 	$responsable= $rs->fields['USUA_DOC_RESPONSABLE'];
 	$nivelExp= $rs->fields['SGD_EXP_PRIVADO'];
@@ -216,7 +215,6 @@ function incluirSubexpediente( numeroExpediente, numeroRadicado )
 <body bgcolor="#FFFFFF" topmargin="0">
 <input type="hidden" name="ordenarPor" id="ordenarPor" value="">
 <?php
-//$db->conn->debug = true;
 // Modificado Infom�trika 23-Julio-2009
 // Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
 // Cambi� $_POST['orden'] por $orden
@@ -447,7 +445,6 @@ if($usuaPermExpediente >= 1  ) {
 	include_once ("$ruta_raiz/include/tx/Expediente.php");
 	$expediente = new Expediente($db);
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-	//$db->conn->debug=true;
 
 	if($radi_tipo_deri==0 and $radi_nume_deri) {
 		$verrad_padre = $radi_nume_deri;
@@ -506,7 +503,6 @@ if($usuaPermExpediente >= 1  ) {
 	$isqlDepR = "SELECT USUA_DOC_RESPONSABLE, SGD_EXP_PRIVADO,SGD_SEXP_PAREXP1,SGD_SEXP_PAREXP2
 			FROM SGD_SEXP_SECEXPEDIENTES
 			WHERE SGD_EXP_NUMERO = '$numExpediente' ORDER BY SGD_SEXP_FECH DESC ";
-	//$db->conn->debug=true;
 	$rsDepR = $db->conn->Execute($isqlDepR);
 	$nivelExp= $rsDepR->fields['SGD_EXP_PRIVADO'];
 	$docRes= $rsDepR->fields['USUA_DOC_RESPONSABLE'];
@@ -954,7 +950,6 @@ Modificado Carlos Barrero -SES
 	</TD>
 	</tr>
 <?
-//$db->conn->debug =true;
 $rs = $db->conn->query($isql);
 $i = 0;
 while(!$rs->EOF) {
@@ -1193,7 +1188,6 @@ while(!$rs->EOF) {
 	  *   Carga los anexos del radicado indicado en la variable $radicado_d
 		*   incluye la clase anexo.php
 		**/
-  //$db->conn->debug = true;
     include_once "$ruta_raiz/class_control/anexo.php";
     include_once "$ruta_raiz/class_control/TipoDocumento.php";
     $a = new Anexo($db->conn);

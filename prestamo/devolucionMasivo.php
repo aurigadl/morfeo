@@ -10,7 +10,6 @@
 session_start();
 include ("./common.php");
 include ("./encabezado.php");
-//$db->conn->debug=true;
 
 // devolucionMasivo CustomIncludes end
 //-------------------------------

@@ -2,7 +2,6 @@
 $ruta_raiz = "../../..";
 include_once ("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler($ruta_raiz);
-//$db->conn->debug = true;
 $id = (isset($_GET['id']) && !empty($_GET['id'])) ? $_GET['id'] : 0;
 //if ($deta_causal and $sector) {
 	$isql = "select SGD_EIT_NOMBRE,SGD_EIT_CODIGO, SGD_EIT_COD_PADRE,CODI_MUNI, CODI_DPTO from SGD_EIT_ITEMS

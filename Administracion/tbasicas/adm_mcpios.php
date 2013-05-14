@@ -9,7 +9,6 @@ $ADODB_COUNTRECS = false;
 include_once($ruta_raiz.'/config.php'); 			// incluir configuracion.
 include_once($ruta_raiz."/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug = true;
 if ($db)
 {	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	if (isset($_POST['btn_accion']))

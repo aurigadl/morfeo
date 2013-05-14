@@ -751,7 +751,6 @@ function seHaRadicadoAnexo($cod){
         if($this->sgd_exp_numero) $recordR["SGD_EXP_NUMERO"]      = $this->sgd_exp_numero;
         if($this->anex_estado_mail) $recordR["ANEX_ESTADO_EMAIL"] = $this->anex_estado_mail;
         if($this->usuaDoc) $recordR["USUA_DOC"] = $this->usuaDoc;
-        //$this->cursor->conn->debug = true;
         $insert = $this->cursor->insert("ANEXOS", $recordR);
         if($insert==1)
         {

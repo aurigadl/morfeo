@@ -69,7 +69,6 @@ switch($db->driver)
                         $condiMedio = " AND c.mrec_codi = $mrecCodi ";
 			$queryETodosDetalle = $queryEDetalle . $orderE;
 			$queryEDetalle .= $condiMedio . $orderE;
-                //$db->conn->debug = true;
 		}break;
 	//case 'oracle':
 	//case 'ocipo':

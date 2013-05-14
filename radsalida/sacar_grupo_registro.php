@@ -29,7 +29,6 @@ if (!$db)
 $fecha_hoy = Date("Y-m-d");
 $sqlFechaHoy=$db->conn->DBDate($fecha_hoy);
 
-//$db->conn->debug = true;
 //número de radicados que fueron seleccionados de la lista
 $num = count($check_value);
 $i = 0; 

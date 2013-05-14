@@ -25,7 +25,6 @@ $objCtrlAplInt = new ControlAplIntegrada($db);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 //$db2->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $num_archivos=0;
-//$db->conn->debug = true;
 $anex = & new Anexo($db);
 $sqlFechaDocto = $db->conn->SQLDate("Y-m-D H:i:s A","sgd_fech_doc");
 $sqlFechaAnexo = $db->conn->SQLDate("Y-m-D H:i:s A","anex_fech_anex");

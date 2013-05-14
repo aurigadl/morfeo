@@ -29,7 +29,6 @@ $iSql = "select * from radicado
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
-$db->conn->debug = true;
 
 $rs = $db->conn->query($iSql);
 $f = fopen("archivo.html", "rb");
@@ -47,7 +46,6 @@ while(!$rs->EOF){
               where radi_nume_radi=$radicado and
               sgd_dir_tipo=1
               ";
-  $db->conn->debug = true;
   $rsDir = $db->conn->query($iSql2);
   
   

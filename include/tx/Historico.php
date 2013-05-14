@@ -124,7 +124,6 @@ function insertarHistoricoArch($id,$radicados,  $depeOrigen , $usCodOrigen, $obs
 					DEPE_CODI=$depeOrigen
 					AND USUA_CODI=$usCodOrigen";
 		# Busca el usuairo Origen para luego traer sus datos.
-		//$this->db->conn->debug=true;
 		$rs = $this->db->conn->Execute($sql);
 		$usDocOrigen = $rs->fields["USUA_DOC"];
 		$record = array(); # Inicializa el arreglo que contiene los datos a insertar

@@ -60,7 +60,6 @@ include('./captcha/simple-php-captcha.php');
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 session_start();
 $_SESSION['captcha'] = captcha();
 $fechah = date("dmy") . "_" . time("hms");

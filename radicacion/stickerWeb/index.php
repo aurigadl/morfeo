@@ -16,7 +16,6 @@ $tip3desc       = $_SESSION["tip3desc"];
 $tip3img        = $_SESSION["tip3img"];
 
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-//$db->conn->debug = true;
 if ($verradicado) $verrad = $verradicado;
 
 $numrad = $verrad;

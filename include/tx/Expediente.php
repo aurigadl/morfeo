@@ -78,7 +78,6 @@ class Expediente
 	{
 		$this->db = $db;
 		$this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//		$this->db->conn->debug = true;
 	}
 
 /** FUNCION CONSULTA EXPEDIENTE
@@ -253,14 +252,12 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
         }
     }
 
-	//$this->db->conn->debug = true; 200590012345
 	$estado_expediente =0;
 	$query="select SGD_EXP_NUMERO
 			from SGD_SEXP_SECEXPEDIENTES
 			WHERE
 			SGD_EXP_NUMERO='$numExpediente'
 			";
-    // $this->db->conn->debug = true;
 	if($expOld=="false")
 	{
 	$rs = $this->db->conn->Execute($query);
@@ -350,7 +347,6 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
 				,SGD_SBRD_CODIGO='$codiSbrd',
 				SGD_PEXP_CODIGO='$codiProceso',
 				USUA_DOC_RESPONSABLE='$usuaDoc'";
-//$this->db->conn->debug=true;
 		if($valorParametro != "''"  )
     		{
 			if($campoParametro != ""){
@@ -359,7 +355,6 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
 			}
     		}
     		$query .= " WHERE SGD_EXP_NUMERO = '$numExpediente'";
-//$this->db->conn->debug=true;
 		$rs = $this->db->conn->query($query);
  		}
     	}
@@ -459,7 +454,6 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
 				SGD_EXP_NUMERO='$num_expediente'
 				and SGD_EXP_ESTADO='1'
 				";
-//$this->db->conn->debug=true;
 		$rs = $this->db->conn->query($query);
 		if ($rs){
 
@@ -617,7 +611,6 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
 				substr(sgd_exp_NUMERO,length(sgd_exp_numero)-5,5) desc, sgd_sexp_secuencia DESC
 			";
 			// AND SGD_SEXP_SECUENCIA > 0
-	  //$this->db->conn->debug = true;
 	  $rs = $this->db->conn->Execute($query);
 		$numExpediente = $rs->fields["SGD_EXP_NUMERO"];
 		$secExp = $rs->fields["SGD_SEXP_SECUENCIA"];
@@ -687,7 +680,6 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
         }
         $q_TRDExp .=" ORDER BY SEXP.SGD_SEXP_FECH desc"	;
         // print $q_TRDExp;
-       // $this->db->conn->debug=true;
         $rs_TRDExp = $this->db->conn->query( $q_TRDExp );
 
         $arrTRDExp['serie'] = $rs_TRDExp->fields['SGD_SRD_CODIGO']."-".$rs_TRDExp->fields['SGD_SRD_DESCRIP'];

@@ -13,7 +13,6 @@
 	$rs=$db->query($isql);
 	$krd= $rs->fields["USUA_LOGIN"];
 
-	$db->conn->debug=true;
 echo("$krd");*/
 	?>
 <html>

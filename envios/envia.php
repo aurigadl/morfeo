@@ -29,7 +29,6 @@ $tip3img     = $_SESSION["tip3img"];
 
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
-//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 ?>
 <html>
@@ -377,7 +376,6 @@ $isql = "SELECT a.SGD_FENV_CODIGO, a.SGD_CLTA_DESCRIP, a.SGD_CLTA_PESDES, a.SGD_
 			AND a.SGD_TAR_CODIGO = b.SGD_TAR_CODIGO
 			AND a.SGD_CLTA_CODSER = b.SGD_CLTA_CODSER
 			AND a.SGD_CLTA_CODSER = $tipoCoberturaEnvio";
-//$db1->conn->debug = true;
 $rsEnvio = $db1->conn->query($isql);
 
 $tmp = 0 ;

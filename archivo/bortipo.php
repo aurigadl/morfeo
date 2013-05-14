@@ -6,7 +6,6 @@ include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 include_once "$ruta_raiz/include/tx/Historico.php";
 include_once "$ruta_raiz/include/tx/Expediente.php";
 $db = new ConnectionHandler( "$ruta_raiz" );
-//$db->conn->debug = true;
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia&krd=$krd&cod=$cod&tipo=3";
 $encabezado2 = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia&krd=$krd&cod=$cod&tipo=4";
 $encabezado3 = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia&krd=$krd&cod=$cod&tipo=6";
@@ -32,7 +31,6 @@ if($tipo==3){
 $pru=$db->conn->Execute("select sgd_exp_edificio from sgd_exp_expediente where sgd_exp_edificio = '$cod'");
 if($pru->RecordCount()==0){
 $sql="delete from sgd_eit_items where sgd_eit_codigo = '$cod'";
-//$db->conn->debug=true;
 $rs=$db->conn->Execute($sql);
 $sqli="select sgd_eit_codigo from sgd_eit_items where sgd_eit_cod_padre = '$cod'";
 $rsi=$db->conn->Execute($sqli);
