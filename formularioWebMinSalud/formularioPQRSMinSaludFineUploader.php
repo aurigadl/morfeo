@@ -21,7 +21,6 @@ $_SESSION["secRadicaFormularioWeb"]=$secRadicaFormularioWeb; // Osea que usa la 
 $_SESSION["idFormulario"] = sha1(microtime(true).mt_rand(10000,90000));
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 
 include('./funciones.php');
 include('./formulario_sql.php');

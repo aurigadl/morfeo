@@ -430,7 +430,6 @@ function pestanas(pestana) {
         if($rad2) $tpRadicado = "2";
         if($rad0) $tpRadicado = "0";
         echo "<input type='hidden' name='tpRadicado' value='$tpRadicado'>";
-        //$db->conn->debug = true;
         $docDia = $db->conn->SQLDate('D','a.RADI_FECH_OFIC');
         $docMes = $db->conn->SQLDate('M','a.RADI_FECH_OFIC');
         $docAno = $db->conn->SQLDate('Y','a.RADI_FECH_OFIC');
@@ -1555,9 +1554,7 @@ $Tx = new Tx($db);
 echo $ent;
 echo "t";
 print_r($tpDepeRad[$ent]);
-//		$db->conn->debug = true;
 		$noRad = $rad->newRadicado($ent, $tpDepeRad[$ent]);
-//		$db->conn->debug = false;
 	if ($noRad=="-1")
 		die("<hr><b><font color=red><center>Error no genero un Numero de Secuencia o Inserto el radicado<br>SQL </center></font></b><hr>");
 
@@ -1613,9 +1610,7 @@ print_r($tpDepeRad[$ent]);
 	}
 	$sgd_dir_us2=2;
 	$conexion = $db;
-	//$db->conn->debug = true;
 	include "./grb_direcciones.php";
-	//$db->conn->debug = false;
 	$verradicado = $nurad;
 
 		echo "<script>window.open('../verradicado.php?verrad=$nurad&var_envio=$var_envio".$datos_envio."&datoVer=985&ruta_raiz=".$ruta_raiz."', 'Modificacion_de_Datos', 'height=700,width=650,scrollbars=yes');</script>";
@@ -1889,7 +1884,6 @@ if(!$Submit3 and !$Submit4){
 </form>
 <?php
     if ($debugUsr == "CARLOS") {
-       //$db->conn->debug = false;
     }
     $verrad = $nurad;
     $radi = $nurad;

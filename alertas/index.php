@@ -285,7 +285,6 @@ session_start();
     		if(!$radi_nume_salida) $radi_nume_salida = 0;
     		$sql_anx = "SELECT * FROM ANEXOS WHERE RADI_NUME_SALIDA = $radi_nume_salida AND ANEX_TIPO = 20";
     //		echo $sql_anx;
-    //		$db->conn->debug = true;
     		$rs_anx = $db->query($sql_anx);
     		if(!$rs_anx->EOF ){
     			if($rs_anx->fields["ANEX_ESTADO"] < 3){

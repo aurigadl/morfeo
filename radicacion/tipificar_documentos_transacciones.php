@@ -46,7 +46,6 @@ if (!$ruta_raiz) $ruta_raiz= "..";
 	$db = new ConnectionHandler("$ruta_raiz");
 	if (!defined('ADODB_FETCH_ASSOC')) define('ADODB_FETCH_ASSOC',2);
    	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-	//$db->conn->debug=true;
 	include_once ("../include/query/busqueda/busquedaPiloto1.php");
 	include_once "$ruta_raiz/include/tx/Historico.php";
     include_once ("$ruta_raiz/class_control/TipoDocumental.php");

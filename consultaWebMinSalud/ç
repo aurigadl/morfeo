@@ -13,7 +13,6 @@ if(!$tdoc) $tdoc = 0;
 		 order by a.SGD_FLD_CODIGO";
 
 
-	$db->conn->debug=true;
 	$rs=$db->query($isql);
 ?>
 <TABLE><TR><TD></TD></TR></TABLE>

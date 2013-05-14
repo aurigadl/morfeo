@@ -31,7 +31,6 @@
  $ruta_raiz = "..";
  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
  $db = new ConnectionHandler("$ruta_raiz");	
- //$db->conn->debug = true;
  
  $encabezado = "".session_name()."=".session_id()."&filtroSelect=$filtroSelect&accion_sal=$accion_sal&dependencia=$dependencia&tpAnulacion=$tpAnulacion&orderNo=";
  $linkPagina = "$PHP_SELF?$encabezado&accion_sal=$accion_sal&orderTipo=$orderTipo&orderNo=$orderNo";
@@ -116,7 +115,6 @@
  			       and $sqlFechaHoy between $sgd_sbrd_fechini and $sgd_sbrd_fechfin
 			 order by detalle
 			  ";
-	//$db->conn->debug = true;
 	$rsSub=$db->conn->query($querySub);
 	include "$ruta_raiz/include/tx/ComentarioTx.php";
 	print $rsSub->GetMenu2("tsub", $tsub, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
@@ -139,7 +137,6 @@
   </td>
   </tr>
 <?
-//  $db->conn->debug = true;
   $isql = "select m.depe_codi_aplica
                  from sgd_mrd_matrird m
                          where m.depe_codi = '$coddepe'
@@ -192,7 +189,6 @@
 	
 	$encabezado = "".session_name()."=".session_id()."&krd=$krd&estado_sal=$estado_sal&estado_sal_max=$estado_sal_max&accion_sal=$accion_sal&coddepe=$coddepe&dep_sel=$dep_sel&med=$med&tsub=$tsub&codserie=$codserie&nomcarpeta=$nomcarpeta&orderTipo=$orderTipo&orderNo=";
 	$linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo";
-	//$db->conn->debug = false;
 	$pager = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);
 	$pager->checkAll = false;
 	$pager->checkTitulo = true; 	
@@ -234,7 +230,6 @@
 	$encabezado = "".session_name()."=".session_id()."&krd=$krd&estado_sal=$estado_sal&estado_sal_max=$estado_sal_max&accion_sal=$accion_sal&coddepe=$coddepe&dep_sel=$dep_sel&codserie=$codserie&med=$med&tsub=$tsub&nomcarpeta=$nomcarpeta&orderTipo=$orderTipo&orderNo=";
 	$linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo";
 
-	$db->conn->debug = false;
 	$pager = new ADODB_Pager($db,$isqlF,'adodb', true,$orderNo,$orderTipo);
 	$pager->checkAll = false;
 	$pager->checkTitulo = true; 	

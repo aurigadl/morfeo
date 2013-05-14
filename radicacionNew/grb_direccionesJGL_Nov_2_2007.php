@@ -172,7 +172,6 @@ if ($nextval==-1)
 	echo "<span class='etextomenu'>No se encontro la secuencia sec_dir_direcciones ";
 }
 global $ADODB_COUNTRECS;
-//$conexion->conn->debug = true;
 if($documento_us1 and !$cc)
 {
 		echo "<hr><br />documento_us1 y no CC.<br />";
@@ -421,7 +420,6 @@ if( $muni_us7 ){ //die("Paso por CC");
 						'".trim($telefono_us1)."', '$mail_us1', $sgd_dir_tipo, $nextval, '$codigo', '$otro_us7' )";
   $dir_codigo_new = $nextval;
   $nextval++;
-  $conexion->conn->debug= true;
   $rsg=$conexion->query($isql);
 
 	if (!$rsg)

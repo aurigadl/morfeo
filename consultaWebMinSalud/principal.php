@@ -81,7 +81,6 @@ preview = window.open(URL , "preview", windowprops);
 			FROM SGD_TPR_TPDCUMENTO 
 				where sgd_tpr_codigo='$tdoc'
 			";
-		//$db->conn->debug=true;
 		$rs=$db->query($isql);
 		if  (!$rs->EOF) 
 		{
@@ -193,7 +192,6 @@ preview = window.open(URL , "preview", windowprops);
 		 where
 		  b.sgd_tpr_codigo='$tdoc'
 		 order by a.SGD_FLD_CODIGO";
-	// $db->conn->debug=true;
 	$rs=$db->query($isql);
 	$iFld = 0;
 	if(!$rs->EOF)

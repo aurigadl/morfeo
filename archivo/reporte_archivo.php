@@ -219,7 +219,6 @@ if($Buscar)
    include_once( "$ruta_raiz/include/query/archivo/queryReportePorRadicados.php" );
    if($genDetalle==1) $queryUs = $queryEDetalle;
    if($genTodosDetalle==1) $queryUs = $queryETodosDetalle;
-   //$db->conn->debug=true;
    $reporte = 1;
    /*
     * Modificado 

@@ -14,7 +14,6 @@ include ("./encabezado.php");
 // devolver CustomIncludes end
 //-------------------------------
 
-//$db->conn->debug=true;
 
 //===============================
 // Save Page and File Name available into variables

@@ -130,7 +130,6 @@ switch($db->driver)
                          */ 
                        $queryETodosDetalle = $queryEDetalle . $orderE;
                        $queryEDetalle .= $condicionUS . $orderE; 
-			//$db->conn->debug = true;
 		}break;
 	case 'oracle':
 	case 'oci8':

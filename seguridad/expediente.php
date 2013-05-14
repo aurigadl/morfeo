@@ -22,7 +22,6 @@ include_once "$ruta_raiz/include/tx/Historico.php";
 //include_once ("$ruta_raiz/class_control/TipoDocumental.php");
 include_once "$ruta_raiz/include/tx/Expediente.php";
 //$trd = new TipoDocumental($db);
-//$db->conn->debug = true;	
 ?>
 <html>
 <head>
@@ -109,7 +108,6 @@ if($grbNivel and $num_expediente)
     {
       $observa = "Expediente Confidencial Usuario Responsable y Jefe. (No usuarios actules de Radicados)";
     }
-    //$db->conn->debug = true;
     if($db->conn->Execute($query) && $db->conn->Execute($query2))
     {
       echo "<span class=leidos>El nivel se actualiz&oacute; correctamente. ";

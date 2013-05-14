@@ -3,17 +3,14 @@ require_once($ruta_raiz.'/include/PHPMailer_v5.1/class.phpmailer.php');
 $query = "select u.USUA_EMAIL
                 from usuario u
                 where u.USUA_CODI ='$usuaCodiMail' and  u.depe_codi='$depeCodiMail'";
-//$db->conn->debug = true;
 $rs=$db->conn->query($query);
 $mailDestino = $rs->fields["USUA_EMAIL"];
 //echo "$mailDestino";
-$db->conn->debug = false;
 include $ruta_raiz."/conf/configPHPMailer.php";
 
 $queryPath = "select RADI_NUME_RADI, RADI_PATH
                 from RADICADO
                 where RADI_NUME_RADI IN($radicadosSelText 0)";
-//$db->conn->debug = true;
 $rsPath = $db->conn->query($queryPath);
 $linkImagenesTmp = "";
 if($rsPath){

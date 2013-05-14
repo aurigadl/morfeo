@@ -23,7 +23,6 @@ if($_GET["Buscar"]) $Buscar=$_GET["Buscar"];
  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
  $db = new ConnectionHandler("$ruta_raiz");
 
- // $db->conn->debug=true;
 
  define('ADODB_FETCH_ASSOC',2);
  $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
@@ -54,7 +53,6 @@ $ruta_raiz = "..";
 include_once "$ruta_raiz/js/funtionImage.php";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug = true;
 ?>
 <script>
 
@@ -166,7 +164,6 @@ $dependencia_busq2 .= " and c.radi_depe_radi  = $dep_sel";
  $orderTipo="desc";
 include "$ruta_raiz/include/query/devolucion/querycuerpoDevGestion.php";
  $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 ?>
   <form name=formEnviar action='../devolucion/dev_corresp_gestion.php?<?=session_name()."=".session_id()."&krd=$krd" ?>&estado_sal=<?=$estado_sal?>&estado_sal_max=<?=$estado_sal_max?>&pagina_sig=<?=$pagina_sig?>&dep_sel=<?=$dep_sel?>&nomcarpeta=<?=$nomcarpeta?>&orderNo=<?=$orderNo?>' method=post>
  <?
@@ -174,7 +171,6 @@ include "$ruta_raiz/include/query/devolucion/querycuerpoDevGestion.php";
         $encabezado = session_name()."=".session_id()."&dep_sel=$dep_sel&krd=$krd&estado_sal=$estado_sal&usua_perm_impresion=$usua_perm_impresion&fechah=$fechah&estado_sal_max=$estado_sal_max&ascdesc=$ascdesc&orno=";
 	$linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo";
 
-	//$db->conn->debug = true;
 	$pager = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);
 	$pager->checkAll = false;
 	$pager->checkTitulo = true;

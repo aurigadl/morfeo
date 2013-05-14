@@ -28,7 +28,6 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
 //variable que referencia un objeto tipo radicado
 $rad = & new Radicado($db);
-//$db->conn->debug=true;
 //variable que referencia un objeto tipo grupo massiva
 $grupoMas = & new GrupoMasiva($db);
 if (strlen($dep_sel)<1)

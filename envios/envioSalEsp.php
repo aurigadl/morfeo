@@ -10,7 +10,6 @@ function microtime_float()
   list($usec, $sec) = explode(" ", microtime());
   return ((float)$usec + (float)$sec);
 }
-//$db->conn->debug=true;
 //$time_start = microtime_float();
 ?>
 <html>

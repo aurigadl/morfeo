@@ -218,7 +218,6 @@ switch($tipoEstadistica)
 	include "$ruta_raiz/include/query/archivo/queryReportePorRadicados.php";
 	$generar = "ok";
 	}
-//$db->conn->debug = true;
 	if($generar == "ok") {
 		if($genDetalle==1) $queryE = $queryEDetalle;
 		if($genTodosDetalle==1) $queryE = $queryETodosDetalle;

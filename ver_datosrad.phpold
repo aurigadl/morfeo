@@ -35,7 +35,6 @@ $sqlcopias =  "  SELECT
               WHERE 
                   RADI_NUME_RADI = $verradicado";
 
-                   // $db->conn->debug = true;
 $nocopi  = $db->conn->Execute($sqlcopias);
 $copias  = $nocopi->fields["EXISTE"];
 if($menu_ver != 5) {
@@ -492,7 +491,6 @@ if($no_tipo!="true") {
   $isql = "select sgd_tpr_codigo, sgd_tpr_descrip, fech_vcmto, sgd_tpr_termino, date(fech_vcmto)-date(now()) diasparavencimiento, date(fech_vcmto)-date(radi_fech_radi)  diasplazo, date(now())-date(radi_fech_radi)  diashoy
 		 from sgd_tpr_tpdcumento tpr, radicado r 
 		where r.tdoc_codi=tpr.sgd_tpr_codigo and  r.radi_nume_radi=$verradicado   ";
-//	$db->conn->debug = true;
                   $rs=$db->query($isql);
                   if  (!$rs->EOF){
                         $tpdoc_grbTRD    = $rs->fields["SGD_TPR_CODIGO"];

@@ -196,7 +196,6 @@ else
 	$db = new ConnectionHandler("..");
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);	
     $isql = "select * from usuario where USUA_LOGIN ='$krd' and USUA_SESION='". substr(session_id(),0,29)."' ";
-	//$db->conn->debug=true;
 	$rs=$db->query($isql);
 	// Validacion de Usuario y COntraseña MD5
 	//echo "** $krd *** $drde";

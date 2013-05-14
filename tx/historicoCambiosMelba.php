@@ -61,7 +61,6 @@ funcionario,firma,dependencia,tarifa,login,tipo_poblacion
   and operacion not IN ('AD','ADD','ADT','ARD','CFD','DD','DDD','DDF','MFD','REE','REI','RIS','RS','RSD','TRA','DES')
  order by fecha desc" ;
   
-  // $db->conn->debug = true;
   $rs     =$db->conn->Execute($isql);
   if ($rs->EOF)  {
       echo "<hr><center><b><span class='alarmas'>No se encuentra ningun Registro en MELBA del Radicado Buscado</span></center></b></hr>";

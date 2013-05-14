@@ -96,7 +96,6 @@ if($Buscar AND $busq_radicados_tmp)
 	include "$ruta_raiz/include/query/uploadFile/queryUploadFileRad.php";
 	$rs=$db->conn->Execute($query);
 
-	//$db->conn->debug=true;
 	if ($rs->EOF)  {
 		echo "<hr><center><b><span class='alarmas'>No se encuentra ningun radicado con el criterio de busqueda</span></center></b></hr>";
 	}

@@ -18,7 +18,6 @@ session_start();
     include_once "$ruta_raiz/config.php";
 
     $conexion = new ConnectionHandler($ruta_raiz);
-    //$conexion->conn->debug = true;
     $hora  = date("H")."_".date("i")."_".date("s");
     // var que almacena el dia de la fecha
     $ddate = date('d');

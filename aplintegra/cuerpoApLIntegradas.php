@@ -26,7 +26,6 @@ function abrirFuncion(url){
  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 error_reporting(7);
  $db = new ConnectionHandler("$ruta_raiz");	 
- //$db->conn->debug = true;
  $accion_sal = "Funciones de aplicativos integrados";
  $nomcarpeta = "Funciones de aplicativos integrados";
  //$pagina_sig = "firmarDocumentos.php";
@@ -99,7 +98,6 @@ error_reporting(7);
 
 
 	//include "$ruta_raiz/include/query/firma/queryCuerpoPendientesFirma.php";
-	//$db->conn->debug = true;
 	$query= " select a.SGD_APLI_DESCRIP,a.SGD_APLI_CODI, f.SGD_APLFAD_MENU,f.SGD_APLFAD_LK1 from 
 					SGD_APLI_APLINTEGRA a ,
 				  SGD_APLUS_PLICUSUA  u,

@@ -105,7 +105,6 @@ include "$ruta_raiz/include/query/anulacion/querycuerpo_anulacion.php";
 ?>
   <form name=formEnviar action='../anulacion/solAnulacion.php?<?=session_name()."=".session_id()."&krd=$krd" ?>&tpAnulacion=<?=$tpAnulacion?>&depeBuscada=<?=$depeBuscada?>&estado_sal_max=<?=$estado_sal_max?>&pagina_sig=<?=$pagina_sig?>&dep_sel=<?=$dep_sel?>&nomcarpeta=<?=$nomcarpeta?>&orderTipo=<?=$orderTipo?>&orderNo=<?=$orderNo?>' method=post>
 <?php
-// $db->conn->debug=true;
 $encabezado = "".session_name()."=".session_id()."&krd=$krd&depeBuscada=$depeBuscada&accion_sal=$accion_sal&filtroSelect=$filtroSelect&dep_sel=$dep_sel&tpAnulacion=$tpAnulacion&nomcarpeta=$nomcarpeta&orderTipo=$orderTipo&orderNo=";
 $linkPagina = $_SERVER['PHP_SELF']."?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo";
 $pager = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);

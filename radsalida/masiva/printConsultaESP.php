@@ -12,7 +12,6 @@ require_once("$ruta_raiz/class_control/Esp.php");
 
 if (!$db)	$db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug=true;
 
 //En caso de no llegar la dependencia recupera la sesión
 if(!isset($_SESSION['dependencia']))	include "$ruta_raiz/rec_session.php";

@@ -98,7 +98,6 @@ function envio_datos()
     $db = new ConnectionHandler("$ruta_raiz");
     define('ADODB_FETCH_ASSOC',2);
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-//	$db->conn->debug = false;
 	$encabezado = "&krd=$krd&dep_sel=$dep_sel&usModo=$usModo&perfil=$perfil&cedula=$cedula&dia=$dia&mes=$mes&ano=$ano&ubicacion=$ubicacion&piso=$piso&extension=$extension&email=$email&email1=$email1&email2=$email2";
 ?>
 <center>

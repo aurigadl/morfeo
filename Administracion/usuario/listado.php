@@ -30,7 +30,6 @@ if(!$dependencia or !$tpDepeRad) include "$ruta_raiz/rec_session.php";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 
 $db = new ConnectionHandler("$ruta_raiz");	
-//$db->conn->debug = true;
 error_reporting(0);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $isql = "select USUARIO.USUA_CODI,USUARIO.USUA_NOMB, USUARIO.USUA_LOGIN, DEPENDENCIA.DEPE_NOMB, DEPENDENCIA.DEPE_CODI from USUARIO INNER JOIN dependencia on dependencia.depe_codi = usuario.depe_codi ";

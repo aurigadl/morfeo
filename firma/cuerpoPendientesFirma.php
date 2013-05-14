@@ -18,7 +18,6 @@ if (!$dependencia)   include "$ruta_raiz/rec_session.php";
  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 error_reporting(7);
  $db = new ConnectionHandler("$ruta_raiz");	 
-// $db->conn->debug = true;
  $accion_sal = "Firmar Documentos";
  $nomcarpeta = "Documentos pendientes de firma digital";
  $pagina_sig = "firmarDocumentos.php";
@@ -91,7 +90,6 @@ error_reporting(7);
 
 
 	include "$ruta_raiz/include/query/firma/queryCuerpoPendientesFirma.php";
-	//$db->conn->debug = true;
 	$rs=$db->conn->Execute($query);
 	
 	if (!$rs->EOF)  {

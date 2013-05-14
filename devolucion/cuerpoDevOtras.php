@@ -14,7 +14,6 @@
  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
  $db = new ConnectionHandler("$ruta_raiz");
 
- $db->conn->debug=true;
 
  define('ADODB_FETCH_ASSOC',2);
  $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
@@ -45,7 +44,6 @@ $ruta_raiz = "..";
 include_once "$ruta_raiz/js/funtionImage.php";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug = true;
 if(!$estado_sal)   {$estado_sal=2;}
 if(!$estado_sal_max) $estado_sal_max=3;
 if($estado_sal==4)
@@ -152,7 +150,6 @@ include "$ruta_raiz/include/query/devolucion/querycuerpoDevOtras.php";
 	$encabezado = "".session_name()."=".session_id()."&krd=$krd&estado_sal=$estado_sal&estado_sal_max=$estado_sal_max&accion_sal=$accion_sal&dependencia_busq2=$dependencia_busq2&dep_sel=$dep_sel&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion&nomcarpeta=$nomcarpeta&orderTipo=$orderTipo&orderNo=";
 	$linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo";
 
-	//$db->conn->debug = true;
 	$pager = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);
 	$pager->checkAll = false;
 	$pager->checkTitulo = true;

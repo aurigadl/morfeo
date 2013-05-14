@@ -18,7 +18,6 @@ $ADODB_COUNTRECS = false;
 $error = 0;
 $dsn = $driver."://".$usuario.":".$contrasena."@".$servidor."/".$db;
 $conn = NewADOConnection($dsn);
-//$conn->debug=1;
 
 switch ($_GET['var'])
 {	case 'tar'	:
@@ -87,7 +86,6 @@ switch ($_GET['var'])
                       DEPARTAMENTO.DPTO_NOMB, MUNICIPIO.MUNI_NOMB ";
 		}break;
 }
-//$conn->debug=true;
 $Rs_clta = $conn->Execute($isql); 
 
 ?>

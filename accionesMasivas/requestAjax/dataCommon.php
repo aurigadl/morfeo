@@ -12,7 +12,6 @@ session_start();
 
 	include_once	("$ruta_raiz/include/db/ConnectionHandler.php");
 	$db 			= new ConnectionHandler("$ruta_raiz");	
-	//$b->conn->debug = true;		
 	include_once	("$ruta_raiz/include/tx/Historico.php");	
 	include_once 	("$ruta_raiz/class_control/TipoDocumental.php");
 	include_once	("$ruta_raiz/include/query/busqueda/busquedaPiloto1.php");	

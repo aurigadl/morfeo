@@ -90,7 +90,6 @@ $queryE = "
       $queryE .= " GROUP BY b.USUA_LOGIN  ORDER BY $orno $ascdesc ";
       /** CONSULTA PARA VER DETALLES 
       */
-    //  $db->conn->debug = true;			
       $queryEDetalle = "SELECT 
           r.RADI_NUME_RADI RADICADO
           , b.USUA_NOMB USUARIO
@@ -166,7 +165,6 @@ function pintarEstadistica($fila,$indice,$numColumna)
   }
 return $salida;
 }
-//$db->conn->debug = true;
 function pintarEstadisticaDetalle($fila,$indice,$numColumna){
       global $ruta_raiz,$encabezado,$krd,$db;
       //$verImg=($fila['SGD_SPUB_CODIGO']==1)?($fila['USUARIO']!=$_SESSION['usua_nomb']?false:true):($fila['USUA_NIVEL']>$_SESSION['nivelus']?false:true);

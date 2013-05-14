@@ -59,7 +59,6 @@ $mesajes        = $objMensaje->getMsgsUsr($_SESSION['usua_doc'],$_SESSION['depen
   and radi_nume_radi = $verradicado
  order by fecha desc" ;
  
-  // $db->conn->debug = true;
   $rs     =$db->conn->Execute($isql);
   if ($rs->EOF)  {
       echo "<hr><center><b><span class='alarmas'>No se encuentra ningun Registro del Radicado Buscado</span></center></b></hr>";

@@ -9,7 +9,6 @@ import_request_variables("gp", "");
 <?
 error_reporting(7);
 $ruta_raiz = "..";
-//$db->conn->debug =true;
 //if(!$dependencia or !$krd) include ("../rec_session.php");
  $encabezado = session_name()."=".session_id()."&krd=$krd&fechah=$fechah";
  include "connectIMAP.php";  

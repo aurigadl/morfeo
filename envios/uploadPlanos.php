@@ -14,7 +14,6 @@ include_once("$ruta_raiz/include/combos.php");
 if (!$db)	$db = new ConnectionHandler($ruta_raiz);
 //if (!defined('ADODB_FETCH_ASSOC'))	define('ADODB_FETCH_ASSOC',2);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-//$db->conn->debug=true;
 
 /**
  * Retorna la cantidad de bytes de una expresion como 7M, 4G u 8K.

@@ -179,7 +179,6 @@ class jhrtf {
 
         if ($fp){
             //Recorre el arrego de los datos
-            //$this->conexion->conn->debug = true;
             for($ii=0; $ii < count ($this->datos) ; $ii++){   
                 $i=0;
                 $numeroExpediente = "";

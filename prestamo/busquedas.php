@@ -10,7 +10,6 @@
 session_start();
 include_once ("./common.php");
 include_once ("./encabezado.php");
-//$db->conn->debug=true;
 // busquedas CustomIncludes end
 //-------------------------------
 

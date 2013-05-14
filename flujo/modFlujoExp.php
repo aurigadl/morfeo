@@ -26,7 +26,6 @@ require_once    ("$ruta_raiz/class_control/Mensaje.php");
 
 if (!$db) $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 ?>
 <html>
 <head><title>Cambio de Estado Al Expedidente</title></head>
@@ -75,7 +74,6 @@ function verificaModificacion(){
   include_once ("$ruta_raiz/include/tx/Flujo.php");
   include_once ("$ruta_raiz/include/tx/Expediente.php");    
   $objHistorico= new Historico($db);
-  //$db->conn->debug=true;
 	
 	$expediente = new Expediente($db);
 	$expediente->consultaTipoExpediente($numeroExpediente);

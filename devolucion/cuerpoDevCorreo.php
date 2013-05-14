@@ -128,14 +128,12 @@ $imagen="flechadesc.gif";
 		  }
 	   }
     }
-//$db->conn->debug = true;
 $sqlChar = $db->conn->SQLDate("d-m-Y H:i A","SGD_RENV_FECH");
 $valor    = "(cast(a.sgd_renv_cantidad as numeric) * cast(a.sgd_renv_valor as numeric))";
 include "$ruta_raiz/include/query/devolucion/querycuerpoDevCorreo.php";
 ?>
  <form name=formEnviar action='../devolucion/devolucion_otras.php?<?=session_name()."=".session_id() ?>&estado_sal=<?=$estado_sal?>&estado_sal_max=<?=$estado_sal_max?>&pagina_sig=<?=$pagina_sig?>&dep_sel=<?=$dep_sel?>&nomcarpeta=<?=$nomcarpeta?>&orderNo=<?=$orderNo?>' method=post>
 <?
-//$db->conn->debug = true;
 $encabezado = "".session_name()."=".session_id()."&estado_sal=$estado_sal&estado_sal_max=$estado_sal_max&accion_sal=$accion_sal&dependencia_busq2=$dependencia_busq2&dep_sel=$dep_sel&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion&nomcarpeta=$nomcarpeta&orderTipo=$orderTipo&orderNo=";
 $linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo";
 

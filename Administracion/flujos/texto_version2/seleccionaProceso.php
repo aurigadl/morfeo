@@ -40,7 +40,6 @@ if ( $accion == 1 ) {
     $db = new ConnectionHandler( "$ruta_raiz" );
     if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-	$db->conn->debug = true;
 ?>
 <form name='frmCrear' action='<?=$action?>' method="post">
 <table width="93%"  border="1" align="center">
@@ -63,7 +62,6 @@ if ( $accion == 1 ) {
 					$rsDep = $db->conn->Execute( $sql );
 					
 					print $rsDep->GetMenu2( "proceso", "", false, false, 0," class='select'" );
-					 $db->conn->debug = false;	
 			?>
 		</td>
 	</tr>

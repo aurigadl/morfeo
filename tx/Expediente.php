@@ -166,7 +166,6 @@ class Expediente
   */   
 function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_doc,$usuaDocExp,$codiSRD,$codiSBRD,$expOld,$fechaExp)
 {
-	//$this->db->conn->debug = true; 200590012345
 	$estado_expediente =0;
 	$query="select SGD_EXP_NUMERO
 			from SGD_SEXP_SECEXPEDIENTES
@@ -174,7 +173,6 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
 			SGD_EXP_NUMERO='$numExpediente'
 			";
 	echo "<hr>-------> Entro a insertar.... ********************<hr>";
-	//$this->db->conn->debug = true;	
 	if($expOld=="false")
 	{
 	$rs = $this->db->conn->query($query);

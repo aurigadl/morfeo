@@ -6,7 +6,6 @@ if (!$dependencia or !$depe_codi_territorial or !$krd or !$dependencianomb or !$
 if (!$db)
 $db = new ConnectionHandler("."); 
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug=true;
 $db->conn->StartTrans();
 //print ("***dos***"); 
  

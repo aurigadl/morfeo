@@ -27,7 +27,6 @@ $tip3img =$_SESSION["tip3img"];   $verrad = "";
   $db = new ConnectionHandler($ruta_raiz);	 
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
-//$db->conn->debug=true;
 
 
 
@@ -172,9 +171,7 @@ function PRESTAMO_action($sAction) {
         	   	$fldPRES_DEPE_ARCH = $rs->fields['UBIC_DEPE_ARCH']; 
 	      }
 	  // Genera PRES_ID
-	  //$db->conn->debug = true;
 	  $sec=$db->conn->nextId('SEC_PRESTAMO');
-      //$db->conn->debug = true;
       $sSQL = "insert into PRESTAMO(
                   PRES_ID,
                   RADI_NUME_RADI,
@@ -255,7 +252,6 @@ function PRESTAMO_action($sAction) {
       $sSQL = "update PRESTAMO set ".$setFecha.",PRES_ESTADO=".$estadoNew." 
 		 where PRES_ID in (".$sfldPRES_ID.") and PRES_ESTADO ".$estadoOld;			   
       // Execute SQL statement 
-//$db->conn->debug = true;      
 if($db->conn->query($sSQL)){ verMensaje($nombTx,$fecha);	}
 	  else{ echo "<script> alert(".$titError."); </script>"; 	}
    }   
@@ -317,7 +313,6 @@ function ESTADO_PRESTAMO_show() {
 			    G.PARAM_NOMB='PRESTAMO_REQUERIMIENTO' and G.PARAM_CODI=r.PRES_REQUERIMIENTO";
       // Execute SQL statement	    
       $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-	//$db->conn->debug = true;
       $rs=$db->query($sSQL);
       // Process empty recordset
       if($rs && !$rs->EOF) { ?>   
@@ -416,7 +411,6 @@ function PRESTAMO_show() {
    $krd = $_SESSION["krd"];
    $dependencia = $_SESSION["dependencia"];
 
-//$db->conn->debug = true;
    $sFormTitle="Reservar";
    // Modificado Infometrika 14-Julio-2009
    // Esta operacion se realiza en el script solicitar/common.php, funcion get_param().

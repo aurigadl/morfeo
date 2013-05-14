@@ -9,7 +9,6 @@ include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 include_once "$ruta_raiz/include/tx/Historico.php";
 include_once "$ruta_raiz/include/tx/Expediente.php";
 $db = new ConnectionHandler( "$ruta_raiz" );
-//$db->conn->debug = true;
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia&krd=$krd&tipo=$tipo&codp=$codp&codig=$codig";
 
 ?>
@@ -36,7 +35,6 @@ else{
 			$sigc=strtoupper($Shijoc);
 			$sec=$db->conn->nextId( 'SEC_EDIFICIO' );
 			$sql="insert into sgd_eit_items (sgd_eit_codigo,sgd_eit_cod_padre,sgd_eit_nombre,sgd_eit_sigla) values ( '$sec','$codig','$nomc','$sigc')";
-			//$db->conn->debug=true;
 			$rs=$db->conn->Execute($sql);
 			if($rs->EOF)$t+=1;
 			if($ver2==2){
@@ -47,7 +45,6 @@ else{
 					$sigc2=strtoupper($Shijoc2);
 					$sec2=$db->conn->nextId( 'SEC_EDIFICIO' );
 					$sql2="insert into sgd_eit_items (sgd_eit_codigo,sgd_eit_cod_padre,sgd_eit_nombre,sgd_eit_sigla) values ('$sec2','$sec','$nomc2','$sigc2')";
-					//$db->conn->debug=true;
 					$rs2=$db->conn->Execute($sql2);
 					if($rs2->EOF)$t+=1;
 					if($ver3==3){
@@ -58,7 +55,6 @@ else{
 							$sigc3=strtoupper($Shijoc3);
 							$sec3=$db->conn->nextId( 'SEC_EDIFICIO' );
 							$sql3="insert into sgd_eit_items (sgd_eit_codigo,sgd_eit_cod_padre,sgd_eit_nombre,sgd_eit_sigla) values ( '$sec3','$sec2','$nomc3','$sigc3')";
-							//$db->conn->debug=true;
 							$rs3=$db->conn->Execute($sql3);
 							if($rs3->EOF)$t+=1;
 							if($ver4==4){
@@ -69,7 +65,6 @@ else{
 									$sigc4=strtoupper($Shijoc4);
 									$sec4=$db->conn->nextId( 'SEC_EDIFICIO' );
 									$sql4="insert into sgd_eit_items (sgd_eit_codigo,sgd_eit_cod_padre,sgd_eit_nombre,sgd_eit_sigla) values ( '$sec4','$sec3','$nomc4','$sigc4')";
-									//$db->conn->debug=true;
 									$rs4=$db->conn->Execute($sql4);
 									if($rs4->EOF)$t+=1;
 									if($ver5==5){
@@ -80,7 +75,6 @@ else{
 											$sigc5=strtoupper($Shijoc5);
 											$sec5=$db->conn->nextId( 'SEC_EDIFICIO' );
 											$sql5="insert into sgd_eit_items (sgd_eit_codigo,sgd_eit_cod_padre,sgd_eit_nombre,sgd_eit_sigla) values ('$sec5','$sec4','$nomc5','$sigc5')";
-											//$db->conn->debug=true;
 											$rs5=$db->conn->Execute($sql5);
 											if($rs5->EOF)$t+=1;
 											if($ver6==6){
@@ -91,7 +85,6 @@ else{
 													$sigc6=strtoupper($Shijoc6);
 													$sec6=$db->conn->nextId( 'SEC_EDIFICIO' );
 													$sql6="insert into sgd_eit_items (sgd_eit_codigo,sgd_eit_cod_padre,sgd_eit_nombre,sgd_eit_sigla) values ('$sec6','$sec5','$nomc6','$sigc6')";
-													//$db->conn->debug=true;
 													$rs6=$db->conn->Execute($sql6);
 													if($rs6->EOF)$t+=1;
 												}

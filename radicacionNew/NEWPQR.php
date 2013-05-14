@@ -9,7 +9,6 @@ include_once "../include/db/ConnectionHandler.php";
 include_once "../class_control/AplIntegrada.php";
 $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 
 function StrValido($cadena) {
 	$login = strtolower($cadena);

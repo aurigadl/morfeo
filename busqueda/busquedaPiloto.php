@@ -206,7 +206,6 @@ function Search_show()
   $usua_doc = $_SESSION["usua_doc"];
   $codusuario = $_SESSION["codusuario"];
   $nivelus = $_SESSION["nivelus"];
-  //$db->conn->debug = true;
 if($_REQUEST["flds_TDOC_CODI"]) $flds_TDOC_CODI=$_REQUEST["flds_TDOC_CODI"];
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
@@ -527,7 +526,6 @@ function Ciudadano_show($nivelus, $tpRemDes, $whereFlds)
   $sOrder = "";
   $sSQL = "";
   $db = new ConnectionHandler($ruta_raiz);
-  //$db->conn->debug = true;
 	if($tpRemDes==1){
 		$tpRemDesNombre = "Por Ciudadano";
 	}if($tpRemDes==2){
@@ -922,7 +920,6 @@ $sSQL .= $sWhere . $whereTrd . $sOrder;
 // Execute SQL statement
 //-------------------------------
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 $rs=$db->query($sSQL);
 
 $db->conn->SetFetchMode(ADODB_FETCH_NUM);
@@ -1579,7 +1576,6 @@ function buscar_prueba($nivelus, $tpRemDes, $whereFlds){
         <td class=\"titulos4\" colspan=\"20\" width=\"2000\" ><a name=\"RADICADO\">$sFormTitle</a></td>
         </tr>
         </table>";
-	//$db->conn->debug = true;
     $paginador=new myPaginador($db,strtoupper($sSQL),null,"",250);
     $paginador->setImagenASC($ruta_raiz."iconos/flechaasc.gif");
     $paginador->setImagenDESC($ruta_raiz."iconos/flechadesc.gif");

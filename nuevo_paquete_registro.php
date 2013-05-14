@@ -22,7 +22,6 @@ $q="select a.SGD_TPR_CODIGO, a.ANEX_TIPO_CODI, a.SGD_DNUFE_GERARQ,b.SGD_PNUFE_CO
 if (!$db)
 		$db = new ConnectionHandler($ruta_raiz);
 $db->conn->BeginTrans();
-//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);	 
 
 $anexo = & new Anexo($db);

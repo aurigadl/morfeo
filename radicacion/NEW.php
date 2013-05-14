@@ -1817,7 +1817,6 @@ if(!$Submit3 and !$Submit4){
                  ORDER BY d.DEPE_NOMB
                   ";
 	}
-	//$db->conn->debug = true;
 	$rs=$db->conn->query($query);
 	$varQuery = $query;
 	print $rs->GetMenu2("coddepeinf", $coddepeinf, false, true,5," class='select'" );
@@ -1840,7 +1839,6 @@ if(!$Submit3 and !$Submit4){
 		    from informados a,dependencia b
 		    where a.depe_codi=b.depe_codi and a.radi_nume_radi ='$nurad'
 		    order by info_fech desc ";
-	// $db->conn->debug = true;
   $k = 1;
   $rs=$db->conn->query($query2);
   if ($rs)

@@ -23,7 +23,6 @@ $codusuario     = $_SESSION["codusuario"];
 $codigo_envio = $tipo_envio;
 include_once  "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("..");
-//$db->conn->debug = true;
 if (!defined('ADODB_FETCH_ASSOC'))	define('ADODB_FETCH_ASSOC',2);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
@@ -179,7 +178,6 @@ $codigo_envio=$tipo_envio;
 				WHERE DEPE_CODI=$dependencia AND $sqlChar = '$fecha_mes'
 						AND ".$db->conn->length."(sgd_renv_planilla) > 0 
 						AND sgd_fenv_codigo = $tipo_envio ORDER BY cast(SGD_RENV_PLANILLA as numeric(12)) desc";
-//	$db->conn->debug = true;
 
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
    	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;

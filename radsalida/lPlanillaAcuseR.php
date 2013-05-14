@@ -178,7 +178,6 @@ if($generar_listado)
 		   $i_total3 = 0;
 	    }else  {
 			$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-			//$db->conn->debug = TRUE;
 			$rsParaUp = $db->conn->Execute("select * from sgd_renv_regenvio  $where_isql $order_isql");
 			$rvCodigo = $rsParaUp->fields["SGD_RENV_CODIGO"] ;
 			if ($rvCodigo)  {

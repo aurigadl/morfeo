@@ -811,7 +811,6 @@ if($tpRadicado) {echo "<input type=hidden name=tpRadicado value=$tpRadicado>";}
 	<tr valign="top">
 	<td height="95" class="titulos5"> <BR>
 	<?php
-	//$db->conn->debug = true;
 	 for($i=1;$i<=3;$i++)
 	{
 	if($i==1)
@@ -1169,7 +1168,6 @@ if ($parametroTip == True)
   		$opcMenu = "";
 	}
 	$ADODB_COUNTRECS = true;
-	//$db->conn->debug=true;
 	$rs=$db->conn->query($query);
 	if ($rs && !$rs->EOF )
 	{	$numRegs = "!".$rs->RecordCount();

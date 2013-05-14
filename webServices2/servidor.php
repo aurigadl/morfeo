@@ -184,7 +184,6 @@ function darUsuarioSelect ($usuaEmail='',$usuaDoc=''){
 	global $ruta_raiz;
 	$db = new ConnectionHandler("$ruta_raiz");
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-	$db->conn->debug = true;
 	if ($usuaEmail != ''){
 		$sql = "select DEPE_CODI, USUA_CODI, USUA_DOC, USUA_EMAIL  from usuario where UPPER(USUA_EMAIL) = UPPER('$usuaEmail')";
 		echo $sql;

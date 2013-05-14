@@ -21,7 +21,6 @@
                         ID_CONT
                     from BODEGA_EMPRESAS 
                     where IDENTIFICADOR_EMPRESA = $espcodi ";
-		$db->conn->debug = true;
         $rs = $db->conn->Execute($isql);
 //		$rs = $db->query($isql);
 	    if(!$rs->EOF) {
@@ -69,7 +68,6 @@
 	{$rem_isql = "";}
 	*/
 	//DNP
-			$db->conn->debug = true;
 //			include("../debugger.php");
 	 $isqlRemDest = "select * from ANEXOS  where ANEX_CODIGO='$anexo' AND ANEX_RADI_NUME=$numrad";  
      $rsRemDest=$db->conn->Execute($isqlRemDest);                                                
@@ -92,7 +90,6 @@
 	  $rem_isql = " and sgd_anex_codigo=$anexo ";	
 	}else {
          $isqlRemDest7 = "select SGD_DIR_TIPO from SGD_DIR_DRECCIONES  where RADI_NUME_RADI=$numrad";
-         		$db->conn->debug = true;
 
          $rsRemDest7=$db->conn->Execute($isqlRemDest7);     
          if (!$rsRemDest7->EOF){             

@@ -54,7 +54,6 @@ $ADODB_COUNTRECS = false;
 error_reporting(7);
 
 $db = new ConnectionHandler($ruta_raiz);
-//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
 // Procedimiento para filtro de radicados....
@@ -268,7 +267,6 @@ $numerot=$rs->RecordCount();
 <?
 include "$ruta_raiz/include/query/queryCuerpoinf.php";
 $a = new combo($db);
-//$db->conn->debug=true;
 $concatSQL=$db->conn->Concat($concatenar,"' '","depe_nomb");
 $s = "SELECT DEPE_CODI,$concatSQL as NOMBRE  from dependencia order by depe_nomb asc ";
 $r = "DEPE_CODI";

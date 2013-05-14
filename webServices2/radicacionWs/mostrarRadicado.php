@@ -47,7 +47,6 @@
 	include_once ($ruta_raiz . "/include/db/ConnectionHandler.php");
 	$db = new ConnectionHandler("$ruta_raiz");
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-	//$db->conn->debug = true;
 	
 	$sql = "SELECT sgd_dir_direccion as direccion, muni_codi, dpto_codi 
 			FROM anexos WHERE anex_codigo = '$anexoCodigo'";

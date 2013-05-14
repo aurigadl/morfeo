@@ -17,7 +17,6 @@ $ruta_raiz = "..";
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug = true;
 	if (!defined('ADODB_FETCH_ASSOC'))	define('ADODB_FETCH_ASSOC',2);
    	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $yy = 20;
@@ -67,7 +66,6 @@ $date_result = date("Y-m-d", mktime(($date_r["hours"]+0),($date_r["minutes"]+0),
 	include "$ruta_raiz/include/tx/ComentarioTx.php";
 	print $rsD->GetMenu2("codserie", $codserie, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
 
-//$db->conn->debug=true;
  ?>
  </td>
  </td>

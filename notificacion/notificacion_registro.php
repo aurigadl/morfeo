@@ -37,7 +37,6 @@ if (!$db)
 $db->conn->BeginTrans();
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);	
 $objNotific = & new Notificacion($db);
-//$db->conn->debug=true;
 if (!$krd or !$dependencia)   include "$ruta_raiz/rec_session.php";
 $verrad =$verradOld;
 
@@ -55,7 +54,6 @@ $verrad =$verradOld;
 <body bgcolor="#FFFFFF" topmargin="0">
 
 <?
-//$db->conn->debug=true;
 
 
 // Programa que actualiza los datos de notificaci�n para un radicado

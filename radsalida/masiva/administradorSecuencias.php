@@ -16,7 +16,6 @@ if(!isset($_SESSION['dependencia']))
 if (!$db)	$db = new ConnectionHandler($ruta_raiz);
 
 $phpsession = session_name()."=".session_id();
-$db->conn->debug = true;
 
 ?>
 <html>

@@ -24,7 +24,6 @@ function RegresarV(){
 <TR  class='titulos2'><TD class=titulosError colspan=4 align=center>RELACION DEPENDENCIAS CON EDIFICIOS</TD></TR>
 <TR  class='titulos2'><TD colspan=4>&nbsp;</TD></TR>
 <?
-//$db->conn->debug=true;
 if($Ingresar or $Modificar){
 	if($depe!="" and $exp_edificio!=""){
 		if($exp_item=="")$exp_item2=0;
@@ -33,7 +32,6 @@ if($Ingresar or $Modificar){
 			$rp=$db->conn->Execute("select max(sgd_arch_id) AS DEM from sgd_arch_depe");
 			$cont=$rp->fields['DEM']+1;
 			$sql="insert into sgd_arch_depe (sgd_arch_id,sgd_arch_depe,sgd_arch_edificio,sgd_arch_item) values ($cont,'$depe',$exp_edificio,$exp_item2)";
-			//$db->conn->debug=true;
 			$rs=$db->conn->Execute($sql);
 			if($rs->EOF)echo "El registro fue insertado";
 			else echo "El registro no pudo ser ingresado";
@@ -74,7 +72,6 @@ if($edi==1){
 	$conD=$db->conn->Concat("D.DEPE_CODI","'-'","D.DEPE_NOMB");
 	$sql5="SELECT DISTINCT($conD), D.DEPE_CODI FROM DEPENDENCIA D, USUARIO U WHERE D.DEPE_CODI=U.DEPE_CODI AND U.USUA_ADMIN_ARCHIVO >= 1 ORDER BY D.DEPE_CODI";
 	//$sql5="select ($conD) as detalle,DEPE_CODI from DEPENDENCIA order by DEPE_CODI";
-	//$db->conn->debug=true;
 	$rs=$db->conn->Execute($sql5);
 	print $rs->GetMenu2('depe',$depe,true,false,"","class=select");
 ?>
@@ -84,7 +81,6 @@ if($edi==1){
 <td class="titulos2">DEPARTAMENTO
 <td class="titulos2" >
 <?
-	//$db->conn->debug=true;
 	$queryDpto = "select distinct(d.dpto_nomb),d.dpto_codi from departamento d, sgd_eit_items i where d.dpto_codi=i.codi_dpto ORDER BY dpto_nomb";
 	$rsD=$db->query($queryDpto);
 	print $rsD->GetMenu2("codDpto", $codDpto, "0:-- Seleccione --", false,""," onChange='submit()' class='select'" ); //echo "D.C.";//PARA LA CRA

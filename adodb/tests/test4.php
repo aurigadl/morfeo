@@ -43,7 +43,6 @@ $conn->PConnect("", "sa", "natsoft", "northwind"); // connect to MySQL, testdb
 //$conn->Connect('','scott','natsoft');
 //$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
-$conn->debug=1;
 $conn->Execute("delete from adoxyz where lastname like 'Smi%'");
 
 $rs = $conn->Execute($sql); // Execute the query and get the empty recordset

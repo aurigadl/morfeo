@@ -15,7 +15,6 @@ $codusuario = $_SESSION["codusuario"];
 $ruta_raiz = "..";
 include_once  "../include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("..");
-//$db->conn->debug = true;
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 error_reporting(7);

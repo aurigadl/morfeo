@@ -33,7 +33,6 @@ $depeBuscada =$dep_sel;
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 include_once "$ruta_raiz/js/funtionImage.php";
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug = true;
 if(!$dep_sel) $dep_sel = $dependencia;
 $depeBuscada = $dep_sel;
 

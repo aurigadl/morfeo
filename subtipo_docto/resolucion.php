@@ -5,7 +5,6 @@ require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 if (!$db)
 		$db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true; 
  
  if(!$_SESSION['dependencia']) include "$ruta_raiz/rec_session.php";
  

@@ -6,7 +6,6 @@ import_request_variables("gp", "");
 if (!$ruta_raiz) $ruta_raiz = "..";
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler( "$ruta_raiz" );
-//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&cod=$cod&codp=$codp&tipo=2";
 
@@ -21,7 +20,6 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&cod=$cod&codp=$cod
 <?
 if($grabar){
 $squ="update sgd_eit_items set SGD_EIT_COD_PADRE=$cod_pa,SGD_EIT_NOMBRE='$nombre',SGD_EIT_SIGLA='$sigla' WHERE SGD_EIT_CODIGO =$cod";
-//$db->conn->debug=true;
 $rs=$db->conn->Execute($squ);
 if($rs->EOF)echo "Achivo Modificado";
 else echo "No se pudo modificar";

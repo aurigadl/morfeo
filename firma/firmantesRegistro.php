@@ -29,7 +29,6 @@ include_once($ruta_raiz."/include/tx/Historico.php");
 //Se crea la conexi�n con la b ase de datos
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug=true;
 $db->conn->StartTrans();
 
 //Se crea el objeto de an�lisis de firmas
@@ -76,7 +75,6 @@ while ($i < $num) {
 	$nombFirmas = $nombFirmas. $objUsuario->get_usua_nomb() . "<BR>";
 	
 	while ($j < $numRads) {
-		//$db->conn->debug=true;
 		$radicado = $arrRads[$j];
 		//Arreglo simple de un radicado para gestion de historicos
 		$arrRad = array();

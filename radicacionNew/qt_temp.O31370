@@ -40,7 +40,6 @@ $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->Execute("select * from usuario");
 $debugUsr = strtoupper($krd);
 if ($debugUsr == "CARLOS" || $debugUsr == "SCASAS") {
-    //$db->conn->debug = false;
 }
 ?>
 <!-- Prueba 1 Linea 30 -->

@@ -17,7 +17,6 @@ $usua_ano_grb = substr($usua_nacim,0,4);
 if (!$db)
 	$db = new ConnectionHandler(".");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);		
-//$db->conn->debug=true;	
 
 
  

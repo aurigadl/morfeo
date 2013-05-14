@@ -51,7 +51,6 @@ class Tx extends Historico
 				DEPE_CODI=$depeCodi
 				AND USUA_CODI=$codUsuario";
 	# Busca el usuairo Origen para luego traer sus datos.
-	//$this->db->conn->debug=true;
 	
 
 	$this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -168,7 +167,6 @@ function registrarNovedad($tipo, $docUsuarioDest, $numRad, $ruta_raiz=".."){
 function informar( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino, $codUsOrigen,$observa,$idenviador = null, $ruta_raiz="", $infConjunto=0)
 {
 	$whereNivel = "";
-	// $this->db->conn->debug =true;
 	//$this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
 	$sql = "SELECT
@@ -198,7 +196,6 @@ function informar( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino
 				AND USUA_CODI=$codUsDestino";
 	# Busca el usuairo Origen para luego traer sus datos.
   //if(!$idenviador) $idenviador = $_SESSION["usua_doc"];  
-  //$this->db->conn->debug = true;
 	$rs = $this->db->query($sql); # Ejecuta la busqueda
 	$usNivel = $rs->fields["CODI_NIVEL"];
 	$usLoginDestino = $rs->fields["USUA_LOGIN"];
@@ -220,7 +217,6 @@ function informar( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino
   if(!$idenviador) $idenviador = $docUsuarioOrigen;
 	$tmp_rad = array();
 	$informaSql = true;
-	// $this->db->conn->debug=true;
 	while ((list(,$noRadicado)=each($radicados)) and $informaSql)
 	{	if (strstr($noRadicado,'-'))	$tmp = explode('-',$noRadicado);
 		else $tmp = $noRadicado;
@@ -245,7 +241,6 @@ function informar( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino
 		# Mandar como parametro el recordset vacio y el arreglo conteniendo los datos a insertar
 		# a la funcion GetInsertSQL. Esta procesara los datos y regresara un enunciado SQL
 		# para procesar el INSERT.
-    //$this->db->conn->debug = true;
     if($noRadicado){
       $informaSql = $this->db->conn->Replace("INFORMADOS",$record,array('RADI_NUME_RADI','INFO_CODI','USUA_DOC','USUA_DOC_ORIGEN','INFO_CONJUNTO'),false);
       if ($informaSql)        $tmp_rad = array($record["RADI_NUME_RADI"]);
@@ -259,7 +254,6 @@ function informar( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino
 function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino, $codUsOrigen,$observa)
 {	$tmp_rad = array();
 	$deleteSQL = true;
-	//$this->db->conn->debug=true;
 	while ((list(,$noRadicado)=each($radicados)) and $deleteSQL)
 	{	//foreach($radicados as $noRadicado)
 		# Borrar el informado seleccionado
@@ -352,7 +346,6 @@ function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUs
 				DEPE_CODI=$depDestino
 				AND USUA_CODI=$codUsDestino";
 	# Busca el usuairo Origen para luego traer sus datos.
-	//$this->db->conn->debug=true;
 
 	$rs = $this->db->query($sql);
 	//$usNivel = $rs->fields["CODI_NIVEL"];
@@ -404,7 +397,6 @@ function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUs
 		$carp_codi=substr($depOrigen,0,2);
 		$carp_per = 0;
 		$carp_codi = 0;
-		//$this->db->conn->debug=true;
 		$isql = "update radicado
       set
         RADI_USU_ANTE='$loginOrigen'
@@ -433,7 +425,6 @@ function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUs
 		$carp_codi=substr($depOrigen,0,2);
 		$carp_per = 0;
 		$carp_codi = 0;
-		//$this->db->conn->debug=true;
 		$isql = "update radicado
       set
       RADI_USU_ANTE='$loginOrigen'
@@ -486,7 +477,6 @@ function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUs
 	foreach($radicados as $noRadicado)
 	{
 	# Busca el usuairo Origen para luego traer sus datos.
-	//$this->db->conn->debug=true;
 		$rad=array();		
 		if($usuaDocAgen)
 		{
@@ -538,7 +528,6 @@ function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUs
   {
   	$whereNivel = "";
   	$retorno="";
-  	//$this->db->conn->debug=true;
   	$this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	  foreach($radicados as $noRadicado)
 	  {
@@ -557,7 +546,6 @@ function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUs
 				a.RADI_USU_ANTE=b.USUA_LOGIN
 				AND b.usua_esta='1'
 				AND a.RADI_NUME_RADI = $noRadicado";
-		//$this->db->conn->debug = true;
 		 # Busca el usuairo Origen para luego traer sus datos.
 		 $rs = $this->db->conn->Execute($sql); # Ejecuta la busqueda
 		 $codUsDestino = $rs->fields['USUA_CODI'];
@@ -579,7 +567,6 @@ function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUs
 				and h.usua_codi=b.usua_codi
 		and b.usua_esta='1'
         AND h.RADI_NUME_RADI = $noRadicado";
-		  //$this->db->conn->debug = true;
 	  	$rs = $this->db->conn->Execute($isql); # Ejecuta la busqueda
 	    $codUsDestino = $rs->fields['USUA_CODI'];
 		  //  echo "$codUsDestino ....". $isql;

@@ -103,7 +103,6 @@ $whereFiltro=$dependencia_busq2;
     }
 	$sqlFecha = $db->conn->SQLDate("d-m-Y H:i A","b.RADI_FECH_RADI");  
 	include "$ruta_raiz/include/query/anulacion/querycuerpo_Repanula.php";
-      //$db->conn->debug = true;
 	?>
   <form name=formEnviar action='../anulacion/solAnulacion.php?<?=session_name()."=".session_id()."&krd=$krd" ?>&tpAnulacion=<?=$tpAnulacion?>&depeBuscada=<?=$depeBuscada?>&estado_sal_max=<?=$estado_sal_max?>&pagina_sig=<?=$pagina_sig?>&dep_sel=<?=$dep_sel?>&nomcarpeta=<?=$nomcarpeta?>&orderTipo=<?=$orderTipo?>&orderNo=<?=$orderNo?>' method=post>
  <?

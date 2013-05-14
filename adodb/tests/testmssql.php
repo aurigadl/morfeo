@@ -27,7 +27,6 @@ include('../tohtml.inc.php');
 $conn = &ADONewConnection("mssql");  // create a connection
 $conn->Connect('localhost','sa','natsoft','northwind') or die('Fail');
 
-$conn->debug =1;
 $query = 'select * from products';
 $conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $rs = $conn->Execute($query);
@@ -45,7 +44,6 @@ $p = $conn->Prepare('insert into products (productname,unitprice,dcreated) value
 echo "<pre>";
 print_r($p);
 
-$conn->debug=1;
 $conn->Execute($p,array('John'.rand(),33.3,$conn->DBDate(time())));
 
 $p = $conn->Prepare('select * from products where productname like ?');
@@ -57,7 +55,6 @@ die();
 //$conn->Connect('mangrove','sa','natsoft','ai');
 
 //$conn->Connect('mangrove','sa','natsoft','ai');
-$conn->debug=1;
 $conn->Execute('delete from blobtest');
 
 $conn->Execute('insert into blobtest (id) values(1)');

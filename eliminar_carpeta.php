@@ -48,7 +48,6 @@ if($BorrarCarp)
 	$isql=	"select count(1) AS Num from radicado
 			where carp_per=1 and carp_codi=$borrcarpeta and
 			 	  radi_depe_actu=$dependencia and radi_usua_actu=$codusuario ";
-	//$db->conn->debug = true;
 	$rs=$db->conn->Execute($isql);
 	
 	$numerot = $rs->fields[0];

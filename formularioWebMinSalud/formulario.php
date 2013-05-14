@@ -25,7 +25,6 @@ $_SESSION["secRadicaFormularioWeb"]=$secRadicaFormularioWeb; // Osea que usa la 
 
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 
 include('./funciones.php');
 include('./formulario_sql.php');

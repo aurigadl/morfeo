@@ -36,7 +36,6 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 require_once("$ruta_raiz/class_control/CombinaError.php");
 $conexion = new ConnectionHandler($ruta_raiz);
 $conexion->conn->StartTrans();
-$conexion->conn->debug = false;
 $conexion->conn->SetFetchMode(ADODB_FETCH_ASSOC);	 
 
 //variable con elementos de sesion

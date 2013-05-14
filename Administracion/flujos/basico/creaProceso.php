@@ -56,7 +56,6 @@ $salida = 0;
     $db = new ConnectionHandler( "$ruta_raiz" );
     if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-//	$db->conn->debug = true;
 	//<form name='frmCrear' action='<?=$action
 	$resultadoInsercion = 1;
 //		include "$ruta_raiz/debugger.php";
@@ -135,7 +134,6 @@ $salida = 0;
 				 			 
 							 order by detalle
 							  ";
-							  $db->conn->debug=true;
 					$rsSub=$db->conn->query($querySub);
 					include "$ruta_raiz/include/tx/ComentarioTx.php";
 					print $rsSub->GetMenu2("tsub", $tsub, "0:-- Seleccione --", false,""," class='select'" );

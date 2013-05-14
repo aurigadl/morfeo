@@ -39,7 +39,6 @@ $verradEntra=$verrad;
 if (!$ruta_raiz) $ruta_raiz = "..";
 include_once($ruta_raiz."/include/tx/Historico.php");
 $objHistorico= new Historico($db);
-$db->conn->debug=true;
 $isql = "select * FROM SGD_FLD_FLUJODOC where sgd_tpr_codigo='$tdoc'";
 	$rs=$db->query($isql);
 	if($rs)
@@ -78,7 +77,6 @@ $isql = "select * FROM SGD_FLD_FLUJODOC where sgd_tpr_codigo='$tdoc'";
 		$recordWhere2["RADI_NUME_RADI"] = $verradEntra;
 		$rs=$db->update("RADICADO", $recordSet2,$recordWhere2);
 		array_splice($recordSet2, 0);
-		//$db->conn->debug=true;
 		if($rs)
 		{
 			echo "<br><span class=info>Estado  Actualizado</span>";

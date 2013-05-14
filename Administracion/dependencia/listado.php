@@ -5,7 +5,6 @@ if(!$dependencia or !$tpDepeRad) include "$ruta_raiz/rec_session.php";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 
 $db = new ConnectionHandler("$ruta_raiz");	
-//$db->conn->debug = true;
 error_reporting(0);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $isql = "select DEPENDENCIA.DEPE_CODI,DEPENDENCIA.DEPE_NOMB FROM DEPENDENCIA";

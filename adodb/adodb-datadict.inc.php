@@ -256,12 +256,9 @@ class ADODB_DataDict {
 	{
 		$rez = 2;
 		$conn = &$this->connection;
-		$saved = $conn->debug;
 		foreach($sql as $line) {
 			
-			if ($this->debug) $conn->debug = true;
 			$ok = $conn->Execute($line);
-			$conn->debug = $saved;
 			if (!$ok) {
 				if ($this->debug) ADOConnection::outp($conn->ErrorMsg());
 				if (!$continueOnError) return 0;

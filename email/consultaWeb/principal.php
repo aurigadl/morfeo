@@ -73,7 +73,6 @@ preview = window.open(URL , "preview", windowprops);
 			FROM SGD_TPR_TPDCUMENTO 
 				where sgd_tpr_codigo='$tdoc'
 			";
-		//$db->conn->debug=false;
 		$rs=$db->query($isql);
 		if  (!$rs->EOF) 
 		{
@@ -186,7 +185,6 @@ preview = window.open(URL , "preview", windowprops);
 		 AND a.sgd_tpr_codigo='$tdoc'
 		 AND a.sgd_fld_codigo=a.sgd_fld_grupoweb
 		 order by a.SGD_FLD_CODIGO";
-	// $db->conn->debug=true;
 	$rs=$db->query($isql);
 	$iFld = 0;
 	if(!$rs->EOF)
@@ -264,7 +262,6 @@ $isql = "select
 		AND (r.radi_nume_radi like '%5' or r.radi_nume_radi like '%1' or r.radi_nume_radi like '%2')
 		AND r.radi_tipo_deri = 0
 		";
-//$db->conn->debug = true;
 $rs = $db->query($isql);
 $i=1;
 if(!$rs->EOF)

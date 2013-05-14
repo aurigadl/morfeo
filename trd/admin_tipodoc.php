@@ -19,7 +19,6 @@ include ("$ruta_raiz/busqueda/common.php");
 // Genera dinamicamente los tipos de radicado
 $sql = "SELECT SGD_TRAD_CODIGO,SGD_TRAD_DESCR FROM SGD_TRAD_TIPORAD ORDER BY SGD_TRAD_CODIGO";
 $ADODB_COUNTRECS = true;
-//$db->conn->debug = true;
 $rs_trad = $db->query($sql);
 if ($rs_trad->RecordCount() >= 0)
 {	$i = 0;
@@ -193,7 +192,6 @@ if($_POST['modi_tdoc'] && ($detatipod != '') && ($codtdocI !=0) )
 		, SGD_TERMINO_REAL = '$terminot'
 		,sgd_tpr_radica=$tpRadica  
 		where  sgd_tpr_codigo = $codtdocI ";
-		//$db->conn->debug = true;
 		$rsIN = $db->conn->query($query);
 		$terminot = '' ;
 		$detatipod = '';

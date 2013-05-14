@@ -196,5 +196,4 @@ switch($db->driver)
 		}break;
 }
 */
-//$db->conn->debug = true;
 ?>

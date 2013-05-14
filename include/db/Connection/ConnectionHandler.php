@@ -62,14 +62,12 @@ function imagen()
 //  Retorna False en caso de ocurrir error;
 function query($sql)
 {
-  //$this->conn->debug=true;
 $cursor = $this->conn->Execute($sql);
   return $cursor;
 }
 //  Retorna la fecha actual segun la BD del driver;
 function sysdate()
 {
-  //$this->conn->debug=true;
 	if($this->driver == "postgres")  return "now()";
   if($this->driver == "oci8")  return "sysdate";
   if($this->driver == "mssql")  return "GETDATE()";
@@ -157,7 +155,6 @@ function getResult($sql) {
     	$temp[] = $field;
     }
   	$sql = "insert into " . $table . "(" . join(",",$fieldsnames) . ") values (" . join(",",$temp) . ")";
-  	if ($this->conn->debug==true)
   	{
   	 echo "<hr>(".$this->driver.") $sql<hr>";
   	}
@@ -209,11 +206,9 @@ function getResult($sql) {
 	}
 	$sql = "update " . $table ." set " . join(",",$tmpSet) . "    where " . join(" and ",$tmpWhere);
 
-	if ($this->conn->debug==true)
   	{
   	 echo "<hr>(".$this->driver.") $sql<hr>";
   	}
-//$this->conn->debug=true;
   	$res = $this->conn->Execute( $sql );
 	
   	if( !$res )
@@ -247,7 +242,6 @@ function getResult($sql) {
 	$sql = "delete from " . $table . " where " . join(" and ",$tmpWhere);
 
 	//print("*** $sql ****");
- 	if ($this->conn->debug==true)
   	{
   	 echo "<hr>(".$this->driver.") $sql<hr>";
   	}

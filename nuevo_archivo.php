@@ -486,7 +486,6 @@ $q_exp .= " FROM SGD_EXP_EXPEDIENTE ";
 $q_exp .= " WHERE RADI_NUME_RADI = " . $numrad;
 $q_exp .= " AND SGD_EXP_ESTADO <> 2";
 $q_exp .= " ORDER BY fecha desc";
-//$db->conn->debug = true;
 $rs_exp = $db->conn->Execute( $q_exp );
 						
 if( $rs_exp->RecordCount() == 0 )
@@ -715,7 +714,6 @@ if($codigo or $_FILES['userfile1']['size'])
 	  where
 		   sgd_anex_codigo='$codigo'
 		  order by sgd_dir_tipo desc";
-    //$db->conn->debug = true;
     // cast(sgd_dir_tipo as varchar(3)) like '7%' and   Se elimina para mostrarlo siempre....
     $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
     $rs=$db->conn->Execute($isql);

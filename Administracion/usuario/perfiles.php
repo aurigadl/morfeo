@@ -27,7 +27,6 @@
 	$ruta_raiz = "../..";
 	include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 	$db = new ConnectionHandler("$ruta_raiz");	
-	//$db->conn->debug = true;
 	error_reporting(0);
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	if ($codigo && $dependencia)

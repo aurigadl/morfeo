@@ -117,7 +117,6 @@ include "$ruta_raiz/envios/paEncabeza.php";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 include("$ruta_raiz/class_control/usuario.php");
 $db = new ConnectionHandler($ruta_raiz);
-//$db->conn->debug=true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $objUsuario = new Usuario($db);
 ?>
@@ -400,7 +399,6 @@ if($generarOrfeo)
   <td>
 	<?	 		
 	// Se calcula el numero de | a mostrar
-	//$db->conn->debug = true;
 	$rs=$db->query($isqlCount);
 	$numerot = $rs->fields["CONTADOR"];
 	$paginas = ($numerot / 20);

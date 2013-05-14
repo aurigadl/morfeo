@@ -168,7 +168,6 @@ if(trim($rs->fields["USUA_LOGIN"])==trim($krd))
 
 		// Esta consulta selecciona las carpetas Basicas de DocuImage que son extraidas de la tabla Carp_Codi
 		$isql ="select CARP_CODI,CARP_DESC from carpeta order by carp_codi ";
-		//$db->conn->debug = true;
 		$rs = $db->query($isql);
 		$addadm = "";
 ?>
@@ -253,7 +252,6 @@ if(trim($rs->fields["USUA_LOGIN"])==trim($krd))
 		 *  (Por. SIXTO 20040302)
 		 */
 		$sqlFechaHoy=$db->conn->DBTimeStamp(time());
-		//$db->conn->debug = true;
 		$sqlAgendado=" and (agen.SGD_AGEN_FECHPLAZO >= ".$sqlFechaHoy.")";
 		$isql="select count(1) as CONTADOR from SGD_AGEN_AGENDADOS agen
 			where  usua_doc='$usua_doc' and agen.SGD_AGEN_ACTIVO=1 $sqlAgendado";
@@ -277,7 +275,6 @@ if(trim($rs->fields["USUA_LOGIN"])==trim($krd))
 		$sqlAgendado=" and (agen.SGD_AGEN_FECHPLAZO <= ".$sqlFechaHoy.")";
 		$isql="select count(1) as CONTADOR from SGD_AGEN_AGENDADOS agen
 			where  usua_doc='$usua_doc' and agen.SGD_AGEN_ACTIVO=1 $sqlAgendado";
-		//$db->conn->debug = true;
 		$rs=$db->query($isql);
 		$num_exp = $rs->fields["CONTADOR"];
 		$data="Agendados vencidos";
@@ -367,12 +364,10 @@ if($numerot>=1){
 <?
   $numeroP = 0;
   include ("include/query/queryCuerpoPrioritario.php");
-  // $db->conn->debug = true;
   echo "<!-- $isqlPrioritario -->";
   $rsP = $db->conn->query($isqlPrioritario);
   $numeroP = $rsP->fields["NUMEROP"];
    
-  $db->conn->debug = false;
   if($numeroP >=1) $clasePrioritarios="titulosError"; else $clasePrioritarios="menu_princ";
 ?>
 

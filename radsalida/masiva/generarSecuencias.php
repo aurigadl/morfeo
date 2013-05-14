@@ -37,7 +37,6 @@ $digitosDependencia = $_SESSION["digitosDependencia"];
 require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 if (!$db)	$db = new ConnectionHandler($ruta_raiz);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-//$db->conn->debug = true;
 $phpsession = session_name()."=".session_id();
 ?>
 <html>

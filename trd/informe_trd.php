@@ -71,7 +71,6 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	include "$ruta_raiz/include/query/devolucion/querydependencia.php";
 	$sqlD = "select $sqlConcat ,depe_codi from dependencia where depe_estado=1
 							order by depe_codi";
-//$db->conn->debug = true;
 			$rsDep = $db->conn->Execute($sqlD);
 	       print $rsDep->GetMenu2("dep_sel","$dep_sel",$blank1stItem = "$valor:$ss_RADI_DEPE_ACTUDisplayValue", false, 0," onChange='submit();' class='select'");	
 	?>

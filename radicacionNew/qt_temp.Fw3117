@@ -51,7 +51,6 @@ include_once "../include/db/ConnectionHandler.php";
 //include_once "../class_control/AplIntegrada.php";
 $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 include "crea_combos_universales.php";
 //$objApl = new AplIntegrada($db);
 if($nurad)

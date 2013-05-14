@@ -60,7 +60,6 @@ class PlanillaModel{
 		public  function radicadosEntrega($arrayDatos){
 			global $ruta_raiz;
 			$db=Connection::getCurrentInstance();
-			//	$db->conn->debug = true;
 			$fechaIni =$arrayDatos['fecha_busq']." ".$arrayDatos['hora_ini'].":".$arrayDatos['minutos_ini'];
 			$fechaFin = $arrayDatos['fecha_fin']." ".$arrayDatos['hora_fin'].":".$arrayDatos['minutos_fin'];
 			$remplazos =array($db->conn->SQLDate("Y-m-d H:i A","r.RADI_FECH_RADI"),

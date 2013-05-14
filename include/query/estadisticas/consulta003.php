@@ -132,7 +132,6 @@ switch($db->driver)
 	 		/** CONSULTA PARA VER TODOS LOS DETALLES */
 			$queryETodosDetalle = $queryEDetalle . $orderE;
 			$queryEDetalle .= $condicionE . $condicionDep . $orderE;
-                 //$db->conn->debug = true;	
 		}break;
 }
 

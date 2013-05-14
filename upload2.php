@@ -41,7 +41,6 @@ $lnr         = 11+$ln;
     include_once("$ruta_raiz/class_control/anex_tipo.php");
 
     if (!$db)	$db = new ConnectionHandler($ruta_raiz);
-    //$db->conn->debug = true;
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
     $anex       = & new Anexo($db);
     $anexTip    = & new Anex_tipo($db);
@@ -107,7 +106,6 @@ $lnr         = 11+$ln;
         // $auxnumero = Es codigo del consecutivo del anexo al radicado
         // Esta borrado?
         // $anex_salida = marca con 1 si es un radicado de salida
-  // $db->conn->debug = true;
         include "$ruta_raiz/include/query/queryUpload2.php";
         if ($expIncluidoAnexo) {
             $expAnexo = 	$expIncluidoAnexo;

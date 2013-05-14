@@ -26,10 +26,8 @@ if($_POST["codiCarp"]) $carpCodi = $_POST["carpCodi"]; else $carpCodi = $_GET["c
 
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 echo "<hr>".$usuaLogin."<hr>";
-$db->conn->debug = true;
 
 if($usuaLogin and !$carpCodi)
 {
@@ -44,7 +42,6 @@ if($usuaLogin and !$carpCodi)
 					and u.depe_codi=r.radi_depe_actu 
 					and u.usua_codi=r.radi_usua_actu
 				group by r.carp_codi";
- $db->conn->debug = true;
  $rs = $db->conn->query($iSql);
 	echo "<hr>";
 	while(!$rs->EOF){
@@ -68,7 +65,6 @@ if($usuaLogin and !$carpCodi)
 				and u.usua_codi=cp.usua_codi
 				and u.depe_codi=r.radi_depe_actu 
 				and u.usua_codi=r.radi_usua_actu";
- $db->conn->debug = true;
  $rs = $db->conn->query($iSql);
 	echo "<hr>";
 	$radicados = array();

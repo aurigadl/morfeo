@@ -16,7 +16,6 @@
 	$archivoExec	= "http://$ipServidor/~jgonzal/br_3.6.0/radicacionWeb/radicacionQrs/verificacion.php";
 	$db = new ConnectionHandler("$ruta_raiz");
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-	//$db->conn->debug = true;
 	$tpl = new HTML_Template_IT($ruta_raiz . "/tpl");
 	$comenzarRad = (!empty($HTTP_POST_VARS["radiQrs"])) ? $HTTP_POST_VARS["radiQrs"] : null;
 	

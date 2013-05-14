@@ -65,7 +65,6 @@ $cp=0;
 $conD=$db->conn->Concat("sgd_eit_codigo","'-'","sgd_eit_nombre");
 //$sqli="select ($conD) as detalle,sgd_eit_codigo from sgd_eit_items where sgd_eit_codigo='$cod'";
 $sqli="select ($conD) as detalle,sgd_eit_codigo from sgd_eit_items where sgd_eit_cod_padre='$cod'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 print $rsi->GetMenu2('codig',$codig,true,false,"","class='select'; onchange=submit();");
 /*if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
@@ -105,7 +104,6 @@ $cp++;
 $tm=$c;
 for($i=0;$i<$tm;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codig'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codig;
@@ -131,7 +129,6 @@ $cp++;
 $tm1=$c;
 for($i=$tm;$i<$tm1;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codi[$i]'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codi[$i];
@@ -157,7 +154,6 @@ $cp++;
 $tm2=$c;
 for($i=$tm1;$i<$tm2;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codi[$i]'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codi[$i];
@@ -183,7 +179,6 @@ $cp++;
 $tm3=$c;
 for($i=$tm2;$i<$tm3;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codi[$i]'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codi[$i];
@@ -209,7 +204,6 @@ $cp++;
 $tm4=$c;
 for($i=$tm3;$i<$tm4;$i++){
 $sqli="select sgd_eit_nombre from sgd_eit_items where sgd_eit_codigo='$codi[$i]'";
-//$db->conn->debug=true;
 $rsi=$db->conn->Execute($sqli);
 if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
 $codigo=$codi[$i];

@@ -539,7 +539,6 @@ if (!$mail->Send()) {
         $rsRegenvio = $db->conn->SelectLimit($sql_sgd_renv_codigo,2);
         $nextval = $rsRegenvio->fields["SGD_RENV_CODIGO"];
         $nextval++;
-        //$db->conn->debug= true;
         $fechaActual = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
         $destinatarios = "Destino:".$_POST["destinatario"]." Copia:".$_POST["concopia"];
         $dependencia = $_POST["depecodi"];

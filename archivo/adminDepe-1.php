@@ -58,7 +58,6 @@ window.open("inDepe.php?<?=session_name()."=".session_id()?>&krd=<?=$krd?>&cod="
   <td class="titulos2">BORRAR</td>
   </tr>
 <?
-//$db->conn->debug=true;
 $conD=$db->conn->Concat("DEPE_CODI","'-'","DEPE_NOMB");
 $rs=$db->conn->Execute("select $conD AS DEPE, sgd_arch_edificio,sgd_arch_item,sgd_arch_id from dependencia, sgd_arch_depe where depe_codi=sgd_arch_depe ORDER BY SGD_ARCH_DEPE");
 while(!$rs->EOF){

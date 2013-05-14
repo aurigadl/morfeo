@@ -261,7 +261,6 @@ if ( ! is_dir( $ruta_raiz.'/bodega/tmp' ) )
 function creaDirDepe( $ruta_raiz ,$anoCrear)
 {
     $db = new ConnectionHandler( "$ruta_raiz" );
-    $db->conn->debug = true;
 
     $query  = "SELECT DEPE_CODI";
     $query .= " FROM dependencia";

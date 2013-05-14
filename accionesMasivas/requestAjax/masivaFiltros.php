@@ -1,6 +1,5 @@
 <?php
 include_once('dataCommon.php');
-//$db->conn->debug = true;
 	/*
 	 * dataCommon.php comparte los datos mas relevantes y los 
 	 * objetos mas utilizados como session,adodb, etc.
@@ -102,7 +101,6 @@ include_once('dataCommon.php');
 						     AND T.SGD_TPR_ESTADO		='1'
 						
 					ORDER BY DETALLE";
-			//$db->conn->debug = true;		
 			$salida	=	$db->conn->Execute($sql2);
 		
 			while(!$salida->EOF) {
@@ -256,7 +254,6 @@ include_once('dataCommon.php');
                                                 SE.SGD_EXP_NUMERO LIKE '$nuExpediente'";
 
 			
-//		        $db->conn->debug=true;	
 			$salida = $db->conn->Execute($sqlE);	
 				
 			if(empty($salida->EOF)){

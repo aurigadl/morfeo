@@ -11,7 +11,6 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 include_once( "$ruta_raiz/include/tx/Expediente.php" );
 $expediente = new Expediente( $db );
 
-//$db->conn->debug =true;
 if( isset( $_POST['grabar'] ) && $_POST['grabar'] == "GRABAR" )
 {
 	

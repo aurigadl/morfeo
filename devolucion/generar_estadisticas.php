@@ -133,7 +133,6 @@ if($generar_informe)
         ?>
 	Numero de Registros  <? echo $nregis ; ?>
 	<?
-	$db->conn->debug = false;
 	$ruta_raiz = "..";
 	$pager = new ADODB_Pager($db->conn,$isql,'adodb', true,$orderNo,$orderTipo);
 	$pager->toRefLinks = $linkPagina;

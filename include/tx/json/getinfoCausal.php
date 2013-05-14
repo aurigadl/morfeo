@@ -2,7 +2,6 @@
 $ruta_raiz = "../../..";
 include_once ("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler($ruta_raiz);
-//$db->conn->debug = true;
 $id = (isset($_GET['deta_causal']) && !empty($_GET['deta_causal'])) ? $_GET['deta_causal'] : 0;
 //if ($deta_causal and $sector) {
 	$isql = "SELECT dcau.SGD_DCAU_CODIGO, cau.SGD_CAU_CODIGO, dcau.SGD_DCAU_DESCRIP
@@ -12,7 +11,6 @@ $id = (isset($_GET['deta_causal']) && !empty($_GET['deta_causal'])) ? $_GET['det
         AND dcau.sgd_dcau_estado=1
         AND dcau.SGD_DCAU_DESCRIP LIKE '%".$id."%'
         ORDER BY dcau.SGD_DCAU_DESCRIP ";
-  //$db->conn->debug = true;
 	$rs = $db->conn->query($isql);
 	if ($rs && !$rs->EOF) {
 	?>

@@ -47,7 +47,6 @@ if(!empty($tipoDocumentos) and $tipoDocumentos!='9999' and $tipoDocumentos!='999
 	}
 
 //*$condiRep Esta condicion permite que se genere la estadistica con solo una respuesta por radicado
-//$db->conn->debug = true;
 switch($db->driver)
 { 
   case 'postgres':
@@ -76,7 +75,6 @@ switch($db->driver)
       /*
        * CONSULTA PARA VER DETALLES 
       */
-     //$db->conn->debug = true;
      if ($condiRep == "SI" )
       {	
    
@@ -248,7 +246,6 @@ function pintarEstadistica($fila,$indice,$numColumna)
   }
 return $salida;
 }
-//$db->conn->debug = true;
 function pintarEstadisticaDetalle($fila,$indice,$numColumna){
       global $ruta_raiz,$encabezado,$krd,$db,$radi_anterior;
         include_once "$ruta_raiz/js/funtionImage.php";

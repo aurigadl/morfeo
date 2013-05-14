@@ -32,7 +32,6 @@ include_once ("$ruta_raiz/include/db/ConnectionHandlerSUI.php");
 $dbSUI = new ConnectionHandlerSUI("$ruta_raiz");
 $dbSUI->conn->SetFetchMode(ADODB_FETCH_NUM);	
 $dbSUI->conn->SetFetchMode(ADODB_FETCH_ASSOC);		
-//$dbSUI->conn->debug = true;
 ?>
 <html>
 <head>
@@ -207,7 +206,6 @@ if($buscarVal!="Buscar") die ("<hr>Presione Buscar cuando Desee realizar la Busq
 	//$sqlFecha = $db->conn->DBDate("b.RADI_FECH_RADI", "d-m-Y H:i A");
 	//$sqlFecha = $db->conn->DBTimeStamp("b.RADI_FECH_RADI","" ,"Y-m-d H:i:s");
   //$db->SQLDate('Y-\QQ');
-	//$db->conn->debug = true;
 	$iSql = 'select
 				to_char(b.RADI_NUME_RADI) as "IDT_Numero Radicado"
 				,b.RADI_PATH as "HID_RADI_PATH"
@@ -231,7 +229,6 @@ if($buscarVal!="Buscar") die ("<hr>Presione Buscar cuando Desee realizar la Busq
   if ($txtValor) $iSql = $iSql . " and b.ra_asun like '%$txtValor%'";
 	//	order by '.$order .' ' .$orderTipo;
 	// and b.PAR_SERV_SECUE='.$sector.'
-  //$db->conn->debug = true;	
 $rs=$db->conn->Execute($iSql);
   if ($rs->EOF and $busqRadicados)  {
 		echo "<hr><center><b><span class='alarmas'>No se encuentra ningun radicado con el criterio de busqueda</span></center></b></hr>";

@@ -56,7 +56,6 @@ $radSelec = "";
  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
  $db = new ConnectionHandler("$ruta_raiz");	 
 
-//$db->conn->debug=true; 
 if (!$estado_sal)   {$estado_sal=2;}
  if (!$estado_sal_max) $estado_sal_max=3;
  if ($estado_sal==4) {
@@ -149,7 +148,6 @@ if (!$estado_sal)   {$estado_sal=2;}
 
 	  $rs=$db->conn->Execute($isql);
 	//$nregis = $rs->recordcount();	
-//$db->conn->debug=true; 
 	if (!$rs->fields["Radicado"])  {
 		echo "<table class=borde_tab width='100%'><tr><td class=titulosError><center>NO se encontro nada con el criterio de busqueda</center></td></tr></table>";}
 	else  {

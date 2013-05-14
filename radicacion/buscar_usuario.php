@@ -36,7 +36,6 @@ if (!$db) $db = new ConnectionHandler("$ruta_raiz");
 include("crea_combos_universales.php");	
 error_reporting(7);
 $db->conn->SetFetchMode(ADODB_FETCH_NUM);	
-//$db->conn->debug = true;
 ?>
 <html>
 <head>
@@ -313,7 +312,6 @@ if(!$formulario)
 	<td colspan="3%" CLASS="titulos5" >COLOCAR COMO </td>
 </tr> 
   <?
-  //$db->conn->debug = true;
    $grilla = "timpar";
    $i = 0;
    // ********************************

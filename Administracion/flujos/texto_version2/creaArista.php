@@ -50,7 +50,6 @@ if ( $tipificacion ) $deshabilitado =  ""; else $deshabilitado =  "disabled=true
     $db = new ConnectionHandler( "$ruta_raiz" );
     if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-	//$db->conn->debug = true;
 	if( $_GET['proceso'] != '' ){
 		$procesoSelected = $_GET['proceso'];
 	}elseif ( $_POST['proceso'] != ''){

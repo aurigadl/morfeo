@@ -27,7 +27,6 @@ include_once "$ruta_raiz/include/tx/Historico.php";
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $db = new ConnectionHandler($ruta_raiz);
 $objHistorico= new Historico($db);
-//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 if($_GET["nurad"]) $nurad = $_GET["nurad"];
 ?>
@@ -123,7 +122,6 @@ $imagen="flechadesc.gif";
 	  $ruta_raiz = "..";
 	  require "$ruta_raiz/class_control/class_control.php";
 	  $btt = new CONTROL_ORFEO($db);
-	  //$db->conn->debug = true;
     
    //$grabar = "";
  
@@ -154,7 +152,6 @@ $imagen="flechadesc.gif";
 	    $j=1;
 	    if (!$exp_piso2) $exp_piso2=0;
 	    $sqm="select sgd_eit_sigla from sgd_eit_items where sgd_eit_codigo = '$exp_piso2'";
-      //$db->conn->debug = true;
 	    $rs=$db->conn->Execute($sqm);
 	    $exp_piso=$exp_piso2;
 	    
@@ -238,9 +235,7 @@ $imagen="flechadesc.gif";
     $iSql = " UPDATE SGD_EXP_EXPEDIENTE
                 set SGD_EXP_CAJA=$exp_caja, SGD_EXP_ESTADO=1
               WHERE SGD_EXP_NUMERO='$num_expediente'";
-     //$db->conn->debug = true;
      $resultadoGen = $db->conn->query($iSql);
-     //$db->conn->debug = true;
      if($resultadoGen) {
       echo ".. Ubicacion Grabada corectamente ..";
      }else{
@@ -253,7 +248,6 @@ $imagen="flechadesc.gif";
     echo '.. No actualizo Radicados en Carpetas ..';
   }else{
   echo " .. Datos de radicados Grabados Correctamente ..";
-//$this->db->conn->debug=true;
   $objHistorico->insertarHistorico($arrayRad,$dep_sel ,$codusuario, $dep_sel,$codusuario, $observa, 57);
 //
   }
@@ -414,9 +408,7 @@ $imagen="flechadesc.gif";
               where SGD_EIT_COD_PADRE = '$itemCodigoPadre'
               $whereInicio
               order by SGD_EIT_NOMBRE ";
-      //$db->conn->debug = true;
       $rs=$db->query($sql);
-      //$db->conn->debug = false;
       $itemCodigoAnt = $btt->itemCodigo[$iItem];
       $nombreSelectItem = "expItem". $iItem;
       if($rs){
@@ -578,7 +570,6 @@ $imagen="flechadesc.gif";
             AND r.RADI_NUME_RADI=e.RADI_NUME_RADI AND e.SGD_EXP_ESTADO <> 2";
 	      //if($exp_carpeta!="" and $car)$sqlrad1.=" and e.SGD_EXP_CARPETA LIKE '$exp_carpeta'";
 	      $sqlrad1.=" ORDER BY e.SGD_EXP_CARPETA ,e.RADI_NUME_RADI";
-	      //$db->conn->debug=true;
 	      $rsrad=$db->query($sqlrad1);
 	      $ce=1;
         $carpeta = array();

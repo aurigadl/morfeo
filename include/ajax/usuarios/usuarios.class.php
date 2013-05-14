@@ -102,7 +102,6 @@ class usuarios{
 		$iSql .= " ORDER BY U.SGD_ROL_CODIGO DESC, u.USUA_NOMB";
 		//return $iSql;
 		//ECHO "$isql";
-		//$this->db->conn->debug = true;
 		$rsUs = $this->db->conn->Execute($iSql);
 		$cadena = ' document.getElementById("'.$idObjetoHtml.'").length=0;';
 		$j=0;
@@ -142,7 +141,6 @@ class usuarios{
 	
     $ruta_raiz = $this->ruta_raiz;
     include "$ruta_raiz/include/tx/Tx.php";
-        //$this->db->conn->debug = true;
 	$tx = new Tx($this->db);
 	if($txInformar){
 	  if($infConjunto==true)  $infConjunto=1; else $infConjunto=0;
@@ -176,7 +174,6 @@ function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
 		AND info_conjunto =0
 		AND USUA_DOC_ORIGEN = '$usuaDocOrigen'
 		order by info_fech desc";
-        //$this->db-conn->debug = true;
 	$rsUs = $this->db->conn->Execute($iSql);
 	
 	$cadena .= "seleccion = document.getElementById('$idObjetoHtml'); ";
@@ -207,7 +204,6 @@ function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
 		AND info_conjunto>=1
 		AND USUA_DOC_ORIGEN = '$usuaDocOrigen'
                 order by info_fech desc";
-        //$this->db-conn->debug = true;
         $rsUs = $this->db->conn->Execute($iSql);
         $cadena .= "<span class=titulos5>TRAMITE EN CONJUNTO:</span><TABLE class=borde_tab width=100%>";
         while (!$rsUs->EOF)

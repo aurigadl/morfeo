@@ -10,7 +10,6 @@ error_reporting(0);
 if (!$ruta_raiz) $ruta_raiz="..";
 include_once("buscarFila.php");
 error_reporting(7);
-//$db->conn->debug = true;
 
 if (!$ruta_raiz) $ruta_raiz="..";
 error_reporting(7);

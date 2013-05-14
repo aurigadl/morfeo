@@ -27,7 +27,6 @@ if(!$orno) $orno=2;
    * @var string
    * @access public
    */
-//$db->conn->debug = true;
 switch($db->driver)
 {	
 	case 'postgres':
@@ -76,7 +75,6 @@ switch($db->driver)
                        $queryETodosDetalle = $queryEDetalle . $orderE;
                        $queryEDetalle .= $condicionUS . $orderE; 
 
-                 //$db->conn->debug = true;
 		 //return;
 		}break;
 	case 'oracle':

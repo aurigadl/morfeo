@@ -169,7 +169,6 @@ if ($swLog==1)
 	//$sqlFecha = $db->conn->DBDate("b.RADI_FECH_RADI", "d-m-Y H:i A");
 	//$sqlFecha = $db->conn->DBTimeStamp("b.RADI_FECH_RADI","" ,"Y-m-d H:i:s");
         //$db->SQLDate('Y-\QQ');
-	//$db->conn->debug = true;
 	include "$ruta_raiz/include/query/queryCuerpoTx.php";
 	$rs=$db->conn->Execute($isql);
 	if ($rs->EOF and $busqRadicados)  {

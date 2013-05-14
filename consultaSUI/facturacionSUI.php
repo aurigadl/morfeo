@@ -36,7 +36,6 @@ error_reporting(7);
 include_once "$ruta_raiz/include/db/ConnectionHandlerSUI.php";
 $db = new ConnectionHandlerSUI($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 $fechah = date("dmy") . "_" . time("hms");
 $usua_nuevo=3;
 	$numeroRadicado = str_replace("-","",$numeroRadicado);

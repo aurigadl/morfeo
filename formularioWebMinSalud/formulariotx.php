@@ -30,7 +30,6 @@ require_once($ruta_raiz."/conf/configPHPMailer.php");
 $db   = new ConnectionHandler($ruta_raiz);
 $mail = new PHPMailer();
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug=true;
 
 session_start();
 $errorFormulario = 0;

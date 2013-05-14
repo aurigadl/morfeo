@@ -24,7 +24,6 @@ $mensaje_error = false;
    include_once "$ruta_raiz/include/db/ConnectionHandler.php";
    $db = new ConnectionHandler($ruta_raiz);	 
 
-   // $db->conn->debug=true;
    if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
 
 /*********************************************************************************

@@ -14,7 +14,6 @@ include_once ("./encabezado.php");
 
 // prestar CustomIncludes end
 //-------------------------------
-//$db->conn->debug=true;
 
 
 //===============================

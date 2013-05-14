@@ -23,7 +23,6 @@ if (!$db) $db = new ConnectionHandler("$ruta_raiz");
 include("crea_combos_universales.php");	
 error_reporting(7);
 $db->conn->SetFetchMode(ADODB_FETCH_NUM);	
-//$db->conn->debug=true;
 ?>
 <html>
 <head>
@@ -542,7 +541,6 @@ if($no_documento or $nombre_essp)
 	}
 	$isql .= " order by usua_nomb "; 
 	}
-	//$db->conn->debug = true;
 	$rs=$db->query($isql); 
 	
 	$tipo_emp = $tbusqueda;

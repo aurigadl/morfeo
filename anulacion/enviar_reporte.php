@@ -51,7 +51,6 @@ $codusuario     = $_SESSION["codusuario"];
  require_once("$ruta_raiz/class_control/ControlAplIntegrada.php");
  include('../config.php');
  $db = new ConnectionHandler("$ruta_raiz");	
- //$db->conn->debug=true;
  $db->conn->BeginTrans();
  $objCtrlAplInt = new ControlAplIntegrada($db); 
  var_dump($checkValue);

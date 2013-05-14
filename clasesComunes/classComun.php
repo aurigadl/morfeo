@@ -26,7 +26,6 @@ class DATOSDEST {
   function DATOSDEST($db,$radicado,$espcodi) {
 
     error_reporting(7);
-    $db->conn->debug = false;   
     
 	if ($espcodi) {
 	   $isql = "select 

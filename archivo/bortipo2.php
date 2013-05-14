@@ -32,7 +32,6 @@ if($tipo==1){
 }
 if($tipo==3){
 $sql="delete from sgd_eit_items where sgd_eit_codigo like '$cod'";
-//$db->conn->debug=true;
 $rs=$db->conn->Execute($sql);
 $sqli="select sgd_eit_codigo from sgd_eit_items where sgd_eit_cod_padre like '$cod'";
 $rsi=$db->conn->Execute($sqli);

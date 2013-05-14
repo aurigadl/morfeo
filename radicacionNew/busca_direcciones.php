@@ -1,5 +1,4 @@
 <?php
-//$db->conn->debug = true;
 if($radicadopadre) {
   $buscar_d = $radicadopadre;
 }
@@ -23,7 +22,6 @@ if($espcodi) {
       ID_CONT
   from BODEGA_EMPRESAS
   where IDENTIFICADOR_EMPRESA = $espcodi ";
-//$db->conn->debug = true;
 $rs = $db->conn->Execute($isql);
     if(!$rs->EOF) {
       $dir_codigo_us3 = $rs->fields["IDENTIFICADOR_EMPRESA"];

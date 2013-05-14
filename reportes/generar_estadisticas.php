@@ -25,7 +25,6 @@ $depe_codi_territorial = $_SESSION["depe_codi_territorial"];
 include_once  "../include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
 
-//$db->conn->debug = true;
 if(!$fecha_busq) $fecha_busq=date("Y-m-d");
 if(!$fecha_busq2) $fecha_busq2=date("Y-m-d");
 ?>
@@ -104,7 +103,6 @@ if(!$fecha_busq2) $fecha_busq2=date("Y-m-d");
 	$sqlD = "select $sqlConcat ,depe_codi from dependencia 
 	        where depe_codi_territorial = $depe_codi_territorial
 		order by depe_codi";
-		 //$db->conn->debug = true;
 		$rsDep = $db->conn->Execute($sqlD);
 	       print $rsDep->GetMenu2("dep_sel","$dep_sel",$blank1stItem = "$valor:$ss_RADI_DEPE_ACTUDisplayValue", false, 0," onChange='submit();' class='select'");	
 	?>

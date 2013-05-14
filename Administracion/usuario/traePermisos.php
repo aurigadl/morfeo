@@ -23,7 +23,6 @@
 /*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
 /*************************************************************************************/
 $isql = "SELECT * FROM USUARIO WHERE USUA_LOGIN = '$usuLoginSel'";
-//$db->conn->debug = true;
 $rsCrea = $db->conn->query($isql);
 
 $usua_activo 	= $rsCrea->fields["USUA_ESTA"];

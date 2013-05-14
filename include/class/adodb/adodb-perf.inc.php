@@ -104,12 +104,9 @@ function& adodb_log_sql(&$connx,$sql,$inputarr)
 			$tracer = '';
 			$errM = '';
 			$errN = 0;
-			$dbg = $conn->debug;
-			$conn->debug = false;
 			if (!is_object($rs) || $rs->dataProvider == 'empty') 
 				$conn->_affected = $conn->affected_rows(true);
 			$conn->lastInsID = @$conn->Insert_ID();
-			$conn->debug = $dbg;
 		}
 		if (isset($_SERVER['HTTP_HOST'])) {
 			$tracer .= '<br>'.$_SERVER['HTTP_HOST'];
@@ -142,8 +139,6 @@ function& adodb_log_sql(&$connx,$sql,$inputarr)
 		$arr = array('b'=>strlen($sql).'.'.crc32($sql),
 					'c'=>substr($sql,0,3900), 'd'=>$params,'e'=>$tracer,'f'=>adodb_round($time,6));
 		//var_dump($arr);
-		$saved = $conn->debug;
-		$conn->debug = 0;
 		
 		$d = $conn->sysTimeStamp;
 		if (empty($d)) $d = date("'Y-m-d H:i:s'");
@@ -166,7 +161,6 @@ function& adodb_log_sql(&$connx,$sql,$inputarr)
 			$isql = "insert into $perf_table (created,sql0,sql1,params,tracer,timer) values( $d,?,?,?,?,?)";
 		}
 		$ok = $conn->Execute($isql,$arr);
-		$conn->debug = $saved;
 		
 		if ($ok) {
 			$conn->_logsql = true; 
@@ -441,7 +435,6 @@ Committed_AS:   348732 kB
 			$save = $ADODB_FETCH_MODE;
 			$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
 			if ($this->conn->fetchMode !== false) $savem = $this->conn->SetFetchMode(false);
-			//$this->conn->debug=1;
 			$rs =& $this->conn->SelectLimit(
 			"select avg(timer) as avg_timer,$sql1,count(1),max(timer) as max_timer,min(timer) as min_timer
 				from $perf_table
@@ -713,7 +706,6 @@ Committed_AS:   348732 kB
 			if (empty($ADODB_LOG_CONN))
 				echo "<p>&nbsp; <a href=\"?do=viewsql&clearsql=1\">Clear SQL Log</a><br>";
 			echo $this->HealthCheck();
-			//$this->conn->debug=1;
 			echo $this->CheckMemory();
 			global $ADODB_LOG_CONN;
 			break;
@@ -751,7 +743,6 @@ Committed_AS:   348732 kB
 	function Poll($secs=5)
 	{
 		$this->conn->fnExecute = false;
-		//$this->conn->debug=1;
 		if ($secs <= 1) $secs = 1;
 		echo "Accumulating statistics, every $secs seconds...\n";flush();
 		$arro =& $this->PollParameters();

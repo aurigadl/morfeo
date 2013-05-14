@@ -28,7 +28,6 @@ $q="select b.SGD_PNUFE_CODI ,a.SGD_DNUFE_CODI,a.SGD_DNUFE_PATH ,b.SGD_PNUFE_SERI
 
 if (!$db)
 		$db = new ConnectionHandler($ruta_raiz);
-//$db->conn->debug = true;
 $anexo = new Anexo($db);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);	
 //print("EL DOCUMENTO DE ORIGEN ES $tdoc");

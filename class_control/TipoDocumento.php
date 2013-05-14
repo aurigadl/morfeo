@@ -118,7 +118,6 @@ function TipoDocumento_codigo($codigo)
 		//almacena el query
 		$q= "select *  from sgd_tpr_tpdcumento where sgd_tpr_codigo=$codigo";
 		//echo $q;
-		//$this->cursor->conn->debug = true;
 			$rs=$this->cursor->query($q);
 		if  (!$rs->EOF)
 		{
