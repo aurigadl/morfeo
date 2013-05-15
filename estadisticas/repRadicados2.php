@@ -2,22 +2,21 @@
 
 session_start();
 
-$ruta_raiz = ".."; 
 
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
-
+$ruta_raiz = ".."; 
 ?>
 
 <html>
 <head>
-    <link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
+    <link rel="stylesheet" href="<?=$ruta_raiz."/estilos/orfeo38/orfeo.css"?>" >
     <script src="js/popcalendar.js"></script>
     <script src="js/mensajeria.js"></script>
     <div id="spiffycalendar" class="text"></div>
-    <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
+    <?php include_once "$ruta_raiz/js/funtionImage.php"; ?> 
 </head>
 
 <?php include "$ruta_raiz/envios/paEncabeza.php"; ?>
@@ -57,8 +56,8 @@ and TO_CHAR(RADI_FECH_RADI, 'YYYY-MM-DD') <= '$fecha_fin 24:00:00'
 and sgd_trad_codigo>=1
 and depe_Codi not in ('905','900')
 and depe_codi is not null
-group by TO_CHAR(RADI_FECH_RADI, 'YYYY-MM-DD'), sgd_trad_codigo
-order by TO_CHAR(RADI_FECH_RADI, 'YYYY-MM-DD'), sgd_trad_codigo desc";
+group by TO_CHAR(RADI_FECH_RADI, 'YYYY-MM-DD') , sgd_trad_codigo
+order by TO_CHAR(RADI_FECH_RADI, 'YYYY-MM-DD') , sgd_trad_codigo desc";
 
   $rs   = $db->conn->Execute($isql2);
   if ($rs->EOF)  {
@@ -66,7 +65,7 @@ order by TO_CHAR(RADI_FECH_RADI, 'YYYY-MM-DD'), sgd_trad_codigo desc";
   }
 
 ?>
-<table class="borde_tab" >
+<table class="borde_tab2" >
 
 <?php
 $fechaAnterior = "";
@@ -104,29 +103,29 @@ while (!$rs->EOF){
     $b2 = $valor[2][$iK]/30;
     $b3 = $valor[3][$iK]/30;
     
-    $Tvar[$iK]= "<table border =0>
-			<tr class=listado1 VALIGN='TOP'>
-			<td colspan=3 VALIGN='TOP'  ><center>".$fechaR[1][$iK] ."</center></td>
+    $Tvar[$iK]= "<table border=0 class=borde_tab2>
+			<tr class=borde_tab2 VALIGN='TOP'>
+			<td colspan=3 VALIGN='TOP'  class=listado2_0><center>".$fechaR[1][$iK] ."</center></td>
 			</tr>
 			<tr valign='bottom' > 
-				<td  valign='bottom' height=70><table width=20  height='$b1' ><tr ><td bgColor = '#000066' width=20></td> </tr></table></td>
-				<td valign='bottom'  height=70><table width=20  height='$b2'  ><tr ><td bgColor = '#CC9900' width=20></td> </tr></table></td>
-				<td valign='bottom'  height=70><table width=20  height='$b3'  ><tr ><td bgColor = '#006600' width=20></td> </tr></table></td>
+				<td  valign='bottom' height=60><table width=20  height='$b1' ><tr ><td bgColor = '#000066' width=20></td> </tr></table></td>
+				<td valign='bottom'  height=60><table width=20  height='$b2'  ><tr ><td bgColor = '#CC9900' width=20></td> </tr></table></td>
+				<td valign='bottom'  height=60><table width=20  height='$b3'  ><tr ><td bgColor = '#006600' width=20></td> </tr></table></td>
 				</tr>
-			<tr class=listado1> 
-				<td VALIGN='bottom'> ". $valor[1][$iK]."</td> 
-				<td VALIGN='bottom'> ". $valor[2][$iK]."</td> 
-				<td VALIGN='bottom'> ". $valor[3][$iK]."</td>  
+			<tr class=listado1_0> 
+				<td VALIGN='bottom' class='listado2_0' height=0> ". $valor[1][$iK]."</td> 
+				<td VALIGN='bottom' class='listado1_0' height=0> ". $valor[2][$iK]."</td> 
+				<td VALIGN='bottom' class='listado2_0' height=0> ". $valor[3][$iK]."</td>  
 				</tr>
 			</table>
 ";
 		}
 		?>
 		<table class="borde_tab">
-			<tr class=listado2>
-			 <td>Lun</td>	<td>Mar</td>	<td>Mie</td>	<td>Juev</td>	<td>Vie</td><td>Sab</td><td>Dom</td>		
+			<tr class=borde_tab2>
+			 <td class=listado2_0>Lun</td>	<td class=listado2_0>Mar</td>	<td class=listado2_0>Mie</td>	<td class=listado2_0>Juev</td>	<td class=listado2_0>Vie</td><td class=listado2_0>Sab</td><td class=listado2_0>Dom</td>		
 			</tr>
-      <tr class=listado1>
+      <tr class=borde_tab2>
 			 <td VALIGN='TOP'><?=$Tvar[1]?></td>	
 			 <td VALIGN='TOP'><?=$Tvar[2]?></td>
 			 <td VALIGN='TOP'><?=$Tvar[3]?></td>
@@ -134,7 +133,7 @@ while (!$rs->EOF){
      	 <td VALIGN='TOP'><?=$Tvar[5]?></td>
 			 <td VALIGN='TOP'><?=$Tvar[6]?></td>
 			 <td VALIGN='TOP'><?=$Tvar[7]?></td>		
-			 <td><table height=5><tr class=listado1 height=5><td bgColor = '#000066' width=5></td><td>Entrada</td> <td bgColor = '#CC9900' width=5></td><td>Salida</td>  <td bgColor = '#006600' width=5></td><td>Internos</td> </tr></table>
+			 <td><table height=5 ><tr class=listado1_0 height=5><td bgColor = '#000066' width=5 height=0></td><td>Entrada</td> <td bgColor = '#CC9900' width=5></td><td>Salida</td>  <td bgColor = '#006600' width=5></td><td>Internos</td> </tr></table>
 			</tr>
 		</table>
 		<?
@@ -158,19 +157,19 @@ while (!$rs->EOF){
     $b2 = $valor[2][$iK]/30;
     $b3 = $valor[3][$iK]/30;
     
-    $Tvar[$iK]= "<table border =0>
-			<tr class=listado1 VALIGN='TOP'>
-			<td colspan=3 VALIGN='TOP'  ><center>".$fechaR[1][$iK] ."</center></td>
+    $Tvar[$iK]= "<table border =0 class='borde_tab2'>
+			<tr class='borde_tab2' VALIGN='TOP'>
+			<td colspan=3 VALIGN='TOP' class=listado2_0 ><center>".$fechaR[1][$iK] ."</center></td>
 			</tr>
-			<tr valign='bottom' > 
-				<td  valign='bottom' height=70><table width=20  height='$b1' ><tr ><td bgColor = '#000066' width=20></td> </tr></table></td>
-				<td valign='bottom'  height=70><table width=20  height='$b2'  ><tr ><td bgColor = '#CC9900' width=20></td> </tr></table></td>
-				<td valign='bottom'  height=70><table width=20  height='$b3'  ><tr ><td bgColor = '#006600' width=20></td> </tr></table></td>
+			<tr valign='bottom'  > 
+				<td  valign='bottom' height=60><table width=20  height='$b1' ><tr ><td bgColor = '#000066' width=20></td> </tr></table></td>
+				<td valign='bottom'  height=60><table width=20  height='$b2'  ><tr ><td bgColor = '#CC9900' width=20></td> </tr></table></td>
+				<td valign='bottom'  height=60><table width=20  height='$b3'  ><tr ><td bgColor = '#006600' width=20></td> </tr></table></td>
 				</tr>
-			<tr class=listado1> 
-				<td VALIGN='bottom'> ". $valor[1][$iK]."</td> 
-				<td VALIGN='bottom'> ". $valor[2][$iK]."</td> 
-				<td VALIGN='bottom'> ". $valor[3][$iK]."</td>  
+			<tr class='borde_tab2'> 
+				<td VALIGN='bottom' class=listado2_0> ". $valor[1][$iK]."</td> 
+				<td VALIGN='bottom' class=listado1_0> ". $valor[2][$iK]."</td> 
+				<td VALIGN='bottom' class=listado2_0> ". $valor[3][$iK]."</td>  
 				</tr>
 			</table>
 ";
@@ -179,10 +178,10 @@ while (!$rs->EOF){
 		}
 		?>
 		<table class="borde_tab">
-			<tr class=listado2>
+			<tr class=listado2_0>
 			 <td>Lun</td>	<td>Mar</td>	<td>Mie</td>	<td>Juev</td>	<td>Vie</td><td>Sab</td><td>Dom</td>		
 			</tr>
-      <tr class=listado1>
+      <tr class=listado1 >
 			 <td VALIGN='TOP'><?=$Tvar[1]?></td>	
 			 <td VALIGN='TOP'><?=$Tvar[2]?></td>
 			 <td VALIGN='TOP'><?=$Tvar[3]?></td>
@@ -190,7 +189,7 @@ while (!$rs->EOF){
      	 <td VALIGN='TOP'><?=$Tvar[5]?></td>
 			 <td VALIGN='TOP'><?=$Tvar[6]?></td>
 			 <td VALIGN='TOP'><?=$Tvar[7]?></td>		
-			 <td><table height=5><tr class=listado1 height=5><td bgColor = '#000066' width=5></td><td>Entrada</td> <td bgColor = '#CC9900' width=5></td><td>Salida</td>  <td bgColor = '#006600' width=5></td><td>Internos</td> </tr></table>
+			 <td><table height=5><tr class=listado1_0 height=5><td bgColor = '#000066' width=5></td><td>Entrada</td> <td bgColor = '#CC9900' width=5></td><td>Salida</td>  <td bgColor = '#006600' width=5></td><td>Internos</td> </tr></table>
 			</tr>
 		</table>
 		<?

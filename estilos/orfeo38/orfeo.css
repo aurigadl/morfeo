@@ -149,6 +149,13 @@
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 }
+.borde_tab2 {
+	border: 1px solid #377584;
+	border-radius:5px;
+	border-collapse:collapse;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
 .leidos {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
@@ -185,6 +192,18 @@
 	vertical-align: middle;
 	height: 30px;
 }
+.listado1_0 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8px;
+	font-style: normal;
+	font-weight: bolder;
+	text-transform: none;
+	color: #000000;
+	text-decoration: none;
+	background-color: #FFFFFF;
+	vertical-align: middle;
+	height: 3px;
+}
 .listado2 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
@@ -194,9 +213,21 @@
 	color: #000000;
 	text-decoration: none;
 	background-color: #e4e9ee;
-	text-align: left;
 	vertical-align: middle;
 	height: 30px;
+}
+.listado2_0 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8px;
+	font-style: normal;
+	font-weight: bolder;
+	text-transform: none;
+	color: #000000;
+	text-decoration: none;
+	background-color: #e4e9ee;
+	text-align: center;
+	vertical-align: middle;
+	height: 5px;
 }
 .listado2_center {
 
