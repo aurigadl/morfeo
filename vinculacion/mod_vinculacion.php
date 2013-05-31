@@ -1,25 +1,17 @@
 <?
+session_start();
 /**
   * Pagina de Anexos / Asociados
 	* Se añadio a la 3.8.0 por
   * @autor Carlos Barrero 2009-10-06 -SES
-  * @licencia GNU/GPL
+  *        Modificado Jairo Losada 2013 - Fundacion Correlibre.org
+  * @licencia AGPL V3
   */
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
- 
-
- 	$verradOld=$verrad;
-        error_reporting(0); 
- 	session_start(); 
-
-
-
-
- 	error_reporting(7);
+  error_reporting(0); 
+ 	
 	$ruta_raiz = ".."; 
-	$verrad =$verradOld;
-	if (!$verrad) $verrad= $rad;
 	if($verrad)
 	{
 		$ent = substr($verrad,-1);

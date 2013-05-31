@@ -1,15 +1,35 @@
 <?php
-if (!$ruta_raiz) $ruta_raiz= "..";
-    include_once("$ruta_raiz/include/db/ConnectionHandler.php");
+session_start();
+/** OrfeoGpl
+  * @autor Fundacion Correlibre.org
+  * @licencia AGPL V3.
+  * @fecha 2013/01/31
+  *
+  */
+
+
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+
+define('ADODB_ASSOC_CASE', 1);
+$krd            = $_SESSION["krd"];
+$dependencia    = $_SESSION["dependencia"];
+$usua_doc       = $_SESSION["usua_doc"];
+$codusuario     = $_SESSION["codusuario"];
+
+
+if (!$ruta_raiz) $ruta_raiz= "..";    include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 	$db = new ConnectionHandler("$ruta_raiz");
-	define('ADODB_FETCH_ASSOC',2);
-   	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+  //$db->conn->debug = true;
+	
+	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	include_once "$ruta_raiz/include/tx/Historico.php";
-    $objHistorico= new Historico($db);
+  $objHistorico= new Historico($db);
 	$arrayRad = array();
 	$arrayRad[]=$verrad;
 	$fecha_hoy = Date("Y-m-d");
 	$sqlFechaHoy=$db->conn->DBDate($fecha_hoy);
+  
 	if  (count($recordSet)>0)
     	array_splice($recordSet, 0);  		
 	if  (count($recordWhere)>0)

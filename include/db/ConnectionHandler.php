@@ -155,6 +155,7 @@ function getResult($sql) {
     	$temp[] = $field;
     }
   	$sql = "insert into " . $table . "(" . join(",",$fieldsnames) . ") values (" . join(",",$temp) . ")";
+		if ($this->conn->debug==true)
   	{
   	 echo "<hr>(".$this->driver.") $sql<hr>";
   	}
@@ -198,7 +199,7 @@ function getResult($sql) {
 	  $tmpWhere[] = " " . $fieldName . " = " . $field . " ";
 	}
 	$sql = "update " . $table ." set " . join(",",$tmpSet) . "    where " . join(" and ",$tmpWhere);
-
+  if ($this->conn->debug==true)
   	{
   	 echo "<hr>(".$this->driver.") $sql<hr>";
   	}
@@ -235,6 +236,7 @@ function getResult($sql) {
 	$sql = "delete from " . $table . " where " . join(" and ",$tmpWhere);
 
 	//print("*** $sql ****");
+  if ($this->conn->debug==true)
   	{
   	 echo "<hr>(".$this->driver.") $sql<hr>";
   	}
