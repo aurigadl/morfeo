@@ -790,7 +790,7 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
 		$rs = $this->db->conn->query( $query );
         $arrExpedientes = array();
         while( $rs && !$rs->EOF ){
-            $arrExpedientes[] = $rs->fields['sgd_exp_numero'];
+            $arrExpedientes[] = $rs->fields['SGD_EXP_NUMERO'];
             $rs->MoveNext();
         }
 
