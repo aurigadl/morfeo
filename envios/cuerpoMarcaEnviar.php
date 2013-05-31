@@ -8,7 +8,7 @@ session_start();
 /*                                                                                   */
 /* Este programa es software libre. usted puede redistribuirlo y/o modificarlo       */
 /* bajo los terminos de la licencia GNU General Public publicada por                 */
-/* la "Free Software Foundation"; Licencia version 2. 			             */
+/* la "Free Software Foundation"; Licencia AGPL version 3. 			             */
 /*                                                                                   */
 /* Copyright (c) 2005 por :	  	  	                                     */
 /* SSPS "Superintendencia de Servicios Publicos Domiciliarios"                       */
@@ -19,9 +19,8 @@ session_start();
 /*   Lucia Ojeda          lojedaster@gmail.com             Desarrolladora            */
 /* D.N.P. "Departamento Nacional de Planeación"                                      */
 /*   Hollman Ladino       hollmanlp@gmail.com                Desarrollador           */
+/* Fundacion Correlibre.org                                                          */
 /*                                                                                   */
-/* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
-/*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
 /*************************************************************************************/
 ?>
 <?
@@ -225,15 +224,16 @@ function window_onload()
 
 
 
-function markAll()
-{
-if(form1.marcartodos.checked==1)
-for(i=4;i<form1.elements.length;i++)
-form1.elements[i].checked=1;
-else
-    for(i=4;i<form1.elements.length;i++)
-  	form1.elements[i].checked=0;
-}
+		<!-- Funcion que activa el sistema de marcar o desmarcar todos los check  -->
+		function markAll()
+		{
+			if(document.formEnviar.elements['checkAll'].checked)
+			for(i=1;i<document.formEnviar.elements.length;i++)
+			document.formEnviar.elements[i].checked=1;
+			else
+			for(i=1;i<document.formEnviar.elements.length;i++)
+			document.formEnviar.elements[i].checked=0;
+		}
 <?php
    //include "libjs.php";
 	 function tohtml($strValue)
@@ -444,17 +444,17 @@ function marcar()
                   <td  width='10%' align="center"> <a href='<?=$PHP_SELF."?".$encabezado ?>1&ordcambio=1&orno=7' class='textoOpcion' alt='Ordenamiento'>	
                     <?=$img7 ?>
                     Generado Por </a> </td>
-                  <td  width='3%' align="center"> </td>
+                  <td  width='3%' align="center"> <center><input name="checkAll" value="checkAll" onclick="markAll();" type="checkbox"></center> </td>
                 </tr>
                 <?
 		 
 		 $i = 1;
 		 $ki=0;
-	   $registro=$pagina*20;
+	   $registro=$pagina*200;
    while($rs&&!$rs->EOF)
 	 	 { 
 	 	 	
-       if($ki>=$registro and $ki<($registro+20)){
+       if($ki>=$registro and $ki<($registro+200)){
        	    
 			$swEsperaFirma =  false;
 			$estado=	$rs->fields['CHU_ESTADO'];
@@ -615,7 +615,7 @@ function marcar()
 	$numerot = $ki;
 	
 	// Se calcula el numero de | a mostrar
-	$paginas = ($numerot / 20); 
+	$paginas = ($numerot / 200); 
 	?><span class='leidos'> Paginas</span> <?
 	if(intval($paginas)<=$paginas)
 	{$paginas=$paginas;}else{$paginas=$paginas-1;}
