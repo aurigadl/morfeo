@@ -138,6 +138,7 @@
         $queryRec = "AND USUA_SESION='".date("amdhIs")."o".str_replace(".","",$REMOTE_ADDR)."$krd' ";
     }else{
     	//Consulta rapida para saber si el usuario se autentica por LDAP o por DB
+        $krd=addslashes($krd);
     	$myQuery = "SELECT USUA_AUTH_LDAP from usuario where USUA_LOGIN ='$krd'";
         
     	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
