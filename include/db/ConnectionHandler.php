@@ -263,6 +263,31 @@ function getResult($sql) {
 			return $retorno;
 		}
 	}
+/*
+* @param $string string cadena para convertir caracteres especiales a mayuscula para busquedas
+*/
+static function fullUpper($string){
+  return strtr(strtoupper($string), array(
+      "à" => "À",
+      "è" => "È",
+      "ì" => "Ì",
+      "ò" => "Ò",
+      "ù" => "Ù",
+      "á" => "Á",
+      "é" => "É",
+      "í" => "Í",
+      "ó" => "Ó",
+      "ú" => "Ú",
+      "â" => "Â",
+      "ê" => "Ê",
+      "î" => "Î",
+      "ô" => "Ô",
+      "û" => "Û",
+      "ç" => "Ç",
+      "ñ" => "Ñ",
+    ));
+}
+
 
  /*
  function datoActualizado($mensaje) {

@@ -15,7 +15,7 @@ if (!$ruta_raiz) $ruta_raiz = "..";
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
-define('ADODB_ASSOC_CASE', 2);
+define('ADODB_ASSOC_CASE', 1);
 
 $krd            = $_SESSION["krd"];
 $dependencia    = $_SESSION["dependencia"];

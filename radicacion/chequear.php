@@ -259,6 +259,8 @@
 		$where_ciu .= " $and_exp  g.SGD_EXP_NUMERO LIKE '%$buscar_por_exp%' ";
 	} 
 	$nombres = strtoupper(trim($buscar_por_nombres));
+	$nombres= ConnectionHandler::fullUpper($nombres);
+//echo $nombres;
 	if(trim($nombres))
 	{	$array_nombre = explode(" ",$nombres);
 		$strCamposConcat = $db->conn->Concat("UPPER(d.SGD_DIR_NOMREMDES)","UPPER(d.SGD_DIR_NOMBRE)");

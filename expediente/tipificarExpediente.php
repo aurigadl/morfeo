@@ -312,7 +312,7 @@ if ( !isset( $Actualizar ) ) //Inicio if( $Actualizar )
                 $queryPEXP  = "select SGD_PEXP_TERMINOS";
                 $queryPEXP .= " FROM SGD_PEXP_PROCEXPEDIENTES";
                 $queryPEXP .= " WHERE SGD_PEXP_CODIGO  = ".$codProc;
-                // print $queryPEXP;
+                 print $queryPEXP;
                 $rs=$db->conn->Execute($queryPEXP);
 
                 $expTerminos = $rs->fields["SGD_PEXP_TERMINOS"];

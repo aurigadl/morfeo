@@ -133,6 +133,7 @@ include "genBarras1.php";
 			where 
 				fe.SGD_PEXP_CODIGO ='$codProceso'
 				order by fe.SGD_FEXP_ORDEN  ";  
+		//$db->conn->debug = true;
 		$rs2 = $db->query($isqlEstados);
 		$terminosTotales = 0;
 	$colsProc = 0;

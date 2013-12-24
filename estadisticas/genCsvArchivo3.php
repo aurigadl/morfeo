@@ -90,6 +90,7 @@ order by a.radi_nume_radi, a.radi_fech_radi
 ";
  // and a.radi_depe_radi in ($genDependencias)
 //echo "<hr>la consulta Utilizadad es : $isql<hr>";
+$db->conn->debug = true;
 $rs = $db->query($isql);
 
 

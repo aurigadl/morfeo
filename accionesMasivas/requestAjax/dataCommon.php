@@ -4,7 +4,9 @@ session_start();
 	$ruta_raiz = "../..";
 
 	//Paremetros get y pos enviados desde la aplicacion origen
-	import_request_variables("gP", "");	
+//	import_request_variables("gP", "");	
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
 	//Confirmar existencia de session
 		if(!isset($_SESSION['dependencia']))

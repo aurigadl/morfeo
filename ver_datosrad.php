@@ -3,6 +3,8 @@ if (!$ruta_raiz) $ruta_raiz=".";
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 require_once("$ruta_raiz/class_control/TipoDocumento.php");
 
+define('ADODB_ASSOC_CASE', 2);
+
 if (!$db)
 $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -99,8 +101,7 @@ $usuarioLoginRadicador = $rsU->fields["USUA_LOGIN"];
 //El nivel de seguridad basico viene del radicado, pero si el Expediente en el que se encuentra tiene seguridad diferente de publico
 //Este determina el verdadero nivel de seguridad del radicado
 
-if( $perm == 1 )
-$nivelRad = 1;
+if( $perm == 1 ) $nivelRad = 1;
 
 $radi_tipo_deri  = $rs->fields["RADI_TIPO_DERI"];
 $sector_grb      = $rs->fields["PAR_SERV_SECUE"];
@@ -202,6 +203,7 @@ if($sector_grb)
 	$rs=$db->query($isql);
 	if  (!$rs->EOF)
 	$sector_nombre = $rs->fields["PAR_SERV_NOMBRE"];
+	//echo "<hr> $sector_nombre // $isql <hr>";
 }
 if($flujo_grb)
 {
@@ -378,15 +380,17 @@ if($no_tipo!="true") {
 						SGD_DDCA_DDSGRGDO ddcau,
 						PAR_SERV_SERVICIOS serv
 					WHERE caux.RADI_NUME_RADI = '$verrad' AND
-			          dcau.SGD_DCAU_CODIGO = caux.SGD_DDCA_CODIGO AND
-			          cau.SGD_CAU_CODIGO = caux.SGD_DCAU_CODIGO AND
-			          ddcau.SGD_DDCA_CODIGO = caux.SGD_DDCA_DDSGRGDO AND
-			          ddcau.PAR_SERV_SECUE = serv.PAR_SERV_SECUE";
+			          dcau.SGD_DCAU_CODIGO = caux.SGD_DCAU_CODIGO AND
+			          cau.SGD_CAU_CODIGO = caux.SGD_CAU_CODIGO AND
+			          ddcau.SGD_DDCA_CODIGO = caux.SGD_DDCA_codigo AND
+			          ddcau.PAR_SERV_SECUE = serv.PAR_SERV_SECUE
+				ORDER BY caux.sgd_caux_fecha desc";
 	$rs = $db->query($sqlSelect);
+//echo "<hr> $sector_nombre // $sqlSelect <hr>";
 	if (!$rs->EOF)
 	{
-		$sector_grb = $rs->fields['PAR_SERV_SECUE'];
-		$sector_nombre = $rs->fields['PAR_SERV_NOMBRE'];
+	//	$sector_grb = $rs->fields['PAR_SERV_SECUE'];
+	//	$sector_nombre = $rs->fields['PAR_SERV_NOMBRE'];
 		$causal_grb = $rs->fields["SGD_CAU_CODIGO"];
 		$causal_nombre = $rs->fields["SGD_CAU_DESCRIP"];
 		$deta_causal_grb = $rs->fields["SGD_DCAU_CODIGO"];
@@ -394,6 +398,7 @@ if($no_tipo!="true") {
 		$ddca_causal = $rs->fields["SGD_DDCA_CODIGO"];
 		$ddca_causal_nombre = $rs->fields["SGD_DDCA_DESCRIP"];
 		$ddca_causal_grb = $rs->fields["SGD_DDCA_CODIGO"];
+//echo "<hr> $sector_nombre // $isql <hr>";
 
 	}
 
@@ -474,6 +479,7 @@ if($no_tipo!="true") {
 	// echo "<hr> $ruta_raiz <hr>";
 	
 	include_once ("$ruta_raiz/include/tx/Expediente.php");
+	//$db->conn->debug=true;
 	$trdExp          = new Expediente($db);
 	$numExpediente   = $trdExp->consulta_exp("$verrad");
 	$mrdCodigo       = $trdExp->consultaTipoExpediente($numExpediente);
@@ -487,6 +493,7 @@ if($no_tipo!="true") {
 	$codigoFldExp    = $trdExp->codigoFldExp;
 	$expUsuaDoc      = $trdExp->expUsuaDoc;
 	//unset($verradicado);
+	//echo "<hr>++ $numExpediente $verrad";
   if(!$tdoc){
   $isql = "select sgd_tpr_codigo, sgd_tpr_descrip, fech_vcmto, sgd_tpr_termino, date(fech_vcmto)-date(now()) diasparavencimiento, date(fech_vcmto)-date(radi_fech_radi)  diasplazo, date(now())-date(radi_fech_radi)  diashoy
 		 from sgd_tpr_tpdcumento tpr, radicado r 

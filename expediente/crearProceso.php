@@ -62,16 +62,16 @@ $ruta_raiz= "..";
 		$record["SGD_FARS_CODIGO"] = "0";
 		$record["SGD_HFLD_AUTOMATICO"] = 1;
 	
-	if(!$fechaExp) $fechaExp = $fecha_hoy;
+	if(!$fechaExp) $fechaExp = $fecha_hoy; $db->conn->debug=true;
 	$sqlFechaHoy=$db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
 		$query="insert into SGD_SEXP_SECEXPEDIENTES(SGD_EXP_NUMERO   ,SGD_SEXP_FECH      ,DEPE_CODI   ,USUA_DOC   ,SGD_FEXP_CODIGO,SGD_SRD_CODIGO,SGD_SBRD_CODIGO,SGD_SEXP_SECUENCIA, SGD_SEXP_ANO,USUA_DOC_RESPONSABLE,SGD_PEXP_CODIGO)
 	VALUES ('$numExpediente',". $sqlFechaHoy ." ,'$depe_codi','$usua_doc',$codEtapa,$codiSRD,$codiSBRD,$secExp ,$anoExp,$usuaDocExp,$proc)";
-	$query = "Update SGD_SEXP_SECEXPEDIENTES set SGD_PEXP_CODIGO=$proc where SGD_EXP_NUMERO='$numExpediente' ";
+//	$query = "Update SGD_SEXP_SECEXPEDIENTES set SGD_PEXP_CODIGO=$proc where SGD_EXP_NUMERO='$numExpediente' ";
 		if (!$rs = $db->conn->query($query)){
 			//echo '<br>Lo siento no pudo agregar el expediente<br>';
 		echo "<script type=\"text/javascript\"> alert(\"No se ha podido Adicionar el proceso \");</script>";
 			return 0;
-		}else{
+		}else{ break;
 		//echo "<br>Expediente Grabado Correctamente<br>";
 		$insertSQL = $db->insert("SGD_HFLD_HISTFLUJODOC", $record, "true");
 		
@@ -172,7 +172,7 @@ function validar(){
 	<?
 	$nomb_varc = "su.sgd_sbrd_codigo";
 	$nomb_varde = "su.sgd_sbrd_descrip";
-	include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
+	include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";$db->conn->debug=true;
 	$querySub = "select distinct ($sqlConcat) as detalle, su.sgd_sbrd_codigo
 		from sgd_mrd_matrird m, sgd_sbrd_subserierd su
 		where m.depe_codi = '$coddepe'

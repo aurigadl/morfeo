@@ -106,11 +106,12 @@ class Expediente
 		   if (!$rs->EOF)
 		   {
 			 $this->num_expediente = $rs->fields['SGD_EXP_NUMERO'];
-			 $this->estado_expediente = $rs->fields['SGD_EXP_ESTADO'];
+		//	echo  $rs->fields['SGD_EXP_NUMERO']."<hr>";
+			$this->estado_expediente = $rs->fields['SGD_EXP_ESTADO'];
 
 		   }
 		}
-		//$this->num_expediente = $num_expediente;
+		//$this->num_expediente = $num_expediente;   RP
 		return $this->num_expediente;
 	 }
 

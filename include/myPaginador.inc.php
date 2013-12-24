@@ -350,7 +350,7 @@ class myPaginador{
 				$claseTr=($i%2)==0?"class=\"listado2\"":"class=\"listado1\"";
 				echo "\t <tr {$claseTr}> \n \t \t ";
 				for($n=0; $n< $numCols;$n++){
-					$celda=call_user_func($this->funcionPintaFilas,&$resultado->fields,$i,$n);
+					$celda=call_user_func($this->funcionPintaFilas,$resultado->fields,$i,$n);
 					if($celda!==false){
 					echo "\t \t<td > $celda\t \t \n \t \t</td> \n";	
 					}
@@ -358,7 +358,7 @@ class myPaginador{
 				echo " \t </tr> \n";
 			}else{
 				
-				echo call_user_func($this->funcionPintaFilas,&$resultado->fields,$i);
+				echo call_user_func($this->funcionPintaFilas,$resultado->fields,$i);
 			}
 			$resultado->MoveNext();
 		}

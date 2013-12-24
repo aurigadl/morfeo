@@ -60,21 +60,21 @@ td{
 $noRad = $_REQUEST['nurad'];
 ?>
 <body topmargin="5" leftmargin="0"  onload="window.print();">
-    <table width="400px" cellpadding="0" cellspacing="0">
+    <table width="250px" cellpadding="0" cellspacing="0">
         <tr>
             <td rowspan=2>
                 <center>
-                    <img src='../../imagenes/logostikerSin.png' width='80'>
+                    <img src='../../logoEntidad3.png' width='70'>
                 </center>
             </td>
             <td  align=left width="300px"> 
                 <span>&nbsp;<span>
-                <center>
-                <p><span><b><h3><?=$entidad_largo?></h3><b></span></p>
-                </center>
+               <!-- <center>
+               <p><span><b><h3><?=$entidad_largo?></h3><b></span></p> 
+                </center> -->
                 <span><center><img src="barcode_img.php?num=<?php echo($numrad) ?>&type=Code39&imgtype=png" width=200><center><span>
-                <p><span><b>Destino: <?=$radi_depe_actu?> <?=substr($dependenciaDestino,0,15)?>
-                 - Rem: <?=substr($remite,0,18); ?> </b></span></p>
+<!--                  <p><span><b>Destino: <?=substr($dependenciaDestino,0,20)?><p><span><b>    --> 
+                <p><span><b> - Rem: <?=substr($remite,0,20); ?> </b></span></p>
                 <p><span  align="left"><b>
                     Folios: <?=$radi_nume_folio?> &nbsp;&nbsp; Anexos: <?=$radi_nume_anexo?> &nbsp;&nbsp; Copias: <?=$copias?>   </b>
                 </span></p>
@@ -82,7 +82,8 @@ $noRad = $_REQUEST['nurad'];
                 <span  align="left"><b>
                     <?=substr($radi_fech_radi,0,16). " "?>  &nbsp;&nbsp; C&oacute;d veri: <?=$sgd_rad_codigoverificacion?> </b>
                 </span>
-                 <p><span><b>Consulte su tr&aacute;mite en http://www.correlibre.org</b></span></p>
+                <!-- <p><span><b>Consulte su tr&aacute;mite en http://www.correlibre.org</b></span></p> -->
+                 <p><span><b>Visitenos en http://veeduriadistrital.gov.co</b></span></p>
             </td>                     
         </tr>
 <!--

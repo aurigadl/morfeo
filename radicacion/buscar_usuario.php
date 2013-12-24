@@ -266,12 +266,12 @@ if(!$formulario)
 			<option value=0 <?=$datos ?>>USUARIO</option>
 				<?
 				if($tbusqueda==1){$datos = "selected";$tbusqueda=1;}else{$datos= "";}
-			    #if (strlen($nombreTp3) > 0) echo "<option value=1 $datos>$nombreTp3</option>";
+			    if (strlen($nombreTp3) > 0) echo "<option value=1 $datos>$nombreTp3</option>";
 				
 				if($tbusqueda==2){$datos = "selected";$tbusqueda=2;}else{$datos= "";}
 				?> 
 			
-                <!--<option value=2 <=$datos >>EMPRESAS</option>-->
+                <option value=2 <=$datos >EMPRESAS</option>
 				<? if($tbusqueda==6){$datos = " selected ";$tbusqueda=6;}else{$datos= "";}?>
 			<option value=6 <?=$datos ?>>FUNCIONARIO</option>
 		</select>

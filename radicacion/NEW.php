@@ -832,7 +832,7 @@ if($tpRadicado) {echo "<input type=hidden name=tpRadicado value=$tpRadicado>";}
 	<td class="titulos5">
 <div class="tabber" id="tab1" border="1">
   <?php
-  for($i=1;$i<=3;$i++){
+  for($i=1;$i<=3;$i=$i+2){
       if($i==1){
 	  $grbNombresUs1 = trim($nombre_us1) . " " . trim($prim_apel_us1) . " ". trim($seg_apel_us1);
 	  $nombre       = $nombre_us1;

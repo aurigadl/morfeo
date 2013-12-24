@@ -19,8 +19,8 @@ header ("Location: $ruta_raiz/cerrar_session.php");
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
-//define('ADODB_ASSOC_CASE', 2);
-
+define('ADODB_ASSOC_CASE', 2);
+//$db->conn->debug=true;
 $krd            = $_SESSION["krd"];
 $dependencia    = $_SESSION["dependencia"];
 $usua_doc       = $_SESSION["usua_doc"];
@@ -38,6 +38,7 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	vecSubseccionE = new Array (
 <?php
 // For para el javascript
+//$db->conn->debug=true;
 $rs = $db->conn->query("SELECT * FROM SGD_DCAU_CAUSAL");
 $cont = 0;
 while(!$rs->EOF)
@@ -228,20 +229,20 @@ while(!$rs->EOF)
 </head>
 <body>
 <form name=form_causales method="post"
-	action="<?=$ruta_raiz?>/causales/mod_causal.php?<?=session_name()?>=<?=trim(session_id())?>&krd=<?=$krd?>&verrad=<?=$verrad?>&verradicado=<?=$verrad?><?="&datoVer=$datoVer&mostrar_opc_envio=$mostrar_opc_envio&nomcarpeta=$nomcarpeta"?>">
+	action="<?=$ruta_raiz?>/causales/mod_causal.php?<?=session_name()?>=<?=trim(session_id())?>&krd=<?=$krd?>&verrad=<?=$verrad?>&verradicado=<?=$verrad?>&sectorCodigoAnt=<?=$sectorCodigoAnt?>&sectorNombreAnt=<?=$sectorNombreAnt?>">
 <table border=0 width 100%  cellpadding="0" cellspacing="5"
 	class="borde_tab">
-	<!--<tr>
-	<td class="titulos2">Sector</td>
+	<tr>
+	<td class="titulos2">Localidad</td>
 	<td>
 <?php
-//include_once($ruta_raiz."/sector/mod_sector.php");
+include_once($ruta_raiz."/sector/mod_sector.php");
 ?>
 	</td>
 </tr>
 -->
 	<tr>
-		<td class="titulos2">Eje <?php
+		<td class="titulos2">Sector <?php
 		if (!$ruta_raiz) $ruta_raiz="..";
 		include_once($ruta_raiz."/include/tx/Historico.php");
 		$objHistorico= new Historico($db);
@@ -279,14 +280,17 @@ while(!$rs->EOF)
 			if($ddca_causal !=null ) $recordSet["SGD_DDCA_DDSGRGDO"] = "$ddca_causal";
 			if($deta_causal !=null) $recordSet["SGD_DDCA_CODIGO"] = "$deta_causal";
 			$recordWhere["RADI_NUME_RADI"] = $verrad;
-			$db->update("SGD_CAUX_CAUSALES", $recordSet,$recordWhere);
+			//$db->update("SGD_CAUX_CAUSALES", $recordSet,$recordWhere);
 			$sqlSelect = "SELECT SGD_CAUX_CODIGO,COUNT(RADI_NUME_RADI) AS COUNT_RADI
 					FROM SGD_CAUX_CAUSALES 
 					WHERE RADI_NUME_RADI = $verrad
 					GROUP BY SGD_CAUX_CODIGO";
+//$rs =
+//$db->conn->debug=true ;echo "2222222222222222";
 			//select para saber habia registro por actualizar
 			$rs = $db->conn->Execute($sqlSelect);
 
+//$db->conn->debug=true;
 			if (!$rs->EOF) $actualizo = $rs->fields["COUNT_RADI"];
 
 			// Verifica banderas de actualizacion o de insercion para actulizar los nuevos datos
@@ -320,27 +324,28 @@ while(!$rs->EOF)
 
 				}
 
-				$causal_nombre_grb = ($causal_nombre != '') ? $causal_nombre: 'Sin Clasificar' ;
-				$dcausal_nombre_grb = ($dcausal_nombre != '') ? $dcausal_nombre : 'Sin Especificar' ;
-				$ddca_causal_nombre = ($ddca_causal_nombre != '') ? $ddca_causal_nombre : 'No específicado' ;
-				echo "<span class=info>Causal Actualizada</span>";
-				$observa = "*Cambio Causal Eje / Tema / Críterio * ($causal_nombre_grb / $dcausal_nombre_grb / $ddca_causal_nombre)";
-				$codusdp = str_pad($dependencia, 3, "0", STR_PAD_LEFT).str_pad($codusuario, 3, "0", STR_PAD_LEFT);
-				$objHistorico->insertarHistorico($arrayRad,$dependencia ,$codusuario, $dependencia,$codusuario, $observa, 17);
-				$actualizoFlag = true;
+			$causal_nombre_grb = ($causal_nombre != '') ? $causal_nombre: 'Sin Clasificar' ;
+			$dcausal_nombre_grb = ($dcausal_nombre != '') ? $dcausal_nombre : 'Sin Especificar' ;
+			$ddca_causal_nombre = ($ddca_causal_nombre != '') ? $ddca_causal_nombre : 'No específicado' ;
+			echo "<span class=info>Causal Actualizada</span>";
+			$observa = "*Cambio Causal Eje / Tema / Críterio * ($causal_nombre_grb / $dcausal_nombre_grb / $ddca_causal_nombre)";
+			$codusdp = str_pad($dependencia, 3, "0", STR_PAD_LEFT).str_pad($codusuario, 3, "0", STR_PAD_LEFT);
+			$objHistorico->insertarHistorico($arrayRad,$dependencia ,$codusuario, $dependencia,$codusuario, $observa, 17);
+			$actualizoFlag = true;
 
-			} else if (!isset($actualizo) || ($actualizo==0) )
-			{
+		} else if (!isset($actualizo) || ($actualizo==0) )
+		{
 				// Si no habia nada por actualizar inserta el registro
 					
-				// Si la causal no se encuentra la inserta en este procedimineto
-				$flag = 0;
+			// Si la causal no se encuentra la inserta en este procedimineto
+			$flag = 0;
 
-				$recordSet["RADI_NUME_RADI"] = $verrad;
-
-				if($causal_new !=null ) $recordSet["SGD_DCAU_CODIGO"] = "$causal_new";
-				if($ddca_causal !=null ) $recordSet["SGD_DDCA_DDSGRGDO"] = "$ddca_causal";
-				if($deta_causal !=null) $recordSet["SGD_DDCA_CODIGO"] = "$deta_causal";
+			$recordSet["RADI_NUME_RADI"] = $verrad;
+			$recordSet["SGD_CAUX_FECHA"] = "now()";
+			if($causal_new !=null ) $recordSet["SGD_CAU_CODIGO"] = "$causal_new";
+//		if($ddca_causal !=null ) $recordSet["SGD_DDCA_DDSGRGDO"] = "$ddca_causal";
+			if($deta_causal !=null) $recordSet["SGD_DCAU_CODIGO"] = "$deta_causal";
+			$recordSet["SGD_DDCA_CODIGO"] = "1";	
 
 				$rs = $db->insert("SGD_CAUX_CAUSALES", $recordSet);
 				array_splice($recordSet, 0);
@@ -376,16 +381,16 @@ while(!$rs->EOF)
 					array_splice($recordSet, 0);
 					array_splice($recordWhere, 0);
 					echo "<span class=info>Causal Agregada</span>";
-					$causal_nombre_grb = ($causal_nombre != '') ? $causal_nombre: 'Sin Clasificar' ;
-					$dcausal_nombre_grb = ($dcausal_nombre != '') ? $dcausal_nombre : 'Sin Especificar' ;
-					$ddca_causal_nombre = ($ddca_causal_nombre != '') ? $ddca_causal_nombre : 'No específicado' ;
-					$observa = "*Inserción Causal Eje / Tema / Críterio * ($causal_nombre_grb / $dcausal_nombre_grb / $ddca_causal_nombre)";
-					$codusdp = str_pad($dependencia, 3, "0", STR_PAD_LEFT).str_pad($codusuario, 3, "0", STR_PAD_LEFT);
-					$objHistorico->insertarHistorico($arrayRad,$dependencia ,$codusuario, $dependencia,$codusuario, $observa, 17);
-					$insertoFlag = true;
-				} // Fin de insercion de causales
+		$causal_nombre_grb = ($causal_nombre != '') ? $causal_nombre: 'Sin Clasificar' ;
+		$dcausal_nombre_grb = ($dcausal_nombre != '') ? $dcausal_nombre : 'Sin Especificar' ;
+		$ddca_causal_nombre = ($ddca_causal_nombre != '') ? $ddca_causal_nombre : 'No específicado' ;
+	$observa = "*Inserción Causal Eje / Tema / Críterio * ($causal_nombre_grb / $dcausal_nombre_grb / $ddca_causal_nombre)";
+		$codusdp = str_pad($dependencia, 3, "0", STR_PAD_LEFT).str_pad($codusuario, 3, "0", STR_PAD_LEFT);
+		$objHistorico->insertarHistorico($arrayRad,$dependencia ,$codusuario, $dependencia,$codusuario, $observa, 17);
+		$insertoFlag = true;
+	} // Fin de insercion de causales
 
-			}
+	}
 
 
 
@@ -412,34 +417,34 @@ while(!$rs->EOF)
 		//				$causal_new = $rsDetalleCau->fields["SGD_CAU_CODIGO"];
 		//			}
 		//		}
-		$causal  = $causal_new;
-		if(!isset($causal_new)){
-			$causal_new = $causal_grb;
+	$causal  = $causal_new;
+	if(!isset($causal_new)){
+		$causal_new = $causal_grb;
+	}
+	if(!isset($deta_causal)){
+		$deta_causal = $deta_causal_grb;
+	}
+	if(!isset($ddca_causal)){
+		$ddca_causal = $ddca_causal_grb;
+	}
+	$isql = "SELECT SGD_CAU_DESCRIP, SGD_CAU_CODIGO FROM SGD_CAU_CAUSAL ORDER BY SGD_CAU_CODIGO";
+	$rs = $db->conn->query($isql);
+	echo $rs->GetMenu2('causal_new',$causal_new,false,false,1, 'onChange="submit();"  class="select"');
+	?></td>
+	<tr>
+		<td class="titulos2">Tema</td>
+		<td width="323"><?php
+		$isql = "SELECT SGD_DCAU_DESCRIP, SGD_DCAU_CODIGO
+	FROM SGD_DCAU_CAUSAL 
+	WHERE SGD_CAU_CODIGO = $causal_new ORDER BY SGD_DCAU_CODIGO" ;
+		$rs = $db->query($isql);
+		if($causal_new ==  $causal_grb){
+		echo $rs->GetMenu2('deta_causal',$deta_causal,false,false,1,'onChange="submit();"  class="select"');
+		$causal_grb = $causal_new;
 		}
-		if(!isset($deta_causal)){
-			$deta_causal = $deta_causal_grb;
-		}
-		if(!isset($ddca_causal)){
-			$ddca_causal = $ddca_causal_grb;
-		}
-		$isql = "SELECT SGD_CAU_DESCRIP, SGD_CAU_CODIGO FROM SGD_CAU_CAUSAL ORDER BY SGD_CAU_CODIGO";
-		$rs = $db->conn->query($isql);
-		echo $rs->GetMenu2('causal_new',$causal_new,false,false,1, 'onChange="submit();"  class="select"');
-		?></td>
-		<tr>
-			<td class="titulos2">Tema</td>
-			<td width="323"><?php
-			$isql = "SELECT SGD_DCAU_DESCRIP, SGD_DCAU_CODIGO
-		FROM SGD_DCAU_CAUSAL 
-		WHERE SGD_CAU_CODIGO = $causal_new ORDER BY SGD_DCAU_CODIGO" ;
-			$rs = $db->query($isql);
-			if($causal_new ==  $causal_grb){
-				echo $rs->GetMenu2('deta_causal',$deta_causal,false,false,1,'onChange="submit();"  class="select"');
-				$causal_grb = $causal_new;
-			}
-			else{
-				echo $rs->GetMenu2('deta_causal',NULL,false,false,1,'onChange="submit();"  class="select"');
-				$isql = "SELECT SGD_DCAU_CODIGO
+		else{
+		echo $rs->GetMenu2('deta_causal',NULL,false,false,1,'onChange="submit();"  class="select"');
+			$isql = "SELECT SGD_DCAU_CODIGO
 		FROM SGD_DCAU_CAUSAL 
 		WHERE SGD_CAU_CODIGO = $causal_new ORDER BY SGD_DCAU_CODIGO LIMIT 1";
 				$rs = $db->query($isql);
@@ -447,33 +452,35 @@ while(!$rs->EOF)
 				$causal_grb = $causal_new;
 			}
 			?></td>
-		</tr>
-		<tr>
-			<td class="titulos2">Críterio de Ayuda</td>
-			<td width="323" class='celdaGris' class='etextomenu'><?php
-			if ($deta_causal != null)
-			{
-				$isql = "SELECT SGD_DDCA_DESCRIP, SGD_DDCA_CODIGO
-			FROM SGD_DDCA_DDSGRGDO 
-			WHERE SGD_DCAU_CODIGO = $deta_causal";
-				$rs = $db->query($isql);
-				if($deta_causal == $deta_causal_grb){
-					echo $rs->GetMenu2('ddca_causal',$ddca_causal,false,false,1,'onChange="submit();"  class="select"');
-					$deta_causal_grb = $deta_causal;
-					
-				} else {
-					echo $rs->GetMenu2('ddca_causal',NULL,false,false,1,'onChange="submit();"  class="select"');
-					$isql = "SELECT SGD_DDCA_CODIGO
-			FROM SGD_DDCA_DDSGRGDO 
-			WHERE SGD_DCAU_CODIGO = $deta_causal ORDER BY SGD_DDCA_CODIGO LIMIT 1" ;
-					$rs = $db->query($isql);
-					$ddca_causal = $rs->fields['SGD_DDCA_CODIGO'];
-					$deta_causal_grb = $deta_causal;
-				}
-			}
-			?></td>
-		</tr>
+</tr><?php if (3>5)
+{  ?>
 
+	<tr>
+		<td class="titulos2">Críterio de Ayuda</td>
+		<td width="323" class='celdaGris' class='etextomenu'><?php
+		if ($deta_causal != null)
+		{
+			$isql = "SELECT SGD_DDCA_DESCRIP, SGD_DDCA_CODIGO
+				FROM SGD_DDCA_DDSGRGDO 
+				WHERE SGD_DCAU_CODIGO = $deta_causal";
+			$rs = $db->query($isql);
+			if($deta_causal == $deta_causal_grb){
+				echo $rs->GetMenu2('ddca_causal',$ddca_causal,false,false,1,'onChange="submit();"  class="select"');
+				$deta_causal_grb = $deta_causal;
+
+			} else {
+				echo $rs->GetMenu2('ddca_causal',NULL,false,false,1,'onChange="submit();"  class="select"');
+				$isql = "SELECT SGD_DDCA_CODIGO
+					FROM SGD_DDCA_DDSGRGDO 
+					WHERE SGD_DCAU_CODIGO = $deta_causal ORDER BY SGD_DDCA_CODIGO LIMIT 1" ;
+				$rs = $db->query($isql);
+				$ddca_causal = $rs->fields['SGD_DDCA_CODIGO'];
+				$deta_causal_grb = $deta_causal;
+			}
+		}
+	?></td>
+		</tr>
+		<?php } ?>
 		<tr>
 			<td colspan="2" align="center">
 			<table>
@@ -486,24 +493,19 @@ while(!$rs->EOF)
 			</table>
 			</td>
 		</tr>
-		<input type=hidden name=ver_causal value="Si ver Causales">
-		<input type=hidden name="grabar_causal" id='grabar_causal' value="1">
-		<input type=hidden name="$verrad" value="<?=$verrad?>">
-		<input type=hidden name="sectorNombreAnt"
-			value="<?=$sectorNombreAnt?>">
-		<input type=hidden name="sectorCodigoAnt"
-			value="<?=$sectorCodigoAnt?>">
-		<input type=hidden name="causal_grb" value="<?=$causal_grb?>">
-		<input type=hidden name="causal_nombre" value="<?=$causal_nombre?>">
-		<input type=hidden name="deta_causal_grb"
-			value="<?=$deta_causal_grb?>">
-		<input type=hidden name="dcausal_nombre" value="<?=$dcausal_nombre?>">
-		<input type=hidden name="ddca_causal_nombre"
-			value="<?=$ddca_causal_nombre?>">
-
 </table>
-			<?php
-			$ruta_raiz = ".";
-			?></form>
+                <input type=hidden name=ver_causal value="Si ver Causales">
+                <input type=hidden name="grabar_causal" id='grabar_causal' value="1">
+                <input type=hidden name="verrad" value="<?=$verrad?>">
+                <input type=hidden name="sectorNombreAnt" value="<?=$sectorNombreAnt?>">
+                <input type=hidden name="sectorCodigoAnt" value="<?=$sectorCodigoAnt?>">
+                <input type=hidden name="causal_grb" value="<?=$causal_grb?>">
+                <input type=hidden name="causal_nombre" value="<?=$causal_nombre?>">
+                <input type=hidden name="deta_causal_grb" value="<?=$deta_causal_grb?>">
+                <input type=hidden name="dcausal_nombre" value="<?=$dcausal_nombre?>">
+                <input type=hidden name="ddca_causal_nombre" value="<?=$ddca_causal_nombre?>">
+	<?php
+	$ruta_raiz = ".";
+?></form>
 </body>
 </html>

@@ -79,6 +79,7 @@ where
 order by a.radi_nume_radi, a.radi_fech_radi 
 ";
 echo "<hr>la consulta Utilizadad es : $isql<hr>";
+$db->conn->debug = true;
 $rs = $db->Execute($isql);
 
 
