@@ -169,7 +169,7 @@ while(!$rs->EOF)
 
 $radicado_d .= "$verrad";
 error_reporting(7);
-$db->conn->debug=true;
+//$db->conn->debug=true;
 include "$ruta_raiz/include/query/queryver_historico.php";
 $sqlFechaEnvio = $db->conn->SQLDate("d-m-Y H:i A","a.SGD_RENV_FECH");
 $isql = "select $sqlFechaEnvio AS SGD_RENV_FECH,
