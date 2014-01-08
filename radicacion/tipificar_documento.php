@@ -258,7 +258,7 @@ function regresar(){
    	include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
 	$querySerie = "select distinct($sqlConcat) as detalle, s.sgd_srd_codigo 
 	     from sgd_mrd_matrird m, sgd_srd_seriesrd s
-			 where (cast(m.depe_codi as varchar(5)) = '$coddepe' or cast(m.depe_codi_aplica as varchar(5)) like '%$coddepe%' or cast(m.depe_codi as varchar(5))='$depDireccion')
+			 where (cast(m.depe_codi as varchar(5)) = '$coddepe' or m.depe_codi_aplica like '%$coddepe%' or cast(m.depe_codi as varchar(5))='$depDireccion')
 						 and s.sgd_srd_codigo = m.sgd_srd_codigo
 			       and CAST(m.sgd_mrd_esta AS numeric(1) )       = 1 
              and ".$db->sysdate()." between s.sgd_srd_fechini and s.sgd_srd_fechfin";
@@ -269,7 +269,7 @@ function regresar(){
 			//     and ".$sqlFechaHoy." between $sgd_srd_fechini and $sgd_srd_fechfin
 	$querySerie .= "
 			  ";
-
+//        $db->conn->debug=true;
 	$rsD=$db->conn->query($querySerie);
 	$comentarioDev = "Muestra las Series Docuementales";
 	include "$ruta_raiz/include/tx/ComentarioTx.php";
@@ -287,7 +287,7 @@ function regresar(){
    	$querySub = "select distinct ($sqlConcat) as detalle, su.sgd_sbrd_codigo 
 	         from sgd_mrd_matrird m, sgd_sbrd_subserierd su
 			 where
-         (cast(m.depe_codi as varchar(5)) = '$coddepe' or cast(m.depe_codi_aplica as varchar(5)) like '%$coddepe%' or cast(m.depe_codi as varchar(5))='$depDireccion')
+         (cast(m.depe_codi as varchar(5)) = '$coddepe' or m.depe_codi_aplica  like '%$coddepe%' or cast(m.depe_codi as varchar(5))='$depDireccion')
          and cast(m.sgd_mrd_esta as numeric(1))       = 1
 			   and m.sgd_srd_codigo = $codserie
 				 and su.sgd_srd_codigo = $codserie
@@ -342,7 +342,7 @@ function regresar(){
 		 <td width="33%" class="listado2" height="25">
 	 <center><input name="actualizar" type="button" class="botones_funcion" id="envia23" onClick="procModificar();"value=" Modificar "></center></TD>
         <td width="33%" class="listado2" height="25">
-		 <center><input name="Cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar();window.opener.close();"value="Aceptar"></center></TD>
+		 <center><input name="Cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar();window.close();"value="Cerrar"></center></TD>
 	   </tr>
 	</table>
 	<table width="70%" border="0" cellspacing="1" cellpadding="0" align="center" class="borde_tab">
