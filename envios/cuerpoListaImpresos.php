@@ -9,7 +9,8 @@ session_start();
   * @autor Jairo Losada 
   * @fecha 2009/05
   */
-import_request_variables("gp", "");
+//import_request_variables("gp", "");
+extract($_REQUEST);
 $krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $usua_doc    = $_SESSION["usua_doc"];
