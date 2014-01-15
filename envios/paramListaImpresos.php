@@ -23,7 +23,8 @@ session_start();
 /* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
 /*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
 /*************************************************************************************/
-import_request_variables("gp", "");
+//import_request_variables("gp", "");
+extract($_REQUEST);
 $krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $usua_doc    = $_SESSION["usua_doc"];
