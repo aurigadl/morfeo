@@ -58,19 +58,8 @@ function verificaModificacion(){
    }
 }
 </script>
-
-<body onload="verificaModificacion()">
-<CENTER>
-<form name=modFlujoExp  method='post' action='modFlujoExp.php?<?=session_name()?>=<?=trim(session_id())?>&numeroExpediente=<?=$numeroExpediente?>&krd=<?=$krd?>&texp=<?=$texp?>&numRad=<?=$numRad?>&<?="&mostrar_opc_envio=$mostrar_opc_envio&nomcarpeta=$nomcarpeta&carpeta=$carpeta&leido=$leido"?>'>
-<table border=0 width 100% cellpadding="0" cellspacing="5" class="borde_tab">
-  <input type=hidden name=ver_flujo value="Si ver fLUJO">
-  <input type=hidden name=nomcarpeta value="<?=$nomcarpeta?>">
-  <tr> 
-    <td class="titulos2"> Flujo
-	 </td>
-      <TD width="323"  >
-        <?
-  $verradEntra=$verrad;
+<?
+ $verradEntra=$verrad;
   include_once($ruta_raiz."/include/tx/Historico.php");
   include_once ("$ruta_raiz/include/tx/Flujo.php");
   include_once ("$ruta_raiz/include/tx/Expediente.php");    
@@ -79,6 +68,7 @@ function verificaModificacion(){
 	$expediente = new Expediente($db);
 	$expediente->consultaTipoExpediente($numeroExpediente);
 	$procAutomatico = $expediente->pAutomatico;
+	$descFldExp 	= $expediente->descFldExp;
 	//$db->conn->debug = true;
 	$codProceso = $texp;
 	$objFlujo = new Flujo($db, $texp, $usua_doc);
@@ -104,7 +94,27 @@ function verificaModificacion(){
 	$frmLinkSelect = str_replace("{dependencia}","$dependencia", $frmLinkSelect);
 	$frmLinkSelect = str_replace("{documentoUsuario}","$usua_doc", $frmLinkSelect);
 	$frmLinkSelect = str_replace("{nombreUsuario}","$usua_nomb", $frmLinkSelect);
-	
+
+
+?>
+<body onload="verificaModificacion()">
+<CENTER>
+<form name=modFlujoExp  method='post' action='modFlujoExp.php?<?=session_name()?>=<?=trim(session_id())?>&numeroExpediente=<?=$numeroExpediente?>&krd=<?=$krd?>&texp=<?=$texp?>&numRad=<?=$numRad?>&<?="&mostrar_opc_envio=$mostrar_opc_envio&nomcarpeta=$nomcarpeta&carpeta=$carpeta&leido=$leido"?>'>
+<table border=0 width 100% cellpadding="0" cellspacing="5" class="borde_tab">
+  <input type=hidden name=ver_flujo value="Si ver fLUJO">
+  <input type=hidden name=nomcarpeta value="<?=$nomcarpeta?>">
+  <tr> 
+    <td class="titulos2"> Estado Actual
+	 </td>
+      <TD width="323" class=titulos2 ><?=$descFldExp?>
+      </td>
+  </tr>
+  <tr> 
+    <td class="titulos2"> Etapa(s) Siguiente(s)
+	 </td>
+      <TD width="323" class=titulos2 >
+        <?
+ 	
 	
 	
 	//var_dump($arrEtapas);
