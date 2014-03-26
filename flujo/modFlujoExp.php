@@ -14,11 +14,12 @@ $ruta_raiz = "..";
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
-define('ADODB_ASSOC_CASE', 2);
+define('ADODB_ASSOC_CASE', 1);
 $verrad         = "";
 $krd            = $_SESSION["krd"];
 $dependencia    = $_SESSION["dependencia"];
 $usua_doc       = $_SESSION["usua_doc"];
+$usua_nomb       = $_SESSION["usua_nomb"];
 $codusuario     = $_SESSION["codusuario"];
 
 include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
@@ -29,7 +30,7 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 ?>
 <html>
 <head><title>Cambio de Estado Al Expedidente</title></head>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
 
 <script>
 function verificaModificacion(){
@@ -70,7 +71,7 @@ function verificaModificacion(){
       <TD width="323"  >
         <?
   $verradEntra=$verrad;
-    include_once($ruta_raiz."/include/tx/Historico.php");
+  include_once($ruta_raiz."/include/tx/Historico.php");
   include_once ("$ruta_raiz/include/tx/Flujo.php");
   include_once ("$ruta_raiz/include/tx/Expediente.php");    
   $objHistorico= new Historico($db);
@@ -78,10 +79,35 @@ function verificaModificacion(){
 	$expediente = new Expediente($db);
 	$expediente->consultaTipoExpediente($numeroExpediente);
 	$procAutomatico = $expediente->pAutomatico;
+	//$db->conn->debug = true;
+	$codProceso = $texp;
 	$objFlujo = new Flujo($db, $texp, $usua_doc);
+	$codFld = $objFlujo->actualNodoExpediente($numeroExpediente);
 	$objFlujo->depeCodi = $dependencia;
+	
 	$objFlujo->usuaCodi = $codusuario;
 	$arrEtapas = split('-', $flujo);
+	
+	$kk = $objFlujo->getArista($codProceso, $codFld);
+	$frmNombre = $objFlujo->frmNombre;
+	$frmLink = $objFlujo->frmLink;
+	$frmLinkSelect = $objFlujo->frmLinkSelect;
+	
+	$frmLink = str_replace("{numeroRadicado}","$numRad", $frmLink);
+	$frmLink = str_replace("{numeroExpediente}","$numeroExpediente", $frmLink);
+	$frmLink = str_replace("{dependencia}","$dependencia", $frmLink);
+	$frmLink = str_replace("{documentoUsuario}","$usua_doc", $frmLink);
+	$frmLink = str_replace("{nombreUsuario}","$usua_nomb", $frmLink);
+	
+	$frmLinkSelect = str_replace("{numeroRadicado}","$numRad", $frmLinkSelect);
+	$frmLinkSelect = str_replace("{numeroExpediente}","$numeroExpediente", $frmLinkSelect);
+	$frmLinkSelect = str_replace("{dependencia}","$dependencia", $frmLinkSelect);
+	$frmLinkSelect = str_replace("{documentoUsuario}","$usua_doc", $frmLinkSelect);
+	$frmLinkSelect = str_replace("{nombreUsuario}","$usua_nomb", $frmLinkSelect);
+	
+	
+	
+	//var_dump($arrEtapas);
 	$expEstadoActual = ($_GET['codigoFldExp'] != null) ? $_GET['codigoFldExp'] : $arrEtapas[0];
 	
 	$arrayAristas =$objFlujo->aristasSiguiente($expEstadoActual);
@@ -148,6 +174,9 @@ function verificaModificacion(){
 		if($rs){
 			print $rs->GetMenu2("flujo", "$flujo", "0:-- Seleccione --", false,"","class='select'");
 			$grabarDisabled = 'visibility:visible';
+			
+	
+			
 		}else {
 			echo "<SPAN class=leidos>El proceso no tiene m&aacute;s etapas.</span>";
 			$grabarDisabled = 'visibility:hidden';
@@ -164,7 +193,7 @@ else
 if($grabarFlujo)
 {
   /**  INTENTA ACTUALIZAR LA CAUSAL 
-    *  Si esta no esta entonces simplemente le inserte
+    *  Si esta no esta entonces simplemente le insertef
 	*/
   if(!$ddca_causal) 
   	$ddca_causal=0;
@@ -176,6 +205,8 @@ if($grabarFlujo)
         $objFlujo->usuaCodi = $codusuario;
 
 	list ($estadoNuevo, $aristaActual) = split('-', $flujo);
+	
+	
 	$expEstadoActual = $objFlujo->actualNodoExpediente($numeroExpediente);
 	$observa .= " ($flujo_nombre)";
 	$estadoModificado = $objFlujo->cambioNodoExpediente($numeroExpediente,$numRad,$estadoNuevo,$aristaActual,0,"Cambio Manual. ($flujo_nombre)",$_GET['texp']);
@@ -186,22 +217,40 @@ if($grabarFlujo)
   </tr>
 	<TR bgcolor="White"><TD width="100">
 				<center>
-				<img src="<?=$ruta_raiz?>/iconos/tuxTx.gif" alt="Tux Transaccion" title="Tux Transaccion">
+				<img src="<?=$ruta_raiz?>/iconos/tuxTx.gif" alt="Tux Transaccion" title="Tux Transaccion" width=20>
 				</center>
 		</td><TD align="left">
         <span class="etextomenu">
         </span>
-	        <textarea name=observa cols=70 rows=3 class=ecajasfecha></textarea>
+	        <textarea name=observa cols=90 rows=2 class=ecajasfecha></textarea>
 			</TD></TR>
 
   </td></tr>
-	<tr><TD>
+	<tr><TD colspan=2 align=center>
 	<input type=submit name=grabarFlujo value='Grabar Cambio' class='botones' style="<?=$grabarDisabled?>">
 	<input name="cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar ">
 
 	</TD></tr>
 </table>
 </form>
+<?PHP
+if(trim($frmNombre)<>""){
+?>
+<table class=borde_tab width="100%">
+<tr class=titulos2>
+<td class=titulos2><?=$frmNombre ?></td>
+<td class=titulos2><a href='<?=$frmLink ?>' target='frmFrame'><?=$frmNombre ?></a></td>
+<td class=titulos2><a href='<?=$frmLinkSelect ?>' target='frmFrame'>Listado</a></td>
+</tr>
+<tr><td class=titulos2 colspan=3>
+  <center>
+   <iframe src='<?=$frmLink ?>' width=80% height='800' name=frmFrame> </iframe>
+  </center>
+</td></tr>
+</table>
+<?php
+}
+?>
 </CENTER>
 
 </body>

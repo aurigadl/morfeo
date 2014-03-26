@@ -16,7 +16,7 @@
 ( isset( $_POST['ordenarPor'] ) && $_POST['ordenarPor'] != '' ) ? $ordenarPor = $_POST['ordenarPor'] : $ordenarPor = $_GET['ordenarPor'];
 ?>
 <html><head><title>.: Modulo total :.</title>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
 <script>
 function regresar(){
 	window.location.reload();
@@ -65,7 +65,7 @@ function verTipoExpedienteOld(numeroExpediente)
   ?>
   window.open("<?=$ruta_raiz?>/expediente/tipificarExpedienteOld.php?numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","Tipificacion_Documento","height=450,width=750,scrollbars=yes");
 }
-function modFlujo(numeroExpediente,texp,codigoFldExp)
+function modFlujo(numeroExpediente,texp,codigoFldExp,ventana='default')
 {
 <?php
 	$isqlDepR = "SELECT RADI_DEPE_ACTU,RADI_USUA_ACTU from radicado
@@ -74,8 +74,16 @@ function modFlujo(numeroExpediente,texp,codigoFldExp)
 	$coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
 	$codusua = $rsDepR->fields['RADI_USUA_ACTU'];
 	$ind_ProcAnex="N";
+	
+	
 ?>
-window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?codigoFldExp="+codigoFldExp+"&krd=<?=$krd?>&numeroExpediente="+numeroExpediente+"&numRad=<?=$verrad?>&texp="+texp+"&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","TexpE<?=$fechaH?>","height=250,width=750,scrollbars=yes");
+if(ventana=="Max"){
+   opcVentana = "fullscreen=yes, scrollbars=auto";
+  }else{
+   opcVentana = "height=250,width=750,scrollbars=yes";
+  }
+  
+window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?codigoFldExp="+codigoFldExp+"&krd=<?=$krd?>&numeroExpediente="+numeroExpediente+"&numRad=<?=$verrad?>&texp="+texp+"&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","TexpE<?=$fechaH?>",opcVentana);
 }
 function Responsable(numeroExpediente) {
 <?php
@@ -705,9 +713,17 @@ if($usuaPermExpediente >= 1  ) {
 <?
 if($descPExpediente){
 	$expediente->consultaTipoExpediente($num_expediente);
+	include_once ("$ruta_raiz/include/tx/Flujo.php");
+	$objFlujo = new Flujo($db, $texp, $usua_doc);
+	$kk = $objFlujo->getArista($texp, $codigoFldExp);
+	$frmNombre = $objFlujo->frmNombre;
+	$frmLink = $objFlujo->frmLink;
+	$frmLinkSelect = $objFlujo->frmLinkSelect;
+	if($frmNombre) $ventana = "Max"; else $ventana = "Default";
+	
 ?>
 &nbsp;&nbsp;&nbsp;&nbsp;Estado :<span class=leidos2> <?=$descFldExp?></span>&nbsp;&nbsp;&nbsp;
-<input type="button" value="..." class=botones_2 onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>)"></td>
+<input type="button" value="..." class=botones_2 onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')"></td>
 <?
 }
 if($num_expediente !=""){

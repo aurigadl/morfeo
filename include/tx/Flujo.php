@@ -26,6 +26,10 @@ class Flujo{
 	var $codNodoProx; // Siguiente Nodo.
 	var $codArista; // Codigo de Atista 
 	var $descArista;  // Descripcion arista
+	var $frmNomvre;  // Nombre del Formulario en la Arista.
+	var $frmLink; // Nombre del link al formulario en la Arista.
+	var $frmLinkSelect; // Nombre del link al listado de formularios seleccionados en la arista.
+	var $frmLinkSql; // Nombre del link al listado de formularios seleccionados en la arista.
 	
 	/**
 	 * Constructor.  La clase se instancia con el codigo del proceso y la conexion a la base de datos.
@@ -67,8 +71,7 @@ class Flujo{
 	 * @return array   // retorna el arreglo de aristas posibles.
 	 */
 	function aristasSiguiente($estadoActualExp){
-		if($estadoActualExp==1 or !$estadoActualExp)
-		{
+		if($estadoActualExp==1 or !$estadoActualExp){
 			$query = "SELECT SGD_FEXP_CODIGO FROM SGD_FEXP_FLUJOEXPEDIENTES 
 			WHERE SGD_FEXP_ORDEN=1 AND SGD_PEXP_CODIGO=$this->codProceso";
 			$rs = $this->db->conn->query($query);
@@ -80,10 +83,8 @@ class Flujo{
 		ORDER BY SGD_FEXP_CODIGOINI,SGD_FEXP_CODIGOFIN";	
 		$rs = $this->db->conn->query($query);
 		$aristasArray = "";
-		if($rs)
-		{
-			while(!$rs->EOF)
-			{
+		if($rs){
+			while(!$rs->EOF){
 				$aristasArray[] = $rs->fields["SGD_FARS_CODIGO"];
 				$nodosSig[] = $rs->fields["SGD_FEXP_CODIGOFIN"];
 				$aristasNombresSig[] = $rs->fields["SGD_FARS_DESC"];
@@ -92,6 +93,8 @@ class Flujo{
 				$aristaSRD[] = $rs->fields["SGD_SRD_CODIGO"];
 				$aristaSBRD[] = $rs->fields["SGD_SBRD_CODIGO"];
 				$aristaAutomatico[] = $rs->fields["SGD_FARS_AUTOMATICO"];
+				$aristaFrmNombre[] = $rs->fields["SGD_FARS_FRMNOMBRE"];
+				$aristaFrmLink[] = $rs->fields["SGD_FARS_FRMLINK"];
 				$rs->MoveNext();
 			}
 			$this->nodosSig = $nodosSig;
@@ -143,12 +146,12 @@ class Flujo{
 	 */
 	function actualNodoExpediente($expNume){
 		$query = "SELECT * FROM SGD_SEXP_SECEXPEDIENTES WHERE SGD_EXP_NUMERO='$expNume' and SGD_PEXP_CODIGO = " . $this->codProceso;
+		//$this->db->conn->debug = true;
 		$rs = $this->db->conn->query($query);
 		if($rs){
 			$nodoActual = $rs->fields["SGD_FEXP_CODIGO"];
 		}
-		if(!empty($nodoActual))
-		{
+		if(!$nodoActual){
 			$query = "SELECT * FROM SGD_FEXP_FLUJOEXPEDIENTES 
 					   where sgd_pexp_codigo = ".$this->codProceso."
 					  ORDER BY SGD_FEXP_ORDEN";
@@ -156,6 +159,7 @@ class Flujo{
 			$nodoActual = $rs->fields["SGD_FEXP_CODIGO"];
 			
 		}
+		if($nodoActual==0) $nodoActual=1;
 		return $nodoActual;
 	}
 	/**
@@ -172,25 +176,22 @@ class Flujo{
 	 * @param number $usuaDoc Documento del usuario que realiza el movimiento
 	 * @param number $usuaCodi Codigo del usuario
 	 * @param Varchar $observa Observacion escrita por el usuario para el cambio de estado
-         * @param string $proc proceso del al cual se reailza el cambio 
+   * @param string $proc proceso del al cual se reailza el cambio 
 	 * @return number  retorna o si fallo y 1 si ejecuto bien la operacion.
 	 */
 	function cambioNodoExpediente($expNume,$radiNume,$nodoNuevo,$aristaCodi,$fldAutomatico,$observa,$proc = null){
 		$recordSet2["SGD_FEXP_CODIGO"] = $nodoNuevo;		
 		$recordWhere2["SGD_EXP_NUMERO"] = "'".$expNume."'";					
 		$recordWhere2["SGD_PEXP_CODIGO"] = $proc;
-                $rs=$this->db->update("SGD_SEXP_SECEXPEDIENTES", $recordSet2,$recordWhere2);	
-                $realizado = '0';
-		if($rs)
-		{
+		$rs=$this->db->update("SGD_SEXP_SECEXPEDIENTES", $recordSet2,$recordWhere2);	
+		$realizado = '0';
+		if($rs){
 			//$observa = "*Cambio Estado*  ";
-			
 			$flujo_nombre = $this->getNombreNodo($nodoNuevo,$this->codProceso);
 			$observa .= " ($flujo_nombre)";
 			$arrayRad = array();
 			$arrayRad[]=$verradEntra;
 			$codusdp = str_pad($dependencia, 3, "0", STR_PAD_LEFT).str_pad($codusuario, 3, "0", STR_PAD_LEFT);
-
 			$record["SGD_FEXP_CODIGO"] = $nodoNuevo;
 			$record["SGD_EXP_FECHFLUJOANT"] = $this->db->conn->OffsetDate(0,$this->db->conn->sysTimeStamp);
 			$record["SGD_HFLD_FECH"] = $this->db->conn->OffsetDate(0,$this->db->conn->sysTimeStamp);
@@ -206,7 +207,7 @@ class Flujo{
 			$record["SGD_HFLD_AUTOMATICO"] = $fldAutomatico;
 			$insertSQL = $this->db->insert("SGD_HFLD_HISTFLUJODOC", $record, "true");
 			$realizado='1';
-		}		
+		}
 		return $realizado;
 	}
 		function getAristaTipoDoc($tipoDoc, $codProceso,$codSerie,$codSbrd){
@@ -226,6 +227,31 @@ class Flujo{
 			$this->codArista = $rs->fields["SGD_FARS_CODIGO"];
 			$this->descArista = $rs->fields["SGD_FARS_DESC"];
 			$this->codNodoSiguiente =  $rs->fields["SGD_FEXP_CODIGOFIN"];
+			$this->frmNombre = $rs->fields["SGD_FEXP_FRMNOMBRE"];
+			$this->frmLink = $rs->fields["SGD_FEXP_FRMLINK"];
+		}
+		return $this->codArista;
+	}
+		
+	function getArista($codProceso, $codFld){
+	  if($codFld==0) $coFld=1; 
+		$query = "SELECT * FROM SGD_FARS_FARISTAS 
+		WHERE 
+		SGD_PEXP_CODIGO=$codProceso
+		AND SGD_FEXP_CODIGOINI=$codFld
+		ORDER BY SGD_FEXP_CODIGOINI,SGD_FEXP_CODIGOFIN";	
+		
+		$rs = $this->db->conn->query($query);
+		$aristasArray = "";
+		if($rs){
+			
+			$this->codArista = $rs->fields["SGD_FARS_CODIGO"];
+			$this->descArista = $rs->fields["SGD_FARS_DESC"];
+			$this->codNodoSiguiente =  $rs->fields["SGD_FEXP_CODIGOFIN"];
+			$this->frmNombre = $rs->fields["SGD_FARS_FRMNOMBRE"];
+			$this->frmLink = $rs->fields["SGD_FARS_FRMLINK"];
+			$this->frmLinkSelect = $rs->fields["SGD_FARS_FRMLINKSELECT"];
+			$this->frmLinkSql = $rs->fields["SGD_FARS_FRMSQL"];
 		}
 		return $this->codArista;
 	}
