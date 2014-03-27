@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-    $ruta_raiz = "."; 
+    $ruta_raiz = ".";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
 
@@ -33,12 +33,12 @@ $carpeta=$carpetano;
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("$ruta_raiz");
 
-include("$ruta_raiz/class_control/Param_admin.php"); 
+include("$ruta_raiz/class_control/Param_admin.php");
 $param=Param_admin::getObject($db,'%','ALERT_FUNCTION');
 
 
 require("include/xajax/xajax.inc.php");
-$xajax = new xajax(); 
+$xajax = new xajax();
 $xajax->registerExternalFunction("updateInBox", "inBox_xajax.php");
 $xajax->registerExternalFunction("updateFolders", "inBox_xajax.php");
 //$xajax->debugOn();
@@ -48,7 +48,7 @@ $xajax->processRequests();
 <head>
 <link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
 <script type="text/javascript" language="javascript">
-    
+
 /* 	FUNCION QUE MUESTRA LA VENTANA DE NOVEDADES DE USUARIO
 	Busca los radicados de entrada o internos que le llegaron al usuario.
 	Además los documentos que le devolvieron,
@@ -75,7 +75,7 @@ function updateFolders()
 }
 </script>
 <?php
-$xajax->printJavascript('include/xajax/'); 
+$xajax->printJavascript('include/xajax/');
 ?><script type="text/javascript">
 // Variable que guarda la �ltima opci�n de la barra de herramientas de funcionalidades seleccionada
 function MM_swapImgRestore() { //v3.0
@@ -127,7 +127,7 @@ function cambioMenu(img){
 	}
 }
 function verPersonales(id){
-    
+
     mostrado=0;
     elem = document.getElementById(id);
     if(elem.style.display=="block")mostrado=1;
@@ -367,7 +367,7 @@ if($numerot>=1){
   echo "<!-- $isqlPrioritario -->";
   $rsP = $db->conn->query($isqlPrioritario);
   $numeroP = $rsP->fields["NUMEROP"];
-   
+
   if($numeroP >=1) $clasePrioritarios="titulosError"; else $clasePrioritarios="menu_princ";
 ?>
 
@@ -399,7 +399,7 @@ if($numerot>=1){
     // BUSCA LAS CARPETAS PERSONALES DE CADA USUARIO Y LAS COLOCA contando el numero de documentos en cada carpeta.
     $isql ="select distinct CODI_CARP,DESC_CARP,NOMB_CARP from carpeta_per where usua_codi=$codusuario and depe_codi=$dependencia order by codi_carp  ";
     $rs=$db->query($isql);
-    while(!$rs->EOF) 
+    while(!$rs->EOF)
     {
 	    if($data=="")   $data = "NULL";
 	    $data = trim($rs->fields["NOMB_CARP"]);
@@ -434,21 +434,6 @@ if($numerot>=1){
 <?
 include "$ruta_raiz/menu/menuPrimero.php";
 ?>
-<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="t_bordeVerde">
-<tr align="center">
-<!-- <td height="35"><img width=80 src='<?=$logo?>' alt="Logo"></td> -->
-</tr>
-<tr align="center">
-<td height="20">
-		<font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-Equipo:
-<?php	// Coloca de direccion ip del equipo desde el cual se esta entrando a la pagina.
-					echo $_SERVER['REMOTE_ADDR'];
-?></font>
-	</td>
-</tr>
-</table>
 </form>
-
 </body>
 </html>

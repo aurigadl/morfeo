@@ -6,17 +6,17 @@
  * Este programa es software libre. usted puede redistribuirlo y/o modificarlo
  * bajo los terminos de la licencia GNU General Public publicada por
  * la "Free Software Foundation"; Licencia version 2.
- * 
+ *
  * SSPS "Superintendencia de Servicios Publicos Domiciliarios"
  * Jairo Hernan Losada  jlosada@gmail.com                Desarrollador
  * Sixto Angel Pinzon Lopez --- angel.pinzon@gmail.com   Desarrollador
  * C.R.A.  "COMISION DE REGULACION DE AGUAS Y SANEAMIENTO AMBIENTAL"
  * Liliana Gomez        lgomezv@gmail.com                Desarrolladora
  * Lucia Ojeda          lojedaster@gmail.com             Desarrolladora
- * 
+ *
  * D.N.P. "Departamento Nacional de Planeacion"
  * Hollman Ladino       hollmanlp@gmail.com                Desarrollador
- * 
+ *
  * Fundacion CorreLibre.org
  * aurigadl@gmail.com
  */
@@ -26,7 +26,7 @@
 	include("$ruta_raiz/autenticaLDAP.php");
 	if(!$krd) $krd = $_REQUEST["krd"];
 
-	
+
 	$db = new ConnectionHandler("$ruta_raiz");
 	$db->conn->SetFetchMode(ADODB_FETCH_NUM);
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -34,17 +34,17 @@
 	$krd        = strtoupper($krd);
 	$fechah     = date("Ymd") . "_". time("hms");
 	$check      = 1;
-	$numeroa    = 
-	$numero     = 
-	$numeros    = 
-	$numerot    = 
-	$numerop    = 
+	$numeroa    =
+	$numero     =
+	$numeros    =
+	$numerot    =
+	$numerop    =
 	$numeroh    = 0;
 	$ValidacionKrd  = "";
-	$queryDep       = " SELECT 
-						DEPE_CODI AS DEPE_CODI 
+	$queryDep       = " SELECT
+						DEPE_CODI AS DEPE_CODI
 				FROM
-						usuario 
+						usuario
 				WHERE
 						USUA_LOGIN ='$krd'";
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -53,26 +53,26 @@
 	$query          = " SELECT
 										a.SGD_TRAD_CODIGO AS \"SGD_TRAD_CODIGO\",
 							a.SGD_TRAD_DESCR,
-							a.SGD_TRAD_ICONO AS SGD_TRAD_ICONO 
-								FROM 
+							a.SGD_TRAD_ICONO AS SGD_TRAD_ICONO
+								FROM
 										SGD_TRAD_TIPORAD a
 						order by a.SGD_TRAD_CODIGO";
-                
+
     $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
     $rs             = $db->conn->Execute($query);
     $varQuery       = $query;
     $comentarioDev  = ' Busca todos los tipos de Radicado Existentes ';
-    
+
     $iTpRad         = 0;
     $queryTip3      = "";
-    
-    $tpNumRad       = 
-    $tpDescRad      = 
+
+    $tpNumRad       =
+    $tpDescRad      =
     $tpImgRad       = array();
-    
+
     $queryTRad      = "";
     $queryDepeRad   = "";
-    
+
     while(!$rs->EOF){
         $numTp              = $rs->fields["SGD_TRAD_CODIGO"];
         $descTp 			= $rs->fields["SGD_TRAD_DESCR"];
@@ -84,24 +84,24 @@
         $tpDescRad[$iTpRad] =$descTp;
         $tpImgRad[$iTpRad]  =$imgTp;
         $iTpRad++;
-        
+
         $rs->MoveNext();
     }
-    
-    
+
+
     /**
-     * BUSQUEDA DE ICONOS Y NOMBRES PARA LOS TERCEROS 
-     * (Remitentes/Destinarios) AL RADICAR * $tip3[][][]  Array  
-     *  Contiene los tipos de radicacion existentes.  
-     *  En la primera dimencion indica la posicion 
-     *  dependiendo del tipo de rad. (ej. salida -> 1, ...). 
-     *  En la segunda dimencion almacenara los datos de 
-     *  nombre del tipo de rad. inidicado, 
-     *  Para la tercera dimencion indicara la descripcion del 
-     *  tercero y en la cuarta dim. contiene el nombre del 
+     * BUSQUEDA DE ICONOS Y NOMBRES PARA LOS TERCEROS
+     * (Remitentes/Destinarios) AL RADICAR * $tip3[][][]  Array
+     *  Contiene los tipos de radicacion existentes.
+     *  En la primera dimencion indica la posicion
+     *  dependiendo del tipo de rad. (ej. salida -> 1, ...).
+     *  En la segunda dimencion almacenara los datos de
+     *  nombre del tipo de rad. inidicado,
+     *  Para la tercera dimencion indicara la descripcion del
+     *  tercero y en la cuarta dim. contiene el nombre del
      *  archio imagen del tipo de tercero.
      */
-    
+
     $query = "  SELECT
                     a.SGD_DIR_TIPO,
                     a.SGD_TIP3_CODIGO,
@@ -112,20 +112,20 @@
                 FROM
                     SGD_TIP3_TIPOTERCERO a";
     $rs     = $db->conn->Execute($query);
-    
+
     while(!$rs->EOF){
     	$dirTipo   = $rs->fields["SGD_DIR_TIPO"];
     	$nombTip3  = $rs->fields["SGD_TIP3_NOMBRE"];
     	$descTip3  = $rs->fields["SGD_TIP3_DESC"];
     	$imgTip3   = $rs->fields["SGD_TIP3_IMGPESTANA"];
-        
+
     	for($iTp=0;$iTp<$iTpRad;$iTp++){
-    	    
+
     		$numTp        =  $tpNumRad[$iTp];
     		$campoTip3    = "SGD_TPR_TP$numTp";
     		$numTpExiste  = $rs->fields[$campoTip3];
-            
-    		if($numTpExiste>=1){    		    
+
+    		if($numTpExiste>=1){
     			$tip3Nombre[$dirTipo][$numTp]    = $nombTip3;
     			$tip3desc[$dirTipo][$numTp]      = $descTip3;
     			$tip3img[$dirTipo][$numTp]       = $imgTip3;
@@ -140,13 +140,13 @@
     	//Consulta rapida para saber si el usuario se autentica por LDAP o por DB
         $krd=addslashes($krd);
     	$myQuery = "SELECT USUA_AUTH_LDAP from usuario where USUA_LOGIN ='$krd'";
-        
+
     	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
     	$rs                = $db->conn->Execute($myQuery);
     	$autenticaPorLDAP  = $rs->fields['USUA_AUTH_LDAP'];
-        
+
     	if($autenticaPorLDAP == 0 or !$autenticaPorLDAP){
-    		$queryRec = "AND (USUA_PASW ='".SUBSTR(md5($drd),1,26)."' or a.USUA_NUEVO='0')";	
+    		$queryRec = "AND (USUA_PASW ='".SUBSTR(md5($drd),1,26)."' or a.USUA_NUEVO='0')";
     	}else{
     		$queryRec = '';
     	}
@@ -162,50 +162,49 @@
     //Modificado idrd para tomar los valores de permisos de empresas y parques
     //No anadir parques que ya esta incluido en el a.*  jlosada
 
-    $query = "SELECT 
+    $query = "SELECT
                 a.*,
                 b.DEPE_NOMB,
                 b.DEPE_CODI_TERRITORIAL,
                 b.DEPE_CODI_PADRE
                 $queryTRad
                 $queryDepeRad
-		      FROM 
+		      FROM
                 usuario a,
                 DEPENDENCIA b
 		      WHERE
-                USUA_LOGIN          = '$krd' 
+                USUA_LOGIN          = '$krd'
                 and  a.depe_codi    = b.depe_codi $queryRec";
-                
+
     $comentarioDev  = ' Busca Permisos de Usuarios ...';
     $rs             = $db->conn->Execute($query);
-	
+
     //Si no se autentica por LDAP segun los permisos de DB
     if (!$autenticaPorLDAP){
-    	//Verificamos que la consulta en DB haya sido 
+    	//Verificamos que la consulta en DB haya sido
         //exitosa con el password digitado
     	if(trim($rs->fields["USUA_LOGIN"])==$krd){
     		$validacionUsuario = '';
     	}else{
     		$mensajeError         = "USUARIO O CONTRASE&Ntilde;A INCORRECTOS";
     		$validacionUsuario    = 'No Pasa Validacion Base de Datos';
-    	} 
+    	}
     }else{
-        	
+
         //El usuario tiene Validacion por LDAP
     	$correoUsuario     = $rs->fields['USUA_EMAIL'];
     	//Verificamos que tenga correo en la DB, si no tiene no se puede validar por LDAP
-    	if ( $correoUsuario == '' ){	
+    	if ( $correoUsuario == '' ){
     	   //No tiene correo, entonces error LDAP
     	   $validacionUsuario = 'No Tiene Correo';
-    	   $mensajeError = "EL USUARIO NO TIENE CORREO ELECTR&Oacute;NICO REGISTRADO";           
-    	}else{	
-		echo "Verificando Ldap . . .";
+    	   $mensajeError = "EL USUARIO NO TIENE CORREO ELECTR&Oacute;NICO REGISTRADO";
+    	}else{
     	   //Tiene correo, luego lo verificamos por LDAP
     	   $validacionUsuario    = checkldapuser( $krd, $drd, $ldapServer );
     	   $mensajeError         = $validacionUsuario;
     	}
     }
-		 	
+
     if ( !$validacionUsuario ){
     	$perm_radi_salida_tp = 0;
     	if (!isset($tpDependencias)) $tpDependencias = "";
@@ -219,10 +218,10 @@
     		}
     		$tpDependencias .= "<".$rs->fields[$campo].">";
     	}
-    
-    	if ($krd){	    
+
+    	if ($krd){
         	if (trim($rs->fields["USUA_ESTA"])==1){
-        	        	    
+
         		$fechah               = date("dmy") . "_" . time("hms");
         		$dependencia          = $rs->fields["DEPE_CODI"];
         		$dependencianomb      = $rs->fields["DEPE_NOMB"];
@@ -268,136 +267,136 @@
         		$permArchi             = $rs->fields["PERM_ARCHI"];
         		$permVobo              = $rs->fields["PERM_VOBO"];
         		$permRespuesta         = isset($rs->fields["USUA_PERM_RESPUESTA"])?$rs->fields["USUA_PERM_RESPUESTA"]:"";
-                            
+
                 if($usua_perm_impresion==1){
                     if($perm_radi_salida_tp>=1) $perm_radi_sal = 3; else $perm_radi_sal = 1;
                 }else{
                     if($perm_radi_salida_tp>=1) $perm_radi_sal = 1;
                 }
-                            	
-                //Traemos el campo que indica si el usuario puede 
+
+                //Traemos el campo que indica si el usuario puede
                 //utilizar el administrador de flujos o no
-                
+
         		$usua_perm_adminflujos    = $rs->fields["USUA_PERM_ADMINFLUJOS"];
         		$mostrar_opc_envio        = 0;
         		$nivelus                  = $rs->fields["CODI_NIVEL"];
-        
-        		$isql = "select 
+
+        		$isql = "select
                             b.MUNI_NOMB from dependencia a,municipio b
-        				where 
+        				where
                             a.muni_codi=b.muni_codi
         					and a.dpto_codi=b.dpto_codi
         					and a.muni_codi=b.muni_codi
         					and a.depe_codi=$dependencia";
-                            
+
         		$rs = $db->conn->Execute($isql);
         		$depe_municipio= $rs->fields["MUNI_NOMB"];
-        		
+
         		/**
         		*   Consulta que anade los nombres y codigos de carpetas del Usuario
         		*/
         		$isql = "select CARP_CODI, CARP_DESC from carpeta";
         		$rs   = $db->conn->Execute($isql);
         		$iC   = 0;
-        		
-        		while(!$rs->EOF){    		    
+
+        		while(!$rs->EOF){
         			$iC = $rs->fields["CARP_CODI"];
         			$descCarpetasGen[$iC] = $rs->fields["CARP_DESC"];
         			$rs->MoveNext();
         		}
-        		
+
             	$isql = "select CODI_CARP, DESC_CARP from carpeta_per
             				where usua_codi=$codusuario and depe_codi = $dependencia";
             	$rs = $db->conn->Execute($isql);
             	$iC = 0;
-            	
+
             	while(!$rs->EOF)
             	{
             		$iC = $rs->fields["CODI_CARP"];
             		$descCarpetasPer[$iC] = $rs->fields["DESC_CARP"];
             		$rs->MoveNext();
             	}
-            	
+
             	//Busca si el usuario puede integrar aplicativos
-                $sqlIntegraApp ="   SELECT 
+                $sqlIntegraApp ="   SELECT
                                         a.SGD_APLI_DESCRIP,
                 				        a.SGD_APLI_CODI,
-                				        u.SGD_APLUS_PRIORIDAD 
-                                    FROM 
+                				        u.SGD_APLUS_PRIORIDAD
+                                    FROM
                                         SGD_APLI_APLINTEGRA a,
                                         SGD_APLUS_PLICUSUA  u
-                                    WHERE 
-                                        u.USUA_DOC = '$usua_doc' AND 
+                                    WHERE
+                                        u.USUA_DOC = '$usua_doc' AND
             				            a.SGD_APLI_CODI <> 0 AND
             				            a.SGD_APLI_CODI =  u.SGD_APLI_CODI";
-            	
+
             	$rsIntegra=$db->conn->Execute($sqlIntegraApp);
-            	
+
             	if ($rsIntegra && !$rsIntegra->EOF)
             		$usua_perm_intergapps=1;
-            	
+
             	// Fin Consulta de carpetas
-                
+
             	/**	Creada por HLP.
             	 * Query para construir $cod_local. La cual contiene
             	 * ID_CONTinente+ID_PAIS+id_dpto+id_mncpio.
-            	 * Si $cod_local=0, significa que NO hay un municipio 
+            	 * Si $cod_local=0, significa que NO hay un municipio
             	 * como local. ORFEO DEBE TENER localidad.
         		*/
-               
+
             	$ADODB_COUNTRECS = true;
-            	
-            	$isql = "SELECT 
+
+            	$isql = "SELECT
                             d.ID_CONT,
                 			d.ID_PAIS,
                 			d.DPTO_CODI,
                 			d.MUNI_CODI,
                 			m.MUNI_NOMB
-                		FROM 
+                		FROM
                             dependencia d,
                 			municipio m
-                		WHERE 
+                		WHERE
                             d.ID_CONT = m.ID_CONT AND
                 			d.ID_PAIS = m.ID_PAIS AND
                 			d.DPTO_CODI = m.DPTO_CODI AND
                 			d.MUNI_CODI = m.MUNI_CODI AND
                 			d.DEPE_CODI = $dependencia";
-            	
+
             	$rs_cod_local      = $db->conn->Execute("$isql");
             	$ADODB_COUNTRECS   = false;
-                
-            	if ($rs_cod_local && !$rs_cod_local->EOF){	
+
+            	if ($rs_cod_local && !$rs_cod_local->EOF){
                     $cod_local     =    $rs_cod_local->fields['ID_CONT']."-".
                                         str_pad($rs_cod_local->fields['ID_PAIS'],3,0,STR_PAD_LEFT)."-".
                                         str_pad($rs_cod_local->fields['DPTO_CODI'],3,0,STR_PAD_LEFT)."-".
                                         str_pad($rs_cod_local->fields['MUNI_CODI'],3,0,STR_PAD_LEFT);
             		$depe_municipio= $rs_cod_local->fields["MUNI_NOMB"];
             		$rs_cod_local->Close();
-                    
-            	}else{	
+
+            	}else{
                     $cod_local = 0;
             		$depe_municipio = "CONFIGURAR EN SESSION_ORFEO.PHP";
-            	}            
+            	}
             	if(!isset($recOrfeo)){
                 	$recOrfeo   = "";
             	}
             	$recOrfeoOld   = $recOrfeo;
             	$nombSession   = date("ymdhis")."o".str_replace(".","",$_SERVER['REMOTE_ADDR'])."$krd";
-                
-                
-                
+
+
+
             	session_id($nombSession);
             	session_start();
-            	$recOrfeo = $recOrfeoOld;        
-                
-            	
+            	$recOrfeo = $recOrfeoOld;
+
+
             	$fechah    = date("Ymd"). "_". time("hms");
             	$carpeta   = 0;
             	if (!isset($PHP_SELF)){
                 	$PHP_SELF = $_SERVER["PHP_SELF"];
             	}
             	$dirOrfeo  = str_replace("login.php","",$PHP_SELF);
-                
+
             	$_SESSION["entidad"]               = $entidad;
             	$_SESSION["entidad_largo"]		   = $entidad_largo;
             	$_SESSION["dirOrfeo"]              = $dirOrfeo;
@@ -460,7 +459,7 @@
             	$_SESSION["autentica_por_LDAP"]    = $autenticaPorLDAP;
             	$_SESSION["usuaPermRadFax"]        = $usuaPermRadFax;
             	$_SESSION["usuaPermRadEmail"]      = $usuaPermRadEmail;
-            	
+
             	if (!isset($XAJAX_PATH)){
             	    $XAJAX_PATH = "";
             	}
@@ -471,116 +470,68 @@
             	$_SESSION["secRadicaFormularioWeb"] = $secRadicaFormularioWeb;
                 $_SESSION["ESTILOS_PATH"]           = $ESTILOS_PATH;
                 $_SESSION["seriesVistaTodos"]       = $seriesVistaTodos;
-				$_SESSION["digitosDependencia"]     = $digitosDependencia;  
-				
+				$_SESSION["digitosDependencia"]     = $digitosDependencia;
+
 				if (!isset($indiTRD)){
 				    $indiTRD = "";
 				}
-                $_SESSION["indiTRD"]                = $indiTRD;                 
-                //Variables para Correo IMAP             
+                $_SESSION["indiTRD"]                = $indiTRD;
+                //Variables para Correo IMAP
                 $_SESSION["PEAR_PATH"]              = $PEAR_PATH;
 				$_SESSION["servidor_mail"]          = $servidor_mail;
     			$_SESSION["puerto_mail"]            = $puerto_mail;
     			$_SESSION["protocolo_mail"]         = $protocolo_mail;
     			$_SESSION["menuAdicional"]          = $menuAdicional;
                 $_SESSION["permArchi"]              = $permArchi;
-				$_SESSION["permVobo"]               = $permVobo;      
-                $_SESSION["usua_perm_respuesta"]    = $permRespuesta; 		                
-                
+				$_SESSION["permVobo"]               = $permVobo;
+                $_SESSION["usua_perm_respuesta"]    = $permRespuesta;
+
                 if( isset($archivado_requiere_exp) )
                     $_SESSION["archivado_requiere_exp"] = true;
-    			
+
                 if( isset($archivado_requiere_exp) )
                         {$_SESSION["archivado_requiere_exp"] = $archivado_requiere_exp;	}
-            
+
                 //Se pone el permiso de administracion de flujos en la sesion para su posterior consulta
                 $_SESSION["usua_perm_adminflujos"]     = $usua_perm_adminflujos;
-                $_SESSION["krd"]                       = $krd;		
-            
+                $_SESSION["krd"]                       = $krd;
+
                 $nomcarpera = "ENTRADA";
                 if(!$orno) $orno = 0;
-                    
-                $query = "   UPDATE 
-                        usuario 
-                         SET 
+
+                $query = "   UPDATE
+                        usuario
+                         SET
                         usua_sesion='". session_id() .
-                        "',usua_fech_sesion=sysdate 
-                         WHERE  
+                        "',usua_fech_sesion=sysdate
+                         WHERE
                         USUA_LOGIN ='$krd'  ";
-                    
-                $recordSet["USUA_SESION"]                = "'".SUBSTR(session_id(),1,30)."'";			
+
+                $recordSet["USUA_SESION"]                = "'".SUBSTR(session_id(),1,30)."'";
                 $recordSet["USUA_FECH_SESION"]           = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
                 $recordWhere["USUA_LOGIN"]               = "'$krd'";
                 $db->update("USUARIO", $recordSet,$recordWhere);
                 $ValidacionKrd = "Si";
-                            
+
             }else{
                 $ValidacionKrd="Errado .... ";
-            	if($recOrfeo=="loginWeb"){
-            	    echo "  <script language='JavaScript' type='text/JavaScript'>
-                                alert('El usuario $krd ESTA INACTIVO \n por
-                                favor consulte con el administrador del sistema');
-    				        </script>";
-                            
-                }else{
-                    echo '<B>
-                            <CENTER>
-                             <font face="Arial, Helvetica, sans-serif" 
-                              size="2">EL USUARIO '.$krd.' ESTA INACTIVO <br> Por 
-                              favor consulte con el administrador del sistema
-                             </font>
-                            </CENTER>
-                           </B>';     
-                } 
-            				
+                $mensajeError = "EL USUARIO '.$krd.' ESTA INACTIVO <br> Por
+                              favor consulte con el administrador del sistema";
             }
         }else{
             if($recOrfeo=="loginWeb"){
-        	   echo "<script language='JavaScript' type='text/JavaScript'>
-        				alert('USUARIO O PASSWORD INCORRECTOS \n INTENTE DE NUEVO');
-        			</script>";
-            }else{
-                $ValidacionKrd="Errado ....";
-        		if($recOrfeo=="Seguridad") die (include "$ruta_raiz/cerrar_session.php");
-                echo "<B>
-                        <CENTER>
-                            <font face='Arial, Helvetica, sans-serif' size='2'>
-                                Usuario o contrase&ntilde;a incorrectos
-                            </font>
-                        </CENTER>
-                      </B>";            
+              $mensajeError = "Usuario o contrase&ntilde;a incorrectos";
+              $ValidacionKrd="Errado ....";
+        		  if($recOrfeo=="Seguridad") die (include "$ruta_raiz/cerrar_session.php");
             }
         }
     }
     else{
     	if($recOrfeo=="loginWeb"){
-    	    echo "<script language='JavaScript' type='text/JavaScript'>
-                        alert('USUARIO O PASSWORD INCORRECTOS \n INTENTE DE NUEVO');
-                  </script>";
-    	}else{    	    
-    		$ValidacionKrd="Errado ....";
+        $mensajeError = "USUARIO O PASSWORD INCORRECTOS \n INTENTE DE NUEVO";
+    	}else{
+        $ValidacionKrd="Errado ....";
     		if($recOrfeo=="Seguridad") die (include "$ruta_raiz/cerrar_session.php");
-    		if (!$autenticaPorLDAP){
-    		    echo"
-    		          <br/><br/><br/>
-                      <b>
-                        <CENTER>
-                            <font face='Arial, Helvetica, sans-serif' size='2'>
-                                Falla verificaci&oacute;n con base de datos
-                                <br/>$mensajeError
-                            </font>
-                        </CENTER>
-                      </b>";
-    		}else{
-    		    echo "<b>
-                        <CENTER>
-                            <font face='Arial, Helvetica, sans-serif' size='2'>
-                               Falla verificaci&oacute;n LDAP
-      			               <br><?=$mensajeError?>
-      			            </font>
-                        </CENTER>
-                      </b>";
-            }
     	}
     }
 ?>
