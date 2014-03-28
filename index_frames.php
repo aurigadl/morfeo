@@ -14,9 +14,14 @@
   $codusuario     = $_SESSION["codusuario"];
   $tip3Nombre     = $_SESSION["tip3Nombre"];
   $tip3desc       = $_SESSION["tip3desc"];
+  $tpDescRad      = $_SESSION["tpDescRad"];
   $tip3img        = $_SESSION["tip3img"];
   $ESTILOS_PATH   = $_SESSION["ESTILOS_PATH"];
   $nombUser       = $_SESSION["usua_nomb"];
+  $tpNumRad       = $_SESSION["tpNumRad"];
+  $tpPerRad       = $_SESSION["tpPerRad"];
+
+
   $phpsession     = session_name()."=".session_id();
   $fechah         = date("Ymdhms");
   $ruta_raiz      = ".";
@@ -28,8 +33,35 @@
   $enlace4        = "href=\"tx/cuerpoInfConjunto.php?$phpsession&mostrar_opc_envio=1&orderNo=2&fechaf=$fechah&
                      carpeta=66&nomcarpeta=Informados&orderTipo=desc&adodb_next_page=1\"";
   $enlace5        = "href=\"cuerpoTx.php?<?=$phpsession?>&fechah=";
+  $enlace6        = "href=\"cuerpoPrioritario.php?<?=$phpsession?>&fechah=";
+  $enlace7        = "href=\"crear_carpeta.php?$phpsession&krd=$krd";
+  $enlace8        = "href=\"cuerpo.php?$phpsession";
 
   $sqlFechaHoy    = $db->conn->DBTimeStamp(time());
+
+  // Radicacion
+  foreach ($tpNumRad as $key => $valueTp){
+			$valueDesc = $tpDescRad[$key];
+      $enlace9   = "href=\"radicacion/chequear.php?$phpsession&krd=$krd&fechah=$fechah&primera=1&ent=$valueTp&depende=$dependencia\"";
+    	if($tpPerRad[$valueTp]==1 or $tpPerRad[$valueTp]==3){
+        $linkrad .= "<li><a $enlace9 target='mainFrame'> $valueDesc </a></li>";
+		  }
+  }
+
+	if ($_SESSION["usua_masiva"]==1) {
+      $enlace10 = "href=\"radsalida/masiva/menu_masiva.php?$phpsessio&krd=$krd&fechah=$fechah \"";
+      $linkrad .= "<li><a $enlace10 target=\"mainFrame\">Masiva</a></li>";
+	}
+
+  if ($_SESSION["perm_radi"]>=1){
+      $enlace11 = "href=\"uploadFiles/uploadFileRadicado.php?$phpsession&krd=$krd&fechah=$fechah&primera=1&ent=2&depende=$dependencia\"";
+      $linkrad .= "<li><a $enlace11 target=\"mainFrame\">Asociar Imagenes</a></li>";
+  }
+
+  if ($_SESSION["usuaPermRadEmail"]==1) {
+    $enlace12 = "href='email/index.php?$phpsession&krd=$krd&fechah=$fechah&primera=1&ent=2&depende=$dependencia\"";
+    $linkrad .= "<li><a $enlace12 target=\"mainFrame\">e-Mail</a></li>";
+  }
 
 	// Esta consulta selecciona las carpetas como Devueltos,  Entrada ,salida
   $isql = "SELECT CARP_CODI,CARP_DESC FROM CARPETA ORDER BY CARP_CODI";
@@ -112,6 +144,57 @@
   $data     ="Ultimas Transacciones del Usuario";
   $link6    = $enlace5."$fechah&nomcarpeta=$data&tipo_carpt=0\"";
   $link6show= "<li><a $link6 target=\"mainFrame\">Transacciones</a></li>";
+
+  //Prioritarios
+  $numeroP = 0;
+  include ("include/query/queryCuerpoPrioritario.php");
+  $rsP               = $db->conn->query($isqlPrioritario);
+  $numeroP           = $rsP->fields["NUMEROP"];
+  $clasePrioritarios = ($numeroP >= 1)? "titulosError" : "menu_princ";
+  $link7             = $enlace6."$fechah&nomcarpeta=$data&tipo_carpt=0\"";
+  $link7show         = "<li><a $link6 target=\"mainFrame\">Prioritarios ($numeroP)</a></li>";
+
+  //Enlace carpetas Personales
+  $link8             = $enlace7."fechah=$fechah&adodb_next_page=1\"";
+  $link8show         = "<a tabindex=\"-1\"  target=\"mainFrame\" > Personales </a>";
+  $link9show        .= "<li><a tabindex=\"-1\" $link8 target=\"mainFrame\"> Nueva Carpeta <i class=\" fa fa-plus-circle\"></i></a></li>";
+
+  //Carpetas Personales
+  $isql ="SELECT
+            DISTINCT CODI_CARP,
+            DESC_CARP,
+            NOMB_CARP
+          FROM
+            CARPETA_PER
+          WHERE
+            USUA_CODI=$codusuario AND
+            DEPE_CODI=$dependencia ORDER BY CODI_CARP  ";
+
+  $rs = $db->query($isql);
+  while(!$rs->EOF){
+	    $data    = trim($rs->fields["NOMB_CARP"]);
+	    $numdata = trim($rs->fields["CODI_CARP"]);
+	    $detalle = trim($rs->fields["DESC_CARP"]);
+	    $data    = trim($rs->fields["NOMB_CARP"]) ;
+      $isql    = "SELECT
+                    COUNT(1) AS CONTADOR
+                  FROM
+                    RADICADO
+                  WHERE
+                    CARP_PER=1 AND
+                    CARP_CODI = $numdata AND
+                    RADI_DEPE_ACTU = $dependencia AND
+                    RADI_USUA_ACTU=$codusuario ";
+
+	    $rs1     = $db->query($isql);
+	    $numerot = $rs1->fields["CONTADOR"];
+	    $datap   = "$data(Personal)";
+
+      $link9       = $enlace8."fechah=$fechah&tipo_carp=1&carpeta=$numdata&nomcarpeta=$data\"";
+      $link10show .= "<li><a tabindex=\"-1\" $link9 target=\"mainFrame\" > $data($numerot) </a></li>";
+	    $rs->MoveNext();
+    }
+
 ?>
 
 <html lang="es">
@@ -159,11 +242,25 @@
                       <?=$link1show?>
                       <?=$link4show?>
                       <?=$link5show?>
-                      <li class="divider"></li>
                       <?=$link6show?>
-                      <li class="divider"></li>
+                      <?=$link7show?>
                       <?=$link2show?>
                       <?=$link3show?>
+                      <li class="divider"></li>
+                      <li class="dropdown-submenu">
+                        <?=$link8show?>
+                        <ul class="dropdown-menu">
+                          <?=$link9show?>
+                          <?=$link10show?>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Radicaci&oacute;n <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <?=$linkrad?>
                     </ul>
                   </li>
                 </ul>
