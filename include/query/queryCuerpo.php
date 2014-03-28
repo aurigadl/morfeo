@@ -88,6 +88,7 @@ switch($db->driver)
 				b.RADI_NUME_RADI as "IDT_Numero Radicado"
 				,b.RADI_PATH as "HID_RADI_PATH"
 				,'.$sqlFecha.' as "DAT_Fecha Radicado"
+				,'.$sqlFecha.' as "HID_RADI_FECH_RADI"
 				, b.RADI_NUME_RADI as "HID_RADI_NUME_RADI"
 				'.$whereCuentaI.'
 				,b.RA_ASUN  as "Asunto"'.

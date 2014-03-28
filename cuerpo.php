@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-    $ruta_raiz = ".";
+    $ruta_raiz = "."; 
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
 
@@ -9,7 +9,7 @@ foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
 
-define('ADODB_ASSOC_CASE', 2);
+define('ADODB_ASSOC_CASE', 1);
 $verrad         = "";
 $krd            = $_SESSION["krd"];
 $dependencia    = $_SESSION["dependencia"];
@@ -22,76 +22,32 @@ $descCarpetasGen= $_SESSION["descCarpetasGen"] ;
 $descCarpetasPer= $_SESSION["descCarpetasPer"];
 
 $_SESSION['numExpedienteSelected'] = null;
-?>
 
-<html>
-<head>
-    <script src="js/popcalendar.js"></script>
-    <script src="js/mensajeria.js"></script>
-    <div id="spiffycalendar" class="text"></div>
-    <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
-</head>
+                
+  include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
+	if (!$db) $db = new ConnectionHandler($ruta_raiz);
+	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);  
+	//$db->conn->debug = true;
+	$sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_RADI");  
+	  if(strlen($orderNo)==0){
+      $orderNo="2";
+      $order = 3;
+  }else{
+      $order = $orderNo +1;
+  }
+	
+		if(trim($orderTipo)=="") $orderTipo="DESC";
+		if($orden_cambio==1){
+				if(trim($orderTipo)!="DESC"){
+						$orderTipo="DESC";
+				}else{
+						$orderTipo="ASC";
+				}
+		}
 
-<?php include "$ruta_raiz/envios/paEncabeza.php"; ?>
-
-<body bgcolor="#FFFFFF" topmargin="0" onLoad="window_onload();">
-
-<?php
-
-include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
-require_once    ("$ruta_raiz/class_control/Mensaje.php");
-
-if (!$db) $db = new ConnectionHandler($ruta_raiz);
-$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-
-$objMensaje     = new Mensaje($db);
-$mesajes        = $objMensaje->getMsgsUsr($_SESSION['usua_doc'],$_SESSION['dependencia']);
-if ($swLog==1) echo ($mesajes);
-if(trim($orderTipo)=="") $orderTipo="DESC";
-if($orden_cambio==1){
-    if(trim($orderTipo)!="DESC"){
-        $orderTipo="DESC";
-    }else{
-        $orderTipo="ASC";
-    }
-}
-
-  if(!$carpeta) $carpeta=0;
-  if(!$tipo_carp) $tipo_carp=0;
-
-    if($busqRadicados){
-        $busqRadicados  = trim($busqRadicados);
-        $textElements   = split (",", $busqRadicados);
-        $newText        = "";
-        $dep_sel        = $dependencia;
-        foreach ($textElements as $item){
-            $item = trim ( $item );
-            if ( strlen ( $item ) != 0){
-                $busqRadicadosTmp .= " b.radi_nume_radi like '%$item%' or";
-            }
-        }
-        if(substr($busqRadicadosTmp,-2)=="or"){
-            $busqRadicadosTmp = substr($busqRadicadosTmp,0,strlen($busqRadicadosTmp)-2);
-        }
-        if(trim($busqRadicadosTmp)){
-            $whereFiltro .= "and ( $busqRadicadosTmp ) ";
-        }
-    }
-    $linkPagina     = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo&carpeta=$carpeta&tipo_carp=$tipo_carp&busqRadicados=$busqRadicados&nomcarpeta=$nomcarpeta";
-    $encabezado     = session_name()."=".session_id()."&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion&carpeta=$carpeta&tipo_carp=$tipo_carp&adodb_next_page=1&busqRadicados=$busqRadicados&nomcarpeta=$nomcarpeta&agendado=$agendado&orderTipo=$orderTipo&chkCarpeta=$chkCarpeta&orderNo=";
-    ?>
-  <table width="100%" align="center" cellspacing="1" cellpadding="0" class="borde_tab">
-      <tr class="tablas">
-          <td>
-        <form name="form_busq_rad" id="form_busq_rad" action="?<?=$encabezado?>" method="get">
-          <span class="etextomenu">
-              Buscar radicado(s) (Separados por coma)
-              <span class="etextomenu">
-                  <input name="busqRadicados" type="text" size="40" class="tex_area" value="<?=$busqRadicados?>" />
-                  <input type=submit value='Buscar ' name=Buscar valign='middle' class='botones' />
-              </span>
-
-              <?php
+			if(!$carpeta) $carpeta=0;
+			if(!$tipo_carp) $tipo_carp=0;	
+			
               /**
               * Este if verifica si se debe buscar en los radicados de todas las carpetas.
               * @$chkCarpeta char  Variable que indica si se busca en todas las carpetas.
@@ -102,94 +58,337 @@ if($orden_cambio==1){
                   $whereCarpeta = " ";
               }else{
                   $chkValue="";
-                  $whereCarpeta = " and b.carp_codi=$carpeta ";
+                  $whereCarpeta = " and b.carp_codi=$carpeta ";              
                   $whereCarpeta   = $whereCarpeta ." and b.carp_per=$tipo_carp ";
               }
-
+              
 
               $fecha_hoy      = Date("Y-m-d");
               $sqlFechaHoy    = $db->conn->DBDate($fecha_hoy);
-
+              
               //Filtra el query para documentos agendados
               if ($agendado==1){
-                  $sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos
+                  $sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos    
               }else  if ($agendado==2){
                   $sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
-              }
-
+              }    
+              
               if ($agendado){
                   $colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
                   $whereCarpeta="";
               }
-
+              
               //Filtra teniendo en cienta que se trate de la carpeta Vb.
               if($carpeta==11 && $codusuario !=1 && $_GET['tipo_carp']!=1){
                   $whereUsuario = " and  b.radi_usu_ante ='$krd' ";
-              }else{
+              }else{	
                   $whereUsuario = " and b.radi_usua_actu='$codusuario' ";
               }
-              ?>
-              <input type="checkbox" name="chkCarpeta" value=xxx <?=$chkValue?> /> Todas las carpetas
-            </span>
-	        <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
-	        <input type='hidden' name='tipo_carp' value='<?php echo $tipo_carp?>' >
-	        <input type='hidden' name='carpeta' value='<?php echo $carpeta?>'>
-        </form>
-        </td>
-    </tr>
-</table>
-
-<form name="form1" id="form1" action="./tx/formEnvio.php?<?=$encabezado?>" method="GET">
-	<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
-<?php
-  $controlAgenda=1;
-  if($carpeta==11 and !$tipo_carp and $codusuario!=1){
-  }else{
-      include "./tx/txOrfeo.php";
-  }
-
-  /*  GENERACION LISTADO DE RADICADOS
-  *  Aqui utilizamos la clase adodb para generar el listado de los radicados
-  *  Esta clase cuenta con una adaptacion a las clases utiilzadas de orfeo.
-  *  el archivo original es adodb-pager.inc.php la modificada es adodb-paginacion.inc.php
-  */
-
-  if(strlen($orderNo)==0){
-      $orderNo="2";
-      $order = 3;
-  }else{
-      $order = $orderNo +1;
-  }
-
-  $sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_RADI");
-
+              
+              
   include "$ruta_raiz/include/query/queryCuerpo.php";
-
-  if($usua_doc === '999000999' and $dependencia === '999'){
-      echo "<hr><center><b><span class='alarmas'>No se mostrarn los
-          radicados para el usuario de salida <br>
-          realiza las busquedas en el modulo de consultas</b></hr>";
-      die;
-  }
-
+  // $db->conn->debug = true;
   $rs     =$db->conn->Execute($isql);
-  if ($rs->EOF and $busqRadicados)  {
-      echo "<hr><center><b><span class='alarmas'>
-              No se encuentra ningun radicado con el
-              criterio de busqueda
-              </span></center></b></hr>";
-  }else{
-      $pager                  = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);
-      $pager->checkAll        = false;
-      $pager->checkTitulo     = true;
-      $pager->toRefLinks      = $linkPagina;
-      $pager->toRefVars       = $encabezado;
-      $pager->descCarpetasGen = $descCarpetasGen;
-      $pager->descCarpetasPer = $descCarpetasPer;
-      if($_GET["adodb_next_page"]) $pager->curr_page = $_GET["adodb_next_page"];
-      $pager->Render($rows_per_page=50,$linkPagina,$checkbox=chkAnulados);
-  }
-  ?>
-  </form>
+?>
+<html>
+<head>
+    <meta charset="utf-8">
+        <title>Sistema de informaci&oacute;n integrado de Metrovivienda</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="SIIM2">
+        <meta name="keywords" content="siim, metrovivienda, gestion, misional">
+        <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
+        <!-- Bootstrap core CSS -->
+        <link href="<?=$ruta_raiz?>/estilos/bootstrap.min.css" rel="stylesheet">
+        <!-- font-awesome CSS -->
+        <link href="<?=$ruta_raiz?>/estilos/font-awesome.css" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="<?=$ruta_raiz?>/estilos/font-awesome.min.css" rel="stylesheet">
+        <link href="<?=$ruta_raiz?>/estilos/smartadmin-production.css" rel="stylesheet">
+        <link href="<?=$ruta_raiz?>/estilos/smartadmin-skins.css" rel="stylesheet">
+        <link href="<?=$ruta_raiz?>/estilos/demo.css" rel="stylesheet">
+        <link href="<?=$ruta_raiz?>/estilos/siim_temp.css" rel="stylesheet">
+        <script type="text/javascript" src="<?=$ruta_raiz?>/js/jquery.min.js"></script>
+        <script type="text/javascript" src="<?=$ruta_raiz?>/js/bootstrap.js"></script>
+        
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/bootstrap.min.js"></script>	
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/notification/SmartNotification.min.js"></script>	
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/smartwidgets/jarvis.widget.min.js"></script>	
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script> 
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/sparkline/jquery.sparkline.min.js"></script>  
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/jquery-validate/jquery.validate.min.js"></script>  
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/masked-input/jquery.maskedinput.min.js"></script>  
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/select2/select2.min.js"></script>  
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>  
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>  
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/smartclick/smartclick.js"></script> 
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/demo.js"></script> 
+				<script type="text/javascript" src="<?=$ruta_raiz?>/js/app.js"></script>       
+			<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/fuelux/wizard/wizard.js"></script> 
+        
+        <!-- GOOGLE FONT -->
+</head>
+<body>
+<div class="row">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark">
+			<i class="fa fa-table fa-fw "></i> 
+				Bandeja 
+			<span>> 
+			<?=$nomcarpeta?>
+			</span>
+		</h1>
+	</div>
+	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+		<ul id="sparks" class="">
+			<li class="sparks-info">
+				<h5> Radicados <span class="txt-color-blue"><?=$numeroRadicados?></span></h5>
+				<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
+					1300, 1877, 2500, 2577
+				</div>
+			</li>
+			<li class="sparks-info">
+				<h5> Vencidos <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45</span></h5>
+				<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
+					110,150,300,130,400,240
+				</div>
+			</li>
+			<li class="sparks-info">
+				<h5> Ok <span class="txt-color-greenDark">&nbsp;2447</span></h5>
+				<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
+					110,150,300,130,400,240
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<!-- NEW WIDGET START -->
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2><?=$carpeta?> </h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+						<div class="widget-body-toolbar">
+
+						</div>
+						
+						<table id="dt_basic" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>Radicado</th>
+									<th>Fecha Radicado</th>
+									<th>Asunto</th>
+									<th>Remitente</th>
+									<th>Tipo Documento</th>
+									<th>Dias Restantes</th>
+									<th>Enviado Por</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php
+							 while(!$rs->EOF){
+							  $numeroRadicado = $rs->fields["HID_RADI_NUME_RADI"];
+							  $fechaRadicado = $rs->fields["HID_RADI_FECH_RADI"];
+							  $asuntoRadicado = $rs->fields["ASUNTO"];
+							  $remitenteRadicado = $rs->fields["REMITENTE"];
+							  $tipoDocumentoRadicado = $rs->fields["TIPO DOCUMENTO"];
+							  $diasRadicado = $rs->fields["DIAS RESTANTES"];
+							  $enviadoPor = $rs->fields["ENVIADO POR"];
+							  $radiPath = $rs->fields["HID_RADI_PATH"];
+							  
+							  $linkVerRadicado = "./verradicado.php?verrad=$numeroRadicado&".session_name()."=".session_id()."&nomcarpeta=$nomcarpeta";
+							  $linkImagen = "$ruta_raiz/bodega/$radiPath";
+							?>
+								<tr>
+									<td><A onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=200,height=100');" href='#'> <?=$numeroRadicado?></a></td>
+									<td><a href='<?=$linkVerRadicado?>'><?=$fechaRadicado?></a></td>
+									<td><?=$asuntoRadicado?></td>
+									<td><?=$remitenteRadicado?></td>
+									<td><?=$tipoDocumentoRadicado?></td>
+									<td><?=$diasRadicado?>35728</td>
+									<td><?=$enviadoPor?></td>
+									<td><input id="<?=$numeroRadicado?>" type="checkbox" value="CHKANULAR" name="checkValue[<?=$numeroRadicado?>]"></td>
+								</tr>
+							<?php 
+							 $rs->MoveNext();
+							} ?>
+							</tbody>
+						</table>
+
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+
+
+			</div>
+			<!-- end widget -->
+
+	<!-- end row -->
+
+</section>
+<!-- end widget grid -->
+
+<script type="text/javascript">
+
+	// DO NOT REMOVE : GLOBAL FUNCTIONS!
+	pageSetUp();
+	
+	// PAGE RELATED SCRIPTS
+
+	loadDataTableScripts();
+	function loadDataTableScripts() {
+
+		loadScript("js/plugin/datatables/jquery.dataTables-cust.min.js", dt_2);
+
+		function dt_2() {
+			loadScript("js/plugin/datatables/ColReorder.min.js", dt_3);
+		}
+
+		function dt_3() {
+			loadScript("js/plugin/datatables/FixedColumns.min.js", dt_4);
+		}
+
+		function dt_4() {
+			loadScript("js/plugin/datatables/ColVis.min.js", dt_5);
+		}
+
+		function dt_5() {
+			loadScript("js/plugin/datatables/ZeroClipboard.js", dt_6);
+		}
+
+		function dt_6() {
+			loadScript("js/plugin/datatables/media/js/TableTools.min.js", dt_7);
+		}
+
+		function dt_7() {
+			loadScript("js/plugin/datatables/DT_bootstrap.js", runDataTables);
+		}
+
+	}
+
+	function runDataTables() {
+
+		/*
+		 * BASIC
+		 */
+		$('#dt_basic').dataTable({
+			"sPaginationType" : "bootstrap_full"
+		});
+
+		/* END BASIC */
+
+		/* Add the events etc before DataTables hides a column */
+		$("#datatable_fixed_column thead input").keyup(function() {
+			oTable.fnFilter(this.value, oTable.oApi._fnVisibleToColumnIndex(oTable.fnSettings(), $("thead input").index(this)));
+		});
+
+		$("#datatable_fixed_column thead input").each(function(i) {
+			this.initVal = this.value;
+		});
+		$("#datatable_fixed_column thead input").focus(function() {
+			if (this.className == "search_init") {
+				this.className = "";
+				this.value = "";
+			}
+		});
+		$("#datatable_fixed_column thead input").blur(function(i) {
+			if (this.value == "") {
+				this.className = "search_init";
+				this.value = this.initVal;
+			}
+		});		
+		
+
+		var oTable = $('#datatable_fixed_column').dataTable({
+			"sDom" : "<'dt-top-row'><'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+			//"sDom" : "t<'row dt-wrapper'<'col-sm-6'i><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'>>",
+			"oLanguage" : {
+				"sSearch" : "Search all columns:"
+			},
+			"bSortCellsTop" : true
+		});		
+		
+
+
+		/*
+		 * COL ORDER
+		 */
+		$('#datatable_col_reorder').dataTable({
+			"sPaginationType" : "bootstrap",
+			"sDom" : "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+			"fnInitComplete" : function(oSettings, json) {
+				$('.ColVis_Button').addClass('btn btn-default btn-sm').html('Columns <i class="icon-arrow-down"></i>');
+			}
+		});
+		
+		/* END COL ORDER */
+
+		/* TABLE TOOLS */
+		$('#datatable_tabletools').dataTable({
+			"sDom" : "<'dt-top-row'Tlf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+			"oTableTools" : {
+				"aButtons" : ["copy", "print", {
+					"sExtends" : "collection",
+					"sButtonText" : 'Save <span class="caret" />',
+					"aButtons" : ["csv", "xls", "pdf"]
+				}],
+				"sSwfPath" : "js/plugin/datatables/media/swf/copy_csv_xls_pdf.swf"
+			},
+			"fnInitComplete" : function(oSettings, json) {
+				$(this).closest('#dt_table_tools_wrapper').find('.DTTT.btn-group').addClass('table_tools_group').children('a.btn').each(function() {
+					$(this).addClass('btn-sm btn-default');
+				});
+			}
+		});
+		
+		/* END TABLE TOOLS */
+
+	}
+
+</script>
 </body>
 </html>
