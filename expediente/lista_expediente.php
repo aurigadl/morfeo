@@ -406,7 +406,7 @@ if($usuaPermExpediente >= 1  ) {
 		echo $mostrarAlerta;
 	} else {
 ?>
-    <td align="center" class="titulos2">
+    <td align="center" class="titulos2" colspan=2>
       <span class="titulos2" align="center">
         <b>ESTE DOCUMENTO SE ENCUENTRA INCLUIDO EN EL(LOS) SIGUIENTE(S) EXPEDIENTE(S).</b>
       </span>
@@ -536,7 +536,7 @@ if($usuaPermExpediente >= 1  ) {
   <!--
   <td class="titulos4" colspan="2">EXPEDIENTE</td>
   -->
-  <td class="listado5" colspan="6">
+  <td class="listado5" colspan="7">
   <!--
     Nombre de Expediente
   -->
@@ -709,8 +709,8 @@ if($usuaPermExpediente >= 1  ) {
 <!--
 <td class="titulos4" colspan="2"></td>
 -->
-<td class='listado5' width="42%" colspan="2">
-<?
+<td class='listado2' width="42%" colspan="1">
+<?php
 if($descPExpediente){
 	$expediente->consultaTipoExpediente($num_expediente);
 	include_once ("$ruta_raiz/include/tx/Flujo.php");
@@ -720,15 +720,30 @@ if($descPExpediente){
 	$frmLink = $objFlujo->frmLink;
 	$frmLinkSelect = $objFlujo->frmLinkSelect;
 	if($frmNombre) $ventana = "Max"; else $ventana = "Default";
-	
+
 ?>
+
 &nbsp;&nbsp;&nbsp;&nbsp;Estado :<span class=leidos2> <?=$descFldExp?></span>&nbsp;&nbsp;&nbsp;
-<input type="button" value="..." class=botones_2 onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')"></td>
-<?
+<input type="button" value="..." class=botones_2 onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<?php
+if($frmNombre){
+?>
+<a href="#" onClick="window.open('<?=$frmLink?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><span class="leidos"> <img src="<?=$ruta_raiz?>/imagenes/formularioIcono.jpg" width=25 ><?=$frmNombre?></span></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<?php
+}
+if($frmLinkSelect){
+?>
+<a href="#" onClick="window.open('<?=$frmLinkSelect?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><span class="leidos"> <img src="<?=$ruta_raiz?>/imagenes/formularioIcono.jpg" width=25 >Ver</span></a>
+<?php
+}
+?>
+</td>
+<?php	
 }
 if($num_expediente !=""){
-?>
-     <td colspan="2">Historia del Expediente :<span class=leidos2> </span>&nbsp;&nbsp;&nbsp;
+?>    <td colspan="2">Historia del Expediente :<span class=leidos2> </span>&nbsp;&nbsp;&nbsp;
 	 <input type="button" value="..." class=botones_2 onClick="verHistExpediente('<?=$num_expediente?>');">
 	 </td>
 <?php 
@@ -761,14 +776,14 @@ if($usuaPermExpediente) {
 	}
 ?>
 <tr>
-  <td class='titulos5'>
+  <td class='titulos5' colspan=1>
     TRD:
   </td>
-  <td class='leidos2'>
+  <td class='leidos2' colspan=2>
     <?php print $arrTRDExp['serie']." / ".$arrTRDExp['subserie']; ?>
   </td>
-  <td colspan="3"></td>
-  <td rowspan="3">
+  <td colspan="3" colspan=2></td>
+  <td rowspan="3" colspan=2>
     <table width="100%" border="0" height="200%" cellspacing=1>
     <?php
 	// Modificado Infom�trika 23-Julio-2009
