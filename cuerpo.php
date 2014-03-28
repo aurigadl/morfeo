@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-    $ruta_raiz = "."; 
+    $ruta_raiz = ".";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
 
@@ -26,7 +26,6 @@ $_SESSION['numExpedienteSelected'] = null;
 
 <html>
 <head>
-    <link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
     <script src="js/popcalendar.js"></script>
     <script src="js/mensajeria.js"></script>
     <div id="spiffycalendar" class="text"></div>
@@ -59,7 +58,7 @@ if($orden_cambio==1){
 
   if(!$carpeta) $carpeta=0;
   if(!$tipo_carp) $tipo_carp=0;
-  
+
     if($busqRadicados){
         $busqRadicados  = trim($busqRadicados);
         $textElements   = split (",", $busqRadicados);
@@ -76,7 +75,7 @@ if($orden_cambio==1){
         }
         if(trim($busqRadicadosTmp)){
             $whereFiltro .= "and ( $busqRadicadosTmp ) ";
-        }    
+        }
     }
     $linkPagina     = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo&carpeta=$carpeta&tipo_carp=$tipo_carp&busqRadicados=$busqRadicados&nomcarpeta=$nomcarpeta";
     $encabezado     = session_name()."=".session_id()."&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion&carpeta=$carpeta&tipo_carp=$tipo_carp&adodb_next_page=1&busqRadicados=$busqRadicados&nomcarpeta=$nomcarpeta&agendado=$agendado&orderTipo=$orderTipo&chkCarpeta=$chkCarpeta&orderNo=";
@@ -85,7 +84,7 @@ if($orden_cambio==1){
       <tr class="tablas">
           <td>
         <form name="form_busq_rad" id="form_busq_rad" action="?<?=$encabezado?>" method="get">
-          <span class="etextomenu">                
+          <span class="etextomenu">
               Buscar radicado(s) (Separados por coma)
               <span class="etextomenu">
                   <input name="busqRadicados" type="text" size="40" class="tex_area" value="<?=$busqRadicados?>" />
@@ -103,50 +102,50 @@ if($orden_cambio==1){
                   $whereCarpeta = " ";
               }else{
                   $chkValue="";
-                  $whereCarpeta = " and b.carp_codi=$carpeta ";              
+                  $whereCarpeta = " and b.carp_codi=$carpeta ";
                   $whereCarpeta   = $whereCarpeta ." and b.carp_per=$tipo_carp ";
               }
-              
+
 
               $fecha_hoy      = Date("Y-m-d");
               $sqlFechaHoy    = $db->conn->DBDate($fecha_hoy);
-              
+
               //Filtra el query para documentos agendados
               if ($agendado==1){
-                  $sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos    
+                  $sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos
               }else  if ($agendado==2){
                   $sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
-              }    
-              
+              }
+
               if ($agendado){
                   $colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
                   $whereCarpeta="";
               }
-              
+
               //Filtra teniendo en cienta que se trate de la carpeta Vb.
               if($carpeta==11 && $codusuario !=1 && $_GET['tipo_carp']!=1){
                   $whereUsuario = " and  b.radi_usu_ante ='$krd' ";
-              }else{	
+              }else{
                   $whereUsuario = " and b.radi_usua_actu='$codusuario' ";
               }
               ?>
-              <input type="checkbox" name="chkCarpeta" value=xxx <?=$chkValue?> /> Todas las carpetas    
+              <input type="checkbox" name="chkCarpeta" value=xxx <?=$chkValue?> /> Todas las carpetas
             </span>
-	        <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
+	        <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
 	        <input type='hidden' name='tipo_carp' value='<?php echo $tipo_carp?>' >
 	        <input type='hidden' name='carpeta' value='<?php echo $carpeta?>'>
         </form>
         </td>
     </tr>
 </table>
-        
+
 <form name="form1" id="form1" action="./tx/formEnvio.php?<?=$encabezado?>" method="GET">
-	<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
+	<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
 <?php
   $controlAgenda=1;
   if($carpeta==11 and !$tipo_carp and $codusuario!=1){
-  }else{	
-      include "./tx/txOrfeo.php"; 
+  }else{
+      include "./tx/txOrfeo.php";
   }
 
   /*  GENERACION LISTADO DE RADICADOS
@@ -154,21 +153,21 @@ if($orden_cambio==1){
   *  Esta clase cuenta con una adaptacion a las clases utiilzadas de orfeo.
   *  el archivo original es adodb-pager.inc.php la modificada es adodb-paginacion.inc.php
   */
-  
+
   if(strlen($orderNo)==0){
       $orderNo="2";
       $order = 3;
   }else{
       $order = $orderNo +1;
   }
-  
-  $sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_RADI");                
-  
+
+  $sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_RADI");
+
   include "$ruta_raiz/include/query/queryCuerpo.php";
 
   if($usua_doc === '999000999' and $dependencia === '999'){
-      echo "<hr><center><b><span class='alarmas'>No se mostrarn los 
-          radicados para el usuario de salida <br> 
+      echo "<hr><center><b><span class='alarmas'>No se mostrarn los
+          radicados para el usuario de salida <br>
           realiza las busquedas en el modulo de consultas</b></hr>";
       die;
   }
@@ -176,7 +175,7 @@ if($orden_cambio==1){
   $rs     =$db->conn->Execute($isql);
   if ($rs->EOF and $busqRadicados)  {
       echo "<hr><center><b><span class='alarmas'>
-              No se encuentra ningun radicado con el 
+              No se encuentra ningun radicado con el
               criterio de busqueda
               </span></center></b></hr>";
   }else{
@@ -191,6 +190,6 @@ if($orden_cambio==1){
       $pager->Render($rows_per_page=50,$linkPagina,$checkbox=chkAnulados);
   }
   ?>
-  </form>    
+  </form>
 </body>
 </html>
