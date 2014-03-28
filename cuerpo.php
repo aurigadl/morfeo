@@ -130,7 +130,7 @@ $_SESSION['numExpedienteSelected'] = null;
         <!-- GOOGLE FONT -->
 </head>
 <body>
-<div class="row">
+<div >
 	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 		<h1 class="page-title txt-color-blueDark">
 			<i class="fa fa-table fa-fw "></i> 
@@ -168,7 +168,7 @@ $_SESSION['numExpedienteSelected'] = null;
 <section id="widget-grid" class="">
 
 	<!-- row -->
-	<div class="row">
+	<div >
 
 		<!-- NEW WIDGET START -->
 		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
