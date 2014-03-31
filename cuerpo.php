@@ -66,21 +66,21 @@ $_SESSION['numExpedienteSelected'] = null;
 		
 		//Filtra el query para documentos agendados
 		if ($agendado==1){
-				$sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos    
+			$sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos    
 		}else  if ($agendado==2){
-				$sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
+			$sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
 		}    
 		
 		if ($agendado){
-				$colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
-				$whereCarpeta="";
+			$colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
+			$whereCarpeta="";
 		}
 		
 		//Filtra teniendo en cienta que se trate de la carpeta Vb.
 		if($carpeta==11 && $codusuario !=1 && $_GET['tipo_carp']!=1){
 				$whereUsuario = " and  b.radi_usu_ante ='$krd' ";
 		}else{	
-				$whereUsuario = " and b.radi_usua_actu='$codusuario' ";
+			$whereUsuario = " and b.radi_usua_actu='$codusuario' ";
 		}
               
 ?>
@@ -94,34 +94,11 @@ $_SESSION['numExpedienteSelected'] = null;
         <meta name="keywords" content="siim, metrovivienda, gestion, misional">
         <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
         <!-- Bootstrap core CSS -->
-        <link href="<?=$ruta_raiz?>/estilos/bootstrap.min.css" rel="stylesheet">
-        <!-- font-awesome CSS -->
-        <link href="<?=$ruta_raiz?>/estilos/font-awesome.css" rel="stylesheet">
-        <!-- Bootstrap core CSS -->
-        <link href="<?=$ruta_raiz?>/estilos/font-awesome.min.css" rel="stylesheet">
-        <link href="<?=$ruta_raiz?>/estilos/smartadmin-production.css" rel="stylesheet">
-        <link href="<?=$ruta_raiz?>/estilos/smartadmin-skins.css" rel="stylesheet">
-        <link href="<?=$ruta_raiz?>/estilos/demo.css" rel="stylesheet">
-        <link href="<?=$ruta_raiz?>/estilos/siim_temp.css" rel="stylesheet">
-        <script type="text/javascript" src="<?=$ruta_raiz?>/js/jquery.min.js"></script>
-        <script type="text/javascript" src="<?=$ruta_raiz?>/js/bootstrap.js"></script>
         
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/bootstrap.min.js"></script>	
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/notification/SmartNotification.min.js"></script>	
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/smartwidgets/jarvis.widget.min.js"></script>	
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script> 
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/sparkline/jquery.sparkline.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/jquery-validate/jquery.validate.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/masked-input/jquery.maskedinput.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/select2/select2.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/smartclick/smartclick.js"></script> 
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/demo.js"></script> 
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/app.js"></script>       
-			<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/fuelux/wizard/wizard.js"></script> 
-        
-        <!-- GOOGLE FONT -->
+        <?php
+         include_once "htmlheader.inc.php";
+        ?>
+
 </head>
 <body onLoad="window_onload();">
 <FORM name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/>
