@@ -66,21 +66,21 @@ $_SESSION['numExpedienteSelected'] = null;
 		
 		//Filtra el query para documentos agendados
 		if ($agendado==1){
-				$sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos    
+			$sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos    
 		}else  if ($agendado==2){
-				$sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
+			$sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
 		}    
 		
 		if ($agendado){
-				$colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
-				$whereCarpeta="";
+			$colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
+			$whereCarpeta="";
 		}
 		
 		//Filtra teniendo en cienta que se trate de la carpeta Vb.
 		if($carpeta==11 && $codusuario !=1 && $_GET['tipo_carp']!=1){
 				$whereUsuario = " and  b.radi_usu_ante ='$krd' ";
 		}else{	
-				$whereUsuario = " and b.radi_usua_actu='$codusuario' ";
+			$whereUsuario = " and b.radi_usua_actu='$codusuario' ";
 		}
               
 ?>
