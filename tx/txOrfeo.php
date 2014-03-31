@@ -255,28 +255,14 @@ function masivaIncluir(){
       <?}?>
     }
 
-
-
-
-
-
-
-
   function window_onload()
   {
       document.getElementById('depsel').style.display = 'none';
-    // document.getElementById('Enviara').style.display = '';
       document.getElementById('depsel8').style.display = 'none';
       document.getElementById('carpper').style.display = 'none';
       document.getElementById('Enviar').style.display = 'none';
   
-    // document.getElementById('movera_r').style.display = 'none';
-    // document.getElementById('reasignar_r').style.display = 'none';
-    // document.getElementById('reasignar_r').style.display = 'none';
-    // document.getElementById('informar_r').style.display = 'none';
-    // document.getElementById('informar').style.display = '';
-      //changedepesel(9);
-      <?
+        <?
       if(!$verrad)
       {
       }

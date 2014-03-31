@@ -129,7 +129,8 @@ $_SESSION['numExpedienteSelected'] = null;
         
         <!-- GOOGLE FONT -->
 </head>
-<body>
+<body onLoad="window_onload();">
+<FORM name=form1 id=form1 />
 <div >
 	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 		<h1 class="page-title txt-color-blueDark">
@@ -207,9 +208,25 @@ $_SESSION['numExpedienteSelected'] = null;
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 						<div class="widget-body-toolbar">
-
+							<div style="position:absolute; right: 90; top:5;">
+								<span class="smart-form">
+										<label class="select" style="width:230px">
+										<select name="depsel" size="1" aria-controls="dt_basic">
+											<option value="9" selected="selected">Enviar a ...</option>
+											<option value="8">Mover a Carpeta ...</option>
+											<option value="9">Enviar a Visto Bueno ...</option>
+											<option value="12">Informar ...</option>
+										</select>
+								</span>
+							</div>
+							<?php
+								$controlAgenda=1;
+								if($carpeta==11 and !$tipo_carp and $codusuario!=1){
+								}else{	
+										include "./tx/txOrfeo.php"; 
+								}
+								?>
 						</div>
-						
 						<table id="dt_basic" class="table table-striped table-bordered table-hover">
 							<thead>
 								<tr>
@@ -271,6 +288,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
 </section>
 <!-- end widget grid -->
+</form>
 
 <script type="text/javascript">
 
