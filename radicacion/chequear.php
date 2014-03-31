@@ -1,12 +1,36 @@
-	<?php
+<?php
+/**
+* @module chequear
+*
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 	session_start();
 
-	    $ruta_raiz = ".."; 
+	    $ruta_raiz = "..";
 	    if (!$_SESSION['dependencia'])
 		header ("Location: $ruta_raiz/cerrar_session.php");
 	/**
 	  * Modificacion Variables Globales Infometrika 2009-05
-	  * Licencia GNU/GPL 
+	  * Licencia GNU/GPL
 	  */
 
 	foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -45,8 +69,7 @@
 	   * @var string
 	   * @access public
 	   */
-	if($faxPath)
-	{
+	if($faxPath) {
 		$iSql= " SELECT SGD_RFAX_FAX, USUA_LOGIN, SGD_RFAX_FECHRADI
 								FROM   SGD_RFAX_RESERVAFAX
 								WHERE SGD_RFAX_FAX='$faxPath'
@@ -55,10 +78,9 @@
 		$rs = $db->conn->query($iSql);
 		$krdTmp = $rs->fields("USUA_LOGIN");
 		$fechRadicacion = $rs->fields("SGD_RFAX_FECHRADI");
-	  if($krdTmp!=$krd)
-		{
-			if(!$krdTmp)
-			{
+
+	  if($krdTmp!=$krd) {
+			if(!$krdTmp) {
 			}
 			{
 				if(trim($krdTmp)!="")
@@ -99,57 +121,68 @@
 	  * @año 2008
 	  * @vesrion OrfeoGpl 3.7
 	  */
-		
-	  if( !$_SESSION['tipoMedio'])
-	  {
+
+	  if( !$_SESSION['tipoMedio']){
 	   $tipoMedio = $_GET['tipoMedio'];
-	   if(!$tipoMedio) $_POST['tipoMedio']; 
-		  }
-	  if ($tipoMedio=='eMail' or $_SESSION['tipoMedio']=='eMail')  
-	  {
-	 if($_GET['eMailPid'])
-	 {
-	     $eMailAmp=$_GET['eMailAmp'];
-	     $eMailMid=$_GET['eMailMid'];
-	     $eMailPid=$_GET['eMailPid'];
-	     $_SESSION['eMailPid'] = $_GET['eMailPid'];
-	     $_SESSION['eMailMid'] = $_GET['eMailMid'];
-	 }else{
-	  $eMailPid = $_SESSION['eMailPid'];
-	  $eMailMid = $_SESSION['eMailMid'];
-	  $eMailAmp = $_SESSION['eMailAmp'];
-	 }   
+	   if(!$tipoMedio) $_POST['tipoMedio'];
+		}
 
-	//echo "
-	//<a href='javascript: window.open(".'"'."mensaje.php?mid=$eMailMid&amp;pid=$eMailPid&amp;passwdEmail=$passwdEmail".'"'.",".'"'."image".'"'.");
-	//        ' target='image' style='color: {$style};' 
-	//           onClick='javascript:window.open(frame_padre.htm,lista1);'>{$msg->header[$mid]['subject']} xxx</a>
-	//";
-	     $fileeMailAtach=$_GET['fileeMailAtach'];
+	  if ($tipoMedio=='eMail' or $_SESSION['tipoMedio']=='eMail'){
+      if($_GET['eMailPid'])
+      {
+        $eMailAmp=$_GET['eMailAmp'];
+        $eMailMid=$_GET['eMailMid'];
+        $eMailPid=$_GET['eMailPid'];
+        $_SESSION['eMailPid'] = $_GET['eMailPid'];
+        $_SESSION['eMailMid'] = $_GET['eMailMid'];
+      }else{
+        $eMailPid = $_SESSION['eMailPid'];
+        $eMailMid = $_SESSION['eMailMid'];
+        $eMailAmp = $_SESSION['eMailAmp'];
+      }
 
-	  }
+      $fileeMailAtach=$_GET['fileeMailAtach'];
+
+    }
 
 	?>
 	<html>
 	<head>
-	  <meta http-equiv="expires" content="99999999999">
-	  <meta http-equiv="Cache-Control" content="cache">
-	  <meta http-equiv="Pragma" content="public">
-	<link href="../estilos/orfeo.css" rel="stylesheet" type="text/css">
-	<style type="text/css">
-	<!--
-	.style1 {font-weight: bold}
-	-->
-	</style>
-	<?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
+    <?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
+	  <?php include_once("$ruta_raiz/js/funtionImage.php")?>
 	</head>
 	<body topmargin="0" bgcolor="#FFFFFF">
+
+    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+      <h1 class="page-title txt-color-blueDark">
+        RADICACION PREVIA <?=$tRadicacionDesc ?> (<?=$dependencia ?> <?=$tpDepeRad[$ent]?>) <?=$tipoMed ?>
+      </h1>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+      <div id="content" style="opacity: 1;">
+        <div class="row">
+          <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+<div role="content">
+
+            <form name="formulario" method="post"  class="smart-form"  action='chequear.php?<?=session_name()."=".session_id()?>&krd=<?=$krd?>&dependencia=<?=$dependencia?>&krd=<?=$krd?>&faxPath=<?=$faxPath?>'>
+              <input type=hidden name=ent value='<?=$ent?>'>
+              <?php include "formRadPrevia.php"; ?>
+            </form>
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+
+
+
 	   <div id="spiffycalendar" class="text"></div>
 	   <div id="spiffycalendar2" class="text"></div>
 	     <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
 			 <script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
 			 <script language="javascript">
-			 <!--
 				<?
 					$ano_ini = date("Y");
 					$mes_ini = substr("00".(date("m")-1),-2);
@@ -159,10 +192,10 @@
 						$fecha_busq = date("Y/m/d") ;
 					if(!$fecha_fin) $fecha_fin = $fecha_busq;
 				?>
-	   var dateAvailable = new ctlSpiffyCalendarBox("dateAvailable", "formulario", "fecha_ini","btnDate1","<?=$fecha_ini?>",scBTNMODE_CUSTOMBLUE);
+	   var dateAvailable  = new ctlSpiffyCalendarBox("dateAvailable", "formulario", "fecha_ini","btnDate1","<?=$fecha_ini?>",scBTNMODE_CUSTOMBLUE);
 	   var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "fecha_fin","btnDate2","<?=$fecha_fin?>",scBTNMODE_CUSTOMBLUE);
 
-	//--></script>
+	  </script>
 	<?
 	   if(!$busq)  $busq = 1;
 	    if(!$tip_rem){$tip_rem=3;}
@@ -184,28 +217,14 @@
 	$datos_enviar = session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah&faxPath=$faxPath";
 	?>
 	<form name="formulario1" method="post" action='chequear.php?dependencia=<?=$dependencia?>&krd=<?=$krd?>&<?=session_name()."=".trim(session_id())?>&krd=<?=$krd?>&faxPath=<?=$faxPath?>'>
-	<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
+	<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
 	  <!--<input name="buscareesp" type="text" class="ecajasfecha" size="20" value=<?php  echo "buscareesp"; ?>>
 	   <input name="buscareespbot" type=submit class="ebuttons2" value="Limitar EESP">-->
 	</form>
-	<form name="formulario" method="post" action='chequear.php?<?=session_name()."=".session_id()?>&krd=<?=$krd?>&dependencia=<?=$dependencia?>&krd=<?=$krd?>&faxPath=<?=$faxPath?>'>
-	  <input type=hidden name=ent value='<?=$ent?>'>
-
-			
-	<?php
-	  /**
-		 * MODULO DE RADICACION PREVIA
-		 * @autor JAIRO H LOSADA
-		 * @fecha 2005-02
-		 */
-	  include "formRadPrevia.php";
-	?>
-	  </div>
-	</form>
 	<form action='NEW.php?<?=session_name()."=".trim(session_id())?>&dependencia=<?=$dependencia?>&faxPath=<?=$faxPath?>' method="post" name="form1" class="style1">
-	<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
+	<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
 	<input type=hidden name=ent value='<?=$ent?>'>
-	<tr> 
+	<tr>
 	 <td colspan="3"> <div align="center">
 		<?php
 		if($Submit)
@@ -236,7 +255,7 @@
 	$hoy = date('d/m/Y');
 	$hace_catorce_dias = date ('d/m/Y', mktime (0,0,0,date('m'),date('d')-14,date('Y')));
 	$where ="   ";
-	// **** limite de Fecha 
+	// **** limite de Fecha
 	$fecha_ini = mktime(00,00,00,substr($fecha_ini,5,2),substr($fecha_ini,8,2),substr($fecha_ini,0,4));
 	$fecha_fin = mktime(23,59,59,substr($fecha_fin,5,2),substr($fecha_fin,8,2),substr($fecha_fin,0,4));
 	$where_fecha = " and (a.radi_fech_radi >= ". $db->conn->DBTimeStamp($fecha_ini) ." and a.radi_fech_radi <= ". $db->conn->DBTimeStamp($fecha_fin).") " ;
@@ -251,13 +270,13 @@
 	if($buscar_por_radicado){ $where_general .= " $and_radicado a.radi_nume_radi = $buscar_por_radicado ";}
 	if($buscar_por_dep_rad){ $where_general .= " $and a.radi_depe_radi in($buscar_por_dep_rad) ";}
 	if($buscar_por_doc)
-	{ 
+	{
 	  $where_ciu .= " $and_doc d.SGD_DIR_DOC = '$buscar_por_doc'";
 	}
 	if($buscar_por_exp)
 	{
 		$where_ciu .= " $and_exp  g.SGD_EXP_NUMERO LIKE '%$buscar_por_exp%' ";
-	} 
+	}
 	$nombres = strtoupper(trim($buscar_por_nombres));
 	$nombres= ConnectionHandler::fullUpper($nombres);
 //echo $nombres;
@@ -265,10 +284,10 @@
 	{	$array_nombre = explode(" ",$nombres);
 		$strCamposConcat = $db->conn->Concat("UPPER(d.SGD_DIR_NOMREMDES)","UPPER(d.SGD_DIR_NOMBRE)");
 		for($i=0;$i<count($array_nombre);$i++)
-		{	$nombres = trim($array_nombre[$i]); 
+		{	$nombres = trim($array_nombre[$i]);
 			$where_ciu .= " and $strCamposConcat LIKE '%$nombres%' ";
 		}
-	       
+
 	}
 	 $query_direcciones = "";
 	if(($buscar_por_doc) or trim($nombres))
@@ -286,7 +305,7 @@
 	{
 
 	$db = new ConnectionHandler("..");
-	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);	
+	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$sqlFecha = $db->conn->SQLDate("d-m-Y H:i","a.RADI_FECH_RADI");
 
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
@@ -313,26 +332,26 @@
 
 	$tpBuscarSel = "";
 	if($tpBusqueda1) {
-		echo $eTitulo; 
+		echo $eTitulo;
 		$tpBuscarSel = "ok";
 		$whereTrd = "1";
 	}
 
 	if($tpBusqueda2) {
-		echo $eTitulo; 
+		echo $eTitulo;
 		$tpBuscarSel = "ok";
 		if($whereTrd) $whereTrd .= ",";
 		$whereTrd .= "2";
 	}
 
 	if($tpBusqueda3) {
-		echo $eTitulo; 
+		echo $eTitulo;
 		$tpBuscarSel = "ok";
 		if($whereTrd) $whereTrd .= ",";
 		$whereTrd .= "3";
 	}
 	if($tpBusqueda4) {
-		echo $eTitulo; 
+		echo $eTitulo;
 		$tpBuscarSel = "ok";
 		if($whereTrd) $whereTrd .= ",";
 		$whereTrd .= "4";
@@ -349,13 +368,13 @@
 	echo "<label1>";
 	$varjh=1;
 	if (!$rsCheck and $tpBuscarSel=="ok"){
-		
+
 	  echo "<center><img src='img_alerta_1.gif' alt='Esta alerta indica que no se encontraron los datos que buscar e Intente buscar con otro nombre, apellido o No. IDD'>";
 	  echo "<center><font size='3' face='arial' class='etextomenu'><b>No se encontraron datos con las caracteristicas solicitadas</b></font>";
 	}else {
 	?>
 	  <table width='100%' class="borde_tab">
-	<? 
+	<?
 		if($tpBuscarSel=="ok"){
 	?>
 	<tr align="center" class="titulos2">
@@ -372,7 +391,7 @@
 	$radicado_anterior=0;
 
 	/**
-		*  Busqueda de radicados 
+		*  Busqueda de radicados
 		*/
 	/*
 	 * Ajuste validacion permisos unificados
@@ -406,7 +425,7 @@
 
 	    //$nume_radi = ora_getcolumn($cursor,2);
 	    $nume_radi = $rsCheck->fields["RADI_NUME_RADI"];
-	    
+
 	    $nurad = $nume_radi;
 	    $verrad = $nume_radi;
 	    $verradicado = $nume_radi;
@@ -432,20 +451,20 @@
 
 
 	    include "../ver_datosrad.php";
-	    if($dir_tipo==1) 
+	    if($dir_tipo==1)
 	      {
 		      $dir_tipo_desc = $nombreTp1;
 		      //$dignatario1 = ora_getcolumn($cursor,20);
 		      $dignatario1=$rsCheck->fields['SGD_DIR_NOMBRE'];
 		    }
-	    if($dir_tipo==2) 
+	    if($dir_tipo==2)
 	      {
 		      $dir_tipo_desc = $nombreTp2;
 			    //$dignatario2 = ora_getcolumn($cursor,20);
-			    
+
 			    $dignatario2=$rsCheck->fields['SGD_DIR_NOMBRE'];
 		    }
-	    if($dir_tipo==3) 
+	    if($dir_tipo==3)
 	      {
 		      $dir_tipo_desc = $nombreTp3;
 			    //$dignatario3 = ora_getcolumn($cursor,20);
@@ -464,7 +483,7 @@
 				    break;
 		    }
 	    }
-	    
+
 	    if(trim($imagenf)==""){
 		  $dato="No Disp";
 	    }elseif($valImg == "SI"){
@@ -474,7 +493,7 @@
 		$dato="No tiene permiso para acceder a la imagen";
 
 	      }
-		    
+
 	      if($radicado_anterior!=$nume_radi)
 	      {
 		    if($iii==1){
@@ -484,7 +503,7 @@
 			    $fila = "<tr class='timparr'>";
 			    $iii=1;
 		      }
-	   
+
       ?>
       <tr class='borde_tab'><?=$fila ?>
 	      <td class="listado2">		<table class="borde_tab" width="100%">
@@ -551,12 +570,12 @@ $rsCheck->MoveNext();
           <?
 	}
 }
-}else { 
+}else {
 	if($Submit)
 	{
 		?>
 		<center><table></table><table class="borde_tab" width="100%"><tr><td class="titulosError"><center>Debe digitar un Dato para realizar la busqueda !! </center></td></tr></table></center>
-		<? 
+		<?
 		$nobuscar = "No Buscar";
 	}
 	}
@@ -568,23 +587,23 @@ $rsCheck->MoveNext();
 
  	    $dato="<b><a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$nume_radi','$ruta_raiz');\"> Ver Imagen </a>";
 
- 	
+
          }else{
 
           	$dato="No tiene permiso para acceder a la imagen";
 
         }
-if($varjh==2) 
+if($varjh==2)
 {
-?> 
-	<tr class='titulos2'> 
+?>
+	<tr class='titulos2'>
 		<td class="titulos">
 	<input name='titulos' type='radio' value='' title='Radicado No <?=$nume_radi ?>' class="ecajasfecha">
 	NO 	TIENE PADRE</td>
 </tr>
-<? 
+<?
 }
-?> 
+?>
 </table>
 <?php
 	$cent ++;

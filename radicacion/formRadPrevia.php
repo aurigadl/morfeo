@@ -22,14 +22,12 @@ if(!isset($pnomb)){
     $pnomb = "";
 }
 
-?><html>
-<head>
-<link href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css" rel="stylesheet" type="text/css"><script >
-function solonumeros()
-{
+?>
+<script>
+function solonumeros(){
+
  jh =  document.getElementById('buscar_por_radicado').value;
- if(jh)
- {
+ if(jh){
     var1 =  parseInt(jh);
 		if(var1 != jh)
 		{
@@ -57,17 +55,102 @@ function solonumeros()
  }
 }
 </script>
-</head>
-<body onLoad='document.getElementById("buscar_por_radicado").focus();'>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="BORDE_TAB">
-	<tr align="center" >
-	<td class="titulos2">
-	<center>VERIFICAR RADICACION PREVIA <?=$tRadicacionDesc ?>  <b>  <font  size=1 color=green>(  <?=$dependencia ?>
-      -->
-      <?=$tpDepeRad[$ent]?>
-      )<?=$tipoMed ?></b></font></center> </td>   </tr>
-</table>
-</b>
+<link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
+<script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
+<script language="javascript">
+<?php
+  $ano_ini = date("Y");
+  $mes_ini = substr("00".(date("m")-1),-2);
+  if ($mes_ini=="00") {$ano_ini=$ano_ini-1; $mes_ini="12";}
+  $dia_ini = date("d");
+  if(!$fecha_ini) $fecha_ini = "$ano_ini/$mes_ini/$dia_ini";
+    $fecha_busq = date("Y/m/d") ;
+  if(!$fecha_fin) $fecha_fin = $fecha_busq;
+?>
+var dateAvailable  = new ctlSpiffyCalendarBox("dateAvailable", "formulario", "fecha_ini","btnDate1","<?=$fecha_ini?>",scBTNMODE_CUSTOMBLUE);
+var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "fecha_fin","btnDate2","<?=$fecha_fin?>",scBTNMODE_CUSTOMBLUE);
+</script>
+
+   <fieldset>
+    <div class="row">
+      <section class="col col-4">
+        <label class="label">
+          <? if(isset($and_cuentai)) $datoss=" checked ";  else $datoss= " "; ?>
+          <input  type="checkbox" name=and_cuentai value=1 <?=$datoss?> disabled>
+          REFERENCIA (Cuenta I, Oficio)
+        </label>
+        <label class="input"></i>
+          <input name="buscar_por_cuentai" type="text" class="ecajasfecha" id="cuentai" size="35" value="<?=$buscar_por_cuentai ?>">
+        </label>
+      </section>
+      <section class="col col-4">
+        <label class="label">
+          <? if(isset($and_radicado)) $datoss=" checked ";  else $datoss= " "; ?>
+          <input  type="checkbox" name=and_radicado value=1 <?=$datoss?> disabled>
+          No. Radicado
+        </label>
+        <label class="input"></i>
+          <input name="buscar_por_radicado" type="text" class="ecajasfecha" id="buscar_por_radicado" size="35" value="<?=$buscar_por_radicado ?>">
+        </label>
+      </section>
+
+      <section class="col col-4">
+        <label class="label">
+         <? if(isset($and_expediente)) $datoss=" checked ";  else $datoss= " "; ?>
+         <input  type="checkbox" name=and_expediente value=1 <?=$datoss?> disabled>
+         Expediente
+        </label>
+        <label class="input"></i>
+          <input name="buscar_por_exp" type="text" class="ecajasfecha" id="buscar_por" size="35" value="<?=$buscar_por_exp ?>">
+        </label>
+      </section>
+    </div>
+
+    <div class="row">
+      <section class="col col-4">
+        <label class="label">
+          <? if(isset($and_doc)) $datoss=" checked ";  else $datoss= " "; ?>
+          <input  type="checkbox" name=and_doc value=1 <?=$datoss?> disabled>
+          Identificacion (T.I.,C.C.,Nit) *
+        </label>
+        <label class="input"> </i>
+          <input name="buscar_por_doc" type="text" class="ecajasfecha" id="cuentai" size="35" value="<?=$buscar_por_doc ?>">
+        </label>
+      </section>
+      <? if($ent!=22) { ?>
+      <section class="col col-4">
+        <label class="label">
+         <? if(isset($and_nombres)) $datoss=" checked ";  else $datoss= " "; ?>
+         <input  type="checkbox" name=and_nombres value=1 <?=$datoss?> disabled>
+         Nombres
+        </label>
+        <label class="input"></i>
+          <input name="buscar_por_nombres" type="text" class="ecajasfecha" id="buscar_por_nombres" size="35" value="<?=$buscar_por_nombres ?>">
+        </label>
+      </section>
+      <? } ?>
+    </div>
+    <div class="row">
+      <section class="col col-4">
+        <label class="label">
+          Rango de Fechas de Radicaci&oacute;n
+        </label>
+        <label class="input"> </i>
+          <script language="javascript">
+            dateAvailable.writeControl();
+            dateAvailable.dateFormat="yyyy/MM/dd";
+          </script>
+
+          <script language="javascript">
+            dateAvailable2.writeControl();
+            dateAvailable2.dateFormat="yyyy/MM/dd";
+          </script>
+        </label>
+      </section>
+    </div>
+
+   </fieldset>
+
    <table width="100%" border="0" cellspacing="1" cellpadding="1" class="borde_tab">
      <tr>
        <td width="100%" colspan="5" align="CENTER" class="titulos2" >DATO A BUSCAR </td>
@@ -108,10 +191,7 @@ function solonumeros()
        <td width="46%"  colspan="2" class="listado2"><input name="buscar_por_doc" type="text" class="ecajasfecha" id="cuentai" size="35" value="<?=$buscar_por_doc ?>">
        </td>
      </tr>
-     <?
-if($ent!=22)
-{
-?>
+     <?  if($ent!=22) { ?>
      <tr>
        <td width="15%"  align="right" class="titulos2" olspan="2" ><font size="-1">
          <? if(isset($and_nombres)) $datoss=" checked ";  else $datoss= " "; ?>
@@ -121,15 +201,14 @@ if($ent!=22)
        <td width="46%"  colspan="2" class="listado2"><input name="buscar_por_nombres" type="text" class="ecajasfecha" id="buscar_por_nombres" size="35" value="<?=$buscar_por_nombres ?>">
        </td>
      </tr>
-     <?
-}
-?>
+     <?  } ?>
      <tr>
        <td width="15%" align="right" class="titulos2" > Rango de Fechas de Radicaci&oacute;n<strong><font size="-1" face="Arial, Helvetica, sans-serif" class="style4"> </font></strong></td>
-       <td width="19%" align="left" class="titulos2" ><font face="Arial, Helvetica, sans-serif" class="etextomenu"> <font size="-1"><script language="javascript">
-	dateAvailable.writeControl();
-	dateAvailable.dateFormat="yyyy/MM/dd";
-	</script>
+       <td width="19%" align="left" class="titulos2" ><font face="Arial, Helvetica, sans-serif" class="etextomenu"> <font size="-1">
+       <script language="javascript">
+         dateAvailable.writeControl();
+         dateAvailable.dateFormat="yyyy/MM/dd";
+       </script>
        </font></font></td>
        <td colspan="3" align="left" class="titulos2" ><font face="Arial, Helvetica, sans-serif" class="etextomenu"> <font size="-1"><script language="javascript">
 	dateAvailable2.writeControl();

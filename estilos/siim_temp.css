@@ -10,11 +10,6 @@ For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap
 
 /* Global Styles */
 
-body {
-  margin-top: 25px;
-}
-
-
 #page-wrapper {
   width: 100%;
   padding: 5px 15px;
@@ -28,6 +23,14 @@ body {
 .messages-dropdown .dropdown-menu .message-preview .time {
   display: block;
 }
+
+
+/*Barra de navegacion*/
+.navbar-fixed-top{
+  position: static;
+  margin-bottom: initial;
+}
+
 
 .messages-dropdown .dropdown-menu .message-preview .avatar {
   float: left;
