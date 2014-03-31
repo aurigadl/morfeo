@@ -94,34 +94,11 @@ $_SESSION['numExpedienteSelected'] = null;
         <meta name="keywords" content="siim, metrovivienda, gestion, misional">
         <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
         <!-- Bootstrap core CSS -->
-        <link href="<?=$ruta_raiz?>/estilos/bootstrap.min.css" rel="stylesheet">
-        <!-- font-awesome CSS -->
-        <link href="<?=$ruta_raiz?>/estilos/font-awesome.css" rel="stylesheet">
-        <!-- Bootstrap core CSS -->
-        <link href="<?=$ruta_raiz?>/estilos/font-awesome.min.css" rel="stylesheet">
-        <link href="<?=$ruta_raiz?>/estilos/smartadmin-production.css" rel="stylesheet">
-        <link href="<?=$ruta_raiz?>/estilos/smartadmin-skins.css" rel="stylesheet">
-        <link href="<?=$ruta_raiz?>/estilos/demo.css" rel="stylesheet">
-        <link href="<?=$ruta_raiz?>/estilos/siim_temp.css" rel="stylesheet">
-        <script type="text/javascript" src="<?=$ruta_raiz?>/js/jquery.min.js"></script>
-        <script type="text/javascript" src="<?=$ruta_raiz?>/js/bootstrap.js"></script>
         
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/bootstrap.min.js"></script>	
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/notification/SmartNotification.min.js"></script>	
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/smartwidgets/jarvis.widget.min.js"></script>	
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script> 
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/sparkline/jquery.sparkline.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/jquery-validate/jquery.validate.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/masked-input/jquery.maskedinput.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/select2/select2.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>  
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/smartclick/smartclick.js"></script> 
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/demo.js"></script> 
-				<script type="text/javascript" src="<?=$ruta_raiz?>/js/app.js"></script>       
-			<script type="text/javascript" src="<?=$ruta_raiz?>/js/plugin/fuelux/wizard/wizard.js"></script> 
-        
-        <!-- GOOGLE FONT -->
+        <?php
+         include_once "htmlheader.inc.php";
+        ?>
+
 </head>
 <body onLoad="window_onload();">
 <FORM name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/>
