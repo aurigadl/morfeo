@@ -1,13 +1,12 @@
 <?php
 session_start();
 
-    $ruta_raiz = "."; 
-    if (!$_SESSION['dependencia'])
-        header ("Location: $ruta_raiz/cerrar_session.php");
+$ruta_raiz = "."; 
+if (!$_SESSION['dependencia'])
+header ("Location: $ruta_raiz/cerrar_session.php");
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
-
 
 define('ADODB_ASSOC_CASE', 1);
 $verrad         = "";
@@ -22,8 +21,7 @@ $descCarpetasGen= $_SESSION["descCarpetasGen"] ;
 $descCarpetasPer= $_SESSION["descCarpetasPer"];
 
 $_SESSION['numExpedienteSelected'] = null;
-
-                
+               
   include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 	if (!$db) $db = new ConnectionHandler($ruta_raiz);
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);  
@@ -48,47 +46,43 @@ $_SESSION['numExpedienteSelected'] = null;
 			if(!$carpeta) $carpeta=0;
 			if(!$tipo_carp) $tipo_carp=0;	
 			
-              /**
-              * Este if verifica si se debe buscar en los radicados de todas las carpetas.
-              * @$chkCarpeta char  Variable que indica si se busca en todas las carpetas.
-              *
-              */
-              if($chkCarpeta){
-                  $chkValue=" checked ";
-                  $whereCarpeta = " ";
-              }else{
-                  $chkValue="";
-                  $whereCarpeta = " and b.carp_codi=$carpeta ";              
-                  $whereCarpeta   = $whereCarpeta ." and b.carp_per=$tipo_carp ";
-              }
-              
+		/**
+		* Este if verifica si se debe buscar en los radicados de todas las carpetas.
+		* @$chkCarpeta char  Variable que indica si se busca en todas las carpetas.
+		*
+		*/
+		if($chkCarpeta){
+				$chkValue=" checked ";
+				$whereCarpeta = " ";
+		}else{
+				$chkValue="";
+				$whereCarpeta = " and b.carp_codi=$carpeta ";              
+				$whereCarpeta   = $whereCarpeta ." and b.carp_per=$tipo_carp ";
+		}
+		
 
-              $fecha_hoy      = Date("Y-m-d");
-              $sqlFechaHoy    = $db->conn->DBDate($fecha_hoy);
+		$fecha_hoy      = Date("Y-m-d");
+		$sqlFechaHoy    = $db->conn->DBDate($fecha_hoy);
+		
+		//Filtra el query para documentos agendados
+		if ($agendado==1){
+				$sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos    
+		}else  if ($agendado==2){
+				$sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
+		}    
+		
+		if ($agendado){
+				$colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
+				$whereCarpeta="";
+		}
+		
+		//Filtra teniendo en cienta que se trate de la carpeta Vb.
+		if($carpeta==11 && $codusuario !=1 && $_GET['tipo_carp']!=1){
+				$whereUsuario = " and  b.radi_usu_ante ='$krd' ";
+		}else{	
+				$whereUsuario = " and b.radi_usua_actu='$codusuario' ";
+		}
               
-              //Filtra el query para documentos agendados
-              if ($agendado==1){
-                  $sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos    
-              }else  if ($agendado==2){
-                  $sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
-              }    
-              
-              if ($agendado){
-                  $colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
-                  $whereCarpeta="";
-              }
-              
-              //Filtra teniendo en cienta que se trate de la carpeta Vb.
-              if($carpeta==11 && $codusuario !=1 && $_GET['tipo_carp']!=1){
-                  $whereUsuario = " and  b.radi_usu_ante ='$krd' ";
-              }else{	
-                  $whereUsuario = " and b.radi_usua_actu='$codusuario' ";
-              }
-              
-              
-  include "$ruta_raiz/include/query/queryCuerpo.php";
-  // $db->conn->debug = true;
-  $rs     =$db->conn->Execute($isql);
 ?>
 <html>
 <head>
@@ -129,7 +123,8 @@ $_SESSION['numExpedienteSelected'] = null;
         
         <!-- GOOGLE FONT -->
 </head>
-<body>
+<body onLoad="window_onload();">
+<FORM name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/>
 <div >
 	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 		<h1 class="page-title txt-color-blueDark">
@@ -175,19 +170,6 @@ $_SESSION['numExpedienteSelected'] = null;
 
 			<!-- Widget ID (each widget will need unique ID)-->
 			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-				<!-- widget options:
-				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-				data-widget-colorbutton="false"
-				data-widget-editbutton="false"
-				data-widget-togglebutton="false"
-				data-widget-deletebutton="false"
-				data-widget-fullscreenbutton="false"
-				data-widget-custombutton="false"
-				data-widget-collapsed="true"
-				data-widget-sortable="false"
-
-				-->
 				<header>
 					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
 					<h2><?=$carpeta?> </h2>
@@ -207,9 +189,38 @@ $_SESSION['numExpedienteSelected'] = null;
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 						<div class="widget-body-toolbar">
-
+							<div style="position:absolute; left: 195; top:5;">
+								<span class="smart-form">
+										<label class="select" style="width:230px">
+										<select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
+										  <option value="9" selected="selected">Escoja una accion...</option>
+											<option value="9" >Enviar a...</option>
+											<option value="8">Mover a Carpeta...</option>
+											<option value="9">Enviar a Visto Bueno...</option>
+											<option value="12">Informar...</option>
+											<option value="13">Archivar...</option>
+											<option value="14">Agendar...</option>
+											<option value="14"></option>
+										</select>
+								</span>
+							</div>
+							<?php
+								$controlAgenda=1;
+								if($carpeta==11 and !$tipo_carp and $codusuario!=1){
+								}else{	
+								  ?>
+								  	<div style="position:absolute; left: 430; top:5;">
+										<span class="smart-form">
+										<label class="select" style="width:230px">
+										<?
+											include "./tx/txOrfeo.php"; 
+										}
+										?>
+									  </label>
+										</span>
+									</span>
+							</div>
 						</div>
-						
 						<table id="dt_basic" class="table table-striped table-bordered table-hover">
 							<thead>
 								<tr>
@@ -220,11 +231,15 @@ $_SESSION['numExpedienteSelected'] = null;
 									<th>Tipo Documento</th>
 									<th>Dias Restantes</th>
 									<th>Enviado Por</th>
-									<th></th>
+									<th><input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll"></th>
 								</tr>
 							</thead>
 							<tbody>
 							<?php
+							  include "$ruta_raiz/include/query/queryCuerpo.php";
+									// $db->conn->debug = true;
+									$rs     =$db->conn->Execute($isql);
+							
 							 while(!$rs->EOF){
 							  $numeroRadicado = $rs->fields["HID_RADI_NUME_RADI"];
 							  $fechaRadicado = $rs->fields["HID_RADI_FECH_RADI"];
@@ -271,6 +286,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
 </section>
 <!-- end widget grid -->
+</form>
 
 <script type="text/javascript">
 
