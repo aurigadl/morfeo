@@ -47,10 +47,11 @@ $str = <<<EOF
       <link href="$ruta_raiz/estilos/siim_temp.css" rel="stylesheet">
 
       <script type="text/javascript" src="$ruta_raiz/js/jquery.min.js"></script>
+      <script type="text/javascript" src="$ruta_raiz/js/jquery-ui.min.js"></script>
+      <script type="text/javascript" src="$ruta_raiz/js/jarvis.widget.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/bootstrap.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/bootstrap.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/notification/SmartNotification.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/smartwidgets/jarvis.widget.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/sparkline/jquery.sparkline.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/jquery-validate/jquery.validate.min.js"></script>

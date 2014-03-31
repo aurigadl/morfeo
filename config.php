@@ -13,18 +13,18 @@
  **
 **/
 //Nombre de la base de datos de ORFEO
-$servicio = "caliopegd";
+$servicio = "orfeo";
 //Usuario de conexion con permisos de modificacion y creacion de objetos en la Base de datos.
-$usuario = "postgres";
+$usuario = "orfeo_user";
 //Contraseña del usuario anterior
-$contrasena= "123";
+$contrasena= "0rf30p4ssw0rd";
 //Nombre o IP del servidor de BD. Opcional puerto, p.e. 120.0.0.1:1521
 $servidor = "localhost:5432";
 $db = $servicio;
 //Tipo de Base de datos. Los valores validos son: postgres, oci8, mssql.
 $driver = "postgres";
  //Variable que indica el ambiente de trabajo, sus valores pueden ser  desarrollo,prueba,orfeo
-$ambiente = "orfeo";
+$ambiente = "siim";
 //Servidor que procesa los documentos
 $servProcDocs = "127.0.0.1:8000";
 //Acronimo de la empresa
@@ -42,7 +42,7 @@ $entidad_depsal = 999;	//Guarda el codigo de la dependencia de salida por defect
 // Esta es la ubicacion de nuestra carpeta orfeo 
 // ejm: linux    /var/www/miorfeo
 //      windows  c:\apache2.0\hpdocs\miorfeo
-$ABSOL_PATH              = "/var/www/caliopegd/";
+$ABSOL_PATH              = "/var/www/siim/";
 
 /**
 *	Se crea la variable $ADODB_PATH.
@@ -75,13 +75,13 @@ $menuAdicional  = 0;
 $PEAR_PATH               = $ABSOL_PATH."pear/";
 
 // Servidor de Acceso al correo Electronico
-$servidor_mail           = "imap.gmail.com";
+$servidor_mail           = "imap.admin.gov.co";
 
 // Tipo de servidor de correo Usado
 $protocolo_mail          = "imap"; // imap  | pop3
 
 // Puerto del servidor de Mail.
-$puerto_mail             = 993; //Segun servidor defecto 143 | 110
+$puerto_mail             = 143; //Segun servidor defecto 143 | 110
 
 //Color de Fondo de OrfeoGPL
 $colorFondo              = "8cacc1";
@@ -114,7 +114,7 @@ $httpOrfeoRemoto         = " Por el momento OrfeoGPL no tiene Acceso Por Web Ext
 $httpWebOficial          = "http://www.correlibre.org";
 
 // Digitos de la Dependencia Minimo 1 maximo 5
-$digitosDependencia      = 3;
+$digitosDependencia      = 4;
 
 
 ini_set('include_path', '.:'.$PEAR_PATH);

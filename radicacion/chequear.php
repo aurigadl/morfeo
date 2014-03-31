@@ -159,6 +159,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </h1>
     </div>
 
+
+
     <div class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
       <div id="content" style="opacity: 1;">
         <div class="row">
@@ -642,5 +644,28 @@ echo "<input type=hidden name=krd value=$krd>";
 echo " ";
 ?>
 </form>
+  <!-- JARVIS WIDGETS -->
+  <script type="text/javascript">
+    $(document).ready(function() {
+        // START AND FINISH DATE
+        $('#startdate').datepicker({
+          dateFormat : 'dd.mm.yy',
+          prevText : '<i class="fa fa-chevron-left"></i>',
+          nextText : '<i class="fa fa-chevron-right"></i>',
+          onSelect : function(selectedDate) {
+            $('#finishdate').datepicker('option', 'minDate', selectedDate);
+          }
+        });
+
+        $('#finishdate').datepicker({
+          dateFormat : 'dd.mm.yy',
+          prevText : '<i class="fa fa-chevron-left"></i>',
+          nextText : '<i class="fa fa-chevron-right"></i>',
+          onSelect : function(selectedDate) {
+            $('#startdate').datepicker('option', 'maxDate', selectedDate);
+          }
+        });
+    });
+  </script>
 </body>
 </html>
