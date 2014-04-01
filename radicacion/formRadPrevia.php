@@ -48,7 +48,6 @@ function solonumeros(){
 			{
 				alert("Atencion: El numero de Caracteres del radicado es de <?php echo $lnr; ?>. (Digito :"+numCaracteres+")");
 			}
-			
 		}
  }else{
  	document.formulario.submit();
@@ -57,26 +56,10 @@ function solonumeros(){
 </script>
 <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
 <script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
-<script language="javascript">
-<?php
-  $ano_ini = date("Y");
-  $mes_ini = substr("00".(date("m")-1),-2);
-  if ($mes_ini=="00") {$ano_ini=$ano_ini-1; $mes_ini="12";}
-  $dia_ini = date("d");
-  if(!$fecha_ini) $fecha_ini = "$ano_ini/$mes_ini/$dia_ini";
-    $fecha_busq = date("Y/m/d") ;
-  if(!$fecha_fin) $fecha_fin = $fecha_busq;
-?>
-var dateAvailable  = new ctlSpiffyCalendarBox("dateAvailable", "formulario", "fecha_ini","btnDate1","<?=$fecha_ini?>",scBTNMODE_CUSTOMBLUE);
-var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "fecha_fin","btnDate2","<?=$fecha_fin?>",scBTNMODE_CUSTOMBLUE);
-</script>
-
    <fieldset>
     <div class="row">
       <section class="col col-4">
         <label class="label">
-          <? if(isset($and_cuentai)) $datoss=" checked ";  else $datoss= " "; ?>
-          <input  type="checkbox" name=and_cuentai value=1 <?=$datoss?> disabled>
           REFERENCIA (Cuenta I, Oficio)
         </label>
         <label class="input"></i>
@@ -85,8 +68,6 @@ var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "f
       </section>
       <section class="col col-4">
         <label class="label">
-          <? if(isset($and_radicado)) $datoss=" checked ";  else $datoss= " "; ?>
-          <input  type="checkbox" name=and_radicado value=1 <?=$datoss?> disabled>
           No. Radicado
         </label>
         <label class="input"></i>
@@ -96,8 +77,6 @@ var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "f
 
       <section class="col col-4">
         <label class="label">
-         <? if(isset($and_expediente)) $datoss=" checked ";  else $datoss= " "; ?>
-         <input  type="checkbox" name=and_expediente value=1 <?=$datoss?> disabled>
          Expediente
         </label>
         <label class="input"></i>
@@ -109,8 +88,6 @@ var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "f
     <div class="row">
       <section class="col col-4">
         <label class="label">
-          <? if(isset($and_doc)) $datoss=" checked ";  else $datoss= " "; ?>
-          <input  type="checkbox" name=and_doc value=1 <?=$datoss?> disabled>
           Identificacion (T.I.,C.C.,Nit) *
         </label>
         <label class="input"> </i>
@@ -120,8 +97,6 @@ var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "f
       <? if($ent!=22) { ?>
       <section class="col col-4">
         <label class="label">
-         <? if(isset($and_nombres)) $datoss=" checked ";  else $datoss= " "; ?>
-         <input  type="checkbox" name=and_nombres value=1 <?=$datoss?> disabled>
          Nombres
         </label>
         <label class="input"></i>
@@ -136,13 +111,13 @@ var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "f
         <div class="row">
           <section class="col col-6">
             <label class="input"> <i class="icon-append fa fa-calendar"></i>
-              <input type="text" name="fecha_ini" id="startdate" placeholder="Expected start date">
+            <input type="text" name="fecha_ini" id="startdate" placeholder="Expected start date" value="<?=$fecha_ini?>">
             </label>
           </section>
 
           <section class="col col-6">
             <label class="input"> <i class="icon-append fa fa-calendar"></i>
-              <input type="text" name="fecha_fin" id="finishdate" placeholder="Expected finish date">
+              <input type="text" name="fecha_fin" id="finishdate" placeholder="Expected finish date" value="<?=$fecha_fin?>">
             </label>
           </section>
         </div>
@@ -154,8 +129,6 @@ var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "f
     <div class="row">
       <section class="col col-4">
         <label class="label">
-          <? if(isset($and_doc)) $datoss=" checked ";  else $datoss= " "; ?>
-          <input  type="checkbox" name=and_doc value=1 <?=$datoss?> disabled>
             Dependencia de Radicacion
         </label>
         <label class="input"> </i>
@@ -166,8 +139,7 @@ var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "f
    <?}?>
    </fieldset>
    <footer>
-     <button type="submit" name="submit" onClick="solonumeros();" class="btn btn-primary">
-      Buscar
-     </button>
+     <input type="submit" name="Submit" onClick="solonumeros();" value="Buscar" onSelect="solonumeros();" class="btn btn-primary">
+     </input>
    </footer>
    <input type='hidden' name='pnom' value='<?=$pnomb ?>'>

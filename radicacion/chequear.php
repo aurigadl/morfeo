@@ -145,12 +145,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     }
 
+
+    $ano_ini = date("Y");
+    $mes_ini = substr("00".(date("m")-1),-2);
+    if ($mes_ini=="00"){
+      $ano_ini=$ano_ini-1; 
+      $mes_ini="12";
+    }
+    $dia_ini = date("d");
+    if(!$fecha_ini) $fecha_ini = "$ano_ini/$mes_ini/$dia_ini";
+      $fecha_busq = date("Y/m/d") ;
+    if(!$fecha_fin) $fecha_fin = $fecha_busq;
+
 	?>
 	<html>
 	<head>
     <?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
 	  <?php include_once("$ruta_raiz/js/funtionImage.php")?>
 	</head>
+
 	<body topmargin="0" bgcolor="#FFFFFF">
 
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
@@ -159,45 +172,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </h1>
     </div>
 
-
-
     <div class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
       <div id="content" style="opacity: 1;">
-        <div class="row">
-          <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
-<div role="content">
-
             <form name="formulario" method="post"  class="smart-form"  action='chequear.php?<?=session_name()."=".session_id()?>&krd=<?=$krd?>&dependencia=<?=$dependencia?>&krd=<?=$krd?>&faxPath=<?=$faxPath?>'>
               <input type=hidden name=ent value='<?=$ent?>'>
               <?php include "formRadPrevia.php"; ?>
             </form>
-
-          </article>
-        </div>
-      </div>
-    </div>
-
-
-
-
-	   <div id="spiffycalendar" class="text"></div>
-	   <div id="spiffycalendar2" class="text"></div>
-	     <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
-			 <script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
-			 <script language="javascript">
-				<?
-					$ano_ini = date("Y");
-					$mes_ini = substr("00".(date("m")-1),-2);
-					if ($mes_ini=="00") {$ano_ini=$ano_ini-1; $mes_ini="12";}
-					$dia_ini = date("d");
-					if(!$fecha_ini) $fecha_ini = "$ano_ini/$mes_ini/$dia_ini";
-						$fecha_busq = date("Y/m/d") ;
-					if(!$fecha_fin) $fecha_fin = $fecha_busq;
-				?>
-	   var dateAvailable  = new ctlSpiffyCalendarBox("dateAvailable", "formulario", "fecha_ini","btnDate1","<?=$fecha_ini?>",scBTNMODE_CUSTOMBLUE);
-	   var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "fecha_fin","btnDate2","<?=$fecha_fin?>",scBTNMODE_CUSTOMBLUE);
-
-	  </script>
 	<?
 	   if(!$busq)  $busq = 1;
 	    if(!$tip_rem){$tip_rem=3;}
@@ -218,12 +198,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	$tRadicacionDesc = " - " .strtoupper($rs->fields["SGD_TRAD_DESCR"]);
 	$datos_enviar = session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah&faxPath=$faxPath";
 	?>
-	<form name="formulario1" method="post" action='chequear.php?dependencia=<?=$dependencia?>&krd=<?=$krd?>&<?=session_name()."=".trim(session_id())?>&krd=<?=$krd?>&faxPath=<?=$faxPath?>'>
-	<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
-	  <!--<input name="buscareesp" type="text" class="ecajasfecha" size="20" value=<?php  echo "buscareesp"; ?>>
-	   <input name="buscareespbot" type=submit class="ebuttons2" value="Limitar EESP">-->
-	</form>
-	<form action='NEW.php?<?=session_name()."=".trim(session_id())?>&dependencia=<?=$dependencia?>&faxPath=<?=$faxPath?>' method="post" name="form1" class="style1">
+	<form action='NEW.php?<?=session_name()."=".trim(session_id())?>&dependencia=<?=$dependencia?>&faxPath=<?=$faxPath?>' class="smart-form" method="post" name="form1">
+  <fieldset>
 	<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
 	<input type=hidden name=ent value='<?=$ent?>'>
 	<tr>
@@ -232,23 +208,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		if($Submit)
 		{
 		?>
-		<table border=0 width=100% class="borde_tab" cellspacing="0">
-		<tr align="center" class="titulos2">
-		<td class="titulos2">RADICAR COMO...</td>
-	</tr></Table>
-		<br>
-		<table border=0 width=100% class="borde_tab">
-		<tr align="center">
-			<td width="33%" height="25" class="listado2" align="center">
-		 <center><input name="rad1" type=submit class="botones_funcion" value="Nuevo (Copia Datos)"></center>
-	</TD>
-			<td width="33%" class="listado2" height="25">
-				<center><input name="rad0" type=submit class="botones_funcion" value="Como Anexo"></center></td>
-			<td width="33%" class="listado2" height="25">
-				<center><input name="rad2" type=submit class="botones_funcion" value="Asociado"></center>
-			</td>
-		</tr>
-		</table>
+<div class="widget-body">
+  <div class="row">
+      <h1>RADICAR COMO...</h1>
+      <br />
+      <p> Selecciona, una opcion para copiar los dots y crear un anexo apartir de uno anterior ó crea uno nuevo.  </p>
+      <br />
+      <section class="col col-4">
+        <input class="btn btn-success btn-sm" name="rad1" type=submit value="Nuevo (Copia Datos)">
+      </section>
+      <section class="col col-4">
+        <input class="btn btn-success btn-sm" name="rad0" type=submit value="Como Anexo">
+      </section>
+      <section class="col col-4">
+        <input class="btn btn-success btn-sm" name="rad2" type=submit value="Asociado">
+      </section>
+  </div>
+</div>
 	<?php
 		}
 	$accion="&accion=buscar";
@@ -271,19 +247,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	if($buscar_por_cuentai){ $where_general .= " $and_cuentai a.radi_cuentai like '%$buscar_por_cuentai%' ";}
 	if($buscar_por_radicado){ $where_general .= " $and_radicado a.radi_nume_radi = $buscar_por_radicado ";}
 	if($buscar_por_dep_rad){ $where_general .= " $and a.radi_depe_radi in($buscar_por_dep_rad) ";}
-	if($buscar_por_doc)
-	{
+	if($buscar_por_doc){
 	  $where_ciu .= " $and_doc d.SGD_DIR_DOC = '$buscar_por_doc'";
 	}
-	if($buscar_por_exp)
-	{
+	if($buscar_por_exp){
 		$where_ciu .= " $and_exp  g.SGD_EXP_NUMERO LIKE '%$buscar_por_exp%' ";
 	}
 	$nombres = strtoupper(trim($buscar_por_nombres));
 	$nombres= ConnectionHandler::fullUpper($nombres);
 //echo $nombres;
-	if(trim($nombres))
-	{	$array_nombre = explode(" ",$nombres);
+	if(trim($nombres)) {	$array_nombre = explode(" ",$nombres);
 		$strCamposConcat = $db->conn->Concat("UPPER(d.SGD_DIR_NOMREMDES)","UPPER(d.SGD_DIR_NOMBRE)");
 		for($i=0;$i<count($array_nombre);$i++)
 		{	$nombres = trim($array_nombre[$i]);
@@ -643,26 +616,30 @@ echo "<input type=hidden name=drde value=$drde>";
 echo "<input type=hidden name=krd value=$krd>";
 echo " ";
 ?>
+
+</fieldset>
 </form>
+      </div>
+    </div>
   <!-- JARVIS WIDGETS -->
   <script type="text/javascript">
     $(document).ready(function() {
         // START AND FINISH DATE
         $('#startdate').datepicker({
-          dateFormat : 'dd.mm.yy',
-          prevText : '<i class="fa fa-chevron-left"></i>',
-          nextText : '<i class="fa fa-chevron-right"></i>',
-          onSelect : function(selectedDate) {
-            $('#finishdate').datepicker('option', 'minDate', selectedDate);
-          }
-        });
-
-        $('#finishdate').datepicker({
-          dateFormat : 'dd.mm.yy',
+          dateFormat : 'yy/mm/dd',
           prevText : '<i class="fa fa-chevron-left"></i>',
           nextText : '<i class="fa fa-chevron-right"></i>',
           onSelect : function(selectedDate) {
             $('#startdate').datepicker('option', 'maxDate', selectedDate);
+          }
+        });
+
+        $('#finishdate').datepicker({
+          dateFormat : 'yy/mm/dd',
+          prevText : '<i class="fa fa-chevron-left"></i>',
+          nextText : '<i class="fa fa-chevron-right"></i>',
+          onSelect : function(selectedDate) {
+            $('#finishdate').datepicker('option', 'minDate', selectedDate);
           }
         });
     });

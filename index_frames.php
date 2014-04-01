@@ -49,17 +49,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $phpsession     = session_name()."=".session_id();
   $fechah         = date("Ymdhms");
   $ruta_raiz      = ".";
-  $enlace         = "href=\"cuerpo.php?<?=$phpsession?>&adodb_next_page=1&fechah=";
-  $enlace1        = "href=\"cuerpoAgenda.php?<?=$phpsession?>&agendado=1&fechah=";
-  $enlace2        = "href=\"cuerpoAgenda.php?<?=$phpsession?>&agendado=2&fechah=";
-  $enlace3        = "href=\"cuerpoinf.php?<?=$phpsession?>&<?=mostrar_opc_envio=1&orderNo=2&fechaf=$fechah&
+  $enlace         = "href=\"cuerpo.php?$phpsession&adodb_next_page=1&fechah=";
+  $enlace1        = "href=\"cuerpoAgenda.php?$phpsession&agendado=1&fechah=";
+  $enlace2        = "href=\"cuerpoAgenda.php?$phpsession&agendado=2&fechah=";
+  $enlace3        = "href=\"cuerpoinf.php?$phpsession&<?=mostrar_opc_envio=1&orderNo=2&fechaf=$fechah&
                      carpeta=8&nomcarpeta=Informados&orderTipo=desc&adodb_next_page=1\"";
   $enlace4        = "href=\"tx/cuerpoInfConjunto.php?$phpsession&mostrar_opc_envio=1&orderNo=2&fechaf=$fechah&
                      carpeta=66&nomcarpeta=Informados&orderTipo=desc&adodb_next_page=1\"";
-  $enlace5        = "href=\"cuerpoTx.php?<?=$phpsession?>&fechah=";
-  $enlace6        = "href=\"cuerpoPrioritario.php?<?=$phpsession?>&fechah=";
-  $enlace7        = "href=\"crear_carpeta.php?$phpsession&krd=$krd";
-  $enlace8        = "href=\"cuerpo.php?$phpsession";
+  $enlace5        = "href=\"cuerpoTx.php?$phpsession&";
+  $enlace6        = "href=\"cuerpoPrioritario.php?$phpsession&";
+  $enlace7        = "href=\"crear_carpeta.php?$phpsession&krd=$krd&";
+  $enlace8        = "href=\"cuerpo.php?$phpsession&";
+  $enlace20       = "href=\"Administracion/formAdministracion.php?$phpsession&";
+  $enlace21       = "href=\"busqueda/busquedaPiloto.php?$phpsession&";
 
   $sqlFechaHoy    = $db->conn->DBTimeStamp(time());
 
@@ -219,6 +221,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	    $rs->MoveNext();
     }
 
+  //Administracion
+  $link20      = $enlace20."fechah=$fechah&tipo_carp=1&carpeta=$numdata&nomcarpeta=$data\"";
+  $link20show .= "<li><a tabindex=\"-1\" $link20 target=\"mainFrame\"> Administracion </a></li>";
+
+  //Consultas
+  $link21      = $enlace21."&etapa=1&s_Listado=VerListado&fechah=$fechah\"";
+  $link21show .= "<li><a tabindex=\"-1\" $link21 target=\"mainFrame\"> Consultas </a></li>";
+
+
 ?>
 
 <html lang="es">
@@ -260,6 +271,69 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div class="collapse navbar-collapse">
 
                 <ul class="nav navbar-nav">
+
+                  <?php if($_SESSION["usua_admin_sistema"]==1){?>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Acciones <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <?=$link20show?>
+                      <?=$link21show?>
+                      <li><a  href='ReportesR/indexReportes.php' alt='Generar planilla de distribucion y entrega'  target='mainFrame' class="menu_princ">Planilla Reasignados</a></li>
+
+                      <?php if($_SESSION["usua_perm_adminflujos"]==1){ ?>
+                      <li><a href="Administracion/flujos/texto_version2/mnuFlujosBasico.php?<?=$phpsession ?>&" class="menu_princ" target='mainFrame'>Editor Flujos</a></li>
+                      <?php }
+                      if($_SESSION["usua_perm_envios"]>=1) { ?>
+                      <li><a href="radicacion/formRadEnvios.php?<?=$phpsession ?>&<? echo "fechah=$fechah&usr=".md5($dep)."&primera=1&ent=1"; ?>" target='mainFrame' class="menu_princ">Envios</a></li>
+                      <?php }
+
+                      if($_SESSION["usua_perm_modifica"] >=1) { ?>
+                      <li><a href="radicacion/edtradicado.php?<?=$phpsession ?>&fechah=<?=$fechah?>&primera=1&ent=2" target='mainFrame' class="menu_princ">Modificaci&oacute;n</a></li>
+                      <?php }
+
+                      if($_SESSION["usua_perm_intergapps"]==1 ) { ?>
+                      <li><a href="aplintegra/cuerpoApLIntegradas.php?<?=$phpsession?>&<?php echo "fechaf=$fechah&carpeta=8&nomcarpeta=Aplicaciones integradas&orderTipo=desc&orderNo=3"; ?>" target='mainFrame' class="menu_princ">Aplicaciones integradas</a></li>
+                      <?php }
+
+                      if($_SESSION["usua_perm_impresion"] >= 1) {
+                        if(!isset($usua_perm_impresion)){
+                          $usua_perm_impresion = "";
+                        } ?>
+                        <li><a href="envios/cuerpoMarcaEnviar.php?<?=$phpsession?>&<?php echo "fechaf=$fechah&usua_perm_impresion=$usua_perm_impresion&carpeta=8&nomcarpeta=Documentos Para Impresion&orderTipo=desc&orderNo=3"; ?>" target='mainFrame' class="menu_princ">Impresi&oacute;n</a></li>
+                      <?php }
+
+                      if ($_SESSION["usua_perm_anu"]==3 or $_SESSION["usua_perm_anu"]==1){?>
+                        <li><a href="anulacion/cuerpo_anulacion.php?<?=$phpsession?>&tpAnulacion=1&<? echo "fechah=$fechah"; ?>" target='mainFrame' class="menu_princ">Anulaci&oacute;n</a></li>
+                      <?php }
+
+                      if ($_SESSION["usua_perm_trd"]==1) { ?>
+                        <li><a href="trd/menu_trd.php?<?=$phpsession ?>&fechah=<?=$fechah?>" target='mainFrame' class="menu_princ">Tablas Retenci&oacute;n Documental</a></li>
+                      <?php }
+
+                        if($_SESSION["usua_admin_archivo"]>=1) {
+                          $isql = "select count(1) as CONTADOR
+                                from SGD_EXP_EXPEDIENTE
+                                where
+                                sgd_exp_estado=0 ";
+                            $rs=$db->conn->Execute($isql);
+                            $num_exp = $rs->fields["CONTADOR"];
+                        ?>
+                       <li><a href='archivo/archivo.php?<?=$phpsession?>&krd=<?=$krd?>&fechah=<?=$fechah?>&usr=<?=md5($dep)?>&primera=1&ent=1' target='mainFrame' class="menu_princ">Archivo (<?=$num_exp?>)</a></li>
+                      <?php }
+
+                      if ($_SESSION["usua_perm_prestamo"]==1) { ?>
+                        <li><a href="prestamo/menu_prestamo.php?<?=$phpsession ?>&etapa=1&&s_Listado=VerListado&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>" target='mainFrame' class="menu_princ">Prestamo</a></li>
+
+                      <?php }
+                      if($_SESSION["usua_perm_dev"]==1) { ?>
+                      <li> <a href='devolucion/cuerpoDevCorreo.php?<?=$phpsession?>&krd=<?=$krd?>&<?php echo "fechaf=$fechah&carpeta=8&devolucion=2&estado_sal=4&nomcarpeta=Documentos Para Impresion&orno=1&adodb_next_page=1"; ?>' target='mainFrame' class="menu_princ" >Dev Correo</span></a></li>
+                      <?php }?>
+
+
+                    </ul>
+                  </li>
+                  <?php } ?>
+
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Bandejas <b class="caret"></b></a>
                     <ul class="dropdown-menu">

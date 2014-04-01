@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$ruta_raiz = ".."; 
+$ruta_raiz = "..";
 if (!$_SESSION['dependencia'])
     header ("Location: $ruta_raiz/cerrar_session.php");
 
@@ -35,11 +35,9 @@ $tipoMedio            = $_SESSION['eMailtipoMedio'];
 
 
 if($tipoMedio=="eMail"){
-
     if(empty($mail_us1)){
         $mail_us1 = $eMailRemitente;
     }
-
     if(empty($nombre_us1)){
         $nombre_us1 = $eMailRemitente;
     }
@@ -72,11 +70,8 @@ $nombreTp3 = $tip3Nombre[3][$ent];
 ?>
 <HTML>
 <head>
-<title>.:: Orfeo Modulo de Radicaci&acuoteo;n::.</title>
-<meta http-equiv="expires" content="99999999999">
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="../estilos/tabber.css" TYPE="text/css" MEDIA="screen">
-<link rel="stylesheet" href="../estilos/orfeo.css" type="text/css">
+<?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
+
 <SCRIPT Language="JavaScript" src="../js/crea_combos_2.js"></SCRIPT>
 <script type="text/javascript" src="../js/tabber.js"></script>
 <script language="JavaScript">
@@ -135,8 +130,8 @@ function radicar_doc()
 
 {	if(fechf ("formulario",16)=="ok")
 	{
-        if(/[A-Za-z]+$/.test(document.formulario.nofolios.value) | 
-           /[A-Za-z]+$/.test(document.formulario.noanexos.value)){ 
+        if(/[A-Za-z]+$/.test(document.formulario.nofolios.value) |
+           /[A-Za-z]+$/.test(document.formulario.noanexos.value)){
             alert("Escriba un número válido en No de folios o anexos.")
             return false;
         }
@@ -144,12 +139,12 @@ function radicar_doc()
 		if ( document.formulario.documento_us1.value != 0 &&
 			document.formulario.muni_us1.value != 0 &&
 			document.formulario.direccion_us1.value != 0 &&
-			document.formulario.coddepe.value != 0) 
+			document.formulario.coddepe.value != 0)
   		{
 			   document.formulario.submit();
 		}
 	 else
-	 	{	
+	 	{
 		alert("El tipo de Documento, Remitente/Destinatario, Direccion y Dependencia son obligatorios ");	}
 	 }
 
@@ -219,7 +214,9 @@ i=1;
 }
 </script>
 </head>
-<body bgcolor="#FFFFFF">
+<body topmargin="0" bgcolor="#FFFFFF" style="zoom: 1;" cz-shortcut-listen="true">
+
+
    <div id="spiffycalendar" class="text"></div>
    <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
  <script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
@@ -234,7 +231,7 @@ i=1;
   $hora   = date('H:i:s');
   $fechaf = $date.$mdate.$adate.$hora;
   // aqui se busca el radicado para editar si viene la variable $Buscar
-  
+
 if($Buscar){
 	  $docDia = $db->conn->SQLDate('d','a.RADI_FECH_OFIC');
 	  $docMes = $db->conn->SQLDate('m','a.RADI_FECH_OFIC');
@@ -326,7 +323,7 @@ if(!$fecha_gen_doc || $fecha_gen_doc=='//')
   $varQuery = $query;
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	$rs=$db->conn->query($query);
-	
+
 	if(!$rs->EOF)
 	{
 		echo "<!-- No hay datos: $query -->";
@@ -371,18 +368,18 @@ if(!$fecha_gen_doc || $fecha_gen_doc=='//')
 	}
 	IF($rad1)
 	{
-	  $encabezado = "<center><b>Copia de datos del Radicado  $radicadopadre ";
+	  $encabezado = "Copia de datos del Radicado  $radicadopadre ";
 	  $tipoanexo = "1";
 	}
 	IF($rad0)
 	{
-	  $encabezado = "<center><b>Anexo de $radicadopadre ";
+	  $encabezado = "Anexo de $radicadopadre ";
 	  $tipoanexo = "0";
 	  $radicadopadre_exist=1;
 	}
 	 IF($rad2)
      {
-	 $encabezado = "<center><b>Documento Asociado de $radicadopadre ";
+	 $encabezado = "Documento Asociado de $radicadopadre ";
 	  if(!$Submit4 and !$Submit3){$cuentai = "";}
 	  $tipoanexo = "2";
  	  $radicadopadre_exist=1;
@@ -724,114 +721,107 @@ var contadorVentanas=0
   if ($Buscar1)
  {
 	  include "busca_direcciones.php";
-	  
+
  }
   $var_envio="ent=$ent&carp_per=$carp_per&carp_codi=$carp_codi&rad=$nurad&coddepe=$coddepe&depende=$depende";
 ?>
-<form action='NEW.php?<?=$var_envio?>'  method="post" name="formulario" id="formulario" class="borde_tab">
-<INPUT TYPE=HIDDEN NAME=radicadopadre value='<?=$radicadopadre ?>'>
-<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
-<input type=hidden name=tipoanexo value='<?=$tipoanexo ?>'>
-<input type=hidden name='noradicar' value='<?=$noradicar ?>'>
-<input type=hidden name='noradicar1' value='<?=$noradicar1 ?>'>
-<input type=hidden name='noradicar2' value='<?=$noradicar2 ?>'>
-<input type=hidden name='atrasRad0' value='<?=$rad0 ?>'>
-<input type=hidden name='atrasRad1' value='<?=$rad1 ?>'>
-<input type=hidden name='atrasRad2' value='<?=$rad2 ?>'>
-<input type=hidden name='faxPath' value='<?=$faxPath ?>'>
+
+<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 <?
-if($tpRadicado) {echo "<input type=hidden name=tpRadicado value=$tpRadicado>";}
-?>
-<table width="99%"  border="0" align="center" cellpadding="1" cellspacing="1" class="borde_tab">
-<tr>
-	<td width="6" class="titulos2"><a href='./NEW.php?<?=session_name()."=".session_id()?>&rad2=Asociado&krd=<?=$krd?>&ent=<?=$ent?>&rad1=<?=$atrasRad1?>&rad2=<?=$atrasRad2?>&rad0=<?=$atrasRad0?>&radicadopadre=<?=$radicadopadre?>&noradicar=<?=$noradicar?>&noradicar1=<?=$noradicar1?>&noradicar2=<?=$noradicar2?>'>Atras</a></td>
-    <td width="94%" align="center"  valign="middle" class="titulos2"><b>
-      <?php
-		$query = "select SGD_TRAD_CODIGO
+  if($tpRadicado) {
+    echo "<input type=hidden name=tpRadicado value=$tpRadicado>";
+  }
+  $query = "select SGD_TRAD_CODIGO
 								, SGD_TRAD_DESCR from sgd_trad_tiporad
 							where SGD_TRAD_CODIGO=$ent";
-		$rs=$db->conn->query($query);
-		$tRadicacionDesc = $rs->fields["SGD_TRAD_DESCR"];
-	?>
-      MODULO DE RADICACION
-      <?=$tRadicacionDesc?>
-      (Dep
-      <?=$dependencia ?>
-      ->
-      <?=$tpDepeRad[$ent]?>
-      )</b>
-        <?php if($nurad)
-		{
-			echo "<b>Rad No" . $nurad;
-			$ent = substr($nurad,-1);
-		}
-	?>
-        <br>
-        <?=$encabezado ?>
-	</td>
-</tr>
-</table>
-<table  width=99% border="0" align="center" cellspacing="1" cellpadding="1" class="borde_tab" >
-	<tr valign="middle">
-		<td class="titulos5" width="15%" align="right">
-			<font color="" face="Arial, Helvetica, sans-serif">
-			<span class="titulos5">Fecha: dd/mm/aaaa</span></font>
-		</td>
-		<td class="listado5" width="15%"><font color="" face="Arial, Helvetica, sans-serif">
-			<input name="fechproc1" type="text"  readonly="true" id="fechproc13" size="2" maxlength="2" value="<?php echo $ddate;?>" class="tex_area">/
-			<input name="fechproc2" type="text"  readonly="true" id="fechproc23" size="2" maxlength="2" value="<?php echo $mdate;?>" class="tex_area">/
-			<input name="fechproc3" readonly="true" type="text" id="fechproc33" size="4" maxlength="4" value="<?php echo $adate;?>" class="tex_area">
-			</font>
-	</td>
-		<td width="15%" class="titulos5" align="right"><font color="" face="Arial, Helvetica, sans-serif" class="titulos5">Fecha Doc. dd/mm/aaaa </font>
-	</td>
-		<td width="15%" class="listado5"><font color="" face="Arial, Helvetica, sans-serif">
-			<script language="javascript">
-				dateAvailable1.date = "<?=date('Y-m-d');?>";
-				dateAvailable1.writeControl();
-				dateAvailable1.dateFormat="dd-MM-yyyy";
-			</script>
-			</font> <font color="" face="Arial, Helvetica, sans-serif">&nbsp;</font>
-		</td>
-		<td width="15%" class="titulos5" align="right">Referencia</td>
-		<td width="15%" class="listado5">
-			<font face="Arial, Helvetica, sans-serif">
-			<input name="cuentai" type="text"  maxlength="20" class="tex_area" value='<?php echo $cuentai; ?>' >
-			</font>
-	</td>
-	<td width="15%" class="titulos5" align="right">Guia</td>
-	<td width="15%" class="listado5">
-            <input type=text name='guia'name='id' value='<?=$guia ?>' <?=$bloqEdicion?> class="tex_area" size=35>
-	</td>
-	</tr>
-</table>
-<table width="600" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-	<td height="0"> <input name="VERIFICAR" type='hidden' class="ebuttons2" value="Verifique Radicaci&oacute;n">
-	</td>
-	</tr>
-</table>
-  
-<table width="99%" align="center" border="0" cellspacing="0" cellpadding="0">
-	<tr valign="bottom">
-		<td height="10">
-		<table width="99%" align="center" border="0" cellspacing="0" cellpadding="0">
-		<tr>
-		<?
-			if($ent!=2) $img_remitente = "destinatario"; else $img_remitente = "remitente";
-			?>
-	<td width="523"  valign="bottom" >
-	</td>
-		<?
-		if($ent!=2) $busq_salida="true"; else  $busq_salida=""; ?>
-		</tr>
-		</table>
-		</td>
-	</tr>
-	<tr valign="top">
-	<td class="titulos5">
-<div class="tabber" id="tab1" border="1">
-  <?php
+	$rs=$db->conn->query($query);
+	$tRadicacionDesc = $rs->fields["SGD_TRAD_DESCR"];
+?>
+  <h1 class="txt-color-blueDark">
+    Modulo de radicacion
+    <?=$tRadicacionDesc?>
+    (Dep <?=$dependencia?> <?=$tpDepeRad[$ent]?>)
+    <?php
+      if($nurad){
+        echo "<b>Rad No" . $nurad;
+        $ent = substr($nurad,-1);
+      }
+    ?>
+  </h1>
+  <p><?=$encabezado ?></p>
+</div>
+
+<div class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+  <div id="content" style="opacity: 1;">
+  <form action='NEW.php?<?=$var_envio?>' class="smart-form"  method="post" name="formulario" id="formulario">
+  <INPUT TYPE=HIDDEN NAME=radicadopadre value='<?=$radicadopadre ?>'>
+  <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
+  <input type=hidden name=tipoanexo value='<?=$tipoanexo ?>'>
+  <input type=hidden name='noradicar' value='<?=$noradicar ?>'>
+  <input type=hidden name='noradicar1' value='<?=$noradicar1 ?>'>
+  <input type=hidden name='noradicar2' value='<?=$noradicar2 ?>'>
+  <input type=hidden name='atrasRad0' value='<?=$rad0 ?>'>
+  <input type=hidden name='atrasRad1' value='<?=$rad1 ?>'>
+  <input type=hidden name='atrasRad2' value='<?=$rad2 ?>'>
+  <input type=hidden name='faxPath' value='<?=$faxPath ?>'>
+
+   <fieldset>
+    <div class="row">
+      <section class="col col-4">
+        <label class="label">
+			    Fecha: dd/mm/aaaa
+        </label>
+        <label class="input">
+          <div class="row">
+            <section class="col col-4">
+              <input name="fechproc1" type="text"  readonly="true" id="fechproc13" size="2" maxlength="2" value="<?php echo $ddate;?>" class="tex_area">
+            </section>
+            <section class="col col-4">
+              <input name="fechproc2" type="text"  readonly="true" id="fechproc23" size="2" maxlength="2" value="<?php echo $mdate;?>" class="tex_area">
+            </section>
+            <section class="col col-4">
+              <input name="fechproc3" readonly="true" type="text" id="fechproc33" size="4" maxlength="4" value="<?php echo $adate;?>" class="tex_area">
+            </section>
+          <div>
+        </label>
+      </section>
+
+      <section class="col col-4">
+        <label class="label">
+          Fecha Doc. dd/mm/aaaa 
+        </label>
+        <label class="input">
+          <script language="javascript">
+            dateAvailable1.date = "<?=date('Y-m-d');?>";
+            dateAvailable1.writeControl();
+            dateAvailable1.dateFormat="dd-MM-yyyy";
+          </script>
+        </label>
+      </section>
+
+      <section class="col col-4">
+        <label class="label">
+          Referencia
+        </label>
+        <label class="input">
+          <input name="cuentai" type="text"  maxlength="20" value='<?php echo $cuentai; ?>' >
+        </label>
+      </section>
+  </div>
+  <div class="row">
+    <section class="col col-4">
+        <label class="label">
+          Guia
+        </label>
+        <label class="input">
+          <input type=text name='guia'name='id' value='<?=$guia ?>' <?=$bloqEdicion?> class="tex_area" size=35>
+          <input name="VERIFICAR" type='hidden' class="ebuttons2" value="Verifique Radicaci&oacute;n">
+        </label>
+    </section>
+  </div>
+
+
+<?php
   for($i=1;$i<=3;$i=$i+2){
       if($i==1){
 	  $grbNombresUs1 = trim($nombre_us1) . " " . trim($prim_apel_us1) . " ". trim($seg_apel_us1);
@@ -905,7 +895,66 @@ if($tpRadicado) {echo "<input type=hidden name=tpRadicado value=$tpRadicado>";}
       $titulo = $tip3Nombre[$i][$ent];
       if(!$titulo)  $titulo = "?? $i";
 
-    ?>
+?>
+
+  <div class="row">
+    <section class="col col-4">
+        <label class="label">
+          Documento
+        </label>
+        <label class="input">
+          <div class="row">
+            <section class="col col-10">
+              <input type=text name='cc_documento_us<?=$i?>' value='<?=$cc_documento?>' readonly="true" class="tex_area">
+            </section>
+            <section class="col col-2">
+              <input typ=etext name='documento_us<?=$i ?>' value='<?=$documento?>' readonly="true" class="tex_area" size="1">
+            </section>
+          </div>
+        </label>
+    </section>
+    <section class="col col-4">
+        <label class="label">
+         Tipo 
+        </label>
+        <label class="select">
+          <select name="tipo_emp_us<?=$i?>" class="input-sm">
+          <?
+            if($i==1){if($tipo_emp_us1==0){$datos = " selected ";}else{$datos= "";}}
+            if($i==2){if($tipo_emp_us2==0){$datos = " selected ";}else{$datos= "";}}
+          if($i==3){if($tipo_emp_us3==0){$datos = " selected ";}else{$datos= "";}}
+          ?>
+          <option value=0 '<?=$datos ?>'>USUARIO  </option>
+            <?
+          if($i==1){if($tipo_emp_us1==1){$datos = " selected ";}else{$datos= "";}}
+              if($i==2){if($tipo_emp_us2==1){$datos = " selected ";}else{$datos= "";}}
+            if($i==3){if($tipo_emp_us3==1){$datos = " selected ";}else{$datos= "";}}
+            ?>
+          <option value=1 '<?=$datos ?>'>ENTIDADES  </option>
+            <?
+          if($i==1){if($tipo_emp_us1==2){$datos = " selected ";}else{$datos= "";}}
+              if($i==2){if($tipo_emp_us2==2){$datos = " selected ";}else{$datos= "";}}
+            if($i==3){if($tipo_emp_us3==2){$datos = " selected ";}else{$datos= "";}}
+            ?>
+          <option value=2 '<?=$datos ?>'>EMPRESAS  </option>
+            <?
+          if($i==1){if($tipo_emp_us1==6){$datos = " selected ";}else{$datos= "";}}
+              if($i==2){if($tipo_emp_us2==6){$datos = " selected ";}else{$datos= "";}}
+            if($i==3){if($tipo_emp_us3==6){$datos = " selected ";}else{$datos= "";}}
+            ?>
+          <option value=6 '<?=$datos ?>'>FUNCIONARIOS  </option>
+        </select>
+        </label>
+    </section>
+  </div>
+  </form>
+  </div>
+</div>
+
+
+
+
+
     <div class="tabbertab" title="<?=$titulo?>">
     <table width=100%  name='pes<?=$i?>' id='pes<?=$i?>' class="t_bordeGris" align="center" cellpadding="0" cellspacing="1">
     <tr class=listado2>
@@ -1127,8 +1176,8 @@ unset($paiscodi);
 unset($deptocodi);
 unset($municodi);
 
-if(empty($asu)){    
-    $asu =  $eMailsubject; 
+if(empty($asu)){
+    $asu =  $eMailsubject;
 }
 
 $asu = htmlspecialchars(stripcslashes($asu));
@@ -1184,10 +1233,10 @@ $asu = htmlspecialchars(stripcslashes($asu));
 	<input name="hoj" type=hidden value="<? echo $hoj; ?>">
 	<?php
 	 $query = "select SGD_TPR_DESCRIP
-	 ,SGD_TPR_CODIGO 
-	from SGD_TPR_TPDCUMENTO 
+	 ,SGD_TPR_CODIGO
+	from SGD_TPR_TPDCUMENTO
 	WHERE SGD_TPR_TP$ent='1'
-	 and SGD_TPR_RADICA='1' 
+	 and SGD_TPR_RADICA='1'
 	ORDER BY SGD_TPR_DESCRIP ";
 	$opcMenu = "0:-- Seleccione un tipo --";
 	$fechaHoy = date("Y-m-d");
@@ -1222,19 +1271,19 @@ $asu = htmlspecialchars(stripcslashes($asu));
         <font color="" face="Arial, Helvetica, sans-serif" class="etextomenu">
             <table  border="0" cellspacing="1" cellpadding="1" align="center">
                 <tr>
-                    <td  class="titulos5"  align="right"> 
+                    <td  class="titulos5"  align="right">
                          No. Folios
                     </td>
-                    <td  class="titulos5" width="15px" align="left"> 
+                    <td  class="titulos5" width="15px" align="left">
                         <input name="nofolios" id="nofolios" type="text" size="10" class="tex_area" value="<?php echo htmlspecialchars(stripcslashes($nofolios));?>">
                     </td>
                     <td  class="titulos5" width="25%" align="left">No. Anexos</td>
-                    <td  class="titulos5" width="25px" align="left"> 
+                    <td  class="titulos5" width="25px" align="left">
                        <input name="noanexos" id="noanexos" type="text" size="10" class="tex_area" value="<?php echo htmlspecialchars(stripcslashes($noanexos));?>">
                     </td>
                 </tr>
             </table>
-        </font> 
+        </font>
         </td>
     </tr>
   <!--
@@ -1296,7 +1345,7 @@ if($radi_depe_actu_padre and $tipoanexo==0 and !$coddepeinf)  $coddepe = $radi_d
 		case 'SGD':
 			$query = "SELECT ".$db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
 			FROM DEPENDENCIA d
-                        INNER JOIN usuario u ON u.depe_codi = d.depe_codi 
+                        INNER JOIN usuario u ON u.depe_codi = d.depe_codi
                         and u.usua_codi = 1
                         and u.usua_esta = '1'
                         and d.depe_estado = 1
@@ -1324,7 +1373,7 @@ if($radi_depe_actu_padre and $tipoanexo==0 and !$coddepeinf)  $coddepe = $radi_d
 		print $rs->GetMenu2("coddepe",$coddepe, "0:-- Seleccione una Dependencia --", false,false,"class='select'");
 	else
 		print $rs->GetMenu2("coddepe","", "0:-- Seleccione una Dependencia --", false,false,"class='select'");
-	
+
 	$ADODB_COUNTRECS = false;
 ?>
     </font>
@@ -1390,7 +1439,7 @@ if($Submit3=="Radicar")
 	$fechproc4=substr($adate,2,4);
 	$fechrd=$ddate.$mdate.$fechproc4;
 
-    if($fechproc12==''){	
+    if($fechproc12==''){
         $fechproc12=date('d');
         $fechproc22=date('m');
         $fechproc32=date('y');
@@ -1542,12 +1591,12 @@ if($Submit3=="Radicar")
     <?php
     }
     //echo "<script>window.open('radicado_n.php?nurad=$nurad&var_envio=$var_envio', 'ConfirmacionRad$nurad', 'height=260,width=430,left=350,top=300 ');</script>";
-	/*  
+	/*
 	 *  Sitio en el cual se incluyen botones de acceso al boton de eMail para asociar archivos al radicado generado.
 	 *@autor Orlando Burgos
 	 *@fecha 2008
 	 */
-    if($tipoMedio=="eMail") 
+    if($tipoMedio=="eMail")
     {
       $varEnvio = session_name()."=".session_id()."&nurad=$nurad";
       ?>
@@ -1750,7 +1799,7 @@ if(!$Submit3 and !$Submit4){
 <?php
 }else{
 	$varEnvio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&faxPath=$faxPath&verrad=$nurad&nurad=$nurad&ent=$ent&remite=$nombre&dependenciaDestino=$dependencia";
- 
+
 ?>
 <center><input type='button' onClick='modificar_doc()' name='Submit44' value='MODIFICAR DATOS' class="botones_largo">
 <font face='Arial' size='2' color='red'><b><u>
@@ -1809,9 +1858,9 @@ if(!$Submit3 and !$Submit4){
 			ORDER BY DEPE_CODI, DEPE_NOMB";
 			break;
 		default:
-			$query ="select  ". $db->conn->concat('d.depe_nomb',"' ('",'u.USUA_LOGIN',"')'") ." AS DEPE_NOMB, d.DEPE_CODI 
+			$query ="select  ". $db->conn->concat('d.depe_nomb',"' ('",'u.USUA_LOGIN',"')'") ." AS DEPE_NOMB, d.DEPE_CODI
                 from DEPENDENCIA d, usuario u
-                WHERE 
+                WHERE
                   u.depe_codi=d.depe_codi
                   and u.usua_codi=1
                  ORDER BY d.DEPE_NOMB
@@ -1872,7 +1921,6 @@ if(!$Submit3 and !$Submit4){
 	</tr>
   </table>
 	<br>
-</form>
 <?php
 	$verrad = $nurad;
 	$radi = $nurad;
@@ -1888,7 +1936,7 @@ if(!$Submit3 and !$Submit4){
 			if (!(is_null($muni_tmp)))
 			{	echo "\n";
 				echo "cambia(document.formulario, 'idpais$i', 'idcont$i');
-					
+
 					formulario.idpais$i.value = ${$var_pai};
 				  	cambia(document.formulario, 'codep_us$i', 'idpais$i');
 				  	formulario.codep_us$i.value = '${$var_dpt}';
