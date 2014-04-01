@@ -52,10 +52,19 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
 }
 
 </script>
-Asunto:<?=$ra_asun ?><br>
-Fecha Radicado: <?=$radi_fech_radi ?>, &nbsp;&nbsp;
-Hojas: <?=$radi_nume_hoja ?> &nbsp;&nbsp;&nbsp;&nbsp; Folios: <?=$radi_nume_folio?>  &nbsp;&nbsp;&nbsp;  Anexos: <?=$radi_nume_anexo?></br>
-Descripcion Anexos: <?=$radi_desc_anex ?>,&nbsp;&nbsp; Anexo/Asociado
+<table border=0>
+<tr  class=odd>
+ <td><b>Asunto</b></td><td><?=$ra_asun ?></td>
+</tr>
+<tr  cellspace=0 cellpad=0>
+<td><b>Fecha Radicado</b></td><td> <?=$radi_fech_radi ?>, &nbsp;&nbsp;</td>
+</tr>
+<tr  cellspace=0 cellpad=0>
+<td><b>Hojas </b></td><td> <?=$radi_nume_hoja ?> </td><td><b>  Folios</b></td><td><?=$radi_nume_folio?></td><td><b>   Anexos:</b></td><td> <?=$radi_nume_anexo?></td>
+</tr>
+<tr>
+<td><b>
+Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado</b></td><td>
 	<?	
 	if($radi_tipo_deri!=1 and $radi_nume_deri)
 	   {	echo $radi_nume_deri;
@@ -75,12 +84,13 @@ Descripcion Anexos: <?=$radi_desc_anex ?>,&nbsp;&nbsp; Anexo/Asociado
 	 if($verradPermisos == "Full" or $datoVer=="985")
 		{
 	?>
-		<input type=button name=mostrar_anexo value='...' class=botones_2 onClick="verVinculoDocto();">
+		<input type=button name=mostrar_anexo value='...'  class="btn btn-primary btn-xs" onClick="verVinculoDocto();">
 	<?
 		}
 	?>
-<p>
-Referencia / Oficio:<?=$cuentai ?>&#160;&#160;&#160;&#160;&#160;
+</td><td><b>Referencia / Oficio</b></td><td><?=$cuentai ?></td>
+</tr>
+
     <?
 		$muniCodiFac = "";
 		$dptoCodiFac = "";
@@ -100,17 +110,18 @@ Referencia / Oficio:<?=$cuentai ?>&#160;&#160;&#160;&#160;&#160;
 	<?
 		}
 	?>
-Imagen:	<span class='vinculos'><?=$imagenv ?></span> Estado Actual
+<tr><td><b>Imagen</b></td><td>	<span class='vinculos'><?=$imagenv ?></span> </td><td><b>Estado Actual</b></td><td>
 		<span ><?=$descFldExp?></span>&nbsp;&nbsp;&nbsp;
 		<? 
 			if($verradPermisos == "Full" or $datoVer=="985")
 	  		{
 	  	?>
-  <input type=button name=mostrar_causal value='...' class=botones_2 onClick="modFlujo('<?=$numExpediente?>',<?=$texp?>,<?=$codigoFldExp?>)">
+  <input type=button name=mostrar_causal value='...' class="btn btn-primary btn-xs" onClick="modFlujo('<?=$numExpediente?>',<?=$texp?>,<?=$codigoFldExp?>)">
 		<?
 			}
 		?>
-	, Nivel de Seguridad</br>
+		</Td><td><b>
+	, Nivel de Seguridad</b></td><td>
 	<?
 		if($nivelRad==1)
 		{	echo "Confidencial";	}
@@ -119,11 +130,13 @@ Imagen:	<span class='vinculos'><?=$imagenv ?></span> Estado Actual
 		if($verradPermisos == "Full" or $datoVer=="985")
 	  	{	$varEnvio = "krd=$krd&numRad=$verrad&nivelRad=$nivelRad";
 	?>
-		<input type=button name=mostrar_causal value='...' class=botones_2 onClick="window.open('<?=$ruta_raiz?>/seguridad/radicado.php?<?=$varEnvio?>','Cambio Nivel de Seguridad Radicado', 'height=220, width=300,left=350,top=300')">
+		<input type=button name=mostrar_causal value='...' class="btn btn-primary btn-xs" onClick="window.open('<?=$ruta_raiz?>/seguridad/radicado.php?<?=$varEnvio?>','Cambio Nivel de Seguridad Radicado', 'height=220, width=300,left=350,top=300')">
 	<?
 		}
 	?>
-	Clasificacion Documental:
+	</td><tr>
+	<tr>
+	<th>Clasificacion Documental</th><td>
 	<?
 		if(!$codserie) $codserie = "0";
 		if(!$tsub) $tsub = "0";
@@ -133,9 +146,10 @@ Imagen:	<span class='vinculos'><?=$imagenv ?></span> Estado Actual
 	<?
 		if($verradPermisos == "Full" or $datoVer=="985") {
 	?>
-		<input type=button name=mosrtar_tipo_doc2 value='...' class=botones_2 onClick="ver_tipodocuTRD(<?=$codserie?>,<?=$tsub?>);">
-	<br>
-	Tema:<?=$sector_nombre?>
+		<input type=button name=mosrtar_tipo_doc2 value='...' class="btn btn-primary btn-xs" onClick="ver_tipodocuTRD(<?=$codserie?>,<?=$tsub?>);">
+	</td><td><b>
+	Tema</b></td><td><?=$sector_nombre?>
+	
       <? 
 		$nombreSession = session_name();
 		$idSession = session_id();
@@ -156,17 +170,17 @@ Imagen:	<span class='vinculos'><?=$imagenv ?></span> Estado Actual
 					"&ddca_causal_grb=" . $ddca_causal .  
 					"&ddca_causal_nombre=". $ddca_causal_nombre . "'";
 	  ?>
-      <input type=button name="mostrar_causal" value="..." class="botones_2" onClick="window.open(<?=$datosEnviar?>,'Tipificacion_Documento','height=300,width=750,scrollbars=no')">
+      <input type=button name="mostrar_causal" value="..." class="btn btn-primary btn-xs" onClick="window.open(<?=$datosEnviar?>,'Tipificacion_Documento','height=300,width=750,scrollbars=no')">
       <input type="hidden" name="mostrarCausal" value="N">
       <?
 	   }
 	   ?>
-    Sub-Tema:
+   </td><td><b> Sub-Tema</b></td>
     <?
 	$causal_nombre_grb = $causal_nombre;
 	$dcausal_nombre_grb = $dcausal_nombre;
 	$$ddca_causal_nombre_grb = $ddca_causal_nombre;
-	?>
+	?><td>
       <?=$causal_nombre ?>
       / 
       <?=$dcausal_nombre ?>
@@ -176,21 +190,22 @@ Imagen:	<span class='vinculos'><?=$imagenv ?></span> Estado Actual
       <? 
 	  if ($verradPermisos == "Full"  or $datoVer=="985" ) {
 	  ?>
-      	<input type=button name="mostrar_causal" value="..." class='botones_2' onClick="window.open(<?=$datosEnviar?>,'Tipificacion_Documento','height=300,width=750,scrollbars=no')">
+      	<input type=button name="mostrar_causal" value="..." class="btn btn-primary btn-xs" onClick="window.open(<?=$datosEnviar?>,'Tipificacion_Documento','height=300,width=750,scrollbars=no')">
       <?
 	  } 
 	  ?>
-    Poblacion: <?=$tema_nombre ?>
+	  </td></tr><td><b>
+    Poblacion</b><td> <?=$tema_nombre ?>
       <? 
 	  if ($verradPermisos == "Full"  or $datoVer=="985") {
 	  ?>
-      <input type=button name="mostrar_temas" id='mostrar_temas'  value='...' class=botones_2 onClick="ver_temas();">
+      <input type=button name="mostrar_temas" id='mostrar_temas'  value='...' class="btn btn-primary btn-xs" onClick="ver_temas();">
       <?
 	  }
 }
 	  ?>
+	  </td></tr></table>
 </form>
-Involucrados</p>
 <table width="80%" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
 <tr>
  <th>Nombre</th>

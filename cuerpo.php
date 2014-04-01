@@ -208,7 +208,7 @@ $_SESSION['numExpedienteSelected'] = null;
 									<th>Tipo Documento</th>
 									<th>Dias Restantes</th>
 									<th>Enviado Por</th>
-									<th><input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll"></th>
+									<th><input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll"> </th>
 								</tr>
 							</thead>
 							<tbody>
