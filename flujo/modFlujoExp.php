@@ -29,9 +29,8 @@ if (!$db) $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 ?>
 <html>
-<head><title>Cambio de Estado Al Expedidente</title></head>
-<link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
-
+<head><title>..:: Cambio de Estado de un Proceso / Procedimiento ::..</title></head>
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <script>
 function verificaModificacion(){
   var modificado = document.modFlujoExp.estadoModificado2.value;
@@ -100,19 +99,19 @@ function verificaModificacion(){
 <body onload="verificaModificacion()">
 <CENTER>
 <form name=modFlujoExp  method='post' action='modFlujoExp.php?<?=session_name()?>=<?=trim(session_id())?>&numeroExpediente=<?=$numeroExpediente?>&krd=<?=$krd?>&texp=<?=$texp?>&numRad=<?=$numRad?>&<?="&mostrar_opc_envio=$mostrar_opc_envio&nomcarpeta=$nomcarpeta&carpeta=$carpeta&leido=$leido"?>'>
-<table border=0 width 100% cellpadding="0" cellspacing="5" class="borde_tab">
+<table border=0 width 100% class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <input type=hidden name=ver_flujo value="Si ver fLUJO">
   <input type=hidden name=nomcarpeta value="<?=$nomcarpeta?>">
   <tr> 
     <td class="titulos2"> Estado Actual
 	 </td>
-      <TD width="323" class=titulos2 ><?=$descFldExp?>
+      <TD width="323" ><?=$descFldExp?>
       </td>
   </tr>
   <tr> 
     <td class="titulos2"> Etapa(s) Siguiente(s)
 	 </td>
-      <TD width="323" class=titulos2 >
+      <TD width="323" >
         <?
  	
 	
@@ -128,7 +127,9 @@ function verificaModificacion(){
 	$k = 0;
 	if($arrayNodos)
 	{
-	?><select name="flujo"  class="select"><?
+	?>
+	<label class="select">
+	<select name="flujo"  class="select"><?
 	
 		foreach ($arrayNodos as $value){
 			$fldCodigos .= "$value ,";
@@ -166,7 +167,7 @@ function verificaModificacion(){
 		}
 	?>
 	</select>
-
+  </label>
 <?
 			$grabarDisabled = 'visibility:visible';
 	}else { //No hay mas etapas en el proceso
@@ -225,20 +226,18 @@ if($grabarFlujo)
    ?>
       </td>
   </tr>
-	<TR bgcolor="White"><TD width="100">
-				<center>
-				<img src="<?=$ruta_raiz?>/iconos/tuxTx.gif" alt="Tux Transaccion" title="Tux Transaccion" width=20>
-				</center>
-		</td><TD align="left">
-        <span class="etextomenu">
-        </span>
-	        <textarea name=observa cols=90 rows=2 class=ecajasfecha></textarea>
+	<TR ><TD width="100%" colspan=2>
+				
+	        <label class="textarea">
+					<i class="icon-append fa fa-comment"></i>
+					<textarea name="observa" rows="4"></textarea>
+					</label>
 			</TD></TR>
 
   </td></tr>
 	<tr><TD colspan=2 align=center>
-	<input type=submit name=grabarFlujo value='Grabar Cambio' class='botones' style="<?=$grabarDisabled?>">
-	<input name="cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar ">
+	<input type=submit name=grabarFlujo value='Grabar Cambio' class='btn btn-primary btn-xs' style="<?=$grabarDisabled?>">
+	<input name="cerrar" type="button" class="btn btn-primary btn-xs" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar ">
 
 	</TD></tr>
 </table>
@@ -246,15 +245,15 @@ if($grabarFlujo)
 <?PHP
 if(trim($frmNombre)<>""){
 ?>
-<table class=borde_tab width="100%">
-<tr class=titulos2>
-<td class=titulos2><?=$frmNombre ?></td>
-<td class=titulos2><a href='<?=$frmLink ?>' target='frmFrame'><?=$frmNombre ?></a></td>
-<td class=titulos2><a href='<?=$frmLinkSelect ?>' target='frmFrame'>Listado</a></td>
+<table class="table-bordered table-striped  table-hover smart-form has-tickbox" width="90%">
+<tr>
+<td><?=$frmNombre ?></td>
+<td><a href='<?=$frmLink ?>' target='frmFrame'><?=$frmNombre ?></a></td>
+<td><a href='<?=$frmLinkSelect ?>' target='frmFrame'>Listado</a></td>
 </tr>
-<tr><td class=titulos2 colspan=3>
+<tr><td colspan=3>
   <center>
-   <iframe src='<?=$frmLink ?>' width=80% height='800' name=frmFrame> </iframe>
+   <iframe src='<?=$frmLink ?>' width=95% height='800' name=frmFrame> </iframe>
   </center>
 </td></tr>
 </table>
