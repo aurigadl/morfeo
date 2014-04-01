@@ -215,13 +215,11 @@ i=1;
 </script>
 </head>
 <body topmargin="0" bgcolor="#FFFFFF" style="zoom: 1;" cz-shortcut-listen="true">
-
-
    <div id="spiffycalendar" class="text"></div>
    <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
- <script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
-<link rel="stylesheet" href="../estilos/tabber.css" TYPE="text/css" MEDIA="screen">
-<script type="text/javascript" src="../js/tabber.js"></script>
+  <script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
+  <link rel="stylesheet" href="../estilos/tabber.css" TYPE="text/css" MEDIA="screen">
+  <script type="text/javascript" src="../js/tabber.js"></script>
 <?php
 
   $ddate  = date('d');
@@ -257,7 +255,7 @@ if($Buscar){
 			  $Submit4 = "Modificar";
 		  }
 
-          $asu             = $rs->fields["RA_ASUN"];
+      $asu             = $rs->fields["RA_ASUN"];
 		  $tip_doc         = $rs->fields["TDID_CODI"];
 		  $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
 		  $ane             = $rs->fields["RADI_DESC_ANEX"];
@@ -718,11 +716,10 @@ case 1 : if(document.formulario.elements[s].value>31)
 var contadorVentanas=0
 </script>
 <?php
-  if ($Buscar1)
- {
-	  include "busca_direcciones.php";
+    if ($Buscar1){
+      include "busca_direcciones.php";
 
- }
+  }
   $var_envio="ent=$ent&carp_per=$carp_per&carp_codi=$carp_codi&rad=$nurad&coddepe=$coddepe&depende=$depende";
 ?>
 
@@ -767,7 +764,7 @@ var contadorVentanas=0
 
    <fieldset>
     <div class="row">
-      <section class="col col-4">
+      <section class="col col-3">
         <label class="label">
 			    Fecha: dd/mm/aaaa
         </label>
@@ -786,7 +783,7 @@ var contadorVentanas=0
         </label>
       </section>
 
-      <section class="col col-4">
+      <section class="col col-3">
         <label class="label">
           Fecha Doc. dd/mm/aaaa
         </label>
@@ -799,7 +796,7 @@ var contadorVentanas=0
         </label>
       </section>
 
-      <section class="col col-4">
+      <section class="col col-3">
         <label class="label">
           Referencia
         </label>
@@ -807,17 +804,16 @@ var contadorVentanas=0
           <input name="cuentai" type="text"  maxlength="20" value='<?php echo $cuentai; ?>' >
         </label>
       </section>
-  </div>
-  <div class="row">
-    <section class="col col-4">
-        <label class="label">
-          Guia
-        </label>
-        <label class="input">
-          <input type=text name='guia'name='id' value='<?=$guia ?>' <?=$bloqEdicion?> class="tex_area" size=35>
-          <input name="VERIFICAR" type='hidden' class="ebuttons2" value="Verifique Radicaci&oacute;n">
-        </label>
-    </section>
+
+      <section class="col col-3">
+          <label class="label">
+            Guia
+          </label>
+          <label class="input">
+            <input type=text name='guia'name='id' value='<?=$guia ?>' <?=$bloqEdicion?> class="tex_area" size=35>
+            <input name="VERIFICAR" type='hidden' class="ebuttons2" value="Verifique Radicaci&oacute;n">
+          </label>
+      </section>
   </div>
 
 
@@ -946,13 +942,12 @@ var contadorVentanas=0
           </select>
           </label>
       </section>
+    </div>
 
-      <section class="col col-4">
-            <input type="button" name="Button" value="BUSCAR" class="btn" onClick="Start('buscar_usuario.php?&nombreTp1=<?=$nombreTp1?>&nombreTp2=<?=$nombreTp2?>&nombreTp3=<?=$nombreTp3?>&busq_salida=<?=$busq_salida?>&ent=<?=$ent?>',1024,400);" align="right">
-            <input type='hidden' name='depende22' value="<?php echo $depende;?>">
-          </section>
-        </div>
-      </section>
+    <footer>
+      <input type="button" name="Button" value="BUSCAR" class="btn btn-success" onClick="Start('buscar_usuario.php?&nombreTp1=<?=$nombreTp1?>&nombreTp2=<?=$nombreTp2?>&nombreTp3=<?=$nombreTp3?>&busq_salida=<?=$busq_salida?>&ent=<?=$ent?>',1024,400);">
+      <input type='hidden' name='depende22' value="<?php echo $depende;?>">
+    </footer>
 
     <div class="row">
       <section class="col col-6">
