@@ -27,8 +27,6 @@ session_start();
 /* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
 /*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
 /*************************************************************************************/
-include_once "class_control/AplIntegrada.php";
-$objApl = new AplIntegrada($db);
 $lkGenerico = "&usuario=$krd&nsesion=".trim(session_id())."&nro=$verradicado"."$datos_envio";
 ?>
 <script src="js/popcalendar.js"></script>
@@ -54,53 +52,10 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
 }
 
 </script>
-<table width="100%" border="0" cellpadding="0" cellspacing="1" class=borde_tab>
-<tr class=titulos2> 
-	<td class="titulos2" colspan="6" >INFORMACION GENERAL </td>
-</tr>
-</table>
-<table border=0 cellspace=2 cellpad=2 WIDTH=100% align="left" class="borde_tab" id=tb_general>
-<tr> 
-	<td align="right" bgcolor="#CCCCCC" height="25" class="titulos2" >FECHA DE RADICADO</td>
-    <td  width="25%" height="25" class="listado2"><?=$radi_fech_radi ?></td>
-    <td bgcolor="#CCCCCC" width="25%" align="right" height="25" class="titulos2" >ASUNTO</td>
-    <td class='listado2' colspan="3" width="25%"><?=$ra_asun ?></td>
-</tr>
-<tr> 
-    <td align="right" bgcolor="#CCCCCC" height="25" class="titulos2"><?=$tip3Nombre[1][$ent]?></td> 
-    <td class='listado2' width="25%" height="25"><?=$nomRemDes["x1"] ?> </td>
-	<td bgcolor="#CCCCCC" width="25%" align="right" height="25" class="titulos2" >DIRECCI&Oacute;N CORRESPONDENCIA</td>
-	<td class='listado2' width="25%"><?=$dirDireccion["x1"] ?></td>
-	<td bgcolor="#CCCCCC" width="25%" align="right" height="25" class="titulos2" >MUN/DPTO</td>
-	<td class='listado2' width="25%"><?=$dirDpto["x1"]."/".$dirMuni["x1"] ?></td>
-</tr>
-<tr> 
-	<td align="right" bgcolor="#CCCCCC" height="25" class="titulos2"><?=$tip3Nombre[2][$ent]?></td>
-	<td class='listado2' width="25%" height="25"> <?=$nomRemDes["x2"]?></td>
-    <td bgcolor="#CCCCCC" width="25%" align="right" height="25" class="titulos2">DIRECCI&Oacute;N CORRESPONDENCIA </td>
-    <td class='listado2' width="25%"> <?=$dirDireccion["x2"] ?></td>
-    <td bgcolor="#CCCCCC" width="25%" align="right" height="25" class="titulos2">MUN/DPTO</td>
-    <td class='listado2' width="25%"> <?=$dirDpto["x2"]."/".$dirMuni["x2"] ?></td>
-</tr>
-<tr>
-	<td align="right" bgcolor="#CCCCCC" height="25" class="titulos2"><?=$tip3Nombre[3][$ent]?></td>
-	<td class='listado2' width="25%" height="25"> <?=$nombret_us3 ?> -- <?=$cc_documento_us3?></td>
-    <td bgcolor="#CCCCCC" width="25%" align="right" height="25" class="titulos2">DIRECCI&Oacute;N CORRESPONDENCIA </td>
-    <td class='listado2' width="25%"> <?=$direccion_us3 ?></td>
-    <td bgcolor="#CCCCCC" width="25%" align="right" height="25" class="titulos2">MUN/DPTO</td>
-    <td class='listado2' width="25%"> <?=$dpto_nombre_us3."/".$muni_nombre_us3 ?></td>
-</tr>
-<tr>
-	<td height="25" bgcolor="#CCCCCC" align="right" class="titulos2">CANTIDAD: </td>
-    <td class='listado2' width="25%" height="25"> HOJAS: <?=$radi_nume_hoja ?> &nbsp;&nbsp;&nbsp FOLIOS: <?=$radi_nume_folio?>  &nbsp;&nbsp;&nbsp;  ANEXOS: <?=$radi_nume_anexo?></td>
-    <td bgcolor="#CCCCCC" width="25%" height="25" align="right" class="titulos2"> DESCRIPCION ANEXOS </td>
-    <td class='listado2'  width="25%" height="11"> <?=$radi_desc_anex ?></td>
-    <td bgcolor="#CCCCCC" width="25%" align="right" height="25" class="titulos2">&nbsp;</td>
-    <td class='listado2' width="25%">&nbsp;</td>
-</tr>
-<tr> 
-	<td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">DOCUMENTO<br>Anexo/Asociado</td>
-	<td class='listado2' width="25%" height="25">
+Asunto:<?=$ra_asun ?><br>
+Fecha Radicado: <?=$radi_fech_radi ?>, &nbsp;&nbsp;
+Hojas: <?=$radi_nume_hoja ?> &nbsp;&nbsp;&nbsp;&nbsp; Folios: <?=$radi_nume_folio?>  &nbsp;&nbsp;&nbsp;  Anexos: <?=$radi_nume_anexo?></br>
+Descripcion Anexos: <?=$radi_desc_anex ?>,&nbsp;&nbsp; Anexo/Asociado
 	<?	
 	if($radi_tipo_deri!=1 and $radi_nume_deri)
 	   {	echo $radi_nume_deri;
@@ -124,9 +79,8 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
 	<?
 		}
 	?>
-	</td>
-    <td bgcolor="#CCCCCC" width="25%" align="right" height="25" class="titulos2">REF/OFICIO/CUENTA INTERNA </td>
-    <td class='listado2' colspan="3" width="25%"> <?=$cuentai ?>&#160;&#160;&#160;&#160;&#160;
+<p>
+Referencia / Oficio:<?=$cuentai ?>&#160;&#160;&#160;&#160;&#160;
     <?
 		$muniCodiFac = "";
 		$dptoCodiFac = "";
@@ -146,14 +100,8 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
 	<?
 		}
 	?>
-    </td>
-  </tr>
-  <tr> 
-	<td align="right" height="25" class="titulos2">IMAGEN</td>
-	<td class='listado2' colspan="1"><span class='vinculos'><?=$imagenv ?></span></td>
-	<td align="right" height="25"  class="titulos2">ESTADO ACTUAL   </td>
-	<td class='listado2' >
-		<span class=leidos2><?=$descFldExp?></span>&nbsp;&nbsp;&nbsp;
+Imagen:	<span class='vinculos'><?=$imagenv ?></span> Estado Actual
+		<span ><?=$descFldExp?></span>&nbsp;&nbsp;&nbsp;
 		<? 
 			if($verradPermisos == "Full" or $datoVer=="985")
 	  		{
@@ -162,9 +110,7 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
 		<?
 			}
 		?>
-	</td>
-	<td align="right" height="25"  class="titulos2">Nivel de Seguridad</td>
-	<td class='listado2' colspan="3">
+	, Nivel de Seguridad</br>
 	<?
 		if($nivelRad==1)
 		{	echo "Confidencial";	}
@@ -177,11 +123,7 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
 	<?
 		}
 	?>
-	</td>
-</tr>
-<tr> 
-	<td align="right" height="25" class="titulos2">TRD</td>
-	<td class='listado2' colspan="6">
+	Clasificacion Documental:
 	<?
 		if(!$codserie) $codserie = "0";
 		if(!$tsub) $tsub = "0";
@@ -192,13 +134,8 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
 		if($verradPermisos == "Full" or $datoVer=="985") {
 	?>
 		<input type=button name=mosrtar_tipo_doc2 value='...' class=botones_2 onClick="ver_tipodocuTRD(<?=$codserie?>,<?=$tsub?>);">
-	</td>
-</tr>
-  <tr>
- 
-    <td align="right" height="25" class="titulos2">TEMA</td>
-    <td class='listado2' colspan="6"> 
-      <?=$sector_nombre?>
+	<br>
+	Tema:<?=$sector_nombre?>
       <? 
 		$nombreSession = session_name();
 		$idSession = session_id();
@@ -224,16 +161,12 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
       <?
 	   }
 	   ?>
-    </td>
-  </tr>
-  <tr> 
-    <td align="right" height="25" class="titulos2">SUB-TEMA</td>
+    Sub-Tema:
     <?
 	$causal_nombre_grb = $causal_nombre;
 	$dcausal_nombre_grb = $dcausal_nombre;
 	$$ddca_causal_nombre_grb = $ddca_causal_nombre;
 	?>
-    <td class='listado2' colspan="6"> 
       <?=$causal_nombre ?>
       / 
       <?=$dcausal_nombre ?>
@@ -247,12 +180,7 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
       <?
 	  } 
 	  ?>
-    </td>
-  </tr>
-  <tr> 
-    <td align="right" height="25" class="titulos2">POBLACI&Oacute;N</td>
-    <td class='listado2' colspan="6"> 
-      <?=$tema_nombre ?>
+    Poblacion: <?=$tema_nombre ?>
       <? 
 	  if ($verradPermisos == "Full"  or $datoVer=="985") {
 	  ?>
@@ -261,7 +189,37 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
 	  }
 }
 	  ?>
-    </td>
-  </tr>
-</table>
 </form>
+Involucrados</p>
+<table width="80%" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+<tr>
+ <th>Nombre</th>
+ <th>Direccion</th>
+ <th>Ciudad / Departamento</th>
+ <th>Mail</th>
+ <th>Telefono</th>
+</tr>
+<tr> 
+  <td   ><?=$nomRemDes["x1"] ?> </td>
+	<td  ><?=$dirDireccion["x1"] ?></td>
+	<td  ><?=$dirDpto["x1"]."/".$dirMuni["x1"] ?></td>
+	<td   ><?=$email["x1"] ?> </td>
+	<td   ><?=$telefono["x1"] ?> </td>
+</tr>
+<tr> 
+	<td   > <?=$nomRemDes["x2"]?></td>
+  <td  > <?=$dirDireccion["x2"] ?></td>
+ <td  > <?=$dirDpto["x2"]."/".$dirMuni["x2"] ?></td>
+	<td   ><?=$email["x2"] ?> </td>
+	<td   ><?=$telefono["x2"] ?> </td>
+ 
+</tr>
+<tr>
+	<td   > <?=$nombret_us3 ?> -- <?=$cc_documento_us3?></td>
+  <td  > <?=$direccion_us3 ?></td>
+  <td  > <?=$dpto_nombre_us3."/".$muni_nombre_us3 ?></td>
+  	<td   ><?=$email["x3"] ?> </td>
+	<td   ><?=$telefono["x3"] ?> </td>
+
+</tr>
+</table>

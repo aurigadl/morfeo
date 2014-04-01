@@ -28,7 +28,9 @@ $fechaAgenda = $_POST["fechaAgenda"];
 <head>
 <title>Realizar Transaccion - Orfeo </title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<?php
+ include_once $ruta_raiz."/htmlheader.inc.php";
+?>
 </head>
 <?php
 /**
@@ -176,49 +178,60 @@ switch ($codTx){
 if($okTx== -1)  $okTxDesc = " No ";
 
 ?>
+<div id="content" style="opacity: 1; width=80%;">
+<div class="well well-sm well-light" style="opacity: 1; width=80%;">
+<div class="widget-body" style="opacity: 1; width=80%;">
+<div id="wid-id-0" class="jarviswidget jarviswidget-color-orange jarviswidget-sortable" data-widget-editbutton="false" role="widget" style="opacity: 1; width=80%;">
+<header role="heading" style="opacity: 1; width=80%;">
+
+<span class="widget-icon">
+<h2>Transacciones de Documentos de Documentos </h2>
+<span class="jarviswidget-loader">
+</header>
+
 <form action='enviardatos.php' method=post name=formulario>
 <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
 <br>
-<table border=0 cellspace=2 cellpad=2 WIDTH=50%  class="t_bordeGris" id=tb_general align="left">
+<table WIDTH=50%  class="table table-striped table-bordered table-hover dataTable" id=tb_general align="center">
 	<tr>
-	<td colspan="2" class="titulos4">ACCION REQUERIDA <?=$accionCompletada?>  <?=$okTxDesc?> COMPLETADA <?=$causaAccion ?> </td>
+	<td colspan="2" >ACCION REQUERIDA <?=$accionCompletada?>  <?=$okTxDesc?> COMPLETADA <?=$causaAccion ?> </td>
 	</tr>
 	<tr>
-	<td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">ACCION REQUERIDA :
+	<td align="right"  height="25" >ACCION REQUERIDA :
 	</td>
-	<td  width="65%" height="25" class="listado2_no_identa">
+	<td  width="65%" height="25" >
 	<?=$nombTx?>
 	</td>
 	</tr>
 	<tr>
-	<td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">RADICADOS INVOLUCRADOS :
+	<td align="right" height="25" class="titulos2">RADICADOS INVOLUCRADOS :
 	</td>
 	<td  width="65%" height="25" class="listado2_no_identa"><?=join("<BR> ",$radicadosSel)?>
 	</td>
 	</tr>
 	<tr>
-	<td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">USUARIO DESTINO :
+	<td align="right"height="25" >USUARIO DESTINO :
 	</td>
-	<td  width="65%" height="25" class="listado2_no_identa">
+	<td  width="65%" height="25" >
 	<?=$usCodDestino?>
 	</td>
 	</tr>
 	<tr>
-	<td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">FECHA Y HORA :
+	<td align="right"  height="25" >FECHA Y HORA :
 	</td>
-	<td  width="65%" height="25" class="listado2_no_identa">
+	<td  width="65%" height="25" >
 	<?=date("m-d-Y  H:i:s")?>
 	</td>
 	</tr>
 	<tr>
-	<td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">USUARIO ORIGEN:
+	<td align="right" height="25" class="titulos2">USUARIO ORIGEN:
 	</td>
 	<td  width="65%" height="25" class="listado2_no_identa">
 	<?=$usua_nomb?>
 	</td>
 	</tr>
 	<tr>
-	<td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">DEPENDENCIA ORIGEN:
+	<td align="right"  height="25" class="titulos2">DEPENDENCIA ORIGEN:
 	</td>
 	<td  width="65%" height="25" class="listado2_no_identa">
 	<?=$depe_nomb?>
@@ -252,6 +265,10 @@ if($_SESSION["enviarMailMovimientos"]==1){
 </tr>
 	
 </table>
+</div>
+</div>
+</div>
+</div>
 </form>
 </body>
 </html>

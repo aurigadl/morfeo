@@ -1,14 +1,3 @@
-<html>
-<head>
-<title>Untitled</title>
-<link rel="stylesheet" href="estilos/orfeo.css">
-</head>
-<body >
-<table width="100%" border="0" cellpadding="0" cellspacing="1" class=borde_tab>
-  <tr > 
-    <td class="titulos2" colspan="6" >HISTORICO </td>
-  </tr>
-</table>
 <?php
 	   require_once("$ruta_raiz/class_control/Transaccion.php");
 		 require_once("$ruta_raiz/class_control/Dependencia.php");
@@ -31,37 +20,39 @@
 	   $rs = $db->query($isql);			      	   
 	   $dependencia_rad = $rs->fields["DEPE_NOMB"];
 ?>
-<table  width="100%"  align="center"  border="0" cellpadding="0" cellspacing="1" class="borde_tab"  >
+<table  width="80%"  align="center"  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr   align="left">
-    <td width=10% class="titulos2" height="24">USUARIO ACTUAL</td>
-    <td  width=15% class="listado2" height="24" align="left"><?=$usuario_actual?></td>
-    <td width=10% class="titulos2" height="24">DEPENDENCIA ACTUAL</td>
-    <td  width=15% class="listado2" height="24"><?=$dependencia_actual?></td>
+    <td width=10%  >USUARIO ACTUAL</td>
+    <td  width=15%   align="left"><?=$usuario_actual?></td>
+    <td width=10%  >DEPENDENCIA ACTUAL</td>
+    <td  width=15%  ><?=$dependencia_actual?></td>
   </tr>
     <tr  class='etextomenu' align="left">
-    <td width=10% class="titulos2" height="24">USUARIO RADICADOR </td>
-    <td  width=15% class="listado2" height="24"><?=$usuario_rad?></td>
-    <td width=10% class="titulos2" height="24">DEPENDENCIA DE RADICACION </td> 
-    <td  width=15% class="listado2" height="24"><?=$dependencia_rad?></td>
+    <td width=10%  >USUARIO RADICADOR </td>
+    <td  width=15%  ><?=$usuario_rad?></td>
+    <td width=10%  >DEPENDENCIA DE RADICACION </td> 
+    <td  width=15%  ><?=$dependencia_rad?></td>
   </tr>
  </table>
- <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+ <table><tr><td> &nbsp;&nbsp;</td></tr></table>
+ <table width="100%"  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" align="center">
   <tr>
-    <td height="25" class="titulos4">FLUJO HISTORICO DEL DOCUMENTO</td>
+    <td height="25" class="titulos4"> </td>
   </tr>
 </table>
-<table  width="100%" align="center" border="0" cellpadding="0" bgcolor="cdd0FF" cellspacing="1" class="borde_tab" >
-  <tr   align="center" class=listado2>
-    <td width=10% class="titulos2" height="24">DEPENDENCIA </td>
-    <td  width=5% class="titulos2" height="24">FECHA</td>
-     <td  width=15% class="titulos2" height="24">TRANSACCION </td>  
-    <td  width=15% class="titulos2" height="24" >US. ORIGEN</td>
+<table><tr><td>&nbsp;&nbsp;</td></tr></table>
+<table  width="100%" align="center"  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" >
+  <tr   align="center" >
+    <td width=10%  >DEPENDENCIA </td>
+    <td  width=5%  >FECHA</td>
+     <td  width=15%  >TRANSACCION </td>  
+    <td  width=15%   >US. ORIGEN</td>
 		<?
 		 /** Esta es la columna que se elimino de forma Temporal  USUARIO - DESTINO
-			 * <td  width=15% class="grisCCCCCC" height="24" ><font face="Arial, Helvetica, sans-serif"> US. DESTINO</font></td>
+			 * <td  width=15% class="grisCCCCCC"  ><font face="Arial, Helvetica, sans-serif"> US. DESTINO</font></td>
 			 */
 		?>
-    <td  width=40% height="24" class="titulos2">COMENTARIO</td>
+    <td  width=40%  >COMENTARIO</td>
   </tr>
   <?
   $sqlFecha = $db->conn->SQLDate("d-m-Y H:i A","a.HIST_FECH");
@@ -119,19 +110,19 @@
 		if($i!=10000)
 			{
 		?>
-  <tr class="titulos2"> <?  
+  <tr > <?  
 		    $i=1;
 			}
 			 ?>
-    <td class="listado1" >
+    <td  >
 	<?=$objDep->getDepe_nomb()?></td>
-    <td class="listado1">
+    <td >
 	<?=$rs->fields["HIST_FECH1"]?>
  </td>
-<td class="listado1"  >
+<td   >
   <?=$trans->getDescripcion()?>
 </td>
-<td class="listado1"  >
+<td   >
    <?=$objUs->get_usua_nomb()?>
 </td>
 		<?
@@ -141,7 +132,7 @@
 			 * <?=$usua_destino?> </td> 
 			 */
 		?>
-			 <td class="listado1"><?=$rs->fields["HIST_OBSE"]?></td>
+			 <td ><?=$rs->fields["HIST_OBSE"]?></td>
   </tr>
   <?
 	$rs->MoveNext();
@@ -196,41 +187,25 @@ $isql = "select $sqlFechaEnvio AS SGD_RENV_FECH,
 		order by a.SGD_RENV_FECH desc ";
 $rs = $db->query($isql);
 ?>
-
-<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0" class="borde_tab">
-<?
-  if ((strtoupper($_SESSION["entidad"]) == "correlibre") and ($radi_fech_radi < '2012-10-13' )){
-?>
-  <tr>
-    <td height="50" class="titulos4"><a href="tx/historicoMelbacorrelibre.php?verradicado=<?=$verradicado?>" target="Historico<?=$verradicado?>" > 
-    Ver Historico de Melba(correlibre)-MOVIMIENTOS</a>
-    </td>
-    <td height="50" class="titulos4"><a href="tx/historicoCambiosMelba.php?verradicado=<?=$verradicado?>" target="HistoricoCambios<?=$verradicado?>" > 
-    Ver Historico de Melba(correlibre)-TRANSACCIONES</a>
-    </td>
-   </tr>
-<?
-  }
-?>
-</table>
+<table><tr><td>&nbsp;&nbsp;</td></tr></table>
  <table width="100%" align="center" border="0" cellpadding="0" cellspacing="0" class="borde_tab">
   <tr>
     <td height="25" class="titulos4">DATOS DE ENVIO</td>
   </tr>
 </table>
-<table width="100%"  align="center" border="0" cellpadding="0" cellspacing="1" class="borde_tab" >
+<table width="80%"  align="center"  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox"  >
   <tr  align="center">
-    <td width=10% class="listado2" height="24">RADICADO </td>
-    <td width=10% class="listado2" height="24">DEPENDENCIA</td>
-    <td  width=15% class="listado2" height="24">FECHA </td>
-    <td  width=15% class="listado2" height="24">Destinatario</td>      
-    <td  width=15% class="listado2" height="24" >DIRECCION </td>
-    <td  width=15% class="listado2" height="24" >DEPARTAMENTO </td>
-    <td  width=15% class="listado2" height="24" >MUNICIPIO</td>
-    <td  width=15% class="listado2" height="24" >TIPO DE ENVIO</td>
-    <td  width=5% height="24" class="listado1"> No. PLANILLA</td>
-    <td  width=15% height="24" class="listado1">OBSERVACIONES O DESC DE ANEXOS</td>      
- <td  width=15% height="24" class="listado1">Realizo Envio</td>
+    <td width=10%  >RADICADO </td>
+    <td width=10%  >DEPENDENCIA</td>
+    <td  width=15%  >FECHA </td>
+    <td  width=15%  >Destinatario</td>      
+    <td  width=15%   >DIRECCION </td>
+    <td  width=15%   >DEPARTAMENTO </td>
+    <td  width=15%   >MUNICIPIO</td>
+    <td  width=15%   >TIPO DE ENVIO</td>
+    <td  width=5%  > No. PLANILLA</td>
+    <td  width=15%  >OBSERVACIONES O DESC DE ANEXOS</td>      
+ <td  width=15%  >Realizo Envio</td>
   </tr>
   <?
 $i=1;
@@ -263,30 +238,30 @@ while(!$rs->EOF)
   <tr > <?  $i=1;
 			}
 			 ?>
-    <td class="listado2" >
+    <td  >
 	<?=$imgRadDev?><?=$radEnviado?></td>
-    <td class="listado2" >
+    <td  >
 	<?=$rs->fields["DEPE_NOMB"]?></td>
-    <td class="listado2">
+    <td >
 	<?
 		echo "<a class=vinculos href='./verradicado.php?verrad=$radEnviado&krd=$krd' target='verrad$radEnviado'><span class='timpar'>".$rs->fields["SGD_RENV_FECH"]."</span></a>";
 	?> </td>
-    <td class="listado2">
+    <td >
 	<?=$rs->fields["SGD_RENV_NOMBRE"]
 	?> </td>
-    <td class="listado2"  >
+    <td   >
 	<?=$rs->fields["SGD_RENV_DIR"]?> </td>
-    <td class="listado2"  >
+    <td   >
 	 <?=$rs->fields["SGD_RENV_DEPTO"] ?> </td>
-    <td class="listado2"  >
+    <td   >
 	 <?=$rs->fields["SGD_RENV_MPIO"] ?> </td>
-    <td class="listado2"  >
+    <td   >
 	 <?=$rs->fields["SGD_FENV_DESCRIP"] ?> </td>
-    <td class="listado2"  >
+    <td   >
 	 <?=$rs->fields["SGD_RENV_PLANILLA"] ?> </td>
-    <td class="listado2"  >
+    <td   >
 	 <?=$rs->fields["SGD_RENV_OBSERVA"] ?> </td>
-   <td class="listado2"  >
+   <td   >
          <?=$rs->fields["USUA_LOGIN"] ?> </td>
 
   </tr>

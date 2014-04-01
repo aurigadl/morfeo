@@ -538,7 +538,7 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 function arr2html(&$arr,$ztabhtml='',$zheaderarray='')
 {
 	if (!$ztabhtml) $ztabhtml = 'BORDER=1';
-	$s = "<TABLE $ztabhtml class=t_bordeGris width=98%>";//';print_r($arr);
+	$s = "<TABLE $ztabhtml class='table table-bordered' width=98%>";//';print_r($arr);
 	if ($zheaderarray)
 	{
 		$s .= '<TR class=tparr>';

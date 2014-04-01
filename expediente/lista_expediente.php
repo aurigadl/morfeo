@@ -15,8 +15,6 @@
 ( isset( $_POST['verBorrados'] ) && $_POST['verBorrados'] != '' ) ? $verBorrados = $_POST['verBorrados'] : $verBorrados = $_GET['verBorrados'];
 ( isset( $_POST['ordenarPor'] ) && $_POST['ordenarPor'] != '' ) ? $ordenarPor = $_POST['ordenarPor'] : $ordenarPor = $_GET['ordenarPor'];
 ?>
-<html><head><title>.: Modulo total :.</title>
-<link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
 <script>
 function regresar(){
 	window.location.reload();
@@ -220,7 +218,6 @@ function incluirSubexpediente( numeroExpediente, numeroRadicado )
 </style>
 <script language="JavaScript" src="./js/funciones.js"></script>
 </head>
-<body bgcolor="#FFFFFF" topmargin="0">
 <input type="hidden" name="ordenarPor" id="ordenarPor" value="">
 <?php
 // Modificado Infom�trika 23-Julio-2009
@@ -277,12 +274,12 @@ $time_start = microtime_float();
 	?>
 <input type="hidden" name="menu_ver_tmp" value=4>
 <input type="hidden" name="menu_ver" value=4>
-<table  cellspacing="5" width="100%" align="center" class="borde_tab">
+<table  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox"  width=90%>
   <tr>
-    <td class="titulos5"><span class="leidos"> DOCUMENTO <?=$nombre_deri ?>
+    <td ><span class="leidos"> DOCUMENTO <?=$nombre_deri ?>
       <b> <?=$radi_nume_deri ?> </b></span></td>
 </tr></table>
-<table border=0 width="100%" cellspacing="4" class="borde_tab" align="center">
+<table  width=90% class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
 	<?
 		$isql = "select a.* from radicado a where a.radi_nume_radi = $radi_nume_deri";
 		$rs =&$db->conn->Execute($isql);include_once "$ruta_raiz/tx/verLinkArchivo.php";
@@ -357,7 +354,7 @@ $time_start = microtime_float();
 <tr><td></td></tr>
 </table></p>
 -->
-<table border="0" width="100%" class="borde_tab" align="center" class="titulos2">
+<table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" width=90%>
   <tr class="titulos2">
 <?php
      if($numrad){
@@ -447,7 +444,7 @@ if($usuaPermExpediente >= 1  ) {
   </tr>
 </table>
 
-<table border="0" width="100%" class='borde_tab' align="center" cellspacing=1 >
+<table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
 <?
 	error_reporting(7);
 	include_once ("$ruta_raiz/include/tx/Expediente.php");
@@ -784,7 +781,7 @@ if($usuaPermExpediente) {
   </td>
   <td colspan="3" colspan=2></td>
   <td rowspan="3" colspan=2>
-    <table width="100%" border="0" height="200%" cellspacing=1>
+    <table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
     <?php
 	// Modificado Infom�trika 23-Julio-2009
 	// Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
@@ -871,7 +868,7 @@ if($usuaPermExpediente) {
         <table border=0 width=98% align="center" cellpadding="0" cellspacing="0" id="t1" class="sortable" >
         <!---------------------------------------------------------------------------------->
         <a name="t1"></a>
-        <table border=0 width="100%" class="borde_tab" align="center" cellpadding="0" cellspacing="0">
+        <table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
 <?
 
 }
@@ -1387,7 +1384,7 @@ while(!$rs->EOF) {
 </table>
 <p>
 
-<table width="100%" class='borde_tab' cellspacing="0" cellpadding="0" align="center" id="tblAnexoAsociado">
+<table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr>
     <td class="titulos5">Y ESTA RELACIONADO CON EL(LOS) SIGUIENTE(S) DOCUMENTOS:</td>
     <td class="titulos5" align="center">

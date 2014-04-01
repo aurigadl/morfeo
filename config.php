@@ -13,11 +13,11 @@
  **
 **/
 //Nombre de la base de datos de ORFEO
-$servicio = "orfeo";
+$servicio = "caliopegd";
 //Usuario de conexion con permisos de modificacion y creacion de objetos en la Base de datos.
 $usuario = "orfeo_user";
 //Contraseña del usuario anterior
-$contrasena= "0rf30p4ssw0rd";
+$contrasena= "123";
 //Nombre o IP del servidor de BD. Opcional puerto, p.e. 120.0.0.1:1521
 $servidor = "localhost:5432";
 $db = $servicio;

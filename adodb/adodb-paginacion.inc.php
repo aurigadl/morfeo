@@ -31,7 +31,7 @@ class ADODB_Pager {
 	var $linksPerPage=20; // number of links per page in navigation bar
 	var $showPageLinks; 
 
-	var $gridAttributes = 'width="100%"  border="0"  cellpadding="0" cellspacing="1" class="borde_tab"';
+	var $gridAttributes = 'width="100%"  border="0"  cellpadding="0" cellspacing="1" class="table table-striped table-bordered table-hover dataTable" aria-describedby="dt_basic_info"';
 	
 	// Localize text strings here
 	var $first = '<code>|&lt;</code>';

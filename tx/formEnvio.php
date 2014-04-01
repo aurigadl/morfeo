@@ -343,7 +343,9 @@ else
 <head>
 <title>Enviar Datos</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="<?=$ruta_raiz; ?>/estilos/orfeo.css">
+<?php
+ include_once $ruta_raiz."/htmlheader.inc.php";
+?>
 <!-- Cargando los temas para el calendario Java -->
 <link rel="stylesheet" href="../include/zpcal/themes/fancyblue.css" />
 
@@ -471,9 +473,17 @@ function okTx()
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 </head>
-<body bgcolor="#FFFFFF" topmargin="0" >
+<body topmargin="0" >
+<div id="content" style="opacity: 1; width=80%;">
+<div class="well well-sm well-light" style="opacity: 1; width=80%;">
+<div class="widget-body" style="opacity: 1; width=80%;">
+<div id="wid-id-0" class="jarviswidget jarviswidget-color-orange jarviswidget-sortable" data-widget-editbutton="false" role="widget" style="opacity: 1; width=80%;">
+<header role="heading" style="opacity: 1; width=80%;">
 
-
+<span class="widget-icon">
+<h2>Transacciones de Documentos de Documentos </h2>
+<span class="jarviswidget-loader">
+</header>
 <?php
 	/**
 	 * Modificaciones Febrero de 2007, por SSPD para el DNP
@@ -488,7 +498,7 @@ if ($mensaje_errorEXP || $mensaje_error )
 else
 {
 ?>
-<table border=0 width=100% cellpadding="0" cellspacing="0">
+<table width=70% cellpadding="0" cellspacing="0" ALIGN=CENTER CLASS='form-contol input-sm'>
 <tr>
 	<td width=100%>
 	<br>
@@ -497,15 +507,13 @@ else
 	<input type='hidden' name=codTx value='<?=$codTx?>'>
 	<input type='hidden' name=EnviaraV value='<?=$EnviaraV?>'>
 	<input type='hidden' name=fechaAgenda value='<?=$fechaAgenda?>'>
-	<table width="98%" border="0" cellpadding="0" cellspacing="5" class="borde_tab">
+	<table width="98%" border="0" cellpadding="0" cellspacing="5" class='table table-striped table-bordered table-hover dataTable' aria-describedby='dt_basic_info'">
 	<TR>
-				<TD width=30% class="titulos4">USUARIO:<br><br><?=$_SESSION['usua_nomb']?> </TD>
-				<TD width='30%' class="titulos4">DEPENDENCIA:<br><br><?=$_SESSION['depe_nomb']?><br></TD>
-				<td class="titulos4">
+	<td class="titulos4">
 <?
 switch ($codTx)
 {	case 7:
-		{	print "Borrar Informados ";
+		{	print "Borrar Informados </td><td>";
 			echo "<input type='hidden' name='info_doc' value='".$tmp_arr_id."'>";
 		}break;
 	case 8:	$usDefault = 1;
@@ -515,12 +523,10 @@ switch ($codTx)
 			$cad2 = $db->conn->Concat($db->conn->IfNull("d.DEP_SIGLA", "'N.N.'"),"'-'","RTRIM(u.usua_nomb)");
 			$sql = "select $cad2 as usua_nomb, $cad as usua_codi from usuario u,dependencia d where u.depe_codi in(".implode($depsel8,',').")
 					$whereReasignar and u.USUA_ESTA='1' and u.depe_codi = d.depe_codi ORDER BY usua_nomb";
-	
-
-			$rs = $db->conn->Execute($sql);
+				$rs = $db->conn->Execute($sql);
 			$usuario = $codUsuario;
-			print "Informados";
-			print $rs->GetMenu2('usCodSelect[]',$usDefault,false,true,10," id='usCodSelect' class='select' ");
+			print "Informados</td><td>";
+			print $rs->GetMenu2('usCodSelect[]',$usDefault,false,true,10," id='usCodSelect'  class='form-control input-sm'");
 			break;
 	case 9:	$whereDep = "and u.depe_codi=$depsel ";
 		if($dependencia==$depsel)
@@ -576,8 +582,10 @@ switch ($codTx)
 				$rs = $db->conn->Execute($sql);
 				$usuario = $codUsuario;
 				//print $rs->GetMenu2('usCodSelect',$usDefault,false,false,0," id ='usCodSelect' class='select' ");
-				?>				
-				<select name=usCodSelect class=select>
+				echo  "Reasignar a $proccarp </td><td>";
+				?>		
+				
+				<select name=usCodSelect class="form-control input-sm">
 					<option value="-1">-- Seleccione un funcionario --</option>
 				<?
 				while(!$rs->EOF)
@@ -615,7 +623,7 @@ switch ($codTx)
 				?>
 				</select>
 				<?
-				print "Reasignar $proccarp";
+				
 				break;
 	case 10:
 			   $carpetaTipo = substr($carpSel,1,1);
@@ -688,15 +696,11 @@ switch ($codTx)
 		}
 		?>
 		<center>
-		<table width="900"  border=0 align="center" bgcolor="White">
-		<TR bgcolor="White"><TD width="100">
-				<center>
-				<img src="<?=$ruta_raiz?>/iconos/tuxTx.gif" alt="Tux Transaccion" title="Tux Transaccion">
-				</center>
-		</td><TD align="left">
-        <span class="etextomenu">
+		<table width="100%"  border=0 align="center" bgcolor="White">
+		<TR bgcolor="White"><TD width="100" colspan=3>
+		        <span class="etextomenu">
         </span>
-		        <textarea name=observa id=observa cols=80 rows=5  class=ecajasfecha></textarea>
+		        <textarea name=observa id=observa cols=80 rows=3  class=form-control placeholder="Escriba un Comentario"></textarea>
 			</TD></TR>
 		</center>
 		<input type=hidden name=enviar value=enviarsi>
@@ -731,18 +735,16 @@ switch ($codTx)
             from DEPENDENCIA
             where depe_estado=1
             ORDER BY 1";
-	$rs=$db->conn->Execute($query);
-	$varQuery = $query;
-	print $rs->GetMenu2("coddepeinf", $coddepeinf, false, true,5," $scriptCargarUsuarios class='select' id='coddepeinf'");
-	$observaInf = "document.getElementById('observa').value";
+						$rs=$db->conn->Execute($query);
+						$varQuery = $query;
+						print $rs->GetMenu2("coddepeinf", $coddepeinf, false, true,5," $scriptCargarUsuarios class='form-control custom-scroll' id='coddepeinf' width=200");
+						$observaInf = "document.getElementById('observa').value";
         ?>
             </td>	
         <td align=center class=titulos2>
-				<INPUT TYPE='radio' name='accionIR' checked id='accionInformar' value='InformarOtrosD'>
-        Seleccione los Usuarios<br>
 	 <select name="usuariosInformar" id="usuariosInformar" size="5" width=450
     onclick="remote.informarUsuario('usuariosInformados','<?=$radicadosTx?>','<?=$krd?>','<?=$dependencia?>','<?=$codusuario ?>',document.getElementById('coddepeinf').value,document.getElementById('usuariosInformar').value,<?=$observaInf?> , document.getElementById('accionInformar').checked, 0,  document.getElementById('chkConjunto').checked,'<?=$usua_doc?>') ; " 
-    class="select" align="LEFT" >
+     class="form-control custom-scroll" align="LEFT" >
    </select>
 
 	</td>	
@@ -817,6 +819,9 @@ switch ($codTx)
 <?
 }
 ?>
+</div>
+</div>
+</div>
 </body>
 </html>
 

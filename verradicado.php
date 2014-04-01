@@ -2,31 +2,6 @@
 session_start();
 $ruta_raiz = "."; 
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
-//*************************************************************************************/
-//* ORFEO GPL:Sistema de Gestion Documental		http://www.orfeogpl.org	             */
-//*	Idea Original de la SUPERINTENDENCIA DE SERVICIOS PUBLICOS DOMICILIARIOS         */
-//*				COLOMBIA TEL. (57) (1) 6913005  orfeogpl@gmail.com                   */
-//* ===========================                                                       */
-//*                                                                                   */
-//* Este programa es software libre. usted puede redistribuirlo y/o modificarlo       */
-//* bajo los terminos de la licencia GNU General Public publicada por                 */
-//* la "Free Software Foundation"; Licencia version 2. 			                      */
-//*                                                                                   */
-//* Copyright (c) 2005 por :	  	  	                                              */
-//* SSPS "Superintendencia de Servicios Publicos Domiciliarios"                       */
-//*   Jairo Hernan Losada  jlosada@gmail.com                Desarrollador             */
-//*   Sixto Angel Pinzón López --- angel.pinzon@gmail.com   Desarrollador             */
-//* C.R.A.  "COMISION DE REGULACION DE AGUAS Y SANEAMIENTO AMBIENTAL"                 */
-//*   Liliana Gomez        lgomezv@gmail.com                Desarrolladora            */
-//*   Lucia Ojeda          lojedaster@gmail.com             Desarrolladora            */
-//* D.N.P. "Departamento Nacional de Planeación"                                      */
-//*   Hollman Ladino       hollmanlp@gmail.com                Desarrollador           */
-//*                                                                                   */
-//* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
-//*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
-//*  Infometrika            info@infometrika.com  05/2009  Arreglo Variables Globales */
-//*  Jairo Losada           jlosada@gmail.com     05/2009  Eliminacion Funciones-Procesos */
-//*************************************************************************************/
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 $krd                = $_SESSION["krd"];
@@ -39,8 +14,6 @@ $tip3img            = $_SESSION["tip3img"];
 $tpNumRad           = $_SESSION["tpNumRad"];
 $tpPerRad           = $_SESSION["tpPerRad"];
 $tpDescRad          = $_SESSION["tpDescRad"];
-$tip3Nombre         = $_SESSION["tip3Nombre"];
-$tpDepeRad          = $_SESSION["tpDepeRad"];
 $usuaPermExpediente = $_SESSION["usuaPermExpediente"];
 $nomcarpeta=$_GET["nomcarpeta"];
 $verradicado = $_GET['verrad'];
@@ -85,7 +58,9 @@ include "$ruta_raiz/tx/verifSession.php";
 
 ?>
 <html><head><title>.: Modulo total :.</title>
-<link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
+<?php
+	include_once "htmlheader.inc.php";
+?>
 <!-- seleccionar todos los checkboxes-->
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 <SCRIPT LANGUAGE="JavaScript">
@@ -263,7 +238,6 @@ function hidden_tipodocumento()
 <div id="spiffycalendar" class="text"></div>
 <script language="JavaScript" src="js/spiffyCal/spiffyCal_v2_1.js"></script>
 <link rel="stylesheet" type="text/css" href="js/spiffyCal/spiffyCal_v2_1.css">
-<link rel="stylesheet" href="estilos/tabber.css" TYPE="text/css" MEDIA="screen">
 </head>
 <?php
 // Modificado Supersolidaria
@@ -292,10 +266,9 @@ if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" )
  			if($nivelRad==1) die("-");
  		}
  ?>
-<table border=0 width=100%  cellpadding="0" cellspacing="0" class="borde_tab">
+<table width=100%   class="table table-striped table-bordered table-hover dataTable">
  <tr>
-   <td class="titulos2"><A class=vinculos HREF='javascript:history.back();'>PAGINA ANTERIOR</A></td>
-   <td width=85% class="titulos2">
+   <td >
 <?
  if($krd)
 	{
@@ -341,44 +314,9 @@ if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" )
     </td>
   </tr>
 </table>
-<table width=100% class='t_bordeGris'>
-<tr class='t_bordeGris' >
-<td width='33%' height="6" >
-	<table width='100%' border='0' cellspacing='0' cellpadding='0'>
-	<tr class="celdaGris">
 <?
 $datosaenviar = "fechaf=$fechaf&mostrar_opc_envio=$mostrar_opc_envio&tipo_carp=$tipo_carp&carpeta=$carpeta&nomcarpeta=$nomcarpeta&datoVer=$datoVer&ascdesc=$ascdesc&orno=$orno";
 ?>
-<td class="titulos2">LISTADO DE: </td>
-</tr>
-	<tr>
-	<td class="info"><?=$nomcarpeta ?>
-	</td>
-	</tr>
-</table>
-</td>
-<td width='33%' >
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td width="10%" class="titulos2">USUARIO:</td>
-		</tr>
-		<tr>
-			<td width="90%" class="info"><?=$_SESSION['usua_nomb'] ?></td>
-		</tr>
-	</table>
-</td>
-<td width="33%">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td width="16%"  class="titulos2" >DEPENDENCIA:</td>
-		</tr>
-		<tr>
-		<td width="84%" class="info" ><?=$_SESSION['depe_nomb'] ?></td>
-	</tr>
-</table>
-</td>
-</tr>
-</table>
 <form name="form1" id="form1" action="<?=$ruta_raiz?>/tx/formEnvio.php?<?=session_name()?>=<?=session_id()?>" method="GET">
 <?php
 if($verradPermisos=="Full" && !($carpeta==66 || $carpeta==8 ) )
@@ -390,7 +328,7 @@ if($verradPermisos=="Full" && !($carpeta==66 || $carpeta==8 ) )
 <input type=hidden name='checkValue[<?=$verrad?>]' value='CHKANULAR'>
 <input type=hidden name=enviara value='9'>
 </form>
-<table border=0 align='center' cellpadding="0" cellspacing="0" width="100%" ><form action='verradicado.php?<?=session_name()?>=<?=trim(session_id())?>&verrad=<?=$verrad?>&datoVer=<?=$datoVer?>&chk1=<?=$verrad."&carpeta=$carpeta&nomcarpeta=$nomcarpeta"?>' method='GET' name='form2'>
+<form action='verradicado.php?<?=session_name()?>=<?=trim(session_id())?>&verrad=<?=$verrad?>&datoVer=<?=$datoVer?>&chk1=<?=$verrad."&carpeta=$carpeta&nomcarpeta=$nomcarpeta"?>' method='GET' name='form2'>
  <?
 echo "<input type='hidden' name='fechah' value='$fechah'>";
 // Modificado Infom�trika 22-Julio-2009
@@ -425,100 +363,9 @@ include "ver_datosrad.php";
 include "ver_datosgeo.php";
 $tipo_documento .= "<input type=hidden name=menu_ver value='$menu_ver'>";
 $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&tipo_carp=$tipo_carp&carpeta=$carpeta&verrad=$verrad&datoVer=$datoVer&fechah=fechah&menu_ver_tmp=";
-?>
-<tr>
-	<td width="94%" class="listado1" colspan=16>
-	<?
-	$datos1 = "";$datos2 = "";$datos3 = "";$datos4 = "";$datos5 = "";
-	if($menu_ver==5){$datos5 = "_R";}
-	if($menu_ver==1){$datos1 = "_R";}
-	if($menu_ver==2){$datos2 = "_R";}
-	if($menu_ver==3){$datos3 = "_R";}
-	if($menu_ver==4){$datos4 = "_R";}
-?>
-<table cellpadding="0" cellspacing="0"><TR><TD>
-<div id="tab1" class="tabberlive" border="0" >
-<ul class="tabbernav">
-<?   if($menu_ver==1){ $datoss = "class=tabberactive";}else{$datoss ="";} ?>
-<li <?=$datoss?> >
-<a href='verradicado.php?<?=$hdatos ?>1'>
-Informacion de Radicado
-</a>
-</li>
-</ul>
-</div>
-	</TD><td>
-	<div id="tab1" class="tabberlive" border="1">
-<ul class="tabbernav">
-<?   if($menu_ver==3){ $datoss = "class=tabberactive";}else{$datoss ="";} ?>
-<li <?=$datoss?> >
-<a href='verradicado.php?<?=$hdatos?>3'>
-	Historico</a>
-  </li></ul>
-	</div>
-</td>
-<td>	
-<div id="tab1" class="tabberlive" border="1">
-<ul class="tabbernav">
-<?   if($menu_ver==2){ $datoss = "class=tabberactive";}else{$datoss ="";} ?>
-<li <?=$datoss?> >
-	<a href='verradicado.php?<?=$hdatos ?>2' >
-	Documentos</a>
-</li>
-</ul>
-</div>
-</td><td>		
-	<div id="tab1" class="tabberlive" border="1">
-<ul class="tabbernav">
-<?   if($menu_ver==4){ $datoss = "class=tabberactive";}else{$datoss ="";} ?>
-<li <?=$datoss?> >
-<a href='verradicado.php?<?=$hdatos ?>4'>
-	Expedientes
-	</a>
-</li>
-</ul>
-</div>
-</td></tr>
-</table>
-	</td>
-      <td rowspan="4" class="" width="3%">&nbsp;</td>
-    </tr>
-    <tr >
-		<td  width="100%" >
-		<table class=borde_tab width="100%" marginheight="0" marginwidth="0">
-		<TR><TD>
-		<?
-		error_reporting(7);
-		switch ($menu_ver) {	
-		case 1:
-			include "lista_general.php";
-			break;
-		case 2:
-			include "./lista_anexos.php";
-			break;
-		case 3:
-			include "ver_historico.php";
-			break;
-		case 4:
-			include "./expediente/lista_expediente.php";
-			break;
-		case 5:
-			include "plantilla.php";
-			break;
-								default:break;
-					}
-		?>
-		</TD></TR>
-		</table>
-		</td>
-    </tr>
-    <input type=hidden name=menu_ver value='<?=$menu_ver ?>'>
-    <tr>
-      <td height="17" width="94%" class="celdaGris"> <?
+
 	}else {
-	?>  </td>
-  </tr>
-</table>
+	?>
 <form name='form1' action='enviar.php' method='GET'>
 <input type=hidden name=depsel>
 <input type=hidden name=depsel8>
@@ -531,11 +378,294 @@ Informacion de Radicado
 	}
 }else {echo "<center><b><span class='eerrores'>NO TIENE AUTORIZACION PARA INGRESAR</span><BR><span class='eerrores'><a href='login.php' target=_parent>Por Favor intente validarse de nuevo. Presione aca!</span></a>";}
 
-?> </td>
-</tr>
-<tr>
-	<td height="15" width="94%" class="listado2">&nbsp;</TD>
-</tr>
+?>
 </form>
-</table>
+<!-- row -->
+<div >
+
+	<div class="well well-sm well-light">
+			<div id="tabs">
+				<ul>
+					<li>
+						<div><a href="#tabs-a">Informacion del Radicado</a></div>
+					</li>
+					<li>
+						<a href="#tabs-b">Traza</a>
+					</li>
+					<li>
+						<a href="#tabs-c">Documeto</a>
+					</li>
+					<li>
+						<a href="#tabs-d">Expediente</a>
+					</li>					
+				</ul>
+				<div id="tabs-a">
+			      <?php include "lista_general.php"; ?>
+				</div>
+				<div id="tabs-b">
+					<p>
+						<?php include "ver_historico.php"; ?>
+					</p>
+				</div>
+				<div id="tabs-c">
+					<p>
+						<?php include "./lista_anexos.php"; ?>
+					</p>
+				</div>
+				<div id="tabs-d">
+					<p>
+						<?php include "./expediente/lista_expediente.php"; ?>
+					</p>
+				</div>				
+			</div>
+
+<script type="text/javascript">
+	// DO NOT REMOVE : GLOBAL FUNCTIONS!
+	pageSetUp();
+
+	// PAGE RELATED SCRIPTS
+
+	// menu
+	$("#menu").menu();
+
+	/*
+	 * AUTO COMPLETE AJAX
+	 */
+
+	function log(message) {
+		$("<div>").text(message).prependTo("#log");
+		$("#log").scrollTop(0);
+	}
+
+	$("#city").autocomplete({
+		source : function(request, response) {
+			$.ajax({
+				url : "http://ws.geonames.org/searchJSON",
+				dataType : "jsonp",
+				data : {
+					featureClass : "P",
+					style : "full",
+					maxRows : 12,
+					name_startsWith : request.term
+				},
+				success : function(data) {
+					response($.map(data.geonames, function(item) {
+						return {
+							label : item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
+							value : item.name
+						}
+					}));
+				}
+			});
+		},
+		minLength : 2,
+		select : function(event, ui) {
+			log(ui.item ? "Selected: " + ui.item.label : "Nothing selected, input was " + this.value);
+		}
+	});
+
+	/*
+	 * Spinners
+	 */
+	$("#spinner").spinner();
+	$("#spinner-decimal").spinner({
+		step : 0.01,
+		numberFormat : "n"
+	});
+
+	$("#spinner-currency").spinner({
+		min : 5,
+		max : 2500,
+		step : 25,
+		start : 1000,
+		numberFormat : "C"
+	});
+
+	/*
+	 * CONVERT DIALOG TITLE TO HTML
+	 * REF: http://stackoverflow.com/questions/14488774/using-html-in-a-dialogs-title-in-jquery-ui-1-10
+	 */
+	$.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+		_title : function(title) {
+			if (!this.options.title) {
+				title.html("&#160;");
+			} else {
+				title.html(this.options.title);
+			}
+		}
+	}));
+
+
+	/*
+	* DIALOG SIMPLE
+	*/
+
+	// Dialog click
+	$('#dialog_link').click(function() {
+		$('#dialog_simple').dialog('open');
+		return false;
+
+	});
+
+	$('#dialog_simple').dialog({
+		autoOpen : false,
+		width : 600,
+		resizable : false,
+		modal : true,
+		title : "<div class='widget-header'><h4><i class='fa fa-warning'></i> Empty the recycle bin?</h4></div>",
+		buttons : [{
+			html : "<i class='fa fa-trash-o'></i>&nbsp; Delete all items",
+			"class" : "btn btn-danger",
+			click : function() {
+				$(this).dialog("close");
+			}
+		}, {
+			html : "<i class='fa fa-times'></i>&nbsp; Cancel",
+			"class" : "btn btn-default",
+			click : function() {
+				$(this).dialog("close");
+			}
+		}]
+	});
+
+	/*
+	* DIALOG HEADER ICON
+	*/
+
+	// Modal Link
+	$('#modal_link').click(function() {
+		$('#dialog-message').dialog('open');
+		return false;
+	});
+
+	$("#dialog-message").dialog({
+		autoOpen : false,
+		modal : true,
+		title : "<div class='widget-header'><h4><i class='icon-ok'></i> jQuery UI Dialog</h4></div>",
+		buttons : [{
+			html : "Cancel",
+			"class" : "btn btn-default",
+			click : function() {
+				$(this).dialog("close");
+			}
+		}, {
+			html : "<i class='fa fa-check'></i>&nbsp; OK",
+			"class" : "btn btn-primary",
+			click : function() {
+				$(this).dialog("close");
+			}
+		}]
+
+	});
+
+	/*
+	 * Remove focus from buttons
+	 */
+	$('.ui-dialog :button').blur();
+
+	/*
+	 * Just Tabs
+	 */
+
+	$('#tabs').tabs();
+
+	/*
+	 *  Simple tabs adding and removing
+	 */
+
+	$('#tabs2').tabs();
+
+	// Dynamic tabs
+	var tabTitle = $("#tab_title"), tabContent = $("#tab_content"), tabTemplate = "<li style='position:relative;'> <span class='air air-top-left delete-tab' style='top:7px; left:7px;'><button class='btn btn-xs font-xs btn-default hover-transparent'><i class='fa fa-times'></i></button></span></span><a href='#{href}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{label}</a></li>", tabCounter = 2;
+
+	var tabs = $("#tabs2").tabs();
+
+	// modal dialog init: custom buttons and a "close" callback reseting the form inside
+	var dialog = $("#addtab").dialog({
+		autoOpen : false,
+		width : 600,
+		resizable : false,
+		modal : true,
+		buttons : [{
+			html : "<i class='fa fa-times'></i>&nbsp; Cancel",
+			"class" : "btn btn-default",
+			click : function() {
+				$(this).dialog("close");
+
+			}
+		}, {
+
+			html : "<i class='fa fa-plus'></i>&nbsp; Add",
+			"class" : "btn btn-danger",
+			click : function() {
+				addTab();
+				$(this).dialog("close");
+			}
+		}]
+	});
+
+	// addTab form: calls addTab function on submit and closes the dialog
+	var form = dialog.find("form").submit(function(event) {
+		addTab();
+		dialog.dialog("close");
+		event.preventDefault();
+	});
+
+	// actual addTab function: adds new tab using the input from the form above
+	function addTab() {
+		var label = tabTitle.val() || "Tab " + tabCounter, id = "tabs-" + tabCounter, li = $(tabTemplate.replace(/#\{href\}/g, "#" + id).replace(/#\{label\}/g, label)), tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
+
+		tabs.find(".ui-tabs-nav").append(li);
+		tabs.append("<div id='" + id + "'><p>" + tabContentHtml + "</p></div>");
+		tabs.tabs("refresh");
+		tabCounter++;
+
+		// clear fields
+		$("#tab_title").val("");
+		$("#tab_content").val("");
+	}
+
+	// addTab button: just opens the dialog
+	$("#add_tab").button().click(function() {
+		dialog.dialog("open");
+	});
+
+	// close icon: removing the tab on click
+	$("#tabs2").on("click", 'span.delete-tab', function() {
+
+		var panelId = $(this).closest("li").remove().attr("aria-controls");
+		$("#" + panelId).remove();
+		tabs.tabs("refresh");
+	});
+
+	/*
+	* ACCORDION
+	*/
+	//jquery accordion
+	
+     var accordionIcons = {
+         header: "fa fa-plus",    // custom icon class
+         activeHeader: "fa fa-minus" // custom icon class
+     };
+     
+	$("#accordion").accordion({
+		autoHeight : false,
+		heightStyle : "content",
+		collapsible : true,
+		animate : 300,
+		icons: accordionIcons,
+		header : "h4",
+	})
+
+	/*
+	 * PROGRESS BAR
+	 */
+	$("#progressbar").progressbar({
+     	value: 25,
+     	create: function( event, ui ) {
+     		$(this).removeClass("ui-corner-all").addClass('progress').find(">:first-child").removeClass("ui-corner-left").addClass('progress-bar progress-bar-success');
+		}
+	});
+
+</script>
 </body></html>

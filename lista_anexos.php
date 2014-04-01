@@ -242,35 +242,23 @@ function regresar(){
 }
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 </script>
-<link rel="stylesheet" href="estilos/orfeo.css">
-
-<body bgcolor="#FFFFFF">
-<table width="100%" border="0" cellspacing="1" cellpadding="0" class=borde_tab>
-<tr><td height="25" class="titulos2" colspan="10">GENERACION DE DOCUMENTOS </td>
-<td  height="25" class="titulos2" colspan="10" width="60%">
-<a href="http://orfeogpl.info/orfeogplVideos/radicacionSalida.ogv" target='VideosOrfeoGPL' alt='Descarga de Video Prueba de orfeogpl.org. Aprox 11 Megas'  title='Descarga de Video Prueba de orfeogpl.org. Aprox 11 Megas'>
-<img src='imagenes/videoOrfeo.png' width=40 border=0>
-</a>
-</td>
-</tr>
-</table>
-<table WIDTH="100%" align="center" border="0" cellpadding="0" cellspacing="1"  class="borde_tab" bgcolor="cdd0FF" >
-<tr class='etextomenu' align='middle'>
-	<th width='10%' class="titulos2" align="left">
-		<img src="<?=$ruta_raiz?>/imagenes/estadoDoc.gif" width="120" height="32">
+<table WIDTH="100%" align="center" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" >
+<tr >
+	<th >
+		<img src="<?=$ruta_raiz?>/imagenes/estadoDoc.gif">
 	</th>
-    <th width='10%'  class="titulos2">RADICADO</th>
-    <th  width='5%' class="titulos2">TIPO</th>
-	 <th  width='5%' class="titulos2">TRD</font></th>
-    <th  width='1%' class="titulos2"></th>
-    <th  width='10%' class="titulos2">DESTINO</th>
-    <th  width='5%' class="titulos2" >TAMA&Ntilde;O (Kb)</th>
-    <th  width='5%' class="titulos2" >SOLO LECTURA</th>
-    <th  width='20%' class="titulos2" >CREADOR</th>
-    <th  width='20%' class="titulos2">DESCRIPCION</th>
-    <th  width='12%' class="titulos2">ANEXADO</th>
-    <th  width='13%' class="titulos2">NUMERADO</th>
-    <th  width='35%' colspan="5" class="titulos2"  >ACCION</th>
+    <th width='10%'  >RADICADO</th>
+    <th  width='5%' >TIPO</th>
+	 <th  width='5%' >TRD</font></th>
+    <th  width='1%' ></th>
+    <th  width='10%' >DESTINO</th>
+    <th  width='5%'  >TAMA&Ntilde;O (Kb)</th>
+    <th  width='5%'  >SOLO LECTURA</th>
+    <th  width='20%'  >CREADOR</th>
+    <th  width='20%' >DESCRIPCION</th>
+    <th  width='12%' >ANEXADO</th>
+    <th  width='13%' >NUMERADO</th>
+    <th  width='35%' colspan="5"   >ACCION</th>
 </tr>
 <?php
 /*
@@ -304,13 +292,8 @@ while(!$rs->EOF)
 	$linkarchivotmp=$directoriobase.substr(trim($coddocu),0,4)."/".intval(substr(trim($coddocu),4,$ln))."/docs/tmp".trim($rs->fields["NOMBRE"]);
 	if(!trim($rs->fields["NOMBRE"])) $linkarchivo = "";
 ?>
-<tr class="listado1" bgcolor="cdd0FF">
+<tr>
 <?php
-if($origen==1)
-{	echo " class='timpar' ";
-	if ($rs->fields["NOMBRE"]=="No"){$linkarchivo= "";}
-	echo "";
-}
 if($rs->fields["RADI_NUME_SALIDA"]!=0)
 {	$cod_radi =$rs->fields["RADI_NUME_SALIDA"];	}
 else
@@ -330,7 +313,7 @@ if($anex_estado==2)
 if($anex_estado==3) {$img_estado = "<img src=$ruta_raiz/imagenes/docImpreso.gif>"; }
 if($anex_estado==4) {$img_estado = "<img src=$ruta_raiz/imagenes/docEnviado.gif>"; }
 ?>
-<TD height="21" class="listado2"> <font size=1> <?=$img_estado?> </font>
+<TD height="21" > <font size=1> <?=$img_estado?> </font>
 </TD>
  <TD><font size=1> 
 <?php
@@ -401,7 +384,7 @@ if($anex_estado==4) {$img_estado = "<img src=$ruta_raiz/imagenes/docEnviado.gif>
 </font>
 </td>
 
-	<td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif" class="etextomenu">
+	<td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif">
 	<?php
 	    /**
 		  *  $perm_radi_sal  Viene del campo PER_RADI_SAL y Establece permiso en la rad. de salida
@@ -669,7 +652,7 @@ if($verradPermisos == "Full")
 {
 ?>
 <br>
-<table  width="100%" align="center" border="0" cellpadding="0" cellspacing="5" class="borde_tab">
+<table  width="100%" align="center" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr align="center">
      <td >
      <a class="vinculos" href='javascript:nuevoArchivo(<? if ( $num_archivos==0 && $swRadDesdeAnex==false)  echo "1"; else echo "0";  ?>)' class="timpar">
