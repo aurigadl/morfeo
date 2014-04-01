@@ -354,7 +354,7 @@ $time_start = microtime_float();
 <tr><td></td></tr>
 </table></p>
 -->
-<table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" width=90%>
+<table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" width=100%>
   <tr class="titulos2">
 <?php
      if($numrad){
@@ -394,7 +394,7 @@ if($usuaPermExpediente >= 1  ) {
 	
       ?>
 	<a href="#" onClick="verTipoExpediente('<?=$num_expediente?>','<?=$codserie?>','<?=$tsub?>','<?=$tdoc?>','MODIFICAR')" >
-	<span class="leidos"><b>CREAR</b></span></a>
+	<b>CREAR</b></a>
 	<?php
 	}
 
@@ -403,21 +403,19 @@ if($usuaPermExpediente >= 1  ) {
 		echo $mostrarAlerta;
 	} else {
 ?>
-    <td align="center" class="titulos2" colspan=2>
-      <span class="titulos2" align="center">
+    <td align="center" colspan=3>
         <b>ESTE DOCUMENTO SE ENCUENTRA INCLUIDO EN EL(LOS) SIGUIENTE(S) EXPEDIENTE(S).</b>
-      </span>
     </td>
     <td align="center">
+      <label class="select">
       <?php print $rs_exp->GetMenu( 'expIncluido', $expIncluido, false, true, 3, "class='select' onChange='document.form2.submit();'", false ); ?>
+      </LABEL>
     </td>
-    <td align="center" nowrap>
-    <a href="#" onClick="insertarExpediente();" ><span class="leidos2"><b>INCLUIR EN</b></span></a>
+    <td align="center">
+    <a href="#" onClick="insertarExpediente();" ><b>INCLUIR EN</b></a>
       <br>
-      <br>
-      <a href="#" onClick="excluirExpediente();" ><span class="leidos2"><b>EXCLUIR DE</b></span></a>
-      <br>
-      <br>
+      <a href="#" onClick="excluirExpediente();" ><b>EXCLUIR DE</b></a>
+     <br>
       <?php
 	if(!$codserie) {
 		$codserie = 0;
@@ -444,7 +442,7 @@ if($usuaPermExpediente >= 1  ) {
   </tr>
 </table>
 
-<table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+<table width="100%" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
 <?
 	error_reporting(7);
 	include_once ("$ruta_raiz/include/tx/Expediente.php");
@@ -549,15 +547,15 @@ if($usuaPermExpediente >= 1  ) {
      Responsable: <b><span class=leidos2> <? echo $responsable;?></b> 
 	<?
 		if($krdperm==2){
-			echo "<input type=\"button\" value=\"Cambiar\" class=\"botones_3\" onClick=\"Responsable('$num_expediente')\">";
+			echo "<input type=\"button\" value=\"Cambiar\" class=\"btn btn-primary btn-xs\" onClick=\"Responsable('$num_expediente')\">";
 			if ($arch!=2 && $mostar){
 			?>
-			<input type="button" class="botones_mediano2" value="Cerrar Expediente" onClick=" CambiarE(2,'<?=$num_expediente?>') ">
+			<input type="button" class="btn btn-primary btn-xs" value="Cerrar Expediente" onClick=" CambiarE(2,'<?=$num_expediente?>') ">
 		<?
 		}
 		elseif($mostrar){
 		?>
-			<input type="button" class="botones_mediano2" value="Reabrir Expediente" onClick=" CambiarE(1,'<?=$num_expediente?>')">
+			<input type="button" class="btn btn-primary btn-xs" value="Reabrir Expediente" onClick=" CambiarE(1,'<?=$num_expediente?>')">
 		<?
 		}
 		}
@@ -579,7 +577,7 @@ if($usuaPermExpediente >= 1  ) {
 <?
 	if($krdperm==2){
 	?>
-<input type="button" value="Cambiar" class=botones_3 onClick="Responsable('<?=$num_expediente?>')">
+<input type="button" value="Cambiar" class="btn btn-primary btn-xs" onClick="Responsable('<?=$num_expediente?>')">
 <br>
 <?php if($mostrar){?>
 			<input type="button" class="botones_mediano" value="Cerrar Expediente" onClick=" CambiarE(2,'<?=$num_expediente?>') ">
@@ -721,11 +719,12 @@ if($descPExpediente){
 ?>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Estado :<span class=leidos2> <?=$descFldExp?></span>&nbsp;&nbsp;&nbsp;
-<input type="button" value="..." class=botones_2 onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')">
+<input type="button" value="..." class="btn btn-primary btn-xs" onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <?php
 if($frmNombre){
 ?>
+<BR>
 <a href="#" onClick="window.open('<?=$frmLink?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><span class="leidos"> <img src="<?=$ruta_raiz?>/imagenes/formularioIcono.jpg" width=25 ><?=$frmNombre?></span></a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <?php
@@ -741,7 +740,7 @@ if($frmLinkSelect){
 }
 if($num_expediente !=""){
 ?>    <td colspan="2">Historia del Expediente :<span class=leidos2> </span>&nbsp;&nbsp;&nbsp;
-	 <input type="button" value="..." class=botones_2 onClick="verHistExpediente('<?=$num_expediente?>');">
+	 <input type="button" value="..." class="btn btn-primary btn-xs" onClick="verHistExpediente('<?=$num_expediente?>');">
 	 </td>
 <?php 
 // if($usuaPermExpediente and $verradPermisos == "Full") {
@@ -749,10 +748,10 @@ if($usuaPermExpediente) {
 
 ?>
   <td  nowrap>Adicionar Proceso :<span class=leidos2> </span>&nbsp;&nbsp;&nbsp;
-    <input type="button" value="..." class=botones_2 onClick="crearProc('<?=$num_expediente?>');">
+    <input type="button" value="..." class="btn btn-primary btn-xs" onClick="crearProc('<?=$num_expediente?>');">
   </td>
 <td  nowrap>Seguridad Exp (<?=$nivelExp?>) :<span class=leidos2> </span>&nbsp;&nbsp;&nbsp;
-    <input type="button" value="..." class=botones_2 onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">
+    <input type="button" value="..." class="btn btn-primary btn-xs" onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">
   </td>
 <?php } else {?>
 	<td>&nbsp;</td>	
@@ -773,14 +772,8 @@ if($usuaPermExpediente) {
 	}
 ?>
 <tr>
-  <td class='titulos5' colspan=1>
-    TRD:
-  </td>
-  <td class='leidos2' colspan=2>
-    <?php print $arrTRDExp['serie']." / ".$arrTRDExp['subserie']; ?>
-  </td>
-  <td colspan="3" colspan=2></td>
-  <td rowspan="3" colspan=2>
+  <td colspan="5">
+    <B>TRD :</B><?php print $arrTRDExp['serie']." / ".$arrTRDExp['subserie']; ?>
     <table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
     <?php
 	// Modificado Infom�trika 23-Julio-2009
@@ -800,22 +793,15 @@ if($usuaPermExpediente) {
 	if( $arrDatosParametro != "" ) {
 		foreach( $arrDatosParametro as $clave => $datos ) {
     ?>
-      <tr rowspan="4"   class="leidos2">
-        <td colspan="2" class="titulos5"><? print $datos['etiqueta']; ?>:</td>
+      <tr rowspan="4"  >
+        <td colspan="2" ><? print $datos['etiqueta']; ?>:</td>
         <td colspan="2" ><? print $datos['parametro']; ?></td>
       </tr>
         <?php
         }
       }
     ?>
-    </table>
-  </td>
-</tr>
-<tr >
-  <td class="titulos5">
-    Proceso:
-  </td>
-  <td colspan="4" class='leidos2'>
+    <br><B>Proceso: </B>
     <?php
         /*
          *  Modificado: 17-Agosto-2006 Supersolidaria
@@ -825,14 +811,8 @@ if($usuaPermExpediente) {
 		print $arrTRDExp['proceso']." / ".$arrTRDExp['terminoProceso'];
                 }
     ?>
-  </td>
-</tr>
-<tr >
-  <td class="titulos5" nowrap>
-    Fecha Inicio:
-  </td>
-  <td colspan="4" class='leidos2'>
-    <?php print $arrTRDExp['fecha']; ?>
+  <br>
+    <b>Fecha Inicio: </b><?php print $arrTRDExp['fecha']; ?>
   </td>
 </tr>
 
@@ -858,7 +838,7 @@ if($usuaPermExpediente) {
         Ocultar Borrados:&nbsp;
         <?php
         }
-        print '<input type="button" name="btnVerBorrados" value="..." class="botones_2" onclick="document.form2.submit();">';
+        print '<input type="button" name="btnVerBorrados" value="..." class="btn btn-primary btn-xs" onclick="document.form2.submit();">';
         print '</p>';
       ?>
         <!--Modificaci�n: 15-Junio-2006 Supersolidaria Opci�n para ordenar los registros--->

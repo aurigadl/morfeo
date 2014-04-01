@@ -58,9 +58,7 @@ include "$ruta_raiz/tx/verifSession.php";
 
 ?>
 <html><head><title>.: Modulo total :.</title>
-<?php
-	include_once "htmlheader.inc.php";
-?>
+<?php include_once "htmlheader.inc.php"; ?>
 <!-- seleccionar todos los checkboxes-->
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 <SCRIPT LANGUAGE="JavaScript">

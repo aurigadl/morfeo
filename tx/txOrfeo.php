@@ -304,18 +304,6 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 			}
 			else
 			{	echo(" ");
-		?>
-			<div style="position:absolute; left: 275; top:5;">
-			<script language="javascript">
-				var dateAvailable = new ctlSpiffyCalendarBox("dateAvailable", "form1","fechaAgenda","btnDate1","",scBTNMODE_CUSTOMBLUE);
-				dateAvailable.date = "2003-08-05";
-				dateAvailable.writeControl();
-				dateAvailable.dateFormat="yyyy-MM-dd";
-			</script>
-				<input name="Submit2" type="button" class="botones" value="Agendar &gt;&gt;" onClick='txAgendar();'>
-			</div>
-
-	<?php
 		}	
 	}
 if ($nomcarpeta)

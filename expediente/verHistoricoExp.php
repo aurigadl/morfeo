@@ -69,15 +69,18 @@ $db = new ConnectionHandler($ruta_raiz);
 <head>
 
 <title>HISTORICO EXPEDIENTE <?=$numeroExpediente?></title>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </head>
 <body >
-<table width="1024" border="0" cellpadding="0" cellspacing="0" align="center">
-  <tr bgcolor="#006699">
-    <td class="titulos4" colspan="6" ><center>HISTORICO DEL EXPEDIENTE <?=$numeroExpediente?> "<?=$descTipoExp?>"  </center></td>
-	 </tr>
-</table>
-
+<div class="well well-sm well-light" style="opacity: 1; width=100%; overflow-y: scroll;">
+<div class="widget-body" style="opacity: 1; width=90%;">
+<div id="wid-id-0" class="jarviswidget jarviswidget-color-orange jarviswidget-sortable" style="opacity: 2; width=80%;" role="widget" data-widget-editbutton="false">
+<header style="opacity: 1; width=90%;" role="heading">
+<span class="widget-icon">
+<h2>Historico del Expediente <?=$numeroExpediente?> <?=$descTipoExp?> </h2>
+<span class="jarviswidget-loader"> </span>
+</span>
+</header>
 <?php
 	require_once("$ruta_raiz/class_control/Transaccion.php");
 	require_once("$ruta_raiz/class_control/Dependencia.php");
@@ -92,34 +95,34 @@ $db = new ConnectionHandler($ruta_raiz);
 //include_once "$ruta_raiz/flujoGrafico.php";
 ?>
 <center>
-<table  width="1024"  align="center"  border="0" cellpadding="0" cellspacing="5" class="borde_tab"  >
+<table  width="100%"  align="center"  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox"  >
   <tr   >
     <td width=25% class="titulos2" height="24">ESTADO ACTUAL</td>
-    <td  width=25% class="listado2" height="24" align="left"><?=$descFldExp?></td>
+    <td  width=25%  height="24" align="left"><?=$descFldExp?></td>
     <td width=25% class="titulos2" height="24">DIAS ESPERADOS PARA ESTE ESTADO</td>
-    <td  width=25% class="listado2" height="24"><?=$expTerminosP?> Dias Habiles</td>
+    <td  width=25%  height="24"><?=$expTerminosP?> Dias Habiles</td>
   </tr>
     <tr  class='etextomenu' >
     <td  class="titulos2" height="24">DIAS HABILES DE PROCESO </td>
-    <td  class="listado2" height="24"><?=$tReal?></td>
+    <td   height="24"><?=$tReal?></td>
     <td  class="titulos2" height="24">DIAS HABILES LEGALES </td> 
-    <td  class="listado2" height="24"><?=$expTerminos?></td>
+    <td   height="24"><?=$expTerminos?></td>
   </tr>
  </table>
 </center>
- <table width="1024" border="0" cellspacing="0" cellpadding="0" align="center">
+ <table width="100%" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr>
     <td height="25" class="titulos4">FLUJO HISTORICO DEL EXPEDIENTE ---- FECHA DE INICIO DE PROCESO <?=$expFechaCrea?></td>
   </tr>
 </table>
-<table  width="1024" align="center" border="0" cellpadding="0" cellspacing="1" class="borde_tab" >
+<table  width="100%" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" >
   <tr   align="center">
-    <td width=100 class="titulos2" height="24">DEPENDENCIA </td>
-    <td  width=100 class="titulos2" height="24">FECHA</td>
-     <td  width=100 class="titulos2" height="24">TRANSACCION </td>  
-    <td  width=100 class="titulos2" height="24" >USUARIO</td>
-		<td  width=100 class="titulos2" height="24" >RADICADO</td>
-    <td  width=200 height="24" class="titulos2">COMENTARIO</td>
+    <th width=100 class="titulos2" height="20"><small>DEPENDENCIA </small></th>
+    <th  width=100 class="titulos2" height="20"><small>FECHA</small></th>
+     <th  width=100 class="titulos2" height="20"><small>TRANSACCION</small> </th>  
+    <th  width=100 class="titulos2" height="20" ><small>USUARIO</small></th>
+		<th  width=100 class="titulos2" height="20" ><small>RADICADO</small></th>
+    <th  width=200 height="20" class="titulos2"><small>COMENTARIO</small></th>
 	<?
 		/** FLUJO GRAFICO DE LOS ESTADOS POR EL CUAL PASA EL EXPEDIENTE
 			*/
@@ -146,7 +149,7 @@ if($rs)
 		$flujoCodigo[$codFlujo] = $codOrden;
 		$flujoTerminosReal[$codFlujo] = $terminosTotales;
 		?>
-		<td  width=300 height="24" class="titulos2"><?=$etapaFlujo?> (<?=$etapaFlujoTerminos?> / <?=$flujoTerminosReal[$codFlujo]?> Dias)</td>
+		<th  width=300 height="10" align=center><small><?=$etapaFlujo?><br>(<?=$etapaFlujoTerminos?> / <?=$flujoTerminosReal[$codFlujo]?> Dias)</small></th>
 		<?
 		$rs->MoveNext();
 	}
@@ -214,21 +217,21 @@ if($rs)
 		    $i=1;
 			}
 			 ?>
-    <td class="listado2" >
+    <td  >
 	<?=$objDep->getDepe_nomb()?></td>
-    <td class="listado2">
+    <td >
 	<?
 			$expFechaHist = $rs->fields["HIST_FECH"];
 			echo $expFechaHist;
 	?>
  </td>
-<td class="listado2"  >
+<td   >
   <?=$trans->getDescripcion()?>
 </td>
-<td class="listado2"  >
+<td   >
    <?=$objUs->get_usua_nomb()?>
 </td>
-<td class="listado2"  >
+<td   >
    <?=$rs->fields["RADI_NUME_RADI"]?>
 </td>
 		<?
@@ -238,7 +241,7 @@ if($rs)
 			 * <?=$usua_destino?> </td> 
 			 */
 		?>
-		<td class="listado2" width="200"><?=$rs->fields["HIST_OBSERVA"]?></td>
+		<td  width="200"><?=$rs->fields["HIST_OBSERVA"]?></td>
 	<? 
 			$flujoCodigoActual = $flujoCodigo[$rs->fields["SGD_FEXP_CODIGO"]];
 			for($i=0;$i<=$flujoCodigoActual-1;$i++)
@@ -273,6 +276,8 @@ if($rs)
   // Finaliza Historicos
 	?>
 </table>
-
+</div>
+</div>
+</div>
 </body>
 </html>
