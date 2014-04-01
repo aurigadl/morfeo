@@ -788,7 +788,7 @@ var contadorVentanas=0
 
       <section class="col col-4">
         <label class="label">
-          Fecha Doc. dd/mm/aaaa 
+          Fecha Doc. dd/mm/aaaa
         </label>
         <label class="input">
           <script language="javascript">
@@ -897,401 +897,448 @@ var contadorVentanas=0
 
 ?>
 
+    <div class="row">
+      <section class="col col-4">
+          <label class="label">
+            Documento
+          </label>
+          <label class="input">
+            <div class="row">
+              <section class="col col-10">
+                <input type=text name='cc_documento_us<?=$i?>' value='<?=$cc_documento?>' readonly="true" class="tex_area">
+              </section>
+              <section class="col col-2">
+                <input typ=etext name='documento_us<?=$i ?>' value='<?=$documento?>' readonly="true" class="tex_area" size="1">
+              </section>
+            </div>
+          </label>
+      </section>
+      <section class="col col-4">
+          <label class="label">
+          Tipo
+          </label>
+          <label class="select">
+            <select name="tipo_emp_us<?=$i?>" class="input-sm">
+            <?
+              if($i==1){if($tipo_emp_us1==0){$datos = " selected ";}else{$datos= "";}}
+              if($i==2){if($tipo_emp_us2==0){$datos = " selected ";}else{$datos= "";}}
+            if($i==3){if($tipo_emp_us3==0){$datos = " selected ";}else{$datos= "";}}
+            ?>
+            <option value=0 '<?=$datos ?>'>USUARIO  </option>
+              <?
+            if($i==1){if($tipo_emp_us1==1){$datos = " selected ";}else{$datos= "";}}
+                if($i==2){if($tipo_emp_us2==1){$datos = " selected ";}else{$datos= "";}}
+              if($i==3){if($tipo_emp_us3==1){$datos = " selected ";}else{$datos= "";}}
+              ?>
+            <option value=1 '<?=$datos ?>'>ENTIDADES  </option>
+              <?
+            if($i==1){if($tipo_emp_us1==2){$datos = " selected ";}else{$datos= "";}}
+                if($i==2){if($tipo_emp_us2==2){$datos = " selected ";}else{$datos= "";}}
+              if($i==3){if($tipo_emp_us3==2){$datos = " selected ";}else{$datos= "";}}
+              ?>
+            <option value=2 '<?=$datos ?>'>EMPRESAS  </option>
+              <?
+            if($i==1){if($tipo_emp_us1==6){$datos = " selected ";}else{$datos= "";}}
+                if($i==2){if($tipo_emp_us2==6){$datos = " selected ";}else{$datos= "";}}
+              if($i==3){if($tipo_emp_us3==6){$datos = " selected ";}else{$datos= "";}}
+              ?>
+            <option value=6 '<?=$datos ?>'>FUNCIONARIOS  </option>
+          </select>
+          </label>
+      </section>
+
+      <section class="col col-4">
+            <input type="button" name="Button" value="BUSCAR" class="btn" onClick="Start('buscar_usuario.php?&nombreTp1=<?=$nombreTp1?>&nombreTp2=<?=$nombreTp2?>&nombreTp3=<?=$nombreTp3?>&busq_salida=<?=$busq_salida?>&ent=<?=$ent?>',1024,400);" align="right">
+            <input type='hidden' name='depende22' value="<?php echo $depende;?>">
+          </section>
+        </div>
+      </section>
+
+    <div class="row">
+      <section class="col col-6">
+          <label class="label">
+            <?=$lbl_nombre ?>
+          </label>
+          <label>
+            <INPUT type=text name='nombre_us<?=$i ?>' value='<?=$nombre ?>'  readonly="true"  class="tex_area" size=40>
+          </label>
+      </section>
+      <section class="col col-6">
+          <label class="label">
+            <?=$lbl_apellido ?>
+          </label>
+          <label>
+            <?php if($i==4) {
+              $ADODB_COUNTRECS = true;
+              $query ="select PAR_SERV_NOMBRE,PAR_SERV_CODIGO FROM PAR_SERV_SERVICIOS order by PAR_SERV_NOMBRE";
+              $rs=$db->conn->query($query);
+              $numRegs = "! ".$rs->RecordCount();
+              $varQuery = $query;
+              print $rs->GetMenu2("sector_us$i", "sector_us$i", "0:-- Seleccione --", false,"","onChange='procEst(formulario,18,$i )' class='ecajasfecha'");
+              $ADODB_COUNTRECS = false;
+              ?>
+              <select name="sector_us<?=$i ?>" class="select">
+                <?php while(!$rs->EOF) {
+                $codigo_sect = $rs->fields["PAR_SERV_CODIGO"];
+                $nombre_sect = $rs->fields["PAR_SERV_NOMBRE"];
+                echo "<option value=$codigo_sect>$nombre_sect</option>";
+                $rs->MoveNext();
+                  }
+                ?>
+              </select>
+                <?  } else { ?>
+                <INPUT type=text name='prim_apel_us<?=$i ?>' value='<?=$papel ?>' class="tex_area"  readonly="true"  size="35">
+                <?  } ?>
+          </label>
+      </section>
+    </div>
+
+    <div class="row">
+      <section class="col col-6">
+          <label class="label">
+            <?=$lbl_nombre2 ?>
+          </label>
+          <label>
+            <input type=text name='seg_apel_us<?=$i ?>' value='<?=$sapel ?>'  readonly="true"  class="tex_area" size=40>
+          </label>
+      </section>
+      <section class="col col-6">
+          <label class="label">
+            Tel&eacute;fono
+          </label>
+          <label>
+            <input type=text name='telefono_us<?=$i ?>' value='<?=$tel ?>' <?=$bloqEdicion?> class="tex_area" size=35>
+          </label>
+      </section>
+    </div>
+
+    <div class="row">
+
+      <section class="col col-6">
+          <label class="label">
+          Direcci&oacute;n
+          </label>
+          <label>
+              <INPUT type=text name='direccion_us<?=$i ?>' value='<?=$dir ?>' <?=$bloqEdicion?> class="tex_area" size=40>
+          </label>
+      </section>
+
+      <section class="col col-6">
+          <label class="label">
+            Tel&eacute;fono
+          </label>
+          <label>
+            <input type=text name='telefono_us<?=$i ?>' value='<?=$tel ?>' <?=$bloqEdicion?> class="tex_area" size=35>
+          </label>
+      </section>
+
+    </div>
+    <div class="row">
+      <section class="col col-6">
+          <label class="label">
+            Mail
+          </label>
+          <label>
+            <INPUT type=text name='mail_us<?=$i ?>' value='<?=$mail ?>' <?=$bloqEdicion?> class="tex_area" size=35>
+          </label>
+      </section>
+
+      <?  if($i!=3) { ?>
+      <section class="col col-6">
+          <label class="label">
+            Dignatario
+          </label>
+          <label>
+            <INPUT type='text' name='otro_us<?=$i ?>' value="<?php echo htmlspecialchars(stripcslashes($otro)); ?>" class='tex_area' size='40' maxlength='50'>
+          </label>
+      </section>
+      <?  } ?>
+    </div>
+
+    <div class="row">
+      <section class="col col-6">
+          <label class="label">
+            Continente
+          </label>
+          <label>
+
+          <?php
+                /*  En este segmento trabajaremos macrosusticiï¿½n, lo que en el argot php se denomina Variables variables.
+            *	El objetivo es evitar realizar codigo con las mismas asignaciones y comparaciones cuya diferencia es el
+            *	valor concatenado de una variable + $i.
+            */
+                $var_cnt = "idcont".$i;
+                $var_pai = "idpais".$i;
+                $var_dpt = "codep_us".$i;
+                $var_mcp = "muni_us".$i;
+
+                /*	Se crean las variables cuyo contenido es el valor por defecto para cada combo, esto segï¿½n el siguiente orden:
+            *	1. Se pregunta si existe idcont1, idcont2 e idcont3 (segï¿½n iteracciï¿½n del ciclo), si es asï¿½ se asigna a $contcodi.
+            *	2. Sino existe (osea que no viene de buscar_usuario.php) se pregunta si existe "localidad" y se asigna el
+            *	   respectivo cï¿½digo; de ser negativa la "localidad", $contcodi toma el valor de 0. Esto para cada
+            *	   variable de continente, pais, dpto y mncpio respectivamente.
+            */
+
+                (${$var_cnt}) ? $contcodi = ${$var_cnt} : ($_SESSION['cod_local'] ? $contcodi = (substr($_SESSION['cod_local'],0,1)*1) : $contcodi = 0 ) ;
+                (${$var_pai}) ? $paiscodi = ${$var_pai} : ($_SESSION['cod_local'] ? $paiscodi = (substr($_SESSION['cod_local'],2,3)*1) : $paiscodi = 0 ) ;
+                (${$var_dpt}) ? $deptocodi = ${$var_dpt} : ($_SESSION['cod_local'] ? $deptocodi = $paiscodi."-".(substr($_SESSION['cod_local'],6,3)*1) : $deptocodi = 0 ) ;
+                (${$var_mcp}) ? $municodi = ${$var_mcp} : ($_SESSION['cod_local'] ? $municodi = $deptocodi."-".substr($_SESSION['cod_local'],10,3)*1 : $municodi = 0 ) ;
+
+                //	Visualizamos el combo de continentes.
+                echo $Rs_Cont->GetMenu2("idcont$i",$contcodi,"0:<< seleccione >>",false,0," id=\"idcont$i\" CLASS=\"select\" onchange=\"cambia(this.form, 'idpais$i', 'idcont$i')\" ");
+                $Rs_Cont->Move(0);
+            ?>
+          </label>
+      </section>
+      <section class="col col-6">
+          <label class="label">
+            Pa&iacute;s
+          </label>
+          <label>
+            <?php
+            //	Visualizamos el combo de paises.
+            echo "<SELECT NAME=\"idpais$i\" ID=\"idpais$i\" CLASS=\"select\" onchange=\"cambia(this.form, 'codep_us$i', 'idpais$i')\">";
+            while (!$Rs_pais->EOF and !( $Submit4)){
+              if ($_SESSION['cod_local'] and ($Rs_pais->fields['ID0'] == $contcodi)){
+                ($paiscodi == $Rs_pais->fields['ID1'])? $s = " selected='selected'" : $s = "";
+                echo "<option".$s." value='".$Rs_pais->fields['ID1']."'>".$Rs_pais->fields['NOMBRE']."</option>";
+              }
+              $Rs_pais->MoveNext();
+            }
+            echo "</SELECT>";
+            $Rs_pais->Move(0); ?>
+          </label>
+      </section>
+    </div>
+    <div class="row">
+
+      <section class="col col-6">
+          <label class="label">
+            Departamento
+          </label>
+          <label>
+              <?php
+              echo "<SELECT NAME=\"codep_us$i\" ID=\"codep_us$i\" CLASS=\"select\" onchange=\"cambia(this.form, 'muni_us$i', 'codep_us$i')\">";
+            while (!$Rs_dpto->EOF and !( $Submit4)){
+              if ($_SESSION['cod_local'] and ($Rs_dpto->fields['ID0'] == $paiscodi)){
+                ($deptocodi == $Rs_dpto->fields['ID1'])? $s = " selected='selected'" : $s = "";
+                echo "<option".$s." value='".$Rs_dpto->fields['ID1']."'>".$Rs_dpto->fields['NOMBRE']."</option>";
+              }
+              $Rs_dpto->MoveNext();
+              }
+              echo "</SELECT>";
+              $Rs_dpto->Move(0); ?>
+          </label>
+      </section>
+
+      <section class="col col-6">
+          <label class="label">
+            Municipio
+          </label>
+          <label>
+              <?php
+              echo "<SELECT NAME=\"muni_us$i\" ID=\"muni_us$i\" CLASS=\"select\" >";
+              while (!$Rs_mcpo->EOF and !( $Submit4)){
+                if ($_SESSION['cod_local']){
+                  ($municodi == $Rs_mcpo->fields['ID1'])? $s = " selected='selected'" : $s = "";
+                  echo "<option".$s." value='".$Rs_mcpo->fields['ID1']."'>".$Rs_mcpo->fields['NOMBRE']."</option>";
+                }
+                $Rs_mcpo->MoveNext();
+              }
+              echo "</SELECT>";
+              $Rs_mcpo->Move(0);
+              $municodi=0;$muninomb="";$deptocodi=0; ?>
+          </label>
+      </section>
+    </div>
+<? } 
+
+/******************************************
+ *
+ *
+ * ***************************************/
+
+  unset($contcodi);
+  unset($paiscodi);
+  unset($deptocodi);
+  unset($municodi);
+
+  if(empty($asu)){
+      $asu =  $eMailsubject;
+  }
+
+  $asu = htmlspecialchars(stripcslashes($asu));
+?>
+
   <div class="row">
-    <section class="col col-4">
-        <label class="label">
-          Documento
-        </label>
-        <label class="input">
-          <div class="row">
-            <section class="col col-10">
-              <input type=text name='cc_documento_us<?=$i?>' value='<?=$cc_documento?>' readonly="true" class="tex_area">
-            </section>
-            <section class="col col-2">
-              <input typ=etext name='documento_us<?=$i ?>' value='<?=$documento?>' readonly="true" class="tex_area" size="1">
-            </section>
-          </div>
-        </label>
+    <section class="col col-6">
+      <label class="label">
+        Asunto
+      </label>
+      <label>
+        <textarea name="asu" cols="70" class="tex_area" rows="2" ><?=$asu?></textarea>
+      </label>
     </section>
-    <section class="col col-4">
+
+    <section class="col col-6">
         <label class="label">
-         Tipo 
+        <?php if($ent==2){
+          echo "Medio Recepci&oacute;n";
+        } else {
+              echo "Medio Env&iacute;o";
+        }
+
+        if($faxPath) $med=2;
+        if($tipoMedio) $med=4;
+        ?>
         </label>
-        <label class="select">
-          <select name="tipo_emp_us<?=$i?>" class="input-sm">
-          <?
-            if($i==1){if($tipo_emp_us1==0){$datos = " selected ";}else{$datos= "";}}
-            if($i==2){if($tipo_emp_us2==0){$datos = " selected ";}else{$datos= "";}}
-          if($i==3){if($tipo_emp_us3==0){$datos = " selected ";}else{$datos= "";}}
-          ?>
-          <option value=0 '<?=$datos ?>'>USUARIO  </option>
-            <?
-          if($i==1){if($tipo_emp_us1==1){$datos = " selected ";}else{$datos= "";}}
-              if($i==2){if($tipo_emp_us2==1){$datos = " selected ";}else{$datos= "";}}
-            if($i==3){if($tipo_emp_us3==1){$datos = " selected ";}else{$datos= "";}}
-            ?>
-          <option value=1 '<?=$datos ?>'>ENTIDADES  </option>
-            <?
-          if($i==1){if($tipo_emp_us1==2){$datos = " selected ";}else{$datos= "";}}
-              if($i==2){if($tipo_emp_us2==2){$datos = " selected ";}else{$datos= "";}}
-            if($i==3){if($tipo_emp_us3==2){$datos = " selected ";}else{$datos= "";}}
-            ?>
-          <option value=2 '<?=$datos ?>'>EMPRESAS  </option>
-            <?
-          if($i==1){if($tipo_emp_us1==6){$datos = " selected ";}else{$datos= "";}}
-              if($i==2){if($tipo_emp_us2==6){$datos = " selected ";}else{$datos= "";}}
-            if($i==3){if($tipo_emp_us3==6){$datos = " selected ";}else{$datos= "";}}
-            ?>
-          <option value=6 '<?=$datos ?>'>FUNCIONARIOS  </option>
-        </select>
+        <label>
+        <?php
+          $query = "Select MREC_DESC, MREC_CODI from MEDIO_RECEPCION WHERE MREC_CODI <>0 ";
+          $rs=$db->conn->query($query);
+          $varQuery = $query;
+          if($rs){
+            print $rs->GetMenu2("med", $med, "$opcMenu", false,"","class='select' " );
+          }
+        ?>
         </label>
     </section>
   </div>
+
+  <div class="row">
+    <section class="col col-4">
+      <label class="label">
+        Tipo Documental
+      </label>
+      <label>
+        <input name="hoj" type=hidden value="<? echo $hoj; ?>">
+        <?php
+          $query = "SELECT 
+            SGD_TPR_DESCRIP
+            ,SGD_TPR_CODIGO
+            FROM 
+              SGD_TPR_TPDCUMENTO
+          WHERE 
+            SGD_TPR_TP$ent='1'
+            and SGD_TPR_RADICA='1'
+            ORDER BY SGD_TPR_DESCRIP ";
+        $opcMenu = "0:-- Seleccione un tipo --";
+        $fechaHoy = date("Y-m-d");
+        $fechaHoy = $fechaHoy . "";
+        $ADODB_COUNTRECS = true;
+
+        $rs=$db->conn->query($query);
+        if ($rs && !$rs->EOF ) {	
+          $numRegs = "!".$rs->RecordCount();
+          $varQuery = $query;
+          print $rs->GetMenu2("tdoc", $tdoc, "$opcMenu", false,"","class='ecajasfecha' " );
+        }else {
+          $tdoc = 0;
+        }
+        $ADODB_COUNTRECS = false;
+        ?>
+      </label>
+    </section>
+
+    <section class="col col-4">
+        <label class="label">
+          Descripci&oacute; Anexos
+        </label>
+        <label>
+            <input name="ane" id="ane" type="text" size="70" class="tex_area" value="<?php echo htmlspecialchars(stripcslashes($ane));?>">
+        </label>
+    </section>
+
+    <section class="col col-4">
+        <label class="label">
+          Dependencia
+        </label>
+        <label>
+          <?php
+          // Busca las dependencias existentes en la Base de datos...
+          if($radi_depe_actu_padre and $tipoanexo==0 and !$coddepeinf)  $coddepe = $radi_depe_actu_padre;
+            if(!$coddepe)
+            {
+              $coddepe=$dependencia;
+            }
+            /** Solo los documentos de entrada (ent=2) muestra la posibilidad de redireccion a otras dependencias
+              * @queryWhere String opcional para la consulta.
+              */
+            if($ent!=2 || $dependencia=="4240" )
+            {
+              $queryWhere =" and d.depe_codi = $dependencia ";
+            }
+            else
+            {
+              $queryWhere = "";
+            }
+            // Modificado SGD 11-Jul-2007
+            //$query = "select DEPE_NOMB,DEPE_CODI from dependencia $queryWhere order by depe_nomb";
+            switch( $GLOBALS['entidad'] )
+            {
+              case 'SGD':
+                $query = "SELECT ".$db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
+                FROM DEPENDENCIA d
+                                  INNER JOIN usuario u ON u.depe_codi = d.depe_codi
+                                  and u.usua_codi = 1
+                                  and u.usua_esta = '1'
+                                  and d.depe_estado = 1
+                $queryWhere
+                ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
+                break;
+              default:
+                $query = "select DEPE_NOMB,DEPE_CODI from dependencia $queryWhere order by depe_nomb";
+                $query = "SELECT ".$db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
+                FROM DEPENDENCIA d
+                                  INNER JOIN usuario u ON u.depe_codi = d.depe_codi
+                                  and u.usua_codi = 1
+                                  and u.usua_esta = '1'
+                                  and d.depe_estado = 1
+                $queryWhere
+                ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
+            }
+            $ADODB_COUNTRECS = true;
+            $rs=$db->conn->query($query);
+            $numRegs = "!".$rs->RecordCount();
+            $varQuery = $query;
+            $comentarioDev = "Muestra las dependencias";
+
+            if ($ent!=2  || $dependencia=="4240"  )
+              print $rs->GetMenu2("coddepe",$coddepe, "0:-- Seleccione una Dependencia --", false,false,"class='select'");
+            else
+              print $rs->GetMenu2("coddepe","", "0:-- Seleccione una Dependencia --", false,false,"class='select'");
+
+            $ADODB_COUNTRECS = false;
+          ?>
+        </label>
+    </section>
+  </div>
+
+  <div class="row">
+    <section class="col col-4">
+        <label class="label">
+          No. Folios
+        </label>
+        <label>
+          <input name="nofolios" id="nofolios" type="text" size="10" class="tex_area" value="<?php echo htmlspecialchars(stripcslashes($nofolios));?>">
+        </label>
+    </section>
+    <section class="col col-4">
+        <label class="label">
+          No. Anexos
+        </label>
+        <label>
+           <input name="noanexos" id="noanexos" type="text" size="10" class="tex_area" value="<?php echo htmlspecialchars(stripcslashes($noanexos));?>">
+        </label>
+    </section>
+  </div>
+
   </form>
   </div>
 </div>
 
 
-
-
-
-    <div class="tabbertab" title="<?=$titulo?>">
-    <table width=100%  name='pes<?=$i?>' id='pes<?=$i?>' class="t_bordeGris" align="center" cellpadding="0" cellspacing="1">
-    <tr class=listado2>
-	<td class="titulos5"  align="right">Documento</td>
-	<td bgcolor="#FFFFFF"  class="listado5">
-	    <input type=text name='cc_documento_us<?=$i?>' value='<?=$cc_documento?>' readonly="true" class="tex_area">
-	<input typ=etext name='documento_us<?=$i ?>' value='<?=$documento?>' readonly="true" class="tex_area" size="1">
-	</td>
-	<td class="titulos5"  align="right"><font face="Arial, Helvetica, sans-serif" class="etextomenu">Tipo</font></td>
-	<td width="45%"  bgcolor="#FFFFFF" class="listado5">
-    <select name="tipo_emp_us<?=$i?>" class="select">
-    <?
-      if($i==1){if($tipo_emp_us1==0){$datos = " selected ";}else{$datos= "";}}
-      if($i==2){if($tipo_emp_us2==0){$datos = " selected ";}else{$datos= "";}}
-	  if($i==3){if($tipo_emp_us3==0){$datos = " selected ";}else{$datos= "";}}
-    ?>
-	<option value=0 '<?=$datos ?>'>USUARIO  </option>
-    <?
-	if($i==1){if($tipo_emp_us1==1){$datos = " selected ";}else{$datos= "";}}
-	    if($i==2){if($tipo_emp_us2==1){$datos = " selected ";}else{$datos= "";}}
-		if($i==3){if($tipo_emp_us3==1){$datos = " selected ";}else{$datos= "";}}
-    ?>
-	<option value=1 '<?=$datos ?>'>ENTIDADES  </option>
-    <?
-	if($i==1){if($tipo_emp_us1==2){$datos = " selected ";}else{$datos= "";}}
-	    if($i==2){if($tipo_emp_us2==2){$datos = " selected ";}else{$datos= "";}}
-		if($i==3){if($tipo_emp_us3==2){$datos = " selected ";}else{$datos= "";}}
-    ?>
-	<option value=2 '<?=$datos ?>'>EMPRESAS  </option>
-    <?
-	if($i==1){if($tipo_emp_us1==6){$datos = " selected ";}else{$datos= "";}}
-	    if($i==2){if($tipo_emp_us2==6){$datos = " selected ";}else{$datos= "";}}
-		if($i==3){if($tipo_emp_us3==6){$datos = " selected ";}else{$datos= "";}}
-    ?>
-	<option value=6 '<?=$datos ?>'>FUNCIONARIOS  </option>
-	</select>
-	</td>
-	<td align="right">
-	<input type="button" name="Button" value="BUSCAR" class="botones_funcion" onClick="Start('buscar_usuario.php?&nombreTp1=<?=$nombreTp1?>&nombreTp2=<?=$nombreTp2?>&nombreTp3=<?=$nombreTp3?>&busq_salida=<?=$busq_salida?>&ent=<?=$ent?>',1024,400);" align="right">
-	<input type='hidden' name='depende22' value="<?php echo $depende;?>">
-	</td>
-    </tr>
-    <tr class=e_tablas>
-	<td width="13%" class="titulos5" align="right"> <font face="Arial, Helvetica, sans-serif" class="etextomenu"><?=$lbl_nombre ?>
-	    </font></td>
-	<td width="30%" bgcolor="#FFFFFF" class="listado5">
-	    <INPUT type=text name='nombre_us<?=$i ?>' value='<?=$nombre ?>'  readonly="true"  class="tex_area" size=40>
-
-	</td>
-	<td width="10%" class="titulos5" align="right">
-      <font face="Arial, Helvetica, sans-serif" class="etextomenu">
-      <?=$lbl_apellido ?></font></td>
-	<td colspan="3" bgcolor="#FFFFFF" class="listado5">
-    <?php
-	if($i==4)
-	{	$ADODB_COUNTRECS = true;
-	$query ="select PAR_SERV_NOMBRE,PAR_SERV_CODIGO FROM PAR_SERV_SERVICIOS order by PAR_SERV_NOMBRE";
-	$rs=$db->conn->query($query);
-	$numRegs = "! ".$rs->RecordCount();
-	$varQuery = $query;
-	print $rs->GetMenu2("sector_us$i", "sector_us$i", "0:-- Seleccione --", false,"","onChange='procEst(formulario,18,$i )' class='ecajasfecha'");
-	$ADODB_COUNTRECS = false;
-    ?>
-	<select name="sector_us<?=$i ?>" class="select">
-    <?php
-      while(!$rs->EOF)
-      {
-	  $codigo_sect = $rs->fields["PAR_SERV_CODIGO"];
-	  $nombre_sect = $rs->fields["PAR_SERV_NOMBRE"];
-	  echo "<option value=$codigo_sect>$nombre_sect</option>";
-	  $rs->MoveNext();
-      }
-    ?>
-	</select>
-    <?
-							    }else
-							    {
-    ?>
-	<INPUT type=text name='prim_apel_us<?=$i ?>' value='<?=$papel ?>' class="tex_area"  readonly="true"  size="35">
-    <?
-							    }
-    ?>
-	</td>
-	</tr>
-	<tr class=e_tablas>
-	    <td width="10%" class="titulos5"  align="right"><font face="Arial, Helvetica, sans-serif" class="etextomenu"><?=$lbl_nombre2 ?></font></td>
-	    <td width="30%" bgcolor="#FFFFFF" class="listado5">
-	    <input type=text name='seg_apel_us<?=$i ?>' value='<?=$sapel ?>'  readonly="true"  class="tex_area" size=40>
-	</td>
-      <td width="10%" class="titulos5"  align="right"><font face="Arial, Helvetica, sans-serif" class="etextomenu">Tel&eacute;fono
-	    </font></td>
-	    <td  colspan="3" bgcolor="#FFFFFF"  class="listado5">
-	    <input type=text name='telefono_us<?=$i ?>' value='<?=$tel ?>' <?=$bloqEdicion?> class="tex_area" size=35>
-	</td>
-    </tr>
-    <tr class=e_tablas>
-	<td width="10%" class="titulos5"  align="right"><font face="Arial, Helvetica, sans-serif" class="etextomenu">Direcci&oacute;n
-	</font>
-	</td>
-	<td width="30%" bgcolor="#FFFFFF"  class="listado5">
-	    <INPUT type=text name='direccion_us<?=$i ?>' value='<?=$dir ?>' <?=$bloqEdicion?> class="tex_area" size=40>
-	</td>
-	<td width="10%" class="titulos5"  align="right"><font face="Arial, Helvetica, sans-serif" class="etextomenu">Mail
-	    </font></td>
-	<td  colspan="3" bgcolor="#FFFFFF"  class="listado5">
-	    <INPUT type=text name='mail_us<?=$i ?>' value='<?=$mail ?>' <?=$bloqEdicion?> class="tex_area" size=35>
-	</td>
-      </tr>
-      <?
-							      if($i!=3)
-							      {
-      ?>
-      <tr class=e_tablas>
-	  <td width="13%" class="titulos5"  align="right" ><font face="Arial, Helvetica, sans-serif" class="etextomenu">Dignatario</font></td>
-	  <td bgcolor="#FFFFFF"  class="listado5" colspan=3>
-	  <INPUT type='text' name='otro_us<?=$i ?>' value="<?php echo htmlspecialchars(stripcslashes($otro)); ?>" class='tex_area' size='40' maxlength='50'>
-	  </td>
-	  <td width="10%" class="titulos5"  align="right"><font face="Arial, Helvetica, sans-serif" class="etextomenu">
-	      </font></td>
-	  <td  colspan="3" bgcolor="#FFFFFF"  class="listado5">
-	  </td>
-
-      </tr>
-      <?
-							      }
-      ?>
-      <tr class=e_tablas>
-	  <td width="10%" class="titulos5"  align="right"><font face="Arial" class="etextomenu">Continente</font></td>
-	  <td width="20%" bgcolor="#FFFFFF"  class="listado5">
-      <?php
-      /*  En este segmento trabajaremos macrosusticiï¿½n, lo que en el argot php se denomina Variables variables.
-	*	El objetivo es evitar realizar codigo con las mismas asignaciones y comparaciones cuya diferencia es el
-	*	valor concatenado de una variable + $i.
-	*/
-      $var_cnt = "idcont".$i;
-      $var_pai = "idpais".$i;
-      $var_dpt = "codep_us".$i;
-      $var_mcp = "muni_us".$i;
-
-      /*	Se crean las variables cuyo contenido es el valor por defecto para cada combo, esto segï¿½n el siguiente orden:
-	*	1. Se pregunta si existe idcont1, idcont2 e idcont3 (segï¿½n iteracciï¿½n del ciclo), si es asï¿½ se asigna a $contcodi.
-	*	2. Sino existe (osea que no viene de buscar_usuario.php) se pregunta si existe "localidad" y se asigna el
-	*	   respectivo cï¿½digo; de ser negativa la "localidad", $contcodi toma el valor de 0. Esto para cada
-	*	   variable de continente, pais, dpto y mncpio respectivamente.
-	*/
-
-      (${$var_cnt}) ? $contcodi = ${$var_cnt} : ($_SESSION['cod_local'] ? $contcodi = (substr($_SESSION['cod_local'],0,1)*1) : $contcodi = 0 ) ;
-      (${$var_pai}) ? $paiscodi = ${$var_pai} : ($_SESSION['cod_local'] ? $paiscodi = (substr($_SESSION['cod_local'],2,3)*1) : $paiscodi = 0 ) ;
-      (${$var_dpt}) ? $deptocodi = ${$var_dpt} : ($_SESSION['cod_local'] ? $deptocodi = $paiscodi."-".(substr($_SESSION['cod_local'],6,3)*1) : $deptocodi = 0 ) ;
-      (${$var_mcp}) ? $municodi = ${$var_mcp} : ($_SESSION['cod_local'] ? $municodi = $deptocodi."-".substr($_SESSION['cod_local'],10,3)*1 : $municodi = 0 ) ;
-
-      //	Visualizamos el combo de continentes.
-      echo $Rs_Cont->GetMenu2("idcont$i",$contcodi,"0:<< seleccione >>",false,0," id=\"idcont$i\" CLASS=\"select\" onchange=\"cambia(this.form, 'idpais$i', 'idcont$i')\" ");
-      $Rs_Cont->Move(0);
-	?>
-	    </td>
-	    <td width="10%" class="titulos5"  align="right"><font face="Arial" class="etextomenu">Pa&iacute;s</font></td>
-	    <td  colspan="3" bgcolor="#FFFFFF"  class="listado5">
-	<?php
-	    //	Visualizamos el combo de paises.
-	    echo "<SELECT NAME=\"idpais$i\" ID=\"idpais$i\" CLASS=\"select\" onchange=\"cambia(this.form, 'codep_us$i', 'idpais$i')\">";
-	    while (!$Rs_pais->EOF and !( $Submit4))
-	    {
-		if ($_SESSION['cod_local'] and ($Rs_pais->fields['ID0'] == $contcodi))	//Si hay local Y pais pertenece al continente.
-		{
-		    ($paiscodi == $Rs_pais->fields['ID1'])? $s = " selected='selected'" : $s = "";
-		    echo "<option".$s." value='".$Rs_pais->fields['ID1']."'>".$Rs_pais->fields['NOMBRE']."</option>";
-		}
-		$Rs_pais->MoveNext();
-	    }
-      echo "</SELECT>";
-      $Rs_pais->Move(0);
-      ?>	</td>
-
-      <tr >
-	  <td width="10%" class="titulos5"  align="right"><font face="Arial" class="etextomenu">Departamento</font>
-	  </td>
-	  <td width="20%" bgcolor="#FFFFFF"  class="listado5">
-      <?php
-	    echo "<SELECT NAME=\"codep_us$i\" ID=\"codep_us$i\" CLASS=\"select\" onchange=\"cambia(this.form, 'muni_us$i', 'codep_us$i')\">";
-	    while (!$Rs_dpto->EOF and !( $Submit4))
-	    {	if ($_SESSION['cod_local'] and ($Rs_dpto->fields['ID0'] == $paiscodi))	//Si hay local Y dpto pertenece al pais.
-	    {	($deptocodi == $Rs_dpto->fields['ID1'])? $s = " selected='selected'" : $s = "";
-	    echo "<option".$s." value='".$Rs_dpto->fields['ID1']."'>".$Rs_dpto->fields['NOMBRE']."</option>";
-	    }
-	    $Rs_dpto->MoveNext();
-	    }
-	    echo "</SELECT>";
-	    $Rs_dpto->Move(0);
-      ?>
-	  </td>
-	  <td width="10%" class="titulos5"  align="right"><font face="Arial" class="etextomenu">Municipio</font></td>
-	  <td  colspan="3" bgcolor="#FFFFFF"  class="listado5">
-      <?php
-      echo "<SELECT NAME=\"muni_us$i\" ID=\"muni_us$i\" CLASS=\"select\" >";
-      while (!$Rs_mcpo->EOF and !( $Submit4))
-      {	if ($_SESSION['cod_local'])	//Si hay local
-      {	($municodi == $Rs_mcpo->fields['ID1'])? $s = " selected='selected'" : $s = "";
-      echo "<option".$s." value='".$Rs_mcpo->fields['ID1']."'>".$Rs_mcpo->fields['NOMBRE']."</option>";
-      }
-      $Rs_mcpo->MoveNext();
-      }
-      echo "</SELECT>";
-      $Rs_mcpo->Move(0);
-
-
-      $municodi=0;$muninomb="";$deptocodi=0;
-      ?>
-      </td>
-      </tr>
-      </table>
-      </div>
-
-            <?
-        }
-
-unset($contcodi);
-unset($paiscodi);
-unset($deptocodi);
-unset($municodi);
-
-if(empty($asu)){
-    $asu =  $eMailsubject;
-}
-
-$asu = htmlspecialchars(stripcslashes($asu));
-
-?>
-</div>
-<table width=100% border="0" class="borde_tab" align="center">
-	<tr>
-	<td  class="titulos5" width="25%" align="right" > <font color="" face="Arial, Helvetica, sans-serif" class="etextomenu">Asunto
-		</font></td>
-	<td width="75%" class="listado5" >
-    <textarea name="asu" cols="70" class="tex_area" rows="2" ><?=$asu?></textarea>
-	</td>
-	</tr>
-</table>
 <table width=100% border="0" cellspacing="1" cellpadding="1" class="borde_tab" align="center">
-	<!--DWLayoutTable-->
-<tr>
-	<td width="25%" class="titulos5" align="right">
-		<font color="" face="Arial, Helvetica, sans-serif" class="etextomenu">
-		<?php
-		if($ent==2)
-		{
-			echo "Medio Recepci&oacute;n";
-		}
-		else
-		{
-			echo "Medio Env&iacute;o";
-		}
-/** Si la variable $faxPath viene significa que el tipo de recepcion es fax
-	* Por eso $med se coloca en 2
-	*/
-	if($faxPath) $med=2;
-	if($tipoMedio) $med=4;
-?>
-	</font>
-</td>
-<td width="25%" valign="top" class="listado5"><font color="">
-<?
-	$query = "Select MREC_DESC, MREC_CODI from MEDIO_RECEPCION WHERE MREC_CODI <>0 ";
-	$rs=$db->conn->query($query);
-		$varQuery = $query;
-		if($rs)
-		{
-			print $rs->GetMenu2("med", $med, "$opcMenu", false,"","class='select' " );
-		}
-	?>
-</font>
-</td>
-	<td width="25%"  class="titulos5" align="right"> <font face="Arial, Helvetica, sans-serif" class="etextomenu">Tipo Doc</font>
-	</td>
-	<td width="25%" valign="top" class="listado5"> <font color="">
-	<input name="hoj" type=hidden value="<? echo $hoj; ?>">
-	<?php
-	 $query = "select SGD_TPR_DESCRIP
-	 ,SGD_TPR_CODIGO
-	from SGD_TPR_TPDCUMENTO
-	WHERE SGD_TPR_TP$ent='1'
-	 and SGD_TPR_RADICA='1'
-	ORDER BY SGD_TPR_DESCRIP ";
-	$opcMenu = "0:-- Seleccione un tipo --";
-	$fechaHoy = date("Y-m-d");
-	$fechaHoy = $fechaHoy . "";
-	$ADODB_COUNTRECS = true;
-
-	$rs=$db->conn->query($query);
-	if ($rs && !$rs->EOF )
-	{	$numRegs = "!".$rs->RecordCount();
-		$varQuery = $query;
-		print $rs->GetMenu2("tdoc", $tdoc, "$opcMenu", false,"","class='ecajasfecha' " );
-	}else
-	{
-		$tdoc = 0;
-	}
-	$ADODB_COUNTRECS = false;
-?>
-</font>
-</td>
-</tr>
-</table>
-<table width=100% border="0" cellspacing="1" cellpadding="1" class="borde_tab" align="center">
-<!--DWLayoutTable-->
-
-    <tr>
-        <td  class="titulos5" width="25%" align="right"> Desc Anexos </td> <td  class="titulos5" width="25%" align="left" colspan="3">
-            <input name="ane" id="ane" type="text" size="70" class="tex_area" value="<?php echo htmlspecialchars(stripcslashes($ane));?>">
-        </td>
-    </tr>
-    <tr>
-        <td colspan="4">
-        <font color="" face="Arial, Helvetica, sans-serif" class="etextomenu">
-            <table  border="0" cellspacing="1" cellpadding="1" align="center">
-                <tr>
-                    <td  class="titulos5"  align="right">
-                         No. Folios
-                    </td>
-                    <td  class="titulos5" width="15px" align="left">
-                        <input name="nofolios" id="nofolios" type="text" size="10" class="tex_area" value="<?php echo htmlspecialchars(stripcslashes($nofolios));?>">
-                    </td>
-                    <td  class="titulos5" width="25%" align="left">No. Anexos</td>
-                    <td  class="titulos5" width="25px" align="left">
-                       <input name="noanexos" id="noanexos" type="text" size="10" class="tex_area" value="<?php echo htmlspecialchars(stripcslashes($noanexos));?>">
-                    </td>
-                </tr>
-            </table>
-        </font>
-        </td>
-    </tr>
-  <!--
-    /** Modificado Supersolidaria 01-Nov-2006
-      * Datos del funcionario que tiene a cargo una entidad y la dependencia a la
-      * que pertenece.
-      */
-  -->
     <?php
   switch( $db->entidad )
   {
@@ -1316,66 +1363,10 @@ $asu = htmlspecialchars(stripcslashes($asu));
 
 <tr>
 	<td class="titulos5" width="25%" align="right"><font color="" face="Arial, Helvetica, sans-serif" class="etextomenu">
-	Dependencia</font>
+	</font>
 	</td>
 	<td colspan="3" width="75%" class="listado5">
     <font color="" face="Arial, Helvetica, sans-serif">
-    <?php
-// Busca las dependencias existentes en la Base de datos...
-if($radi_depe_actu_padre and $tipoanexo==0 and !$coddepeinf)  $coddepe = $radi_depe_actu_padre;
-	if(!$coddepe)
-	{
-		$coddepe=$dependencia;
-	}
-	/** Solo los documentos de entrada (ent=2) muestra la posibilidad de redireccion a otras dependencias
-		* @queryWhere String opcional para la consulta.
-		*/
-	if($ent!=2 || $dependencia=="4240" )
-	{
-		$queryWhere =" and d.depe_codi = $dependencia ";
-	}
-	else
-	{
-		$queryWhere = "";
-	}
-	// Modificado SGD 11-Jul-2007
-	//$query = "select DEPE_NOMB,DEPE_CODI from dependencia $queryWhere order by depe_nomb";
-	switch( $GLOBALS['entidad'] )
-	{
-		case 'SGD':
-			$query = "SELECT ".$db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
-			FROM DEPENDENCIA d
-                        INNER JOIN usuario u ON u.depe_codi = d.depe_codi
-                        and u.usua_codi = 1
-                        and u.usua_esta = '1'
-                        and d.depe_estado = 1
-			$queryWhere
-			ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
-			break;
-		default:
-			$query = "select DEPE_NOMB,DEPE_CODI from dependencia $queryWhere order by depe_nomb";
-			$query = "SELECT ".$db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
-			FROM DEPENDENCIA d
-                        INNER JOIN usuario u ON u.depe_codi = d.depe_codi
-                        and u.usua_codi = 1
-                        and u.usua_esta = '1'
-                        and d.depe_estado = 1
-			$queryWhere
-			ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
-	}
-	$ADODB_COUNTRECS = true;
-	$rs=$db->conn->query($query);
-	$numRegs = "!".$rs->RecordCount();
-	$varQuery = $query;
-	$comentarioDev = "Muestra las dependencias";
-
-	if ($ent!=2  || $dependencia=="4240"  )
-		print $rs->GetMenu2("coddepe",$coddepe, "0:-- Seleccione una Dependencia --", false,false,"class='select'");
-	else
-		print $rs->GetMenu2("coddepe","", "0:-- Seleccione una Dependencia --", false,false,"class='select'");
-
-	$ADODB_COUNTRECS = false;
-?>
     </font>
 </td>
 </tr>
