@@ -93,7 +93,8 @@ $ruta_raiz= "..";
 <html>
 <head>
 <title>Adicionar Proceso</title>
-<link href="../estilos/orfeo.css" rel="stylesheet" type="text/css"><script>
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+<script>
 function regresar(){
 	document.TipoDocu.submit();
 }
@@ -102,9 +103,6 @@ function Start(URL, WIDTH, HEIGHT)
 {
     windowprops = "top=0,left=0,location=no,status=no, menubar=no,scrollbars=yes, resizable=yes,width="+WIDTH+",height="+HEIGHT;
     preview = window.open(URL , "preview", windowprops);
-}
-function $(elemento){
-	return document.getElementById(elemento);
 }
 function validar(){
 	var error="";
@@ -124,24 +122,19 @@ function validar(){
 		return false
 	}
 }
-</script><style type="text/css">
-<!--
-.style1 {font-size: 14px}
--->
-</style>
+</script>
 </head>
-<body bgcolor="#FFFFFF">
-<div id="spiffycalendar" class="text"></div>
- <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
- <script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
-<form method="post" action="<?=$encabezadol?>" name="TipoDocu" onsubmit="return validar();">
- <table style="width:70%;" border="0" cellspacing="1" cellpadding="0" align="center" class="borde_tab">
-   <tr align="center" class="titulos2">
-      <td height="15" class="titulos2" colspan="2">APLICACION DE LA TRD EL EXPEDIENTE</td>
-    </tr>
+<body >
+<form method="post" action="<?=$encabezadol?>" name="TipoDocu" onsubmit="return validar();"  class="smart-form">
+<div class="widget-body no-padding" width=80% align=center>
+<div class="alert alert-info no-margin fade in" width=80%>
+<i class="fa-fw fa fa-info"></i>
+Creacion de poceso Asociado al Expediente No. <?=$numeroExpediente?>
+</div>
+ <table style="width:96%;" class="table table-bordered table-striped" align=center>
 <tr >
-<td width="62%" class="titulos5" >SERIE</td>
-<td width="38%" class=listado5 >
+<td width="40%"  ><h3>Serie</h3></td>
+<td width="60%"  >
 <?php
 	$fechah=date("dmy") . " ". time("h_m_s");
 	$fecha_hoy = Date("Y-m-d");
@@ -162,17 +155,23 @@ function validar(){
 	$rsD=$db->conn->Execute($querySerie);
 	$comentarioDev = "Muestra las Series Docuementales";
 	include "$ruta_raiz/include/tx/ComentarioTx.php";
-	print $rsD->GetMenu2("codserie", $codserie, "0:-- Seleccione --", false,"","onChange='submit()' class='select' id='codserie'" );
+	?>
+		<label class="select">
+  <?
+	print $rsD->GetMenu2("codserie", $codserie, "0:-- Seleccione --", false,"","onChange='submit()' class=select id='codserie'" );
  ?>
+    <i></i>
+    </label>
 	</td>
 	</tr>
 	<tr>
-		<td class="titulos5" >SUBSERIE</td>
-	<td class=listado5 >
+		<td  ><h3>SubSerie</h3></td>
+	<td  >
 	<?
 	$nomb_varc = "su.sgd_sbrd_codigo";
 	$nomb_varde = "su.sgd_sbrd_descrip";
-	include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";$db->conn->debug=true;
+	include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
+	//$db->conn->debug=true;
 	$querySub = "select distinct ($sqlConcat) as detalle, su.sgd_sbrd_codigo
 		from sgd_mrd_matrird m, sgd_sbrd_subserierd su
 		where m.depe_codi = '$coddepe'
@@ -185,7 +184,14 @@ function validar(){
 
 	$rsSub=$db->conn->Execute($querySub);
 	include "$ruta_raiz/include/tx/ComentarioTx.php";
+		?>
+		<label class="select">
+  <?
 	print $rsSub->GetMenu2("tsub", $tsub, "0:-- Seleccione --", false,"","onChange='submit()' class='select' id='tsub' " );
+	?>
+	    <i></i>
+    </label>
+	<?
 	if(!$codiSRD)
 	{
 		$codiSRD = $codserie;
@@ -200,11 +206,12 @@ function validar(){
 	$rs=$db->conn->Execute($queryPEXP);
 	$texp = $rs->fields["SGD_PEXP_CODIGO"];
 ?>
+
 		</td>
 		</tr>
 	<tr>
-        <td class="titulos5" >PROCESO</td>
-        <td class="listado5" colspan="2" >
+        <td  ><h3>Proceso</h3></td>
+        <td  colspan="2" ><label class="select">
           <?
             $comentarioDev = "Muestra los procesos segun la combinacion Serie-Subserie";
             include "$ruta_raiz/include/tx/ComentarioTx.php";
@@ -231,42 +238,36 @@ function validar(){
                 $expTerminos = $rs->fields["SGD_PEXP_TERMINOS"];
                 if ( $expTerminos != "" )
                 {
-                    $expDesc = " $expTerminos Dias Calendario de Termino Total";
+                    $expDesc = "<small> $expTerminos Dias Calendario de Termino Total </small>";
                 }
             }
             print "&nbsp;".$expDesc;
           ?>
+              <i></i>
+          </label>
         </td>
-	</tr>
-	<tr>
-	<td class="listado2" colspan="2">Se dispone a  Crear un Proceso en el Expediente N&middot;</td>
-	</tr>
-	<tr>
-	<td align="center" class="titulosError"  style="font-size:20px;" colspan="2"><?php echo $numeroExpediente;?></td>
 	</tr>
  <tr align="center">
  <tr>
-	<TD class=titulos5>
-		Fecha de Inicio del Proceso.
+	<TD >
+		<h3>Fecha de Inicio del Proceso.</h3>
 	</TD>
-	<td class=listado2>
-  <script language="javascript">
-  <?
+	 <?
 	 if(!$fechaExp) $fechaExp = date("d/m/Y");
   ?>
-   var dateAvailable1 = new ctlSpiffyCalendarBox("dateAvailable1", "TipoDocu", "fechaExp","btnDate1","<?=$fechaExp?>",scBTNMODE_CUSTOMBLUE);
-  </script>
-			<script language="javascript">
-				dateAvailable1.date = "<?=date('Y-m-d');?>";
-				dateAvailable1.writeControl();
-				dateAvailable1.dateFormat="dd-MM-yyyy";
-			</script>
+	<td >
+	<label class="input">
+<i class="icon-append fa fa-calendar"></i>
+<input id="fechaExp" class="hasDatepicker" type="text" placeholder="Fecha de Inicio de PRoceso" name="fechaExp" value="<?=$fechaExp?>">
+</label>
+
   </td>
  </tr>
-<TD class=titulos5 nowrap>
-		Usuario Responsable del Proceso
+<TD  nowrap>
+		<h3>Usuario Responsable del Proceso</h3>
 	</TD>
-	<td class=listado2>
+	<td >
+	<label class=select>
 <?
 	$queryUs = "select usua_nomb, usua_doc from usuario where depe_codi=$dependencia AND USUA_ESTA='1'
 							order by usua_nomb";
@@ -274,22 +275,38 @@ function validar(){
 	print $rsUs->GetMenu2("usuaDocExp", "$usuaDocExp", "0:-- Seleccione --", false,""," class='select' onChange='submit()'");
 
 ?>
+       <i></i>
+          </label>
 	</td>
 </tr>
 	<tr align="center">
 	<td width="33%" height="25" class="listado2" align="center">
 	<center>
 	<?php  if($tsub && $codserie && $usuaDocExp) {?>
-			<input name="CrearProceso" type="submit" id='crearProceso' class="botones_funcion" value="Crear Proceso" />
+			<input name="CrearProceso" type="submit" id='crearProceso' class="btn btn-primary btn-xs" value="Crear Proceso" />
 	<?php } ?>
 	</center></TD>
 	<td width="33%" class="listado2" height="25">
-	<center><input name="cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar "></center></TD>
+	<center><input name="cerrar" type="button" class="btn btn-primary btn-xs" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar "></center></TD>
 	</tr>
 </table>
 </form>
-</body>
-</html>
+</div>
+   <script type="text/javascript">
+    $(document).ready(function() {
+        // START AND FINISH DATE
+        $('#fechaExp').datepicker({
+          dateFormat : 'dd/mm/yyyy',
+          prevText : '<i class="fa fa-chevron-left"></i>',
+          nextText : '<i class="fa fa-chevron-right"></i>',
+          onSelect : function(selectedDate) {
+            $('#fechaExp').datepicker('option', 'maxDate', selectedDate);
+          }
+        });
+    });
+  </script>
+
+
 <?php if(isset($_POST['CrearProceso'])){
 	
 	$sal=crearProcesoExpediente( $numeroExpediente,$nurad,$coddepe,$codusuario,$usua_doc,$usuaDocExp,$codserie,$tsub,$fechaExp, $_POST['codProc'], $arrParametro );
@@ -310,3 +327,8 @@ function validar(){
 			}
  }
  ?>
+ 
+ 
+
+</body>
+</html>
