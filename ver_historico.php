@@ -20,19 +20,12 @@
 	   $rs = $db->query($isql);			      	   
 	   $dependencia_rad = $rs->fields["DEPE_NOMB"];
 ?>
-<table  width="80%"  align="center"  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
-  <tr   align="left">
-    <td width=10%  >USUARIO ACTUAL</td>
+<table  width="80%"  align="center"  class="table table-bordered ">
+  <tr   align="left" >
+    <td width=10% class='alert alert-info' >Usuario Actual</td>
     <td  width=15%   align="left"><?=$usuario_actual?></td>
-    <td width=10%  >DEPENDENCIA ACTUAL</td>
+    <td width=10%  class='alert alert-info' >Dependencia Actual</td>
     <td  width=15%  ><?=$dependencia_actual?></td>
-  </tr>
-    <tr  class='etextomenu' align="left">
-    <td width=10%  >USUARIO RADICADOR </td>
-    <td  width=15%  ><?=$usuario_rad?></td>
-    <td width=10%  >DEPENDENCIA DE RADICACION </td> 
-    <td  width=15%  ><?=$dependencia_rad?></td>
-  </tr>
  </table>
  <table><tr><td> &nbsp;&nbsp;</td></tr></table>
  <table width="100%"  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" align="center">
@@ -41,12 +34,12 @@
   </tr>
 </table>
 <table><tr><td>&nbsp;&nbsp;</td></tr></table>
-<table  width="100%" align="center"  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" >
-  <tr   align="center" >
-    <td width=10%  >DEPENDENCIA </td>
-    <td  width=5%  >FECHA</td>
-     <td  width=15%  >TRANSACCION </td>  
-    <td  width=15%   >US. ORIGEN</td>
+<table  width="100%" align="center" class="table table-bordered"  >
+  <tr   align="center" class='alert alert-info' >
+    <td width=10%  class='alert alert-info'>DEPENDENCIA</td>
+    <td  width=5%  class='alert alert-info'>FECHA</td>
+     <td  width=15% class='alert alert-info' >TRANSACCION</td>  
+    <td  width=15%  class='alert alert-info' >US. ORIGEN</td>
 		<?
 		 /** Esta es la columna que se elimino de forma Temporal  USUARIO - DESTINO
 			 * <td  width=15% class="grisCCCCCC"  ><font face="Arial, Helvetica, sans-serif"> US. DESTINO</font></td>
@@ -188,24 +181,24 @@ $isql = "select $sqlFechaEnvio AS SGD_RENV_FECH,
 $rs = $db->query($isql);
 ?>
 <table><tr><td>&nbsp;&nbsp;</td></tr></table>
- <table width="100%" align="center" border="0" cellpadding="0" cellspacing="0" class="borde_tab">
+ <table width="100%" align="center"  >
   <tr>
     <td height="25" class="titulos4">DATOS DE ENVIO</td>
   </tr>
 </table>
-<table width="80%"  align="center"  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox"  >
+<table width="80%"  align="center"  class="table table-bordered"  >
   <tr  align="center">
-    <td width=10%  >RADICADO </td>
-    <td width=10%  >DEPENDENCIA</td>
-    <td  width=15%  >FECHA </td>
-    <td  width=15%  >Destinatario</td>      
-    <td  width=15%   >DIRECCION </td>
-    <td  width=15%   >DEPARTAMENTO </td>
-    <td  width=15%   >MUNICIPIO</td>
-    <td  width=15%   >TIPO DE ENVIO</td>
-    <td  width=5%  > No. PLANILLA</td>
-    <td  width=15%  >OBSERVACIONES O DESC DE ANEXOS</td>      
- <td  width=15%  >Realizo Envio</td>
+    <td width=10%  class='alert alert-info'>RADICADO </td>
+    <td width=10%   class='alert alert-info'>DEPENDENCIA</td>
+    <td  width=15%   class='alert alert-info'>FECHA </td>
+    <td  width=15%   class='alert alert-info'>Destinatario</td>      
+    <td  width=15%   class='alert alert-info' >DIRECCION </td>
+    <td  width=15%  class='alert alert-info'  >DEPARTAMENTO </td>
+    <td  width=15%  class='alert alert-info'  >MUNICIPIO</td>
+    <td  width=15%  class='alert alert-info'  >TIPO DE ENVIO</td>
+    <td  width=5%  class='alert alert-info' > No. PLANILLA</td>
+    <td  width=15%   class='alert alert-info'>OBSERVACIONES</td>      
+ <td  width=15%   class='alert alert-info'>Realizo Envio</td>
   </tr>
   <?
 $i=1;

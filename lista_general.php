@@ -205,13 +205,13 @@ Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado
 	  ?>
 	  </td></tr></table>
 </form>
-<table width="80%" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+<table width="80%" class="table table-bordered ">
 <tr>
- <th>Nombre</th>
- <th>Direccion</th>
- <th>Ciudad / Departamento</th>
- <th>Mail</th>
- <th>Telefono</th>
+ <th  class='alert alert-info'>Nombre</th>
+ <th  class='alert alert-info'>Direccion</th>
+ <th  class='alert alert-info'>Ciudad / Departamento</th>
+ <th  class='alert alert-info'>Mail</th>
+ <th  class='alert alert-info'>Telefono</th>
 </tr>
 <tr> 
   <td   ><?=$nomRemDes["x1"] ?> </td>

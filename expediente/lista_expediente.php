@@ -338,7 +338,7 @@ $time_start = microtime_float();
 
 	if( $rs_exp->RecordCount( ) == 0 ) {
 		$mostrarAlerta = "<td align=\"center\" class=\"titulos2\">";
-		$mostrarAlerta .= "<span class=\"leidos2\" class=\"titulos2\" align=\"center\">
+		$mostrarAlerta .= "<span class=\"alert alert-block alert-success\" class=\"titulos2\" align=\"center\">
 				<b>ESTE DOCUMENTO NO HA SIDO INCLUIDO EN NINGUN EXPEDIENTE.</b>
 			</span>
 			</td>";
@@ -367,8 +367,10 @@ if($usuaPermExpediente >= 1  ) {
 		echo $mostrarAlerta;
 	} else {
 ?>
-    <td align="center" colspan=3>
-        <b>ESTE DOCUMENTO SE ENCUENTRA INCLUIDO EN EL(LOS) SIGUIENTE(S) EXPEDIENTE(S).</b>
+    <td align="center" colspan=3 >
+      <div class="alert alert-block alert-info">
+        ESTE DOCUMENTO SE ENCUENTRA INCLUIDO EN EL(LOS) SIGUIENTE(S) EXPEDIENTE(S).
+        </div>
     </td>
     <td align="center">
       <label class="select">
@@ -496,10 +498,10 @@ if($usuaPermExpediente >= 1  ) {
 								<a href="#" onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
 							</li>
 							<li>
-								<a href="#" onClick="">Cambiar Responsable</a>
+								<a href="#" onClick="Responsable('<?=$num_expediente?>');">Cambiar Responsable</a>
 							</li>
 							<li>
-								<a href="#" onClick="">Cerrar Expediente</a>
+								<a href="#" onClick="CambiarE(2,'<?=$num_expediente?>');">Cerrar Expediente</a>
 							</li>							
 							
 							

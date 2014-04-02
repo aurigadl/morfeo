@@ -242,23 +242,23 @@ function regresar(){
 }
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 </script>
-<table WIDTH="100%" align="center" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" >
+<table WIDTH="100%" align="center" class="table table-bordered smart-form" >
 <tr >
 	<th >
 		<img src="<?=$ruta_raiz?>/imagenes/estadoDoc.gif">
 	</th>
-    <th width='10%'  >RADICADO</th>
-    <th  width='5%' >TIPO</th>
-	 <th  width='5%' >TRD</font></th>
-    <th  width='1%' ></th>
-    <th  width='10%' >DESTINO</th>
-    <th  width='5%'  >TAMA&Ntilde;O (Kb)</th>
-    <th  width='5%'  >SOLO LECTURA</th>
-    <th  width='20%'  >CREADOR</th>
-    <th  width='20%' >DESCRIPCION</th>
-    <th  width='12%' >ANEXADO</th>
-    <th  width='13%' >NUMERADO</th>
-    <th  width='35%' colspan="5"   >ACCION</th>
+    <td width='10%'  class='alert alert-info' align=center>RADICADO</td>
+    <td  width='5%'  class='alert alert-info' align=center>TIPO</td>
+	 <td  width='5%'  class='alert alert-info' align=center>TRD</font></td>
+    <td  width='1%'  class='alert alert-info' align=center></td>
+    <td  width='10%' class='alert alert-info' align=center>DESTINO</td>
+    <td  width='5%'   class='alert alert-info' align=center>TAMA&Ntilde;O (Kb)</td>
+    <td  width='5%'   class='alert alert-info' align=center>SOLO LECTURA</td>
+    <td  width='20%'  class='alert alert-info' align=center>CREADOR</td>
+    <td  width='20%'  class='alert alert-info' align=center>DESCRIPCION</td>
+    <td  width='12%'  class='alert alert-info' align=center>ANEXADO</td>
+    <td  width='13%'  class='alert alert-info' align=center>NUMERADO</td>
+    <td  width='35%' colspan='5'   class='alert alert-info' align=center >ACCION</td>
 </tr>
 <?php
 /*
