@@ -1774,6 +1774,9 @@ var contadorVentanas=0
               </ul>
               <input type='hidden'  name='Submit4' value='MODIFICAR DATOS' class='ebuttons2'>
               <input type='hidden' name='nurad' value='<?=$nurad?>'></center>
+            </fieldset>
+          </div>
+        </div>
 
     <?}
 
@@ -1806,44 +1809,6 @@ var contadorVentanas=0
         $rs=$db->conn->query($query);
         $varQuery = $query;
         ?>
-
-
-
-        <?php
-	    }
-
-      ?>
-      <input type='hidden' name='depende' value='<?php echo $depende; ?>'><BR>
-      <?php
-      $verrad = $nurad;
-      $radi   = $nurad;
-      $contra = $drde;
-      $tipo   = 1;
-
-      if($Submit3 or $Submit4 or $rad0 or $rad1 or $rad2){
-        echo "<script language='JavaScript'>";
-        for ($i=1; $i<=3; $i++){
-          $var_pai = "idpais".$i;
-          $var_dpt = "codep_us".$i;
-          $var_mcp = "muni_us".$i;
-          $muni_tmp = ${$var_mcp};
-          if (!(is_null($muni_tmp))){
-            echo "\n";
-            echo "cambia(document.formulario, 'idpais$i', 'idcont$i');
-              formulario.idpais$i.value = ${$var_pai};
-              cambia(document.formulario, 'codep_us$i', 'idpais$i');
-              formulario.codep_us$i.value = '${$var_dpt}';
-              cambia(document.formulario, 'muni_us$i', 'codep_us$i');
-              formulario.muni_us$i.value = '${$var_mcp}';";
-          }
-        }
-        echo "</script>";
-      } ?>
-
-            </fieldset>
-          </div>
-        </div>
-
         <div class="col col-4">
           <div class="well">
             <fieldset>
@@ -1898,6 +1863,37 @@ var contadorVentanas=0
             </fieldset>
           </div>
         </div>
+        <?php
+	    }
+
+      ?>
+      <input type='hidden' name='depende' value='<?php echo $depende; ?>'><BR>
+      <?php
+      $verrad = $nurad;
+      $radi   = $nurad;
+      $contra = $drde;
+      $tipo   = 1;
+
+      if($Submit3 or $Submit4 or $rad0 or $rad1 or $rad2){
+        echo "<script language='JavaScript'>";
+        for ($i=1; $i<=3; $i++){
+          $var_pai = "idpais".$i;
+          $var_dpt = "codep_us".$i;
+          $var_mcp = "muni_us".$i;
+          $muni_tmp = ${$var_mcp};
+          if (!(is_null($muni_tmp))){
+            echo "\n";
+            echo "cambia(document.formulario, 'idpais$i', 'idcont$i');
+              formulario.idpais$i.value = ${$var_pai};
+              cambia(document.formulario, 'codep_us$i', 'idpais$i');
+              formulario.codep_us$i.value = '${$var_dpt}';
+              cambia(document.formulario, 'muni_us$i', 'codep_us$i');
+              formulario.muni_us$i.value = '${$var_mcp}';";
+          }
+        }
+        echo "</script>";
+      } ?>
+
     </form>
     </div>
   </div>
