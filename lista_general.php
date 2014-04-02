@@ -29,7 +29,6 @@ session_start();
 /*************************************************************************************/
 $lkGenerico = "&usuario=$krd&nsesion=".trim(session_id())."&nro=$verradicado"."$datos_envio";
 ?>
-<script src="js/popcalendar.js"></script>
 <script>
 function regresar()	
 {	//window.history.go(0);

@@ -26,8 +26,8 @@ include_once "$ruta_raiz/include/tx/Expediente.php";
 <html>
 <head>
 <title>Cambiar Seguridad a Expediente</title>
-<link href="../estilos/orfeo.css" rel="stylesheet" type="text/css"><script>
-
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+<script>
 function regresar(){   	
 	document.TipoDocu.submit();
 }
@@ -38,11 +38,11 @@ function regresar(){
 </style>
 </head>
 <body bgcolor="#FFFFFF">
-<form method="POST" action="expediente.php" name="TipoDocu">
+<form method="POST" action="expediente.php" name="TipoDocu"  class="smart-form">
 <input type=hidden name=numrad value=<?=$numrad?>>
 <input type=hidden name=nurad value=<?=$nurad?>>
-<input type=hidden name=num_expediente value=<?=$num_expediente?>>
-<table border=0 width=70% align="center" class="borde_tab" cellspacing="0">
+<input type=hidden name=num_expediente value='<?=$num_expediente?>'>
+<table width=70% align="center" class="table table-bordered table-striped" >
   <tr align="center" class="titulos2">
     <td height="15" class="titulos2">CAMBIAR NIVEL DE SEGURIDAD AL EXPEDIENTE No. <?=$num_expediente?></td>
     </tr>

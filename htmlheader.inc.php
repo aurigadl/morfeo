@@ -49,8 +49,8 @@ $str = <<<EOF
       <script type="text/javascript" src="$ruta_raiz/js/jquery.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/jquery-ui.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/jarvis.widget.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/bootstrap.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/bootstrap.min.js"></script>
+      
+      
       <script type="text/javascript" src="$ruta_raiz/js/notification/SmartNotification.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/sparkline/jquery.sparkline.min.js"></script>
@@ -63,6 +63,8 @@ $str = <<<EOF
       <script type="text/javascript" src="$ruta_raiz/js/demo.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/app.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/fuelux/wizard/wizard.js"></script>
+      <script type="text/javascript" src="$ruta_raiz/js/bootstrap.js"></script>
+     
 EOF;
 echo $str;
 ?>
