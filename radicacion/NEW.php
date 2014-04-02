@@ -1774,6 +1774,9 @@ var contadorVentanas=0
               </ul>
               <input type='hidden'  name='Submit4' value='MODIFICAR DATOS' class='ebuttons2'>
               <input type='hidden' name='nurad' value='<?=$nurad?>'></center>
+            </fieldset>
+          </div>
+        </div>
 
     <?}
 
@@ -1890,11 +1893,6 @@ var contadorVentanas=0
         }
         echo "</script>";
       } ?>
-
-            </fieldset>
-          </div>
-        </div>
-
 
     </form>
     </div>
