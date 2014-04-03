@@ -223,11 +223,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   //Administracion
   $link20      = $enlace20."fechah=$fechah&tipo_carp=1&carpeta=$numdata&nomcarpeta=$data\"";
-  $link20show .= "<li><a tabindex=\"-1\" $link20 target=\"mainFrame\"> Administracion </a></li>";
+  $link20show  = "<a tabindex=\"-1\" $link20 target=\"mainFrame\" > Administraci&oacute;n </a>";
 
   //Consultas
   $link21      = $enlace21."&etapa=1&s_Listado=VerListado&fechah=$fechah\"";
-  $link21show .= "<li><a tabindex=\"-1\" $link21 target=\"mainFrame\"> Consultas </a></li>";
+  $link21show  = "<li><a tabindex=\"-1\" $link21 target=\"mainFrame\"> Consultas </a></li>";
 
 
 ?>
@@ -276,7 +276,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Acciones <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                      <?=$link20show?>
+
+                      <li class="dropdown-submenu">
+                        <?=$link20show?>
+                        <ul class="dropdown-menu">
+                          <li><a href='./Administracion/usuario/mnuUsuarios.php?<?=$sendSession?>&krd=<?=$krd?>' target='mainFrame' class="vinculos">Usuarios y Perfiles</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_dependencias.php?<?=$sendSession?>" class="vinculos" target="mainFrame">Dependencias</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_nohabiles.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Dias no habiles</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_fenvios.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Env&iacute;o de correspondencia</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_tsencillas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Tablas sencillas</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_trad.php?<?=$sendSession?>&krd=<?=$krd?>" class="vinculos" target='mainFrame'>Tipos de radicaci&oacute;n</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_paises.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Pa&iacute;ses</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_dptos.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Departamentos</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_mcpios.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Municipios</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_tarifas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Tarifas</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_plantillas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Plantillas</a></li>
+                          <li><a href="./Administracion/tbasicas/adm_soportes.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Soportes</a></li>
+                        </ul>
+                      </li>
+
                       <?=$link21show?>
                       <li><a  href='ReportesR/indexReportes.php' alt='Generar planilla de distribucion y entrega'  target='mainFrame' class="menu_princ">Planilla Reasignados</a></li>
 
@@ -373,6 +391,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </ul>
                   </li>
                 </ul>
+
             </div>
             <!-- /.navbar-collapse -->
           </nav>
