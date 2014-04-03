@@ -684,7 +684,7 @@ if($descPExpediente){
 	$frmLinkSelect = $objFlujo->frmLinkSelect;
 	if($frmNombre) $ventana = "Max"; else $ventana = "Default";
   $frmLink = str_replace("{numeroRadicado}","$verrad", $frmLink);
- $frmLink = str_replace("{numeroExpediente}","$numeroExpediente", $frmLink);
+ $frmLink = str_replace("{numeroExpediente}","$mrdCodigo", $frmLink);
  $frmLink = str_replace("{dependencia}","$dependencia", $frmLink);
  $frmLink = str_replace("{documentoUsuario}","$usua_doc", $frmLink);
  $frmLink = str_replace("{nombreUsuario}","$usua_nomb", $frmLink);
