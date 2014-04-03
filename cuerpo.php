@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$ruta_raiz = "."; 
+$ruta_raiz = ".";
 if (!$_SESSION['dependencia'])
 header ("Location: $ruta_raiz/cerrar_session.php");
 
@@ -21,19 +21,19 @@ $descCarpetasGen= $_SESSION["descCarpetasGen"] ;
 $descCarpetasPer= $_SESSION["descCarpetasPer"];
 
 $_SESSION['numExpedienteSelected'] = null;
-               
+
   include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 	if (!$db) $db = new ConnectionHandler($ruta_raiz);
-	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);  
+	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	//$db->conn->debug = true;
-	$sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_RADI");  
+	$sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_RADI");
 	  if(strlen($orderNo)==0){
       $orderNo="2";
       $order = 3;
   }else{
       $order = $orderNo +1;
   }
-	
+
 		if(trim($orderTipo)=="") $orderTipo="DESC";
 		if($orden_cambio==1){
 				if(trim($orderTipo)!="DESC"){
@@ -44,8 +44,8 @@ $_SESSION['numExpedienteSelected'] = null;
 		}
 
 			if(!$carpeta) $carpeta=0;
-			if(!$tipo_carp) $tipo_carp=0;	
-			
+			if(!$tipo_carp) $tipo_carp=0;
+
 		/**
 		* Este if verifica si se debe buscar en los radicados de todas las carpetas.
 		* @$chkCarpeta char  Variable que indica si se busca en todas las carpetas.
@@ -56,33 +56,33 @@ $_SESSION['numExpedienteSelected'] = null;
 				$whereCarpeta = " ";
 		}else{
 				$chkValue="";
-				$whereCarpeta = " and b.carp_codi=$carpeta ";              
+				$whereCarpeta = " and b.carp_codi=$carpeta ";
 				$whereCarpeta   = $whereCarpeta ." and b.carp_per=$tipo_carp ";
 		}
-		
+
 
 		$fecha_hoy      = Date("Y-m-d");
 		$sqlFechaHoy    = $db->conn->DBDate($fecha_hoy);
-		
+
 		//Filtra el query para documentos agendados
 		if ($agendado==1){
-			$sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos    
+			$sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos
 		}else  if ($agendado==2){
 			$sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
-		}    
-		
+		}
+
 		if ($agendado){
 			$colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
 			$whereCarpeta="";
 		}
-		
+
 		//Filtra teniendo en cienta que se trate de la carpeta Vb.
 		if($carpeta==11 && $codusuario !=1 && $_GET['tipo_carp']!=1){
 				$whereUsuario = " and  b.radi_usu_ante ='$krd' ";
-		}else{	
+		}else{
 			$whereUsuario = " and b.radi_usua_actu='$codusuario' ";
 		}
-              
+
 ?>
 <html>
 <head>
@@ -94,10 +94,8 @@ $_SESSION['numExpedienteSelected'] = null;
         <meta name="keywords" content="siim, metrovivienda, gestion, misional">
         <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
         <!-- Bootstrap core CSS -->
-        
-        <?php
-         include_once "htmlheader.inc.php";
-        ?>
+
+        <?php include_once "htmlheader.inc.php"; ?>
 
 </head>
 <body onLoad="window_onload();">
@@ -105,9 +103,9 @@ $_SESSION['numExpedienteSelected'] = null;
 <div >
 	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
 		<h1 class="page-title txt-color-blueDark">
-			<i class="fa fa-table fa-fw "></i> 
-				Bandeja 
-			<span>> 
+			<i class="fa fa-table fa-fw "></i>
+				Bandeja
+			<span>>
 			<?=$nomcarpeta?>
 			</span>
 		</h1>
@@ -184,13 +182,13 @@ $_SESSION['numExpedienteSelected'] = null;
 							<?php
 								$controlAgenda=1;
 								if($carpeta==11 and !$tipo_carp and $codusuario!=1){
-								}else{	
+								}else{
 								  ?>
 								  	<div style="position:absolute; left: 430; top:5;">
 										<span class="smart-form">
 										<label class="select" style="width:230px">
 										<?
-											include "./tx/txOrfeo.php"; 
+											include "./tx/txOrfeo.php";
 										}
 										?>
 									  </label>
@@ -216,7 +214,7 @@ $_SESSION['numExpedienteSelected'] = null;
 							  include "$ruta_raiz/include/query/queryCuerpo.php";
 									// $db->conn->debug = true;
 									$rs     =$db->conn->Execute($isql);
-							
+
 							 while(!$rs->EOF){
 							  $numeroRadicado = $rs->fields["HID_RADI_NUME_RADI"];
 							  $fechaRadicado = $rs->fields["HID_RADI_FECH_RADI"];
@@ -226,7 +224,7 @@ $_SESSION['numExpedienteSelected'] = null;
 							  $diasRadicado = $rs->fields["DIAS RESTANTES"];
 							  $enviadoPor = $rs->fields["ENVIADO POR"];
 							  $radiPath = $rs->fields["HID_RADI_PATH"];
-							  
+
 							  $linkVerRadicado = "./verradicado.php?verrad=$numeroRadicado&".session_name()."=".session_id()."&nomcarpeta=$nomcarpeta";
 							  $linkImagen = "$ruta_raiz/bodega/$radiPath";
 							?>
@@ -240,7 +238,7 @@ $_SESSION['numExpedienteSelected'] = null;
 									<td><?=$enviadoPor?></td>
 									<td><input id="<?=$numeroRadicado?>" type="checkbox" value="CHKANULAR" name="checkValue[<?=$numeroRadicado?>]"></td>
 								</tr>
-							<?php 
+							<?php
 							 $rs->MoveNext();
 							} ?>
 							</tbody>
@@ -269,7 +267,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	pageSetUp();
-	
+
 	// PAGE RELATED SCRIPTS
 
 	loadDataTableScripts();
@@ -333,8 +331,8 @@ $_SESSION['numExpedienteSelected'] = null;
 				this.className = "search_init";
 				this.value = this.initVal;
 			}
-		});		
-		
+		});
+
 
 		var oTable = $('#datatable_fixed_column').dataTable({
 			"sDom" : "<'dt-top-row'><'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
@@ -343,8 +341,8 @@ $_SESSION['numExpedienteSelected'] = null;
 				"sSearch" : "Search all columns:"
 			},
 			"bSortCellsTop" : true
-		});		
-		
+		});
+
 
 
 		/*
@@ -357,7 +355,7 @@ $_SESSION['numExpedienteSelected'] = null;
 				$('.ColVis_Button').addClass('btn btn-default btn-sm').html('Columns <i class="icon-arrow-down"></i>');
 			}
 		});
-		
+
 		/* END COL ORDER */
 
 		/* TABLE TOOLS */
@@ -377,7 +375,7 @@ $_SESSION['numExpedienteSelected'] = null;
 				});
 			}
 		});
-		
+
 		/* END TABLE TOOLS */
 
 	}

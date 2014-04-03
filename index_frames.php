@@ -280,7 +280,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <li class="dropdown-submenu">
                         <?=$link20show?>
                         <ul class="dropdown-menu">
-                          <li><a href='./Administracion/usuario/mnuUsuarios.php?<?=$sendSession?>&krd=<?=$krd?>' target='mainFrame' class="vinculos">Usuarios y Perfiles</a></li>
+                          <li class="dropdown-submenu">
+                            <a href='./Administracion/usuario/mnuUsuarios.php?<?=$sendSession?>&krd=<?=$krd?>' target='mainFrame' class="vinculos">Usuarios y Perfiles</a>
+                            <ul class="dropdown-menu">
+                              <li><a href='./Administracion/usuario/crear.php?<?=$sendSession?>&usModo=1' class="vinculos" target='mainFrame'>Crear Usuario</a></li>
+                              <li><a href='./Administracion/usuario/cuerpoEdicion.php?<?=$sendSession?>&usModo=2' class="vinculos" target='mainFrame'>Editar Usuario</a></li>
+                              <li><a href='./Administracion/usuario/cuerpoConsulta.php?<?=$sendSession?>' class="vinculos" target='mainFrame'>Consultar Usuario</a></li>
+                            </ul>
+                          </li>
                           <li><a href="./Administracion/tbasicas/adm_dependencias.php?<?=$sendSession?>" class="vinculos" target="mainFrame">Dependencias</a></li>
                           <li><a href="./Administracion/tbasicas/adm_nohabiles.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Dias no habiles</a></li>
                           <li><a href="./Administracion/tbasicas/adm_fenvios.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Env&iacute;o de correspondencia</a></li>
@@ -379,6 +386,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <?=$linkrad?>
                     </ul>
                   </li>
+
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right navbar-user">
