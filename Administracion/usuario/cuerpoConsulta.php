@@ -1,31 +1,31 @@
 <?php
-/*************************************************************************************/
-/* ORFEO GPL:Sistema de Gestion Documental		http://www.orfeogpl.org	     */
-/*	Idea Original de la SUPERINTENDENCIA DE SERVICIOS PUBLICOS DOMICILIARIOS     */
-/*				COLOMBIA TEL. (57) (1) 6913005  orfeogpl@gmail.com   */
-/* ===========================                                                       */
-/*                                                                                   */
-/* Este programa es software libre. usted puede redistribuirlo y/o modificarlo       */
-/* bajo los terminos de la licencia GNU General Public publicada por                 */
-/* la "Free Software Foundation"; Licencia version 2. 			             */
-/*                                                                                   */
-/* Copyright (c) 2005 por :	  	  	                                     */
-/* SSPS "Superintendencia de Servicios Publicos Domiciliarios"                       */
-/*   Jairo Hernan Losada  jlosada@gmail.com                Desarrollador             */
-/*   Sixto Angel Pinzón López --- angel.pinzon@gmail.com   Desarrollador             */
-/* C.R.A.  "COMISION DE REGULACION DE AGUAS Y SANEAMIENTO AMBIENTAL"                 */ 
-/*   Liliana Gomez        lgomezv@gmail.com                Desarrolladora            */
-/*   Lucia Ojeda          lojedaster@gmail.com             Desarrolladora            */
-/* D.N.P. "Departamento Nacional de Planeación"                                      */
-/*   Hollman Ladino       hladino@gmail.com                Desarrollador             */
-/*                                                                                   */
-/* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
-/*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
-/*************************************************************************************/
+/**
+* @module crearUsuario
+*
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 session_start();
 $ruta_raiz = "../..";
-// Modificado Infom�trika 24-Septiembre-2009
-// Compatibilidad con register_globals = Off
 $dependencia = $_SESSION["dependencia"];
 
 if (!$dependencia)   include "../../rec_session.php";
@@ -63,17 +63,17 @@ $radSelec = "";
 
 <html>
 <head>
-<title>Envio de Documentos. Orfeo...</title>
-<link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
+  <title>Envio de Documentos. Orfeo...</title>
+  <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </head>
-<body bgcolor="#FFFFFF" topmargin="0" onLoad="window_onload();">
-<div id="spiffycalendar" class="text"></div>
-<link rel="stylesheet" type="text/css" href="js/spiffyCal/spiffyCal_v2_1.css">
+<body>
+  <div id="spiffycalendar" class="text"></div>
+  <link rel="stylesheet" type="text/css" href="js/spiffyCal/spiffyCal_v2_1.css">
 
 <?
  $ruta_raiz = "../..";
  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
- $db = new ConnectionHandler("$ruta_raiz");	 
+ $db = new ConnectionHandler("$ruta_raiz");
  if (!$dep_sel) $dep_sel = $dependencia;
  $nomcarpeta = "Consulta Usuarios";
 
@@ -84,14 +84,14 @@ $radSelec = "";
     $i = 0;
     foreach ($textElements as $item)  {
     	$item = trim ( $item );
-        if ( strlen ( $item ) != 0 ) { 
-		   $i++; 
+        if ( strlen ( $item ) != 0 ) {
+		   $i++;
 		   if ($i > 1) $busq_and = " and "; else $busq_and = " ";
 		      $busq_radicados_tmp .= " $busq_and radi_nume_sal like '%$item%' ";
 		}
      }
 	 $dependencia_busq1 .= " and $busq_radicados_tmp ";
-				
+
  }else  {
     $sql_masiva = "";
  }
@@ -112,10 +112,10 @@ $radSelec = "";
  include "../paEncabeza.php";
  $varBuscada = "usua_login";
  $tituloBuscar = "Buscar Usuario(s) (Separados por coma)";
- include "../paBuscar.php";   
+ include "../paBuscar.php";
  $pagina_sig = "../usuario/consultaDatosGrales.php";
- $accion_sal = "Consultar"; 
- include "../paOpciones.php";   
+ $accion_sal = "Consultar";
+ include "../paOpciones.php";
 
  if($busq_radicados_tmp)  {
    $where_fecha=" ";
@@ -125,7 +125,7 @@ $radSelec = "";
 	$fecha_fin = mktime(23,59,59,substr($fecha_fin,5,2),substr($fecha_fin,8,2),substr($fecha_fin,0,4));
     $where_fecha = " (a.SGD_RENV_FECH >= ". $db->conn->DBTimeStamp($fecha_ini) ." and a.SGD_RENV_FECH <= ". $db->conn->DBTimeStamp($fecha_fin).") " ;
     $dependencia_busq1 .= " $where_fecha and ";
- } 
+ }
 
 	/*  GENERACION LISTADO DE RADICADOS
 	 *  Aqui utilizamos la clase adodb para generar el listado de los radicados
@@ -138,11 +138,11 @@ $radSelec = "";
   <form name=formEnviar action='consultaDatosGrales.php?<?=$encabezado?>&usModo=2' method=post>
  <?
     if ($orderNo==98 or $orderNo==99) {
-       $order=1; 
+       $order=1;
 	   if ($orderNo==98)   $orderTipo="desc";
 
        if ($orderNo==99)   $orderTipo="";
-	}  
+	}
     else  {
 	   if (!$orderNo)  {
   		  $orderNo=0;
@@ -155,7 +155,7 @@ $radSelec = "";
 
 
     $rs=$db->conn->Execute($isql);
-	$nregis = $rs->fields["NOMBRE"];		
+	$nregis = $rs->fields["NOMBRE"];
 	if (!$nregis)  {
 		echo "<hr><center><b>NO se encontro nada con el criterio de busqueda</center></b></hr>";}
 	else  {

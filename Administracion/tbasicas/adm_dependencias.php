@@ -1,15 +1,32 @@
 <?php 
+/**
+* @module crearUsuario
+*
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 session_start();
-// ini_set("display_errors",1);
     $ruta_raiz = "../..";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
-/**
-  * Se anadio compatibilidad con variables globales en Off
-  * @autor Jairo Losada 2009-05
-  * @Fundacion CorreLibre.org
-  * @licencia GNU/GPL V 3
-  */
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
@@ -57,8 +74,6 @@ if ($db)
 		switch ($_POST['btn_accion'])
 		{	case 'Agregar':
 			{
-				//$db->conn->BeginTrans();
-				//Agregamos en el vector $record los registros de código y secuencias.
 				$record['DEPE_CODI'] = $_POST['txtIdDep'];
 				foreach ($Vec_Trad as $tmp)
 				{
@@ -73,10 +88,7 @@ if ($db)
 				}	}
 				$tabla = 'DEPENDENCIA';
 				$sql = $db->conn->GetInsertSQL($tabla,$record,true,null);
-				//creamos registro en la tabla dependencia
 				$ok1 = $db->conn->Execute($sql);
-				//Crear estructura en bodega
-				//Se llama esta clase UNICAMENTE con el fin de standarizar la obtencion del S.O. en que se ejecuta el servidor.
 				include($ruta_raiz.'/radsalida/masiva/OpenDocText.class.php');
 				$tmp_obj = new OpenDocText();
                 $rut_bodeg=str_replace('/',$tmp_obj->barra,$ruta_raiz).$tmp_obj->barra."bodega".$tmp_obj->barra.date('Y').$tmp_obj->barra.$record['DEPE_CODI'].$tmp_obj->barra."docs";
@@ -350,6 +362,7 @@ $ADODB_COUNTRECS=true;
 <title>Orfeo- Admon de Dependencias.</title>
 <link href="<?php echo $ruta_raiz ?>/estilos/orfeo.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="<?php echo $ruta_raiz ?>/estilos/tabber.css" TYPE="text/css" MEDIA="screen">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <script language="JavaScript" src="<?php echo $ruta_raiz ?>/js/formchek.js"></script>
 <script language="JavaScript" src="<?php echo $ruta_raiz ?>/js/crea_combos_2.js"></script>
 <script language="JavaScript">
@@ -506,110 +519,127 @@ function ver_listado()
 </script>
 </head>
 <body>
-<form name="formSeleccion" id="formSeleccion" method="post" action="<?= $_SERVER['PHP_SELF']?>">
-<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
-<table width="100%" border="1" align="center" class="t_bordeGris">
-<tr bordercolor="#FFFFFF">
-	<td width="100%" colspan="2" height="40" align="center" class="titulos4"><b>ADMINISTRADOR DE DEPENDENCIAS</b></td>
-</tr>
-<tr class=timparr>
-	<td width="25%" align="left" class="titulos2"><b>&nbsp;Seleccione Dependencia</b></td>
-	<td width="75%" colspan="5" class="listado2">
-	<?php
-		echo $slc_dep1;
-	?>
-	</td>
-</tr>
-</table>
-<div class="tabber" id="tab1">
-	<div class="tabbertab" title="B&aacute;sicos">
-	<table width="100%" border="1" align="center" class="t_bordeGris">
-	<tr class=timparr>
-		<td width="25%" align="left" class="titulos2"><b>&nbsp;Ingrese c&oacute;digo.</b></td>
-		<td class="listado2"><input name="txtIdDep" id="txtIdDep" type="text" size="5" maxlength="<?=$digitosDependencia?>" value="<?=$txtIdDep ?>"></td>
-		<td class="titulos2"><b>&nbsp;Ingrese Sigla</b></td>
-		<td class="listado2"><input name="txtSigla" id="txtSigla" type="text" size="10" maxlength="15" value="<?=$txtSigla ?>"></td>
-		<td class="titulos2"><b>&nbsp;Seleccione Estado</b></td>
-		<td class="listado2">
-			<select name="Slc_destado" id="Slc_destado" class="select">
-				<option value="" selected>&lt; seleccione &gt;</option>
-				<option value="0" <?=$off ?>>Inactiva</option>
-				<option value="1" <?=$on ?>>Activa</option>
-			</select>
-		</td>
-	</tr>
-	<tr class=timparr>
-		<td width="25%" align="left" class="titulos2"><b>&nbsp;Ingrese nombre.</b></td>
-		<td width="25%"  class="listado2"><input name="txtModelo" id="txtModelo" type="text" size="50" maxlength="70" value="<?=$txtModelo ?>"></td>
-                <td width="25%" class="titulos2"><b>&nbsp;Acto Administrativo de Creaci&oacute;n.</b></td>
-		<td colspan="3" width="25%" class="listado2"><input name="txtActoAdmon" id="txtModelo" type="text" size="50" maxlength="70" value="<?=$txtActoAdmon ?>"></td>
-	</tr>
-	<tr>
-		<td align="left" class="titulos2"><b>&nbsp;Ingrese direcci&oacute;n.</b></td>
-		<td colspan="5" class="listado2"><input name="txtDir" id="txtDir" type="text" size="50" maxlength="70" value="<?=$txtDir ?>"></td>
-	</tr>
-	<tr>
-	<td align="left" class="titulos2"><b>&nbsp;Seleccione ubicaci&oacute;n ?</b></td>
-	<td colspan="5" class="listado2">
-	<?	// Listamos los continentes.
-   		echo $slc_cont;
-    ?>
-	<select name="idpais1" id="idpais1" class="select" onChange="cambia(this.form, 'codep_us1', 'idpais1')">
-	<option value="0" selected>&lt;&lt; Seleccione Pais &gt;&gt;</option>
-	</select>
+  <form name="formSeleccion" id="formSeleccion" method="post" action="<?= $_SERVER['PHP_SELF']?>">
+  <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
+    <div class="col-sm-12">
+      <!-- widget grid -->
+      <section id="widget-grid">
+        <!-- row -->
+        <div class="row">
+          <!-- NEW WIDGET START -->
+          <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
 
-	<select name='codep_us1' id ="codep_us1" class='select' onChange="cambia(this.form, 'muni_us1', 'codep_us1')" ><option value='0' selected>&lt;&lt; Seleccione Departamento &gt;&gt;</option></select>
+              <header>
+                <h2>
+                  Administracion de dependencias<br>
+                  <small><?=$tituloCrear ?></small>
+                </h2>
+              </header>
+              <!-- widget div-->
+              <div>
+                <!-- widget content -->
+                <div class="widget-body no-padding">
 
-	<select name='muni_us1' id="muni_us1" class='select'><option value='0' selected>&lt;&lt; Seleccione Municipio &gt;&gt;</option></select>
-		</td>
-	</tr>
-	<tr>
-		<td align="left" class="titulos2"><b>&nbsp;Seleccione Dependencia PADRE</b></td>
-		<td colspan="5" class="listado2">
-		<?php
-			echo $slc_dep2;
-		?>
-		</td>
-	</tr>
-	<tr>
-		<td align="left" class="titulos2"><b>&nbsp;Seleccione Dependencia TERRITORIAL</b></td>
-		<td colspan="5" class="listado2">
-		<?php
-			echo $slc_dep3;
-		?>
-		</td>
-	</tr>
-	<tr>
-		<td align="left" class="titulos2"><b>&nbsp;Seleccione las Dependencias a las que ser&aacute; VISIBLE.</b><br />Presione (CTRL + click) para seleccionar varios</td>
-		<td colspan="5" class="listado2">
-		<?php
-			echo $slc_dep4;
-		?>
-		</td>
-	</tr>
-	</table>
-	</div>
-	<div class="tabbertab" title="Consecutivos">
-	<table width="100%" border="1" align="center" class="t_bordeGris">
-	<?php
-		echo $pes2;
-	?>
-	</table>
-	</div>
-</div>
-<?php
-echo $error_msg;
-?>
-<table width="100%" border="1" align="center" cellpadding="0" cellspacing="0" class="listado2">
-<tr>
-	<td width="10%">&nbsp;</td>
-    <td width="20%" align="center"><input name="btn_accion" type="button" class="botones" id="btn_accion" value="Listado" onClick="ver_listado();" accesskey="L" alt="Alt + L"></td>
-	<td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Agregar" onClick="return ValidarInformacion(this.value);" accesskey="A"></td>
-	<td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Modificar" onClick="return ValidarInformacion(this.value);" accesskey="M"></td>
-	<td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Eliminar" onClick="document.form1.hdBandera.value='E'; return ValidarInformacion();" accesskey="E"></td>
-	<td width="10%">&nbsp;</td>
-</tr>
-</table>
+                  <table class="table table-bordered table-striped">
+                    <tr class=timparr>
+                      <td width="25%" align="left" class="titulos2"><b>&nbsp;Seleccione Dependencia</b></td>
+                      <td width="75%" colspan="5" class="listado2">
+                      <?php
+                        echo $slc_dep1;
+                      ?>
+                      </td>
+                    </tr>
+                  </table>
+                  <div class="tabber" id="tab1">
+                      <div class="tabbertab" title="B&aacute;sicos">
+                        <table class="table table-bordered table-striped">
+                      <tr class=timparr>
+                        <td width="25%" align="left" class="titulos2"><b>&nbsp;Ingrese c&oacute;digo.</b></td>
+                        <td class="listado2"><input name="txtIdDep" id="txtIdDep" type="text" size="5" maxlength="<?=$digitosDependencia?>" value="<?=$txtIdDep ?>"></td>
+                        <td class="titulos2"><b>&nbsp;Ingrese Sigla</b></td>
+                        <td class="listado2"><input name="txtSigla" id="txtSigla" type="text" size="10" maxlength="15" value="<?=$txtSigla ?>"></td>
+                        <td class="titulos2"><b>&nbsp;Seleccione Estado</b></td>
+                        <td class="listado2">
+                          <select name="Slc_destado" id="Slc_destado" class="select">
+                            <option value="" selected>&lt; seleccione &gt;</option>
+                            <option value="0" <?=$off ?>>Inactiva</option>
+                            <option value="1" <?=$on ?>>Activa</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr class=timparr>
+                        <td width="25%" align="left" class="titulos2"><b>&nbsp;Ingrese nombre.</b></td>
+                        <td width="25%"  class="listado2"><input name="txtModelo" id="txtModelo" type="text" size="50" maxlength="70" value="<?=$txtModelo ?>"></td>
+                                    <td width="25%" class="titulos2"><b>&nbsp;Acto Administrativo de Creaci&oacute;n.</b></td>
+                        <td colspan="3" width="25%" class="listado2"><input name="txtActoAdmon" id="txtModelo" type="text" size="50" maxlength="70" value="<?=$txtActoAdmon ?>"></td>
+                      </tr>
+                      <tr>
+                        <td align="left" class="titulos2"><b>&nbsp;Ingrese direcci&oacute;n.</b></td>
+                        <td colspan="5" class="listado2"><input name="txtDir" id="txtDir" type="text" size="50" maxlength="70" value="<?=$txtDir ?>"></td>
+                      </tr>
+                      <tr>
+                      <td align="left" class="titulos2"><b>&nbsp;Seleccione ubicaci&oacute;n ?</b></td>
+                      <td colspan="5" class="listado2">
+                      <?	// Listamos los continentes.
+                          echo $slc_cont;
+                        ?>
+                      <select name="idpais1" id="idpais1" class="select" onChange="cambia(this.form, 'codep_us1', 'idpais1')">
+                      <option value="0" selected>&lt;&lt; Seleccione Pais &gt;&gt;</option>
+                      </select>
+
+                      <select name='codep_us1' id ="codep_us1" class='select' onChange="cambia(this.form, 'muni_us1', 'codep_us1')" ><option value='0' selected>&lt;&lt; Seleccione Departamento &gt;&gt;</option></select>
+
+                      <select name='muni_us1' id="muni_us1" class='select'><option value='0' selected>&lt;&lt; Seleccione Municipio &gt;&gt;</option></select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left" class="titulos2"><b>&nbsp;Seleccione Dependencia PADRE</b></td>
+                        <td colspan="5" class="listado2">
+                        <?php
+                          echo $slc_dep2;
+                        ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left" class="titulos2"><b>&nbsp;Seleccione Dependencia TERRITORIAL</b></td>
+                        <td colspan="5" class="listado2">
+                        <?php
+                          echo $slc_dep3;
+                        ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left" class="titulos2"><b>&nbsp;Seleccione las Dependencias a las que ser&aacute; VISIBLE.</b><br />Presione (CTRL + click) para seleccionar varios</td>
+                        <td colspan="5" class="listado2">
+                        <?php
+                          echo $slc_dep4;
+                        ?>
+                        </td>
+                      </tr>
+                      </table>
+	                </div>
+
+                  <div class="tabbertab" title="Consecutivos">
+                    <table class="table table-bordered table-striped">
+                    <?php
+                      echo $pes2;
+                    ?>
+                    </table>
+                  </div>
+              </div>
+              <?php echo $error_msg; ?>
+              <table class="table table-bordered table-striped">
+                  <tr>
+                    <td width="10%">&nbsp;</td>
+                      <td width="20%" align="center"><input name="btn_accion" type="button" class="botones" id="btn_accion" value="Listado" onClick="ver_listado();" accesskey="L" alt="Alt + L"></td>
+                    <td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Agregar" onClick="return ValidarInformacion(this.value);" accesskey="A"></td>
+                    <td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Modificar" onClick="return ValidarInformacion(this.value);" accesskey="M"></td>
+                    <td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Eliminar" onClick="document.form1.hdBandera.value='E'; return ValidarInformacion();" accesskey="E"></td>
+                    <td width="10%">&nbsp;</td>
+                  </tr>
+               </table>
 <script type="text/javascript">
 /* Since we specified manualStartup=true, tabber will not run after
    the onload event. Instead let's run it now, to prevent any delay
@@ -617,6 +647,13 @@ echo $error_msg;
 */
 tabberAutomatic(tabberOptions);
 </script>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
 </form>
 </body>
 </html>

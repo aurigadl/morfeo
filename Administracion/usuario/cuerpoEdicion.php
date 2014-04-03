@@ -1,33 +1,33 @@
-<?php 
-session_start();
+<?php
+/**
+* @module crearUsuario
+*
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
 
-	$ruta_raiz = "../..";
-    if (!$_SESSION['dependencia'])
-        header ("Location: $ruta_raiz/cerrar_session.php");
-/*************************************************************************************/
-/* ORFEO GPL:Sistema de Gestion Documental		http://www.orfeogpl.org	     */
-/*	Idea Original de la SUPERINTENDENCIA DE SERVICIOS PUBLICOS DOMICILIARIOS     */
-/*				COLOMBIA TEL. (57) (1) 6913005  orfeogpl@gmail.com   */
-/* ===========================                                                       */
-/*                                                                                   */
-/* Este programa es software libre. usted puede redistribuirlo y/o modificarlo       */
-/* bajo los terminos de la licencia GNU General Public publicada por                 */
-/* la "Free Software Foundation"; Licencia version 2. 			             */
-/*                                                                                   */
-/* Copyright (c) 2005 por :	  	  	                                     */
-/* SSPS "Superintendencia de Servicios Publicos Domiciliarios"                       */
-/*   Jairo Hernan Losada  jlosada@gmail.com                Desarrollador             */
-/*   Sixto Angel Pinzón López --- angel.pinzon@gmail.com   Desarrollador             */
-/* C.R.A.  "COMISION DE REGULACION DE AGUAS Y SANEAMIENTO AMBIENTAL"                 */
-/*   Liliana Gomez        lgomezv@gmail.com                Desarrolladora            */
-/*   Lucia Ojeda          lojedaster@gmail.com             Desarrolladora            */
-/* D.N.P. "Departamento Nacional de Planeación"                                      */
-/*   Hollman Ladino       hollmanlp@gmail.com                Desarrollador           */
-/*                                                                                   */
-/* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
-/*  Nombre Desarrollador   Correo             Fecha   Modificacion                   */
-/*  Jairo Losada         jlosada@gmail.com   2009/05  Variables Globales             */ 
-/*************************************************************************************/
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+session_start();
+$ruta_raiz = "../..";
+  if (!$_SESSION['dependencia'])
+      header ("Location: $ruta_raiz/cerrar_session.php");
 
 $krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
@@ -62,11 +62,10 @@ $radSelec = "";
 <html>
 <head>
 <title>Envio de Documentos. Orfeo...</title>
-<link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </head>
-<body bgcolor="#FFFFFF" topmargin="0" onLoad="window_onload();">
+<body>
 <div id="spiffycalendar" class="text"></div>
-<link rel="stylesheet" type="text/css" href="<?$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.css">
 <?php
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
  $db = new ConnectionHandler("$ruta_raiz");
@@ -131,7 +130,6 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 	 *  el archivo original es adodb-pager.inc.php la modificada es adodb-paginacion.inc.php
 	 */
 
-	error_reporting(0);
 ?>
   <form name=formEnviar action='crear.php?<?=$encabezado?>' method=GET>
   <input type=hidden name=usModo value=2>
