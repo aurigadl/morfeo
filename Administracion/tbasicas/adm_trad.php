@@ -1,4 +1,28 @@
 <?php
+/**
+* @module crearUsuario
+*
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 session_start();
 
     $ruta_raiz="../..";
@@ -6,9 +30,6 @@ session_start();
         header ("Location: $ruta_raiz/cerrar_session.php");
 
 
-/*
-*	Funcion que convierte un valor de PHP a un valor Javascript.
-*/
 function valueToJsValue($value, $encoding = false) {
 	if (!is_numeric($value)) {
 		$value = str_replace('\\', '\\\\', $value);
@@ -16,8 +37,8 @@ function valueToJsValue($value, $encoding = false) {
 		$value = '"'.$value.'"';
 	}
 	if ($encoding) {
-		switch ($encoding) {	
-			case 'utf8' :	
+		switch ($encoding) {
+			case 'utf8' :
 				return iconv("ISO-8859-2", "UTF-8", $value);
 				break;
 		}
@@ -27,12 +48,8 @@ function valueToJsValue($value, $encoding = false) {
 	return ;
 }
 
-/*
-*	Funcion que convierte un vector de PHP a un vector Javascript.
-*	Utiliza a su vez la funcion valueToJsValue.
-*/
 function arrayToJsArray( $array, $name, $nl = "\n", $encoding = false ) {
-	if (is_array($array)) {	
+	if (is_array($array)) {
 		$jsArray = $name . ' = new Array();'.$nl;
 		foreach($array as $key => $value) {
 			switch (gettype($value)) {
@@ -42,7 +59,7 @@ function arrayToJsArray( $array, $name, $nl = "\n", $encoding = false ) {
 					break;
 				case 'array':
 					$jsArray .= arrayToJsArray($value,
-									$name.'['.valueToJsValue($key, $encoding).']', 
+									$name.'['.valueToJsValue($key, $encoding).']',
 									$nl);
 					break;
 				case 'NULL':
@@ -99,15 +116,15 @@ if ($db) {
 	$sql =	"SELECT SGD_TRAD_CODIGO as ID,
 			SGD_TRAD_DESCR as NOMB,
 			SGD_TRAD_GENRADSAL as GRS
-		FROM SGD_TRAD_TIPORAD 
+		FROM SGD_TRAD_TIPORAD
 		ORDER BY SGD_TRAD_CODIGO";
 
 	$v_tr = $db->conn->GetAll($sql);
-} else {	
+} else {
 	$error = 1;
 }
 
-if ($error) {	
+if ($error) {
 	$cad = '<tr bordercolor="#FFFFFF">
 			<td width="3%" align="center" class="titulosError" colspan="3" bgcolor="#FFFFFF">';
 	switch ($error) {
@@ -133,7 +150,7 @@ if ($error) {
 <html>
 <head>
 <title>.:Orfeo - Administrador de Contactos :.</title>
-<link rel="stylesheet" href="../../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <script language="JavaScript" src="<?=$ruta_raiz?>/js/formchek.js"></script>
 <script language="JavaScript">
 <?php
@@ -230,76 +247,104 @@ function busca(dato){
 </script>
 </head>
 <body>
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF'].'?krd='.$krd ?>" name="form1" id="form1">
-<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
-<table width="75%" border="1" align="center" class=t_bordeGris>
-	<tr bordercolor="#FFFFFF">
-		<td width="100%" class="titulos4">
-			<B><span class=etexto><center>Administrador de Tipos de Radicados</center></span></B></td>
-	</tr>
-</table>
-<table width="75%" border="1" align="center" class=t_bordeGris>
-<tr class=timparr>
-	<td width="3%" class="titulos2" height="26">1.</td>
-	<td width="25%" class="titulos2" height="26">Seleccione el C&oacute;digo</td>
-	<td width="72%" class="listado2" height="1">
-		<table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" width="100%" id="AutoNumber1">
-		<tr>
-			<td width="10%" align="center">0</td>
-			<td width="10%" align="center">1</td>
-			<td width="10%" align="center">2</td>
-			<td width="10%" align="center">3</td>
-			<td width="10%" align="center">4</td>
-			<td width="10%" align="center">5</td>
-			<td width="10%" align="center">6</td>
-			<td width="10%" align="center">7</td>
-			<td width="10%" align="center">8</td>
-			<td width="10%" align="center">9</td>
-		</tr>
-		<tr>
-			<td width="10%" align="center"><input type="radio" value="0" name="grpRad" onclick="ver_datos(this.value)" disabled></td>
-			<td width="10%" align="center"><input type="radio" value="1" name="grpRad" onclick="ver_datos(this.value)" disabled></td>
-			<td width="10%" align="center"><input type="radio" value="2" name="grpRad" onclick="ver_datos(this.value)" disabled></td>
-			<td width="10%" align="center"><input type="radio" value="3" name="grpRad" onclick="ver_datos(this.value)"></td>
-			<td width="10%" align="center"><input type="radio" value="4" name="grpRad" onclick="ver_datos(this.value)"></td>
-			<td width="10%" align="center"><input type="radio" value="5" name="grpRad" onclick="ver_datos(this.value)"></td>
-			<td width="10%" align="center"><input type="radio" value="6" name="grpRad" onclick="ver_datos(this.value)"></td>
-			<td width="10%" align="center"><input type="radio" value="7" name="grpRad" onclick="ver_datos(this.value)"></td>
-			<td width="10%" align="center"><input type="radio" value="8" name="grpRad" onclick="ver_datos(this.value)"></td>
-			<td width="10%" align="center"><input type="radio" value="9" name="grpRad" onclick="ver_datos(this.value)"></td>
-		</tr>
-		</table>
-	</td>
-</tr>
-<tr>
-	<td width="3%" class="titulos2" height="26" rowspan="2">2.</td>
-	<td width="25%" class="titulos2" height="26">Nombre del T.R.</td>
-	<td width="72%" class="listado2">
-		<input type="text" name="txtnombre" id="txtnombre" size="30" maxlength="30" />
-	</td>
-</tr>
-<tr>
-	<td width="25%" class="titulos2" height="26">Genera radicado de salida?</td>
-	<td width="72%" class="listado2">
-		<select size="1" name="slcGRS">
-			<option value="">&nbsp;</option>
-			<option value="1">S I</option>
-			<option value="0">N O</option>
-		</select>
-	</td>
-</tr>
-<?PHP echo $cad ?>
-</table>
-<table width="75%" border="1" align="center" cellpadding="0" cellspacing="0" class="listado2">
-<tr>
-	<td width="10%">&nbsp;</td>
-    <td width="20%" align="center"><input name="btn_accion" type="button" class="botones" id="btn_accion" value="Listado" onClick="ver_listado();" accesskey="L" alt="Alt + L"></td>
-	<td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Agregar" onClick="return ValidarInformacion(this.value);" accesskey="A" /></td>
-	<td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Modificar" onClick="return ValidarInformacion(this.value);" accesskey="M" /></td>
-	<td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Eliminar" onClick="return ValidarInformacion(this.value);" accesskey="E" /></td>
-	<td width="10%">&nbsp;</td>
-</tr>
-</table>
+
+  <form method="POST" action="<?php echo $_SERVER['PHP_SELF'].'?krd='.$krd ?>" name="form1" id="form1">
+  <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
+
+  <div class="col-sm-12">
+    <!-- widget grid -->
+    <section id="widget-grid">
+      <!-- row -->
+      <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <!-- Widget ID (each widget will need unique ID)-->
+          <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+
+            <header>
+              <h2>
+                Administrador de Tipos de Radicados<br>
+                <small><?=$tituloCrear ?></small>
+              </h2>
+            </header>
+
+            <!-- widget div-->
+            <div>
+              <!-- widget content -->
+              <div class="widget-body no-padding">
+
+                <table class="table table-bordered table-striped">
+
+                  <tr class=timparr>
+                    <td width="3%" class="titulos2" height="26">1.</td>
+                    <td width="25%" class="titulos2" height="26">Seleccione el C&oacute;digo</td>
+                    <td width="72%" class="listado2" height="1">
+                      <table class="table table-bordered table-striped">
+                        <tr>
+                          <td width="10%" align="center">0</td>
+                          <td width="10%" align="center">1</td>
+                          <td width="10%" align="center">2</td>
+                          <td width="10%" align="center">3</td>
+                          <td width="10%" align="center">4</td>
+                          <td width="10%" align="center">5</td>
+                          <td width="10%" align="center">6</td>
+                          <td width="10%" align="center">7</td>
+                          <td width="10%" align="center">8</td>
+                          <td width="10%" align="center">9</td>
+                        </tr>
+                        <tr>
+                          <td width="10%" align="center"><input type="radio" value="0" name="grpRad" onclick="ver_datos(this.value)" disabled></td>
+                          <td width="10%" align="center"><input type="radio" value="1" name="grpRad" onclick="ver_datos(this.value)" disabled></td>
+                          <td width="10%" align="center"><input type="radio" value="2" name="grpRad" onclick="ver_datos(this.value)" disabled></td>
+                          <td width="10%" align="center"><input type="radio" value="3" name="grpRad" onclick="ver_datos(this.value)"></td>
+                          <td width="10%" align="center"><input type="radio" value="4" name="grpRad" onclick="ver_datos(this.value)"></td>
+                          <td width="10%" align="center"><input type="radio" value="5" name="grpRad" onclick="ver_datos(this.value)"></td>
+                          <td width="10%" align="center"><input type="radio" value="6" name="grpRad" onclick="ver_datos(this.value)"></td>
+                          <td width="10%" align="center"><input type="radio" value="7" name="grpRad" onclick="ver_datos(this.value)"></td>
+                          <td width="10%" align="center"><input type="radio" value="8" name="grpRad" onclick="ver_datos(this.value)"></td>
+                          <td width="10%" align="center"><input type="radio" value="9" name="grpRad" onclick="ver_datos(this.value)"></td>
+                        </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="3%" class="titulos2" height="26" rowspan="2">2.</td>
+                      <td width="25%" class="titulos2" height="26">Nombre del T.R.</td>
+                      <td width="72%" class="listado2">
+                        <input type="text" name="txtnombre" id="txtnombre" size="30" maxlength="30" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="25%" class="titulos2" height="26">Genera radicado de salida?</td>
+                      <td width="72%" class="listado2">
+                        <select size="1" name="slcGRS">
+                          <option value="">&nbsp;</option>
+                          <option value="1">S I</option>
+                          <option value="0">N O</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <?PHP echo $cad ?>
+                  </table>
+
+                  <table class="table table-bordered table-striped">
+                    <tr>
+                      <td width="10%">&nbsp;</td>
+                        <td width="20%" align="center"><input name="btn_accion" type="button" class="botones" id="btn_accion" value="Listado" onClick="ver_listado();" accesskey="L" alt="Alt + L"></td>
+                      <td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Agregar" onClick="return ValidarInformacion(this.value);" accesskey="A" /></td>
+                      <td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Modificar" onClick="return ValidarInformacion(this.value);" accesskey="M" /></td>
+                      <td width="20%" align="center"><input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Eliminar" onClick="return ValidarInformacion(this.value);" accesskey="E" /></td>
+                      <td width="10%">&nbsp;</td>
+                    </tr>
+                  </table>
+
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
 </form>
 </body>
 </html>

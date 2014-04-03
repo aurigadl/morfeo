@@ -1,22 +1,40 @@
 <?php
+/**
+* @module crearUsuario
+*
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 session_start();
 
     $ruta_raiz = "../../";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
-/* Administrador de Tablas sencillas.
- * Son tablas que tienen un codigo (digitado) y una descripcion. P.E. : Tema, Resolucion.
- * @copyright Sistema de Gestion Documental ORFEO
- * @version 1.0
- * @author Ing. Hollman Ladino Paredes Auspiciado por el Instituto de Desarrollo Urbano - IDU.
- *
- */
 
 include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 
 $db = new ConnectionHandler($ruta_raiz);
-    
-if ($db->conn){	
+
+if ($db->conn){
 
 	//Creamos un vector con las opciones
 	$vec_ppal[0]= array("&lt; Seleccione &gt;","","","");
@@ -191,8 +209,8 @@ function arrayToJsArray( $array, $name, $nl = "\n", $encoding = false )
 	else
 	{	return false;	}
 }
-if ($error)
-{	$msg = '<tr bordercolor="#FFFFFF">
+if ($error) {
+  $msg = '<tr bordercolor="#FFFFFF">
 			<td width="3%" align="center" class="titulosError" colspan="3" bgcolor="#FFFFFF">';
 	switch ($error)
 	{	case 1:	//NO CONECCION A BD
@@ -235,12 +253,12 @@ function ver_listado()
 if ($ver)
 {
 ?>
- 
+
 	window.open('listados.php?<?=session_name()."=".session_id()?>&var=<?=$ver?>','','scrollbars=yes,menubar=no,height=600,width=800,resizable=yes,toolbar=no,location=no,status=no');
 <?php
 }
-else
-{	echo "alert('Debe seleccionar una Opcion.');";
+else {
+  echo "alert('Debe seleccionar una Opcion.');";
 }
 ?>
 }
@@ -252,73 +270,101 @@ echo arrayToJsArray($vec_tmp, 'vt');
 </script>
 
 <title>Orfeo - Admor de tablas sencillas.</title>
-<link href="<?=$ruta_raiz ?>/estilos/orfeo.css" rel="stylesheet" type="text/css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+
 </head>
 <body>
 <form name="form1" method="post" action="<?= $_SERVER['PHP_SELF']?>">
-<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
+<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
 <input type="hidden" name="hdBandera" value="">
-<table width="75%" border="1" align="center" cellspacing="0" class="tablas">
-<tr bordercolor="#FFFFFF">
-	<td colspan="3" height="40" align="center" class="titulos4" valign="middle"><b><span class=etexto>ADMINISTRADOR DE TABLAS SENCILLAS</span></b></td>
-</tr>
-<tr bordercolor="#FFFFFF">
-	<td width="3%" align="center" class="titulos2"><b>1.</b></td>
-	<td width="25%" align="left" class="titulos2"><b>&nbsp;Seleccione la tabla</b></td>
-	<td width="72%" class="listado2">
-		<SELECT name="slc_ppal" id="slc_ppal" class="select" onchange="this.form.submit();">
-		<?=$opc_cmb ?>
-		</SELECT>
-	</td>
-</tr>
-<tr bordercolor="#FFFFFF">
-	<td align="center" class="titulos2"><b>2.</b></td>
-	<td align="left" class="titulos2"><b>&nbsp;Seleccione Registro</b></td>
-    <td align="left" class="listado2">
-		<?=$slc_tmp	?>
-	</td>
-</tr>
-<tr bordercolor="#FFFFFF">
-	<td rowspan="2" valign="middle" class="titulos2">3.</td>
-	<td align="left" class="titulos2"><b>&nbsp;Ingrese c&oacute;digo</b></td>
-	<td class="listado2"><input name="txtId" id="txtId" type="text" size="10" maxlength="2"></td>
-</tr>
-<tr bordercolor="#FFFFFF">
-	<td align="left" class="titulos2"><b>&nbsp;Ingrese nombre</b></td>
-	<td class="listado2"><input name="txtModelo" id="txtModelo" type="text" size="50" maxlength="30"></td>
-</tr>
-<?php
-	echo $msg;
-?>
-</table>
-<table width="75%" border="1" align="center" cellpadding="0" cellspacing="0" class="tablas">
-<tr bordercolor="#FFFFFF">
-	<td width="10%" class="listado2">&nbsp;</td>
-	<td width="20%"  class="listado2">
-		<span class="celdaGris"> <span class="e_texto1"><center>
-		<input name="btn_accion" type="button" class="botones" id="btn_accion" value="Listado" onClick="ver_listado();">
-		</center></span>
-	</td>
-	<td width="20%" class="listado2">
-		<span class="e_texto1"><center>
-		<input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Agregar" onClick="document.form1.hdBandera.value='A'; return ValidarInformacion();">
-		</center></span>
-	</td>
-	<td width="20%" class="listado2">
-		<span class="e_texto1"><center>
-		<input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Modificar" onClick="document.form1.hdBandera.value='M'; return ValidarInformacion();">
-		</center></span>
-	</td>
-	<td width="20%" class="listado2">
-		<span class="e_texto1"><center>
-		<input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Eliminar" onClick="document.form1.hdBandera.value='E'; return ValidarInformacion();">
-		</center></span>
-	</td>
-	<td width="10%" class="listado2">&nbsp;</td>
-</tr>
-</table>
-</form>
+  <div class="col-sm-12">
+    <!-- widget grid -->
+    <section id="widget-grid">
+      <!-- row -->
+      <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <!-- Widget ID (each widget will need unique ID)-->
+          <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
 
+            <header>
+              <h2>
+                Administrador de tablas sencillas
+              </h2>
+            </header>
+
+            <!-- widget div-->
+            <div>
+              <!-- widget content -->
+              <div class="widget-body no-padding">
+
+                <table class="table table-bordered table-striped">
+                    <tr bordercolor="#FFFFFF">
+                      <td colspan="3" height="40" align="center" class="titulos4" valign="middle"><b><span class=etexto></span></b></td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                      <td width="3%" align="center" class="titulos2"><b>1.</b></td>
+                      <td width="25%" align="left" class="titulos2"><b>&nbsp;Seleccione la tabla</b></td>
+                      <td width="72%" class="listado2">
+                        <SELECT name="slc_ppal" id="slc_ppal" class="select" onchange="this.form.submit();">
+                        <?=$opc_cmb ?>
+                        </SELECT>
+                      </td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                      <td align="center" class="titulos2"><b>2.</b></td>
+                      <td align="left" class="titulos2"><b>&nbsp;Seleccione Registro</b></td>
+                        <td align="left" class="listado2">
+                        <?=$slc_tmp	?>
+                      </td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                      <td rowspan="2" valign="middle" class="titulos2">3.</td>
+                      <td align="left" class="titulos2"><b>&nbsp;Ingrese c&oacute;digo</b></td>
+                      <td class="listado2"><input name="txtId" id="txtId" type="text" size="10" maxlength="2"></td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                      <td align="left" class="titulos2"><b>&nbsp;Ingrese nombre</b></td>
+                      <td class="listado2"><input name="txtModelo" id="txtModelo" type="text" size="50" maxlength="30"></td>
+                    </tr>
+                    <?php
+                      echo $msg;
+                    ?>
+                    </table>
+                    <table class="table table-bordered table-striped">
+                      <tr bordercolor="#FFFFFF">
+                        <td width="10%" class="listado2">&nbsp;</td>
+                        <td width="20%"  class="listado2">
+                          <span class="celdaGris"> <span class="e_texto1"><center>
+                          <input name="btn_accion" type="button" class="botones" id="btn_accion" value="Listado" onClick="ver_listado();">
+                          </center></span>
+                        </td>
+                        <td width="20%" class="listado2">
+                          <span class="e_texto1"><center>
+                          <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Agregar" onClick="document.form1.hdBandera.value='A'; return ValidarInformacion();">
+                          </center></span>
+                        </td>
+                        <td width="20%" class="listado2">
+                          <span class="e_texto1"><center>
+                          <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Modificar" onClick="document.form1.hdBandera.value='M'; return ValidarInformacion();">
+                          </center></span>
+                        </td>
+                        <td width="20%" class="listado2">
+                          <span class="e_texto1"><center>
+                          <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Eliminar" onClick="document.form1.hdBandera.value='E'; return ValidarInformacion();">
+                          </center></span>
+                        </td>
+                        <td width="10%" class="listado2">&nbsp;</td>
+                      </tr>
+                      </table>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</form>
 <script ID="clientEventHandlersJS" LANGUAGE="JavaScript">
 <!--
 function ValidarInformacion()

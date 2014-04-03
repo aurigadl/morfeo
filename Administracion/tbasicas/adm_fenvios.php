@@ -1,17 +1,33 @@
 <?php
+/**
+* @module crearUsuario
+*
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 session_start();
 
     $ruta_raiz="../..";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
-
-/*  Administrador de Tablas sencillas.
- *	Son tablas que tienen un codigo (digitado) y una descripcion. P.E. : Tema, Resolucion.
- * @copyright Sistema de Gestion Documental ORFEO
- * @version 1.0
- * @author Desarrollado por Ing. Hollman Ladino Paredes para el Instituto de Desarrollo Urbano - IDU.
- *
- */
 
 if (!isset($krd)) $krd = $_POST['krd']; else $krd = $_GET['krd'];
 
@@ -76,15 +92,15 @@ if ($db)
 {	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
 	if (isset($_POST['btn_accion']))
-	{	
+	{
 		$codi_ini = $_POST['sls_idfenv'];
 		$record = array();
-               
+
 		$record['SGD_FENV_DESCRIP'] = $_POST['txtNombre'];
 		$record['SGD_FENV_CODIGO'] = $_POST['txtId'];
 		$record['SGD_FENV_ESTADO'] = $_POST['slc_act'];
 		$record['SGD_FENV_PLANILLA'] = $_POST['slc_pnl'];
-               	
+
 		switch($_POST['btn_accion'])
 		{	Case 'Agregar':
 				{
@@ -94,7 +110,7 @@ if ($db)
 					($ok) ? $error = 3 : $error = 2;
 				}break;
 			Case 'Modificar':
-				{	
+				{
 				  if ($codi_ini <> $record['SGD_FENV_CODIGO'])
 				    {
 					//No se permite modificar el código del envío
@@ -152,8 +168,7 @@ else
 
 $msg = "";
 if ($error)
-{	$msg .= '<tr bordercolor="#FFFFFF">
-			<td width="3%" align="center" class="titulosError" colspan="3" bgcolor="#FFFFFF">';
+{	$msg .= '<tr> 			<td width="3%" align="center" class="titulosError" colspan="3" bgcolor="#FFFFFF">';
 	switch ($error)
 	{	case 1:	//NO CONECCION A BD
 				$msg .= "Error al conectar a BD, comun&iacute;quese con el Administrador de sistema !!";
@@ -176,9 +191,10 @@ if ($error)
 ?>
 <html>
 <head>
+<title>.: ORFEO :. Administraci&oacute;n de ESP(Entidades)</title>
 <script language="JavaScript" src="<?=$ruta_raiz?>/js/crea_combos_2.js"></script>
 <script language="JavaScript" src="<?=$ruta_raiz?>/js/formchek.js"></script>
-<link rel="stylesheet" href="../../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <script language="JavaScript" type="text/JavaScript">
 function ver_listado(que)
 {
@@ -188,7 +204,7 @@ function ver_listado(que)
 function ValidarInformacion()
 {	var strMensaje = "Por favor ingrese todos los datos.";
 
-	if(isWhitespace(document.form1.txtId.value)) 
+	if(isWhitespace(document.form1.txtId.value))
 	{	alert("Debe seleccionar o digitar el codigo.\n" + strMensaje);
 		document.form1.txtId.focus();
 		return false;
@@ -196,19 +212,19 @@ function ValidarInformacion()
 	else if(isNaN(document.form1.txtId.value))
 	{	alert("El Codigo debe ser numerico.\n" + strMensaje);
 		document.form1.txtId.focus();
-		return false; 
+		return false;
 	}
-	
+
 	if ( (document.form1.hdBandera.value == "A") || (document.form1.hdBandera.value == "M") )
-	{	if(isWhitespace(document.form1.txtNombre.value) || 
-			isWhitespace(document.form1.slc_pnl.value) || 
+	{	if(isWhitespace(document.form1.txtNombre.value) ||
+			isWhitespace(document.form1.slc_pnl.value) ||
 			isWhitespace(document.form1.slc_act.value)
 		  )
 		{	alert(strMensaje);
-			return false; 
+			return false;
 		}
 	}
-	if(document.form1.hdBandera.value == "E") 
+	if(document.form1.hdBandera.value == "E")
 	{	if(confirm("Esta seguro de borrar el registro ?\n"))
 		{	document.form1.submit();	}
 		else
@@ -223,7 +239,7 @@ echo arrayToJsArray($v_fenv, 've');
 ?>
 
 function actualiza_datos(vlr)
-{	
+{
 	var i;
 	for (i=0; i<=ve.length; i++)
 	{
@@ -246,86 +262,106 @@ function actualiza_datos(vlr)
 	}
 }
 </script>
-<title>.: ORFEO :. Administraci&oacute;n de ESP(Entidades)</title>
 </head>
 <body>
 <form name="form1" id="form1" method="post" action="<?= $_SERVER['PHP_SELF'] ?>">
-<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
+<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
 <input type="hidden" id="hdBandera" name="hdBandera" value="">
 <input type="hidden" id="krd" name="krd" value="<?= $krd ?>">
-<table width="75%" align="center" border="1" cellspacing="0" class="tablas">
-	<tr bordercolor="#FFFFFF">
-		<td colspan="6" height="40" class="titulos4" valign="middle" align="center">Administraci&oacute;n de Formas de Env&iacute;o.</td>
-	</tr>
-</table>
-<table border="1" cellpadding="0" cellspacing="0" align="center" width="75%">
-<tr bordercolor = "#FFFFFF">
-	<td width="5%" align="center" valign="middle" class="titulos2">1.</td>
-	<td width="20%" align="left" class="titulos2">Seleccione Env&iacute;o</td>
-	<td class="listado2">&nbsp;
-	<?=$slc_fenv?>
-	</td>
-</tr>
-<tr bordercolor = "#FFFFFF">
-	<td width="5%" align="center" valign="middle" class="titulos2">2.</td>
-	<td width="20%" align="left" class="titulos2">Mod. o Ingrese datos</td>
-	<td class="listado2">
-		<table border="1" cellpadding="0" cellspacing="0" width="100%">
-		<tr>
-			<td width="33%" align="center" valign="middle" class="titulos2">ID</td>
-			<td width="33%" align="center" valign="middle" class="titulos2">NOMBRE</td>
-		</tr>
-		<tr align="center">
-			<td width="33%"><input class="tex_area" type="text" name="txtId" id="txtId" size="3" maxlength="3"></td>
-			<td width="33%"><input class="tex_area" type="text" name="txtNombre" id="txtNombre" size="50" maxlength="80"></td>
-		</tr>
-		<tr>
-			<td width="33%" align="center" valign="middle" class="titulos2">Est&aacute; activa ?</td>
-			<td width="34%" align="center" valign="middle" class="titulos2">Genera Planilla ?</td>
-		</tr>
-		<tr align="center">
-			<td width="34%">
-				<select name="slc_act" id="slc_act" class="select">
-					<option value="">Seleccione</option>
-					<option value="1"> S  I </option>
-					<option value="0"> N  O </option>
-				</select>
-			</td>
-			<td width="34%">
-				<select name="slc_pnl" id="slc_pnl" class="select">
-					<option value="">Seleccione</option>
-					<option value="1"> S  I </option>
-					<option value="0"> N  O </option>
-				</select>
-			</td>
-		</tr>
-		</table>
-	</td>
-</tr>
-<?php	echo $msg;	?>
-</table>
-<table width="75%" border="1" align="center" cellpadding="0" cellspacing="0" class="tablas">
-<tr bordercolor="#FFFFFF">
-	<td width="10%" class="listado2">&nbsp;</td>
-	<td width="20%"  class="listado2">
-		<span class="celdaGris"><center>
-		<input name="btn_accion" type="button" class="botones" id="btn_accion" value="Listado" onClick="ver_listado();">
-		</center></span>	</td>
-	<td width="20%" class="listado2">
-		<span class="e_texto1"><center>
-		<input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Agregar" onClick="document.form1.hdBandera.value='A'; return ValidarInformacion();">
-		</center></span>	</td>
-	<td width="20%" class="listado2">
-		<span class="e_texto1"><center>
-		<input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Modificar" onClick="document.form1.hdBandera.value='M'; return ValidarInformacion();">
-		</center></span>	</td>
-	<td width="20%" class="listado2">
-		<span class="e_texto1"><center>
-		  <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Eliminar" onClick="document.form1.hdBandera.value='E'; return ValidarInformacion();">
-		  </center></span>	</td>
-	<td width="10%" class="listado2">&nbsp;</td>
-</tr>
-</table>
-</form>
-</body>
+
+  <div class="col-sm-12">
+    <!-- widget grid -->
+    <section id="widget-grid">
+      <!-- row -->
+      <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <!-- Widget ID (each widget will need unique ID)-->
+          <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+
+            <header>
+              <h2>
+                Administraci&oacute;n de Formas de Env&iacute;o
+              </h2>
+            </header>
+
+            <!-- widget div-->
+            <div>
+              <!-- widget content -->
+              <div class="widget-body no-padding">
+
+                <table class="table table-bordered table-striped">
+
+                  <tr>
+                    <td width="5%" align="center" valign="middle" class="titulos2">1.</td>
+                    <td width="20%" align="left" class="titulos2">Seleccione Env&iacute;o</td>
+                    <td class="listado2">&nbsp;
+                    <?=$slc_fenv?>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td width="5%" align="center" valign="middle" class="titulos2">2.</td>
+                    <td width="20%" align="left" class="titulos2">Mod. o Ingrese datos</td>
+                    <td class="listado2">
+
+                    <table class="table table-bordered table-striped">
+                      <tr>
+                        <td width="33%" align="center" valign="middle" class="titulos2">ID</td>
+                        <td width="33%" align="center" valign="middle" class="titulos2">NOMBRE</td>
+                      </tr>
+                      <tr align="center">
+                        <td width="33%"><input class="tex_area" type="text" name="txtId" id="txtId" size="3" maxlength="3"></td>
+                        <td width="33%"><input class="tex_area" type="text" name="txtNombre" id="txtNombre" size="50" maxlength="80"></td>
+                      </tr>
+                      <tr>
+                        <td width="33%" align="center" valign="middle" class="titulos2">Est&aacute; activa ?</td>
+                        <td width="34%" align="center" valign="middle" class="titulos2">Genera Planilla ?</td>
+                      </tr>
+                      <tr align="center">
+                        <td width="34%">
+                          <select name="slc_act" id="slc_act" class="select">
+                            <option value="">Seleccione</option>
+                            <option value="1"> S  I </option>
+                            <option value="0"> N  O </option>
+                          </select>
+                        </td>
+                        <td width="34%">
+                          <select name="slc_pnl" id="slc_pnl" class="select">
+                            <option value="">Seleccione</option>
+                            <option value="1"> S  I </option>
+                            <option value="0"> N  O </option>
+                          </select>
+                        </td>
+                      </tr>
+                      </table>
+                  </td>
+                </tr>
+                <?php	echo $msg;	?>
+                </table>
+
+                <table class="table table-bordered table-striped">
+                  <tr>
+                    <td width="10%" class="listado2">&nbsp;</td>
+                    <td width="20%"  class="listado2">
+                      <span class="celdaGris"><center>
+                      <input name="btn_accion" type="button" class="botones" id="btn_accion" value="Listado" onClick="ver_listado();">
+                      </center></span>	</td>
+                    <td width="20%" class="listado2">
+                      <span class="e_texto1"><center>
+                      <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Agregar" onClick="document.form1.hdBandera.value='A'; return ValidarInformacion();">
+                      </center></span>	</td>
+                    <td width="20%" class="listado2">
+                      <span class="e_texto1"><center>
+                      <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Modificar" onClick="document.form1.hdBandera.value='M'; return ValidarInformacion();">
+                      </center></span>	</td>
+                    <td width="20%" class="listado2">
+                      <span class="e_texto1"><center>
+                        <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Eliminar" onClick="document.form1.hdBandera.value='E'; return ValidarInformacion();">
+                        </center></span>	</td>
+                    <td width="10%" class="listado2">&nbsp;</td>
+                  </tr>
+                </table>
+    </form>
+  </body>
 </html>
