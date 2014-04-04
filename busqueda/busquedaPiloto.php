@@ -4,7 +4,7 @@ if(!$ruta_raiz) $ruta_raiz="..";  if (!$_SESSION['dependencia'])   header ("Loca
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
-  
+
 $krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $usua_doc    = $_SESSION["usua_doc"];
@@ -21,7 +21,7 @@ $fechah = date("ymd") . "_" . time("hms");
 
 // Save Page and File Name available into variables
 
-//------------------------------- 
+//-------------------------------
 $sFileName = "busquedaPiloto.php";
 //===============================
 // busqueda PageSecurity begin
@@ -47,7 +47,7 @@ $nomcarpeta  = $_GET["nomcarpeta"];
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="<?=$ruta_raiz?>/estilos/orfeo.css" type="text/css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 </head>
 <script>
@@ -124,58 +124,79 @@ $nomcarpeta  = $_GET["nomcarpeta"];
 	     echo "opener.document.insExp.numeroExpediente.value = fecha\n";
 	     echo "opener.focus(); window.close();}\n";
 	?>
-	}	
+	}
 
 </script>
 
 <body class="PageBODY" onLoad='document.getElementById("cajarad").focus();'>
-<table>
-	<tr>
-		<td valign="top" width="80%">
-			<?php Search_show() ?>
-		</td>
-		<td valign="top">
-		    		</td>
-	</tr>
-</table>
-<table>
-	<tr>
-		<td valign="top">
-<?php
-if($Busqueda or $s_entrada){
-	if($s_Listado=="VerListado"){
-		echo "<tr><td valign='top'>";
-			if($flds_ciudadano=="CIU") $whereFlds .= "1,";
-			if($flds_empresaESP=="ESP") $whereFlds .= "2,";
-			if($flds_oEmpresa=="OEM") $whereFlds .= "3,";
-			if($flds_FUNCIONARIO=="FUN") $whereFlds .= "4,";
-			$whereFlds .= "0";
-			Ciudadano_show($nivelus,9,$whereFlds);
-	    echo "</td></tr>";
-	}
-    else{
-        if (!$etapa)
-            if($flds_ciudadano=="CIU"){
-                   Ciudadano_show($nivelus,1,1);
-                }else{
-		  if(!strlen($flds_ciudadano) 
-		      && !strlen($flds_empresaESP) 
-		      && !strlen($flds_oEmpresa) 
-		      && !strlen($flds_FUNCIONARIO)){
-                   Ciudadano_show($nivelus,9,1);
-                 }
-                 }
-        echo "</td></tr><tr><td valign='top'>";
-        if($flds_empresaESP=="ESP") Ciudadano_show($nivelus,3,3);
-        echo "</td></tr><tr><td valign='top'>";
-        if($flds_oEmpresa=="OEM") Ciudadano_show($nivelus,2,2);
-        echo "</td></tr><tr><td valign='top'>";
-        if($flds_FUNCIONARIO=="FUN") Ciudadano_show($nivelus,4,4);
-        echo "</td></tr>";
-    }
-}
-?>
- </table>
+  <div class="col-sm-12">
+    <!-- widget grid -->
+    <section id="widget-grid">
+      <!-- row -->
+      <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <!-- Widget ID (each widget will need unique ID)-->
+          <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+            <div>
+              <!-- widget content -->
+              <div class="widget-body no-padding">
+
+                  <table class="table table-bordered table-striped">
+                    <tr>
+                      <td valign="top">
+                        <?php Search_show() ?>
+                      </td>
+                      <td valign="top">
+                              </td>
+                    </tr>
+                  </table>
+
+                  <table class="table table-bordered table-striped">
+                    <tr>
+                      <td valign="top">
+                  <?php
+                  if($Busqueda or $s_entrada){
+                    if($s_Listado=="VerListado"){
+                      echo "<tr><td valign='top'>";
+                        if($flds_ciudadano=="CIU") $whereFlds .= "1,";
+                        if($flds_empresaESP=="ESP") $whereFlds .= "2,";
+                        if($flds_oEmpresa=="OEM") $whereFlds .= "3,";
+                        if($flds_FUNCIONARIO=="FUN") $whereFlds .= "4,";
+                        $whereFlds .= "0";
+                        Ciudadano_show($nivelus,9,$whereFlds);
+                        echo "</td></tr>";
+                    }
+                      else{
+                          if (!$etapa)
+                              if($flds_ciudadano=="CIU"){
+                                    Ciudadano_show($nivelus,1,1);
+                                  }else{
+                        if(!strlen($flds_ciudadano)
+                            && !strlen($flds_empresaESP)
+                            && !strlen($flds_oEmpresa)
+                            && !strlen($flds_FUNCIONARIO)){
+                                    Ciudadano_show($nivelus,9,1);
+                                  }
+                                  }
+                          echo "</td></tr><tr><td valign='top'>";
+                          if($flds_empresaESP=="ESP") Ciudadano_show($nivelus,3,3);
+                          echo "</td></tr><tr><td valign='top'>";
+                          if($flds_oEmpresa=="OEM") Ciudadano_show($nivelus,2,2);
+                          echo "</td></tr><tr><td valign='top'>";
+                          if($flds_FUNCIONARIO=="FUN") Ciudadano_show($nivelus,4,4);
+                          echo "</td></tr>";
+                      }
+                  }
+                  ?>
+                  </table>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
 </body>
 </html>
 <?php
@@ -210,7 +231,7 @@ if($_REQUEST["flds_TDOC_CODI"]) $flds_TDOC_CODI=$_REQUEST["flds_TDOC_CODI"];
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
-  
+
   if ($indiVinculo == 1)
 	  {
        $sFormTitle = $sFormTitle . "  Anexo  al Vuelo ";
@@ -286,211 +307,233 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 //-------------------------------
 ?>
 <form method="get" action="busquedaPiloto.php?<?=session_name()."=".session_id()?>&indiVinculo=<?=$indiVinculo?>&verrad=<?=$verrad?>&carpeAnt=<?=$carpeAnt?>&nomcarpeta=<?=$nomcarpeta?>" name="Search">
-<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
+<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
 <input type="hidden" name="FormName" value="Search"><input type="hidden" name="FormAction" value="search">
-  <table  border=0 cellpadding=0 cellspacing=2 class='borde_tab'>
-    <tr>
-      <td  class="titulos4" colspan="13"><a name="Search">
-        <?=$sFormTitle?>
-      </td>
-    </tr>
-    <tr>
-      <td class="titulos5">Radicado</td>
-      <td class="listado5">
-        <input class="tex_area" type="text" name="s_RADI_NUME_RADI" maxlength="" value="<?=tohtml($flds_RADI_NUME_RADI) ?>" size="" id="cajarad">
-      </td>
-    </tr>
-    <tr>
-      <td class="titulos5">Identificaci&oacute;n (T.I.,C.C.,Nit) *</td>
-      <td class="listado5">
-        <input class="tex_area" type="text" name="s_DOCTO" maxlength="" value="<?=tohtml($flds_DOCTO) ?>" size="" >
-      </td>
-    </tr>
+  <div class="col-sm-12">
+    <!-- widget grid -->
+    <section id="widget-grid">
+      <!-- row -->
+      <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <!-- Widget ID (each widget will need unique ID)-->
+          <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
 
-    <!--
-    /**
-    * Busqueda por expediente
-    * Fecha de modificacion: 30-Junio-2006
-    * Modificador: Supersolidaria
-    */
-    -->
-    <tr>
-      <td class="titulos5">Expediente</td>
-      <td class="listado5">
-        <input class="tex_area" type="text" name="s_SGD_EXP_SUBEXPEDIENTE" maxlength="" value="<?=tohtml($flds_SGD_EXP_SUBEXPEDIENTE) ?>" size="" >
-      </td>
-    </tr>
+            <header>
+              <h2>
+                Administracion de dependencias<br>
+                <small><?=$tituloCrear ?></small>
+              </h2>
+            </header>
+            <!-- widget div-->
+            <div>
+              <!-- widget content -->
+              <div class="widget-body no-padding">
 
-    <tr>
-      <td class="titulos5">
-        <INPUT  type="radio" NAME="s_solo_nomb" value="All" CHECKED
-  <?if($flds_solo_nomb=="All"){ echo ("CHECKED");} ?>>
-        Buscar Por<br>
-        <!--<INPUT type="radio" NAME="s_solo_nomb" value="Any"
-  <? if($flds_solo_nomb=="Any"){echo ("CHECKED");} ?>>Cualquier Palabra (o)<br>-->
-        </td>
-      <td class="listado5">
-        <input class="tex_area" type="text" name="s_RADI_NOMB" maxlength="70" value="<?=tohtml($flds_RADI_NOMB) ?>" size="70" >
-      </td>
-    </tr>
-<?
-$listadoView = " checked=checked";
-?>
+                  <table class="table table-bordered table-striped">
 
-    <tr>
-      <td class="titulos5"> Buscar en Radicados
-        de  </td>
-      <td class="listado5">
-        <select class="select" name="s_entrada" >
-          <?
-	if(!$s_Listado) $s_Listado="VerListado";
-  if ($flds_entrada==0) $flds_entrada="9999";
-  echo "<option value=\"9999\">" . $ss_TRAD_CODIDisplayValue . "</option>";
-  $lookup_s_entrada = db_fill_array("select SGD_TRAD_CODIGO, SGD_TRAD_DESCR from SGD_TRAD_TIPORAD order by 2");
+                      <tr>
+                        <td  class="titulos4" colspan="13"><a name="Search">
+                          <?=$sFormTitle?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="titulos5">Radicado</td>
+                        <td class="listado5">
+                          <input class="tex_area" type="text" name="s_RADI_NUME_RADI" maxlength="" value="<?=tohtml($flds_RADI_NUME_RADI) ?>" size="" id="cajarad">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="titulos5">Identificaci&oacute;n (T.I.,C.C.,Nit) *</td>
+                        <td class="listado5">
+                          <input class="tex_area" type="text" name="s_DOCTO" maxlength="" value="<?=tohtml($flds_DOCTO) ?>" size="" >
+                        </td>
+                      </tr>
 
-  if(is_array($lookup_s_entrada))
-  {
-    reset($lookup_s_entrada);
-    while(list($key, $value) = each($lookup_s_entrada))
-    {
-      if($key == $flds_entrada) $option="<option SELECTED value=\"$key\">$value</option>";
-      else $option="<option value=\"$key\">$value</option>";
-      echo $option;
-    }
-  }
-  ?>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td class="titulos5">Desde Fecha (dd/mm/yyyy)</td>
-      <td class="listado5">
-        <select class="select" name="s_desde_dia">
-          <?
-  for($i = 1; $i <= 31; $i++)
-  {
-    if($i == $flds_desde_dia) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
-    else $option="<option value=\"" . $i . "\">" . $i . "</option>";
-    echo $option;
-  }
-  ?>
-        </select>
-        <select class="select" name="s_desde_mes">
-          <?
-  for($i = 1; $i <= 12; $i++)
-  {
-    if($i == $flds_desde_mes) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
-    else $option="<option value=\"" . $i . "\">" . $i . "</option>";
-    echo $option;
-  }
-  ?>
-        </select>
-        <select class="select" name="s_desde_ano">
-          <?
-  $agnoactual=Date('Y');
-  for($i = 1990; $i <= $agnoactual; $i++)
-  {
-    if($i == $flds_desde_ano) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
-    else $option="<option value=\"" . $i . "\">" . $i . "</option>";
-    echo $option;
-  }
-  ?>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td class="titulos5">Hasta Fecha (dd/mm/yyyy)</td>
-      <td class="listado5">
-        <select class="select" name="s_hasta_dia">
-          <?
-  for($i = 1; $i <= 31; $i++)
-  {
-    if($i == $flds_hasta_dia) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
-    else $option="<option value=\"" . $i . "\">" . $i . "</option>";
-    echo $option;
-  }
-  ?>
-        </select>
-        <select class="select" name="s_hasta_mes">
-          <?
-  for($i = 1; $i <= 12; $i++)
-  {
-    if($i == $flds_hasta_mes) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
-    else $option="<option value=\"" . $i . "\">" . $i . "</option>";
-    echo $option;
-  }
-  ?>
-        </select>
-        <select class="select" name="s_hasta_ano">
-          <?
-  for($i = 1990; $i <= $agnoactual; $i++)
-  {
-    if($i == $flds_hasta_ano) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
-    else $option="<option value=\"" . $i . "\">" . $i . "</option>";
-    echo $option;
-  }
-  ?>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td class="titulos5"><font class="FieldCaptionFONT">Tipo de Documento</td>
-      <td class="listado5">
-        <select class="select" name="s_TDOC_CODI">
-          <?
-  if ($flds_TDOC_CODI==0) $flds_TDOC_CODI="9999";
-  echo "<option value=\"9999\">" . $ss_TDOC_CODIDisplayValue . "</option>";
-  $lookup_s_TDOC_CODI = db_fill_array("select SGD_TPR_CODIGO, SGD_TPR_DESCRIP from SGD_TPR_TPDCUMENTO order by 2");
+                      <!--
+                      /**
+                      * Busqueda por expediente
+                      * Fecha de modificacion: 30-Junio-2006
+                      * Modificador: Supersolidaria
+                      */
+                      -->
+                      <tr>
+                        <td class="titulos5">Expediente</td>
+                        <td class="listado5">
+                          <input class="tex_area" type="text" name="s_SGD_EXP_SUBEXPEDIENTE" maxlength="" value="<?=tohtml($flds_SGD_EXP_SUBEXPEDIENTE) ?>" size="" >
+                        </td>
+                      </tr>
 
-  if(is_array($lookup_s_TDOC_CODI))
-  {
-    reset($lookup_s_TDOC_CODI);
-    while(list($key, $value) = each($lookup_s_TDOC_CODI))
-    {
-      if($key == $flds_TDOC_CODI) $option="<option SELECTED value=\"$key\">$value</option>";
-      else $option="<option value=\"$key\">$value</option>";
-      echo $option;
-    }
-  }
-  ?>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td class="titulos5">Dependencia Actual</td>
-      <td class="listado5">
-        <select class="select" name="s_RADI_DEPE_ACTU">
-          <?
-	$l= strlen($flds_RADI_DEPE_ACTU);
+                      <tr>
+                        <td class="titulos5">
+                          <INPUT  type="radio" NAME="s_solo_nomb" value="All" CHECKED
+                    <?if($flds_solo_nomb=="All"){ echo ("CHECKED");} ?>>
+                          Buscar Por<br>
+                          <!--<INPUT type="radio" NAME="s_solo_nomb" value="Any"
+                    <? if($flds_solo_nomb=="Any"){echo ("CHECKED");} ?>>Cualquier Palabra (o)<br>-->
+                          </td>
+                        <td class="listado5">
+                          <input class="tex_area" type="text" name="s_RADI_NOMB" maxlength="70" value="<?=tohtml($flds_RADI_NOMB) ?>" size="70" >
+                        </td>
+                      </tr>
+                  <?
+                  $listadoView = " checked=checked";
+                  ?>
 
-	if ($l==0){
-		echo "<option value=\"\" SELECTED>" . $ss_RADI_DEPE_ACTUDisplayValue . "</option>";
-	}else{
-		echo "<option value=\"\">" . $ss_RADI_DEPE_ACTUDisplayValue . "</option>";
-	}
-$lookup_s_RADI_DEPE_ACTU = db_fill_array("select DEPE_CODI, DEPE_NOMB from DEPENDENCIA where depe_estado=1 order by 2");
+                      <tr>
+                        <td class="titulos5"> Buscar en Radicados
+                          de  </td>
+                        <td class="listado5">
+                          <select class="select" name="s_entrada" >
+                            <?
+                    if(!$s_Listado) $s_Listado="VerListado";
+                    if ($flds_entrada==0) $flds_entrada="9999";
+                    echo "<option value=\"9999\">" . $ss_TRAD_CODIDisplayValue . "</option>";
+                    $lookup_s_entrada = db_fill_array("select SGD_TRAD_CODIGO, SGD_TRAD_DESCR from SGD_TRAD_TIPORAD order by 2");
 
-if(is_array($lookup_s_RADI_DEPE_ACTU))
-{
-	reset($lookup_s_RADI_DEPE_ACTU);
-	while(list($key, $value) = each($lookup_s_RADI_DEPE_ACTU))
-	{
-		if($l>0 && $key == $flds_RADI_DEPE_ACTU) $option="<option SELECTED value=\"$key\">$value</option>";
-		else $option="<option value=\"$key\">$value</option>";
-		echo $option;
-	}
-}
-  ?>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td align="right" colspan="3" class="titulos5">
-        <input class="botones" type="button" value="Limpiar" onclick="limpiar();">
-        <input class="botones" type="submit" name=Busqueda value="B&uacute;squeda">
-      </td>
-    </tr>
-  </table>
+                    if(is_array($lookup_s_entrada))
+                    {
+                      reset($lookup_s_entrada);
+                      while(list($key, $value) = each($lookup_s_entrada))
+                      {
+                        if($key == $flds_entrada) $option="<option SELECTED value=\"$key\">$value</option>";
+                        else $option="<option value=\"$key\">$value</option>";
+                        echo $option;
+                      }
+                    }
+                    ?>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="titulos5">Desde Fecha (dd/mm/yyyy)</td>
+                        <td class="listado5">
+                          <select class="select" name="s_desde_dia">
+                            <?
+                    for($i = 1; $i <= 31; $i++)
+                    {
+                      if($i == $flds_desde_dia) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
+                      else $option="<option value=\"" . $i . "\">" . $i . "</option>";
+                      echo $option;
+                    }
+                    ?>
+                          </select>
+                          <select class="select" name="s_desde_mes">
+                            <?
+                    for($i = 1; $i <= 12; $i++)
+                    {
+                      if($i == $flds_desde_mes) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
+                      else $option="<option value=\"" . $i . "\">" . $i . "</option>";
+                      echo $option;
+                    }
+                    ?>
+                          </select>
+                          <select class="select" name="s_desde_ano">
+                            <?
+                    $agnoactual=Date('Y');
+                    for($i = 1990; $i <= $agnoactual; $i++)
+                    {
+                      if($i == $flds_desde_ano) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
+                      else $option="<option value=\"" . $i . "\">" . $i . "</option>";
+                      echo $option;
+                    }
+                    ?>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="titulos5">Hasta Fecha (dd/mm/yyyy)</td>
+                        <td class="listado5">
+                          <select class="select" name="s_hasta_dia">
+                            <?
+                    for($i = 1; $i <= 31; $i++)
+                    {
+                      if($i == $flds_hasta_dia) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
+                      else $option="<option value=\"" . $i . "\">" . $i . "</option>";
+                      echo $option;
+                    }
+                    ?>
+                          </select>
+                          <select class="select" name="s_hasta_mes">
+                            <?
+                    for($i = 1; $i <= 12; $i++)
+                    {
+                      if($i == $flds_hasta_mes) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
+                      else $option="<option value=\"" . $i . "\">" . $i . "</option>";
+                      echo $option;
+                    }
+                    ?>
+                          </select>
+                          <select class="select" name="s_hasta_ano">
+                            <?
+                    for($i = 1990; $i <= $agnoactual; $i++)
+                    {
+                      if($i == $flds_hasta_ano) $option="<option SELECTED value=\"" . $i . "\">" . $i . "</option>";
+                      else $option="<option value=\"" . $i . "\">" . $i . "</option>";
+                      echo $option;
+                    }
+                    ?>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="titulos5"><font class="FieldCaptionFONT">Tipo de Documento</td>
+                        <td class="listado5">
+                          <select class="select" name="s_TDOC_CODI">
+                            <?
+                    if ($flds_TDOC_CODI==0) $flds_TDOC_CODI="9999";
+                    echo "<option value=\"9999\">" . $ss_TDOC_CODIDisplayValue . "</option>";
+                    $lookup_s_TDOC_CODI = db_fill_array("select SGD_TPR_CODIGO, SGD_TPR_DESCRIP from SGD_TPR_TPDCUMENTO order by 2");
+
+                    if(is_array($lookup_s_TDOC_CODI))
+                    {
+                      reset($lookup_s_TDOC_CODI);
+                      while(list($key, $value) = each($lookup_s_TDOC_CODI))
+                      {
+                        if($key == $flds_TDOC_CODI) $option="<option SELECTED value=\"$key\">$value</option>";
+                        else $option="<option value=\"$key\">$value</option>";
+                        echo $option;
+                      }
+                    }
+                    ?>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="titulos5">Dependencia Actual</td>
+                        <td class="listado5">
+                          <select class="select" name="s_RADI_DEPE_ACTU">
+                            <?
+                    $l= strlen($flds_RADI_DEPE_ACTU);
+
+                    if ($l==0){
+                      echo "<option value=\"\" SELECTED>" . $ss_RADI_DEPE_ACTUDisplayValue . "</option>";
+                    }else{
+                      echo "<option value=\"\">" . $ss_RADI_DEPE_ACTUDisplayValue . "</option>";
+                    }
+                  $lookup_s_RADI_DEPE_ACTU = db_fill_array("select DEPE_CODI, DEPE_NOMB from DEPENDENCIA where depe_estado=1 order by 2");
+
+                  if(is_array($lookup_s_RADI_DEPE_ACTU))
+                  {
+                    reset($lookup_s_RADI_DEPE_ACTU);
+                    while(list($key, $value) = each($lookup_s_RADI_DEPE_ACTU))
+                    {
+                      if($l>0 && $key == $flds_RADI_DEPE_ACTU) $option="<option SELECTED value=\"$key\">$value</option>";
+                      else $option="<option value=\"$key\">$value</option>";
+                      echo $option;
+                    }
+                  }
+                    ?>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="right" colspan="3" class="titulos5">
+                          <input class="botones" type="button" value="Limpiar" onclick="limpiar();">
+                          <input class="botones" type="submit" name=Busqueda value="B&uacute;squeda">
+                        </td>
+                      </tr>
+                    </table>
 </form>
 
 <?php
@@ -595,24 +638,24 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
       $sSortParams = "FormCIUDADANO_Sorting=" . $iSort . "&FormCIUDADANO_Sorted=" . "&";
     }
     switch ($iSort){
-    case   1: $sOrder = " order by r.radi_nume_radi" . $sDirection; break;
-    case   2: $sOrder = " order by r.radi_fech_radi" . $sDirection; break;
-    case   3: $sOrder = " order by r.ra_asun" . $sDirection; break;
-    case   4: $sOrder = " order by td.sgd_tpr_descrip" . $sDirection; break;
-    case   5: $sOrder = " order by r.radi_nume_hoja" . $sDirection; break;
-    case   6: $sOrder = " order by dir.sgd_dir_direccion" . $sDirection; break; 
-    case   7: $sOrder = " order by dir.sgd_dir_telefono" . $sDirection; break;
-	case   8: $sOrder = " order by dir.sgd_dir_mail" . $sDirection; break;
-	case   9: $sOrder = " order by dir.sgd_dir_nombre" . $sDirection; break;
-	case   12: $sOrder = " order by dir.sgd_dir_telefono" . $sDirection; break;
-    case   13: $sOrder = " order by dir.sgd_dir_direccion" . $sDirection; break;
-    case   14: $sOrder = " order by dir.sgd_dir_doc" . $sDirection; break;
-    case   17: $sOrder = " order by r.radi_usu_ante" . $sDirection; break;
-	case   20: $sOrder = " order by r.radi_pais" . $sDirection; break;
-	case   21: $sOrder = " order by diasr" . $sDirection; break;
-	case   22: $sOrder = " order by dir.sgd_dir_nombre" . $sDirection; break;
-	case   23: $sOrder = " order by dir.sgd_dir_nombre" . $sDirection; break;
-	case   24: $sOrder = " order by dir.sgd_dir_nombre" . $sDirection; break;
+        case   1: $sOrder  = " order by r.radi_nume_radi" . $sDirection; break;
+        case   2: $sOrder  = " order by r.radi_fech_radi" . $sDirection; break;
+        case   3: $sOrder  = " order by r.ra_asun" . $sDirection; break;
+        case   4: $sOrder  = " order by td.sgd_tpr_descrip" . $sDirection; break;
+        case   5: $sOrder  = " order by r.radi_nume_hoja" . $sDirection; break;
+        case   6: $sOrder  = " order by dir.sgd_dir_direccion" . $sDirection; break;
+        case   7: $sOrder  = " order by dir.sgd_dir_telefono" . $sDirection; break;
+        case   8: $sOrder  = " order by dir.sgd_dir_mail" . $sDirection; break;
+        case   9: $sOrder  = " order by dir.sgd_dir_nombre" . $sDirection; break;
+        case   12: $sOrder = " order by dir.sgd_dir_telefono" . $sDirection; break;
+        case   13: $sOrder = " order by dir.sgd_dir_direccion" . $sDirection; break;
+        case   14: $sOrder = " order by dir.sgd_dir_doc" . $sDirection; break;
+        case   17: $sOrder = " order by r.radi_usu_ante" . $sDirection; break;
+        case   20: $sOrder = " order by r.radi_pais" . $sDirection; break;
+        case   21: $sOrder = " order by diasr" . $sDirection; break;
+        case   22: $sOrder = " order by dir.sgd_dir_nombre" . $sDirection; break;
+        case   23: $sOrder = " order by dir.sgd_dir_nombre" . $sDirection; break;
+        case   24: $sOrder = " order by dir.sgd_dir_nombre" . $sDirection; break;
     }
   }
 
@@ -620,9 +663,9 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
 // Encabezados HTML de las Columnas (Titulos)
 //-------------------------------
  if ($indiVinculo != 2){?>
-	<table width="2000" border=0 cellpadding=0 cellspacing=0 class='borde_tab'> 
+	<table class="table table-bordered table-striped">
 	<?}else {?>
-	<table width="200" border=0 cellpadding=0 cellspacing=0 class='borde_tab'>
+	<table class="table table-bordered table-striped">
 	<?}?>
 	<tr>
 		<td class="titulos4" colspan="20"><a name="RADICADO"><?=$sFormTitle?></a></td>
@@ -632,7 +675,7 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
 	if ($indiVinculo >= 1)
 	{	?>
 		<td class="titulos5"><font class="ColumnFONT"> </td>
-	<?	}	
+	<?	}
 	 if ($indiVinculo != 2)
 	  {	?>
 		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=1&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Radicado</a></td>
@@ -734,8 +777,8 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
         /**
           * No se tienen en cuenta los radicados que han sido excluidos de un expediente.
           * Fecha de modificacion: 12-Septiembre-2006
-          * Modificador: Supersolidaria 
-          * Aqui se hace la consulta en los diferentes campos agregar campos si es nescesario 
+          * Modificador: Supersolidaria
+          * Aqui se hace la consulta en los diferentes campos agregar campos si es nescesario
           */
   $sWhere = $sWhere . " AND EXP.SGD_EXP_ESTADO <> 2";
   $sWhere = $sWhere . " AND ( EXP.SGD_EXP_NUMERO LIKE '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%'";
@@ -818,7 +861,7 @@ if ($yaentro == true ) $sWhere .= " and (";
 $sWhere .= "UPPER(".$db->conn->Concat("r.ra_asun","r.radi_cuentai","dir.sgd_dir_telefono","dir.sgd_dir_direccion","r.radi_nume_guia") . ") LIKE '%".$ps_RADI_NOMB."%' ";
    $tok = strtok(" ");
 if ($yaentro == true ) $sWhere .= ")";
-	
+
 	$yaentro=true;
 	$sWhere .="))";
 
@@ -873,24 +916,24 @@ require_once("../include/query/busqueda/busquedaPiloto1.php");
 $sSQL = "SELECT ".
 			$radi_nume_radi." AS RADI_NUME_RADI,".
 	        $db->conn->SQLDate('Y-m-d H:i:s','R.RADI_FECH_RADI')." AS RADI_FECH_RADI,
-			r.RA_ASUN, 
+			r.RA_ASUN,
 			td.sgd_tpr_descrip, ".
 			$redondeo." as diasr,
-			r.RADI_NUME_HOJA, 
-			r.RADI_PATH, 
-			dir.SGD_DIR_DIRECCION, 
-			dir.SGD_DIR_MAIL,
-			dir.SGD_DIR_NOMREMDES, 
-			dir.SGD_DIR_TELEFONO, 
+			r.RADI_NUME_HOJA,
+			r.RADI_PATH,
 			dir.SGD_DIR_DIRECCION,
-			dir.SGD_DIR_DOC, 
-			r.RADI_USU_ANTE, 
-			r.RADI_PAIS, 
+			dir.SGD_DIR_MAIL,
+			dir.SGD_DIR_NOMREMDES,
+			dir.SGD_DIR_TELEFONO,
+			dir.SGD_DIR_DIRECCION,
+			dir.SGD_DIR_DOC,
+			r.RADI_USU_ANTE,
+			r.RADI_PAIS,
 			dir.SGD_DIR_NOMBRE,
-			dir.SGD_TRD_CODIGO, 
-			r.RADI_DEPE_ACTU, 
-			r.RADI_USUA_ACTU, 
-			r.CODI_NIVEL, 
+			dir.SGD_TRD_CODIGO,
+			r.RADI_DEPE_ACTU,
+			r.RADI_USUA_ACTU,
+			r.CODI_NIVEL,
 			r.SGD_SPUB_CODIGO";
 
 /**
@@ -900,7 +943,7 @@ $sSQL = "SELECT ".
   */
 if( strlen( $ps_SGD_EXP_SUBEXPEDIENTE ) != 0 )	$sSQL .= " ,EXP.SGD_EXP_NUMERO";
 
-$sSQL .= " FROM sgd_dir_drecciones dir, radicado r, sgd_tpr_tpdcumento td";	
+$sSQL .= " FROM sgd_dir_drecciones dir, radicado r, sgd_tpr_tpdcumento td";
 
 /**
   * Busqueda por expediente
@@ -1055,13 +1098,13 @@ $linkInfGeneral="<a class='vinculos' href='javascript:noPermiso()' > ";
 /*
  * Ajuste validacion permisos unificados
  * @author Liliana Gomez Velasquez
- * @fecha 11 septiembre 2009 
+ * @fecha 11 septiembre 2009
  */
-  
+
   include_once "$ruta_raiz/tx/verLinkArchivo.php";
-  
+
   $verLinkArchivo = new verLinkArchivo ( $db );
-  
+
   $resulVali  = $verLinkArchivo->valPermisoRadi ($fldRADI_NUME_RADI);
   $valImg     = $resulVali ['verImg'];
   $pathImagen = $resulVali ['pathImagen'];
@@ -1077,11 +1120,11 @@ $linkInfGeneral="<a class='vinculos' href='javascript:noPermiso()' > ";
 
 if(strlen( $ps_SGD_EXP_SUBEXPEDIENTE ) == 0 ){
 $consultaExpediente="SELECT exp.SGD_EXP_NUMERO, sexp.sgd_exp_privado  , u.usua_doc DOC_RESPONSABLE, u.DEPE_CODI DEPE_RESPONSABLE
-                     FROM SGD_EXP_EXPEDIENTE exp, 
+                     FROM SGD_EXP_EXPEDIENTE exp,
 			sgd_sexp_secexpedientes sexp left join usuario u
                            on sexp.usua_doc_responsable=u.usua_doc
 		     WHERE
-		      exp.radi_nume_radi= $fldRADI_NUME_RADI 
+		      exp.radi_nume_radi= $fldRADI_NUME_RADI
 		      AND exp.sgd_exp_numero=sexp.sgd_exp_numero
 		      AND exp.sgd_exp_fech=(SELECT MIN(exp2.SGD_EXP_FECH) as minFech from sgd_exp_expediente exp2 where exp2.radi_nume_radi= $fldRADI_NUME_RADI)";
 //$db->debug = true;
@@ -1114,7 +1157,7 @@ $consultaExpediente="SELECT exp.SGD_EXP_NUMERO, sexp.sgd_exp_privado  , u.usua_d
    }else{
       $imgExp="<img src='../img/expCandado.png' height=18>";
     }
- 
+
   }
 }
 $verImg=( $seguridadRadicado==1)?($fldUSUA_ACTU !=$_SESSION['usua_nomb']?false:true):($nivelRadicado > $nivelus?false:true);
@@ -1122,7 +1165,7 @@ $verImg=( $seguridadRadicado==1)?($fldUSUA_ACTU !=$_SESSION['usua_nomb']?false:t
 if ($valImg == "SI") {
  $linkDocto = "<a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$fldRADI_NUME_RADI','$ruta_raiz');\" target\"Imagen$iii\">";
  $linkInfGeneral = "<a class='vinculos' href='../verradicado.php?verrad=$fldRADI_NUME_RADI&" . session_name () . "=" . session_id () . "&carpeta=9&nomcarpeta=Busquedas&tipo_carp=0'>";
- $verImg=true; 
+ $verImg=true;
 }
 
 
@@ -1322,15 +1365,15 @@ function resolverTipoCodigo($tipo)
 		case 1:
 			$salida  = "Ciudadano";
 			break;
-		case 2: 
+		case 2:
 			$salida = "Empresa";
 			break;
-		case 3: 
+		case 3:
 			$salida= "Entidad";
 			break;
-		case 4: 
+		case 4:
 			$salida= "Funcionario";
-			break;	
+			break;
 	}
 	return $salida;
 }
@@ -1361,22 +1404,22 @@ function pintarResultadoConsultas(&$fila,$indice,$numColumna) //aqui se dibujan 
 		case 1 :
 			if($fila['RADI_PATH'] && $verImg)
 				$salida="<a class=\"vinculos\" href=\"{$ruta_raiz}bodega".$fila['RADI_PATH']."\" target=\"imagen".(strlen($fila['RADI_PATH'])+1)."\">".$fila['RADI_NUME_RADI']."</a>";
-			else 
-				$salida.=$fila['RADI_NUME_RADI'];	
+			else
+				$salida.=$fila['RADI_NUME_RADI'];
 		   break;
-		case 2:	
+		case 2:
 		   	if($verImg)
 				$salida="<a class=\"vinculos\" href=\"{$ruta_raiz}verradicado.php?verrad=".$fila['RADI_NUME_RADI']."&amp;".session_name()."=".session_id()."&amp;carpeta=8&amp;nomcarpeta=Busquedas&amp;tipo_carp=0 \" >".$fila['RADI_FECH_RADI']."</a>";
-		   	else 
+		   	else
 				$salida="<a class=\"vinculos\" href=\"#\" onclick=\"noPermiso();\">".$fila['RADI_FECH_RADI']."</a>";
 		   break;
-		case 3:	
+		case 3:
 			$salida.=$fila['SGD_EXP_NUMERO'];
 			break;
 		case 4:
 			if($ps_RADI_NOMB)
 				$salida.=resalaltarTokens($ps_RADI_NOMB,$fila['RA_ASUN']);
-			else  
+			else
 				$salida.=htmlentities($fila['RA_ASUN']);
 			break;
 		case 5:
@@ -1391,7 +1434,7 @@ function pintarResultadoConsultas(&$fila,$indice,$numColumna) //aqui se dibujan 
 		case 8:
 			if($ps_RADI_NOMB)
 				$salida.=resalaltarTokens($ps_RADI_NOMB,$fila['SGD_DIR_DIRECCION']);
-			else  
+			else
 				$salida.=htmlentities($fila['SGD_DIR_DIRECCION']);
 			break;
 		case 9:
@@ -1403,7 +1446,7 @@ function pintarResultadoConsultas(&$fila,$indice,$numColumna) //aqui se dibujan 
 		case 11:
 			if($ps_RADI_NOMB)
 				$salida.= resalaltarTokens($ps_RADI_NOMB,$fila['SGD_DIR_NOMBRE']);
-			else 
+			else
 				$salida.= tohtml($fila['SGD_DIR_NOMBRE']);
 			break;
 		case 12:
@@ -1431,7 +1474,7 @@ function pintarResultadoConsultas(&$fila,$indice,$numColumna) //aqui se dibujan 
 				$salida.=htmlentities(tohtml($fila['USUARIO_ANTERIOR']));
 			break;
 		case 17:
-			$salida.=tohtml($fila['RADI_PAIS']); 
+			$salida.=tohtml($fila['RADI_PAIS']);
 			break;
 		case 18:
 			$salida.=($fila['RADI_DEPE_ACTU']!=999)?tohtml($fila['DIASR']):"Sal";
@@ -1443,14 +1486,14 @@ function pintarResultadoConsultas(&$fila,$indice,$numColumna) //aqui se dibujan 
 function buscar_prueba($nivelus, $tpRemDes, $whereFlds){
     global $ruta_raiz;
     $db=new ConnectionHandler($ruta_raiz);
-    
+
     //constrimos las  condiciones dependiendo de los parametros de busqueda seleccionados
     $ps_desde_RADI_FECH_RADI = mktime(0,0,0,$_GET["s_desde_mes"],$_GET["s_desde_dia"],$_GET["s_desde_ano"]);
     $ps_hasta_RADI_FECH_RADI = mktime(23,59,59,$_GET["s_hasta_mes"],$_GET["s_hasta_dia"],$_GET["s_hasta_ano"]);
 
     $where=" AND (R.RADI_FECH_RADI BETWEEN ".$db->conn->DBDate($ps_desde_RADI_FECH_RADI)." AND ".$db->conn->DBDate($ps_hasta_RADI_FECH_RADI).")";
     // se rescantan los parametros de busqueda
-    $ps_RADI_NUME_RADI = $_GET["s_RADI_NUME_RADI"];  
+    $ps_RADI_NUME_RADI = $_GET["s_RADI_NUME_RADI"];
     if(!$ps_RADI_NUME_RADI) $ps_RADI_NUME_RADI="2";
     $ps_DOCTO =  $_GET["s_DOCTO"];
     $ps_RADI_DEPE_ACTU =$_GET["s_RADI_DEPE_ACTU"];
@@ -1493,10 +1536,10 @@ function buscar_prueba($nivelus, $tpRemDes, $whereFlds){
     {
         $min="INNER JOIN SGD_EXP_EXPEDIENTE MINEXP ON R.RADI_NUME_RADI=MINEXP.RADI_NUME_RADI";
         $where = $where. " AND MINEXP.SGD_EXP_ESTADO <> 2";
-        $where = $where . " AND ( 
-            SEXP.SGD_EXP_NUMERO LIKE '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE , "Text" ))."%' 
-            OR SEXP.SGD_SEXP_PAREXP1 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%') 
-            OR SEXP.SGD_SEXP_PAREXP2 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%') 
+        $where = $where . " AND (
+            SEXP.SGD_EXP_NUMERO LIKE '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE , "Text" ))."%'
+            OR SEXP.SGD_SEXP_PAREXP1 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
+            OR SEXP.SGD_SEXP_PAREXP2 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
             OR SEXP.SGD_SEXP_PAREXP3 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
             OR SEXP.SGD_SEXP_PAREXP4 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
             OR SEXP.SGD_SEXP_PAREXP5 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%'))";
@@ -1533,7 +1576,7 @@ function buscar_prueba($nivelus, $tpRemDes, $whereFlds){
 
     $titulos=array("#","1#RADICADO","3#FECHA RADICACION","2#EXPEDIENTE","4#ASUNTO","14#TIPO DE DIOCUMENTO","21#TIPO","7#NO DE HOJAS","15#DIRECCION CONTACTO","18#TELEFONO CONTACTO","16#MAIL CONTACTO ","20#DIGNATARIO","17#NOMBRE","19#DOCUMENTO","22#USUARIO ACTUAL","10#DEPENDENCIA ACTUAL","23#USUARIO ANTERIOR","11#PAIS","13#DIAS RESTANTES");
 
-    $sSQL=" select 
+    $sSQL=" select
                 R.RADI_NUME_RADI,
                 MINEXP.SGD_EXP_NUMERO,".
                 $db->conn->SQLDate('Y-m-d H:i:s','R.RADI_FECH_RADI')." AS RADI_FECH_RADI,
@@ -1541,33 +1584,33 @@ function buscar_prueba($nivelus, $tpRemDes, $whereFlds){
                 R.RADI_NUME_HOJA,
                 R.RADI_PATH,
                 R.RADI_USUA_ACTU,
-                R.CODI_NIVEL, 
+                R.CODI_NIVEL,
                 R.SGD_SPUB_CODIGO,
                 R.RADI_DEPE_ACTU,
                 R.RADI_PAIS,
                 D.DEPE_NOMB,
                 {$redondeo} AS DIASR,
                 TD.SGD_TPR_DESCRIP,
-                DIR.SGD_DIR_DIRECCION, 
+                DIR.SGD_DIR_DIRECCION,
                 DIR.SGD_DIR_MAIL,
                 DIR.SGD_DIR_NOMREMDES,
                 DIR.SGD_DIR_TELEFONO,
                 DIR.SGD_DIR_DOC,
                 DIR.SGD_DIR_NOMBRE,
-                DIR.SGD_TRD_CODIGO, 
-                U.USUA_NOMB USUARIO_ACTUAL, 
+                DIR.SGD_TRD_CODIGO,
+                U.USUA_NOMB USUARIO_ACTUAL,
                 AL.USUA_NOMB USUARIO_ANTERIOR,
                 U.CODI_NIVEL USUA_NIVEL,
                 SGD_EXP_PRIVADO
-            FROM 
-                RADICADO R INNER JOIN SGD_DIR_DRECCIONES DIR ON R.RADI_NUME_RADI=DIR.RADI_NUME_RADI 
-                INNER JOIN SGD_TPR_TPDCUMENTO TD ON R.TDOC_CODI=TD.SGD_TPR_CODIGO 
-                INNER JOIN USUARIO U ON R.RADI_USUA_ACTU=U.USUA_CODI AND R.RADI_DEPE_ACTU=U.DEPE_CODI 
-                LEFT JOIN USUARIO AL ON R.RADI_USU_ANTE=AL.USUA_LOGIN 
+            FROM
+                RADICADO R INNER JOIN SGD_DIR_DRECCIONES DIR ON R.RADI_NUME_RADI=DIR.RADI_NUME_RADI
+                INNER JOIN SGD_TPR_TPDCUMENTO TD ON R.TDOC_CODI=TD.SGD_TPR_CODIGO
+                INNER JOIN USUARIO U ON R.RADI_USUA_ACTU=U.USUA_CODI AND R.RADI_DEPE_ACTU=U.DEPE_CODI
+                LEFT JOIN USUARIO AL ON R.RADI_USU_ANTE=AL.USUA_LOGIN
                 {$min}
                 LEFT JOIN SGD_SEXP_SECEXPEDIENTES SEXP ON MINEXP.SGD_EXP_NUMERO=SEXP.SGD_EXP_NUMERO
-            WHERE 
-                DIR.SGD_DIR_TIPO = 1 
+            WHERE
+                DIR.SGD_DIR_TIPO = 1
                 ".$where;
         echo "liliana" .$sSQL;
 

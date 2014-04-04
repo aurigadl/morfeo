@@ -9714,8 +9714,7 @@ body {
     direction: ltr;
     height: 100%;
     margin: 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: auto;
     padding: 0;
 }
 a:active, a:focus, a:hover, button, button:active, button:focus, embed, input::-moz-focus-inner, object {

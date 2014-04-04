@@ -430,8 +430,7 @@ function addOpt(oCntrl, iPos, sTxt, sVal)
 	eval(oCntrl.options[iPos]=selOpcion);
 }
 
-function borra_datos(form1)
-{
+function borra_datos(form1){
 	borra_combo(form1, 7);
 	borra_combo(form1, 8);
 	borra_combo(form1, 9);

@@ -1,9 +1,33 @@
 <?php
+/**
+* @module crearUsuario
+*
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 session_start();
     $ruta_raiz = "../..";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
-    
+
 # Variables de la session de Orfeo
 $krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
@@ -66,9 +90,9 @@ function arrayToJsArray( $array, $name, $nl = "\n", $encoding = false )
 }
 
 if ($db)
-{	
+{
        if (isset($_POST['btn_accion']))
-	{	
+	{
                 $record = array();
 		$record['SGD_FENV_CODIGO'] = $_POST['id_fenv'];		//Forma de envio.
 		$record['SGD_TAR_CODIGO'] =  $_POST['txt_idTar'];	//Codigo de la tarifa.
@@ -79,7 +103,7 @@ if ($db)
 
         switch($_POST['btn_accion']){
 
-            Case 'Agregar': 
+            Case 'Agregar':
 			Case 'Modificar':
 			{	$db->conn->BeginTrans();
 				$ok = $db->conn->Replace('SGD_CLTA_CLSTARIF',$record,array('SGD_FENV_CODIGO','SGD_TAR_CODIGO','SGD_CLTA_CODSER'),$autoquote = true);
@@ -117,7 +141,7 @@ if ($db)
 				$rs = $db->conn->Execute($query);
 				$ADODB_COUNTRECS = false;
 				if ($rs->RecordCount() <= 0)
-				{ 
+				{
 					$ok1 = $db->conn->Execute('DELETE FROM SGD_TAR_TARIFAS WHERE SGD_FENV_CODIGO='.$record['SGD_FENV_CODIGO'].' AND SGD_TAR_CODIGO='.$record['SGD_TAR_CODIGO'].' AND SGD_CLTA_CODSER='.$record['SGD_CLTA_CODSER']);
 					$ok2 = $db->conn->Execute('DELETE FROM SGD_CLTA_CLSTARIF WHERE SGD_FENV_CODIGO='.$record['SGD_FENV_CODIGO'].' AND SGD_TAR_CODIGO='.$record['SGD_TAR_CODIGO'].' AND SGD_CLTA_CODSER='.$record['SGD_CLTA_CODSER']);
 					if ($ok1 && $ok2)
@@ -313,118 +337,145 @@ function anula_datos()
 </script>
 <head>
 <title>Orfeo - Admon de Tarifas.</title>
-<link href="../../estilos/orfeo.css" rel="stylesheet" type="text/css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </head>
 <body>
-<form name="form1" id="form1" method="post" action="<?= $_SERVER['PHP_SELF']?>">
-<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
-<input type="hidden" id="hdBandera" name="hdBandera" value="">
-<table width="75%" align="center" border="1" cellspacing="0" class="tablas">
-	<tr bordercolor="#FFFFFF">
-		<td colspan="6" height="40" class="titulos4" valign="middle" align="center">Administraci&oacute;n de tarifas.</td>
-	</tr>
-	<tr bordercolor="#FFFFFF">
-    	<td align="center" valign="middle" class="titulos2">1.</td>
-    	<td align="left" class="titulos2">Forma del env&iacute;o</td>
-    	<td colspan="4" class="listado2">
-<?php		
-    // Listamos los continentes.
-    $sql_fenv = $db->conn->Execute($sql_fenv);
-   	echo $sql_fenv->GetMenu2('id_fenv',$_POST['id_fenv'],"0:&lt;&lt; SELECCIONE &gt;&gt;",false,0," id=\"id_fenv\" class='select' Onchange='anula_todo();' ");
-?>
-		</td>
-	</tr>
-	<tr bordercolor="#FFFFFF">
-    	<td width="5%" align="center" valign="middle" class="titulos2">2.</td>
-	    <td width="26%" align="left" class="titulos2">Localizaci&oacute;n del Env&iacute;o </td>
-	    <td colspan="4" class="listado2">
-	    	<select name="slc_TipoTar" class="select" id="slc_TipoTar" onChange="if (id_fenv.value == 0) {alert ('Seleccione Forma de Envio'); slc_TipoTar.value=0;} else this.form.submit()">
-      			<option value="0">&lt;&lt; seleccione &gt;&gt;</option>
-      			<option value="1" <? ($_POST['slc_TipoTar'] == '1')? print "selected" : print "" ?>>Nacional</option>
-      			<option value="2" <? ($_POST['slc_TipoTar'] == '2')? print "selected" : print "" ?>>Internacional</option>
-    		</select>
-    	</td>
-	</tr>
-	<tr bordercolor="#FFFFFF">
-	    <td align="center" valign="middle" class="titulos2">3.</td>
-	    <td align="left" class="titulos2">Seleccione Tarifa </td>
-	    <td colspan="4" class="listado2">
-<?php		
-        // Listamos las tarifas.
-		$Rs_clta = $db->conn->Execute($sql_clta);
-		if ($_POST['slc_TipoTar'] > 0)
-		{	
-			echo $Rs_clta->GetMenu2('id_clta',false,"0:&lt;&lt; SELECCIONE &gt;&gt;",false,0," id=\"id_clta\" onchange=\"Actualiza()\" class='select'");
-	    	$Rs_clta->Close();
-		}
-		else echo "<select name='id_clta' id='id_clta' class='select'></select>";
-?>
-		</td>
-	</tr>
-	<tr bordercolor="#FFFFFF">
-	    <td width="5%" rowspan="5" align="center" valign="middle" class="titulos2">4.</td>
-	    <td width="26%" class="titulos2">C&oacute;digo</td>
-	    <td colspan="4" align="center" class="listado2">
-			<input name="txt_idTar" id="txt_idTar" type="text" size="5" maxlength="5">
-	    </td>
-	</tr>
-	<tr bordercolor="#FFFFFF">
-	    <td width="26%" rowspan="2" class="titulos2">Peso</td>
-	    <td width="16%" align="center" class="titulos2"> L&iacute;mite Inferior</td>
-	    <td width="16%" align="center" class="titulos2">L&iacute;mite Superior </td>
-	    <td colspan="2" align="center" class="titulos2">Descripci&oacute;n</td>
-	</tr>
-	<tr bordercolor="#FFFFFF">
-		<td width="16%" align="center" class="listado2"><input name="txt_lim1" id="txt_lim1" type="text" size="5" maxlength="5"></td>
-		<td align="center" class="listado2"><input name="txt_lim2" id="txt_lim2" type="text" size="5" maxlength="5"></td>
-		<td colspan="2" align="center" class="listado2">
-			<input name="txt_desc" id="txt_desc" type="text" size="50" maxlength="150">
-		</td>
-	</tr>
-	<tr bordercolor="#FFFFFF">
-		<td width="26%" rowspan="2" class="titulos2">Valor Env&iacute;o</td>
-		<td colspan="2" align="center" class="titulos2">Local / Grupo 1 *</td>
-		<td colspan="2" align="center" class="titulos2">Nacional / Grupo 2 *</td>
-	</tr>
-	<tr bordercolor="#FFFFFF">
-		<td colspan="2" class="listado2">
-			<center><input name="txt_v1" id="txt_v1" type="text" size="6" maxlength="6"></center>
-		</td>
-		<td colspan="2" class="listado2">
-			<center><input name="txt_v2" id="txt_v2" type="text" size="7" maxlength="7"></center>
-		</td>
-	</tr>
-	<tr bordercolor="#FFFFFF" bgcolor="#FFFFFF">
-		<td colspan="6"><font color="Gray">
-			<b>NOTA: </b> El valor del Env&iacute;o es relacional al punto 2, Si &eacute;ste es a nivel Nacional entonces los valores ser&aacute;n
-			Local y Nacional; sino (internacional) Grupo 1 y Grupo 2 se refiere al valor en caso que el pa&iacute;s destino se encuentre o no
-			en Am&eacute;rica respectivamente.
-			</font></td>
-	</tr>
-<?= $msg_error ?>
-</table>
-<table width="75%" border="1" align="center" cellpadding="0" cellspacing="0" class="tablas">
-<tr bordercolor="#FFFFFF">
-	<td width="10%" class="listado2">&nbsp;</td>
-	<td width="20%"  class="listado2">
-		<span class="celdaGris"><center>
-		<input name="btn_accion" type="button" class="botones" id="btn_accion" value="Listado" onClick="ver_listado('tarifas');">
-		</center></span>	</td>
-	<td width="20%" class="listado2">
-		<span class="e_texto1"><center>
-		<input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Agregar" onClick="document.form1.hdBandera.value='A'; return validarinfo(this.form);">
-		</center></span>	</td>
-	<td width="20%" class="listado2">
-		<span class="e_texto1"><center>
-		<input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Modificar" onClick="document.form1.hdBandera.value='M'; return validarinfo(this.form);">
-		</center></span>	</td>
-	<td width="20%" class="listado2">
-		<span class="e_texto1"><center>
-		  <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Eliminar" onClick="document.form1.hdBandera.value='E'; return val_borrar(document.form1.txt_idTar.value);">
-		  </center></span>	</td>
-	<td width="10%" class="listado2">&nbsp;</td>
-</tr>
-</table>
+  <form name="form1" id="form1" method="post" action="<?= $_SERVER['PHP_SELF']?>">
+  <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
+  <input type="hidden" id="hdBandera" name="hdBandera" value="">
+
+  <div class="col-sm-12">
+    <!-- widget grid -->
+    <section id="widget-grid">
+      <!-- row -->
+      <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <!-- Widget ID (each widget will need unique ID)-->
+          <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+
+            <header>
+              <h2>
+                Administraci&oacute;n de tarifas.
+              </h2>
+            </header>
+
+            <!-- widget div-->
+            <div>
+              <!-- widget content -->
+              <div class="widget-body no-padding">
+
+                <table class="table table-bordered table-striped">
+                    <tr bordercolor="#FFFFFF">
+                        <td align="center" valign="middle" class="titulos2">1.</td>
+                        <td align="left" class="titulos2">Forma del env&iacute;o</td>
+                        <td colspan="4" class="listado2">
+                  <?php
+                      // Listamos los continentes.
+                      $sql_fenv = $db->conn->Execute($sql_fenv);
+                      echo $sql_fenv->GetMenu2('id_fenv',$_POST['id_fenv'],"0:&lt;&lt; SELECCIONE &gt;&gt;",false,0," id=\"id_fenv\" class='select' Onchange='anula_todo();' ");
+                  ?>
+                      </td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                        <td width="5%" align="center" valign="middle" class="titulos2">2.</td>
+                        <td width="26%" align="left" class="titulos2">Localizaci&oacute;n del Env&iacute;o </td>
+                        <td colspan="4" class="listado2">
+                          <select name="slc_TipoTar" class="select" id="slc_TipoTar" onChange="if (id_fenv.value == 0) {alert ('Seleccione Forma de Envio'); slc_TipoTar.value=0;} else this.form.submit()">
+                              <option value="0">&lt;&lt; seleccione &gt;&gt;</option>
+                              <option value="1" <? ($_POST['slc_TipoTar'] == '1')? print "selected" : print "" ?>>Nacional</option>
+                              <option value="2" <? ($_POST['slc_TipoTar'] == '2')? print "selected" : print "" ?>>Internacional</option>
+                          </select>
+                        </td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                        <td align="center" valign="middle" class="titulos2">3.</td>
+                        <td align="left" class="titulos2">Seleccione Tarifa </td>
+                        <td colspan="4" class="listado2">
+                  <?php
+                          // Listamos las tarifas.
+                      $Rs_clta = $db->conn->Execute($sql_clta);
+                      if ($_POST['slc_TipoTar'] > 0)
+                      {
+                        echo $Rs_clta->GetMenu2('id_clta',false,"0:&lt;&lt; SELECCIONE &gt;&gt;",false,0," id=\"id_clta\" onchange=\"Actualiza()\" class='select'");
+                          $Rs_clta->Close();
+                      }
+                      else echo "<select name='id_clta' id='id_clta' class='select'></select>";
+                  ?>
+                      </td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                        <td width="5%" rowspan="5" align="center" valign="middle" class="titulos2">4.</td>
+                        <td width="26%" class="titulos2">C&oacute;digo</td>
+                        <td colspan="4" align="center" class="listado2">
+                        <input name="txt_idTar" id="txt_idTar" type="text" size="5" maxlength="5">
+                        </td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                        <td width="26%" rowspan="2" class="titulos2">Peso</td>
+                        <td width="16%" align="center" class="titulos2"> L&iacute;mite Inferior</td>
+                        <td width="16%" align="center" class="titulos2">L&iacute;mite Superior </td>
+                        <td colspan="2" align="center" class="titulos2">Descripci&oacute;n</td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                      <td width="16%" align="center" class="listado2"><input name="txt_lim1" id="txt_lim1" type="text" size="5" maxlength="5"></td>
+                      <td align="center" class="listado2"><input name="txt_lim2" id="txt_lim2" type="text" size="5" maxlength="5"></td>
+                      <td colspan="2" align="center" class="listado2">
+                        <input name="txt_desc" id="txt_desc" type="text" size="50" maxlength="150">
+                      </td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                      <td width="26%" rowspan="2" class="titulos2">Valor Env&iacute;o</td>
+                      <td colspan="2" align="center" class="titulos2">Local / Grupo 1 *</td>
+                      <td colspan="2" align="center" class="titulos2">Nacional / Grupo 2 *</td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF">
+                      <td colspan="2" class="listado2">
+                        <center><input name="txt_v1" id="txt_v1" type="text" size="6" maxlength="6"></center>
+                      </td>
+                      <td colspan="2" class="listado2">
+                        <center><input name="txt_v2" id="txt_v2" type="text" size="7" maxlength="7"></center>
+                      </td>
+                    </tr>
+                    <tr bordercolor="#FFFFFF" bgcolor="#FFFFFF">
+                      <td colspan="6"><font color="Gray">
+                        <b>NOTA: </b> El valor del Env&iacute;o es relacional al punto 2, Si &eacute;ste es a nivel Nacional entonces los valores ser&aacute;n
+                        Local y Nacional; sino (internacional) Grupo 1 y Grupo 2 se refiere al valor en caso que el pa&iacute;s destino se encuentre o no
+                        en Am&eacute;rica respectivamente.
+                        </font></td>
+                    </tr>
+                  <?= $msg_error ?>
+                  </table>
+
+                <table class="table table-bordered table-striped">
+                  <tr bordercolor="#FFFFFF">
+                    <td width="10%" class="listado2">&nbsp;</td>
+                    <td width="20%"  class="listado2">
+                      <span class="celdaGris"><center>
+                      <input name="btn_accion" type="button" class="botones" id="btn_accion" value="Listado" onClick="ver_listado('tarifas');">
+                      </center></span>	</td>
+                    <td width="20%" class="listado2">
+                      <span class="e_texto1"><center>
+                      <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Agregar" onClick="document.form1.hdBandera.value='A'; return validarinfo(this.form);">
+                      </center></span>	</td>
+                    <td width="20%" class="listado2">
+                      <span class="e_texto1"><center>
+                      <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Modificar" onClick="document.form1.hdBandera.value='M'; return validarinfo(this.form);">
+                      </center></span>	</td>
+                    <td width="20%" class="listado2">
+                      <span class="e_texto1"><center>
+                        <input name="btn_accion" type="submit" class="botones" id="btn_accion" value="Eliminar" onClick="document.form1.hdBandera.value='E'; return val_borrar(document.form1.txt_idTar.value);">
+                        </center></span>	</td>
+                    <td width="10%" class="listado2">&nbsp;</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
 </form>
 </body>
 </html>
