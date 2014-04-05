@@ -237,7 +237,12 @@ $time_start = microtime_float();
 	$numerot = 0;
 	$numerop = 0;
 	$numeroh = 0;
-
+		$rs =$db->conn->Execute($isql);
+		include_once "$ruta_raiz/tx/verLinkArchivo.php";
+		
+	  $verLinkArch = new verLinkArchivo($db);
+	
+	
 	if($radi_nume_deri and ($radi_tipo_deri==0 or $radi_tipo_deri==2)) {
 	?>
 <input type="hidden" name="menu_ver_tmp" value=4>
@@ -250,9 +255,9 @@ $time_start = microtime_float();
 <table  width=90% class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
 	<?
 		$isql = "select a.* from radicado a where a.radi_nume_radi = $radi_nume_deri";
-		$rs =&$db->conn->Execute($isql);include_once "$ruta_raiz/tx/verLinkArchivo.php";
 
-	        $verLinkArch = new verLinkArchivo($db);
+	  
+	  var_dump($verLinkArch);
 		if(!$rs->EOF) {
 			while(!$rs->EOF) {
 				$radicado_d = $rs->fields["RADI_NUME_RADI"];
@@ -268,6 +273,7 @@ $time_start = microtime_float();
 			          */
 
 	                          $resulVal = $verLinkArch->valPermisoRadi($radicado_d);
+	                          echo "Paso ....";
                                   $verImg = $resulVal['verImg'];
                                   $radicado_path = $resulVal['pathImagen'];
                                   if($verImg == "SI")
@@ -684,7 +690,7 @@ if($descPExpediente){
 	$frmLinkSelect = $objFlujo->frmLinkSelect;
 	if($frmNombre) $ventana = "Max"; else $ventana = "Default";
   $frmLink = str_replace("{numeroRadicado}","$verrad", $frmLink);
- $frmLink = str_replace("{numeroExpediente}","$mrdCodigo", $frmLink);
+ $frmLink = str_replace("{numeroExpediente}","$numeroExpediente", $frmLink);
  $frmLink = str_replace("{dependencia}","$dependencia", $frmLink);
  $frmLink = str_replace("{documentoUsuario}","$usua_doc", $frmLink);
  $frmLink = str_replace("{nombreUsuario}","$usua_nomb", $frmLink);
@@ -1479,7 +1485,8 @@ while(!$rs->EOF) {
 		* @since 10 noviembre 2009
 		* @funcion funlinkArchivo
 	   */
-
+  $db->conn->debug = true;
+  var_dump($resulVal);
 	$resulVal = $verLinkArch->valPermisoRadi($radicadoAnexo);
         $verImg = $resulVal['verImg'];
       	if ($verImg == "NO") {
