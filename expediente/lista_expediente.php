@@ -255,9 +255,6 @@ $time_start = microtime_float();
 <table  width=90% class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
 	<?
 		$isql = "select a.* from radicado a where a.radi_nume_radi = $radi_nume_deri";
-
-	  
-	  var_dump($verLinkArch);
 		if(!$rs->EOF) {
 			while(!$rs->EOF) {
 				$radicado_d = $rs->fields["RADI_NUME_RADI"];
@@ -487,8 +484,9 @@ if($usuaPermExpediente >= 1  ) {
 	// Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
 	//if ($num_expediente != "" && !isset( $_POST['expIncluido'][0] )) {
 	if ( $num_expediente != "" && !isset( $expIncluido ) ) {
-    ?>
-        <br><B><span class="dropdown">
+    ?><table border=0 width="100%">
+      <tr><td width=140>
+        <B><span class="dropdown">
     			<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">Expediente <b class="caret"></b> </a> 
 						<ul class="dropdown-menu">
 						<?
@@ -516,13 +514,14 @@ if($usuaPermExpediente >= 1  ) {
 							?>
 						</ul>
 						</span> </B>
-    
-    
+    </td>
+    <td>
     
     <?=$num_expediente?>
     <input name="num_expediente" type="hidden" size="30" maxlength="18" id='num_expediente' value="<?=$num_expediente?>" class="tex_area" >
      Cod :  <b><span class=leidos2> <? echo $param1;?></b>
      Responsable: <b><span class=leidos2> <? echo $responsable;?></b> 
+     </td>
 	<?
 	}
 	
@@ -623,8 +622,8 @@ if($num_expediente !=""){
 		$arrTRDExp = $expediente->getTRDExp( $num_expediente, "", "", "" );
 	}
 ?>
-    <B>TRD :</B><?php print $arrTRDExp['serie']." / ".$arrTRDExp['subserie']; ?>
-    <table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+    <Tr><td>TRD :</B></td><td><?php print $arrTRDExp['serie']." / ".$arrTRDExp['subserie']; ?>
+    
     <?php
 	// Modificado Infom�trika 23-Julio-2009
 	// Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
@@ -643,16 +642,21 @@ if($num_expediente !=""){
 	if( $arrDatosParametro != "" ) {
 		foreach( $arrDatosParametro as $clave => $datos ) {
     ?>
-      <tr rowspan="4"  >
+    <table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+      <tr >
         <td colspan="2" ><? print $datos['etiqueta']; ?>:</td>
         <td colspan="2" ><? print $datos['parametro']; ?></td>
       </tr>
+      </Table>
         <?php
         }
       }
     ?><br>
-  <span class="dropdown">
-			<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"> Proceso <b class="caret"> </b> </a> 
+  
+  </td></tr>
+	<tr>
+	<td><span class="dropdown">		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"> Proceso <b class="caret"> </b> </a>
+	
 	<ul class="dropdown-menu">
 	<?
 		if($usuaPermExpediente) {
@@ -672,13 +676,14 @@ if($num_expediente !=""){
 			?>
 		</ul>
 		</span>
+		</td><td>
 					<?php
 			if( $arrTRDExp['proceso'] != "" ) {
 			  echo $arrTRDExp['proceso']." / ".$arrTRDExp['terminoProceso'];
 			}
 			?>
-<br>
-<span class="dropdown">
+</td></tr>
+
 <?
 if($descPExpediente){
 	$expediente->consultaTipoExpediente($num_expediente);
@@ -700,69 +705,63 @@ if($descPExpediente){
  $frmLinkSelect = str_replace("{dependencia}","$dependencia", $frmLinkSelect);
  $frmLinkSelect = str_replace("{documentoUsuario}","$usua_doc", $frmLinkSelect);
  $frmLinkSelect = str_replace("{nombreUsuario}","$usua_nomb", $frmLinkSelect);
-  
-  
 }
 ?>
-  <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"> Estado <b class="caret"> </b></a><?=$descFldExp?>  
-						<ul class="dropdown-menu">
-						<?
-						if($usuaPermExpediente) {
-							?>
-							<li>
-								<a href="#" onClick="verHistExpediente('<?=$num_expediente?>');"></a>
-							</li>
-							<li>
-								<a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
-							</li>
-						
-							<li>
-								<a href="#" onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
-							</li>
-								<?
-							}
-							?>
-							<li>
-								<a href="#" onClick="">Estado</a>
-							</li>
-							<li>
-								<a href="#" onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')">Modificar Estado</a>
-							</li>
-							<li>
-								- - Formularios - -
-							</li>
-							<?
-							echo $frmNombre;
-							if($frmNombre){
-								?>
-								<li>
-								  <a href="#" onClick="window.open('<?=$frmLink?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$frmNombre?></a>
-								</li>
-								<?php
-								}
-								?>
-							<?
-							if($frmLinkSelect){
-								?>
-								<li>
-								<a href="#" onClick="window.open('<?=$frmLinkSelect?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$frmNombreSelect?>...</a>
-								</li>
-								<?php
-								}
-								?>								
-						</ul>
+  <tr><td>
+  <span class="dropdown">
+  <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"> Estado <b class="caret"> </b></a>  
+		<ul class="dropdown-menu">
+			<?
+			if($usuaPermExpediente) {
+				?>
+				<li>
+					<a href="#" onClick="verHistExpediente('<?=$num_expediente?>');"></a>
+				</li>
+				<li>
+					<a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
+				</li>
+			
+				<li>
+					<a href="#" onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
+				</li>
+					<?
+				}
+				?>
+				<li>
+					<a href="#" onClick="">Estado</a>
+				</li>
+				<li>
+					<a href="#" onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')">Modificar Estado</a>
+				</li>
+				<li>
+					- - Formularios - -
+				</li>
+				<?
+				if($frmNombre){
+					?>
+					<li>
+						<a href="#" onClick="window.open('<?=$frmLink?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$frmNombre?></a>
+					</li>
+					<?php
+					}
+					?>
+				<?
+				if($frmLinkSelect){
+					?>
+					<li>
+					<a href="#" onClick="window.open('<?=$frmLinkSelect?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$frmNombreSelect?>...</a>
+					</li>
+					<?php
+					}
+					?>								
+			</ul>
 			</span> 
-		</B>						
-						
-						<?php
-
-						
- 
-    ?>
-           
-    
-  <br>
-    <b>Fecha Inicio: </b><?php print $arrTRDExp['fecha']; ?>
+		</B></Td><td><?=$descFldExp?>						
+		</td></tr>				
+		<tr><td>
+    <b>Fecha Inicio: </b></td><td><?php print $arrTRDExp['fecha']; ?></td>
+    </tr>
+    </table>
   </td>
 </tr>
 
@@ -956,31 +955,16 @@ while(!$rs->EOF) {
 
 	 */
 
-	include_once "$ruta_raiz/tx/verLinkArchivo.php";
-
-
-
     $verLinkArchivo = new verLinkArchivo($db);
-
-	
-
     $resulVali = $verLinkArchivo->valPermisoRadi($radicado_d);
-
     $verImg = $resulVali['verImg'];
-
     $pathImagen = $resulVali['pathImagen'];
-
 	$ext_a = '';			
-
 	if(  $radicado_path && $verImg == "SI")
 	{
-
 		$ext_a = substr($radicado_path,-3);
-
 		$ref_radicado = "<a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$radicado_d','$ruta_raiz');\"> $radicado_d</a>";
-
 		$radicado_fech = "<a href='$ruta_raiz/verradicado.php?verrad=$radicado_d&PHPSESSID=".session_id()."&krd=$krd&carpeta=8&nomcarpeta=Busquedas&tipo_carp=0&menu_ver_tmp=3' target=".$radicado_fech."><span class=leidos>$radicado_fech</span></a>";
-
 	}elseif ( !$radicado_path && $duenoExpediente == $_SESSION[ 'usua_doc' ] ){
 
 		//No se cumplen la condiciones anteriores, pero el radicado si tiene
@@ -1485,8 +1469,6 @@ while(!$rs->EOF) {
 		* @since 10 noviembre 2009
 		* @funcion funlinkArchivo
 	   */
-  $db->conn->debug = true;
-  var_dump($resulVal);
 	$resulVal = $verLinkArch->valPermisoRadi($radicadoAnexo);
         $verImg = $resulVal['verImg'];
       	if ($verImg == "NO") {
