@@ -73,6 +73,13 @@ class Expediente
   * Inicializa la Clase.
   *	@param $db variable contenedora del Cursor. Esta tiene que ser  enviada en el construtor
   */
+  
+    var $expedientes = array();
+
+/** $expedientes
+  * array que guarda los expedientes pertenecientes a un aradicado.
+  *	@param $db variable contenedora del Cursor. Esta tiene que ser  enviada en el construtor
+  */  
 
 	function Expediente($db)
 	{
@@ -103,19 +110,83 @@ class Expediente
 		    //echo 'No tiene un Numero de expediente<br>';
 			$this->num_expediente = 0;
 		 }else{
-		   if (!$rs->EOF)
+		  $iE =1;
+		   while(!$rs->EOF)
 		   {
-			 $this->num_expediente = $rs->fields['SGD_EXP_NUMERO'];
-		//	echo  $rs->fields['SGD_EXP_NUMERO']."<hr>";
-			$this->estado_expediente = $rs->fields['SGD_EXP_ESTADO'];
-
+			   if($iE==1) {
+			     $this->num_expediente = $rs->fields['SGD_EXP_NUMERO'];
+		       //	echo  $rs->fields['SGD_EXP_NUMERO']."<hr>";
+			     $this->estado_expediente = $rs->fields['SGD_EXP_ESTADO'];
+			   }
+			   $this->expedientes[$iE]= $rs->fields['SGD_EXP_NUMERO'];
+				 $iE++;
+				 $rs->MoveNext();
 		   }
 		}
 		//$this->num_expediente = $num_expediente;   RP
 		return $this->num_expediente;
 	 }
 
-
+	function consultaExp($radicado)
+	{
+		switch ($this->db->driver)
+		{	case 'mssql':$radi_nume_radi="convert(varchar(14), e.radi_nume_radi)";
+						break;
+			default:$radi_nume_radi="e.radi_nume_radi";break;
+		}
+        // Modificado 15-Agosto-2006 Supersolidaria
+        // No tiene en cuenta los expedientes de los que ha sido excluido el radicado (SGD_EXP_ESTADO = 2).
+		$query="select e.SGD_EXP_NUMERO,e.SGD_EXP_ESTADO,$radi_nume_radi AS RADI_NUME_RADI
+				from SGD_EXP_EXPEDIENTE e
+				where e.RADI_NUME_RADI = $radicado
+                AND SGD_EXP_ESTADO <> 2";
+		$rs = $this->db->conn->query($query);
+		if ($rs->EOF){
+		    //echo 'No tiene un Numero de expediente<br>';
+			$this->num_expediente = 0;
+		 }else{
+		  $iE =1;
+		  $expArr = array();
+		   while(!$rs->EOF){
+			   if($iE==1) {
+			     $this->num_expediente = $rs->fields['SGD_EXP_NUMERO'];
+			     $this->estado_expediente = $rs->fields['SGD_EXP_ESTADO'];
+			   }
+			   $numExpediente= $rs->fields['SGD_EXP_NUMERO'];
+			   //$this->expedientes[$iE] =$numExpediente;
+			   $query = "select exp.RADI_NUME_RADI,r.RA_ASUN, r.RADI_FECH_RADI, t.SGD_TPR_DESCRIP 
+			                 from sgd_exp_expediente exp, radicado r, SGD_TPR_TPDCUMENTO t
+			             where exp.sgd_exp_numero='".$numExpediente."'
+			               and exp.radi_nume_radi = r.radi_nume_radi
+			               and r.tdoc_codi=t.sgd_tpr_codigo";
+			   $rsRad = $this->db->conn->query($query);
+			   $iRr =0;
+			   while(!$rsRad->EOF){
+			     $numRadicado = $rsRad->fields['RADI_NUME_RADI'];
+			     $fechaRadicado = $rsRad->fields['RADI_FECH_RADI'];
+			     $tipoDRadicado = $rsRad->fields['SGD_TPR_DESCRIP'];
+			     $asuntoRadicado = $rsRad->fields['RA_ASUN'];
+			     
+			     //$datosArray["NUM_EXPEDIENTE"] = $numExpediente;
+			     $expArr[$numExpediente][$iRr]["NUM_RADICADO"] = $numRadicado;
+			     $expArr[$numExpediente][$iRr]["FECHA_RADICADO"] = $fechaRadicado;
+			     $expArr[$numExpediente][$iRr]["TIPO_DRADICADO"] = $tipoDRadicado;
+			     $expArr[$numExpediente][$iRr]["ASUNTO_RADICADO"] = $asuntoRadicado;
+			     $iRr++;
+			     $rsRad->MoveNext();
+			   }
+				 $iE++;
+				 $rs->MoveNext();
+		   }
+			   $this->expedientes = $expArr;
+		   
+		   
+		}
+		//$this->num_expediente = $num_expediente;   RP
+		return $this->num_expediente;
+	 }
+	 
+	 
 /**
   * Inserta un Numero de radicado en un Expediete
   * Inicializa la Clase.
