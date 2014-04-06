@@ -3,43 +3,46 @@
 		<div>
 			<!-- widget content -->
 		<div class="widget-body">
-			<div class="tree smart-form">
+			<div class="tree smart-form fa-folder-close">
 				<ul>
 			  <?
 			   if($arrExpedientes){
 			    foreach($arrExpedientes as $key => $datosExp){
 			  ?>
 					<li>
-						<span><i class="fa fa-lg fa-folder-open"></i> <?=$key?></span>
+						<span><i class="fa fa-lg fa-folder-close"></i> <?=$key?></span>
 						<ul>
 						<?
 					  foreach($datosExp as $key2 => $value){
 					  ?>
-							<li>
-								<span><i class="icon-leaf"></i> 
-								<? echo "<TABLE Border=1 WIDTH='750'><TR><TD width=150>".$value["NUM_RADICADO"]."</TD>
-								<TD width=150>".$value["FECHA_RADICADO"]."</TD><TD width=150>".$value["TIPO_DRADICADO"]."</TD><TD width=150>".$value["ASUNTO_RADICADO"]."</TD>
+							<li  style="display:none">
+								<span>
+								<? echo "<TABLE  WIDTH='850'><TR><TD WIDTH=30><i class='icon-leaf'></i> </TD>
+								<TD width=150>";
+								if($valueAnexos["PATH_RADICADO"]) echo "<a href='$ruta_raiz/".$value["PATH_RADICADO"]."' target='".date("ymdhis")."'>";
+								echo $value["NUM_RADICADO"];
+								if($valueAnexos["PATH_RADICADO"]) echo "</a>" ;
+								echo "</TD>
+								<TD width=150>".$value["FECHA_RADICADO"]."</TD><TD width=150>".$value["TIPO_DRADICADO"]."</TD><TD width=250>".$value["ASUNTO_RADICADO"]."</TD>
 								</TR>
 								</TABLE>"; ?></span>
 									<ul>
+													<?
+													  $anexos = $value["ANEXOS"];
+													  if($anexos){
+													  foreach($anexos as $valueAnexos){
+													?>
 														<li style="display:none">
-															<span><i class="fa fa-lg fa-plus-circle"></i> Great Grand Child</span>
-															<ul>
-																<li style="display:none">
-																	<span><i class="icon-leaf"></i> Great great Grand Child</span>
-																</li>
-																<li style="display:none">
-																	<span><i class="icon-leaf"></i> Great great Grand Child</span>
-																</li>
-															</ul>
-														</li>
-														<li style="display:none">
-															<span><i class="icon-leaf"></i> Great Grand Child</span>
-														</li>
-														<li style="display:none">
-															<span><i class="icon-leaf"></i> Great Grand Child</span>
-														</li>
-													</ul>
+															<span><i class="fa fa-lg fa-plus-circle"></i><?=$valueAnexos["ANEX_NUMERO"]?></span> 
+															<? if($valueAnexos["ANEX_PATH"]) {?><a href='<?=$ruta_raiz."/bodega/".$valueAnexos["ANEX_PATH"]?>' target='<?=date("ymdhis")?>'> <? } ?>
+															- <?=$valueAnexos["DESCRIPCION"]?>
+															<? if($valueAnexos["ANEX_PATH"]) {?> </a> <? } ?>
+														</li>	
+													<?
+													 }
+													 }
+													?>
+									</ul>
 							</li>
 						<?
 						}

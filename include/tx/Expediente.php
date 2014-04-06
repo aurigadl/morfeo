@@ -154,7 +154,7 @@ class Expediente
 			   }
 			   $numExpediente= $rs->fields['SGD_EXP_NUMERO'];
 			   //$this->expedientes[$iE] =$numExpediente;
-			   $query = "select exp.RADI_NUME_RADI,r.RA_ASUN, r.RADI_FECH_RADI, t.SGD_TPR_DESCRIP 
+			   $query = "select exp.RADI_NUME_RADI,r.RA_ASUN, r.RADI_FECH_RADI, t.SGD_TPR_DESCRIP, r.RADI_PATH
 			                 from sgd_exp_expediente exp, radicado r, SGD_TPR_TPDCUMENTO t
 			             where exp.sgd_exp_numero='".$numExpediente."'
 			               and exp.radi_nume_radi = r.radi_nume_radi
@@ -166,12 +166,36 @@ class Expediente
 			     $fechaRadicado = $rsRad->fields['RADI_FECH_RADI'];
 			     $tipoDRadicado = $rsRad->fields['SGD_TPR_DESCRIP'];
 			     $asuntoRadicado = $rsRad->fields['RA_ASUN'];
+			     $pathRadicado = $rsRad->fields['RADI_PATH'];
 			     
 			     //$datosArray["NUM_EXPEDIENTE"] = $numExpediente;
 			     $expArr[$numExpediente][$iRr]["NUM_RADICADO"] = $numRadicado;
 			     $expArr[$numExpediente][$iRr]["FECHA_RADICADO"] = $fechaRadicado;
 			     $expArr[$numExpediente][$iRr]["TIPO_DRADICADO"] = $tipoDRadicado;
 			     $expArr[$numExpediente][$iRr]["ASUNTO_RADICADO"] = $asuntoRadicado;
+			     $expArr[$numExpediente][$iRr]["PATH_RADICADO"] = $pathRadicado;
+			     
+						$query = "select a.ANEX_RADI_NUME,a.ANEX_DESC, a.radi_nume_salida, a.anex_numero, t.SGD_TPR_DESCRIP 
+						                 ,a.ANEX_NOMB_ARCHIVO
+													from anexos a, SGD_TPR_TPDCUMENTO t
+											where a.anex_radi_nume='".$numRadicado."'
+												and a.sgd_tpr_codigo=t.sgd_tpr_codigo";
+											//	$this->db->conn->debug = true;
+						$rsAnex = $this->db->conn->query($query);
+						$iRr =0;
+						$arrAnexos = array();
+						$iA =0;
+						while(!$rsAnex->EOF){
+						  $arrAnexos[$iA]["NUMERO"] = $rsAnex->fields['ANEX_RADI_NUME'];
+						  $arrAnexos[$iA]["DESCRIPCION"] = $rsAnex->fields['ANEX_DESC'];
+						  $arrAnexos[$iA]["RADI_SALIDA"] = $rsAnex->fields['RADI_NUME_SALIDA'];
+						  $arrAnexos[$iA]["ANEX_NUMERO"] = $rsAnex->fields['ANEX_NUMERO'];
+						  $arrAnexos[$iA]["ANEX_PATH"] = $rsAnex->fields['ANEX_NOMB_ARCHIVO'];
+						  
+						  $rsAnex->MoveNext();
+						  $iA++;
+						}
+					 if($iA>=1) $expArr[$numExpediente][$iRr]["ANEXOS"] = $arrAnexos;
 			     $iRr++;
 			     $rsRad->MoveNext();
 			   }
