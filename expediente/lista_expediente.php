@@ -649,14 +649,7 @@ if($num_expediente !=""){
 	}
 	if( $arrDatosParametro != "" ) {
 		foreach( $arrDatosParametro as $clave => $datos ) {
-    ?>
-    <table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
-      <tr >
-        <td colspan="2" ><? print $datos['etiqueta']; ?>:</td>
-        <td colspan="2" ><? print $datos['parametro']; ?></td>
-      </tr>
-      </Table>
-        <?php
+           echo "> ".$datos['etiqueta'].":".print $datos['parametro'];
         }
       }
     ?><br>
