@@ -306,7 +306,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <li><a  href='ReportesR/indexReportes.php' alt='Generar planilla de distribucion y entrega'  target='mainFrame' class="menu_princ">Planilla Reasignados</a></li>
 
                       <?php if($_SESSION["usua_perm_adminflujos"]==1){ ?>
-                      <li><a href="Administracion/flujos/texto_version2/mnuFlujosBasico.php?<?=$phpsession ?>&" class="menu_princ" target='mainFrame'>Editor Flujos</a></li>
+                      <li class="dropdown-submenu">
+                        <a href="#" onclick="return false;">Editor Flujos</a>
+                        <ul class="dropdown-menu">
+                          <li><a href='./Administracion/flujos/texto_version2/creaProceso.php?<?=$phpsession ?>&accion=1' class="vinculos" target='mainFrame'>Crear Proceso</a></li>
+                          <li><a href='./Administracion/flujos/texto_version2/seleccionaProceso.php?<?=$phpsession ?>&accion=1' class="vinculos" target='mainFrame'>Editar Flujo</a></li>
+                        </ul>
+                      </li>
                       <?php }
                       if($_SESSION["usua_perm_envios"]>=1) { ?>
                       <li><a href="radicacion/formRadEnvios.php?<?=$phpsession ?>&<? echo "fechah=$fechah&usr=".md5($dep)."&primera=1&ent=1"; ?>" target='mainFrame' class="menu_princ">Envios</a></li>
@@ -332,7 +338,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <?php }
 
                       if ($_SESSION["usua_perm_trd"]==1) { ?>
-                        <li><a href="trd/menu_trd.php?<?=$phpsession ?>&fechah=<?=$fechah?>" target='mainFrame' class="menu_princ">Tablas Retenci&oacute;n Documental</a></li>
+                      <li class="dropdown-submenu">
+                        <a href="#" onclick="return false;">Clasificaci&oacute;n Documental</a>
+                        <ul class="dropdown-menu">
+                          <li><a href='./trd/admin_series.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Series </a></li>
+                          <li><a href='./trd/admin_subseries.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Subseries </a></li>
+                          <li><a href='./trd/cuerpoMatriTRD.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Matriz Relaci&oacute;n </a></li>
+                          <li><a href='./trd/admin_tipodoc.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Tipos Documentales </a></li>
+                          <li><a href='./trd/procModTrdArea.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Modificacion TRD Area </a></li>
+                          <li><a href='./trd/informe_trd.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Listado Tablas de Retencion Documental </a></li>
+                        </ul>
+                      </li>
                       <?php }
 
                         if($_SESSION["usua_admin_archivo"]>=1) {
@@ -343,12 +359,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             $rs=$db->conn->Execute($isql);
                             $num_exp = $rs->fields["CONTADOR"];
                         ?>
-                       <li><a href='archivo/archivo.php?<?=$phpsession?>&krd=<?=$krd?>&fechah=<?=$fechah?>&usr=<?=md5($dep)?>&primera=1&ent=1' target='mainFrame' class="menu_princ">Archivo (<?=$num_exp?>)</a></li>
+                       <li><a href='./expediente/cuerpo_exp.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Archivo (<?=$num_exp?>)</a></li>
                       <?php }
 
                       if ($_SESSION["usua_perm_prestamo"]==1) { ?>
-                        <li><a href="prestamo/menu_prestamo.php?<?=$phpsession ?>&etapa=1&&s_Listado=VerListado&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>" target='mainFrame' class="menu_princ">Prestamo</a></li>
-
+                      <li class="dropdown-submenu">
+                        <a href="#" onclick="return false;">Prestamo</a>
+                        <ul class="dropdown-menu">
+                          <li><a href="./prestamo/prestamo.php?opcionMenu=1" target='mainFrame'>Prestamo de documentos</a></li>
+                          <li><a href="./prestamo/prestamo.php?opcionMenu=2" target='mainFrame'>Devolucion de documentos</a></li>
+                          <li><a href="./prestamo/prestamo.php?opcionMenu=0" target='mainFrame'>Generacion de reportes</a></li>
+                          <li><a href="./prestamo/prestamo.php?opcionMenu=3" target='mainFrame'>Cancelar solicitudes</a></li>
+                        </ul>
+                      </li>
                       <?php }
                       if($_SESSION["usua_perm_dev"]==1) { ?>
                       <li> <a href='devolucion/cuerpoDevCorreo.php?<?=$phpsession?>&krd=<?=$krd?>&<?php echo "fechaf=$fechah&carpeta=8&devolucion=2&estado_sal=4&nomcarpeta=Documentos Para Impresion&orno=1&adodb_next_page=1"; ?>' target='mainFrame' class="menu_princ" >Dev Correo</span></a></li>
