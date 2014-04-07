@@ -649,7 +649,7 @@ if($num_expediente !=""){
 	}
 	if( $arrDatosParametro != "" ) {
 		foreach( $arrDatosParametro as $clave => $datos ) {
-           echo "> ".$datos['etiqueta'].":".print $datos['parametro'];
+           echo ">  ".$datos['etiqueta'].":".print $datos['parametro'];
         }
       }
     ?><br>
