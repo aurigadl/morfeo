@@ -17,13 +17,13 @@
 					  ?>
 							<li  style="display:none">
 								<span>
-								<? echo "<TABLE  WIDTH='850'><TR><TD WIDTH=30><i class='icon-leaf'></i> </TD>
+								<? echo "<TABLE  WIDTH='950'><TR><TD WIDTH=30><i class='icon-leaf'></i> </TD>
 								<TD width=150>";
 								if($valueAnexos["PATH_RADICADO"]) echo "<a href='$ruta_raiz/".$value["PATH_RADICADO"]."' target='".date("ymdhis")."'>";
 								echo $value["NUM_RADICADO"];
 								if($valueAnexos["PATH_RADICADO"]) echo "</a>" ;
 								echo "</TD>
-								<TD width=150>".$value["FECHA_RADICADO"]."</TD><TD width=150>".$value["TIPO_DRADICADO"]."</TD><TD width=250>".$value["ASUNTO_RADICADO"]."</TD>
+								<TD width=150>".$value["FECHA_RADICADO"]."</TD><TD width=150>".$value["TIPO_DRADICADO"]."</TD><TD width=450>".$value["ASUNTO_RADICADO"]."</TD>
 								</TR>
 								</TABLE>"; ?></span>
 									<ul>
@@ -33,7 +33,7 @@
 													  foreach($anexos as $valueAnexos){
 													?>
 														<li style="display:none">
-															<span><i class="fa fa-lg fa-plus-circle"></i><?=$valueAnexos["ANEX_NUMERO"]?></span> 
+															<?=$valueAnexos["ANEX_NUMERO"]?> - <?=$valueAnexos["RADI_SALIDA"]?>
 															<? if($valueAnexos["ANEX_PATH"]) {?><a href='<?=$ruta_raiz."/bodega/".$valueAnexos["ANEX_PATH"]?>' target='<?=date("ymdhis")?>'> <? } ?>
 															- <?=$valueAnexos["DESCRIPCION"]?>
 															<? if($valueAnexos["ANEX_PATH"]) {?> </a> <? } ?>

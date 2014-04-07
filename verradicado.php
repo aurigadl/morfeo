@@ -364,6 +364,7 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 
 	}else {
 	?>
+</form>
 <form name='form1' action='enviar.php' method='GET'>
 <input type=hidden name=depsel>
 <input type=hidden name=depsel8>
@@ -377,10 +378,8 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 }else {echo "<center><b><span class='eerrores'>NO TIENE AUTORIZACION PARA INGRESAR</span><BR><span class='eerrores'><a href='login.php' target=_parent>Por Favor intente validarse de nuevo. Presione aca!</span></a>";}
 
 ?>
-</form>
 <!-- row -->
 <div >
-
 	<div class="well well-sm well-light">
 			<div id="tabs">
 				<ul>
@@ -391,11 +390,14 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 						<a href="#tabs-b">Traza</a>
 					</li>
 					<li>
-						<a href="#tabs-c">Documeto</a>
+						<a href="#tabs-c">Documeto Anexos</a>
 					</li>
 					<li>
 						<a href="#tabs-d">Expediente</a>
 					</li>					
+					<li>
+						<a href="#tabs-f">WorkFlow</a>
+					</li>									
 				</ul>
 				<div id="tabs-a">
 			      <?php include "lista_general.php"; ?>
@@ -410,13 +412,18 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 						<?php include "./lista_anexos.php"; ?>
 					</p>
 				</div>
+				<div id="tabs-f" width=80%>
+					<p>
+						<IFRAME SRC="proceso/workFlow.php?verrad=<?=$verrad?>&numeroExpediente=<?=$numExpediente?>&<?=session_name()."=".session_id()?>" width="100%" height="2000" frameborder="0">  </IFRAME>
+					</p>
+				</div>				
 				<div id="tabs-d">
 					<p>
 						<?php include "./expediente/lista_expediente.php"; ?>
 					</p>
-				</div>				
+				</div>
 			</div>
-
+</div>
 <script type="text/javascript">
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	pageSetUp();
@@ -666,4 +673,5 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 	});
 
 </script>
-</body></html>
+</body>
+</html>

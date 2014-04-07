@@ -1,4 +1,4 @@
-<?
+<? 
 /**
   * CLASE EXPEDIENTE
   * @author JAIRO LOSADA
@@ -18,10 +18,8 @@ class Expediente
    var $descFldExp;
    var $codigoFldExp;
    var $exp_titulo;
-   var $exp_asunto;
-   var $exp_ufisica;
    var $exp_isla;
-   var $exp_caja;
+   var $exp_caja;           
    var $exp_estante;
    var $exp_carpeta;
    var $exp_unicon;
@@ -154,7 +152,7 @@ class Expediente
 			   }
 			   $numExpediente= $rs->fields['SGD_EXP_NUMERO'];
 			   //$this->expedientes[$iE] =$numExpediente;
-			   $query = "select exp.RADI_NUME_RADI,r.RA_ASUN, r.RADI_FECH_RADI, t.SGD_TPR_DESCRIP, r.RADI_PATH
+			   $query = "select exp.RADI_NUME_RADI,r.RA_ASUN, to_char(r.RADI_FECH_RADI, 'YYYY-MM-DD hh:mi:SS') RADI_FECH_RADI, t.SGD_TPR_DESCRIP, r.RADI_PATH
 			                 from sgd_exp_expediente exp, radicado r, SGD_TPR_TPDCUMENTO t
 			             where exp.sgd_exp_numero='".$numExpediente."'
 			               and exp.radi_nume_radi = r.radi_nume_radi

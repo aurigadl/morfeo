@@ -361,20 +361,6 @@ if (!$agendado) {
 }
 /* Final de opcion de enviar para carpetas que no son 11 y 0(VoBo)
 */
-?>
-		<? if ($controlAgenda==1 || $permRespuesta == 1){ ?>
-                    <? if ($permRespuesta == 1) { ?>
-                    <input type="button" value="Respuesta Rapida" 
-                    onClick="respuestaTx()" width="100" name="asignatem" align="bottom" 
-                    class="botonesNew" id="asignatem">
-                    <? } ?>
-		<? if ($permRespuesta == 1) { ?>
-                    <center> <input type="button" value="RR / Doc"
-                    onClick="respuestaTx2()" width="100" name="asignatem" align="bottom"
-                    class="botonesNew" id="asignatem"></center>
-                    <? } ?>
-			<?}?>
-<?php
 /* si esta en la Carpeta de Visto Bueno no muesta las opciones de reenviar
 */
 if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_SESSION['dependencia'] == $radi_depe_actu))

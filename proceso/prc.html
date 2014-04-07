@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+    <head>
+        
+        <title>jsPlumb 1.5.5 demo - jQuery</title>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />		
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="./demo-all.css">
+    <link rel="stylesheet" href="./demo.css">
+    </head>
+    <body data-demo-id="home" data-library="jquery">
+            <div class="demo statemachine-demo" id="statemachine-demo">
+                <div class="w" id="opened">BEGIN<div class="ep"></div></div>
+                <div class="w" id="phone1">PHONE INTERVIEW 1<div class="ep"></div></div>
+                <div class="w" id="phone2">PHONE INTERVIEW 2<div class="ep"></div></div>
+                <div class="w" id="inperson">IN PERSON<div class="ep"></div></div>
+                <div class="w" id="rejected">REJECTED<div class="ep"></div></div>                           
+                <div class="w" id="OtroPc">OTro proceso<div class="ep"></div></div>                           
+            </div>
+
+            <div id="drag-drop-demo" class="demo drag-drop-demo">                                
+                <div class="window" id="dragDropWindow1">one<br/><br/><a href="#" class="cmdLink hide" rel="dragDropWindow1">toggle connections</a><br/><a href="#" class="cmdLink drag" rel="dragDropWindow1">disable dragging</a><br/><a href="#" class="cmdLink detach" rel="dragDropWindow1">detach all</a></div>
+                <div class="window" id="dragDropWindow2">two<br/><br/><a href="#" class="cmdLink hide" rel="dragDropWindow2">toggle connections</a><br/><a href="#" class="cmdLink drag" rel="dragDropWindow2">disable dragging</a><br/><a href="#" class="cmdLink detach" rel="dragDropWindow2">detach all</a></div>
+                <div class="window" id="dragDropWindow3">three<br/><br/><a href="#" class="cmdLink hide" rel="dragDropWindow3">toggle connections</a><br/><a href="#" class="cmdLink drag" rel="dragDropWindow3">disable dragging</a><br/><a href="#" class="cmdLink detach" rel="dragDropWindow3">detach all</a></div>
+                <div class="window" id="dragDropWindow4">four<br/><br/><a href="#" class="cmdLink hide" rel="dragDropWindow4">toggle connections</a><br/><a href="#" class="cmdLink drag" rel="dragDropWindow4">disable dragging</a><br/><a href="#" class="cmdLink detach" rel="dragDropWindow4">detach all</a></div>          
+                <div id="list"></div>                
+            </div>
+            
+
+
+            
+	       
+        <!-- DEP -->
+	    <script src="../../lib/jquery-1.9.0.js"></script>
+		<script src="../../lib/jquery-ui-1.9.2-min.js"></script>
+        <script src="../../lib/jquery.ui.touch-punch.min.js"></script>
+		<!-- /DEP -->
+
+        <!-- for demo dropdown. not a jsplumb dependency -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+				
+		<!-- JS -->
+		<!-- support lib for bezier stuff -->
+		<script src="../../lib/jsBezier-0.6.js"></script>
+        <!-- jsplumb geom functions -->   
+        <script src="../../lib/jsplumb-geom-0.1.js"></script>
+		<!-- jsplumb util -->
+		<script src="../../src/util.js"></script>
+        <!-- base DOM adapter -->
+		<script src="../../src/dom-adapter.js"></script>
+		<!-- main jsplumb engine -->
+		<script src="../../src/jsPlumb.js"></script>
+        <!-- endpoint -->
+		<script src="../../src/endpoint.js"></script>
+        <!-- connection -->
+		<script src="../../src/connection.js"></script>
+        <!-- anchors -->
+		<script src="../../src/anchors.js"></script>
+		<!-- connectors, endpoint and overlays  -->
+		<script src="../../src/defaults.js"></script>
+        <!-- bezier connectors -->
+        <script src="../../src/connectors-bezier.js"></script>
+		<!-- state machine connectors -->
+		<script src="../../src/connectors-statemachine.js"></script>
+		<!-- SVG renderer -->
+		<script src="../../src/renderers-svg.js"></script>
+		<!-- canvas renderer -->
+		<script src="../../src/renderers-canvas.js"></script>
+		<!-- vml renderer -->
+		<script src="../../src/renderers-vml.js"></script>
+        
+        <!-- jquery jsPlumb adapter -->
+		<script src="../../src/jquery.jsPlumb.js"></script>
+		<!-- /JS -->
+		
+		<!--  demo code -->
+	  <script src="../statemachine/demo-jquery.js"></script>
+        
+    </body>
+</html>

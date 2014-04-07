@@ -107,6 +107,34 @@ class Flujo{
 		}
 		return $aristasArray;
 	}
+	
+	/**
+	 * METODO devuelve los nodos de un proceso
+	 *
+	 * @param number $tProc  Codigo del Proceso
+	 * @return array retorna los nodos pertenecientes a un proceso.
+	 */
+	function getNodos($tProc){
+		$query = "SELECT * 
+					FROM SGD_FEXP_FLUJOEXPEDIENTES 
+					WHERE SGD_PEXP_CODIGO=$tProc 
+					ORDER BY SGD_FEXP_ORDEN";
+		//$this->db->conn->debug=true;
+		$rs = $this->db->conn->query($query);
+		
+		$nodos = array();
+		if($rs)
+		{
+		 $i=0;
+		  while(!$rs->EOF){
+				$nodos[$i]["DESCRIP"] = $rs->fields["SGD_FEXP_DESCRIP"];
+				$nodos[$i]["CODIGO"] = $rs->fields["SGD_FEXP_CODIGO"];
+				$i++;
+				$rs->MoveNext();
+			}
+		}
+		return $nodos;
+	}	
 	/**
 	 * METODO devuelve el nombre de un nodo
 	 *
@@ -255,6 +283,46 @@ class Flujo{
 		}
 		return $this->codArista;
 	}
+ /**
+   * Metodo que trae las aristas de un proceso.
+ 	 * @param number codProceso Codigo de proceso. 
+	 * @return array Retorna todas las aristas pertenecientes a un proceso indicado en $codProceso.
+	 */
+
+	function getAristas($codProceso){
+	  if($codFld==0) $coFld=1; 
+		$query = "SELECT * FROM SGD_FARS_FARISTAS 
+		WHERE 
+		SGD_PEXP_CODIGO=$codProceso
+		ORDER BY SGD_FEXP_CODIGOINI,SGD_FEXP_CODIGOFIN";	
+		
+		$rs = $this->db->conn->query($query);
+		$aristas = array();
+		if($rs){
+		$iA=0;
+	   while(!$rs->EOF){		
+			$codigoArista = $rs->fields["SGD_FARS_CODIGO"];
+			$descripArista = $rs->fields["SGD_FARS_DESC"];
+			$nodoInicio =  $rs->fields["SGD_FEXP_CODIGOINI"];
+			$nodoFin =  $rs->fields["SGD_FEXP_CODIGOFIN"];
+			$frmNombre = $rs->fields["SGD_FARS_FRMNOMBRE"];
+			$frmLink = $rs->fields["SGD_FARS_FRMLINK"];
+			$frmLinkSelect = $rs->fields["SGD_FARS_FRMLINKSELECT"];
+			$frmLinkSql = $rs->fields["SGD_FARS_FRMSQL"];
+			$aristas[$iA]["CODIGO"] = $codigoArista; 
+			$aristas[$iA]["DESCRIP"] = $descripArista;
+			$aristas[$iA]["NODO_INICIO"] = $nodoInicio;
+			$aristas[$iA]["NODO_FIN"] = $nodoFin;
+			$aristas[$iA]["FRM_NOMBRE"] = $frmNombre;
+			$aristas[$iA]["FRM_LINK"] = $frmLink;
+			$aristas[$iA]["FRM_LINKSELECT"] = $frmLinkSelect;
+			$aristas[$iA]["FRM_SQL"] = $frmLinkSql;
+			$iA++;
+			$rs->MoveNext();
+			}
+		}
+		return $aristas;
+	}	
 		function getMenuProximaArista($tipoDoc, $codProceso,$codSerie,$codSbrd,$tRad,$name,$default=null,$atributos=''){
 		$query = "SELECT * FROM SGD_FARS_FARISTAS 
 		WHERE 
