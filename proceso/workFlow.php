@@ -76,14 +76,16 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
  $nodosCss = "$ruta_raiz/bodega/tmp/nodos_p$texp.css";
  $fp = fopen($nodosCss, "w");
  $top=3;
+ $left=3;
  foreach($nodos as $etapas){
    
 		$dClass =
 		"#nodo".$etapas["CODIGO"]." {
-		left:20em;
+		left:".$left."em;
 		top:".$top."em;
 		}";
 	$top = $top + 10;	
+	$left = $left + 5;	
 	fputs($fp, $dClass);	
  }
  fclose($fp);
@@ -94,25 +96,32 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 		<link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/demo-all.css">
     <link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/demo.css">
-        <link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/<?=$nodosCss?>">
+    <link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/<?=$nodosCss?>">
+    			<SCRIPT LANGUAGE="JavaScript">
+			function fnSubmit() {
+				window.document.form2.submit();
+				return;
+			}
+			</SCRIPT>      
     </head>
-    <body data-demo-id="home" data-library="jquery">
+    <body data-demo-id="home" data-library="jquery" >
     <?=$descFldExp?>
 		<div class="demo statemachine-demo" id="statemachine-demo">
 				<?php
 					foreach($nodos as $etapas){
 					?>
-					<div class="w" id="nodo<?=$etapas["CODIGO"]?>"><?=$etapas["DESCRIP"]?><div class="ep"></div></div>
+					<div class="w" style="bgColor:green;" id="nodo<?=$etapas["CODIGO"]?>"><?=$etapas["DESCRIP"]?></div>
 				<?php
 					}
 				?>
 		</div>
       <!-- DEP -->
+
 	  <script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jquery-1.9.0.js"></script>
 		<script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jquery-ui-1.9.2-min.js"></script>
     <script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jquery.ui.touch-punch.min.js"></script>
 		<!-- /DEP -->
-
+	  
     <!-- for demo dropdown. not a jsplumb dependency -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 				
@@ -149,12 +158,13 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
         <!-- jquery jsPlumb adapter -->
 		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/jquery.jsPlumb.js"></script>
 		<!-- /JS -->
-		
-		<!--  demo code -->
-	  <!--<script src="<?=$ruta_raiz ?>/proceso/demo-jquery.js"></script> -->
-	  <?php
+		<?php
 	  include "$ruta_raiz/proceso/jqueryDraw.php";
 	  ?>
-        
+		<!--  demo code -->
+	  <!--<script src="<?=$ruta_raiz ?>/proceso/demo-jquery.js"></script> -->
+
+    <form name=form2 action=<?="workFlow.php?verrad=$verrad&numeroExpediente=$numExpediente&".session_name()."=".session_id() ?> method=POST >
+    </form>
     </body>
 </html>

@@ -1,4 +1,4 @@
-<script>
+<script LANGUAGE="JavaScript">
 ;(function() {
 	
 	jsPlumb.ready(function() {

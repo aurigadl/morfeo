@@ -414,7 +414,7 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 				</div>
 				<div id="tabs-f" width=80%>
 					<p>
-						<IFRAME SRC="proceso/workFlow.php?verrad=<?=$verrad?>&numeroExpediente=<?=$numExpediente?>&<?=session_name()."=".session_id()?>" width="100%" height="2000" frameborder="0">  </IFRAME>
+						<IFRAME SRC="proceso/workFlow.php?verrad=<?=$verrad?>&numeroExpediente=<?=$numExpediente?>&<?=session_name()."=".session_id()?>" width="100%" height="4000" frameborder="0">  </IFRAME>
 					</p>
 				</div>				
 				<div id="tabs-d">
