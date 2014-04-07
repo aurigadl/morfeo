@@ -103,8 +103,9 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 		<div class="statemachine-demo" id="statemachine-demo">
 				<?php
 					foreach($nodos as $etapas){
+					if($etapas["CODIGO"]==$codFld) $datoss = "<br>(Aqui va el proceso)"; else $datoss = "";
 					?>
-					<div class="w" style="bgColor:green;" id="nodo<?=$etapas["CODIGO"]?>"><?=$etapas["DESCRIP"]?></div>
+					<div class="w" style="bgColor:green;" id="nodo<?=$etapas["CODIGO"]?>"><?=$etapas["DESCRIP"]?><?=$datoss?></div>
 				<?php
 					}
 				?>
