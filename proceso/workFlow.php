@@ -1,9 +1,9 @@
-<!doctype html>
 <?
 session_start();
-$ruta_raiz = "..";
+if(!$ruta_raiz)$ruta_raiz = "..";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
+$numeroExpediente = $numExpediente;
 /**
 * Paggina de modFlujoExp.php
 * Por Correlibre.org 2012/01
@@ -15,6 +15,7 @@ $ruta_raiz = "..";
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
+include_once "$ruta_raiz/htmlheader.inc.php";
 define('ADODB_ASSOC_CASE', 1);
 $verrad         = "";
 $krd            = $_SESSION["krd"];
@@ -25,7 +26,6 @@ $codusuario     = $_SESSION["codusuario"];
 
 include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 require_once    ("$ruta_raiz/class_control/Mensaje.php");
-
 if (!$db) $db = new ConnectionHandler($ruta_raiz);
 //$db->conn->debug=true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -43,7 +43,6 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$descFldExp 	= $expediente->descFldExp;
 	//$db->conn->debug = true;
 	$texp = $expediente->codigoTipoExp;
-	
 	
 	$codProceso = $texp;
 	$objFlujo = new Flujo($db, $texp, $usua_doc);
@@ -74,6 +73,7 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$frmLinkSelect = str_replace("{nombreUsuario}","$usua_nomb", $frmLinkSelect);
 
  $nodosCss = "$ruta_raiz/bodega/tmp/nodos_p$texp.css";
+ 
  $fp = fopen($nodosCss, "w");
  $top=3;
  $left=3;
@@ -85,28 +85,22 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 		top:".$top."em;
 		}";
 	$top = $top + 10;	
-	$left = $left + 5;	
+	if($left==3)$left = 50;	else $left = 3;
+	
 	fputs($fp, $dClass);	
  }
  fclose($fp);
 ?>
-<html>
-    <head>
-		<meta http-equiv="content-type" content="text/html;charset=utf-8" />		
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 		<link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/demo-all.css">
     <link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/demo.css">
-    <link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/<?=$nodosCss?>">
+    <link rel="stylesheet" href="<?=$nodosCss?>">
     			<SCRIPT LANGUAGE="JavaScript">
 			function fnSubmit() {
 				window.document.form2.submit();
 				return;
 			}
 			</SCRIPT>      
-    </head>
-    <body data-demo-id="home" data-library="jquery" >
-    <?=$descFldExp?>
-		<div class="demo statemachine-demo" id="statemachine-demo">
+		<div class="statemachine-demo" id="statemachine-demo">
 				<?php
 					foreach($nodos as $etapas){
 					?>
@@ -117,54 +111,12 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 		</div>
       <!-- DEP -->
 
-	  <script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jquery-1.9.0.js"></script>
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jquery-ui-1.9.2-min.js"></script>
-    <script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jquery.ui.touch-punch.min.js"></script>
-		<!-- /DEP -->
-	  
-    <!-- for demo dropdown. not a jsplumb dependency -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-				
-		<!-- JS -->
-		<!-- support lib for bezier stuff -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jsBezier-0.6.js"></script>
-        <!-- jsplumb geom functions -->   
-        <script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jsplumb-geom-0.1.js"></script>
-		<!-- jsplumb util -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/util.js"></script>
-        <!-- base DOM adapter -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/dom-adapter.js"></script>
-		<!-- main jsplumb engine -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/jsPlumb.js"></script>
-        <!-- endpoint -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/endpoint.js"></script>
-        <!-- connection -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/connection.js"></script>
-        <!-- anchors -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/anchors.js"></script>
-		<!-- connectors, endpoint and overlays  -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/defaults.js"></script>
-        <!-- bezier connectors -->
-        <script src="<?=$ruta_raiz ?>/js/jsplumb/src/connectors-bezier.js"></script>
-		<!-- state machine connectors -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/connectors-statemachine.js"></script>
-		<!-- SVG renderer -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/renderers-svg.js"></script>
-		<!-- canvas renderer -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/renderers-canvas.js"></script>
-		<!-- vml renderer -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/renderers-vml.js"></script>
-        
-        <!-- jquery jsPlumb adapter -->
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/src/jquery.jsPlumb.js"></script>
+	  <!-- <script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jquery-1.9.0.js"></script>
+		<script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jquery-ui-1.9.2-min.js"></script> -->
+
 		<!-- /JS -->
 		<?php
 	  include "$ruta_raiz/proceso/jqueryDraw.php";
 	  ?>
 		<!--  demo code -->
 	  <!--<script src="<?=$ruta_raiz ?>/proceso/demo-jquery.js"></script> -->
-
-    <form name=form2 action=<?="workFlow.php?verrad=$verrad&numeroExpediente=$numExpediente&".session_name()."=".session_id() ?> method=POST >
-    </form>
-    </body>
-</html>

@@ -396,8 +396,8 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 						<a href="#tabs-d">Expediente</a>
 					</li>					
 					<li>
-						<a href="#tabs-f">WorkFlow</a>
-					</li>									
+						<a href="#tabs-e">WorkFlow</a>
+					</li>							
 				</ul>
 				<div id="tabs-a">
 			      <?php include "lista_general.php"; ?>
@@ -412,11 +412,6 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 						<?php include "./lista_anexos.php"; ?>
 					</p>
 				</div>
-				<div id="tabs-f" width=80%>
-					<p>
-						<IFRAME SRC="proceso/workFlow.php?verrad=<?=$verrad?>&numeroExpediente=<?=$numExpediente?>&<?=session_name()."=".session_id()?>" width="100%" height="4000" frameborder="0">  </IFRAME>
-					</p>
-				</div>				
 				<div id="tabs-d">
 					<p>
 						<?php include "./expediente/lista_expediente.php"; ?>
@@ -427,16 +422,12 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 <script type="text/javascript">
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	pageSetUp();
-
 	// PAGE RELATED SCRIPTS
-
 	// menu
 	$("#menu").menu();
-
 	/*
 	 * AUTO COMPLETE AJAX
 	 */
-
 	function log(message) {
 		$("<div>").text(message).prependTo("#log");
 		$("#log").scrollTop(0);

@@ -87,6 +87,14 @@ function insertarExpediente()
 {
     window.open( "<?=$ruta_raiz?>/expediente/insertarExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=600,width=600,scrollbars=yes" );
 }
+function verWorkFlow()
+{
+		<?php 
+			//  include "./proceso/workFlow.php"; //?verrad=$verrad&numeroExpediente=$numExpediente&".session_name()."=".session_id()."";
+			$pWorkFlow = "./proceso/workFlow.php?verrad=$verrad&numeroExpediente=$numExpediente&".session_name()."=".session_id()."";
+		?>
+    window.open("<?=$pWorkFlow?>","HistExp<?=$fechaH?>","height=750,width=850,scrollbars=yes" );
+}
 function crearExpediente()
 {
 	numExpediente = document.getElementById('num_expediente').value;
@@ -664,6 +672,9 @@ if($num_expediente !=""){
 			<li>
 				<a href="#" onClick="verHistExpediente('<?=$num_expediente?>');">Historial del Proceso/Exp</a>
 			</li>
+			<li>
+				<a href="#" onClick="verWorkFlow('<?=$num_expediente?>','<?=$texp?>');">Ver WorkFlow</a>
+			</li>			
 			<li>
 				<a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
 			</li>
