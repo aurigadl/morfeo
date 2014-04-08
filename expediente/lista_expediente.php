@@ -427,8 +427,8 @@ if($usuaPermExpediente >= 1  ) {
 	*/
 	else if ( isset( $expIncluido ) && $expIncluido != "" ) {
 		$numExpediente = $expIncluido;
-    	}
-	$expediente->expedienteArchivado( $verrad, $numExpediente );
+  }
+	if($verrad) $expediente->expedienteArchivado( $verrad, $numExpediente );
 
 	// Si el radicado no ha sido excluido del expediente
 	if( $expediente->estado_expediente != 2 ) {
@@ -808,7 +808,7 @@ if($descPExpediente){
 <table width="100%"><tr><td>
 <?
  
- $exp = $expediente->consultaExp($verrad);
+ if($verrad) $exp = $expediente->consultaExp($verrad);
  $arrExpedientes = $expediente->expedientes;
  
  
@@ -844,7 +844,7 @@ if($descPExpediente){
     <td align="center">TIPO DE RELACION</td>
   </tr>
   <?php
-    $arrAnexoAsociado = $expediente->expedienteAnexoAsociado( $verrad );
+    if($verrad) $arrAnexoAsociado = $expediente->expedienteAnexoAsociado( $verrad );
 
     if( is_array( $arrAnexoAsociado ) )
     {
@@ -991,12 +991,8 @@ if($descPExpediente){
       	if ($verImg == "NO") {
          echo "<a href='#2' onclick=\"alert('El documento posee seguridad y no posee los suficientes permisos'); return false;\"><span class=leidos>";
 
-        } else
-
-         {
-
+        } else {
 	 ?>
-
 	  <a href='<?=$ruta_raiz?>/verradicado.php?verrad=<?=$radicadoAnexo?>&<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>' target="VERRAD<?=$radicadoAnexo?>">
 
 	 <? }  print $arrDatosRad['fechaRadicacion'];

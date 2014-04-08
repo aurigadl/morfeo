@@ -225,7 +225,7 @@ $_SESSION['numExpedienteSelected'] = null;
 							  $enviadoPor = $rs->fields["ENVIADO POR"];
 							  $radiPath = $rs->fields["HID_RADI_PATH"];
 
-							  $linkVerRadicado = "./verradicado.php?verrad=$numeroRadicado&".session_name()."=".session_id()."&nomcarpeta=$nomcarpeta";
+							  $linkVerRadicado = "./verradicado.php?verrad=$numeroRadicado&".session_name()."=".session_id()."&nomcarpeta=$nomcarpeta#tabs-a";
 							  $linkImagen = "$ruta_raiz/bodega/$radiPath";
 							?>
 								<tr>

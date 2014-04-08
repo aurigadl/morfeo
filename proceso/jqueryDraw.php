@@ -14,7 +14,6 @@
                     length:14,
                     foldback:0.8
 				} ],
-
 			],
 			Container:"statemachine-demo"
 		});

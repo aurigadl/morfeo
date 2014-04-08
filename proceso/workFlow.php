@@ -1,34 +1,28 @@
 <?
+if(!$ruta_raiz){
 session_start();
-if(!$ruta_raiz)$ruta_raiz = "..";
-    if (!$_SESSION['dependencia'])
-        header ("Location: $ruta_raiz/cerrar_session.php");
-$numeroExpediente = $numExpediente;
-/**
-* Paggina de modFlujoExp.php
-* Por Correlibre.org 2012/01
-* Se añadio compatibilidad con variables globales en Off
-* @autor Jairo Losada 2012-05
-* @licencia GNU/GPL V 3
-*/
+ $ruta_raiz="..";
+ 
+if (!$_SESSION['dependencia'])
+header ("Location: $ruta_raiz/cerrar_session.php");
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
-
-include_once "$ruta_raiz/htmlheader.inc.php";
 define('ADODB_ASSOC_CASE', 1);
-$verrad         = "";
 $krd            = $_SESSION["krd"];
 $dependencia    = $_SESSION["dependencia"];
 $usua_doc       = $_SESSION["usua_doc"];
-$usua_nomb       = $_SESSION["usua_nomb"];
 $codusuario     = $_SESSION["codusuario"];
 
-include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
-require_once    ("$ruta_raiz/class_control/Mensaje.php");
-if (!$db) $db = new ConnectionHandler($ruta_raiz);
+  include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
+	if (!$db) $db = new ConnectionHandler($ruta_raiz);
+  $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+	
+	include_once "$ruta_raiz/htmlheader.inc.php";
+}
+if(!$numeroExpediente) $numeroExpediente = $numExpediente;
 //$db->conn->debug=true;
-$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+
 
   if(!$ruta_raiz) $ruta_raiz="..";
  $verradEntra=$verrad;
@@ -91,33 +85,27 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
  }
  fclose($fp);
 ?>
-		<link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/demo-all.css">
-    <link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/demo.css">
-    <link rel="stylesheet" href="<?=$nodosCss?>">
-    			<SCRIPT LANGUAGE="JavaScript">
-			function fnSubmit() {
-				window.document.form2.submit();
-				return;
-			}
-			</SCRIPT>      
-		<div class="statemachine-demo" id="statemachine-demo">
-				<?php
-					foreach($nodos as $etapas){
-					if($etapas["CODIGO"]==$codFld) $datoss = "<br>(Aqui va el proceso)"; else $datoss = "";
-					?>
-					<div class="w" style="bgColor:green;" id="nodo<?=$etapas["CODIGO"]?>"><?=$etapas["DESCRIP"]?><?=$datoss?></div>
-				<?php
-					}
-				?>
-		</div>
-      <!-- DEP -->
+<link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/demo-all.css">
+<link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/demo.css">
+<link rel="stylesheet" href="<?=$nodosCss?>">
+<div class="statemachine-demo" id="statemachine-demo" style="height:200%" >
+	<?php
+		foreach($nodos as $etapas){
+		if($etapas["CODIGO"]==$codFld) {
+		   $datoss = "<br>(Aqui va el proceso)"; 
+		   $classNodo = "w wActual";
+		}else{ 
+		   $datoss = "";
+		   $classNodo = "w";
+		}
+		?>
+			<div class="<?=$classNodo?>" id="nodo<?=$etapas["CODIGO"]?>"><?=$etapas["DESCRIP"]?><?=$datoss?></div>
+		<?
+		}
+		?>
 
-	  <!-- <script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jquery-1.9.0.js"></script>
-		<script src="<?=$ruta_raiz ?>/js/jsplumb/lib/jquery-ui-1.9.2-min.js"></script> -->
+</div>
 
-		<!-- /JS -->
-		<?php
-	  include "$ruta_raiz/proceso/jqueryDraw.php";
-	  ?>
-		<!--  demo code -->
-	  <!--<script src="<?=$ruta_raiz ?>/proceso/demo-jquery.js"></script> -->
+			    <?php
+						include "$ruta_raiz/proceso/jqueryDraw.php";
+						?>
