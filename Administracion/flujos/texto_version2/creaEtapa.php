@@ -243,14 +243,8 @@ function carga(){
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped">
                     <tr class=timparr>
-                          <td height="30" colspan="2" class="listado2"><span class="celdaGris"> <span class="e_texto1">
+                          <td height="30" colspan="6" class="listado2"><span class="celdaGris"> <span class="e_texto1">
                         <center> <input class="botones" type="button" Value=<?=$nombreBoton?> onClick=" return validarDatos();"> </center> </span></td>
-                          <td height="30" colspan="2" class="listado2"><span class="celdaGris"> <span class="e_texto1">
-                    <center><a href='mnuFlujosBasico.php?<?=session_name()."=".session_id()."&$encabezado"?>'>
-                    <input class="botones" type=button name=Cancelar id=Cancelar Value=Cancelar></center>  </span></td>
-                    <td height="30" colspan="2" class="listado2">
-                    <span class="celdaGris">
-                    </span></td>
                     </tr>
                   </table>
                 </div>
