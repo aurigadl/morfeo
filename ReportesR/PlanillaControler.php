@@ -1,16 +1,39 @@
-<?php 
+<?php
+/**
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 if(!isset($ruta_raiz)) 	$ruta_raiz="..";
  require_once "$ruta_raiz/config.php";
  require_once  ($ruta_raiz."/ReportesR/PlanillaModel.php");
  require_once  ($ruta_raiz."/include/exportar/GenReportFactory.php");
  require_once($ruta_raiz."/include/class/OrganizationInfoSession.php");
  require_once ($ruta_raiz."/pear/HTML/Template/IT.php");
+ require_once ($ruta_raiz."/htmlheader.inc.php");
 class PlanillaControler{
 		private $arrayPrincipal=array();
 		private $arraySecundario=array();
 		private $model;
 		private $tpl;
-		private $dependenciaTerritorial; 
+		private $dependenciaTerritorial;
 		private $dependencia;
 	public function PlanillaControler($arrayprincipal,$arraySecundario){
 		global $ruta_raiz;
@@ -18,7 +41,7 @@ class PlanillaControler{
 		$this->arraySecundario=$arraySecundario;
 		$this->tpl 	= new HTML_Template_IT($ruta_raiz."/ReportesR/");
 		$this->model=new PlanillaModel();
-		
+
 	}
 	public function getDependenciaTerritorial(){
 		return $this->dependenciaTerritorial;
@@ -26,14 +49,14 @@ class PlanillaControler{
 	public function setDependenciaTerritorial($dependenciaTerritorial){
 		$this->dependenciaTerritorial=$dependenciaTerritorial;
 	}
-	
+
 	public function getDependencia(){
 		return $this->dependencia;
 	}
 	public function setDependencia($dependencia){
 		$this->dependencia=$dependencia;
 	}
-	
+
 	public function route(){
 		//$arrayDatos=$this->arrayPrincipal+$this->arraySecundario;
 		if(!empty($this->arraySecundario['exportar'])){
@@ -58,6 +81,7 @@ class PlanillaControler{
 		$origen=empty($arrayDatos['dependencia_org'])?$_SESSION['dependencia']:$arrayDatos['dependencia_org'];
 		$fechaBusqFin=empty($arrayDatos['fechaBusqFin'])?date('Y-m-d'):$arrayDatos['fechaBusqFin'];
 		$this->tpl->setVariable("RUTA_RAIZ", $ruta_raiz);
+		$this->tpl->setVariable("LIBS", $str);
 		$this->tpl->setVariable("FECHA_BUS", $fecha_busq);
 		$this->tpl->setVariable("FECHA_BUS_FIN", $fechaBusqFin);
 		$this->tpl->setVariable("HORA_SELECT_INI", $this->construirHora("hora_ini",false,$arrayDatos['hora_ini']));
@@ -65,11 +89,11 @@ class PlanillaControler{
 		$this->tpl->setVariable("MINUTOS_SELECT_INI", $this->construirMinutos("minutos_ini",false,$arrayDatos['minutos_ini']));
 		$this->tpl->setVariable("MINUTOS_SELECT_FIN", $this->construirMinutos("minutos_fin",true,$arrayDatos['minutos_fin']));
 		$this->tpl->setVariable("DEPENDENCIAS", $this->combo("dependencia_bus",$organizacion->findDependenciaByTerritorial(),$arrayDatos['dependencia_bus']));
-		$this->tpl->setVariable("DEPENDENCIA", $this->combo("dependencia_org",$organizacion->findDependenciaByTerritorial(),$origen));	
-		$this->tpl->setVariable("TIPO_RADICADO", $this->combo("tipo_radicado",$organizacion->listTipoRadicados(),$arrayDatos['tipo_radicado']));	
+		$this->tpl->setVariable("DEPENDENCIA", $this->combo("dependencia_org",$organizacion->findDependenciaByTerritorial(),$origen));
+		$this->tpl->setVariable("TIPO_RADICADO", $this->combo("tipo_radicado",$organizacion->listTipoRadicados(),$arrayDatos['tipo_radicado']));
 		if ($arrayDatos['generarPlanilla'])
 			$this->tpl->setVariable("EXPORTAR_FILES",$this->exportFiles());
-		else 
+		else
 			$this->tpl->setVariable("EXPORTAR_FILES","");
 	}
 	public function crearReporte($tipoReporte){
@@ -79,7 +103,7 @@ class PlanillaControler{
 		$reporte->setTamano("LETTER");
 		 require_once($ruta_raiz."config.php");
 		$nombre=$entidad_largo." \n\n "." FECHA:".date('Y-m-d h:i:s')."                    PLANILA No:_______________";
-		$reporte->setOptions(array('titulo'=>array("titulo"=>$nombre,"tamano"=>10,"options"=>array('justification'=>'center'))  
+		$reporte->setOptions(array('titulo'=>array("titulo"=>$nombre,"tamano"=>10,"options"=>array('justification'=>'center'))
 		,"pages"=>array(750,28,10,'','{PAGENUM}/{TOTALPAGENUM}',1),"table"=> array(
 							'width'=>770,'fontSize'=>7,'cols'=>array("FIRMA"=>array('width'=>80),"Asunto"=>array('width'=>120)))));
 		$reporte->setTitulos(array("IDT_Numero Radicado"=>"No Radicado","DAT_Fecha Radicado"=>"Fecha Rad","Fecha Documento"=>"Fecha Documento","Asunto"=>"Asunto"
@@ -88,14 +112,14 @@ class PlanillaControler{
 		$arrayDatos=$this->arrayPrincipal+$this->arraySecundario;
 		$reporte->genReportTable($reporte->consultarResultadosConsulta($this->model->radicadosEntrega($arrayDatos)));
 	}
-	
+
 	private function construirMinutos($nombreCombo,$esFinal=false,$valor=null){
 	   $salida;
-	   if($valor==null && $esFinal==true) 
+	   if($valor==null && $esFinal==true)
 	   			$valor = date("i");
 		else if($valor==null)
-				$valor="01";	
-	   
+				$valor="01";
+
 	   $salida="<select name='".$nombreCombo."' class='select'>";
 	   $seleccionado="";
 		   for($i=0;$i<=59;$i++){
@@ -104,17 +128,17 @@ class PlanillaControler{
 		  	 $seleccionado=($valor==$i)?" selected ":"";
 		   	 $salida.="<option value='".$i."' ".$seleccionado." >".$i."</option>";
 			}
-		$salida.="</select>";	
+		$salida.="</select>";
 	   return $salida;
 	}
-	
+
 	private function  construirHora($nombreCombo,$esFinal=false,$valor=null){
 		$salida;
-		if($valor==null && $esFinal==true) 
+		if($valor==null && $esFinal==true)
 	   			$valor = date("H");
 			else if($valor ==null)
-				$valor="08";	
-				
+				$valor="08";
+
 			$salida="<select name='".$nombreCombo."' class='select' >";
 		   for($i=0;$i<=23;$i++){
 		   			if($i < 10 )
@@ -122,13 +146,13 @@ class PlanillaControler{
 		  	 $seleccionado=($valor==$i)?" selected ":"";
 		   	 $salida.="<option value='".$i."' ".$seleccionado." >".$i."</option>";
 			}
-		$salida.="</select>";	
+		$salida.="</select>";
 	   return $salida;
    }
    	private function combo($nombreCombo,$datos,$default=""){
 		  $salida="<select name='".$nombreCombo."' class='select' >"
 		  		  ."\n\t <option value='' >Todo</option>";
-		  
+
 		   foreach($datos as $valor){
 		   	if($valor instanceof DependenciaInfo){
 				$seleccionado=($default==$valor->getDepeCodi())?" selected ":"";
@@ -137,9 +161,9 @@ class PlanillaControler{
 			 	$seleccionado=($default==$valor->getTipoRadCodigo())?" selected ":"";
 		   	 	$salida.="\n\t <option value='".$valor->getTipoRadCodigo()."' ".$seleccionado." >".$valor->tipoInfoNombre()."</option>";
 			 }
-			 
+
 			}
-		$salida.="</select>";	
+		$salida.="</select>";
 	   return $salida;
 	}
 	private  function exportFiles(){
@@ -149,13 +173,13 @@ class PlanillaControler{
 		$pagina=$_SERVER['PHP_SELF'];
 		foreach($this->arrayPrincipal+$this->arraySecundario as $clave=>$value){
 				$datos.=$clave."=".urlencode($value)."&";
-		}		
+		}
 		foreach($formatos as $value){
 			$salida.="<a href='".$pagina."?".$datos."exportar=".$value['tipo']."' target='_blank' ><img src='".$ruta_raiz."imagenes/".$value['extension'].".png'  title='exportar en ".$value['extension']."' alt='exportar en ".$value['extension']."' /></a>";
 			}
-		return $salida;	
+		return $salida;
 	}
-   
+
 }
 ?>
 

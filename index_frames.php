@@ -60,7 +60,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $enlace6        = "href=\"cuerpoPrioritario.php?$phpsession&";
   $enlace7        = "href=\"crear_carpeta.php?$phpsession&krd=$krd&";
   $enlace8        = "href=\"cuerpo.php?$phpsession&";
-  $enlace20       = "href=\"Administracion/formAdministracion.php?$phpsession&";
   $enlace21       = "href=\"busqueda/busquedaPiloto.php?$phpsession&";
 
   $sqlFechaHoy    = $db->conn->DBTimeStamp(time());
@@ -222,8 +221,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     }
 
   //Administracion
-  $link20      = $enlace20."fechah=$fechah&tipo_carp=1&carpeta=$numdata&nomcarpeta=$data\"";
-  $link20show  = "<a tabindex=\"-1\" $link20 target=\"mainFrame\" > Administraci&oacute;n </a>";
+  $link20show  = "<a  href=\"#\" onclick=\"return false;\"> Administraci&oacute;n </a>";
 
   //Consultas
   $link21      = $enlace21."&etapa=1&s_Listado=VerListado&fechah=$fechah\"";
@@ -281,7 +279,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <?=$link20show?>
                         <ul class="dropdown-menu">
                           <li class="dropdown-submenu">
-                            <a href='./Administracion/usuario/mnuUsuarios.php?<?=$sendSession?>&krd=<?=$krd?>' target='mainFrame' class="vinculos">Usuarios y Perfiles</a>
+                            <a href="#" onclick="return false;">Usuarios y Perfiles</a>
                             <ul class="dropdown-menu">
                               <li><a href='./Administracion/usuario/crear.php?<?=$sendSession?>&usModo=1' class="vinculos" target='mainFrame'>Crear Usuario</a></li>
                               <li><a href='./Administracion/usuario/cuerpoEdicion.php?<?=$sendSession?>&usModo=2' class="vinculos" target='mainFrame'>Editar Usuario</a></li>
