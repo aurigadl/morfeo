@@ -153,8 +153,7 @@ if ($db)
 				//Validacion c.
 				$okc = true;
 				reset($Vec_Trad);
-				while ((list(, $tmp) = each ($Vec_Trad)) && $okc)
-				{
+				while ((list(, $tmp) = each ($Vec_Trad)) && $okc){
                     $vlr_nxt=0;
                     $vlr_act=0;
 					$tmp1 = $tmp['ID'];
