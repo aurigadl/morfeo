@@ -411,6 +411,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right navbar-user">
+
+                  <li class="dropdown">
+                    <a href="#" onclick="return false;"> Opciones </a>
+                    <ul class="dropdown-menu">
+                      <li><a href="plantillas.php?<?=session_name()."=".session_id()?>&fechah=$fechah&krd=$krd&info=false" target="mainFrame"> Plantillas </a></li>
+                    </ul>
+                  </li>
+
                   <li class="dropdown user-dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?=$nombUser?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -419,6 +427,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <li><a href="cerrar_session.php?<?= session_name()."=".session_id()?>"><i class="fa fa-power-off"></i> Salir </a></li>
                     </ul>
                   </li>
+
                 </ul>
 
             </div>
