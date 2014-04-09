@@ -529,8 +529,8 @@ if($usuaPermExpediente >= 1  ) {
     
     <?=$num_expediente?>
     <input name="num_expediente" type="hidden" size="30" maxlength="18" id='num_expediente' value="<?=$num_expediente?>" class="tex_area" >
-     Cod :  <b><span class=leidos2> <? echo $param1;?></b>
-     Responsable: <b><span class=leidos2> <? echo $responsable;?></b> 
+     Cod :  <span class=leidos2> <? echo $param1;?>
+     Responsable: <span class=leidos2> <? echo $responsable;?>
      </td>
 	<?
 	}
@@ -632,7 +632,7 @@ if($num_expediente !=""){
 		$arrTRDExp = $expediente->getTRDExp( $num_expediente, "", "", "" );
 	}
 ?>
-    <Tr><td>TRD :</B></td><td><?php print $arrTRDExp['serie']." / ".$arrTRDExp['subserie']; ?>
+    <Tr><td>Trd</td><td><?php print $arrTRDExp['serie']." / ".$arrTRDExp['subserie']; ?>
     
     <?php
 	// Modificado Infom�trika 23-Julio-2009
@@ -719,9 +719,17 @@ if($descPExpediente){
 }
 ?>
   <tr><td>
+  
+  
+  
   <span class="dropdown">
-  <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"> Estado <b class="caret"> </b></a>  
-		<ul class="dropdown-menu">
+  <li class="dropdown dropdown-large">
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+Estado
+<b class="caret"></b>
+</a>
+  
+		<ul class="dropdown-menu dropdown-menu-large row">
 			<?
 			
 			if($usuaPermExpediente) {
@@ -745,21 +753,21 @@ if($descPExpediente){
 				<li>
 					<a href="#" onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')">Modificar Estado</a>
 				</li>
-				<li>
-					- - Formularios - -
-				</li>
-				<? 
-				foreach($frm as $arista){
-				 
-					?>
-					<li>
-						<a href="#" onClick="window.open('<?=$arista["FRM_LINK"]?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$arista["FRM_NOMBRE"]?></a>
-					</li>
-					<?php
-					}
-       ?>								
-			</ul>
-			</span> 
+				<li class="dropdown-header"> Formularios </li>
+						<? 
+						if($frm){
+							foreach($frm as $arista){
+						?>
+						<li>
+							<a href="#" onClick="window.open('<?=$arista["FRM_LINK"]?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$arista["FRM_NOMBRE"]?></a>
+						</li>
+						<?php
+						}
+						}
+					?>								
+				</ul>
+			 </li>
+		</span> 
 		</B></Td><td><?=$descFldExp?>						
 		</td></tr>				
 		<tr><td>
@@ -773,15 +781,6 @@ if($descPExpediente){
 <td colspan="6" class="titulos5">
   <p>Documentos Pertenecientes al expediente &nbsp;</p>
       <?php
-      /*
-       *  Modificado: 23-Agosto-2006 Supersolidaria
-       *  Bot�n para ver y ocultar los anexos borrados de un radicado cuando se ingresa.
-       *  a la pesta�a EXPEDIENTES.
-       */
-        print "<p>";
-	// Modificado Infom�trika 23-Julio-2009
-	// Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
-        //if( !isset( $_POST['verBorrados'] ) ) {
         if( !isset( $verBorrados ) ) {
         ?>
         Ver Borrados:&nbsp;
@@ -793,16 +792,7 @@ if($descPExpediente){
         }
         print '<input type="button" name="btnVerBorrados" value="..." class="btn btn-primary btn-xs" onclick="document.form2.submit();">';
         print '</p>';
-      ?>
-        <!--Modificaci�n: 15-Junio-2006 Supersolidaria Opci�n para ordenar los registros--->
-        <!--
-        <table border=0 width=98% class="borde_tab" align="center" cellpadding="0" cellspacing="0" R>
-
-        <table border=0 width=98% align="center" cellpadding="0" cellspacing="0" id="t1" class="sortable" >
-        <!---------------------------------------------------------------------------------->
-        <a name="t1"></a>
-<?
-}
+    }
 ?>
 
 <table width="100%"><tr><td>

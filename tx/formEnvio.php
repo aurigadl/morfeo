@@ -721,7 +721,7 @@ switch ($codTx)
             <td class="titulos2" bgcolor="white" colspan=4>
             <? if($varTramiteConjunto==1){  ?>
 	     <input type=checkbox name=chkConjunto Value="Si" id="chkConjunto" >
-             <span class="info">Tramite Conjunto  </span><br> 
+             <span class="info">Tramite Conjunto  </span>
 	    <? }else{    ?>
 		<input type=checkbox name=chkConjunto id="chkConjunto" disabled >
 
@@ -790,7 +790,6 @@ switch ($codTx)
         </div>
                 </td></tr>
 </TABLE>
-	<br>
 		<?
 	/*  GENERACION LISTADO DE RADICADOS
 	 *  Aqui utilizamos la clase adodb para generar el listado de los radicados
