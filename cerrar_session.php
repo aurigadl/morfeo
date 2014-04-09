@@ -17,6 +17,6 @@ session_start();
     }
 
     session_destroy();
-    header('Location: ./login.php');
+    header('Location: ./index_frames.php?close=1');
     exit;
 ?>

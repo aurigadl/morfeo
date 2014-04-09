@@ -1,39 +1,47 @@
 <?
-session_start();
-
 /**
-  * Modificacion Variables Globales Infometrika 2009-05
-  * Licencia GNU/GPL 
-  */
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+session_start();
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
-$krd = $_SESSION["krd"];
+$ruta_raiz   = "..";
+$krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
-$usua_doc = $_SESSION["usua_doc"];
-$codusuario = $_SESSION["codusuario"];
-$tpNumRad = $_SESSION["tpNumRad"];
-$tpPerRad = $_SESSION["tpPerRad"];
-$tpDescRad = $_SESSION["tpDescRad"];
-$tpDepeRad = $_SESSION["tpDepeRad"];
-$ln        = $_SESSION["digitosDependencia"];
-$lnr       = 11+$ln;
-$ruta_raiz = "..";
-
-
+$usua_doc    = $_SESSION["usua_doc"];
+$codusuario  = $_SESSION["codusuario"];
+$tpNumRad    = $_SESSION["tpNumRad"];
+$tpPerRad    = $_SESSION["tpPerRad"];
+$tpDescRad   = $_SESSION["tpDescRad"];
+$tpDepeRad   = $_SESSION["tpDepeRad"];
+$ln          = $_SESSION["digitosDependencia"];
+$lnr         = 11+$ln;
 
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-
-
-/*
-  * @author Liliana Gomez Velasquez
-  * @since 10 de noviembre de 2009
-  * Modificacion manejo acceso a documentos
- */
 
 include_once "$ruta_raiz/js/funtionImage.php";
 include_once "$ruta_raiz/tx/verLinkArchivo.php";
@@ -48,57 +56,39 @@ function fnc_date_calcm($this_date,$num_month){
     return $return_date;//exit function and return string
     }
 
-	
-
 function fnc_date_calc($this_date,$num_day){
 	$my_time = strtotime ($this_date); //converts date string to UNIX timestamp
-   	$timestamp = $my_time + ($num_day * 86400 ); //calculates # of days passed ($num_days) * # seconds in a day (86400)
-    $return_date = date("Y-m-d",$timestamp);  //puts the UNIX timestamp back into string format
-    return $return_date;//exit function and return string
-    }
+ 	$timestamp = $my_time + ($num_day * 86400 ); //calculates # of days passed ($num_days) * # seconds in a day (86400)
+  $return_date = date("Y-m-d",$timestamp);  //puts the UNIX timestamp back into string format
+  return $return_date;//exit function and return string
+}
 
-/*
- *  Modificado: 22-Septiembre-2006 Supersolidaria
- *  Ajuste para eliminar el registro correspondiente al radicado excluido del expediente en
- * la tabla SGD_EXP_EXPEDIENTE.
- */
-
-// Si confirma la exlusi� del radicado
-
-if( $_GET['excluir'] == 1 && $_GET['radExcluido'] != "" && $_GET['expedienteExcluir'] != "" )
-
-{
+if( $_GET['excluir'] == 1 && $_GET['radExcluido'] != "" && $_GET['expedienteExcluir'] != "" ){
     include "$ruta_raiz/include/query/expediente/queryExcluirRadicado.php";
     $rsExcluirRadicado = $db->conn->query( $sqlExcluirRadicado );
 }
 
 if(!$fechai) $fechai=fnc_date_calcm(date('Y-m-d'),'1');
-
 ?>
-
-
 
 <html>
 
 <head>
   <meta http-equiv="Cache-Control" content="cache">
   <meta http-equiv="Pragma" content="public">
-
 <?
 
- if(!$estado_sal)   {$estado_sal=2;}
- if(!$estado_sal_max) $estado_sal_max=3;
- if(!$Buscar) $Buscar=1;
- if($tipo_archivo==0){
-}
+  if(!$estado_sal)   {$estado_sal=2;}
+  if(!$estado_sal_max) $estado_sal_max=3;
+  if(!$Buscar) $Buscar=1;
 
- if ($dep_sel==0) $dep_sel = "%";
-$accion_sal = "Marcar como Archivado Fisicamente";
-$pagina_sig = "envio.php";
+  if ($dep_sel==0) $dep_sel = "%";
+  $accion_sal = "Marcar como Archivado Fisicamente";
+  $pagina_sig = "envio.php";
 
-$buscar_exp = trim($buscar_exp);
-$buscar_rad = trim($buscar_rad);
-$fechf=fnc_date_calc($fechafi,1);
+  $buscar_exp = trim($buscar_exp);
+  $buscar_rad = trim($buscar_rad);
+  $fechf=fnc_date_calc($fechafi,1);
 
 $dependencia_busq1= " and d.sgd_exp_estado=$tipo_archivo and cast(d.depe_codi as varchar) like '$dep_sel'  and (upper(d.sgd_exp_numero) like '%$buscar_exp%' and upper(cast(d.RADI_NUME_RADI as varchar)) like '%$buscar_rad%')";
 
@@ -122,57 +112,35 @@ $imagen="flechadesc.gif";
 ?>
 
 <script>
+function sel_dependencia(){
+  document.write("<form name=forma_b_correspondencia action='cuerpo_exp.php?<?=$encabezado?>'  method=post>");
+  depsel = form1.dep_sel.value ;
+  document.write("<input type=hidden name=depsel value="+depsel+">");
+  document.write("<input type=hidden name=estado_sal  value=3>");
+  document.write("<input type=hidden name=estado_sal_max  value=3>");
+  document.write("<input type=hidden name=fechah value='<?=$fechah?>'>");
+  document.write("</form>");
+  forma_b_correspondencia.submit();
+}
 
-
-
-   function sel_dependencia()
-
-   {
-
-      document.write("<form name=forma_b_correspondencia action='cuerpo_exp.php?<?=$encabezado?>'  method=post>");
-
-	  depsel = form1.dep_sel.value ;
-	  document.write("<input type=hidden name=depsel value="+depsel+">");
-	  document.write("<input type=hidden name=estado_sal  value=3>");
-	  document.write("<input type=hidden name=estado_sal_max  value=3>");
-	  document.write("<input type=hidden name=fechah value='<?=$fechah?>'>");
-	  document.write("</form>");
-	  forma_b_correspondencia.submit();
-   }
-
-
-    <!--
-
-    /*
-     *  Modificado: 02-Octubre-2006 Supersolidaria
-     *  Funci� para confirmar la exclusi� de radicados.
-     */
-
-    -->
-
-     function confirmaExcluir( radicado, expediente )
-
-     {
-        confirma = confirm( 'Confirma que el radicado ' + radicado + ' ya fue excluido fisicamente del expediente ' + expediente + '?' );
-        if( confirma )
-        {
-            document.form1.action = "cuerpo_exp.php?<?=$encabezado?>&radExcluido="+radicado+"&expedienteExcluir="+expediente+"&excluir=1";
-            document.form1.submit();
-        }
-     }
-
+function confirmaExcluir( radicado, expediente ){
+  confirma = confirm( 'Confirma que el radicado ' + radicado + ' ya fue excluido fisicamente del expediente ' + expediente + '?' );
+  if( confirma ){
+    document.form1.action = "cuerpo_exp.php?<?=$encabezado?>&radExcluido="+radicado+"&expedienteExcluir="+expediente+"&excluir=1";
+    document.form1.submit();
+  }
+}
 </script>
-<link rel="stylesheet" href="../estilos/orfeo.css">
-<body bgcolor="#FFFFFF">
+<body>
 <div id="spiffycalendar" class="text"></div>
 <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
- <script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
+<script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
 <script>
 
-<!-- Esta funcion esconde el combo de las dependencia e inforados Se activan cuando el menu envie una seal de cambio.-->
+<!-- Esta funcion esconde el combo de las dependencia e 
+     inforados Se activan cuando el menu envie una seal de cambio.-->
 
-function window_onload()
-{
+function window_onload(){
    form1.depsel.style.display = '';
    form1.enviara.style.display = '';
    form1.depsel8.style.display = 'none';
@@ -181,29 +149,26 @@ function window_onload()
   setupDescriptions();
 }
 
-<!-- Cuando existe una sean de cambio el program ejecuta esta funcion mostrando el combo seleccionado -->
+<!-- Cuando existe una sean de cambio el program ejecuta 
+     esta funcion mostrando el combo seleccionado -->
 
-function changedepesel()
-{
+function changedepesel(){
   form1.depsel.style.display = 'none';
   form1.carpper.style.display = 'none';
   form1.depsel8.style.display = 'none';
-  if(form1.enviara.value==10)
-  {
+  if(form1.enviara.value==10){
     form1.depsel.style.display = 'none';
-	form1.carpper.style.display = '';
-	form1.depsel8.style.display = 'none';
+    form1.carpper.style.display = '';
+    form1.depsel8.style.display = 'none';
   }
 
-  if(form1.enviara.value==9 )
-  {
+  if(form1.enviara.value==9 ){
     form1.depsel.style.display = '';
 	form1.carpper.style.display = 'none';
 	form1.depsel8.style.display = 'none';
   }
 
- if(form1.enviara.value==8 )
-  {
+ if(form1.enviara.value==8 ){
   form1.depsel.style.display = 'none';
 	form1.depsel8.style.display = '';
 	form1.carpper.style.display = 'none';
@@ -211,8 +176,7 @@ function changedepesel()
 }
 
 <!-- Funcion que activa el sistema de marcar o desmarcar todos los check  -->
-function markAll()
-{
+function markAll(){
 if(form1.marcartodos.checked==1)
 for(i=4;i<form1.elements.length;i++)
 form1.elements[i].checked=1;
@@ -222,25 +186,13 @@ else
 }
 
 <?php
-   //include "libjs.php";
-	 function tohtml($strValue)
-{
+function tohtml($strValue){
   return htmlspecialchars($strValue);
 }
 ?>
 </script>
-
-<style type="text/css">
-<!--
-.textoOpcion {  font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: #000000; text-decoration: underline}
--->
-</style>
 </head>
-
-<body bgcolor="#FFFFFF" topmargin="0" >
-<div id="object1" style="position:absolute; visibility:show; left:10px; top:-50px; width=80%; z-index:2" >
-  <p>Cuadro de Historico</p>
-</div>
+<body>
 <?php
 
  /*
@@ -484,7 +436,7 @@ if($Buscar=='Buscar'){
 	include "$ruta_raiz/include/query/expediente/queryCuerpo_exp.php";
 	$rse=$db->query($sqle);
 	$estan = $rse->fields["SGD_EXP_ESTANTE"];
-	$entre = $rse->fields["SGD_EXP_ENTREPA"]; 
+	$entre = $rse->fields["SGD_EXP_ENTREPA"];
 	$caja = $rse->fields["SGD_EXP_CAJA"];
 	$piso = $rse->fields["SGD_EXP_ISLA"];
 	$edifi = $rse->fields["SGD_EXP_EDIFICIO"];
@@ -513,18 +465,18 @@ if($Buscar=='Buscar'){
 	include "$ruta_raiz/include/query/expediente/queryCuerpo_exp.php";
 	$rsd=$db->query($sqlr);
 	$tipoDoc=$rsd->fields['SGD_TPR_DESCRIP'];
-        
+
         if (strlen( $data) <= $lnr){
 
                //Se trata de un Radicad
 
                $resulVali = $verLinkArchivo->valPermisoRadi($data);
 
-               $verImg = $resulVali['verImg'];          	
+               $verImg = $resulVali['verImg'];
 
             }else {
 
-                //Se trata de un anexo	
+                //Se trata de un anexo
 
                 $resulValiA = $verLinkArchivo->valPermisoAnex($data);
 
@@ -610,7 +562,7 @@ if($Buscar=='Buscar'){
 if($estado==2 and $estado_nomb=="Si"){
  /*
 
-  * Invocado por una funcion javascript (funlinkArchivo(numrad,rutaRaiz)) 
+  * Invocado por una funcion javascript (funlinkArchivo(numrad,rutaRaiz))
 
   * @author Liliana Gomez Velasquez
 
@@ -692,38 +644,18 @@ if($estado==2 and $estado_nomb=="Si"){
 </span>
 </td>
 <?php
-
  if($check<=20){
 	 $check=$check+1;
 	 }
 }
 elseif ($estado==1) {
-	 /*
-
-                * Invocado por una funcion javascript (funlinkArchivo(numrad,rutaRaiz)) 
-
-                * @author Liliana Gomez Velasquez
-
-                * @since 10 noviembre 2009
-
-                * @category acceso a documentoss
-
-               */
-
 			   if ($rs->fields ["RADI_PATH"] <>  ""){
-
 			      if ($verImg == "SI"){
-
                      $urlimagen = "<a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$data','$ruta_raiz');\">$data</span></a>";}
-
 				 else {
-
 				     $urlimagen ="<a class='vinculos' href='javascript:noPermiso()' > $data</span></a>";}
-
                }else {
-
                	  $urlimagen = "<a><span class='" . $class . "'>$data</span></a>";
-
                }
 	 ?>
         <tr class='<?=$leido?>'>
@@ -732,21 +664,14 @@ elseif ($estado==1) {
 	 $radi_nume_deri = $rs->fields["RADI_NUME_DERI"];
 	 ?>
     	<td class='<?=$leido ?>' align="right" width="12%"><span class='<?php print $class; ?>'><?=$urlimagen?></span>
-<?
-//		$isql3 ="select to_char(HIST_FECH,'DD/MM/YY HH12:MI:SSam')as HIST_FECH,HIST_FECH AS HIST_FECH1,HIST_OBSE from hist_eventos where radi_nume_radi='$data' order by HIST_FECH1 desc ";
-		$radi_nomb=$rs->fields["NOMBRES"] ;
-?>
+<?  $radi_nomb=$rs->fields["NOMBRES"] ; ?>
 </td>
 <td class='<?=$leido ?>' width="10%"  align="center"><? $ruta_raiz="..";?>
 <span class='<?php print $class; ?>'>
 <? if ($verImg == "SI"){?>
-
 	 	<a href='../verradicado.php?<?=$encabezado . "&num_expediente=$num_expediente&verrad=$data&carpeta_per=0&carpeta=8&nombcarpeta=Expedientes"?>' >
-
      <? }else { echo "variable"?>
-
 	    <a class='vinculos' href='javascript:noPermiso()' >
-
      <?} ?>
 <span class='<?php print $class; ?>'>
     <?=$rs->fields["FECHA"]?></span>
@@ -784,54 +709,27 @@ elseif ($estado==1) {
 	 }
 }
 elseif ($estado==0){
-	  /*
-
-                * Invocado por una funcion javascript (funlinkArchivo(numrad,rutaRaiz)) 
-
-                * @author Liliana Gomez Velasquez
-
-                * @since 10 noviembre 2009
-
-                * @category acceso a documentoss
-
-               */
                if ($rs->fields ["RADI_PATH"] <>  ""){
-
 			      if ($verImg == "SI"){
-
                      $urlimagen = "<a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$data','$ruta_raiz');\">$data</span></a>";}
-
 				 else {
-
 				     $urlimagen ="<a class='vinculos' href='javascript:noPermiso()' > $data</span></a>";}
-
                }else {
-
                	  $urlimagen = "<a><span class='" . $class . "'>$data</span></a>";
-
                }
-	 ?>
-        <tr class='<?=$leido?>'>
-	 <?
+	 ?> <tr class='<?=$leido?>'> <?
 	 $radi_tipo_deri = $rs->fields["RADI_TIPO_DERI"];
 	 $radi_nume_deri = $rs->fields["RADI_NUME_DERI"];
-	 ?>
-    	<td class='<?=$leido ?>' align="right" width="12%"><span class='<?php print $class; ?>'><?=$urlimagen?></span>
-<?
-//		$isql3 ="select to_char(HIST_FECH,'DD/MM/YY HH12:MI:SSam')as HIST_FECH,HIST_FECH AS HIST_FECH1,HIST_OBSE from hist_eventos where radi_nume_radi='$data' order by HIST_FECH1 desc ";
+	 ?> <td class='<?=$leido ?>' align="right" width="12%"><span class='<?php print $class; ?>'><?=$urlimagen?></span> <?
 		$radi_nomb=$rs->fields["NOMBRES"] ;
 ?>
 </td>
 <td class='<?=$leido ?>' width="10%"  align="center"><? $ruta_raiz="..";?>
 <span class='<?php print $class; ?>'>
 <? if ($verImg == "SI"){?>
-
 	 	<a href='../verradicado.php?<?=$encabezado . "&num_expediente=$num_expediente&verrad=$data&carpeta_per=0&carpeta=8&nombcarpeta=Expedientes"?>' >
-
      <? }else { ?>
-
 	    <a class='vinculos' href='javascript:noPermiso()' >
-
      <?} ?>
 <span class='<?php print $class; ?>'>
     <?=$rs->fields["FECHA"]?></span>
@@ -839,13 +737,9 @@ elseif ($estado==0){
 	<td class='<?=$leido?>' width="18%">
 <span class='<?php print $class; ?>'>
 <? if ($verImg == "SI"){?>
-
 	 	<a href='../verradicado.php?<?=$encabezado . "&num_expediente=$num_expediente&verrad=$data&carpeta_per=0&carpeta=8&nombcarpeta=Expedientes"?>' > </a></span>
-
      <? }else { ?>
-
 	    <a class='vinculos' href='javascript:noPermiso()' > </a></span>
-
      <?} ?>
 <span class='<?php print $class; ?>'>
 <?=$num_expediente?></span> </td>
@@ -899,10 +793,7 @@ elseif ($estado==0){
  echo "<input type=hidden name=check value=$check>";
  }
 ?> </td>
-</tr></table>
-<form name=jh >
- <input type=hidDEN name=jj value=0>
- <input type=hidDEN name=dS value=0>
- </form>
+</tr>
+</table>
 </body>
 </html>
