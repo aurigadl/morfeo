@@ -407,8 +407,6 @@ if($usuaPermExpediente >= 1  ) {
 		$verrad_padre = $verrad;
 	}
 
-	// Modificado 23-Junio-2006 Supersolidaria
-	// Consulta si el radicado est� archivado o ha sido excluido del expediente.
 	if( $numExpediente == "" ) {
         	$numExpediente = $expediente->consulta_exp("$verrad");
     	}
@@ -417,15 +415,7 @@ if($usuaPermExpediente >= 1  ) {
     	//if ( $num_expediente != "" && !isset( $_POST['expIncluido'][0] ) ) {
     	if ( $num_expediente != "" && !isset( $expIncluido ) ) {
         	$numExpediente = $num_expediente;
-	}
-	// Modificado Infom�trika 23-Julio-2009
-	// Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
-	/*
-	else if ( isset( $_POST['expIncluido'][0] ) && $_POST['expIncluido'][0] != "" ) {
-		$numExpediente = $_POST['expIncluido'][0];
-    	}
-	*/
-	else if ( isset( $expIncluido ) && $expIncluido != "" ) {
+	}else if ( isset( $expIncluido ) && $expIncluido != "" ) {
 		$numExpediente = $expIncluido;
   }
 	if($verrad) $expediente->expedienteArchivado( $verrad, $numExpediente );
@@ -435,9 +425,7 @@ if($usuaPermExpediente >= 1  ) {
 		// $numExpediente = $expediente->consulta_exp("$verrad");
 		// Si tiene expediente
  		if ($numExpediente) {
-			// Modificado Supersolidaria 03-Agosto-2006
-			// Asigna a $num_expediente el valor de $numExpedente recibido desde ver_datosrad.php
-			//$num_expediente = trim($expediente->num_expediente);
+
 			$num_expediente = $numExpediente;
 			$datoss = " readonly ";
 
@@ -491,7 +479,7 @@ if($usuaPermExpediente >= 1  ) {
 	// Modificado Infom�trika 23-Julio-2009
 	// Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
 	//if ($num_expediente != "" && !isset( $_POST['expIncluido'][0] )) {
-	if ( $num_expediente != "" && !isset( $expIncluido ) ) {
+	if ( $usuaPermExpediente ) {
     ?><table border=0 width="100%">
       <tr><td width=140>
         <span class="dropdown">

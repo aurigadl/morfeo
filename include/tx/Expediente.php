@@ -132,12 +132,24 @@ class Expediente
 						break;
 			default:$radi_nume_radi="e.radi_nume_radi";break;
 		}
+
+		
+				$query="select e.SGD_EXP_NUMERO,e.SGD_EXP_ESTADO,$radi_nume_radi AS RADI_NUME_RADI
+				from SGD_EXP_EXPEDIENTE e
+				where e.RADI_NUME_RADI = $radicado
+                AND SGD_EXP_ESTADO <> 2";
+        //$this->db->conn->debug = true;
+		    $rs = $this->db->conn->query($query);
+				if($rs) $this->num_expediente = $rs->fields['SGD_EXP_NUMERO'];
+				
+		
         // Modificado 15-Agosto-2006 Supersolidaria
         // No tiene en cuenta los expedientes de los que ha sido excluido el radicado (SGD_EXP_ESTADO = 2).
 		$query="select e.SGD_EXP_NUMERO,e.SGD_EXP_ESTADO,$radi_nume_radi AS RADI_NUME_RADI
 				from SGD_EXP_EXPEDIENTE e
-				where e.RADI_NUME_RADI = $radicado
+				where e.SGD_EXP_NUMERO = '".$this->num_expediente."'
                 AND SGD_EXP_ESTADO <> 2";
+   // $this->db->conn->debug = true;
 		$rs = $this->db->conn->query($query);
 		if ($rs->EOF){
 		    //echo 'No tiene un Numero de expediente<br>';

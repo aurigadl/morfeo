@@ -8,8 +8,7 @@
   * @param $query    String Variable Usada para almacenar consultas SQL
   * @param $expTerminos Int Almacena los terminos o Dias habiles para ejecucion de un proceso.
   */
-class Expediente
-{
+class Expediente{
    var $num_expediente;  // Almacena el numero del expediente
    var $estado_expediente; // Almacena el estado 0 para organizacion y 1 para indicar que ya esta clasificado fisicamente en archivo
    var $exp_titulo;
@@ -47,9 +46,7 @@ class Expediente
 
 	function Expediente($db)
 	{
-		ECHO "<hr>**************** prueba......*************<hr>";
 		$this->db = $db;
-		ECHO "<hr>**************** prueba......*************<hr>";
 	}
 
 /** FUNCION CONSULTA EXPEDIENTE
@@ -62,6 +59,7 @@ class Expediente
 		$query="select SGD_EXP_NUMERO,$radi_nume_radi RADI_NUME_RADI 
 				from SGD_EXP_EXPEDIENTE a
 				where RADI_NUME_RADI = $radicado";		 
+				
 		$rs = $this->db->conn->query($query);
 		if ($rs->EOF){
 		    //echo 'No tiene un Numero de expediente<br>';
