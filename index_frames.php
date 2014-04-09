@@ -26,8 +26,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   session_start();
 
   $ruta_raiz = ".";
-  if (!$_SESSION['dependencia'])
-      header ("Location: $ruta_raiz/cerrar_session.php");
+  if (!$_SESSION['dependencia'] || $_GET['close']){
+    header ("Location: $ruta_raiz/login.php");
+  }
 
   include_once "$ruta_raiz/include/db/ConnectionHandler.php";
   $db = new ConnectionHandler("$ruta_raiz");
@@ -300,7 +301,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </ul>
                       </li>
 
-                      <?=$link21show?>
                       <li><a  href='ReportesR/indexReportes.php' alt='Generar planilla de distribucion y entrega'  target='mainFrame' class="menu_princ">Planilla Reasignados</a></li>
 
                       <?php if($_SESSION["usua_perm_adminflujos"]==1){ ?>
@@ -357,7 +357,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             $rs=$db->conn->Execute($isql);
                             $num_exp = $rs->fields["CONTADOR"];
                         ?>
-                       <li><a href='./expediente/cuerpo_exp.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Archivo (<?=$num_exp?>)</a></li>
+                       <!-- <li><a href='./expediente/cuerpo_exp.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Archivo (<?=$num_exp?>)</a></li>-->
                       <?php }
 
                       if ($_SESSION["usua_perm_prestamo"]==1) { ?>
@@ -383,6 +383,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Bandejas <b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                      <?=$link21show?>
                       <?=$link1show?>
                       <?=$link4show?>
                       <?=$link5show?>
