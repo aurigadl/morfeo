@@ -1,13 +1,28 @@
 <? 
 /**
-  * CLASE EXPEDIENTE
-  * @author JAIRO LOSADA
-  * @copyLeft SuperIntendencia de Servicios Publicos
-  * @Licencia GPL licencia publica General
-  * @version Orfeo 3.5
-  * @param $query    String Variable Usada para almacenar consultas SQL
-  * @param $expTerminos Int Almacena los terminos o Dias habiles para ejecucion de un proceso.
-  */
+* CLASE EXPEDIENTE
+*
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyleft
+
+Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/  
 class Expediente
 {
    var $num_expediente;  // Almacena el nume del expediente
@@ -141,16 +156,7 @@ class Expediente
         //$this->db->conn->debug = true;
 		    $rs = $this->db->conn->query($query);
 				if($rs) $this->num_expediente = $rs->fields['SGD_EXP_NUMERO'];
-				
-		
-        // Modificado 15-Agosto-2006 Supersolidaria
-        // No tiene en cuenta los expedientes de los que ha sido excluido el radicado (SGD_EXP_ESTADO = 2).
-		$query="select e.SGD_EXP_NUMERO,e.SGD_EXP_ESTADO,$radi_nume_radi AS RADI_NUME_RADI
-				from SGD_EXP_EXPEDIENTE e
-				where e.SGD_EXP_NUMERO = '".$this->num_expediente."'
-                AND SGD_EXP_ESTADO <> 2";
-   // $this->db->conn->debug = true;
-		$rs = $this->db->conn->query($query);
+
 		if ($rs->EOF){
 		    //echo 'No tiene un Numero de expediente<br>';
 			$this->num_expediente = 0;
@@ -168,8 +174,9 @@ class Expediente
 			                 from sgd_exp_expediente exp, radicado r, SGD_TPR_TPDCUMENTO t
 			             where exp.sgd_exp_numero='".$numExpediente."'
 			               and exp.radi_nume_radi = r.radi_nume_radi
-			               and r.tdoc_codi=t.sgd_tpr_codigo";
+			               and r.tdoc_codi=t.sgd_tpr_codigo";  // $this->db->conn->debug = true;
 			   $rsRad = $this->db->conn->query($query);
+			   
 			   $iRr =0;
 			   while(!$rsRad->EOF){
 			     $numRadicado = $rsRad->fields['RADI_NUME_RADI'];
@@ -192,10 +199,9 @@ class Expediente
 												and a.sgd_tpr_codigo=t.sgd_tpr_codigo";
 											//	$this->db->conn->debug = true;
 						$rsAnex = $this->db->conn->query($query);
-						$iRr =0;
 						$arrAnexos = array();
 						$iA =0;
-						while(!$rsAnex->EOF){
+						while(!$rsAnex->EOF && $tttt){
 						  $arrAnexos[$iA]["NUMERO"] = $rsAnex->fields['ANEX_RADI_NUME'];
 						  $arrAnexos[$iA]["DESCRIPCION"] = $rsAnex->fields['ANEX_DESC'];
 						  $arrAnexos[$iA]["RADI_SALIDA"] = $rsAnex->fields['RADI_NUME_SALIDA'];
@@ -209,12 +215,11 @@ class Expediente
 			     $iRr++;
 			     $rsRad->MoveNext();
 			   }
+			   //var_dump($exoArr);
 				 $iE++;
 				 $rs->MoveNext();
 		   }
 			   $this->expedientes = $expArr;
-		   
-		   
 		}
 		//$this->num_expediente = $num_expediente;   RP
 		return $this->num_expediente;

@@ -13,7 +13,6 @@
 						<span><i class="fa fa-lg fa-folder-close"></i> <?=$key?></span>
 						<ul>
 						<?
-						var_dump($datosExp);
 					  foreach($datosExp as $key2 => $value){
 					  ?>
 							<li  style="display:none">

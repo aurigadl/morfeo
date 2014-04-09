@@ -769,17 +769,7 @@ Estado
 <td colspan="6" class="titulos5">
   <p>Documentos Pertenecientes al expediente &nbsp;</p>
       <?php
-        if( !isset( $verBorrados ) ) {
-        ?>
-        Ver Borrados:&nbsp;
-        <?php
-        } else {
-        ?>
-        Ocultar Borrados:&nbsp;
-        <?php
-        }
-        print '<input type="button" name="btnVerBorrados" value="..." class="btn btn-primary btn-xs" onclick="document.form2.submit();">';
-        print '</p>';
+        
     }
 ?>
 
