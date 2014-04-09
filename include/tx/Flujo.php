@@ -17,6 +17,7 @@ class Flujo{
 	var $aristaSRD;
 	var $aristaSBRD;   // Indica la Serie y subserie a la cual esta fijada dicha arista.
 	var $aristaAutomatico;  // Array Indica si el Flujo por dicha arista es automatico (0) o manual (1). 
+	var $aristasSig;  // Array Indica si el Flujo por dicha arista es automatico (0) o manual (1). 
 		
 	// VARIABLES DE USUARIO QUE INTANCIO LA LASE
 	var $usuaDoc; // Documento de Usuario que esta realizando el proceso
@@ -268,19 +269,36 @@ class Flujo{
 		SGD_PEXP_CODIGO=$codProceso
 		AND SGD_FEXP_CODIGOINI=$codFld
 		ORDER BY SGD_FEXP_CODIGOINI,SGD_FEXP_CODIGOFIN";	
-		
+		//$this->db->conn->debug = true;
 		$rs = $this->db->conn->query($query);
 		$aristasArray = "";
 		if($rs){
+		 $iA = 0;
+		 while(!$rs->EOF){
 			
 			$this->codArista = $rs->fields["SGD_FARS_CODIGO"];
 			$this->descArista = $rs->fields["SGD_FARS_DESC"];
+			$nodoInicio =  $rs->fields["SGD_FEXP_CODIGOFIN"];
 			$this->codNodoSiguiente =  $rs->fields["SGD_FEXP_CODIGOFIN"];
 			$this->frmNombre = $rs->fields["SGD_FARS_FRMNOMBRE"];
 			$this->frmLink = $rs->fields["SGD_FARS_FRMLINK"];
 			$this->frmLinkSelect = $rs->fields["SGD_FARS_FRMLINKSELECT"];
 			$this->frmLinkSql = $rs->fields["SGD_FARS_FRMSQL"];
+			$aristas[$iA]["CODIGO"] = $this->codArista; 
+			$aristas[$iA]["DESCRIP"] = $descArista;
+			$aristas[$iA]["NODO_INICIO"] = $nodoInicio;
+			$aristas[$iA]["NODO_FIN"] = $this->codNodoSiguiente;
+			$aristas[$iA]["FRM_NOMBRE"] = $this->frmNombre;
+			$aristas[$iA]["FRM_LINK"] = $this->frmLink;
+			$aristas[$iA]["FRM_LINKSELECT"] = $this->frmLinkSelect;
+			$aristas[$iA]["FRM_SQL"] = $this->frmLinkSql;
+			$iA++;
+			$rs->MoveNext();
+		 }
+		}else{
+		 return -1;
 		}
+		$this->aristasSig = $aristas;
 		return $this->codArista;
 	}
  /**

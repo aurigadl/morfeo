@@ -23,14 +23,12 @@ $usua_nomb       = $_SESSION["usua_nomb"];
 $codusuario     = $_SESSION["codusuario"];
 
 include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
-require_once    ("$ruta_raiz/class_control/Mensaje.php");
 
 if (!$db) $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 ?>
 <html>
 <head><title>..:: Cambio de Estado de un Proceso / Procedimiento ::..</title></head>
-<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <script>
 function verificaModificacion(){
   var modificado = document.modFlujoExp.estadoModificado2.value;
@@ -57,6 +55,7 @@ function verificaModificacion(){
    }
 }
 </script>
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <?
  $verradEntra=$verrad;
   include_once($ruta_raiz."/include/tx/Historico.php");
@@ -98,9 +97,8 @@ function verificaModificacion(){
 
 ?>
 <body onload="verificaModificacion()">
-<CENTER>
-<form name=modFlujoExp  method='post' action='modFlujoExp.php?<?=session_name()?>=<?=trim(session_id())?>&numeroExpediente=<?=$numeroExpediente?>&krd=<?=$krd?>&texp=<?=$texp?>&numRad=<?=$numRad?>&<?="&mostrar_opc_envio=$mostrar_opc_envio&nomcarpeta=$nomcarpeta&carpeta=$carpeta&leido=$leido"?>'>
-<table border=0 width 100% class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+<form name=modFlujoExp  method='post' action='modFlujoExp.php?<?=session_name()?>=<?=trim(session_id())?>&numeroExpediente=<?=$numeroExpediente?>&krd=<?=$krd?>&texp=<?=$texp?>&numRad=<?=$numRad?>&<?="&mostrar_opc_envio=$mostrar_opc_envio&nomcarpeta=$nomcarpeta&carpeta=$carpeta&leido=$leido"?>' class='smart-form'>
+<table border=0 width='100%' class="table table-bordered table-striped">
   <input type=hidden name=ver_flujo value="Si ver fLUJO">
   <input type=hidden name=nomcarpeta value="<?=$nomcarpeta?>">
   <tr> 
@@ -130,8 +128,8 @@ function verificaModificacion(){
 	{
 	?>
 	<label class="select">
-	<select name="flujo"  class="select"><?
-	
+	<select name="flujo"  class="select">
+	<?
 		foreach ($arrayNodos as $value){
 			$fldCodigos .= "$value ,";
 			$aristaS = $arrayAristas[$k];
@@ -213,8 +211,8 @@ if($grabarFlujo)
 	if(!$deta_causal) 
 	
 	$objFlujo = new Flujo($db, $texp,$usua_doc);
-       $objFlujo->depeCodi = $dependencia;
-        $objFlujo->usuaCodi = $codusuario;
+	$objFlujo->depeCodi = $dependencia;
+	$objFlujo->usuaCodi = $codusuario;
 
 	list ($estadoNuevo, $aristaActual) = split('-', $flujo);
 	
@@ -261,7 +259,5 @@ if(trim($frmNombre)<>""){
 <?php
 }
 ?>
-</CENTER>
-
 </body>
 </html>

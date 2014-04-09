@@ -692,23 +692,30 @@ if($descPExpediente){
 	include_once ("$ruta_raiz/include/tx/Flujo.php");
 	$objFlujo = new Flujo($db, $texp, $usua_doc);
 	$kk = $objFlujo->getArista($texp, $codigoFldExp);
-	$frmNombre = $objFlujo->frmNombre;
-	$frmLink = $objFlujo->frmLink;
-	$frmLinkSelect = $objFlujo->frmLinkSelect;
-	echo "<HR> $numExpediente";
-	if($frmNombre) $ventana = "Max"; else $ventana = "Default";
-	if(!$numeroExpediente) $numeroExpediente = $numExpedente;
-  $frmLink = str_replace("{numeroRadicado}","$verrad", $frmLink);
- $frmLink = str_replace("{numeroExpediente}","$numeroExpediente", $frmLink);
- $frmLink = str_replace("{dependencia}","$dependencia", $frmLink);
- $frmLink = str_replace("{documentoUsuario}","$usua_doc", $frmLink);
- $frmLink = str_replace("{nombreUsuario}","$usua_nomb", $frmLink);
-  
- $frmLinkSelect = str_replace("{numeroRadicado}","$numRad", $frmLinkSelect);
- $frmLinkSelect = str_replace("{numeroExpediente}","$numeroExpediente", $frmLinkSelect);
- $frmLinkSelect = str_replace("{dependencia}","$dependencia", $frmLinkSelect);
- $frmLinkSelect = str_replace("{documentoUsuario}","$usua_doc", $frmLinkSelect);
- $frmLinkSelect = str_replace("{nombreUsuario}","$usua_nomb", $frmLinkSelect);
+	$aristasSig = $objFlujo->aristasSig;
+ $frm = array();	
+ $iA = 0;
+ $ventana = "Default";
+ foreach($aristasSig as $key => $arista){
+  if(trim($arista["FRM_NOMBRE"])){ 
+    $ventana = "Max"; 
+    If(!$numeroExpediente) $numeroExpediente = $numExpedente;
+    $frm[$iA]["FRM_NOMBRE"] = $arista["FRM_NOMBRE"];
+    $frm[$iA]["FRM_LINK"] = $arista["FRM_LINK"];
+		$frm[$iA]["FRM_LINK"] = str_replace("{numeroRadicado}","$verrad", $frm[$iA]["FRM_LINK"]);
+		$frm[$iA]["FRM_LINK"] = str_replace("{numeroExpediente}","$numeroExpediente", $frm[$iA]["FRM_LINK"]);
+		$frm[$iA]["FRM_LINK"] = str_replace("{dependencia}","$dependencia", $frm[$iA]["FRM_LINK"]);
+		$frm[$iA]["FRM_LINK"] = str_replace("{documentoUsuario}","$usua_doc", $frm[$iA]["FRM_LINK"]);
+		$frm[$iA]["FRM_LINK"] = str_replace("{nombreUsuario}","$usua_nomb", $frm[$iA]["FRM_LINK"]);
+			
+		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{numeroRadicado}","$numRad", $frm[$iA]["FRM_LINKSELECT"]);
+		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{numeroExpediente}","$numeroExpediente", $frm[$iA]["FRM_LINKSELECT"]);
+		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{dependencia}","$dependencia", $frm[$iA]["FRM_LINKSELECT"]);
+		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{documentoUsuario}","$usua_doc", $frm[$iA]["FRM_LINKSELECT"]);
+		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{nombreUsuario}","$usua_nomb", $frm[$iA]["FRM_LINKSELECT"]);
+		$iA++;
+	}
+ }
 }
 ?>
   <tr><td>
@@ -716,6 +723,7 @@ if($descPExpediente){
   <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"> Estado <b class="caret"> </b></a>  
 		<ul class="dropdown-menu">
 			<?
+			
 			if($usuaPermExpediente) {
 				?>
 				<li>
@@ -740,24 +748,16 @@ if($descPExpediente){
 				<li>
 					- - Formularios - -
 				</li>
-				<?
-				if($frmNombre){
+				<? 
+				foreach($frm as $arista){
+				 
 					?>
 					<li>
-						<a href="#" onClick="window.open('<?=$frmLink?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$frmNombre?></a>
+						<a href="#" onClick="window.open('<?=$arista["FRM_LINK"]?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$arista["FRM_NOMBRE"]?></a>
 					</li>
 					<?php
 					}
-					?>
-				<?
-				if($frmLinkSelect){
-					?>
-					<li>
-					<a href="#" onClick="window.open('<?=$frmLinkSelect?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$frmNombreSelect?>...</a>
-					</li>
-					<?php
-					}
-					?>								
+       ?>								
 			</ul>
 			</span> 
 		</B></Td><td><?=$descFldExp?>						

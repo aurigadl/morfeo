@@ -235,8 +235,9 @@ function actualizar(){
 
 </script>
 </head>
-<body bgcolor="#FFFFFF" topmargin="0">
-<?php echo $codigo.'HHHHHHHHH';
+<body >
+<form enctype="multipart/form-data" method="POST" name="formulario" id="formulario" action='upload2.php?<?=$variables?>' class="smart_form">
+<?php
 $i_copias = 0;
 if ($codigo){
     $isql = "SELECT CODI_NIVEL
@@ -290,8 +291,9 @@ if(!$radicado_rem){
 }
 
 ?>
-<div >
-	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+<div class="row">
+	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+	<section id="widget-grid" class="">
 <table width="100%" class="table table-bordered">
 <tr>
   <td>
@@ -301,20 +303,18 @@ $datos_envio.="&otro_us2=$otro_us2&dpto_nombre_us2=$dpto_nombre_us2&muni_nombre_
 $datos_envio.="&dpto_nombre_us3=$dpto_nombre_us3&muni_nombre_us3=$muni_nombre_us3&direccion_us3=".urlencode($direccion_us3)."&nombret_us3=$nombret_us3";
 $variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$datos_envio";
 ?>
-<form enctype="multipart/form-data" method="POST" name="formulario" id="formulario" action='upload2.php?<?=$variables?>' class="smart_form">
 <input type="hidden" name="anex_origen" value="<?=$tipo?>">
 <input type="hidden" name="tipo" value="<?=$tipo?>">
 <input type="hidden" name="numrad" value="<?=$numrad?>">
 <input type="hidden" name="tipoLista" value="<?=$tipoLista?>">
 <input type="hidden" name="tipoDocumentoSeleccionado" value="<?php echo $tipoDocumentoSeleccionado ?>">
-<div align="center">
 <table width="100%" class="table table-bordered">
 <tr>
   <td  align="center"  colspan="2">DESCRIPCI&Oacute;N DEL DOCUMENTO</td>
   </tr>
     <tr>
       <td align="left" colspan="3" >
-      <label class="label">Tipo Archivo</label>
+      <label class="label">Tipo Archivo</label><br>
       <label class="select">
       <select name="tipo" class="input-sm" id="tipo_clase" >
 <?php
@@ -750,8 +750,8 @@ if( $rs_exp->RecordCount() == 0 ){
 
     </tr>
     <tr>
-      <td class='celdaGris'  colspan="2">
-      <table  width="100%" border="0" cellpadding="0" cellspacing="1" class="borde_tab" >
+      <td colspan="2">
+      <table  >
       <tr align="center" >
         <td width="203" CLASS=titulos2 >Documento</td>
         <td CLASS=titulos2  >Nombre</td>
@@ -808,7 +808,6 @@ if( $rs_exp->RecordCount() == 0 ){
 <?php
 }
 ?>
-
     <tr><td height='3px' colspan="2"></td></tr>
     <tr align="center">
           <td  align="center" >
@@ -819,8 +818,9 @@ if( $rs_exp->RecordCount() == 0 ){
           <section>
 						<label class="label">Subir Archivo</label>
 						<label class="input input-file state-error" for="file">
-						<div class="button">
-						<input name="userfile1" type="file" onChange="escogio_archivo();" id="userfile" value="valor">
+						 <div class="button">
+						   <input name="userfile1" type="file" onChange="escogio_archivo();" id="userfile" value="valor">
+						 </div>
 						</label>
 						<div class="note note-error">Archivo debe ser menor a  <?php echo number_format((return_bytes(ini_get('upload_max_filesize')))/1000000,2); ?>Mb.</div>
 				 </section>
@@ -839,13 +839,13 @@ if( $rs_exp->RecordCount() == 0 ){
     <?php if($codigo){?>
     <tr><td class="titulos2" align="center" colspan="2"><?=$codigo?></td></tr>
     <?php } ?>
-</table>
-<input type=hidden name=i_copias value='<?=$i_copias?>' id="i_copias" >
+	 </table>
+	 <input type=hidden name=i_copias value='<?=$i_copias?>' id="i_copias" >
+	 </td>
+	 </tr>
+	</table>
+	</DIV>
+	</DIV>
 </form>
-</td>
-</tr>
-</table>
-</DIV>
-</DIV>
 </body>
 </html>
