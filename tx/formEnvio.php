@@ -697,16 +697,12 @@ switch ($codTx)
 		?>
 		<center>
 		<table width="100%"  border=0 align="center" bgcolor="White">
-		<TR bgcolor="White"><TD width="100" colspan=3>
+		<TR bgcolor="White"><TD width="100%" colspan=3>
 	        <label class="textarea">
 					<i class="icon-append fa fa-comment"></i>
 					<textarea name=observa id=observa placeholder="Escriba un Comentario" rows="4"></textarea>
 					</label>	
 					
-						        <label class="textarea">
-					<i class="icon-append fa fa-comment"></i>
-					<textarea name="observa" rows="4"></textarea>
-					</label>
 			</TD></TR>
 		</center>
 		<input type=hidden name=enviar value=enviarsi>
