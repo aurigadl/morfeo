@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
 * @module crearUsuario
 n*
@@ -164,7 +164,7 @@ if ($db)
 						// para la secuencia de un tipo de radicado.
 
 switch($db->driver)
-{     
+{
 	case 'oci8':
 		$ADODB_COUNTRECS = true;
 		$sql_nxt="select * from all_sequences  where sequence_name = '".'SECR_TP'.$tmp1.'_'.$_POST['slc_tr'.$tmp1]."'";
@@ -178,7 +178,7 @@ switch($db->driver)
 		break;
 	case 'mssql':
 	break;
-	
+
 }
 $ADODB_COUNTRECS=true;
 	$rs_rtp =$db->conn->Execute($sql_rtp);
@@ -191,7 +191,7 @@ $ADODB_COUNTRECS=true;
 		$tpr=$tmp1;
 	}else{
 		$record['DEPE_RAD_TP'.$tmp1] = $_POST['slc_tr'.$tmp1];
-	}	
+	}
 					}	}
 				//Finalizamos validaciones para modificación
 				if ($oka && $okb && $okc)
@@ -265,7 +265,7 @@ $ADODB_COUNTRECS=true;
 			$txtIdDep =	$v_def[0]['DEPE_CODI'];
 			$txtSigla =	$v_def[0]['DEP_SIGLA'];
                         $txtActoAdmon =	$v_def[0]['ACTO_ADMON'];
-                      
+
 			if ($v_def[0]['DEPE_ESTADO']==0)
 			{$off='selected'; $on='';}
 			else
@@ -285,7 +285,7 @@ $ADODB_COUNTRECS=true;
 				$i += 1;
 			}
 		}
-		
+
 		$varRad = new TipRads($db);
 		$Vec_Trad = $varRad->GetArrayIdTipRad();
 		$nm = 'slc_tr';
@@ -298,7 +298,7 @@ $ADODB_COUNTRECS=true;
 			$js_pes2 .= "document.getElementById('".$nm.$val['ID']."').value = '';\n";
 			$rs = $db->conn->Execute($sql1.$sql3);
 		}
-		
+
 	 $slc_dep1 = $rs->GetMenu2('id',$txtIdDep,':&lt;&lt seleccione &gt;&gt;',false,false,'Class="select" Onchange="ver_datos(this.value)" id="slc_id"');
 	 $rs = $db->conn->Execute($sql1.$sql3);
 	 $slc_dep2 = $rs->GetMenu2('Slc_dpadre',$Slc_dpadre,':&lt;&lt seleccione &gt;&gt;',false,false,'Class="select" id="Slc_dpadre"');
@@ -405,7 +405,7 @@ function ver_datos(x)
 		borra_datos(document.formSeleccion);
 	}
 	else
-	{	
+	{
 		document.formSeleccion.submit();
 	}
 }
@@ -458,8 +458,8 @@ echo arrayToJsArray($vdptosv, 'vd');
 echo arrayToJsArray($vmcposv, 'vm');
 ?>
 
-function ValidarInformacion(accion){	
-    
+function ValidarInformacion(accion){
+
     if (!(isPositiveInteger(document.formSeleccion.txtIdDep.value,false)))
 	{
 		alert('Seleccione o digite el codigo de la dependencia');
@@ -517,9 +517,10 @@ function ver_listado()
 </head>
 <body>
   <form name="formSeleccion" id="formSeleccion" method="post" action="<?= $_SERVER['PHP_SELF']?>">
-  <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
+  <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
     <div class="col-sm-12">
       <!-- widget grid -->
+      <h2></h2>
       <section id="widget-grid">
         <!-- row -->
         <div class="row">
@@ -538,17 +539,18 @@ function ver_listado()
               <div>
                 <!-- widget content -->
                 <div class="widget-body no-padding">
-
-                  <table class="table table-bordered table-striped">
-                    <tr class=timparr>
-                      <td width="25%" align="left" class="titulos2"><b>&nbsp;Seleccione Dependencia</b></td>
-                      <td width="75%" colspan="5" class="listado2">
-                      <?php
-                        echo $slc_dep1;
-                      ?>
-                      </td>
-                    </tr>
-                  </table>
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                      <tr class=timparr>
+                        <td width="25%" align="left" class="titulos2"><b>&nbsp;Seleccione Dependencia</b></td>
+                        <td width="75%" colspan="5" class="listado2">
+                        <?php
+                          echo $slc_dep1;
+                        ?>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
                   <div class="tabber" id="tab1">
                       <div class="tabbertab" title="B&aacute;sicos">
                         <table class="table table-bordered table-striped">

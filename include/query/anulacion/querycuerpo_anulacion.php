@@ -2,8 +2,7 @@
 /**
   * CONSULTA VERIFICACION PREVIA A LA RADICACION
   */
-switch($db->driver)
-{  
+switch($db->driver){
 	case 'mssql':
 		$isql = 'select
 				convert(varchar(14), b.RADI_NUME_RADI) "IMG_Numero Radicado",
@@ -16,10 +15,10 @@ switch($db->driver)
 				convert(varchar(14),b.RADI_NUME_RADI) "CHK_CHKANULAR"
 			from
 				radicado b, SGD_TPR_TPDCUMENTO c
-			where 
+			where
 				b.radi_nume_radi is not null
 				and b.depe_codi='.$dep_sel.'
-				and b.SGD_TRAD_CODIGO <> 200 
+				and b.SGD_TRAD_CODIGO <> 200
 				and b.tdoc_codi=c.sgd_tpr_codigo
 				and sgd_eanu_codigo is null '.
 				$whereTpAnulacion.' '.$whereFiltro.'
@@ -27,7 +26,7 @@ switch($db->driver)
 		break;
 	case 'oracle':
 	case 'oci8':
-	case 'oci805':	
+	case 'oci805':
 		$isql = 'select
 				to_char(b.RADI_NUME_RADI) "IMG_Numero Radicado",
 				b.RADI_PATH "HID_RADI_PATH",
@@ -39,7 +38,7 @@ switch($db->driver)
 				b.RADI_NUME_RADI "CHK_CHKANULAR"
 			from
 				radicado b, SGD_TPR_TPDCUMENTO c
-			where 
+			where
 				b.radi_nume_radi is not null
 				and b.depe_codi='.$dep_sel.'
 				and b.SGD_TRAD_CODIGO <> 200
@@ -60,7 +59,7 @@ switch($db->driver)
 				b.RADI_NUME_RADI as "CHK_CHKANULAR"
 			from
 				radicado b, SGD_TPR_TPDCUMENTO c
-			where 
+			where
 			 	b.radi_nume_radi is not null
 				and b.depe_codi = '.$dep_sel.'
 				and b.SGD_TRAD_CODIGO <> 200
@@ -68,6 +67,6 @@ switch($db->driver)
 				and b.tdoc_codi=c.sgd_tpr_codigo
 				and sgd_eanu_codigo is null '.
 				$whereTpAnulacion.' '.$whereFiltro.'
-         	order by '.$order .' ' .$orderTipo;
+        order by '.$order .' ' .$orderTipo;
 }
 ?>

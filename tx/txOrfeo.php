@@ -15,12 +15,12 @@ $rad_asun_res 	= preg_replace($pattern, ' ', $rad_asun_res);
 <script language="javascript">
     function returnKrd(){
         return '<?=$krd?>';
-    }    
+    }
 </script>
  <!-- <script type="text/javascript" src="<?=$ruta_raiz?>/js/grabRadSessCarrito.js"></script> -->
   <!--Fin Script para adjuntar y excluir radicados del carrito -->
-  <script language="javascript">       
-  setRutaRaiz ('<?=$ruta_raiz?>');   
+  <script language="javascript">
+  setRutaRaiz ('<?=$ruta_raiz?>');
   <!--
   <?
   // print ("El control agenda en tx($controlAgenda");
@@ -41,13 +41,13 @@ $rad_asun_res 	= preg_replace($pattern, ' ', $rad_asun_res);
   function MM_swapImgRestore() { //v3.0
     var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
   }
-  
+
   function MM_preloadImages() { //v3.0
     var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
       var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
       if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
   }
-  
+
   function MM_findObj(n, d) { //v4.01
     var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
       d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
@@ -55,7 +55,7 @@ $rad_asun_res 	= preg_replace($pattern, ' ', $rad_asun_res);
     for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
     if(!x && d.getElementById) x=d.getElementById(n); return x;
   }
-  
+
   function MM_swapImage() { //v3.0
     var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
       if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
@@ -63,7 +63,7 @@ $rad_asun_res 	= preg_replace($pattern, ' ', $rad_asun_res);
   //-->
 </script>
 
-<script>    
+<script>
 function vistoBueno()
 {
 
@@ -141,10 +141,10 @@ function masivaIncluir(){
         list.push(valor);
 };
  window.open("accionesMasivas/masivaIncluirExp.php?<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>&radicados=" + list, "Masiva_IncluirExp", "height=650,width=750,scrollbars=yes");
-    		};  	
-     };   	    	   
-       
-  
+    		};
+     };
+
+
   function envioTx()
   {
       sw=0;
@@ -191,7 +191,7 @@ function masivaIncluir(){
                 alert("Debe seleccionar UN(1) radicado");
                 return;
             }
- 
+
 
             var url         = "respuestaRapida/index.php?<?=session_name()?>=" +
                               "<?=session_id()?>&radicadopadre=" +
@@ -199,9 +199,9 @@ function masivaIncluir(){
            window.open(url, "Respuesta Rapida", params);
 
       <?}else{?>
-            window.open("respuestaRapida/index.php?<?=session_name()?>=<?=session_id()?>&radicado=" + 
-                        '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' + 
-                        "&asunto=" + '<?php print_r($rad_asun_res)?>' + 
+            window.open("respuestaRapida/index.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
+                        '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
+                        "&asunto=" + '<?php print_r($rad_asun_res)?>' +
                         "&krd=<?=$krd?>", "Respuesta Rapida", params);
       <?}?>
     }
@@ -250,7 +250,7 @@ function masivaIncluir(){
       document.getElementById('depsel8').style.display = 'none';
       document.getElementById('carpper').style.display = 'none';
       document.getElementById('Enviar').style.display = 'none';
-  
+
         <?
       if(!$verrad)
       {
@@ -304,13 +304,13 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 			}
 			else
 			{	echo(" ");
-		}	
+		}
 	}
 if ($nomcarpeta)
 {
 ?>
 <!-- INICIO Permisos de acciones masivas  -->
-	<?PHP	
+	<?PHP
 
 		if ($accMasiva_trd != 1 and !$verradPermisos) {
 			// echo '<td valign="bottom">
@@ -322,20 +322,20 @@ if ($nomcarpeta)
 			//	<a href= "#" title="Solicitud prestamo" onmouseOver="document.ejemplo2.src=\''.$ruta_raiz.'/imagenes/internas/masPrestO.gif\';" onClick="masivaPrestamo();" onmouseOut="document.ejemplo2.src=\''.$ruta_raiz.'/imagenes/internas/masPrest.gif\';"><img name="ejemplo2" src=\''.$ruta_raiz.'/imagenes/internas/masPrest.gif\' border="0" height=51></a>
 			//	</td>';
 		}
-		
+
 		if ($accMasiva_temas == 1) {
 			//echo '<td valign="bottom">
 			//		<a href= "#" title="Asignar Sector y Tema" onmouseOver="document.ejemplo3.src=\''.$ruta_raiz.'/imagenes/internas/masTemaO.gif\';" onClick="masivaTemaSector();" onmouseOut="document.ejemplo3.src=\''.$ruta_raiz.'/imagenes/internas/masTema.gif\';"><img name="ejemplo3" src=\''.$ruta_raiz.'/imagenes/internas/masTema.gif\' ></a>
 			//</td>';
 		}
-		
+
 		if ($accMasiva_incluir != 1 and !$verradPermisos) {
 			//echo '<td valign="bottom">
 			//		<a href= "#" title="Incluir radicado en expediente" onmouseOver="document.ejemplo4.src=\''.$ruta_raiz.'/imagenes/internas/masInclO.gif\';" onClick="masivaIncluir();" onmouseOut="document.ejemplo4.src=\''.$ruta_raiz.'/imagenes/internas/masIncl.gif\';"><img name="ejemplo4" src=\''.$ruta_raiz.'/imagenes/internas/masIncl.gif\' border="0"></a>
 			//	</td>';
 		}
 	?>
-	<!-- FIN Permisos de acciones masivas  --> 
+	<!-- FIN Permisos de acciones masivas  -->
 <?php
 }
 if (!$agendado) {
@@ -363,8 +363,7 @@ if (!$agendado) {
 */
 /* si esta en la Carpeta de Visto Bueno no muesta las opciones de reenviar
 */
-if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_SESSION['dependencia'] == $radi_depe_actu))
-{
+if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_SESSION['dependencia'] == $radi_depe_actu)) {
 	$row1 = array();
 	// Combo en el que se muestran las dependencias, en el caso  de que el usuario escoja reasignar.
 	$dependencianomb=substr($dependencianomb,0,35);
@@ -385,7 +384,7 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 
 	$dependencianomb=substr($dependencianomb,0,35);
         $subDependencia = $db->conn->substr ."(".$db->conn->Concat($db->conn->IfNull('DEP_SIGLA', "'XT'"),"' - '","depe_nomb").",0,50)";
-       
+
 	$subDependencia = $db->conn->substr ."(depe_nomb,0,80)";
 	$sql = "select $subDependencia, depe_codi from DEPENDENCIA ORDER BY DEPE_NOMB";
 	$rs = $db->conn->Execute($sql);

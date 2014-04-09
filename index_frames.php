@@ -413,7 +413,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <ul class="nav navbar-nav navbar-right navbar-user">
 
                   <li class="dropdown">
-                    <a href="#" onclick="return false;"> Opciones </a>
+                    <a href="#" onclick="return false;" data-toggle="dropdown" class="dropdown-toggle"> Opciones <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                       <li><a href="plantillas.php?<?=session_name()."=".session_id()?>&fechah=$fechah&krd=$krd&info=false" target="mainFrame"> Plantillas </a></li>
                     </ul>
