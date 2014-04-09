@@ -6,9 +6,6 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
 require_once($ruta_raiz."/ReportesR/PlanillaControler.php");
 if(!isset($_GET['exportar'])){
-
-
-
 	header("Content-type: text/html");	
 }
 $planilla = new PlanillaControler($_POST,$_GET);

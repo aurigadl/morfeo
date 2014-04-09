@@ -1,7 +1,7 @@
 <?php 
 /**
 * @module crearUsuario
-*
+n*
 * @author Jairo Losada   <jlosada@gmail.com>
 * @author Cesar Gonzalez <aurigadl@gmail.com>
 * @license  GNU AFFERO GENERAL PUBLIC LICENSE
@@ -153,8 +153,7 @@ if ($db)
 				//Validacion c.
 				$okc = true;
 				reset($Vec_Trad);
-				while ((list(, $tmp) = each ($Vec_Trad)) && $okc)
-				{
+				while ((list(, $tmp) = each ($Vec_Trad)) && $okc){
                     $vlr_nxt=0;
                     $vlr_act=0;
 					$tmp1 = $tmp['ID'];
@@ -360,7 +359,6 @@ $ADODB_COUNTRECS=true;
 <html>
 <head>
 <title>Orfeo- Admon de Dependencias.</title>
-<link href="<?php echo $ruta_raiz ?>/estilos/orfeo.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="<?php echo $ruta_raiz ?>/estilos/tabber.css" TYPE="text/css" MEDIA="screen">
 <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <script language="JavaScript" src="<?php echo $ruta_raiz ?>/js/formchek.js"></script>

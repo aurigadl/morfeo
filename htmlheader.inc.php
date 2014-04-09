@@ -50,9 +50,9 @@ $str = <<<EOF
       <script src="$ruta_raiz/js/jsplumb/lib/jquery-1.9.0-min.js"></script>
       <script src="$ruta_raiz/js/jsplumb/lib/jquery-1.9.0.js"></script>
 		  <script src="$ruta_raiz/js/jsplumb/lib/jquery-ui-1.9.2-min.js"></script>
-      
+
       <script type="text/javascript" src="$ruta_raiz/js/jarvis.widget.min.js"></script>
-      
+
       <script type="text/javascript" src="$ruta_raiz/js/notification/SmartNotification.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/sparkline/jquery.sparkline.min.js"></script>
@@ -66,13 +66,13 @@ $str = <<<EOF
       <script type="text/javascript" src="$ruta_raiz/js/app.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/fuelux/wizard/wizard.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/bootstrap.js"></script>
-     
+
     <script src="$ruta_raiz/js/jsplumb/lib/jquery.ui.touch-punch.min.js"></script>
 		<!-- /DEP -->
 		<!-- JS -->
 		<!-- support lib for bezier stuff -->
 		<script src="$ruta_raiz/js/jsplumb/lib/jsBezier-0.6.js"></script>
-		<!-- jsplumb geom functions -->   
+		<!-- jsplumb geom functions -->
 		<script src="$ruta_raiz/js/jsplumb/lib/jsplumb-geom-0.1.js"></script>
 		<!-- jsplumb util -->
 		<script src="$ruta_raiz/js/jsplumb/src/util.js"></script>
@@ -98,9 +98,9 @@ $str = <<<EOF
 		<script src="$ruta_raiz/js/jsplumb/src/renderers-canvas.js"></script>
 		<!-- vml renderer -->
 		<script src="$ruta_raiz/js/jsplumb/src/renderers-vml.js"></script>
-        
+
         <!-- jquery jsPlumb adapter -->
-		<script src="$ruta_raiz/js/jsplumb/src/jquery.jsPlumb.js"></script>     
+		<script src="$ruta_raiz/js/jsplumb/src/jquery.jsPlumb.js"></script>
 EOF;
 echo $str;
 ?>
