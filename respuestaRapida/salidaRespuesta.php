@@ -1,5 +1,7 @@
 <?php
     session_start();
+    error_reporting(E_ALL);
+		ini_set('display_errors', '1');
     set_time_limit(0);
     if($_SESSION["krd"]){
         $krd = $_SESSION["krd"];

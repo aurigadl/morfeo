@@ -32,9 +32,9 @@ $descCarpetasGen= $_SESSION["descCarpetasGen"] ;
 $descCarpetasPer= $_SESSION["descCarpetasPer"];
 
 include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
-require_once    ("$ruta_raiz/class_control/Mensaje.php");
 
 if (!$db) $db = new ConnectionHandler($ruta_raiz);
+//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
 
@@ -46,7 +46,7 @@ $pathImagen = $rs->fields["radi_path"];
 
 
 ?>
-<FRAMESET cols="60%,*"  border=4 scrolling="yes" >
+<FRAMESET cols="99%,*"  border=4 scrolling="yes" >
 
     <frame name="central" src="../respuestaRapida/index.php?PHPSESSID=<?=session_id()?>&radicadopadre=<?=$radicadopadre?>&krd=krd" />
     <!-- <frame name="alto" src='<?=$ruta_raiz ."/linkArchivo.php?&PHPSESSID=".session_id()."&numrad=$radicadopadre"?>' />  -->

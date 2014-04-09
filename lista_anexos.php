@@ -655,9 +655,14 @@ if($verradPermisos == "Full")
 <table  width="100%" align="center" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr align="center">
      <td >
+          <? if ($permRespuesta == 1) { ?>
+                    <a class="titulos5" href="javascript:respuestaTx2()"> Respuesta en PDF</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+     <? } ?>
      <a class="vinculos" href='javascript:nuevoArchivo(<? if ( $num_archivos==0 && $swRadDesdeAnex==false)  echo "1"; else echo "0";  ?>)' class="timpar">
 Anexar Archivo</a>
       </td>
+      
     <script>
     	 swradics=<?=$num_archivos?>;
     </script>

@@ -494,7 +494,7 @@ if($usuaPermExpediente >= 1  ) {
 	if ( $num_expediente != "" && !isset( $expIncluido ) ) {
     ?><table border=0 width="100%">
       <tr><td width=140>
-        <B><span class="dropdown">
+        <span class="dropdown">
     			<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">Expediente <b class="caret"></b> </a> 
 						<ul class="dropdown-menu">
 						<?
@@ -515,13 +515,15 @@ if($usuaPermExpediente >= 1  ) {
 							<li>
 								<a href="#" onClick="CambiarE(2,'<?=$num_expediente?>');">Cerrar Expediente</a>
 							</li>							
-							
+							<li>
+								<a href="#" onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
+							</li>							
 							
 							<?
 							}
 							?>
 						</ul>
-						</span> </B>
+						</span>
     </td>
     <td>
     
@@ -671,10 +673,6 @@ if($num_expediente !=""){
 			<li>
 				<a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
 			</li>
-		
-			<li>
-				<a href="#" onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
-			</li>
 				<?
 			}
 			?>
@@ -697,7 +695,9 @@ if($descPExpediente){
 	$frmNombre = $objFlujo->frmNombre;
 	$frmLink = $objFlujo->frmLink;
 	$frmLinkSelect = $objFlujo->frmLinkSelect;
+	echo "<HR> $numExpediente";
 	if($frmNombre) $ventana = "Max"; else $ventana = "Default";
+	if(!$numeroExpediente) $numeroExpediente = $numExpedente;
   $frmLink = str_replace("{numeroRadicado}","$verrad", $frmLink);
  $frmLink = str_replace("{numeroExpediente}","$numeroExpediente", $frmLink);
  $frmLink = str_replace("{dependencia}","$dependencia", $frmLink);

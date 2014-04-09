@@ -1,11 +1,12 @@
 <?php
     session_start();
-
+    //error_reporting(E_ALL);
+		//ini_set('display_errors', '1');
     if($_SESSION["krd"]){
         $krd = $_SESSION["krd"];
-    } 
+    }
 
-    $ruta_raiz = "../";
+    $ruta_raiz = "..";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
 
@@ -14,7 +15,7 @@
 ***********************************************/
     // envio de respuesta via email
     // Obtiene los datos de la respuesta rapida.
-    $ruta_libs = $ruta_raiz."respuestaRapida/";
+    $ruta_libs = $ruta_raiz."/respuestaRapida/";
     define('ADODB_ASSOC_CASE', 0);
     define('SMARTY_DIR', $ruta_libs . 'libs/');
 
@@ -96,22 +97,21 @@
     $pos = strpos('salidaRespuesta',$_SERVER['HTTP_REFERER']);
 
     if ($pos !== false){
-	    header("Location: index.php?$encabe");
-        die;
-    } 
+      header("Location: index.php?$encabe");
+    }
 
-    require_once($ruta_raiz."config.php");
-    require_once($ruta_raiz."include/db/ConnectionHandler.php");
-    include_once($ruta_raiz."class_control/AplIntegrada.php");
-    include_once($ruta_raiz."class_control/anexo.php");
-    include_once($ruta_raiz."class_control/anex_tipo.php");
-    include_once($ruta_raiz."include/tx/Tx.php");
-    include_once($ruta_raiz."include/tx/Radicacion.php");
-    include_once($ruta_raiz."class_control/Municipio.php");
-    include_once($ruta_raiz."include/PHPMailer_v5.1/class.phpmailer.php");
-    require_once($ruta_raiz."tcpdf/config/lang/eng.php");
-    require_once($ruta_raiz."conf/configPHPMailer.php");
-    require_once($ruta_raiz."tcpdf/tcpdf.php");
+    require_once($ruta_raiz."/config.php");
+    require_once($ruta_raiz."/include/db/ConnectionHandler.php");
+    include_once($ruta_raiz."/class_control/AplIntegrada.php");
+    include_once($ruta_raiz."/class_control/anexo.php");
+    include_once($ruta_raiz."/class_control/anex_tipo.php");
+    include_once($ruta_raiz."/include/tx/Tx.php");
+    include_once($ruta_raiz."/include/tx/Radicacion.php");
+    include_once($ruta_raiz."/class_control/Municipio.php");
+    include_once($ruta_raiz."/include/PHPMailer_v5.1/class.phpmailer.php");
+    require_once($ruta_raiz."/tcpdf/config/lang/eng.php");
+    require_once($ruta_raiz."/conf/configPHPMailer.php");
+    require_once($ruta_raiz."/tcpdf/tcpdf.php");
 
     $db      = new ConnectionHandler("$ruta_raiz");
     $hist    = new Historico($db);
@@ -120,12 +120,12 @@
     $anexTip = new Anex_tipo($db);
     $mail    = new PHPMailer(true);
 
-    $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);                 
+    $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
     $anexTip->anex_tipo_codigo(7);
     $sqlFechaHoy      = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
     $numRadicadoPadre = $_POST["radPadre"];
 
-    $tamanoMax	    = 7 * 1024 * 1024; // 7 megabytes
+    $tamanoMax      = 7 * 1024 * 1024; // 7 megabytes
     $fechaGrab      = trim($date1);
     $numramdon      = rand (0,100000);
     $contador       = 0;
@@ -167,13 +167,14 @@
     $conCopOcul     = $_POST["concopiaOculta"]; //con copia oculta
     $anexHtml       = $_POST["anexHtml"]; //con copia oculta
     $docAnex        = $_POST["docAnex"]; //con copia oculta
-        
+    $medioRadicar   = $_POST["medioRadicar"]; //con copia oculta
+
     $asu            = $_POST["respuesta"];
 
     $tpDepeRad      = $coddepe;
     $radUsuaDoc     = $codigoCiu;
     $usua_doc       = $_SESSION["usua_doc"];
-    $usuario        = $_SESSION["usua_nomb"]; 
+    $usuario        = $_SESSION["usua_nomb"];
     $setAutor       = 'Sistema de Gestion Documental Orfeo';
     $SetTitle       = 'Respuesta a solicitud';
     $SetSubject     = 'Departamento Naciona de planeación';
@@ -188,10 +189,10 @@
     $ruta   = $adate.$coddepe.$usua_actu."_".rand(10000, 99999)."_".time().".pdf";
 
 /***********************************************
-// DATOS DEL RADICADO PADRE 
+// DATOS DEL RADICADO PADRE
 ***********************************************/
     $desti = "
-            SELECT 
+            SELECT
                 s.sgd_dir_nomremdes,
                 s.sgd_dir_direccion,
                 s.sgd_dir_tipo,
@@ -200,10 +201,10 @@
                 s.sgd_sec_codigo,
                 r.depe_codi,
                 r.radi_path
-            FROM 
+            FROM
                 SGD_DIR_DRECCIONES s,
                 RADICADO r
-            WHERE 
+            WHERE
                 r.RADI_NUME_RADI     = $numRadicadoPadre
                 AND s.RADI_NUME_RADI = r.RADI_NUME_RADI";
 
@@ -217,18 +218,18 @@
     $pathPadre      = $rssPatth->fields["radi_path"];
     $depCreadora    = substr($numRadicadoPadre,4,$digitosDependencia) * 1;
 
-    $ruta2  = "bodega/$radano/$depCreadora/docs/".$ruta;
-    $ruta3  = "$radano/$depCreadora/docs/".$ruta;
+    $ruta2  = "/bodega/$radano/$depCreadora/docs/".$ruta;
+    $ruta3  = "/$radano/$depCreadora/docs/".$ruta;
 
 /***********************************************
 // CREACION DEL RADICADO RESPUESTA
 ***********************************************/
     //Para crear el numero de radicado se realiza el siguiente procedimiento
-    $isql_consec = "SELECT 
-                        DEPE_RAD_TP$ent as secuencia 
-                    FROM 
-                        DEPENDENCIA 
-                    WHERE 
+    $isql_consec = "SELECT
+                        DEPE_RAD_TP$ent as secuencia
+                    FROM
+                        DEPENDENCIA
+                    WHERE
                         DEPE_CODI = $tpDepeRad";
 
     $creaNoRad   = $db->conn->Execute($isql_consec);
@@ -261,9 +262,9 @@
     $codTx              = 62;
 
     $nurad = $rad->newRadicado($ent, $tpDepeRad);
-	
+
     if ($nurad=="-1"){
-	    header("Location: salidaRespuesta.php?$encabe&error=1");
+      header("Location: salidaRespuesta.php?$encabe&error=1");
         die;
     }
     //datos para guardar los anexos en la carpeta del nuevo radicado
@@ -273,10 +274,10 @@
     $adjuntos  = 'bodega/'.$ruta1;
 
     $nextval   = $db->nextId("sec_dir_direcciones");
-    //se buscan los datos del radicado padre y se 
+    //se buscan los datos del radicado padre y se
     //insertaran en los del radicado hijo
 
-    $isql = "insert into SGD_DIR_DRECCIONES(			
+    $isql = "insert into SGD_DIR_DRECCIONES(
                                 SGD_TRD_CODIGO,
                                 SGD_DIR_NOMREMDES,
                                 SGD_DIR_DOC,
@@ -361,7 +362,7 @@
 ***********************************************/
     if(!empty($_FILES["archs"]["name"][0])){
         // Arreglo para Validar la extension
-        $sql1 		= "	select
+        $sql1     = " select
                             anex_tipo_codi as codigo
                             , anex_tipo_ext as ext
                             , anex_tipo_mime as mime
@@ -371,45 +372,45 @@
         $exte = $db->conn->Execute($sql1);
 
         while(!$exte->EOF) {
-            $codigo 		= $exte->fields["codigo"];
-            $ext			= $exte->fields["ext"];
-            $mime1			= $exte->fields["mime"];
-            $mime2			= explode(",",$mime1);
+            $codigo     = $exte->fields["codigo"];
+            $ext      = $exte->fields["ext"];
+            $mime1      = $exte->fields["mime"];
+            $mime2      = explode(",",$mime1);
 
             //arreglo para validar la extension
-            $exts[".".$ext]	= array ('codigo' 	=> $codigo,
-                                     'mime'		=> $mime2);
+            $exts[".".$ext] = array ('codigo'   => $codigo,
+                                     'mime'   => $mime2);
             $exte->MoveNext();
         };
 
         //Si no existe la carpeta se crea.
-        if(!is_dir($ruta_raiz.$adjuntos)){
-            $rs	= mkdir($adjuntos, 0700);
+        if(!is_dir($ruta_raiz."/".$adjuntos)){
+            $rs = mkdir($adjuntos, 0700);
             if(empty($rs)){
-	            $errores .= empty($errores)? "&error=2" : '-2';
+              $errores .= empty($errores)? "&error=2" : '-2';
             }
-		}
-                
+    }
+
         $i = 0;
-        $anexo = new Anexo($db);   
+        $anexo = new Anexo($db);
 
         //Validaciones y envio para grabar archivos
         foreach($_FILES["archs"]["name"] as $key => $name){
-            $nombre 	= strtolower(trim($_FILES["archs"]["name"][$key]));
-            $type		= trim($_FILES["archs"]["type"][$key]);
-            $tamano		= trim($_FILES["archs"]["size"][$key]);
-            $tmporal	= trim($_FILES["archs"]["tmp_name"][$key]);
-            $error		= trim($_FILES["archs"]["error"][$key]);            
-            $ext 		= strrchr($nombre,'.');
+            $nombre   = strtolower(trim($_FILES["archs"]["name"][$key]));
+            $type   = trim($_FILES["archs"]["type"][$key]);
+            $tamano   = trim($_FILES["archs"]["size"][$key]);
+            $tmporal  = trim($_FILES["archs"]["tmp_name"][$key]);
+            $error    = trim($_FILES["archs"]["error"][$key]);
+            $ext    = strrchr($nombre,'.');
             if (is_array($exts[$ext])){
                 foreach ($exts[$ext]['mime'] as $value){
                     if(eregi($type,$value)){
                         $bandera = true;
                         if($tamano < $tamanoMax){
-                            //grabar el registro en la base de datos                            
-                            if(strlen($str) > 90){
-								$nombre	= substr($nombre, '-90:');                            
-							}                          							
+                            //grabar el registro en la base de datos
+                        if(strlen($str) > 90){
+                $nombre = substr($nombre, '-90:');
+              }
                             $anexo->anex_radi_nume    = $nurad;
                             $anexo->usuaCodi          = $usua_actu;
                             $anexo->depe_codi         = $coddepe;
@@ -423,25 +424,25 @@
                             $nomFinal                 = $anexo->get_anex_nomb_archivo();
 
                             //Guardar el archivo en la carpteta ya creada
-                            $Grabar_path	= $adjuntos.$nomFinal;
+                            $Grabar_path  = $adjuntos.$nomFinal;
                             if (move_uploaded_file($tmporal, $ruta_raiz.$Grabar_path)) {
                                 //si existen adjuntos los agregamos para enviarlos por correo
-                                $mail->AddAttachment($ruta_raiz.$Grabar_path, $nombre);
+                                $mail->AddAttachment($ruta_raiz."/".$Grabar_path, $nombre);
                             }else {
-	                            $errores .= empty($errores)? "&error=6" : '-6';
+                              $errores .= empty($errores)? "&error=6" : '-6';
                             }
                         }else{
-	                        $errores .= empty($errores)? "&error=5" : '-5';
+                          $errores .= empty($errores)? "&error=5" : '-5';
                         }
                     }
                 }
 
                 if(empty($bandera)){
-	                $errores .= empty($errores)? "&error=4" : '-4';
+                  $errores .= empty($errores)? "&error=4" : '-4';
                 };
 
             }else{
-	            $errores .= empty($errores)? "&error=3" : '-3';
+              $errores .= empty($errores)? "&error=3" : '-3';
             }
 
             $contador ++;
@@ -478,11 +479,12 @@
                                 SGD_APLI_CODI,
                                 SGD_TRAD_CODIGO,
                                 RADI_NUME_SALIDA,
+                                ANEX_TIPO_ENVIO,
                                 SGD_EXP_NUMERO)
                         values ($radicado_rem,
                                 $numRadicadoPadre,
                                 '$codigo',
-                                4,
+                                2,
                                 '$tipo',
                                 $tamano,
                                 '$auxsololect',
@@ -499,57 +501,58 @@
                                 NULL,
                                 1,
                                 $nurad,
+                                $medioRadicar,
                                 NULL)";
 
     $bien = $db->conn->Execute($isql);
     // Si actualizo BD correctamente
     if (!$bien) {
-	    $errores .= empty($errores)? "&error=7" : '-7';
+      $errores .= empty($errores)? "&error=7" : '-7';
     }
 
 /***********************************************
-// REMPLAZAR DATOS EN EL ASUNTO 
+// REMPLAZAR DATOS EN EL ASUNTO
 ***********************************************/
     //REMPLAZO DE DATOS
     $asu = str_replace("RAD_S", $nurad, $asu);
     $asu = str_replace("\xe2\x80\x8b", '', $asu);
 
 /***********************************************
-// CREACION DE PDF RESPUESTA AL RADICADO 
+// CREACION DE PDF RESPUESTA AL RADICADO
 ***********************************************/
-    $cond = "SELECT 
-                DEP_SIGLA, 
-                DEPE_NOMB 
-             FROM 
-                DEPENDENCIA 
-             WHERE 
+    $cond = "SELECT
+                DEP_SIGLA,
+                DEPE_NOMB
+             FROM
+                DEPENDENCIA
+             WHERE
                 DEPE_CODI = $coddepe";
 
     $exte       = $db->conn->Execute($cond);
-    $dep_sig 	= $exte->fields["DEP_SIGLA"];
-    $dep_nom	= $exte->fields["DEPE_NOMB"];
+    $dep_sig  = $exte->fields["DEP_SIGLA"];
+    $dep_nom  = $exte->fields["DEPE_NOMB"];
 
-	// Extend the TCPDF class to create custom Header and Footer
-	class MYPDF extends TCPDF {
+  // Extend the TCPDF class to create custom Header and Footer
+  class MYPDF extends TCPDF {
 
-		//Page header
-		public function Header() {
-			// Logo
-			$this->Image('../img/banerPDF.JPG', 30, 10, 167, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-		}
+    //Page header
+    public function Header() {
+      // Logo
+      $this->Image('../img/banerPDF.JPG', 30, 10, 167, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+    }
 
-		// Page footer
-		public function Footer() {
-			// Position at 15 mm from bottom
-			$this->SetY(-20);
-			// Page number
-            $txt = "<div align='center'> Carrera 13 No. 32- 76 Bogot&aacute;, D.C., Colombia PBX (57-1) 330 50 00 www.correlibre.org";
+    // Page footer
+    public function Footer() {
+      // Position at 15 mm from bottom
+      $this->SetY(-20);
+      // Page number
+            $txt = "<div align='center'> Carrera 13 No. 32- 76 Bogot&aacute;, D.C., Colombia PBX (57-1) 330 50 00 www.minsalud.gov.co";
             $this->writeHTMLCell($w=0, $h=3, $x='32', $y='', $txt, $border=0, $ln=1, $fill=0, $reseth=true);
-		}
-	}
+    }
+  }
 
-	// create new PDF document
-	$pdf = new MYPDF('P', PDF_UNIT, 'LETTER', true, 'UTF-8', false);
+  // create new PDF document
+  $pdf = new MYPDF('P', PDF_UNIT, 'LETTER', true, 'UTF-8', false);
 
     // set document information
     $pdf->SetCreator(PDF_CREATOR);
@@ -600,185 +603,14 @@
     // This method has several options, check the source code documentation for more information.
     $pdf->Output($ruta_raiz.$ruta2, 'F');
 
-    //respuesta rapida adjunta al correo
-    //$mail->AddAttachment($ruta_raiz.$ruta2);
-
-    if(!empty($mail->ErrorInfo)){	
-        $errores .= empty($errores)? "&error=10" : '-10';
-    }
-
-    //radicado padre adjunto al correo
-    
-    $post  = strpos(strtolower($pathPadre),'bodega');
-
-    if($post !== false){
-        $pathPadre = substr($pathPadre,$post + 6);  
-    }
-
-    $rutaPadre = $ruta_raiz.'bodega/'.$pathPadre;
-
-    if(!empty($pathPadre)){
-    	$mail->AddAttachment($rutaPadre, $numRadicadoPadre."_Inicial");
-    } 
-     
-
-    if(!empty($mail->ErrorInfo)){		
-    	$errores .= empty($errores)? "&error=9" : '-9';
-    }
-
-/***********************************************
-// ENVIO DE CORREO ELECTRONICO
-***********************************************/
-    //ADJUNTOS EXISTENTES DEL RADICADO
-    if(!empty($docAnex)){
-        for($i=0;$i<count($docAnex);$i++){
-            unset($file);
-            $file = $ruta_raiz."bodega/".substr(trim($numRadicadoPadre),0,4).
-                "/".intval(substr(trim($numRadicadoPadre),4,$ln))."/docs/".
-                trim($docAnex[$i]);
-
-            if(file_exists($file)){
-                $mail->AddAttachment($file, $docAnex[$i]);
-            }
-        }
-    }
-
-    //Destinatario de correo
-    if(trim($destinat)){
-        $emailSend = split(";",$destinat);
-        foreach($emailSend as $mailDir){
-            if(trim($mailDir)) $mail->AddAddress($mailDir, $mailDir);
-        }
-    }
-
-    if(trim($correocopia)){
-        $emailSend = split(";",$correocopia);
-        foreach($emailSend as $mailDir){
-            if($mailDir) $mail->AddCC(trim($mailDir));
-        }
-    }
-
-    if(trim($conCopOcul)){
-        $emailSend = split(";",$conCopOcul);
-        foreach($emailSend as $mailDir){
-            if($mailDir) $mail->AddBCC(trim($mailDir));
-        }
-    }
-
-    $mail->IsSMTP(); // telling the class to use SMTP
-    $mail->AddReplyTo($usMailSelect);
-    $mail->SetFrom($emailPQRS, "PQRS correlibre");
-
-    $mail->Host       = $hostPHPMailer;
-    $mail->Port       = $portPHPMailer;
-    $mail->SMTPDebug  = $debugPHPMailer;  // 1 = errors and messages // 2 = messages only 
-    $mail->SMTPAuth   = "true";
-    $mail->SMTPSecure = "tls";
-    $mail->AuthType   = $tipoAutenticacion;
-    $mail->Username   = $usuarioEmailPQRS;   // SMTP account username
-    $mail->Password   = $passwordEmailPQRS; // SMTP account password
-    $mail->Subject    = "Respuesta al radicado " . $numRadicadoPadre . "correlibre";
-    $mail->AltBody    = "Para ver el mensaje, por favor use un visor de E-mail compatible!";
-
-    //$mail->From       = $usMailSelect;
-    //$mail->FromName   = $usuario;
-
-    $asu .= "<hr>Sistema de gestion Orfeo. http://www.correlibre.org";
-    $mail->MsgHTML($asu);
-
-    $intentos=1;
-
-    while ((!$exito) && ($intentos < 5)) {
-       $exito = $mail->Send();
-       $intentos=$intentos+1;
-       sleep(7);
-    }
-        
-
-    if (!$exito){
-	    $errores .= empty($errores)? "&error=8" : '-8';
-    }else{
-        $sql_sgd_renv_codigo = "SELECT 
-                                    SGD_RENV_CODIGO 
-                                FROM 
-                                    SGD_RENV_REGENVIO 
-                                ORDER BY SGD_RENV_CODIGO DESC ";
-
-        $rsRegenvio    = $db->conn->SelectLimit($sql_sgd_renv_codigo,2);
-        $nextval       = $rsRegenvio->fields["SGD_RENV_CODIGO"];
-        $nextval++;
-        $fechaActual   = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
-        $destinatarios = "Destino:".$destinat." Copia:".$correocopia;
-        $dependencia   = $_POST["depecodi"];
-
-        $iSqlEnvio = "  INSERT INTO SGD_RENV_REGENVIO(
-                            SGD_RENV_CODIGO
-                            ,SGD_FENV_CODIGO
-                            ,SGD_RENV_FECH
-                            ,RADI_NUME_SAL
-                            ,SGD_RENV_DESTINO
-                            ,SGD_RENV_MAIL
-                            ,SGD_RENV_PESO
-                            ,SGD_RENV_VALOR
-                            ,SGD_RENV_ESTADO
-                            ,USUA_DOC
-                            ,SGD_RENV_NOMBRE
-                            ,SGD_RENV_PLANILLA
-                            ,SGD_RENV_FECH_SAL
-                            ,DEPE_CODI
-                            ,SGD_DIR_TIPO
-                            ,RADI_NUME_GRUPO
-                            ,SGD_RENV_DIR
-                            ,SGD_RENV_CANTIDAD
-                            ,SGD_RENV_TIPO
-                            ,SGD_RENV_OBSERVA
-                            ,SGD_RENV_GRUPO
-                            ,SGD_RENV_VALORTOTAL
-                            ,SGD_RENV_VALISTAMIENTO
-                            ,SGD_RENV_VDESCUENTO
-                            ,SGD_RENV_VADICIONAL
-                            ,SGD_DEPE_GENERA
-                            ,SGD_RENV_PAIS)
-                       VALUES (
-                            $nextval
-                            ,106
-                            ,$fechaActual
-                            ,$nurad
-                            ,'$destinatarios'
-                            ,'$destinatarios'
-                            ,'0'
-                            ,'0'
-                            ,1
-                            ,".$_SESSION["usua_doc"]."
-                            ,'".$destinat."'
-                            , '0' 
-                            ,$fechaActual
-                            ,".$dependencia."
-                            , 1
-                            ,$nurad 
-                            ,'$destinatarios'
-                            ,1 
-                            ,1 
-                            ,'Envio Respuesta Rapida a Correo Electronico'
-                            ,$nurad 
-                            ,'0'
-                            ,'0'
-                            ,'0'
-                            ,'0'
-                            ,$dependencia
-                            ,'Colombia')"; 
-
-        $rsRegenvio = $db->conn->query($iSqlEnvio);
-    }
-
-    $sqlE = "UPDATE 
+    $sqlE = "UPDATE
                 RADICADO
-             SET 
+             SET
                 RADI_PATH = '$ruta3'
-             WHERE 
+             WHERE
                 RADI_NUME_RADI = $nurad";
-    
-	$db->conn->Execute($sqlE);
+
+    $db->conn->Execute($sqlE);
 
     $isqlDepR = "SELECT RADI_DEPE_ACTU,
                         RADI_USUA_ACTU

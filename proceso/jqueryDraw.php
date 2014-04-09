@@ -5,7 +5,7 @@
 						
 		// setup some defaults for jsPlumb.	
 		var instance = jsPlumb.getInstance({
-			Endpoint : ["Dot", {radius:2}],
+			Endpoint : ["Dot", {radius:5}],
 			HoverPaintStyle : {strokeStyle:"#1e8151", lineWidth:2 },
 			ConnectionOverlays : [
 				[ "Arrow", { 
@@ -67,6 +67,9 @@
 			// and finally, make a couple of connections
 			<?		
 		  foreach($aristas as $arista){
+		   if($arista["FRM_NOMBRE"]){
+		     
+		   }
 			 echo 'instance.connect({ source:"nodo'.$arista["NODO_INICIO"].'", target:"nodo'.$arista["NODO_FIN"].'"
 				 , label:"'.$arista["DESCRIP"].'" });';
 		  }
