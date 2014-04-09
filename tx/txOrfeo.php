@@ -342,7 +342,7 @@ if (!$agendado) {
 	if (($_SESSION['depe_codi_padre'] && $_SESSION['codusuario']==1) || $_SESSION['codusuario']!=1) {
 		if(!empty($permVobo) && $permVobo != 0) {
 	?>
-		<a href="#" onmouseout="MM_swapImgRestore()" onclick="seleccionBarra = 14;vistoBueno();" onmouseover="MM_swapImage('Image12','','<?=$ruta_raiz?>/imagenes/internas/overVobo.gif',1)"><img src="<?=$ruta_raiz?>/imagenes/internas/vobo.gif" name="Image12" height="51" border="0" /></a>
+		<a href="#" onmouseout="MM_swapImgRestore()" onclick="seleccionBarra = 14;vistoBueno();" onmouseover="MM_swapImage('Image12','','<?=$ruta_raiz?>/imagenes/internas/overVobo.gif',1)"></a>
     <?
     		}
 	}
@@ -351,7 +351,7 @@ if (!$agendado) {
 		   if(!empty($_SESSION["usua_perm_trdmasiva"]) && $_SESSION["usua_perm_trdmasiva"]!=0 ){
 		   	?>
 		     <a href="#" onMouseOut="MM_swapImgRestore()" onClick="seleccionBarra = 19;tipificar();" onMouseOver="MM_swapImage('Image19','','<?=$ruta_raiz?>/imagenes/internas/tipificarA.gif',1)">
-		     <img src="<?=$ruta_raiz?>/imagenes/internas/tipificar.gif" name="Image19" border="0"></a>
+		     </a>
 		  <?php  }
 
 			if(!empty($permArchi) && $permArchi != 0) {
@@ -378,7 +378,7 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 	}
 	$sql = "select $subDependencia, depe_codi from DEPENDENCIA $whereReasignar ORDER BY DEPE_NOMB";
 	$rs = $db->query($sql);
-	print $rs->GetMenu2('depsel',$dependencia,"0:-- Escoja una Dependencia --",false,0," id=depsel class=select onChange='enviar();' ");
+	print $rs->GetMenu2('depsel',0,"0:-- Escoja una Dependencia --",false,0," id=depsel class=select onChange='enviar();' ");
 	// genera las dependencias para informar
 	$row1 = array();
 
