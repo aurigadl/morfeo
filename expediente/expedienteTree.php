@@ -28,13 +28,14 @@
 								</TABLE>"; ?></span>
 									<ul>
 													<?
+													  $rutaAnexos = "".substr($value["NUM_RADICADO"],0,4). "/" . substr($value["NUM_RADICADO"],4,3)."/docs/";
 													  $anexos = $value["ANEXOS"];
 													  if($anexos){
 													  foreach($anexos as $valueAnexos){
 													?>
 														<li style="display:none">
 															<?=$valueAnexos["ANEX_NUMERO"]?> - <?=$valueAnexos["RADI_SALIDA"]?>
-															<? if($valueAnexos["ANEX_PATH"]) {?><a href='<?=$ruta_raiz."/bodega/".$valueAnexos["ANEX_PATH"]?>' target='<?=date("ymdhis")?>'> <? } ?>
+															<? if($valueAnexos["ANEX_PATH"]) {?><a href='<?=$ruta_raiz."/bodega/$rutaAnexos".$valueAnexos["ANEX_PATH"]?>' target='<?=date("ymdhis")?>'> <? } ?>
 															- <?=$valueAnexos["DESCRIPCION"]?>
 															<? if($valueAnexos["ANEX_PATH"]) {?> </a> <? } ?>
 														</li>	
