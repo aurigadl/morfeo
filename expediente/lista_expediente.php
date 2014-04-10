@@ -741,23 +741,35 @@ Estado
 				<li>
 					<a href="#" onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')">Modificar Estado</a>
 				</li>
-				<li class="dropdown-header"> Formularios </li>
+				</ul>
+			 </li>
+		</span> 
 						<? 
 						if($frm){
 							foreach($frm as $arista){
 						?>
-						<li>
+						  </Td><td><span class="dropdown">
+								<li class="dropdown dropdown-large">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?=$descFldExp?>
+              <b class="caret"></b>
+								</a>
+							<ul class="dropdown-menu dropdown-menu-large row">
+						  <li>
 							<a href="#" onClick="window.open('<?=$arista["FRM_LINK"]?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$arista["FRM_NOMBRE"]?></a>
 						</li>
+						</lu>
+						</span>
+						</td>
 						<?php
 						}
-						}
+						}else{
 					?>								
-				</ul>
-			 </li>
-		</span> 
+
 		</B></Td><td><?=$descFldExp?>						
-		</td></tr>				
+		</td><?
+		}
+		?>
+		</tr>				
 		<tr><td>
      Fecha Inicio: </td><td><?php print $arrTRDExp['fecha']; ?></td>
     </tr>
