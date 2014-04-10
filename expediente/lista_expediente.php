@@ -28,7 +28,7 @@ function crearProc(numeroExpediente){
   window.open("<?=$ruta_raiz?>/expediente/crearProceso.php?sessid=<?=session_id()?>&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=450,width=680,scrollbars=yes");
 }
 function seguridadExp(numeroExpediente,nivelExp){
-  window.open("<?=$ruta_raiz?>/seguridad/expediente.php?<?=session_name()?>=<?=session_id()?>&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>&nivelExp="+nivelExp+"&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=320,width=600,scrollbars=yes");
+  window.open("<?=$ruta_raiz?>/seguridad/expediente.php?<?=session_name()?>=<?=session_id()?>&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>&nivelExp="+nivelExp+"&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=350,width=700,scrollbars=yes");
 }
 function verTipoExpedienteOld(numeroExpediente)
 {
@@ -51,15 +51,15 @@ function modFlujo(numeroExpediente,texp,codigoFldExp,ventana='default')
 	$coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
 	$codusua = $rsDepR->fields['RADI_USUA_ACTU'];
 	$ind_ProcAnex="N";
-	
-	
+
+
 ?>
 if(ventana=="Max"){
    opcVentana = "fullscreen=yes, scrollbars=auto";
   }else{
    opcVentana = "height=250,width=750,scrollbars=yes";
   }
-  
+
 window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?codigoFldExp="+codigoFldExp+"&krd=<?=$krd?>&numeroExpediente="+numeroExpediente+"&numRad=<?=$verrad?>&texp="+texp+"&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","TexpE<?=$fechaH?>",opcVentana);
 }
 function Responsable(numeroExpediente) {
@@ -85,11 +85,11 @@ function CambiarE(est,numeroExpediente) {
 }
 function insertarExpediente()
 {
-    window.open( "<?=$ruta_raiz?>/expediente/insertarExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=600,width=600,scrollbars=yes" );
+    window.open( "<?=$ruta_raiz?>/expediente/insertarExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=600,width=700,scrollbars=yes" );
 }
 function verWorkFlow()
 {
-		<?php 
+		<?php
 			//  include "./proceso/workFlow.php"; //?verrad=$verrad&numeroExpediente=$numExpediente&".session_name()."=".session_id()."";
 			$pWorkFlow = "./proceso/workFlow.php?verrad=$verrad&numeroExpediente=$numExpediente&".session_name()."=".session_id()."";
 		?>
@@ -136,7 +136,7 @@ function ordenarPor( campo ) {
         varOrden = 'DESC';
     }
     else {
-        varOrden = 'ASC';   
+        varOrden = 'ASC';
     }
     document.getElementById('orden').value = varOrden;
     document.getElementById('ordenarPor').value = campo + ' ' + varOrden;
@@ -160,7 +160,7 @@ function cambiarImagen( imagen )
 }
 
 function excluirExpediente() {
-    window.open( "<?=$ruta_raiz?>/expediente/excluirExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=300,width=600,scrollbars=yes" );
+    window.open( "<?=$ruta_raiz?>/expediente/excluirExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=400,width=730,scrollbars=yes" );
 }
 // Incluir Anexos y Asociados a un Expediente.
 function incluirDocumentosExp()
@@ -247,10 +247,10 @@ $time_start = microtime_float();
 	$numeroh = 0;
 		$rs =$db->conn->Execute($isql);
 		include_once "$ruta_raiz/tx/verLinkArchivo.php";
-		
+
 	  $verLinkArch = new verLinkArchivo($db);
-	
-	
+
+
 	if($radi_nume_deri and ($radi_tipo_deri==0 or $radi_tipo_deri==2)) {
 	?>
 <input type="hidden" name="menu_ver_tmp" value=4>
@@ -313,7 +313,7 @@ $time_start = microtime_float();
 
 	  <a href="<?=$ruta_raiz?>/verradicado.php?verrad=<?=$radicado_d ?>&<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>" target="VERRAD<?=$radicado_d?>">
 
-	 <? }?>        
+	 <? }?>
 	<?=$fechaRadicadoPadre?>
 	</a></span>
 	</TD>
@@ -366,7 +366,7 @@ $time_start = microtime_float();
       <?php
 
 if($usuaPermExpediente >= 1  ) {
-	
+
       ?>
 	<a href="#" onClick="verTipoExpediente('<?=$num_expediente?>','<?=$codserie?>','<?=$tsub?>','<?=$tdoc?>','MODIFICAR')" >
 	<b>CREAR</b></a>
@@ -457,14 +457,14 @@ if($usuaPermExpediente >= 1  ) {
 	$isql = "SELECT USUA_PERM_EXPEDIENTE from USUARIO WHERE USUA_LOGIN = '$krd'";
 	$rs = $db->conn->Execute($isql);
 	$krdperm= $rs->fields['USUA_PERM_EXPEDIENTE'];
-	$sqlb="select sgd_exp_archivo from sgd_exp_expediente 
+	$sqlb="select sgd_exp_archivo from sgd_exp_expediente
                 where sgd_exp_numero like '$num_expediente'";
-	
+
 	$rsb=$db->conn->Execute($sqlb);
 	$arch=$rsb->fields['SGD_EXP_ARCHIVO'];
 
-	
-	$mostar=true;		
+
+	$mostar=true;
 	$mostrar=true;
 ?>
 <tr >
@@ -483,7 +483,7 @@ if($usuaPermExpediente >= 1  ) {
     ?><table border=0 width="100%">
       <tr><td width=140>
         <span class="dropdown">
-    			<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">Expediente <b class="caret"></b> </a> 
+    			<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">Expediente <b class="caret"></b> </a>
 						<ul class="dropdown-menu">
 						<?
 						if($usuaPermExpediente) {
@@ -493,7 +493,7 @@ if($usuaPermExpediente >= 1  ) {
 							</li>
 							<li>
 								<a href="#" onClick="excluirExpediente();">Excluir de...</a>
-							</li>						
+							</li>
 							<li>
 								<a href="#" onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
 							</li>
@@ -502,11 +502,11 @@ if($usuaPermExpediente >= 1  ) {
 							</li>
 							<li>
 								<a href="#" onClick="CambiarE(2,'<?=$num_expediente?>');">Cerrar Expediente</a>
-							</li>							
+							</li>
 							<li>
 								<a href="#" onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
-							</li>							
-							
+							</li>
+
 							<?
 							}
 							?>
@@ -514,7 +514,7 @@ if($usuaPermExpediente >= 1  ) {
 						</span>
     </td>
     <td>
-    
+
     <?=$num_expediente?>
     <input name="num_expediente" type="hidden" size="30" maxlength="18" id='num_expediente' value="<?=$num_expediente?>" class="tex_area" >
      Cod :  <span class=leidos2> <? echo $param1;?>
@@ -522,7 +522,7 @@ if($usuaPermExpediente >= 1  ) {
      </td>
 	<?
 	}
-	
+
   ?>
     <input type="hidden" name='funExpediente' id='funExpediente' value="" >
     <input type="hidden" name='menu_ver_tmp' id='menu_ver_tmp' value="4" >
@@ -534,7 +534,7 @@ if($usuaPermExpediente >= 1  ) {
 	$tsub = "";
 	include_once ("$ruta_raiz/include/tx/Expediente.php");
 	$trdExp 	= new Expediente($db);
-	
+
 	$mrdCodigo 	= $trdExp->consultaTipoExpediente("$numExpediente");
 	$trdExpediente 	= $trdExp->descSerie." / ".$trdExp->descSubSerie;
 	$descPExpediente = $trdExp->descTipoExp;
@@ -584,7 +584,7 @@ if($usuaPermExpediente >= 1  ) {
 	// if ($carpeta==8) {
 	if ($carpeta==99998) {
 		//<input type="button"0. name="UPDATE_EXP" value="ACTUALIZAR EXPEDIENTE" class="botones_mediano" onClick="Start('buscar_usuario.php?busq_salida=',1024,400);">
-	} 
+	}
 	if($ASOC_EXP and !$funExpediente) {
     		for($ii=1;$ii<$i;$ii++) {
 			$expediente->num_expediente =  "";
@@ -606,7 +606,7 @@ if($usuaPermExpediente >= 1  ) {
 <?
   if(!$codigoFldExp) $codigoFldExp= "0";
 if($num_expediente !=""){
-?>   
+?>
 <?php
 	// Modificado Infom�trika 23-Julio-2009
 	// Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
@@ -621,7 +621,7 @@ if($num_expediente !=""){
 	}
 ?>
     <Tr><td>Trd</td><td><?php print $arrTRDExp['serie']." / ".$arrTRDExp['subserie']; ?>
-    
+
     <?php
 	// Modificado Infom�trika 23-Julio-2009
 	// Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
@@ -643,11 +643,11 @@ if($num_expediente !=""){
         }
       }
     ?><br>
-  
+
   </td></tr>
 	<tr>
 	<td><span class="dropdown">		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"> Proceso <b class="caret"> </b> </a>
-	
+
 	<ul class="dropdown-menu">
 	<?
 		if($usuaPermExpediente) {
@@ -657,7 +657,7 @@ if($num_expediente !=""){
 			</li>
 			<li>
 				<a href="#" onClick="verWorkFlow('<?=$num_expediente?>','<?=$texp?>');">Ver WorkFlow</a>
-			</li>			
+			</li>
 			<li>
 				<a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
 			</li>
@@ -681,12 +681,12 @@ if($descPExpediente){
 	$objFlujo = new Flujo($db, $texp, $usua_doc);
 	$kk = $objFlujo->getArista($texp, $codigoFldExp);
 	$aristasSig = $objFlujo->aristasSig;
- $frm = array();	
+ $frm = array();
  $iA = 0;
  $ventana = "Default";
  foreach($aristasSig as $key => $arista){
-  if(trim($arista["FRM_NOMBRE"])){ 
-    $ventana = "Max"; 
+  if(trim($arista["FRM_NOMBRE"])){
+    $ventana = "Max";
     If(!$numeroExpediente) $numeroExpediente = $numExpedente;
     $frm[$iA]["FRM_NOMBRE"] = $arista["FRM_NOMBRE"];
     $frm[$iA]["FRM_LINK"] = $arista["FRM_LINK"];
@@ -695,7 +695,7 @@ if($descPExpediente){
 		$frm[$iA]["FRM_LINK"] = str_replace("{dependencia}","$dependencia", $frm[$iA]["FRM_LINK"]);
 		$frm[$iA]["FRM_LINK"] = str_replace("{documentoUsuario}","$usua_doc", $frm[$iA]["FRM_LINK"]);
 		$frm[$iA]["FRM_LINK"] = str_replace("{nombreUsuario}","$usua_nomb", $frm[$iA]["FRM_LINK"]);
-			
+
 		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{numeroRadicado}","$numRad", $frm[$iA]["FRM_LINKSELECT"]);
 		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{numeroExpediente}","$numeroExpediente", $frm[$iA]["FRM_LINKSELECT"]);
 		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{dependencia}","$dependencia", $frm[$iA]["FRM_LINKSELECT"]);
@@ -707,19 +707,19 @@ if($descPExpediente){
 }
 ?>
   <tr><td>
-  
-  
-  
+
+
+
   <span class="dropdown">
   <li class="dropdown dropdown-large">
   <a class="dropdown-toggle" data-toggle="dropdown" href="#">
 Estado
 <b class="caret"></b>
 </a>
-  
+
 		<ul class="dropdown-menu dropdown-menu-large row">
 			<?
-			
+
 			if($usuaPermExpediente) {
 				?>
 				<li>
@@ -728,7 +728,7 @@ Estado
 				<li>
 					<a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
 				</li>
-			
+
 				<li>
 					<a href="#" onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
 				</li>
@@ -743,8 +743,8 @@ Estado
 				</li>
 				</ul>
 			 </li>
-		</span> 
-						<? 
+		</span>
+						<?
 						if($frm){
 							foreach($frm as $arista){
 						?>
@@ -763,13 +763,13 @@ Estado
 						<?php
 						}
 						}else{
-					?>								
+					?>
 
-		</B></Td><td><?=$descFldExp?>						
+		</B></Td><td><?=$descFldExp?>
 		</td><?
 		}
 		?>
-		</tr>				
+		</tr>
 		<tr><td>
      Fecha Inicio: </td><td><?php print $arrTRDExp['fecha']; ?></td>
     </tr>
@@ -781,21 +781,21 @@ Estado
 <td colspan="6" class="titulos5">
   <p>Documentos Pertenecientes al expediente &nbsp;</p>
       <?php
-        
+
     }
 ?>
 
 <table width="100%"><tr><td>
 <?
- 
+
  if($verrad) $exp = $expediente->consultaExp($verrad);
  $arrExpedientes = $expediente->expedientes;
- 
- 
+
+
  include "$ruta_raiz/expediente/expedienteTree.php";
-  
+
 ?>
-</td></tr></table>  
+</td></tr></table>
 <table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr>
     <td class="titulos5">Y ESTA RELACIONADO CON EL(LOS) SIGUIENTE(S) DOCUMENTOS:</td>
@@ -943,7 +943,7 @@ Estado
 	       }else {
 	   	      $rutaRadicado = "<a href='#2' onclick=\"alert('El documento posee seguridad y no posee los suficientes permisos'); return false;\"> $varRadi</a>";
 
-	       }      
+	       }
 
       }
 
@@ -958,7 +958,7 @@ Estado
       ?>
     </td>
     <td>
-   <? 
+   <?
 
        /*
 		* Modificacion link ingreso a imagenes del documento
@@ -1001,9 +1001,9 @@ Estado
     }
     $time_end = microtime_float();
 	$time = $time_end - $time_start;
-	echo "<span class='info'>";  
+	echo "<span class='info'>";
 	echo "<br><b>Se demor&oacute;: $time segundos la Operaci&oacute;n total.</b>";
-	echo "</span>"; 	
+	echo "</span>";
   ?>
 </table>
 
