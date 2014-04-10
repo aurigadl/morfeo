@@ -30,40 +30,66 @@ function Proceso( $db, $nombreProceso,$serieProceso = null, $subSerieProceso = n
 }
 
  	/**
-        * Author: Johnny Gonzalez L.
-        * Inserta un nuevo Proceso al cual se le va a crear flujo
-        **/
-        //function insertaProceso ($nombreProceso, $codProceso = null){
-        function insertaProceso ( ){
+		* Author: Johnny Gonzalez L.
+		* Inserta un nuevo Proceso al cual se le va a crear flujo
+		**/
+  function insertaProceso ( ){
 		
 		$queryID = "select max(sgd_pexp_codigo) AS IDACTUAL from sgd_pexp_procexpedientes";
 		$rs = $this->db->conn->query($queryID);
 		$this->codigoProceso = $rs->fields['IDACTUAL'] + 1;
 		
-                if($this->codigoProceso != null &&  $this->serieProceso != 0 &&  $this->subSerieProceso != 0){
-                	
-                	
-                		$query = "INSERT INTO sgd_pexp_procexpedientes (  sgd_pexp_codigo, sgd_pexp_descrip, ";
-                        $query .= " sgd_srd_codigo, sgd_sbrd_codigo, sgd_pexp_automatico, sgd_pexp_terminos, sgd_pexp_tieneflujo )";
-                        $query .= " VALUES ( " . $this->codigoProceso . ",  '$this->nombreProceso' , ";
-                        $query .= " $this->serieProceso, $this->subSerieProceso, $this->flujoAutomatico, ";
-                        $query .= " $this->terminosProceso , $this->tieneFlujo )";
-                	
-                        
-                } else{
-                	$mensajeResultadoStyle = "class=titulosError2>";
-                        return $mensajeResultadoHeader . $mensajeResultadoStyle . "No se pudo insertar el proceso, debe ingresar TRD para el proceso." . $mensajeResultadoFooter;
-                }
+		if($this->codigoProceso != null &&  $this->serieProceso != 0 &&  $this->subSerieProceso != 0){
+			
+			
+				$query = "INSERT INTO sgd_pexp_procexpedientes (  sgd_pexp_codigo, sgd_pexp_descrip, ";
+						$query .= " sgd_srd_codigo, sgd_sbrd_codigo, sgd_pexp_automatico, sgd_pexp_terminos, sgd_pexp_tieneflujo )";
+						$query .= " VALUES ( " . $this->codigoProceso . ",  '$this->nombreProceso' , ";
+						$query .= " $this->serieProceso, $this->subSerieProceso, $this->flujoAutomatico, ";
+						$query .= " $this->terminosProceso , $this->tieneFlujo )";
+			
+						
+		} else{
+			$mensajeResultadoStyle = "class=titulosError2>";
+						return $mensajeResultadoHeader . $mensajeResultadoStyle . "No se pudo insertar el proceso, debe ingresar TRD para el proceso." . $mensajeResultadoFooter;
+		}
 
-                if (!$rs = $this->db->conn->query($query)){
-                    return $this->mensajeResultadoHeader . $this->estiloError . "No se Pudo insertar el Proceso, ya existe un proceso con el mismo nombre y/o c&oacute;digo de proceso." . $this->mensajeResultadoFooter;
-                }else{
-	                return $this->mensajeResultadoHeader . $this->estiloExito . "Se registr&oacute; el Proceso con c&oacute;digo: " . $this->codigoProceso . " de forma exitosa." . $this->mensajeResultadoFooter;
-                }
+		if (!$rs = $this->db->conn->query($query)){
+				return $this->mensajeResultadoHeader . $this->estiloError . "No se Pudo insertar el Proceso, ya existe un proceso con el mismo nombre y/o c&oacute;digo de proceso." . $this->mensajeResultadoFooter;
+		}else{
+			return $this->mensajeResultadoHeader . $this->estiloExito . "Se registr&oacute; el Proceso con c&oacute;digo: " . $this->codigoProceso . " de forma exitosa." . $this->mensajeResultadoFooter;
+		}
 
 
-        }
 }
+        
+   /** Metodo de modificacion de Posicion de Nodos
+  * modificaNodoPos
+  * @param $codigoNodo COdigo del Nodo a modificar
+  * @param $codigoProceso Codigo del PRoceso a MOdificar
+  * @param $posLeft Posicion izquierda del Nodo.
+  * @param $posTop Posicion Top del Nodo.
+  * @return Retorana el mensaje si se realizo bienla transaccion.
+  *
+  */
+  
+function modificaNodoPos( $codigoNodo, $codigoProceso, $posLeft, $posTop ){
+	$codNodo = str_replace("nodo","",$codigoNodo);
+	$queryOrdenET = "update sgd_fexp_flujoexpedientes set 
+										sgd_fld_posleft='$posLeft', sgd_fld_postop='$posTop' ";
+	$queryOrdenET .= " where  sgd_fexp_codigo = $codNodo and sgd_pexp_codigo='$codigoProceso'";
+
+	if ( !$rsOrd = $this->db->conn->query( $queryOrdenET ) ){
+			return $this->mensajeResultadoHeader . $this->estiloError .' Lo siento no se pudo modificar la etapa '. $this->mensajeResultadoFooter;
+	}else{
+			return  'Etapa modificada correctamente. ' . $etapaAModificar. $this->mensajeResultadoFooter;
+	}
+}
+     
+}
+
+
+
 
 class EtapaFlujo{
 	var $etapa;
@@ -194,6 +220,7 @@ var $estiloExito = "class=titulos>";
 	        }
 	}
 }
+
 
 
 class AristaFlujo{

@@ -13,7 +13,7 @@
 					id:"arrow",
                     length:14,
                     foldback:0.8
-				} ],
+				} ], 
 			],
 			Container:"statemachine-demo"
 		});
@@ -22,14 +22,26 @@
 
         // initialise draggable elements.  
 		instance.draggable(windows);
+	
+		windows.bind("click", function(c) { 
+		  // alert(">>"+c.currentTarget.style.left+">>"+ c.currentTarget.style.top);
+		  realizaProceso(c.currentTarget.style.left, c.currentTarget.style.top, "<?=$numeroExpediente?>", "<?=$codigoProceso?>",c.currentTarget.id);
+			instance.detach(c); 
+		});
+		
+		
 
-        // bind a click listener to each connection; the connection is deleted. you could of course
+
+    // bind a click listener to each connection; the connection is deleted. you could of course
 		// just do this: jsPlumb.bind("click", jsPlumb.detach), but I wanted to make it clear what was
 		// happening.
 		instance.bind("click", function(c) { 
+		console.log("you clicked on ", c);
 			instance.detach(c); 
 		});
 
+
+		
 		// bind a connection listener. note that the parameter passed to this function contains more than
 		// just the new connection - see the documentation for a full list of what is included in 'info'.
 		// this listener sets the connection's internal
@@ -79,3 +91,27 @@
 	});
 })();
 </script>
+
+<script>
+function realizaProceso(valorLeft, valorTop, numeroExpediente, codigoProceso, codigoNodo){
+        var parametros = {
+                "valorLeft" : valorLeft,
+                "valorTop" : valorTop,
+                "codigoNodo" : codigoNodo,
+                "numeroExpediente" : numeroExpediente,
+                "codigoProceso" : <?=$texp?>
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'grbXY.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#resultado").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#resultado").html(response);
+                }
+        });
+}
+</script>
+

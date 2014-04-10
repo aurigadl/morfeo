@@ -1,5 +1,6 @@
 bodega/*
 config.php
 conf/configPHPMailer.php
+respuestaRapida/templates_c/*
 .svn
 *~

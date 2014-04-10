@@ -130,6 +130,8 @@ class Flujo{
 		  while(!$rs->EOF){
 				$nodos[$i]["DESCRIP"] = $rs->fields["SGD_FEXP_DESCRIP"];
 				$nodos[$i]["CODIGO"] = $rs->fields["SGD_FEXP_CODIGO"];
+				$nodos[$i]["POSLEFT"] = $rs->fields["SGD_FLD_POSLEFT"];
+				$nodos[$i]["POSTOP"] = $rs->fields["SGD_FLD_POSTOP"];
 				$i++;
 				$rs->MoveNext();
 			}

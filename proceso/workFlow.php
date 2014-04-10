@@ -69,17 +69,24 @@ if(!$numeroExpediente) $numeroExpediente = $numExpediente;
  $nodosCss = "$ruta_raiz/bodega/tmp/nodos_p$texp.css";
  
  $fp = fopen($nodosCss, "w");
- $top=3;
- $left=3;
+ $top=30;
+ $left=30;
  foreach($nodos as $etapas){
-   
+    if($etapas["POSLEFT"]){
+     $posLeft = number_format(intval(str_replace("px","",$etapas["POSLEFT"])),0);
+     $posTop = number_format(intval(str_replace("px","",$etapas["POSTOP"])),0);
+     
+    }else{
+     $posLeft = $left;
+     $posTop = $top;
+    }
 		$dClass =
 		"#nodo".$etapas["CODIGO"]." {
-		left:".$left."em;
-		top:".$top."em;
-		}";
-	$top = $top + 10;	
-	if($left==3)$left = 50;	else $left = 3;
+		  left:".$posLeft."px;
+		  top:".$posTop."px;
+		}\n";
+	$top = $top + 100;	
+	if($left==30)$left = 550;	else $left = 30;
 	
 	fputs($fp, $dClass);	
  }
@@ -88,7 +95,8 @@ if(!$numeroExpediente) $numeroExpediente = $numExpediente;
 <link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/demo-all.css">
 <link rel="stylesheet" href="<?=$ruta_raiz ?>/proceso/demo.css">
 <link rel="stylesheet" href="<?=$nodosCss?>">
-<div class="statemachine-demo" id="statemachine-demo" style="height:200%" >
+<div class="statemachine-demo" id="statemachine-demo" style="height:100%" >
+<span id="resultado"></span>
 	<?php
 		foreach($nodos as $etapas){
 		if($etapas["CODIGO"]==$codFld) {
