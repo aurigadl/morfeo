@@ -192,12 +192,13 @@ $_SESSION['numExpedienteSelected'] = null;
 										<select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
 										  <option value="9" selected="selected">Escoja una accion...</option>
 											<option value="9" >Enviar a...</option>
-											<option value="8">Mover a Carpeta...</option>
+											<option value="15" >Enviar a Visto Bueno.</option>
+											<option value="10">Mover a Carpeta...</option>
 											<option value="9">Enviar a Visto Bueno...</option>
-											<option value="12">Informar...</option>
+											<option value="8	">Informar...</option>
+											<option value="12	">Devolver...</option>
 											<option value="13">Archivar...</option>
 											<option value="14">Agendar...</option>
-											<option value="14"></option>
 										</select>
 								</span>
 							</div>
