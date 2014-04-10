@@ -1,16 +1,31 @@
 <?php
+/**
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 session_start();
 
 if (!$ruta_raiz) $ruta_raiz = "..";
     if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
-
-/**
-* Pagina excluirExpediente.php que muestra el contenido de las Carpetas
-* Modificado por Correlibre.org en el año 2012
-* Se añadio compatibilidad con variables globales en Off
-* @autor Jairo Losada 2012-05
-* @licencia GNU/GPL V 3
-*/
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
@@ -97,7 +112,6 @@ $arrExpedientes = $expediente->expedientesRadicado($nurad);
 foreach( $arrExpedientes as $clave => $numExpediente ){
     // Consulta el proceso y el estado del expediente
     $arrTRDExp = $expediente->getTRDExp( $numExpediente, "", "", "" );
-    
     $arrDatosExpediente[ $numExpediente ]['proceso'] = $arrTRDExp['proceso'];
     $arrDatosExpediente[ $numExpediente ]['estado']  = $arrTRDExp['estado'];
 }
@@ -109,171 +123,169 @@ foreach( $arrExpedientes as $clave => $numExpediente ){
 <html>
 <head>
 <title>Excluir de Expediente</title>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <script language="JavaScript" src="../js/funciones.js"></script>
 <script language="JavaScript">
 function excluirExpediente()
 {
     var strExpSeleccionados = "";
     frm = document.excExp;
-    if( typeof frm.check_uno.length != "undefined" )
-    {
-        for( i = 0; i < frm.check_uno.length; i++ )
-        {
-            if( frm.check_uno[i].checked )
-            {
-                if( strExpSeleccionados == "" )
-                {
+    if( typeof frm.check_uno.length != "undefined" ) {
+        for( i = 0; i < frm.check_uno.length; i++ ) {
+            if( frm.check_uno[i].checked ) {
+                if( strExpSeleccionados == "" ) {
                     coma = "";
                 }
-                else
-                {
+                else {
                     coma = ",";
                 }
-                
                 strExpSeleccionados += coma + frm.check_uno[i].value;
             }
         }
     }
-    else
-    {
-        if( frm.check_uno.checked )
-        {
+    else {
+        if( frm.check_uno.checked ) {
             strExpSeleccionados = frm.check_uno.value;
         }
     }
 
-    if( strExpSeleccionados != "" )
-	{
+  if( strExpSeleccionados != "" ) {
 		frm.expSeleccionados.value = strExpSeleccionados;
-        frm.submit();
-	}
-    else
-	{
+    frm.submit();
+	} else {
 		alert( "Debe seleccionar un expediente." );
         return false;
 	}
 }
-function confirmaExcluir()
-{
+
+function confirmaExcluir() {
     document.getElementById( 'confirmaIncluirExp' ).value = "EXCLUIR_EXP";
     document.excExp.submit();
 }
 </script>
 </head>
-
 <body>
-<center>
 <form name='excExp' action='<?php print $encabezado; ?>' method="post">
 <input type="hidden" name="expSeleccionados" value="<?php print $_POST['expSeleccionados']; ?>">
 <input type="hidden" name='confirmaIncluirExp' id='confirmaIncluirExp' value="" >
-<table width="93%"  border="1" align="center">
-  	<tr bordercolor="#FFFFFF">
-    <td colspan="2" class="titulos2">
-	<center>
-	<p><B><span class="etexto">EXCLUIR RADICADO DE EXPEDIENTE </span></B> </p>
-	</center>
-	</td>
-	</tr>
-</table>
-<table width="93%"  border="1" align="center">
-<tr></tr>
-</table>
-<table width="93%"  border="1" align="center">
-  <tr bordercolor="#FFFFFF">
-    <td colspan="2" class="titulos2">
-      <center>
-        <p><B>Radicado No. <?php print $_GET['nurad']; ?> Se excluir&aacute; del expediente No. </B> </p>
-    </center></td>
-  </tr>
-</table>
-<table width="93%"  border="1" align="center">
-<tr></tr>
-</table>
-<div align="center">
-	<table width="93%" class="borde_tab" border="0">
-	<tr class="timparr">
-	  <td width="26%" height="66" class="titulos2" align="center">
-        EXPEDIENTE
-      </td>
-	<td width="24%" class="titulos2" align="center">PROCESO</td>
-	<td width="30%" class="titulos2" align="center">ESTADO</td>
-	<td width="20%" height="66" class="titulos2"><div align="center">
-	  <input type="checkbox" name="check_todos" value="checkbox" onClick="todos( document.forms[0] );">
-	</div></td>
-	</tr>
-<?php
-foreach( $arrDatosExpediente as $numeroExpediente => $datosExpediente )
-{
-?>
-    <tr class="listado1">
-	  <td align="center" class="leidos">
-        <?php print $numeroExpediente; ?>
-      </td>
-      <td align="center" class="leidos">
-        <?php print $datosExpediente['proceso']; ?>
-      </td>
-      <td align="center" class="leidos">
-        <?php print $datosExpediente['estado']; ?>
-      </td>
-      <td align="center">
-        <input type="checkbox" name="check_uno" value="<?php print $numeroExpediente; ?>" onClick="uno( document.forms[0] );">
-      </td>
-    </tr>
-<?php
-}
-?>
-</table>
-</div>
-<?php
-if( !isset( $_POST['expSeleccionados'] ) )
-{
-?>
-<div align="center">
-<table border=1 width=93% class="t_bordeGris">
-	<tr class="timparr">
-	<td height="30" colspan="2" class="listado2">
-      <center>
-        <input class="botones" type="button" name="btnExcluir" id="btnExcluir" Value="EXCLUIR" onClick="excluirExpediente();">
-	  </center>
-    </td>
-	<td width="50%" height="30" colspan="2" class="listado2"><center>
-    <input class="botones" type="button" name="Cancelar" id="Cancelar" value="CANCELAR" onClick="opener.regresar(); window.close();"></center>  </td>
-	</tr>
-</table>
-</div>
+<div class="col-sm-12">
+  <!-- widget grid -->
+  <h2></h2>
+  <section id="widget-grid">
+    <!-- row -->
+    <div class="row">
+      <!-- NEW WIDGET START -->
+      <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <!-- Widget ID (each widget will need unique ID)-->
+        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+
+          <header>
+            <h2>
+              Excluir radicado de expediente<br>
+            </h2>
+          </header>
+          <!-- widget div-->
+          <div>
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                  <tr bordercolor="#FFFFFF">
+                    <td colspan="2" class="titulos2">
+                      <center>
+                        <p><B>Radicado No. <?php print $_GET['nurad']; ?> Se excluir&aacute; del expediente No. </B> </p>
+                    </center></td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                  <tr class="timparr">
+                    <td width="26%" height="66" class="titulos2" align="center">
+                      EXPEDIENTE
+                    </td>
+                    <td width="24%" class="titulos2" align="center">PROCESO</td>
+                    <td width="30%" class="titulos2" align="center">ESTADO</td>
+                    <td width="20%" height="66" class="titulos2">
+                      <input type="checkbox" name="check_todos" value="checkbox" onClick="todos( document.forms[0] );">
+                    </td>
+                  </tr>
+                  <?php foreach( $arrDatosExpediente as $numeroExpediente => $datosExpediente ) { ?>
+                  <tr class="listado1">
+                      <td align="center" class="leidos">
+                          <?php print $numeroExpediente; ?>
+                        </td>
+                        <td align="center" class="leidos">
+                          <?php print $datosExpediente['proceso']; ?>
+                        </td>
+                        <td align="center" class="leidos">
+                          <?php print $datosExpediente['estado']; ?>
+                        </td>
+                        <td align="center">
+                          <input type="checkbox" name="check_uno" value="<?php print $numeroExpediente; ?>" onClick="uno( document.forms[0] );">
+                        </td>
+                      </tr>
+                  <?php
+                  }
+                  ?>
+                  </table>
+                  </div>
+<?php if( !isset( $_POST['expSeleccionados'] ) ) { ?>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <tr class="timparr">
+                    <td height="30" colspan="2" class="listado2">
+                        <center>
+                          <input class="botones" type="button" name="btnExcluir" id="btnExcluir" Value="EXCLUIR" onClick="excluirExpediente();">
+                      </center>
+                      </td>
+                    <td width="50%" height="30" colspan="2" class="listado2"><center>
+                      <input class="botones" type="button" name="Cancelar" id="Cancelar" value="CANCELAR" onClick="opener.regresar(); window.close();"></center>  </td>
+                    </tr>
+                </table>
+             </div>
 <?php
 }
 // Solicita confirmaciÃ³n para excluir el radicado del expediente
-else if( isset( $_POST['expSeleccionados'] ) && $_POST['expSeleccionados'] != "" )
-{
-?>
-<table border=0 width="93%" align="center" class="borde_tab">
-  <tr align="center">
-    <td width="33%" height="25" class="listado2" align="center">
-      <center class="titulosError2">
-        <br>
-        <?php print $mensaje; ?>
-      </center>
-    </td>
-  </tr>
-</table>
-<table border=0 width="93%" align="center" class="borde_tab">
-  <tr align="center">
-    <td width="33%" height="25" class="listado2" align="center">
-	  <center>
-	    <input name="btnConfirmar" type="button" onClick="confirmaExcluir();" class="botones_funcion" value="Confirmar">
-	  </center>
-    </td>
-	<td width="33%" class="listado2" height="25">
-	<center><input name="cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar "></center></TD>
-	</tr>
-</table>
+else if( isset( $_POST['expSeleccionados'] ) && $_POST['expSeleccionados'] != "" ) { ?>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <tr align="center">
+                      <td width="33%" height="25" class="listado2" align="center">
+                        <center class="titulosError2">
+                          <br>
+                          <?php print $mensaje; ?>
+                        </center>
+                      </td>
+                    </tr>
+                  </table>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <tr align="center">
+                      <td width="33%" height="25" class="listado2" align="center">
+                      <center>
+                        <input name="btnConfirmar" type="button" onClick="confirmaExcluir();" class="botones_funcion" value="Confirmar">
+                      </center>
+                      </td>
+                    <td width="33%" class="listado2" height="25">
+                    <center><input name="cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar "></center></TD>
+                    </tr>
+                  </table>
+            </div>
 <?php	
 }
 ?>
+
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
 </form>
-<span class="etexto"><center>
-</center></span>
 </body>
 </html>

@@ -198,10 +198,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $rs = $db->query($isql);
   while(!$rs->EOF){
+
 	    $data    = trim($rs->fields["NOMB_CARP"]);
 	    $numdata = trim($rs->fields["CODI_CARP"]);
 	    $detalle = trim($rs->fields["DESC_CARP"]);
-	    $data    = trim($rs->fields["NOMB_CARP"]) ;
+	    $data    = trim($rs->fields["NOMB_CARP"]);
+
       $isql    = "SELECT
                     COUNT(1) AS CONTADOR
                   FROM
@@ -219,6 +221,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       $link9       = $enlace8."fechah=$fechah&tipo_carp=1&carpeta=$numdata&nomcarpeta=$data\"";
       $link10show .= "<li><a tabindex=\"-1\" $link9 target=\"mainFrame\" > $data($numerot) </a></li>";
 	    $rs->MoveNext();
+
     }
 
   //Administracion
