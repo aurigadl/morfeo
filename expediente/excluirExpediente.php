@@ -104,11 +104,10 @@ if( isset( $_POST['expSeleccionados'] ) && $_POST['expSeleccionados'] != "" )
         <?php
     }
 }
-/** CONSULTA SI EL EXPEDIENTE TIENE UNA CLASIFICACION TRD
-  */
+/** CONSULTA SI EL EXPEDIENTE TIENE UNA CLASIFICACION TRD */
 // Consulta los expedientes a los que pertenece un radicado
-$arrExpedientes = $expediente->expedientesRadicado($nurad);
 
+$arrExpedientes = $expediente->expedientesRadicado($nurad);
 foreach( $arrExpedientes as $clave => $numExpediente ){
     // Consulta el proceso y el estado del expediente
     $arrTRDExp = $expediente->getTRDExp( $numExpediente, "", "", "" );
