@@ -119,9 +119,10 @@ if($btn_acc == adjuntar){
     $uploadfile = $direcTor.$nomb;
     $tipValidoOdt  = 'application/vnd.oasis.opendocument.text';
     $tipoValidoDocx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-
+    $tipoValidoXls = 'application/vnd.ms-excel';
+    $tipValidoOds = 'application/vnd.oasis.opendocument.spreadsheet';
     if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile) &&
-            ($_FILES['userfile']['type'] == $tipValidoOdt) || ($_FILES['userfile']['type'] == $tipoValidoDocx)){
+           ($_FILES['userfile']['type']==$tipoValidoXls) ||  ($_FILES['userfile']['type']==$tipValidoOds) || ($_FILES['userfile']['type'] == $tipValidoOdt) || ($_FILES['userfile']['type'] == $tipoValidoDocx)){
 
         //crear listado de plantillas
         $doc3 = new DOMDocument();

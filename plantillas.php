@@ -46,7 +46,7 @@ if(file_exists($archivo3)){
         $temp1     = $campTemp1->item(0)->nodeValue;
         $temp2     = $campTemp2->item(0)->nodeValue;
 
-        $plantill  .= "&nbsp; &nbsp;<a href='".$direcTor.$temp2."'>".$temp1."</a><br/>";
+        $plantill  .= "&nbsp; &nbsp;<a href='".$direcTor.$temp2."'>".$temp1."</a><br/></br>";
     }
 }else{
     $msg  .= " No se abrio el archivo $archivo3 generado desde la administracion de plantillas</br>";
