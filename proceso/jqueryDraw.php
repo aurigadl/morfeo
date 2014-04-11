@@ -1,5 +1,5 @@
 <script LANGUAGE="JavaScript">
-;(function() {
+function mostrarWorkFlow() {
 	
 	jsPlumb.ready(function() {
 						
@@ -89,7 +89,7 @@
 		});
 	
 	});
-})();
+}
 </script>
 
 <script>
@@ -113,5 +113,7 @@ function realizaProceso(valorLeft, valorTop, numeroExpediente, codigoProceso, co
                 }
         });
 }
+mostrarWorkFlow();
 </script>
+
 

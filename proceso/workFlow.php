@@ -73,8 +73,10 @@ if(!$numeroExpediente) $numeroExpediente = $numExpediente;
  $left=30;
  foreach($nodos as $etapas){
     if($etapas["POSLEFT"]){
-     $posLeft = number_format(intval(str_replace("px","",$etapas["POSLEFT"])),0);
-     $posTop = number_format(intval(str_replace("px","",$etapas["POSTOP"])),0);
+     $posL = explode(".",str_replace("px","",$etapas["POSLEFT"]));
+     $posLeft = $posL[0];
+     $posT = explode(".",str_replace("px","",$etapas["POSTOP"]));
+     $posTop = $posT[0];
      
     }else{
      $posLeft = $left;
