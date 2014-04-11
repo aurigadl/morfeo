@@ -9,85 +9,86 @@ session_start();
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
-$krd = $_SESSION["krd"];
+
+$krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
-$usua_doc = $_SESSION["usua_doc"];
-$codusuario = $_SESSION["codusuario"];
-$tip3Nombre=$_SESSION["tip3Nombre"];
-$tip3desc = $_SESSION["tip3desc"];
-$tip3img =$_SESSION["tip3img"];
-$ruta_raiz= "..";
-	include_once("$ruta_raiz/include/db/ConnectionHandler.php");
-	$db = new ConnectionHandler("$ruta_raiz");
-	include_once "$ruta_raiz/include/tx/Historico.php";
-	include_once ("$ruta_raiz/class_control/TipoDocumental.php");
-	include_once "$ruta_raiz/include/tx/Expediente.php";
-	$trd = new TipoDocumental($db);
-	$numeroExpediente=$_GET['numeroExpediente'];
-	$encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionExp&numeroExpediente=$numeroExpediente&dependencia=$dependencia&krd=$krd&nurad=$nurad&coddepe=$coddepe&codusua=$codusua&depende=$depende&ent=$ent&tdoc=$tdoc&codiTRDModi=$codiTRDModi&codiTRDEli=$codiTRDEli&codserie=$codserie&tsub=$tsub&ind_ProcAnex=$ind_ProcAnex";
-	$codserie=(isset($_POST['codserie']))?$_POST['codserie']:0;
-	$tsub =(isset($_POST['tsub']))?$_POST['tsub']:0;
-	$coddepe =$_SESSION['depecodi'];
-	$nurad=$_GET['nurad'];
-	$codusuario=$_SESSION['codusuario'];
-	$usua_doc=$_SESSION['usua_doc'];
-									
-	function crearProcesoExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_doc,$usuaDocExp,$codiSRD,$codiSBRD,$fechaExp,$proc){
-		global $db;
-		$trdExp = substr("00".$codiSRD,-2) . substr("00".$codiSBRD,-2);
-		$anoExp = substr($numExpediente,0,4);
-		$secExp = substr($numExpediente,11,5);
-		$consecutivoExp = substr("00000".$secExp,-5);
-		$numeroExpediente = $anoExp . $dependencia . $trdExp . $consecutivoExp;
-	$fecha_hoy = Date("Y-m-d");
-		
-		$consultaEtaInicial="SELECT SGD_FEXP_CODIGO,SGD_PEXP_DESCRIP FROM SGD_FEXP_FLUJOEXPEDIENTES f 
-							INNER JOIN SGD_PEXP_PROCEXPEDIENTES p on f.SGD_PEXP_CODIGO=p.SGD_PEXP_CODIGO
-							WHERE f.SGD_PEXP_CODIGO={$proc} 
-							order by SGD_FEXP_ORDEN";
-		$rs= $db->conn->SelectLimit($consultaEtaInicial,1);
-		$codEtapa=$rs->fields['SGD_FEXP_CODIGO'];
-		$flujo_nombre=$rs->fields['SGD_PEXP_DESCRIP'];
-		
-		$record["SGD_FEXP_CODIGO"] = $codEtapa;
-		$record["SGD_EXP_FECHFLUJOANT"] = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
-		$record["SGD_HFLD_FECH"] = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
-		$record["SGD_EXP_NUMERO"] = "'".$numExpediente."'";
-		$record["RADI_NUME_RADI"] = $radicado;
-		$record["USUA_DOC"] = "'".$usua_doc."'";
-		$record["DEPE_CODI"] = $depe_codi;
-		$record["USUA_CODI"] = $usua_doc;
-		$record["SGD_TTR_CODIGO"] = 50;
-		$record["SGD_HFLD_OBSERVA"] = "'Creacion del Proceso $flujo_nombre'";
-		$record["SGD_FARS_CODIGO"] = "0";
-		$record["SGD_HFLD_AUTOMATICO"] = 1;
-	
-	if(!$fechaExp) $fechaExp = $fecha_hoy; $db->conn->debug=true;
-	$sqlFechaHoy=$db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
-		$query="insert into SGD_SEXP_SECEXPEDIENTES(SGD_EXP_NUMERO   ,SGD_SEXP_FECH      ,DEPE_CODI   ,USUA_DOC   ,SGD_FEXP_CODIGO,SGD_SRD_CODIGO,SGD_SBRD_CODIGO,SGD_SEXP_SECUENCIA, SGD_SEXP_ANO,USUA_DOC_RESPONSABLE,SGD_PEXP_CODIGO)
-	VALUES ('$numExpediente',". $sqlFechaHoy ." ,'$depe_codi','$usua_doc',$codEtapa,$codiSRD,$codiSBRD,$secExp ,$anoExp,$usuaDocExp,$proc)";
-//	$query = "Update SGD_SEXP_SECEXPEDIENTES set SGD_PEXP_CODIGO=$proc where SGD_EXP_NUMERO='$numExpediente' ";
-		if (!$rs = $db->conn->query($query)){
-			//echo '<br>Lo siento no pudo agregar el expediente<br>';
-		echo "<script type=\"text/javascript\"> alert(\"No se ha podido Adicionar el proceso \");</script>";
-			return 0;
-		}else{ break;
-		//echo "<br>Expediente Grabado Correctamente<br>";
-		$insertSQL = $db->insert("SGD_HFLD_HISTFLUJODOC", $record, "true");
-		
-		return $numExpediente;
-		}
-	}
-	
-	foreach ( $_POST as $elementos => $valor )
-    {
-        if ( strncmp ( $elementos, 'parExp_', 7) == 0 )
-        {
-            $indice = ( int ) substr ( $elementos, 7 );
-            $arrParametro[ $indice ] = $valor;
-        }
-    }
-    if(!$fechaExp) $fechaExp = date("d/m/Y");
+$usua_doc    = $_SESSION["usua_doc"];
+$codusuario  = $_SESSION["codusuario"];
+$tip3Nombre  = $_SESSION["tip3Nombre"];
+$tip3desc    = $_SESSION["tip3desc"];
+$tip3img     = $_SESSION["tip3img"];
+$ruta_raiz   = "..";
+include_once("$ruta_raiz/include/db/ConnectionHandler.php");
+$db = new ConnectionHandler("$ruta_raiz");
+include_once "$ruta_raiz/include/tx/Historico.php";
+include_once ("$ruta_raiz/class_control/TipoDocumental.php");
+include_once "$ruta_raiz/include/tx/Expediente.php";
+$trd = new TipoDocumental($db);
+
+$numeroExpediente = $_GET['numeroExpediente'];
+$encabezadol      = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionExp&numeroExpediente=$numeroExpediente&dependencia=$dependencia&krd=$krd&nurad=$nurad&coddepe=$coddepe&codusua=$codusua&depende=$depende&ent=$ent&tdoc=$tdoc&codiTRDModi=$codiTRDModi&codiTRDEli=$codiTRDEli&codserie=$codserie&tsub=$tsub&ind_ProcAnex=$ind_ProcAnex";
+$codserie   = (isset($_POST['codserie']))?$_POST['codserie']:0;
+$tsub       = (isset($_POST['tsub']))?$_POST['tsub']:0;
+$coddepe    = $_SESSION['depecodi'];
+$nurad      = $_GET['nurad'];
+$codusuario = $_SESSION['codusuario'];
+$usua_doc   = $_SESSION['usua_doc'];
+
+function crearProcesoExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_doc,$usuaDocExp,$codiSRD,$codiSBRD,$fechaExp,$proc){
+  global $db;
+  $trdExp = substr("00".$codiSRD,-2) . substr("00".$codiSBRD,-2);
+  $anoExp = substr($numExpediente,0,4);
+  $secExp = substr($numExpediente,11,5);
+  $consecutivoExp = substr("00000".$secExp,-5);
+  $numeroExpediente = $anoExp . $dependencia . $trdExp . $consecutivoExp;
+  $fecha_hoy = Date("Y-m-d");
+
+  $consultaEtaInicial="SELECT SGD_FEXP_CODIGO,SGD_PEXP_DESCRIP FROM SGD_FEXP_FLUJOEXPEDIENTES f
+    INNER JOIN SGD_PEXP_PROCEXPEDIENTES p on f.SGD_PEXP_CODIGO=p.SGD_PEXP_CODIGO
+    WHERE f.SGD_PEXP_CODIGO={$proc}
+    order by SGD_FEXP_ORDEN";
+  $rs= $db->conn->SelectLimit($consultaEtaInicial,1);
+  $codEtapa=$rs->fields['SGD_FEXP_CODIGO'];
+  $flujo_nombre=$rs->fields['SGD_PEXP_DESCRIP'];
+
+  $record["SGD_FEXP_CODIGO"] = $codEtapa;
+  $record["SGD_EXP_FECHFLUJOANT"] = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
+  $record["SGD_HFLD_FECH"] = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
+  $record["SGD_EXP_NUMERO"] = "'".$numExpediente."'";
+  $record["RADI_NUME_RADI"] = $radicado;
+  $record["USUA_DOC"] = "'".$usua_doc."'";
+  $record["DEPE_CODI"] = $depe_codi;
+  $record["USUA_CODI"] = $usua_doc;
+  $record["SGD_TTR_CODIGO"] = 50;
+  $record["SGD_HFLD_OBSERVA"] = "'Creacion del Proceso $flujo_nombre'";
+  $record["SGD_FARS_CODIGO"] = "0";
+  $record["SGD_HFLD_AUTOMATICO"] = 1;
+
+  if(!$fechaExp) $fechaExp = $fecha_hoy; $db->conn->debug=true;
+  $sqlFechaHoy=$db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
+  $query="insert into SGD_SEXP_SECEXPEDIENTES(SGD_EXP_NUMERO   ,SGD_SEXP_FECH      ,DEPE_CODI   ,USUA_DOC   ,SGD_FEXP_CODIGO,SGD_SRD_CODIGO,SGD_SBRD_CODIGO,SGD_SEXP_SECUENCIA, SGD_SEXP_ANO,USUA_DOC_RESPONSABLE,SGD_PEXP_CODIGO)
+    VALUES ('$numExpediente',". $sqlFechaHoy ." ,'$depe_codi','$usua_doc',$codEtapa,$codiSRD,$codiSBRD,$secExp ,$anoExp,$usuaDocExp,$proc)";
+  //	$query = "Update SGD_SEXP_SECEXPEDIENTES set SGD_PEXP_CODIGO=$proc where SGD_EXP_NUMERO='$numExpediente' ";
+  if (!$rs = $db->conn->query($query)){
+    //echo '<br>Lo siento no pudo agregar el expediente<br>';
+    echo "<script type=\"text/javascript\"> alert(\"No se ha podido Adicionar el proceso \");</script>";
+    return 0;
+  }else{ break;
+  //echo "<br>Expediente Grabado Correctamente<br>";
+  $insertSQL = $db->insert("SGD_HFLD_HISTFLUJODOC", $record, "true");
+
+  return $numExpediente;
+  }
+}
+
+foreach ( $_POST as $elementos => $valor ){
+  if ( strncmp ( $elementos, 'parExp_', 7) == 0 ){
+    $indice = ( int ) substr ( $elementos, 7 );
+    $arrParametro[ $indice ] = $valor;
+  }
+}
+
+if(!$fechaExp) $fechaExp = date("d/m/Y");
 
 ?>
 <html>
@@ -99,31 +100,33 @@ function regresar(){
 	document.TipoDocu.submit();
 }
 
-function Start(URL, WIDTH, HEIGHT)
-{
+function Start(URL, WIDTH, HEIGHT){
     windowprops = "top=0,left=0,location=no,status=no, menubar=no,scrollbars=yes, resizable=yes,width="+WIDTH+",height="+HEIGHT;
     preview = window.open(URL , "preview", windowprops);
 }
+
 function validar(){
-	var error="";
-	if($('crearProceso')!=undefined){
-		var seleccion=document.getElementsByTagName('SELECT');
-		for(i=0;i < seleccion.length;i++){
-			if(seleccion[i].value=='0' ){
-				error="posee un error Verifique e intente de Nuevo en La TRD o no ingreso el Responsable \n recurde solo se puedenasociar TRD con procesos";
-				seleccion[i].focus();
-			}	
-		}
-	}
-	if(error=="")
-		return true;
-	else{
-		alert(error);
-		return false
-	}
+  var error="";
+  if($('crearProceso')!=undefined){
+    var seleccion=document.getElementsByTagName('SELECT');
+    for(i=0;i < seleccion.length;i++){
+      if(seleccion[i].value=='0' ){
+        error="posee un error Verifique e intente de Nuevo en La TRD o no ingreso el Responsable \n recurde solo se puedenasociar TRD con procesos";
+        seleccion[i].focus();
+      }
+    }
+  }
+  if(error=="")
+    return true;
+  else{
+    alert(error);
+    return false
+  }
 }
+
 </script>
 </head>
+
 <body >
 <form method="post" action="<?=$encabezadol?>" name="TipoDocu" onsubmit="return validar();"  class="smart-form">
 <div class="widget-body no-padding" width=80% align=center>
@@ -255,14 +258,13 @@ Creacion de poceso Asociado al Expediente No. <?=$numeroExpediente?>
 	 <?
 	 if(!$fechaExp) $fechaExp = date("d/m/Y");
   ?>
-	<td >
-	<label class="input">
-<i class="icon-append fa fa-calendar"></i>
-<input id="fechaExp" class="hasDatepicker" type="text" placeholder="Fecha de Inicio de PRoceso" name="fechaExp" value="<?=$fechaExp?>">
-</label>
-
+	<td>
+    <label class="input"><i class="icon-append fa fa-calendar"></i>
+      <input  id="fechaEx" class="datepicker" data-dateformat='dd/mm/yy' type="text" placeholder="Fecha de Inicio de PRoceso" name="fechaExp" value="<?=$fechaExp?>">
+    </label>
   </td>
  </tr>
+
 <TD  nowrap>
 		<h3>Usuario Responsable del Proceso</h3>
 	</TD>
@@ -293,14 +295,19 @@ Creacion de poceso Asociado al Expediente No. <?=$numeroExpediente?>
 </form>
 </div>
    <script type="text/javascript">
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
     $(document).ready(function() {
+
+        pageSetUp();
         // START AND FINISH DATE
-        $('#fechaExp').datepicker({
+
+        $('#fechaEx').datepicker({
           dateFormat : 'dd/mm/yyyy',
-          prevText : '<i class="fa fa-chevron-left"></i>',
-          nextText : '<i class="fa fa-chevron-right"></i>',
+          prevText : '<i class=""></i>',
+          nextText : '<i class=""></i>',
           onSelect : function(selectedDate) {
-            $('#fechaExp').datepicker('option', 'maxDate', selectedDate);
+            $('#fechaEx').datepicker('option', 'maxDate', selectedDate);
           }
         });
     });
@@ -308,27 +315,27 @@ Creacion de poceso Asociado al Expediente No. <?=$numeroExpediente?>
 
 
 <?php if(isset($_POST['CrearProceso'])){
-	
+
 	$sal=crearProcesoExpediente( $numeroExpediente,$nurad,$coddepe,$codusuario,$usua_doc,$usuaDocExp,$codserie,$tsub,$fechaExp, $_POST['codProc'], $arrParametro );
 			$observa = "*TRD*".$codserie."/".$codiSBRD." (Creacion de Expediente.)";
 				include_once "$ruta_raiz/include/tx/Historico.php";
 				$radicados[] = $nurad;
-		
+
 			$tipoTx = 51;
 			$Historico = new Historico($db);
 			$Historico->insertarHistoricoExp($numeroExpediente,$radicados, $dependencia,$codusuario, $observa, $tipoTx,0);
 			if($sal){
 			?>
 			<script type="text/javascript">
-				opener.regresar(); 
+				opener.regresar();
 				window.close();
 			</script>
 			<?php
 			}
  }
  ?>
- 
- 
+
+
 
 </body>
 </html>
