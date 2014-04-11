@@ -62,6 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $enlace7        = "href=\"crear_carpeta.php?$phpsession&krd=$krd&";
   $enlace8        = "href=\"cuerpo.php?$phpsession&";
   $enlace21       = "href=\"busqueda/busquedaPiloto.php?$phpsession&";
+  $enlace22       = "href=\"./estadisticas/vistaFormConsulta.php?$phpsession&";
 
   $sqlFechaHoy    = $db->conn->DBTimeStamp(time());
 
@@ -135,7 +136,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           WHERE  USUA_DOC='$usua_doc'
           and agen.SGD_AGEN_ACTIVO=1
           and (agen.SGD_AGEN_FECHPLAZO <= $sqlFechaHoy)";
+
   $rs=$db->query($isql);
+
   $num_exp  = $rs->fields["CONTADOR"];
 	$data     ="Agendados vencidos";
   $link3    = $enlace2."$fechah&nomcarpeta=$data&&tipo_carpt=0&adodb_next_page=1\"";
@@ -230,6 +233,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   //Consultas
   $link21      = $enlace21."&etapa=1&s_Listado=VerListado&fechah=$fechah\"";
   $link21show  = "<li><a tabindex=\"-1\" $link21 target=\"mainFrame\"> Consultas </a></li>";
+
+  //Estadisticas
+  $link22      = $enlace22."&fechah=$fechah\"";
+  $link22show  = "<li><a tabindex=\"-1\" $link22 target=\"mainFrame\"> Estadisticas </a></li>";
 
 
 ?>
@@ -387,6 +394,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Bandejas <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                       <?=$link21show?>
+                      <?=$link22show?>
                       <?=$link1show?>
                       <?=$link4show?>
                       <?=$link5show?>
@@ -420,6 +428,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <a href="#" onclick="return false;" data-toggle="dropdown" class="dropdown-toggle"> Opciones <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                       <li><a href="plantillas.php?<?=session_name()."=".session_id()?>&fechah=$fechah&krd=$krd&info=false" target="mainFrame"> Plantillas </a></li>
+                      <li><a href="http://orfeogpl.info/wiki/ManualUsFinal" target="mainFrame"> Ayuda </a></li>
+                      <li><a href="./Administracion/tbasicas/adm_soportes.php?<?=$sendSession?>" target='mainFrame'>Soportes</a></li>
                     </ul>
                   </li>
 
@@ -427,6 +437,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?=$nombUser?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                       <li><a href="mod_datos.php?<?=session_name()."=".session_id()."&fechah=$fechah&krd=$krd&info=false"?>" target="mainFrame"><i class="fa fa-user"></i> Perfil </a></li>
+                      <li><a href="menu/creditos.php?<?=session_name()."=".session_id()."&fechah=$fechah&krd=$krd&info=false"?>" target="mainFrame"> Creditos </a></li>
+
+                      <?php if ($_SESSION["autentica_por_LDAP"] != 1){?>
+                      <li> <a href='contraxx.php?<?=session_name()."=".session_id()."&fechah=$fechah"?>' target=mainFrame> Cambio de clave </a></li>
+                      <?php } ?>
                       <li class="divider"></li>
                       <li><a href="cerrar_session.php?<?= session_name()."=".session_id()?>"><i class="fa fa-power-off"></i> Salir </a></li>
                     </ul>
