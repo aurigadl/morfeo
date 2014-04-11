@@ -814,101 +814,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </section>
 
   </div>
-  <div class="row">
-  </div>
-
-
-
 
 
 <div id="tabs">
-<?php
-
-  for($i=1; $i<=3; $i++){
-    $titulo = $tip3Nombre[$i][$ent];
-    if(!$titulo)  $titulo = "$i___";
-    $headtagsconten .= "<li><a href=\"#$titulo\">$titulo</a></li>";
-  }
-
-  echo "<ul>".$headtagsconten."</ul>";
-
-  for($i=1; $i<=3; $i++){
-
-    $titulo = $tip3Nombre[$i][$ent];
-    if(!$titulo)  $titulo = "$i___";
-
-    if($i==1){
-      $grbNombresUs1 = trim($nombre_us1) . " " . trim($prim_apel_us1) . " ". trim($seg_apel_us1);
-      $nombre       = $nombre_us1;
-      $documento    = $documento_us1;
-      $papel        = $prim_apel_us1;
-      $sapel        = $seg_apel_us1;
-      $tel          = $telefono_us1;
-      $dir          = $direccion_us1;
-      $mail         = $mail_us1;
-      $muni         = $muni_us1;
-      $codep        = $codep_us1;
-      $idp          = $idpais1;
-      $idc          = $idcont1;
-      $tipo         = $tipo_emp_us1;
-      $cc_documento = $cc_documento_us1;
-      $otro         = $otro_us1;
-    }
-    if($i==2){
-      $nombre        = $nombre_us2;
-      $documento     = $documento_us2;
-      $cc_documento  = $cc_documento_us2;
-      $papel         = $prim_apel_us2;
-      $sapel         = $seg_apel_us2;
-      $grbNombresUs2 = trim($nombre_us2) . " " . trim($prim_apel_us2) . " ". trim($seg_apel_us2);
-      $tel           = $telefono_us2;
-      $dir           = $direccion_us2;
-      $mail          = $mail_us2;
-      $muni          = $muni_us2;
-      $codep         = $codep_us2;
-      $idp           = $idpais2;
-      $idc           = $idcont2;
-      $tipo          = $tipo_emp_us2;
-      $otro          = $otro_us2;
-    }
-
-    if($i==3){
-      $nombre        = $nombre_us3;
-      $documento     = $documento_us3;
-      $cc_documento  = $cc_documento_us3;
-      $grbNombresUs3 = trim($nombre_us3) . " " . trim($prim_apel_us3) . " ".trim($seg_apel_us3);
-      $papel         = $prim_apel_us3;
-      $sapel         = $seg_apel_us3;
-      $tel           = $telefono_us3;
-      $dir           = $direccion_us3;
-      $mail          = $mail_us3;
-      $muni          = $muni_us3;
-      $codep         = $codep_us3;
-      $idp           = $idpais3;
-      $idc           = $idcont3;
-      $tipo          = $tipo_emp_us3;
-      $otro          = $otro_us3;
-    }
-
-    if($tipo==1 or $i==3){
-      $lbl_nombre   = "Raz&oacute;n Social";
-      $lbl_apellido = "Sigla";
-      $lbl_nombre2  = "Rep. Legal";
-    }else{
-      $lbl_nombre   = "Nombres";
-      $lbl_apellido = "Primer Apellido";
-      $lbl_nombre2  = "Segundo Apellido";
-    }
-
-    $bloqEdicion="";
-    if ($i==3){
-	    $bloqEdicion = "readonly='true'";
-    }
-
-
-?>
   <div id="<?=$titulo?>">
-
     <div class="row">
       <section class="col col-2">
           <label class="label">
@@ -919,9 +828,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <section class="col col-11">
                 <input type=text name='cc_documento_us<?=$i?>' value='<?=$cc_documento?>' readonly="true" >
               </section>
-              <section class="col col-1">
-                <input typ=etext name='documento_us<?=$i ?>' value='<?=$documento?>' readonly="true"  size="1">
-              </section>
             </div>
           </label>
       </section>
@@ -931,30 +837,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </label>
           <label class="select">
             <select name="tipo_emp_us<?=$i?>" class="input-sm">
-            <?
-              if($i==1){if($tipo_emp_us1==0){$datos = " selected ";}else{$datos= "";}}
-              if($i==2){if($tipo_emp_us2==0){$datos = " selected ";}else{$datos= "";}}
-            if($i==3){if($tipo_emp_us3==0){$datos = " selected ";}else{$datos= "";}}
-            ?>
-            <option value=0 '<?=$datos ?>'>USUARIO  </option>
-              <?
-            if($i==1){if($tipo_emp_us1==1){$datos = " selected ";}else{$datos= "";}}
-                if($i==2){if($tipo_emp_us2==1){$datos = " selected ";}else{$datos= "";}}
-              if($i==3){if($tipo_emp_us3==1){$datos = " selected ";}else{$datos= "";}}
-              ?>
-            <option value=1 '<?=$datos ?>'>ENTIDADES  </option>
-              <?
-            if($i==1){if($tipo_emp_us1==2){$datos = " selected ";}else{$datos= "";}}
-                if($i==2){if($tipo_emp_us2==2){$datos = " selected ";}else{$datos= "";}}
-              if($i==3){if($tipo_emp_us3==2){$datos = " selected ";}else{$datos= "";}}
-              ?>
-            <option value=2 '<?=$datos ?>'>EMPRESAS  </option>
-              <?
-            if($i==1){if($tipo_emp_us1==6){$datos = " selected ";}else{$datos= "";}}
-                if($i==2){if($tipo_emp_us2==6){$datos = " selected ";}else{$datos= "";}}
-              if($i==3){if($tipo_emp_us3==6){$datos = " selected ";}else{$datos= "";}}
-              ?>
-            <option value=6 '<?=$datos ?>'>FUNCIONARIOS  </option>
+            <option value=0 '<?=$datos ?>'>Usuario       </option>
+            <option value=1 '<?=$datos ?>'>Entidades     </option>
+            <option value=2 '<?=$datos ?>'>Empresas      </option>
+            <option value=6 '<?=$datos ?>'>Funcionarios  </option>
           </select>
           </label>
       </section>
@@ -968,7 +854,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="row">
       <section class="col col-3">
           <label class="label">
-            <?=$lbl_nombre ?>
+            Nombre
           </label>
           <label class="input">
             <INPUT type=text name='nombre_us<?=$i ?>' value='<?=$nombre ?>'  readonly="true"   size=40>
@@ -976,35 +862,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </section>
       <section class="col col-3">
           <label class="label">
-            <?=$lbl_apellido ?>
+            Primer Apellido
           </label>
           <label class="input">
-            <?php if($i==4) {
-              $ADODB_COUNTRECS = true;
-              $query ="select PAR_SERV_NOMBRE,PAR_SERV_CODIGO FROM PAR_SERV_SERVICIOS order by PAR_SERV_NOMBRE";
-              $rs=$db->conn->query($query);
-              $numRegs = "! ".$rs->RecordCount();
-              $varQuery = $query;
-              print $rs->GetMenu2("sector_us$i", "sector_us$i", "0:-- Seleccione --", false,"","onChange='procEst(formulario,18,$i )' class='ecajasfecha'");
-              $ADODB_COUNTRECS = false;
-              ?>
-              <select name="sector_us<?=$i ?>" class="select">
-                <?php while(!$rs->EOF) {
-                $codigo_sect = $rs->fields["PAR_SERV_CODIGO"];
-                $nombre_sect = $rs->fields["PAR_SERV_NOMBRE"];
-                echo "<option value=$codigo_sect>$nombre_sect</option>";
-                $rs->MoveNext();
-                  }
-                ?>
-              </select>
-                <?  } else { ?>
-                <INPUT type=text name='prim_apel_us<?=$i ?>' value='<?=$papel ?>'   readonly="true"  size="35">
-                <?  } ?>
+            <input type=text name='prim_apel_us<?=$i ?>' value='<?=$papel ?>'   readonly="true"  size="35">
           </label>
       </section>
       <section class="col col-3">
           <label class="label">
-            <?=$lbl_nombre2 ?>
+            Segundo Apellido
           </label>
           <label class="input">
             <input type=text name='seg_apel_us<?=$i ?>' value='<?=$sapel ?>'  readonly="true"   size=40>
@@ -1147,7 +1013,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </section>
     </div>
   </div>
-<? }
+<? 
 
 /******************************************
  *
@@ -1919,15 +1785,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       } ?>
 
     </form>
-    </div>
   </div>
 
   <script type="text/javascript">
     $(document).ready(function() {
-
-        //Just Tabs
-        $('#tabs').tabs();
-
         // START AND FINISH DATE
         $('#date').datepicker({
           dateFormat : 'yy/mm/dd',
