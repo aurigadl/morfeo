@@ -307,7 +307,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                           <li><a href="./Administracion/tbasicas/adm_mcpios.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Municipios</a></li>
                           <li><a href="./Administracion/tbasicas/adm_tarifas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Tarifas</a></li>
                           <li><a href="./Administracion/tbasicas/adm_plantillas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Plantillas</a></li>
-                          <li><a href="./Administracion/tbasicas/adm_soportes.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Soportes</a></li>
+                          <!--<li><a href="./Administracion/tbasicas/adm_soportes.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>Soportes</a></li>-->
                         </ul>
                       </li>
 
@@ -428,8 +428,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <a href="#" onclick="return false;" data-toggle="dropdown" class="dropdown-toggle"> Opciones <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                       <li><a href="plantillas.php?<?=session_name()."=".session_id()?>&fechah=$fechah&krd=$krd&info=false" target="mainFrame"> Plantillas </a></li>
-                      <li><a href="http://orfeogpl.info/wiki/ManualUsFinal" target="mainFrame"> Ayuda </a></li>
-                      <li><a href="./Administracion/tbasicas/adm_soportes.php?<?=$sendSession?>" target='mainFrame'>Soportes</a></li>
+                      <li><a href="http://wiki-siim2.infometrika.net" target="mainFrame"> Ayuda </a></li>
+                      <!--<li><a href="./Administracion/tbasicas/adm_soportes.php?<?=$sendSession?>" target='mainFrame'>Soportes</a></li>-->
                     </ul>
                   </li>
 
