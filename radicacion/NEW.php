@@ -1,223 +1,228 @@
 <?php
-session_start();
+/**
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
 
-$ruta_raiz = "..";
-if (!$_SESSION['dependencia'])
-    header ("Location: $ruta_raiz/cerrar_session.php");
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
 
-foreach ($_GET as $key => $valor)   ${$key} = $valor;
-foreach ($_POST as $key => $valor)   ${$key} = $valor;
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
 
-$krd                  = $_SESSION["krd"];
-$dependencia          = $_SESSION["dependencia"];
-$usua_doc             = $_SESSION["usua_doc"];
-$codusuario           = $_SESSION["codusuario"];
-$tpNumRad             = $_SESSION["tpNumRad"];
-$tpPerRad             = $_SESSION["tpPerRad"];
-$tpDescRad            = $_SESSION["tpDescRad"];
-$tip3Nombre           = $_SESSION["tip3Nombre"];
-$tip3img              = $_SESSION["tip3img"];
-$tpDepeRad            = $_SESSION["tpDepeRad"];
-$tip3desc             = $_SESSION["tip3desc"];
-$tip3img              = $_SESSION["tip3img"];
-$ln                   = $_SESSION["digitosDependencia"];
-$lnr                  = 11+$ln;
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-$eMailRemitente       = $_SESSION['eMailRemitente'];
-$eMailNombreRemitente = $_SESSION['eMailNombreRemitente'];
-$eMailsubject         = $_SESSION['eMailSubject'];
-$tipoMedio            = $_SESSION['eMailtipoMedio'];
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+  session_start();
 
-/*
- * Variables de Session de Radicacion de Mails
- * Estas son variables que traen los valores con radicacoin de un correo Electronico
- */
+  $ruta_raiz = "..";
+  if (!$_SESSION['dependencia'])
+      header ("Location: $ruta_raiz/cerrar_session.php");
 
+  foreach ($_GET  as $key => $valor) ${$key} = $valor;
+  foreach ($_POST as $key => $valor) ${$key} = $valor;
 
-if($tipoMedio=="eMail"){
+  $krd                  = $_SESSION["krd"];
+  $dependencia          = $_SESSION["dependencia"];
+  $usua_doc             = $_SESSION["usua_doc"];
+  $codusuario           = $_SESSION["codusuario"];
+  $tpNumRad             = $_SESSION["tpNumRad"];
+  $tpPerRad             = $_SESSION["tpPerRad"];
+  $tpDescRad            = $_SESSION["tpDescRad"];
+  $tip3Nombre           = $_SESSION["tip3Nombre"];
+  $tip3img              = $_SESSION["tip3img"];
+  $tpDepeRad            = $_SESSION["tpDepeRad"];
+  $tip3desc             = $_SESSION["tip3desc"];
+  $tip3img              = $_SESSION["tip3img"];
+  $ln                   = $_SESSION["digitosDependencia"];
+  $lnr                  = 11+$ln;
+
+  $eMailRemitente       = $_SESSION['eMailRemitente'];
+  $eMailNombreRemitente = $_SESSION['eMailNombreRemitente'];
+  $eMailsubject         = $_SESSION['eMailSubject'];
+  $tipoMedio            = $_SESSION['eMailtipoMedio'];
+
+  /*
+  * Variables de Session de Radicacion de Mails
+  * Estas son variables que traen los valores con radicacoin de un correo Electronico
+  */
+
+  if($tipoMedio=="eMail"){
     if(empty($mail_us1)){
-        $mail_us1 = $eMailRemitente;
+      $mail_us1 = $eMailRemitente;
     }
     if(empty($nombre_us1)){
-        $nombre_us1 = $eMailRemitente;
+      $nombre_us1 = $eMailRemitente;
     }
-}
+  }
 
-/**  Fin variables de session de Radicacion de Mail. **/
+  /**  Fin variables de session de Radicacion de Mail. **/
+  include_once("$ruta_raiz/include/db/ConnectionHandler.php");
+  $db     = new ConnectionHandler("$ruta_raiz");
 
-include_once "../include/db/ConnectionHandler.php";
-include_once "../class_control/AplIntegrada.php";
+  include_once("$ruta_raiz/class_control/AplIntegrada.php");
+  include("crea_combos_universales.php");
+  $objApl = new AplIntegrada($db);
 
-$db = new ConnectionHandler("$ruta_raiz");
-include "crea_combos_universales.php";
-$objApl = new AplIntegrada($db);
+  if($nurad){
+    $nurad = trim($nurad);
+    $ent   = substr($nurad,-1);
+  }
 
-if($nurad){
-	$nurad=trim($nurad);
-	$ent = substr($nurad,-1);
-}
+  $no_tipo   = "true";
+  $imgTp1    = str_replace(".jpg", "",$tip3img[1][$ent]);
+  $imgTp2    = str_replace(".jpg", "",$tip3img[2][$ent]);
+  $imgTp3    = str_replace(".jpg", "",$tip3img[3][$ent]);
+  $descTp1   = "alt  = '".$tip3desc[1][$ent]."' title = '".$tip3desc[1][$ent]."'";
+  $descTp2   = "alt  = '".$tip3desc[2][$ent]."' title = '".$tip3desc[2][$ent]."'";
+  $descTp3   = "alt  = '".$tip3desc[3][$ent]."' title = '".$tip3desc[3][$ent]."'";
+  $nombreTp1 = $tip3Nombre[1][$ent];
+  $nombreTp2 = $tip3Nombre[2][$ent];
+  $nombreTp3 = $tip3Nombre[3][$ent];
 
-$no_tipo   = "true";
-$imgTp1    = str_replace(".jpg", "",$tip3img[1][$ent]);
-$imgTp2    = str_replace(".jpg", "",$tip3img[2][$ent]);
-$imgTp3    = str_replace(".jpg", "",$tip3img[3][$ent]);
-$descTp1   = "alt  = '".$tip3desc[1][$ent]."' title = '".$tip3desc[1][$ent]."'";
-$descTp2   = "alt  = '".$tip3desc[2][$ent]."' title = '".$tip3desc[2][$ent]."'";
-$descTp3   = "alt  = '".$tip3desc[3][$ent]."' title = '".$tip3desc[3][$ent]."'";
-$nombreTp1 = $tip3Nombre[1][$ent];
-$nombreTp2 = $tip3Nombre[2][$ent];
-$nombreTp3 = $tip3Nombre[3][$ent];
 ?>
-<HTML>
-<head>
-<?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
+<html>
+  <head>
+  <?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
+  <script language="JavaScript">
+  <?
+  // Convertimos los vectores de los paises, dptos y municipios creados en crea_combos_universales.php a vectores en JavaScript.
+  echo arrayToJsArray($vpaisesv, 'vp');
+  echo arrayToJsArray($vdptosv, 'vd');
+  echo arrayToJsArray($vmcposv, 'vm');
+  ?>
 
-<SCRIPT Language="JavaScript" src="../js/crea_combos_2.js"></SCRIPT>
-<script language="JavaScript">
-<?
-// Convertimos los vectores de los paises, dptos y municipios creados en crea_combos_universales.php a vectores en JavaScript.
-echo arrayToJsArray($vpaisesv, 'vp');
-echo arrayToJsArray($vdptosv, 'vd');
-echo arrayToJsArray($vmcposv, 'vm');
-?>
+  function cambIntgAp(valor){
+    fecha_hoy =  '<?=date('d')."-".date('m')."-".date('Y')?>';
 
-function cambIntgAp(valor){
-	fecha_hoy =  '<?=date('d')."-".date('m')."-".date('Y')?>';
+    if (valor!=0){
+      if  (document.formulario.fecha_gen_doc.value.length==0)
+        document.formulario.fecha_gen_doc.value=fecha_hoy;
+    } else
+      document.formulario.fecha_gen_doc.value="";
 
-	if (valor!=0){
-		if  (document.formulario.fecha_gen_doc.value.length==0)
-			document.formulario.fecha_gen_doc.value=fecha_hoy;
-	} else
-		document.formulario.fecha_gen_doc.value="";
+  }
 
-}
+  function fechf(formulario,n){
 
-function fechf(formulario,n){
-  var fechaActual = new Date();
-	fecha_doc = document.formulario.fecha_gen_doc.value;
-	dias_doc=fecha_doc.substring(0,2);
-	mes_doc=fecha_doc.substring(3,5);
-	ano_doc=fecha_doc.substring(6,10);
-	var fecha = new Date(ano_doc,mes_doc-1, dias_doc);
-  var tiempoRestante = fechaActual.getTime() - fecha.getTime();
-  var dias = Math.floor(tiempoRestante / (1000 * 60 * 60 * 24));
-  if (dias >960 && dias < 1500)
-	{
-    alert("El documento tiene fecha anterior a 60 dias!!");
-   }else{
-    if (dias > 1500)
-  {sftp://jlosada@172.16.0.168/home/orfeodev/jlosada/public_html/orfeointer/radicacion/NEW.php
-  alert("Verifique la fecha del documento!!");
-  fecha_doc = "";
-      }else
-      {
-	fecha_doc = "ok";
-	if (dias < 0)
-	{
-	alert("Verifique la fecha del documento !!, es Una fecha Superior a la Del dia de Hoy");
-	fecha_doc = "asdfa";
-	}
+    var fechaActual = new Date();
+    fecha_doc = document.formulario.fecha_gen_doc.value;
+    dias_doc=fecha_doc.substring(0,2);
+    mes_doc=fecha_doc.substring(3,5);
+    ano_doc=fecha_doc.substring(6,10);
 
+    var fecha = new Date(ano_doc,mes_doc-1, dias_doc);
+    var tiempoRestante = fechaActual.getTime() - fecha.getTime();
+    var dias = Math.floor(tiempoRestante / (1000 * 60 * 60 * 24));
+
+    if (dias >960 && dias < 1500){
+      alert("El documento tiene fecha anterior a 60 dias!!");
+    }else{
+      if (dias > 1500){
+        alert("Verifique la fecha del documento!!");
+        fecha_doc = "";
+      }else{
+        fecha_doc = "ok";
+        if (dias < 0){
+          alert("Verifique la fecha del documento !!, es Una fecha Superior a la Del dia de Hoy");
+          fecha_doc = "asdfa";
+        }
+      }
+    }
+    return fecha_doc;
+  }
+
+  function radicar_doc(){
+    if(fechf ("formulario",16)=="ok"){
+
+      if(/[A-Za-z]+$/.test(document.formulario.nofolios.value) |
+         /[A-Za-z]+$/.test(document.formulario.noanexos.value)){
+         alert("Escriba un número válido en No de folios o anexos.")
+         return false;
       }
 
-}
-return fecha_doc;
-}
-function radicar_doc()
-
-{	if(fechf ("formulario",16)=="ok")
-	{
-        if(/[A-Za-z]+$/.test(document.formulario.nofolios.value) |
-           /[A-Za-z]+$/.test(document.formulario.noanexos.value)){
-            alert("Escriba un número válido en No de folios o anexos.")
-            return false;
-        }
-
-		if ( document.formulario.documento_us1.value != 0 &&
-			document.formulario.muni_us1.value != 0 &&
-			document.formulario.direccion_us1.value != 0 &&
-			document.formulario.coddepe.value != 0)
-  		{
-			   document.formulario.submit();
-		}
-	 else
-	 	{
-		alert("El tipo de Documento, Remitente/Destinatario, Direccion y Dependencia son obligatorios ");	}
-	 }
-
-
-}
-
-function modificar_doc()
-{
-   if (document.formulario.documento_us1.value)
-    {
-       document.formulario.submit();
-	  }
-	 else
-	 {
-	   alert("Remitente/Destinatario son obligatorios ");
-	 }
-}
-function pestanas(pestana)
-{
- <?
-   if($ent==1) $ver_pestana=""; else $ver_pestana="";
-  ?>
-   document.getElementById('remitente').style.display = "";
-   document.getElementById('predio').style.display = "<?=$ver_pestana?>";
-   document.getElementById('empresa').style.display = "<?=$ver_pestana?>";
-  if(pestana==1) {
-    document.getElementById('pes1').style.display = "";
-   }else{
-    document.getElementById('pes1').style.display = "none";
-   }
-  if(pestana==2)
-  {
-  document.getElementById('pes2').style.display = "";
-   }else{document.getElementById('pes2').style.display = "none";}
-  if(pestana==3) {
-  document.getElementById('pes3').style.display = "";
+      if( document.formulario.documento_us1.value != 0 &&
+        document.formulario.muni_us1.value != 0 &&
+        document.formulario.direccion_us1.value != 0 &&
+        document.formulario.coddepe.value != 0){
+          document.formulario.submit();
+      } else {
+      alert("El tipo de Documento, Remitente/Destinatario, Direccion y Dependencia son obligatorios ");	}
+    }
   }
-  else
-  {document.getElementById('pes3').style.display = "none";}
-}
-function pb1()
-{
-   dato1 = document.forma.no_documento.value;
-}
 
-function Start(URL, WIDTH, HEIGHT) {
-	windowprops = "top=0,left=0,location=no,status=no, menubar=no,scrollbars=yes, resizable=yes,width=1100,height=550";
-	preview = window.open(URL , "preview", windowprops);
-}
+  function modificar_doc(){
+    if (document.formulario.documento_us1.value){
+        document.formulario.submit();
+    }else{
+      alert("Remitente/Destinatario son obligatorios ");
+    }
+  }
 
-function doPopup() {
-url = "popup.htm";
-width = 800; // ancho en pixels
-height = 320; // alto en pixels
-delay = 2; // tiempo de delay en segundos
-timer = setTimeout("Start(url, width, height)", delay*1000);
-}
+  function pestanas(pestana){
+    <?  if($ent==1) $ver_pestana=""; else $ver_pestana=""; ?>
+    document.getElementById('remitente').style.display = "";
+    document.getElementById('predio').style.display = "<?=$ver_pestana?>";
+    document.getElementById('empresa').style.display = "<?=$ver_pestana?>";
+    if(pestana==1) {
+      document.getElementById('pes1').style.display = "";
+    }else{
+      document.getElementById('pes1').style.display = "none";
+    }
 
-function buscar_usuario(){
-   document.write('<form target=Buscar_Usuario name=formb action=buscar_usuario.php?envio_salida=true&ent=<?=$ent?> method=POST>');
-   document.write("<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>");
-   document.write("<input type='hidden' name=no_documento value='" + documento +"'>");
-   document.write("</form> ");
-}
+    if(pestana==2) {
+      document.getElementById('pes2').style.display = "";
+    }else{
+      document.getElementById('pes2').style.display = "none";
+    }
+    if(pestana==3) {
+      document.getElementById('pes3').style.display = "";
+    }else{
+      document.getElementById('pes3').style.display = "none";}
+  }
 
-function regresar(){
-i=1;
-}
-</script>
+  function pb1(){
+    dato1 = document.forma.no_documento.value;
+  }
+
+  function Start(URL, WIDTH, HEIGHT) {
+    windowprops = "top=0,left=0,location=no,status=no, menubar=no,scrollbars=yes, resizable=yes,width=1100,height=550";
+    preview = window.open(URL , "preview", windowprops);
+  }
+
+  function doPopup() {
+    url    = "popup.htm";
+    width  = 800; // ancho en pixels
+    height = 320; // alto en pixels
+    delay  = 2; // tiempo de delay en segundos
+    timer  = setTimeout("Start(url, width, height)", delay*1000);
+  }
+
+  function buscar_usuario(){
+    document.write('<form target=Buscar_Usuario name=formb action=buscar_usuario.php?envio_salida=true&ent=<?=$ent?> method=POST>');
+    document.write("<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>");
+    document.write("<input type='hidden' name=no_documento value='" + documento +"'>");
+    document.write("</form> ");
+  }
+
+  function regresar(){
+    i=1;
+  }
+  </script>
 </head>
-<body topmargin="0" bgcolor="#FFFFFF" style="zoom: 1;" cz-shortcut-listen="true">
-   <div id="spiffycalendar" class="text"></div>
-   <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
-  <script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
-<?php
 
+
+
+<body>
+<?php
   $ddate  = date('d');
   $mdate  = date('m');
   $adate  = date('Y');
@@ -226,97 +231,125 @@ i=1;
   $fechaf = $date.$mdate.$adate.$hora;
   // aqui se busca el radicado para editar si viene la variable $Buscar
 
-if($Buscar){
-	  $docDia = $db->conn->SQLDate('d','a.RADI_FECH_OFIC');
-	  $docMes = $db->conn->SQLDate('m','a.RADI_FECH_OFIC');
-	  $docAno = $db->conn->SQLDate('Y','a.RADI_FECH_OFIC');
-	  $fRad   = $db->conn->SQLDate('Y-m-d','a.RADI_FECH_RADI');
-	  if (!$nurad || strlen(trim($nurad))==0)
-		  $nurad="NULL";
-	  $query = "select a.*
-		  ,$docDia AS DOCDIA
-		  ,$docMes AS DOCMES
-		  ,$docAno AS DOCANO
-		  ,a.EESP_CODI
-		  ,a.RA_ASUN
-		  ,$fRad AS FECHA_RADICADO
-		  from radicado a
-		  where a.radi_nume_radi=$nurad";
-	  $rs=$db->conn->query($query);
-	  $varQuery = $query;
-	  $busqueda=$nurad;
-	  if(!$rs->EOF and is_numeric($busqueda))
-	  {
-		  if($cursor){
-			  $Submit4 = "Modificar";
-		  }
+  if($Buscar){
+      $docDia = $db->conn->SQLDate('d','a.RADI_FECH_OFIC');
+      $docMes = $db->conn->SQLDate('m','a.RADI_FECH_OFIC');
+      $docAno = $db->conn->SQLDate('Y','a.RADI_FECH_OFIC');
+      $fRad   = $db->conn->SQLDate('Y-m-d','a.RADI_FECH_RADI');
 
-      $asu             = $rs->fields["RA_ASUN"];
-		  $tip_doc         = $rs->fields["TDID_CODI"];
-		  $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
-		  $ane             = $rs->fields["RADI_DESC_ANEX"];
-		  $codep           = $rs->fields["DEPTO_CODI"];
-		  $pais            = $rs->fields["RADI_PAIS"];
-		  $carp_codi       = $rs->fields["CARP_CODI"];
-		  $cuentai         = $rs->fields["RADI_CUENTAI"];
-		  $carp_per        = $rs->fields["CARP_PER"];
-		  $depende         = $rs->fields["RADI_DEPE_ACTU"];
-		  $tip_rem         = $rs->fields["TRTE_CODI"]+1;
-		  $tdoc            = $rs->fields["TDOC_CODI"];
-		  $med             = $rs->fields["MREC_CODI"];
-		  $cod             = $rs->fields["MUNI_CODI"];
-		  $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
-		  $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
-		  $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
-		  $fechproc12      = $rs->fields["DOCDIA"];
-		  $fechproc22      = $rs->fields["DOCMES"];
-		  $fechproc32      = $rs->fields["DOCANO"];
-		  $fechaRadicacion = $rs->fields["FECHA_RADICADO"];
-		  $espcodi         = $rs->fields["EESP_CODI"];
-		  $fecha_gen_doc   = "$fechproc12/$fechproc22/$fechproc32";
-		  include "busca_direcciones.php";
-	  } else {
-		  echo "<p><center><table width='90%' class=borde_tab celspacing=5><tr><td class=titulosError><center>No se han encontrado registros con numero de radicado <font color=blue>$nurad</font> <br>Revise el radicado escrito, solo pueden ser Numeros de  $lnr digitos <br><p><hr><a href='edtradicado.php?".session_name()."=".session_id()."&fechaf=$fechaf&krd=$krd&drde=$drde'><font color=red>Intente de Nuevo</a></center></td></tr></table></center>";
-		  if(!$rsJHLC) die("<hr>");
-	  }
+      if (!$nurad || strlen(trim($nurad))==0){
+        $nurad="NULL";
+      }
+
+      $query = "select a.*
+        ,$docDia AS DOCDIA
+        ,$docMes AS DOCMES
+        ,$docAno AS DOCANO
+        ,a.EESP_CODI
+        ,a.RA_ASUN
+        ,$fRad AS FECHA_RADICADO
+        from radicado a
+        where a.radi_nume_radi=$nurad";
+
+      $rs       = $db->conn->query($query);
+      $varQuery = $query;
+      $busqueda = $nurad;
+
+      if(!$rs->EOF and is_numeric($busqueda)){
+        if($cursor){
+          $Submit4 = "Modificar";
+        }
+
+        $asu             = $rs->fields["RA_ASUN"];
+        $tip_doc         = $rs->fields["TDID_CODI"];
+        $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
+        $ane             = $rs->fields["RADI_DESC_ANEX"];
+        $codep           = $rs->fields["DEPTO_CODI"];
+        $pais            = $rs->fields["RADI_PAIS"];
+        $carp_codi       = $rs->fields["CARP_CODI"];
+        $cuentai         = $rs->fields["RADI_CUENTAI"];
+        $carp_per        = $rs->fields["CARP_PER"];
+        $depende         = $rs->fields["RADI_DEPE_ACTU"];
+        $tip_rem         = $rs->fields["TRTE_CODI"]+1;
+        $tdoc            = $rs->fields["TDOC_CODI"];
+        $med             = $rs->fields["MREC_CODI"];
+        $cod             = $rs->fields["MUNI_CODI"];
+        $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
+        $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
+        $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
+        $fechproc12      = $rs->fields["DOCDIA"];
+        $fechproc22      = $rs->fields["DOCMES"];
+        $fechproc32      = $rs->fields["DOCANO"];
+        $fechaRadicacion = $rs->fields["FECHA_RADICADO"];
+        $espcodi         = $rs->fields["EESP_CODI"];
+        $fecha_gen_doc   = "$fechproc12/$fechproc22/$fechproc32";
+        include "busca_direcciones.php";
+      } else {
+        echo "<p>
+          <center>
+            <table width='90%' class=borde_tab celspacing=5>
+              <tr>
+                <td class=titulosError>
+                  <center>No se han encontrado registros con numero de radicado
+                    <font color=blue>$nurad</font> <br>Revise el radicado escrito,
+                    solo pueden ser Numeros de  $lnr digitos
+                    <br>
+                    <hr>
+                    <a href='edtradicado.php?".session_name()."=".session_id()."&fechaf=$fechaf&krd=$krd&drde=$drde'>
+                      <font color=red>
+                      Intente de Nuevo
+                    </a>
+                  </center>
+                </td>
+              </tr>
+            </table>
+          </center>";
+        if(!$rsJHLC) die("<hr>");
+      }
   }
 	 // Fin de Busqueda del Radicado para editar
 
 ?>
   <script language="javascript">
-  <?
-  if(!$fecha_gen_doc || $fecha_gen_doc=='//'){
-    $fecha_busq = date("d-m-Y");
-	  $fecha_gen_doc = $fecha_busq;
-  }
-  ?>
+    <?
+    if(!$fecha_gen_doc || $fecha_gen_doc=='//'){
+      $fecha_busq = date("d-m-Y");
+      $fecha_gen_doc = $fecha_busq;
+    }
+    ?>
   </script>
-   <?php
+<?php
 
   if($rad1 or $rad0 or $rad2){
     if($rad1) $tpRadicado = "1";
     if($rad2) $tpRadicado = "2";
     if($rad0) $tpRadicado = "0";
+
     echo "<input type=hidden name=tpRadicado value=$tpRadicado>";
+
     $docDia = $db->conn->SQLDate('D','a.RADI_FECH_OFIC');
     $docMes = $db->conn->SQLDate('M','a.RADI_FECH_OFIC');
     $docAno = $db->conn->SQLDate('Y','a.RADI_FECH_OFIC');
-    if (!$radicadopadre || strlen(trim($radicadopadre))==0)
+
+    if (!$radicadopadre || strlen(trim($radicadopadre))==0){
       $radicadopadre="NULL";
+    }
+
     $query = "select a.*
       ,$docDia AS DOCDIA
       ,$docMes AS DOCMES
       ,$docAno AS DOCANO
       ,a.EESP_CODI from radicado a
       where a.radi_nume_radi=$radicadopadre";
+
     $varQuery = $query;
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
     $rs=$db->conn->query($query);
 
-    if(!$rs->EOF)
-    {
+    if(!$rs->EOF){
       echo "<!-- No hay datos: $query -->";
     }
+
     if(!$Buscar and !$Submit4){
       $varQuery = $query;
       $comentarioDev = 'Entro a Anexar un radicado ';
@@ -351,360 +384,346 @@ if($Buscar){
       $fechproc22=$rs->fields["DOCMES"];
       $fechproc32=$rs->fields["DOCANO"];
     }
-    $ruta_raiz = "..";
+
     $no_tipo = "true";
     include "busca_direcciones.php";
   }
-	IF($rad1){
+
+	if($rad1){
 	  $encabezado = "Copia de datos del Radicado  $radicadopadre ";
 	  $tipoanexo = "1";
 	}
-	IF($rad0){
+
+	if($rad0){
 	  $encabezado = "Anexo de $radicadopadre ";
 	  $tipoanexo = "0";
 	  $radicadopadre_exist=1;
 	}
 
-	IF($rad2){
+	if($rad2){
 	  $encabezado = "Documento Asociado de $radicadopadre ";
 	  if(!$Submit4 and !$Submit3){$cuentai = "";}
 	  $tipoanexo = "2";
  	  $radicadopadre_exist=1;
 	}
-	 IF($noradicar1)
+  if($noradicar1){
 	  $radicadopadre_exist=0;
+  }
  ?>
-  <script>
-function procEst2(formulario,tb)
-{
-	var lista = document.formulario.codep.value;
-	i = document.formulario.codep.value;
-	if (i != 0) {
-		var dropdownObjectPath = document.formulario.tip_doc;
-		var wichDropdown = "tip_doc";
-		var d=tb;
-		var withWhat = document.formulario.codep.value;
-		populateOptions2(wichDropdown, withWhat,tb);
-	  }
-}
-function populateOptions2(wichDropdown, withWhat,tbres){
-  r = new Array;
-  i=0;
+<script>
 
-  if (withWhat == "2"){
-    r[i++]=new Option("NIT", "1");
-  }
-
-  if (withWhat == "1"){
-    document.formulario.submit();
-    r[i++]=new Option("NIT","4");
-    r[i++]=new Option("NUIR","5");
-  }
-
-  if (withWhat == "3"){
-    r[i++]=new Option("CC", "0");
-    r[i++]=new Option("CE", "2");
-    r[i++]=new Option("TI", "1");
-    r[i++]=new Option("PASAPORTE", "3");
-  }
-
-  if (i==0){
-    alert(i + " " + "Error!!!");
-  }else{
-    dropdownObjectPath = document.formulario.tip_doc;
-    eval(document.formulario.tip_doc.length=r.length);
-    largestwidth=0;
-    for (i=0; i < r.length; i++){
-      eval(document.formulario.tip_doc.options[i]=r[i]);
-      if (r[i].text.length > largestwidth) {
-        largestwidth=r[i].text.length;    }
+  function procEst2(formulario,tb){
+    var lista = document.formulario.codep.value;
+    i = document.formulario.codep.value;
+    if (i != 0) {
+      var dropdownObjectPath = document.formulario.tip_doc;
+      var wichDropdown = "tip_doc";
+      var d=tb;
+      var withWhat = document.formulario.codep.value;
+      populateOptions2(wichDropdown, withWhat,tb);
     }
-    eval(document.formulario.tip_doc.length=r.length);
-    //eval(document.myform.cod.options[0].selected=true);
   }
-}
 
-function vnum(formulario,n){
-	valor = formulario.elements[n].value;
-	if (isNaN(valor))
-      {
-		alert ("Dato incorrecto..");
-		formulario.elements[n].value="";
-		formulario.elements[n].focus();
-		return false;
+  function populateOptions2(wichDropdown, withWhat,tbres){
+    r = new Array;
+    i=0;
+
+    if (withWhat == "2"){
+      r[i++]=new Option("NIT", "1");
+    }
+
+    if (withWhat == "1"){
+      document.formulario.submit();
+      r[i++]=new Option("NIT","4");
+      r[i++]=new Option("NUIR","5");
+    }
+
+    if (withWhat == "3"){
+      r[i++]=new Option("CC", "0");
+      r[i++]=new Option("CE", "2");
+      r[i++]=new Option("TI", "1");
+      r[i++]=new Option("PASAPORTE", "3");
+    }
+
+    if (i==0){
+      alert(i + " " + "Error!!!");
+    }else{
+      dropdownObjectPath = document.formulario.tip_doc;
+      eval(document.formulario.tip_doc.length=r.length);
+      largestwidth=0;
+      for (i=0; i < r.length; i++){
+        eval(document.formulario.tip_doc.options[i]=r[i]);
+        if (r[i].text.length > largestwidth) {
+          largestwidth=r[i].text.length;    }
       }
-	else
-		return true;
-}
-
-function fech(formulario,n)
-
-{
-m=n-1;
-s=m-1;
-var f=document.formulario.elements[n].value;
-var meses=parseInt(document.formulario.elements[m].value);
-eval(lona=document.formulario.elements[n].length);
-eval(lonm=document.formulario.elements[m].length);
-eval(lond=document.formulario.elements[s].length);
-if(lona==44 || lonm==44 || lond==44)
-{
-alert("Fecha incorrecta  debe ser DD/MM/AAAA !!!");
-document.formulario.elements[s].value="";
-document.formulario.elements[m].value="";
-document.formulario.elements[n].value="";
-document.formulario.elements[s].focus();
-}
-else{
-if ((f%4)==0){
-if(document.formulario.elements[m].value<13){
-switch(meses){
-case 12 : if(document.formulario.elements[s].value>31)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 11 : if(document.formulario.elements[s].value>30)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 10 : if(document.formulario.elements[s].value>31)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 9 : if(document.formulario.elements[s].value>30)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 8 : if(document.formulario.elements[s].value>31)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 7 : if(document.formulario.elements[s].value>31)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 6 : if(document.formulario.elements[s].value>30)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 5 : if(document.formulario.elements[s].value>31)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 4 : if(document.formulario.elements[s].value>30)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 3 : if(document.formulario.elements[s].value>31)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 2 : if(document.formulario.elements[s].value>29)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 1 : if(document.formulario.elements[s].value>31)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-}
-}
-else {alert("Fecha mes inexistente!!");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-}
-}
-else {
-if(document.formulario.elements[m].value<13){
-switch(meses){
-case 12 : if(document.formulario.elements[s].value>31)
-				{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-	}break;
-case 11 : if(document.formulario.elements[s].value>30)
-{
-	alert ("Fecha incorrecta..");
-	document.formulario.elements[s].value="";
-	document.formulario.elements[m].value="";
-	document.formulario.elements[n].value="";
-	document.formulario.elements[s].focus();
-	return false;
-}break;
-case 10 : if(document.formulario.elements[s].value>31)
-{
-alert ("Fecha incorrecta..");
-document.formulario.elements[s].value="";
-document.formulario.elements[m].value="";
-document.formulario.elements[n].value="";
-document.formulario.elements[s].focus();
-return false;
-}break;
-case 9 : if(document.formulario.elements[s].value>30)
-{
-  alert ("Fecha incorrecta..");
-  document.formulario.elements[s].value="";
-  document.formulario.elements[m].value="";
-  document.formulario.elements[n].value="";
-  document.formulario.elements[s].focus();
-			return false;
-}break;
-case 8 : if(document.formulario.elements[s].value>31)
-{
-  alert ("Fecha incorrecta..");
-  document.formulario.elements[s].value="";
-  document.formulario.elements[m].value="";
-  document.formulario.elements[n].value="";
-  document.formulario.elements[s].focus();
-  return false;
-}break;
-case 7 : if(document.formulario.elements[s].value>31)
-{
-  alert ("Fecha incorrecta..");
-  document.formulario.elements[s].value="";
-  document.formulario.elements[m].value="";
-  document.formulario.elements[n].value="";
-  document.formulario.elements[s].focus();
-  return false;
-}break;
-case 6 : if(document.formulario.elements[s].value>30)
-
-{
-  alert ("Fecha incorrecta..");
-  document.formulario.elements[s].value="";
-  document.formulario.elements[m].value="";
-  document.formulario.elements[n].value="";
-  document.formulario.elements[s].focus();
-  return false;
-}break;
-case 5 : if(document.formulario.elements[s].value>31)
-{
-  alert ("Fecha incorrecta..");
-  document.formulario.elements[s].value="";
-  document.formulario.elements[m].value="";
-  document.formulario.elements[n].value="";
-  document.formulario.elements[s].focus();
-  return false;
-}break;
-case 4 : if(document.formulario.elements[s].value>30)
-{
-  alert ("Fecha incorrecta..");
-  document.formulario.elements[s].value="";
-  document.formulario.elements[m].value="";
-  document.formulario.elements[n].value="";
-  document.formulario.elements[s].focus();
-  return false;
-}break;
-case 3 : if(document.formulario.elements[s].value>31)
-{
-  alert ("Fecha incorrecta..");
-  document.formulario.elements[s].value="";
-  document.formulario.elements[m].value="";
-  document.formulario.elements[n].value="";
-  document.formulario.elements[s].focus();
-  return false;
-}break;
-case 2 : if(document.formulario.elements[s].value>28)
-{
-  alert ("Fecha incorrecta..");
-  document.formulario.elements[s].value="";
-  document.formulario.elements[m].value="";
-  document.formulario.elements[n].value="";
-  document.formulario.elements[s].focus();
-  return false;
-}break;
-case 1 : if(document.formulario.elements[s].value>31)
-{
-  alert ("Fecha incorrecta..");
-  document.formulario.elements[s].value="";
-  document.formulario.elements[m].value="";
-  document.formulario.elements[n].value="";
-  document.formulario.elements[s].focus();
-  return false;
-}break;
-}
-}else{
-  alert("Fecha mes inexistente!!");
-  document.formulario.elements[s].value="";
-  document.formulario.elements[m].value="";
-  document.formulario.elements[n].value="";
-  document.formulario.elements[s].focus();
+      eval(document.formulario.tip_doc.length=r.length);
+      //eval(document.myform.cod.options[0].selected=true);
+    }
   }
+
+  function vnum(formulario,n){
+    valor = formulario.elements[n].value;
+    if (isNaN(valor))
+        {
+      alert ("Dato incorrecto..");
+      formulario.elements[n].value="";
+      formulario.elements[n].focus();
+      return false;
+        }
+    else
+      return true;
   }
-}
-}
-var contadorVentanas=0
+
+  function fech(formulario,n){
+    m=n-1;
+    s=m-1;
+    var f=document.formulario.elements[n].value;
+    var meses=parseInt(document.formulario.elements[m].value);
+    eval(lona=document.formulario.elements[n].length);
+    eval(lonm=document.formulario.elements[m].length);
+    eval(lond=document.formulario.elements[s].length);
+    if(lona==44 || lonm==44 || lond==44){
+      alert("Fecha incorrecta  debe ser DD/MM/AAAA !!!");
+      document.formulario.elements[s].value="";
+      document.formulario.elements[m].value="";
+      document.formulario.elements[n].value="";
+      document.formulario.elements[s].focus();
+    }else{
+      if ((f%4)==0){
+        if(document.formulario.elements[m].value<13){
+          switch(meses){
+            case 12 : if(document.formulario.elements[s].value>31){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 11 : if(document.formulario.elements[s].value>30){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 10 : if(document.formulario.elements[s].value>31){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 9 : if(document.formulario.elements[s].value>30){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 8 : if(document.formulario.elements[s].value>31){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 7 : if(document.formulario.elements[s].value>31){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 6 : if(document.formulario.elements[s].value>30){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 5 : if(document.formulario.elements[s].value>31){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 4 : if(document.formulario.elements[s].value>30){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 3 : if(document.formulario.elements[s].value>31){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 2 : if(document.formulario.elements[s].value>29){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+            case 1 : if(document.formulario.elements[s].value>31){
+              alert ("Fecha incorrecta..");
+              document.formulario.elements[s].value="";
+              document.formulario.elements[m].value="";
+              document.formulario.elements[n].value="";
+              document.formulario.elements[s].focus();
+              return false;
+            }break;
+          }
+        }else {
+          alert("Fecha mes inexistente!!");
+          document.formulario.elements[s].value="";
+          document.formulario.elements[m].value="";
+          document.formulario.elements[n].value="";
+          document.formulario.elements[s].focus();
+        }
+      } else {
+        if(document.formulario.elements[m].value<13){
+        switch(meses){
+          case 12 : if(document.formulario.elements[s].value>31)
+                  {
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+            return false;
+            }break;
+          case 11 : if(document.formulario.elements[s].value>30)
+          {
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+            return false;
+          }break;
+          case 10 : if(document.formulario.elements[s].value>31)
+          {
+          alert ("Fecha incorrecta..");
+          document.formulario.elements[s].value="";
+          document.formulario.elements[m].value="";
+          document.formulario.elements[n].value="";
+          document.formulario.elements[s].focus();
+          return false;
+          }break;
+          case 9 : if(document.formulario.elements[s].value>30)
+          {
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+                return false;
+          }break;
+          case 8 : if(document.formulario.elements[s].value>31)
+          {
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+            return false;
+          }break;
+          case 7 : if(document.formulario.elements[s].value>31)
+          {
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+            return false;
+          }break;
+          case 6 : if(document.formulario.elements[s].value>30)
+
+          {
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+            return false;
+          }break;
+          case 5 : if(document.formulario.elements[s].value>31)
+          {
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+            return false;
+          }break;
+          case 4 : if(document.formulario.elements[s].value>30)
+          {
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+            return false;
+          }break;
+          case 3 : if(document.formulario.elements[s].value>31)
+          {
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+            return false;
+          }break;
+          case 2 : if(document.formulario.elements[s].value>28)
+          {
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+            return false;
+          }break;
+          case 1 : if(document.formulario.elements[s].value>31){
+            alert ("Fecha incorrecta..");
+            document.formulario.elements[s].value="";
+            document.formulario.elements[m].value="";
+            document.formulario.elements[n].value="";
+            document.formulario.elements[s].focus();
+            return false;
+          }break;
+          }
+        }else{
+          alert("Fecha mes inexistente!!");
+          document.formulario.elements[s].value="";
+          document.formulario.elements[m].value="";
+          document.formulario.elements[n].value="";
+          document.formulario.elements[s].focus();
+        }
+      }
+    }
+  }
+  var contadorVentanas=0
 </script>
-<?php
-    if ($Buscar1){
-      include "busca_direcciones.php";
 
+<?php
+  if ($Buscar1){
+    include "busca_direcciones.php";
   }
   $var_envio="ent=$ent&carp_per=$carp_per&carp_codi=$carp_codi&rad=$nurad&coddepe=$coddepe&depende=$depende";
 ?>
@@ -795,6 +814,12 @@ var contadorVentanas=0
       </section>
 
   </div>
+  <div class="row">
+  </div>
+
+
+
+
 
 <div id="tabs">
 <?php
@@ -1312,14 +1337,13 @@ var contadorVentanas=0
     } elseif($radi_depe_actu_padre and $rad0){
       $query= "select USUA_NOMB, USUA_CODI from usuario where depe_codi=$radi_depe_actu_padre and usua_codi=$radi_usua_actu_padre";
       $ADODB_COUNTRECS = true;
-      $rs=$db->conn->query($query);
-      $numRegs = "!".$rs->RecordCount();
+      $rs              = $db->conn->query($query);
+      $numRegs         = "!".$rs->RecordCount();
       $ADODB_COUNTRECS = false;
-      $varQuery = $query;
-      $comentarioDev = "Muestra las dependencias";
-      $usuario_padre = $rs->fields["USUA_NOMB"];
+      $varQuery        = $query;
+      $comentarioDev   = "Muestra las dependencias";
+      $usuario_padre   = $rs->fields["USUA_NOMB"];
       $cod_usuario_inf = $rs->fields["USUA_CODI"];
-      echo "$usuario_padre";
 			$coddepeinf = $radi_depe_actu_padre;
 			$informar_rad = "Informar";
 			$observa_inf = "(Se ha generado un anexo pero ha sido enviado a la dependencia $coddepe)";
@@ -1338,16 +1362,16 @@ var contadorVentanas=0
   $Tx = new Tx($db);
 
   if($Submit3=="Radicar"){
-    $ddate=date("d");
-    $mdate=date("m");
-    $adate=date("Y");
-    $fechproc4=substr($adate,2,4);
-    $fechrd=$ddate.$mdate.$fechproc4;
+    $ddate     = date("d");
+    $mdate     = date("m");
+    $adate     = date("Y");
+    $fechproc4 = substr($adate,2,4);
+    $fechrd    = $ddate.$mdate.$fechproc4;
 
     if($fechproc12==''){
-        $fechproc12=date('d');
-        $fechproc22=date('m');
-        $fechproc32=date('y');
+      $fechproc12=date('d');
+      $fechproc22=date('m');
+      $fechproc32=date('y');
     }
 
     $fechrdoc=$fecha_gen_doc;
@@ -1372,172 +1396,172 @@ var contadorVentanas=0
     $ane .='';
     $med +=0;
     $acceso = 1;
-    if($acceso==0){}else{
+
+    if($acceso != 0){
       if($tip_rem<0){
         $tip_rem=0;
       }
 
-    if(!$documento_us3) {	$documento_us3=0;	}
+      if(!$documento_us3) {	$documento_us3=0;	}
 
-    if($ent != 2) {
-      $carp_codi =$ent;
-      $carp_per = "0";
-      $radi_usua_actu = $codusuario;
-    } else {
-      $carp_codi ="0";
-      $carp_per = "0";
-      if($cod_usuario_inf!=1 and $coddepeinf==$coddepe)
-      {
-        $radi_usua_actu = $cod_usuario_inf;
+      if($ent != 2) {
+        $carp_codi =$ent;
+        $carp_per = "0";
+        $radi_usua_actu = $codusuario;
+      } else {
+        $carp_codi ="0";
+        $carp_per = "0";
+        if($cod_usuario_inf!=1 and $coddepeinf==$coddepe)
+        {
+          $radi_usua_actu = $cod_usuario_inf;
+        }
+        else
+        {
+          $radi_usua_actu = 1;
+        }
       }
-      else
-      {
+
+      if(!$radi_usua_actu and $ent == 2) $radi_usua_actu = $codusuario;
+
+      if(!$radi_usua_actu) $radi_usua_actu = 1;
+
+      if($coddepe==999){
+        $carp_codi=substr($dependencia,0,2);
+        $carp_per=1;
         $radi_usua_actu = 1;
       }
-    }
 
-    if(!$radi_usua_actu and $ent == 2) $radi_usua_actu = $codusuario;
+      if(!$radi_usua_actu) $radi_usua_actu==1;
 
-    if(!$radi_usua_actu) $radi_usua_actu = 1;
+      if($radi_usua_actu_padre and $radi_depe_actu_padre){
+            $radi_usua_actu= "$radi_usua_actu_padre";
+            $coddepe= "$radi_depe_actu_padre";
+      }
 
-    if($coddepe==999){
-      $carp_codi=substr($dependencia,0,2);
-      $carp_per=1;
-      $radi_usua_actu = 1;
-    }
+      if($ent==2 && $dependencia=="4240") $radi_usua_actu = $codusuario;
+      // Buscamos Nivel de Usuario Destino
+      $tmp_mun           = new Municipio($db);
+      $tmp_mun->municipio_codigo($codep_us1,$muni_us1);
+      $rad               = new Radicacion($db);
+      $rad->radiTipoDeri = $tpRadicado;
+      $rad->radiCuentai  = "'".trim($cuentai)."'";
+      $rad->eespCodi     = $documento_us3;
+      $rad->mrecCodi     = $med; // "dd/mm/aaaa"
+      $fecha_gen_doc_YMD = substr($fecha_gen_doc,6 ,4)."-".substr($fecha_gen_doc,3 ,2)."-".substr($fecha_gen_doc,0 ,2);
+      $rad->radiFechOfic =  "".$fecha_gen_doc_YMD."";
 
-    if(!$radi_usua_actu) $radi_usua_actu==1;
+      if(!$radicadopadre)  $radicadopadre = null;
 
-    if($radi_usua_actu_padre and $radi_depe_actu_padre){
-          $radi_usua_actu= "$radi_usua_actu_padre";
-          $coddepe= "$radi_depe_actu_padre";
-    }
+      $rad->radiNumeDeri = trim($radicadopadre);
+      $rad->radiPais     = $tmp_mun->get_pais_codi();
+      $rad->descAnex     = $ane;
+      $rad->radiDepeActu = "'".$coddepe."'";
+      $rad->radiDepeRadi = "'".$coddepe."'";
+      $rad->radiUsuaActu = $radi_usua_actu;
+      $rad->trteCodi     = $tip_rem;
+      $rad->tdocCodi     = $tdoc;
+      $rad->nofolios     = $nofolios;
+      $rad->noanexos     = $noanexos;
+      $rad->guia         = $guia;
+      $rad->tdidCodi     = $tip_doc;
+      $rad->carpCodi     = $carp_codi;
+      $rad->carPer       = $carp_per;
+      $rad->trteCodi     = $tip_rem;
+      $rad->raAsun       = substr(htmlspecialchars(stripcslashes($asu)),0,349);
 
-    if($ent==2 && $dependencia=="4240") $radi_usua_actu = $codusuario;
-    // Buscamos Nivel de Usuario Destino
-    $tmp_mun           = new Municipio($db);
-    $tmp_mun->municipio_codigo($codep_us1,$muni_us1);
-    $rad               = new Radicacion($db);
-    $rad->radiTipoDeri = $tpRadicado;
-    $rad->radiCuentai  = "'".trim($cuentai)."'";
-    $rad->eespCodi     = $documento_us3;
-    $rad->mrecCodi     = $med; // "dd/mm/aaaa"
-    $fecha_gen_doc_YMD = substr($fecha_gen_doc,6 ,4)."-".substr($fecha_gen_doc,3 ,2)."-".substr($fecha_gen_doc,0 ,2);
-    $rad->radiFechOfic =  "".$fecha_gen_doc_YMD."";
+      if (strlen(trim($aplintegra)) == 0)
+        $aplintegra = "0";
 
-    if(!$radicadopadre)  $radicadopadre = null;
+      $rad->sgd_apli_codi = $aplintegra;
+      $codTx = 2;
+      $flag = 1;
 
-    $rad->radiNumeDeri = trim($radicadopadre);
-    $rad->radiPais     = $tmp_mun->get_pais_codi();
-    $rad->descAnex     = $ane;
-    $rad->radiDepeActu = "'".$coddepe."'";
-    $rad->radiDepeRadi = "'".$coddepe."'";
-    $rad->radiUsuaActu = $radi_usua_actu;
-    $rad->trteCodi     = $tip_rem;
-    $rad->tdocCodi     = $tdoc;
-    $rad->nofolios     = $nofolios;
-    $rad->noanexos     = $noanexos;
-    $rad->guia         = $guia;
-    $rad->tdidCodi     = $tip_doc;
-    $rad->carpCodi     = $carp_codi;
-    $rad->carPer       = $carp_per;
-    $rad->trteCodi     = $tip_rem;
-    $rad->raAsun       = substr(htmlspecialchars(stripcslashes($asu)),0,349);
+      $noRad = $rad->newRadicado($ent, $tpDepeRad[$ent]);
 
-    if (strlen(trim($aplintegra)) == 0)
-      $aplintegra = "0";
+      if ($noRad=="-1"){
+        die("
+            <div class=\"col col-4\">
+              <div class=\"well\">
+                <h1><span class=\"semi-bold\">
+                  Error no genero un Numero de Secuencia o Inserto el radicado
+                  <br><br><br>
+                  <small class=\"text-error slideInRight fast animated\">
+                    <strong>
+                    </strong>
+                  </small></h1>
+              </div>
+            </div>
+        ");
+      }
 
-    $rad->sgd_apli_codi = $aplintegra;
-    $codTx = 2;
-    $flag = 1;
+      $radicadosSel[0] = $noRad;
+      $hist->insertarHistorico($radicadosSel,  $dependencia , $codusuario, $coddepe, $radi_usua_actu, " ", $codTx);
+      $nurad = $noRad;
 
-    $noRad = $rad->newRadicado($ent, $tpDepeRad[$ent]);
+      echo "<INPUT TYPE=HIDDEN NAME=nurad value=$nurad>";
+      echo "<INPUT TYPE=HIDDEN NAME=flag value=$flag>";
 
-    if ($noRad=="-1"){
-      die("
-          <div class=\"col col-4\">
-            <div class=\"well\">
-              <h1><span class=\"semi-bold\">
-                Error no genero un Numero de Secuencia o Inserto el radicado
-                <br><br><br>
-                <small class=\"text-error slideInRight fast animated\">
-                  <strong>
-                  </strong>
-                </small></h1>
+        if($noRad){
+          $var_envio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&verrad=$nurad&ent=$ent"; ?>
+
+          <div class="col col-4">
+            <div class="well">
+              <fieldset>
+                <h1>
+                  <span class="semi-bold">Se ha generado el radicado</span> <span class="glyphicon glyphicon-ok text-success"></span><br><br>
+                  <small class="text-success slideInRight fast animated">
+                    <strong>
+                      No. <?=$nurad?>
+                    </strong>
+                  </small>
+                </h1>
+                <br>
+                <p>
+                  <?php if($_SESSION["enviarMailMovimientos"]==1){
+                    $rutaImagen = substr($nurad,0,4)."/".substr($nurad,4,3)."/".$nurad.".tif";
+                    $linkImagenes = "<a href='*SERVIDOR_IMAGEN*".$rutaImagen."'> Documento</a>";
+                    $radicadosSelText = $nurad;
+                    $usuaCodiMail = $radi_usua_actu;
+                    $depeCodiMail = $coddepe;
+
+                    include "../include/mail/mailInformar.php";
+                  }
+                  if($faxPath){
+                    $varEnvio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&faxPath=$faxPath&nurad=$nurad&ent=$ent";
+                    ?>
+                    <input class="botones_largo" value ="SUBIR IMAGEN DE FAX" type=button target= 'UploadFax' onclick="window.open('uploadFax.php?<?=$varEnvio?>','Cargar Archivos de Fax', 'height=300, width=400,left=350,top=300')">
+                  <?php }
+
+                  if($tipoMedio=="eMail"){
+                    $varEnvio = session_name()."=".session_id()."&nurad=$nurad";
+                    ?>
+                    <input class="botones_largo" value ="ASOCIAR EMAIL A RADICADO" type=button target= 'UploadFax' onclick="window.open('../email/uploadMail.php?<?=$varEnvio?>','formulario', 'height=400, width=640,left=350,top=300')">
+                    <?php
+                  }?>
+                </p>
+                <input type=hidden id=numeroRadicado name=numeroRadicado value='<?=$nurad?>' />
+              </fieldset>
             </div>
           </div>
-      ");
-    }
-
-    $radicadosSel[0] = $noRad;
-    $hist->insertarHistorico($radicadosSel,  $dependencia , $codusuario, $coddepe, $radi_usua_actu, " ", $codTx);
-    $nurad = $noRad;
-
-    echo "<INPUT TYPE=HIDDEN NAME=nurad value=$nurad>";
-    echo "<INPUT TYPE=HIDDEN NAME=flag value=$flag>";
-
-      if($noRad){
-        $var_envio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&verrad=$nurad&ent=$ent"; ?>
-
-        <div class="col col-4">
-          <div class="well">
-            <fieldset>
-              <h1>
-                <span class="semi-bold">Se ha generado el radicado</span> <span class="glyphicon glyphicon-ok text-success"></span><br><br>
-                <small class="text-success slideInRight fast animated">
-                  <strong>
-                     No. <?=$nurad?>
-                  </strong>
-                </small>
-              </h1>
-              <br>
-              <p>
-                <?php if($_SESSION["enviarMailMovimientos"]==1){
-                  $rutaImagen = substr($nurad,0,4)."/".substr($nurad,4,3)."/".$nurad.".tif";
-                  $linkImagenes = "<a href='*SERVIDOR_IMAGEN*".$rutaImagen."'> Documento</a>";
-                  $radicadosSelText = $nurad;
-                  $usuaCodiMail = $radi_usua_actu;
-                  $depeCodiMail = $coddepe;
-
-                  include "../include/mail/mailInformar.php";
-                }
-                if($faxPath){
-                  $varEnvio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&faxPath=$faxPath&nurad=$nurad&ent=$ent";
-                  ?>
-                  <input class="botones_largo" value ="SUBIR IMAGEN DE FAX" type=button target= 'UploadFax' onclick="window.open('uploadFax.php?<?=$varEnvio?>','Cargar Archivos de Fax', 'height=300, width=400,left=350,top=300')">
-                <?php }
-
-                if($tipoMedio=="eMail"){
-                  $varEnvio = session_name()."=".session_id()."&nurad=$nurad";
-                  ?>
-                  <input class="botones_largo" value ="ASOCIAR EMAIL A RADICADO" type=button target= 'UploadFax' onclick="window.open('../email/uploadMail.php?<?=$varEnvio?>','formulario', 'height=400, width=640,left=350,top=300')">
-                  <?php
-                }?>
-              </p>
-              <input type=hidden id=numeroRadicado name=numeroRadicado value='<?=$nurad?>' />
-            </fieldset>
-          </div>
-        </div>
-    <?php
-    }else{
-      echo "
-          <div class=\"col-sm-12\">
-            <div class=\"well\">
-              <h1><span class=\"semi-bold\">
-                Ha ocurrido un Problema<br>Verfique los datos e intente de nuevo
-                <br><br>
-                <small class=\"text-error slideInRight fast animated\">
-                  <strong>
-                  </strong>
-                </small></h1>
-            </div>
-          </div>";
-    }
-    $sgd_dir_us2=2;
-    $conexion = $db;
-    error_reporting(7);
-    include "grb_direcciones.php";
-    $verradicado = $nurad;
+      <?php
+      }else{
+        echo "
+            <div class=\"col-sm-12\">
+              <div class=\"well\">
+                <h1><span class=\"semi-bold\">
+                  Ha ocurrido un Problema<br>Verfique los datos e intente de nuevo
+                  <br><br>
+                  <small class=\"text-error slideInRight fast animated\">
+                    <strong>
+                    </strong>
+                  </small></h1>
+              </div>
+            </div>";
+      }
+      $sgd_dir_us2=2;
+      $conexion = $db;
+      include("grb_direcciones.php");
+      $verradicado = $nurad;
     }
     echo  "<INPUT TYPE=HIDDEN NAME=nurad value=$nurad>";
     echo  "<INPUT TYPE=HIDDEN NAME=codusuarioActu value=$codusuarioActu>";

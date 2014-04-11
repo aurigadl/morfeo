@@ -1,36 +1,24 @@
 <?php
-/*
-*	Al cargar este c�igo, si hay un municipio por defecto se cargan los combos con la respectiva informaci�, sino se
-*	cargan los combos vacios y a traves de javascript vamos cambiando el contenido de los combos jerarquicamente.
-*
-*	Creamos un recordset (y respectivo vector) para cada componente de direccion (Continentes, Paises, Dptos y Mnpios),
-*	usamos de "entrada" la opci� getmenu2 de ADODB para generar combos con las opciones por defecto.
-*	El vector es para crearlos en javascript y cambiar las opciones a medida que cambien lo seleccionado en los combos. 
-*/
-
 $ADODB_CACHE_DIR = session_save_path();
 define('ADODB_ASSOC_CASE',1);
-//$ADODB_FETCH_MODE = ADODBFETCH_ASSOC;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$ADODB_ANSI_PADDING_OFF = true;
 
 /*
 *	Funcion que convierte un valor de PHP a un valor Javascript.
 */
-function valueToJsValue($value, $encoding = false)
-{	if (!is_numeric($value)) 
-	{	$value = str_replace('\\', '\\\\', $value);
+function valueToJsValue($value, $encoding = false){
+  if (!is_numeric($value)){
+    $value = str_replace('\\', '\\\\', $value);
 		$value = str_replace('"', '\"', $value);
 		$value = '"'.$value.'"';
 	}
-	if ($encoding)
-	{	switch ($encoding)
-		{	case 'utf8' :	return iconv("ISO-8859-2", "UTF-8", $value);
-							break;
+
+  if ($encoding){
+    switch ($encoding){
+      case 'utf8' :	return iconv("ISO-8859-2", "UTF-8", $value);
+			break;
 		}
-	}
-	else 
-	{	return $value;	}
+	} else{	return $value;	}
  	return ;
 }
 
@@ -39,11 +27,11 @@ function valueToJsValue($value, $encoding = false)
 *	Funcion que convierte un vector de PHP a un vector Javascript.
 *	Utiliza a su vez la funcion valueToJsValue.
 */
-function arrayToJsArray( $array, $name, $nl = "\n", $encoding = false ) 
-{	if (is_array($array)) 
+function arrayToJsArray( $array, $name, $nl = "\n", $encoding = false )
+{	if (is_array($array))
 	{	$jsArray = $name . ' = new Array();'.$nl;
-		foreach($array as $key => $value) 
-		{	switch (gettype($value)) 
+		foreach($array as $key => $value)
+		{	switch (gettype($value))
 			{	case 'unknown type':
 				case 'resource':
 				case 'object':	break;
@@ -55,7 +43,7 @@ function arrayToJsArray( $array, $name, $nl = "\n", $encoding = false )
 								break;
 				case 'string':	$jsArray .= $name.'['.valueToJsValue($key,$encoding).'] = '.valueToJsValue($value, $encoding).';'.$nl;
 								break;
-				case 'double':	
+				case 'double':
 				case 'integer':	$jsArray .= $name.'['.valueToJsValue($key,$encoding).'] = '.$value.';'.$nl;
 								break;
 				default:	trigger_error('Hoppa, egy j t�us a PHP-ben?'.__CLASS__.'::'.__FUNCTION__.'()!', E_USER_WARNING);
@@ -63,7 +51,7 @@ function arrayToJsArray( $array, $name, $nl = "\n", $encoding = false )
 		}
  		return $jsArray;
 	}
-	else 
+	else
 	{	return false;	}
 }
 
@@ -86,17 +74,17 @@ if ($Rs_pais)
 	$vpaisesk = array_keys($vpaises);
 	$vpaisesv = array_values($vpaises);
 	$idx=0;
-	foreach ($vpaisesk as $vpk) 
+	foreach ($vpaisesk as $vpk)
 	{	$vpaisesv[$idx]['ID1'] = $vpk;
 		$idx += 1;
 	}
-	
+
 	foreach( $vpaisesv as $clave => $vpv )
 	{
 		$vpaisesvtmp[ $clave ] = array_change_key_case( $vpv, CASE_UPPER );
 	}
 	$vpaisesv = $vpaisesvtmp;
-	
+
 	unset($vpaisesk);
 	unset($vpaises);
 	unset($vpk);
@@ -124,7 +112,7 @@ if ($Rs_dpto)
 {	$it = 0;
     $vdptosv = array();
     while (!$Rs_dpto->EOF)
-    {	
+    {
 	    $vdptosv[$it]['ID1'] = $Rs_dpto->fields['ID1'];
 	    $vdptosv[$it]['NOMBRE'] = $Rs_dpto->fields['NOMBRE'];
 	    $vdptosv[$it]['ID0'] = $Rs_dpto->fields['ID0'];
@@ -140,13 +128,13 @@ if($db->driver=="mssql")
 {
  $cad = $db->conn->Concat("MUNICIPIO.ID_PAIS","'-'","MUNICIPIO.DPTO_CODI","'-'","MUNICIPIO.MUNI_CODI");
 }
-$sql_mcpo =	"SELECT $cad as ID1, MUNICIPIO.MUNI_NOMB as NOMBRE, MUNICIPIO.DPTO_CODI as ID0, 
-			MUNICIPIO.ID_PAIS as ID, MUNICIPIO.HOMOLOGA_MUNI, MUNICIPIO.HOMOLOGA_IDMUNI 
-			FROM MUNICIPIO, DEPARTAMENTO, SGD_DEF_PAISES, SGD_DEF_CONTINENTES 
-			WHERE MUNICIPIO.ID_PAIS = SGD_DEF_PAISES.ID_PAIS AND 
-			MUNICIPIO.ID_CONT = SGD_DEF_CONTINENTES.ID_CONT AND 
-			MUNICIPIO.DPTO_CODI = DEPARTAMENTO.DPTO_CODI 
-			GROUP BY $cad, MUNICIPIO.MUNI_NOMB, MUNICIPIO.DPTO_CODI, MUNICIPIO.ID_PAIS, MUNICIPIO.HOMOLOGA_MUNI, MUNICIPIO.HOMOLOGA_IDMUNI 
+$sql_mcpo =	"SELECT $cad as ID1, MUNICIPIO.MUNI_NOMB as NOMBRE, MUNICIPIO.DPTO_CODI as ID0,
+			MUNICIPIO.ID_PAIS as ID, MUNICIPIO.HOMOLOGA_MUNI, MUNICIPIO.HOMOLOGA_IDMUNI
+			FROM MUNICIPIO, DEPARTAMENTO, SGD_DEF_PAISES, SGD_DEF_CONTINENTES
+			WHERE MUNICIPIO.ID_PAIS = SGD_DEF_PAISES.ID_PAIS AND
+			MUNICIPIO.ID_CONT = SGD_DEF_CONTINENTES.ID_CONT AND
+			MUNICIPIO.DPTO_CODI = DEPARTAMENTO.DPTO_CODI
+			GROUP BY $cad, MUNICIPIO.MUNI_NOMB, MUNICIPIO.DPTO_CODI, MUNICIPIO.ID_PAIS, MUNICIPIO.HOMOLOGA_MUNI, MUNICIPIO.HOMOLOGA_IDMUNI
  			ORDER BY MUNICIPIO.MUNI_NOMB";
 
 $Rs_mcpo = $db->conn->Execute($sql_mcpo);
@@ -154,7 +142,7 @@ if ($Rs_mcpo)
 {	$it = 0;
 	$vmcposv = array();
 	while (!$Rs_mcpo->EOF)
-	{	
+	{
 		$vmcposv[$it]['ID1'] = $Rs_mcpo->fields['ID1'];
 		$vmcposv[$it]['NOMBRE'] = trim($Rs_mcpo->fields['NOMBRE']);
 		$vmcposv[$it]['ID0'] = $Rs_mcpo->fields['ID0'];
