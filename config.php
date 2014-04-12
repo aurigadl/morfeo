@@ -19,10 +19,10 @@ $usuario = "orfeo_user";
 $usuario = "postgres";
 //Contraseña del usuario anterior
 $contrasena= "ik2013";
-//$contrasena= "123";
+$contrasena= "123";
 //Nombre o IP del servidor de BD. Opcional puerto, p.e. 120.0.0.1:1521
 $servidor = "localhost:5432";
-$servidor = "192.168.0.153:5432";
+//$servidor = "192.168.0.153:5432";
 $db = $servicio;
 //Tipo de Base de datos. Los valores validos son: postgres, oci8, mssql.
 $driver = "postgres";

@@ -379,62 +379,47 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 
 ?>
 <!-- row -->
-<div >
 	<div class="well well-sm well-light">
-			<div id="tabs">
-				<ul>
-																	<li>
-						<a href="#workFlow">WorkFlow</a>
-					</li>		
-					<li>
-						<div><a href="#tabs-a">Informacion del Radicado</a></div>
-					</li>
+		<div id="tabs">
+			<ul>
+				<li>
+					<div><a href="#tabs-a">Informacion del Radicado</a></div>
+				</li>
 
-					<li>
-						<a href="#tabs-b">Traza</a>
-					</li>
+				<li>
+					<a href="#tabs-b">Traza</a>
+				</li>
 
-					<li>
-						<a href="#tabs-c">Documeto Anexos</a>
-					</li>
+				<li>
+					<a href="#tabs-c">Documeto Anexos</a>
+				</li>
 
-					<li>
-						<a href="#tabs-d">Expediente</a>
-					</li>
-					
-	
-				</ul>
-				<ul>
-		    <div id="workFlow" style="height:200%" >
-		    <p>
-			    <?php include "proceso/workFlow.php"; ?>
-
-			  </p>
-				</div>				
-				<div id="tabs-a">
-			      <?php include "lista_general.php"; ?>
-				</div>
-				<div id="tabs-b">
-					<p>
-						<?php include "ver_historico.php"; ?>
-					</p>
-				</div>
-
-				<div id="tabs-c">
-					<p>
-						<?php include "./lista_anexos.php"; ?>
-					</p>
-				</div>
-			
-				<div id="tabs-d">
-					<p><?php include "./expediente/lista_expediente.php"; ?>
-					</p>
-				</div>		
-				</ul>
+				<li>
+					<a href="#tabs-d">Expediente</a>
+				</li>
+			</ul>
+			<ul>
+			<div id="tabs-a">
+					<?php include "lista_general.php"; ?>
 			</div>
-  </div>
-</div>
+			<div id="tabs-b">
+				<p>
+					<?php include "ver_historico.php"; ?>
+				</p>
+			</div>
 
+			<div id="tabs-c">
+				<p>
+					<?php include "./lista_anexos.php"; ?>
+				</p>
+			</div>
+		<div id="tabs-d">
+				<?php include "./expediente/lista_expedientes.php"; ?>
+			</div>		
+			</ul>
+		</div>
+  </div>
+  
 <script type="text/javascript">
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	$('#tabs').tabs();

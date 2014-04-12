@@ -150,8 +150,8 @@ class Expediente
 
 		
 				$query="select e.SGD_EXP_NUMERO,e.SGD_EXP_ESTADO,$radi_nume_radi AS RADI_NUME_RADI
-				from SGD_EXP_EXPEDIENTE e
-				where e.RADI_NUME_RADI = $radicado
+				from SGD_EXP_EXPEDIENTE e, SGD_SEXP_SECEXPEDIENTES sexp
+				where e.RADI_NUME_RADI = $radicado AND e.sgd_exp_numero=sexp.sgd_exp_numero
                 AND SGD_EXP_ESTADO <> 2";
         //$this->db->conn->debug = true;
 		    $rs = $this->db->conn->query($query);
@@ -169,15 +169,18 @@ class Expediente
 			     $this->estado_expediente = $rs->fields['SGD_EXP_ESTADO'];
 			   }
 			   $numExpediente= $rs->fields['SGD_EXP_NUMERO'];
+			   //$this->db->conn->debug = true;
 			   //$this->expedientes[$iE] =$numExpediente;
 			   $query = "select exp.RADI_NUME_RADI,r.RA_ASUN, to_char(r.RADI_FECH_RADI, 'YYYY-MM-DD hh:mi:SS') RADI_FECH_RADI, t.SGD_TPR_DESCRIP, r.RADI_PATH
 			                 from sgd_exp_expediente exp, radicado r, SGD_TPR_TPDCUMENTO t
 			             where exp.sgd_exp_numero='".$numExpediente."'
 			               and exp.radi_nume_radi = r.radi_nume_radi
-			               and r.tdoc_codi=t.sgd_tpr_codigo";  // $this->db->conn->debug = true;
+			               and r.tdoc_codi=t.sgd_tpr_codigo 
+			               ";  // $this->db->conn->debug = true;
 			   $rsRad = $this->db->conn->query($query);
 			   
 			   $iRr =0;
+			   if(!$rsRas->EOF){
 			   while(!$rsRad->EOF){
 			     $numRadicado = $rsRad->fields['RADI_NUME_RADI'];
 			     $fechaRadicado = $rsRad->fields['RADI_FECH_RADI'];
@@ -197,11 +200,12 @@ class Expediente
 													from anexos a, SGD_TPR_TPDCUMENTO t
 											where a.anex_radi_nume='".$numRadicado."'
 												and a.sgd_tpr_codigo=t.sgd_tpr_codigo";
-											//	$this->db->conn->debug = true;
+											//$this->db->conn->debug = true;
 						$rsAnex = $this->db->conn->query($query);
+						//$this->db->conn->debug = false;
 						$arrAnexos = array();
 						$iA =0;
-						while(!$rsAnex->EOF && $tttt){
+						while(!$rsAnex->EOF){
 						  $arrAnexos[$iA]["NUMERO"] = $rsAnex->fields['ANEX_RADI_NUME'];
 						  $arrAnexos[$iA]["DESCRIPCION"] = $rsAnex->fields['ANEX_DESC'];
 						  $arrAnexos[$iA]["RADI_SALIDA"] = $rsAnex->fields['RADI_NUME_SALIDA'];
@@ -220,6 +224,7 @@ class Expediente
 				 $rs->MoveNext();
 		   }
 			   $this->expedientes = $expArr;
+		}
 		}
 		//$this->num_expediente = $num_expediente;   RP
 		return $this->num_expediente;
@@ -752,7 +757,7 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
     * Fecha de modificaciï¿½n:
     * Modificador:
     */
-	function getTRDExp( $numExp, $codiSrd, $codiSbrd, $codiProc )
+	function getTRDExp( $numExp, $codiSrd='', $codiSbrd='', $codiProc='' )
 	{
 	$q_TRDExp  = "SELECT SRD.SGD_SRD_CODIGO, SRD.SGD_SRD_DESCRIP,";
         $q_TRDExp .= " SBRD.SGD_SBRD_CODIGO, SBRD.SGD_SBRD_DESCRIP,";
@@ -791,8 +796,9 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
         }
         $q_TRDExp .=" ORDER BY SEXP.SGD_SEXP_FECH desc"	;
         // print $q_TRDExp;
+        //$this->db->conn->debug = true;
         $rs_TRDExp = $this->db->conn->query( $q_TRDExp );
-
+				//$this->db->conn->debug = false;
         $arrTRDExp['serie'] = $rs_TRDExp->fields['SGD_SRD_CODIGO']."-".$rs_TRDExp->fields['SGD_SRD_DESCRIP'];
         $arrTRDExp['subserie'] = $rs_TRDExp->fields['SGD_SBRD_CODIGO']."-".$rs_TRDExp->fields['SGD_SBRD_DESCRIP'];
         $arrTRDExp['proceso'] = $rs_TRDExp->fields['SGD_PEXP_DESCRIP'];
