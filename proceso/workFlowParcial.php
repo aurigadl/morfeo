@@ -83,12 +83,12 @@ if(!$numeroExpediente) $numeroExpediente = $numExpediente;
  foreach($nodos as $etapas){
     if($etapas["POSLEFT"]){
      $posL = explode(".",str_replace("px","",$etapas["POSLEFT"]));
-     $posLeft = $posL[0] ;
+     $posLeft = $posL[0] + 40;
      $posT = explode(".",str_replace("px","",$etapas["POSTOP"]));
      $posTop = $posT[0] - $posInicialTop;
      
     }else{
-     $posLeft = $left;
+     $posLeft = $left + 40;
      $posTop = $top - $posInicialTop;
     }
 		$dClass =
