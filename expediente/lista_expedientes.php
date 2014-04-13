@@ -258,17 +258,17 @@ $time_start = microtime_float();
 	?>
 
 		<!-- widget content -->
-		<div class="widget-body">
+		<div class="widget-body"  height="100%">
 
-			<div class="tabs-left">
-				<ul class="nav nav-tabs tabs-left" id="demo-pill-nav">
+			<div class="tabs-left"  height="100%">
+				<ul class="nav nav-tabs tabs-left" id="demo-pill-nav" height="100%">
 				<?php
 				$iExp = 1;
 				foreach($arrExpedientes as $numExpediente => $datosExp){
 				if($iExp==1) $datoss = " active "; else  $datoss = " ";
 				?>
 					<li class="<?=$datoss?>">
-						<a href="#tab-<?=$numExpediente?>" data-toggle="tab"> <?=$numExpediente?> </a>
+						<a href="#tab-<?=$numExpediente?>" data-toggle="tab"><span class="badge bg-color-blue txt-color-white">*</span><?=$numExpediente?></a>
 					</li>
 				<?php
 					$iExp++;
@@ -299,15 +299,20 @@ $time_start = microtime_float();
 		</div>
 		<!-- end widget content -->
 </div>
+<table border=0 width="100%"  height=100>
+  <tr >
+    <td>
+    </td>
+    </tr></table>
 
 <table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr>
-    <td class="titulos5">Y ESTA RELACIONADO CON EL(LOS) SIGUIENTE(S) DOCUMENTOS:</td>
-    <td class="titulos5" align="center">
+    <td ><small>Y ESTA RELACIONADO CON EL(LOS) SIGUIENTE(S) DOCUMENTOS:<small></td>
+    <td  align="center">
 <? if( $usuaPermExpediente and $verradPermisos == "Full" or $dependencia=='999'){
 ?>
 	<a href="#tblAnexoAsociado" onClick="incluirDocumentosExp();" >
-		<span ><b>INCLUIR DOCUMENTOS EN EXPEDIENTE</b></span>
+		<b><small>Incluir Documentos en Expediente</b></small>
 	</a>
 <?
 }
@@ -316,7 +321,7 @@ $time_start = microtime_float();
   </tr>
 </table>
 
-<table border=0 width="100%"  align="left">
+<table border=0 width="100%"  >
   <tr >
     <td>
 	  <input type="checkbox" name="check_uno" value="<?php print $radicadoAnexo; ?>" onClick="uno( document.forms[1] );">
@@ -358,13 +363,6 @@ $time_start = microtime_float();
       ?>
     </td>
   </tr>
-  <?php
-  $time_end = microtime_float();
-	$time = $time_end - $time_start;
-	echo "<span class='info'>";
-	echo "<br><b>Se demor&oacute;: $time segundos la Operaci&oacute;n total.</b>";
-	echo "</span>";
-  ?>
 </table>
 
 <script type="text/javascript">
@@ -532,7 +530,7 @@ $time_start = microtime_float();
 				$.smallBox({
 					title : "Callback function",
 					content : "<i class='fa fa-clock-o'></i> <i>You pressed Yes...</i>",
-					color : "#659265",
+					color : "#65365",
 					iconSmall : "fa fa-check fa-2x fadeInRight animated",
 					timeout : 4000
 				});

@@ -1,11 +1,11 @@
 <!-- NEW WIDGET START -->
-<article class="col-sm-12 col-md-12 col-lg-6" align=left>
+<article class="col-sm-12 col-md-12" align=left>
 <!--widget content -->
 <div class="widget-body">
 	<div class="tree smart-form fa-folder-close">
 		<ul>
 		<li>
-			<span><i class="fa fa-lg fa-folder-close"></i> <?=$numExpediente?></span>
+			<span class="alert-success"><i class="fa fa-folder-close"></i> <?=$numExpediente?></span>
 			<ul>
 			<?
 			foreach($datosExp as $key2 => $value){

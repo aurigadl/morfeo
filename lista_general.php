@@ -51,19 +51,17 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
 }
 
 </script>
-<table border=0>
+<table border=0 cellspace=0 colspacing=0 cellspacing=0>
 <tr  class=odd>
- <td><b>Asunto</b></td><td><?=$ra_asun ?></td>
+ <td><small><b>Asunto</b></small></td><td><small><?=$ra_asun ?></small></td>
+<td><small><b>Fecha Documento</b></small></td><td><small> <?=$radi_fech_radi ?>, &nbsp;&nbsp;</small></td>
 </tr>
 <tr  cellspace=0 cellpad=0>
-<td><b>Fecha Radicado</b></td><td> <?=$radi_fech_radi ?>, &nbsp;&nbsp;</td>
-</tr>
-<tr  cellspace=0 cellpad=0>
-<td><b>Hojas </b></td><td> <?=$radi_nume_hoja ?> </td><td><b>  Folios</b></td><td><?=$radi_nume_folio?></td><td><b>   Anexos:</b></td><td> <?=$radi_nume_anexo?></td>
+<td><small><b>Hojas </b></small></td><td><small> <?=$radi_nume_hoja ?> </small></td><td><small><b>  Folios</b></small></td><td><small><?=$radi_nume_folio?></small></td><td><small><b>   Anexos:</b></small></td><td><small> <?=$radi_nume_anexo?></small></td>
 </tr>
 <tr>
-<td><b>
-Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado</b></td><td>
+<td><small><b>
+Descripcion Anexos</b></small></td><td><small> <?=$radi_desc_anex ?></small></td><td><small><b> Anexo/Asociado</b></small></td><td><small>
 	<?	
 	if($radi_tipo_deri!=1 and $radi_nume_deri)
 	   {	echo $radi_nume_deri;
@@ -87,7 +85,7 @@ Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado
 	<?
 		}
 	?>
-</td><td><b>Referencia / Oficio</b></td><td><?=$cuentai ?></td>
+</small></td><td><small><b>Referencia / Oficio</b></small></td><td><small><?=$cuentai ?></small></td>
 </tr>
 
     <?
@@ -109,7 +107,7 @@ Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado
 	<?
 		}
 	?>
-<tr><td><b>Imagen</b></td><td>	<span class='vinculos'><?=$imagenv ?></span> </td><td><b>Estado Actual</b></td><td>
+<tr><td><small><b>Imagen</b></small></td><td><small>	<span class='vinculos'><?=$imagenv ?></span> </small></td><td><small><b>Estado Actual</b></small></td><td><small>
 		<span ><?=$descFldExp?></span>&nbsp;&nbsp;&nbsp;
 		<? 
 			if($verradPermisos == "Full" or $datoVer=="985")
@@ -119,8 +117,8 @@ Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado
 		<?
 			}
 		?>
-		</Td><td><b>
-	, Nivel de Seguridad</b></td><td>
+		</Td><td><small><b>
+	, Nivel de Seguridad</b></small></td><td><small>
 	<?
 		if($nivelRad==1)
 		{	echo "Confidencial";	}
@@ -133,9 +131,9 @@ Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado
 	<?
 		}
 	?>
-	</td><tr>
+	</small></td><tr>
 	<tr>
-	<th>Clasificacion Documental</th><td>
+	<th>Clasificacion Documental</th><td><small>
 	<?
 		if(!$codserie) $codserie = "0";
 		if(!$tsub) $tsub = "0";
@@ -146,8 +144,8 @@ Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado
 		if($verradPermisos == "Full" or $datoVer=="985") {
 	?>
 		<input type=button name=mosrtar_tipo_doc2 value='...' class="btn btn-primary btn-xs" onClick="ver_tipodocuTRD(<?=$codserie?>,<?=$tsub?>);">
-	</td><td><b>
-	Tema</b></td><td><?=$sector_nombre?>
+	</small></td><td><small><b>
+	Tema</b></small></td><td><small><?=$sector_nombre?>
 	
       <? 
 		$nombreSession = session_name();
@@ -174,12 +172,12 @@ Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado
       <?
 	   }
 	   ?>
-   </td><td><b> Sub-Tema</b></td>
+   </small></td><td><small><b> Sub-Tema</b></small></td>
     <?
 	$causal_nombre_grb = $causal_nombre;
 	$dcausal_nombre_grb = $dcausal_nombre;
 	$$ddca_causal_nombre_grb = $ddca_causal_nombre;
-	?><td>
+	?><td><small>
       <?=$causal_nombre ?>
       / 
       <?=$dcausal_nombre ?>
@@ -193,8 +191,8 @@ Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado
       <?
 	  } 
 	  ?>
-	  </td></tr><td><b>
-    Poblacion</b><td> <?=$tema_nombre ?>
+	  </small></td></tr><td><small><b>
+    Poblacion</b><td><small> <?=$tema_nombre ?>
       <? 
 	  if ($verradPermisos == "Full"  or $datoVer=="985") {
 	  ?>
@@ -203,7 +201,7 @@ Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado
 	  }
 }
 	  ?>
-	  </td></tr></table>
+	  </small></td></tr></table>
 </form>
 <table width="80%" class="table table-bordered ">
 <tr>
@@ -214,26 +212,26 @@ Descripcion Anexos</b></td><td> <?=$radi_desc_anex ?></td><td><b> Anexo/Asociado
  <th  class='alert alert-info'>Telefono</th>
 </tr>
 <tr> 
-  <td   ><?=$nomRemDes["x1"] ?> </td>
-	<td  ><?=$dirDireccion["x1"] ?></td>
-	<td  ><?=$dirDpto["x1"]."/".$dirMuni["x1"] ?></td>
-	<td   ><?=$email["x1"] ?> </td>
-	<td   ><?=$telefono["x1"] ?> </td>
+  <td   ><?=$nomRemDes["x1"] ?> </small></td>
+	<td  ><?=$dirDireccion["x1"] ?></small></td>
+	<td  ><?=$dirDpto["x1"]."/".$dirMuni["x1"] ?></small></td>
+	<td   ><?=$email["x1"] ?> </small></td>
+	<td   ><?=$telefono["x1"] ?> </small></td>
 </tr>
 <tr> 
-	<td   > <?=$nomRemDes["x2"]?></td>
-  <td  > <?=$dirDireccion["x2"] ?></td>
- <td  > <?=$dirDpto["x2"]."/".$dirMuni["x2"] ?></td>
-	<td   ><?=$email["x2"] ?> </td>
-	<td   ><?=$telefono["x2"] ?> </td>
+	<td   > <?=$nomRemDes["x2"]?></small></td>
+  <td  > <?=$dirDireccion["x2"] ?></small></td>
+ <td  > <?=$dirDpto["x2"]."/".$dirMuni["x2"] ?></small></td>
+	<td   ><?=$email["x2"] ?> </small></td>
+	<td   ><?=$telefono["x2"] ?> </small></td>
  
 </tr>
 <tr>
-	<td   > <?=$nombret_us3 ?> -- <?=$cc_documento_us3?></td>
-  <td  > <?=$direccion_us3 ?></td>
-  <td  > <?=$dpto_nombre_us3."/".$muni_nombre_us3 ?></td>
-  	<td   ><?=$email["x3"] ?> </td>
-	<td   ><?=$telefono["x3"] ?> </td>
+	<td   > <?=$nombret_us3 ?> -- <?=$cc_documento_us3?></small></td>
+  <td  > <?=$direccion_us3 ?></small></td>
+  <td  > <?=$dpto_nombre_us3."/".$muni_nombre_us3 ?></small></td>
+  	<td   ><?=$email["x3"] ?> </small></td>
+	<td   ><?=$telefono["x3"] ?> </small></td>
 
 </tr>
 </table>

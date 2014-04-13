@@ -279,8 +279,8 @@ if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" )
 	{
 	//  $iusuario = " and us_usuario='$krd'";
 	//  $isql = "select a.* from radicado a where radi_depe_actu=$dependencia  and radi_nume_radi=$verrad";
-  ?>
-	DATOS DEL RADICADO No
+  ?><small>
+	DOCUMENTO N.
 	<?
 	if ($mostrar_opc_envio==0 and $carpeta!=8 and !$agendado)
 	{
@@ -303,12 +303,12 @@ if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" )
 	}
 
 	?>
-	</td>
+	</small></td>
 	<td class="titulos5">
-      <a class="vinculos" href='./solicitar/Reservas.php?radicado=<?="$verrad"?>'>Solicitados</a>
+      <a class="vinculos" href='./solicitar/Reservas.php?radicado=<?="$verrad"?>'><small>Solicitados</small></a>
     </td>
     <td class="titulos5">
-      <a class="vinculos" href='./solicitar/Reservar.php?radicado=<?="$verrad&sAction=insert"?>'>Solicitar Fisico</a>
+      <a class="vinculos" href='./solicitar/Reservar.php?radicado=<?="$verrad&sAction=insert"?>'><small>Solicitar Fisico</small></a>
     </td>
   </tr>
 </table>

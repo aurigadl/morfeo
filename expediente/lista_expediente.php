@@ -1,7 +1,11 @@
+<div style="border:1; position:absolute; top:120;  left:650;">
+<?php include "./proceso/workFlowParcial.php"; ?>
+</div>
 <input type="hidden" name="menu_ver_tmp" value=4>
 <input type="hidden" name="menu_ver" value=4>
-<table width="92%" class="table-bordered  table-condensed  " align="left">
+<table width="92%"  class="table-condensed"  align="left" colspacing=0 cellspacing=0>
 <?
+unset($frm);
 	if($verrad) $expediente->expedienteArchivado( $verrad, $numExpediente );
 	$isqlDepR = "SELECT USUA_DOC_RESPONSABLE, SGD_EXP_PRIVADO,SGD_SEXP_PAREXP1,SGD_SEXP_PAREXP2
 			FROM SGD_SEXP_SECEXPEDIENTES
@@ -28,10 +32,10 @@
   <td >
    <?php
 	if ( $usuaPermExpediente ) {
-   ?><table width="100%">
+   ?><table width="100%"  colspacing=0 cellspacing=0>
      <tr><td width=140>
        <span class="dropdown">
-    		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">Expediente <b class="caret"></b> </a>
+    		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><small>Expediente </small><b class="caret"></b> </a>
 				<ul class="dropdown-menu">
 				<?
 				if($usuaPermExpediente) {
@@ -61,11 +65,11 @@
 			</ul>
 			</span>
     </td>
-    <td>
+    <td><small>
     <?=$num_expediente?>
     <input name="num_expediente" type="hidden" size="30" maxlength="18" id='num_expediente' value="<?=$num_expediente?>" class="tex_area" >
      Cod :  <span class=leidos2> <? echo $param1;?>
-     Responsable: <span class=leidos2> <? echo $responsable;?>
+     Responsable: <span class=leidos2> <?=ucwords(strtolower($responsable))	?></small>
      </td>
 	<?
 	}
@@ -147,7 +151,6 @@
 			}
 		}
 	}
-	echo "<br>$mensaje";
 	?>
 <?
 if(!$codigoFldExp) $codigoFldExp= "0";
@@ -159,7 +162,7 @@ if ( $expIncluido != "" ) {
 	$arrTRDExp = $expediente->getTRDExp( $num_expediente, "", "", "" );
 }
 ?>
-<Tr><td>Clasificacion D.</td><td><?php print $arrTRDExp['serie']." / ".$arrTRDExp['subserie']; ?>
+<Tr><td><small>Clasificacion D.</small></td><td><small><?php echo ucwords(strtolower($arrTRDExp['serie']))." / ".ucwords(strtolower($arrTRDExp['subserie'])); ?>
  <?php
 	if ( $expIncluido != "" ) {
 		$arrDatosParametro = $expediente->getDatosParamExp( $expIncluido, $dependencia );
@@ -174,10 +177,10 @@ if ( $expIncluido != "" ) {
       }
     ?>
 
-  </td></tr>
+  </small></td></tr>
 	<tr>
-	<td><span class="dropdown">		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"> Proceso <b class="caret"> </b> </a>
-
+	<td><span class="dropdown">		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><small> Proceso </small><b class="caret"> </b> </a>
+	
 	<ul class="dropdown-menu">
 	<?
 		if($usuaPermExpediente) {
@@ -196,15 +199,18 @@ if ( $expIncluido != "" ) {
 			?>
 		</ul>
 		</span>
-		</td><td>
+		</td><td><small>
 					<?php
 			if( $arrTRDExp['proceso'] != "" ) {
 			  echo $arrTRDExp['proceso']." / ".$arrTRDExp['terminoProceso'];
 			}
-			?>
+			?></small>
+			
 </td></tr>
-
+ 
 <?
+$aristasSig="";
+$frm = "";
 if($descPExpediente){
 	$expediente->consultaTipoExpediente($num_expediente);
 	include_once ("$ruta_raiz/include/tx/Flujo.php");
@@ -215,8 +221,10 @@ if($descPExpediente){
  $iA = 0;
  $ventana = "Default";
  if($aristasSig){
+ unset($frm);
+ $frm = array();
  foreach($aristasSig as $key => $arista){
-  if(trim($arista["FRM_NOMBRE"])){
+  if(trim($arista["FRM_NOMBRE"]) && trim($arista["FRM_LINK"])){
     $ventana = "Max";
     If(!$numeroExpediente) $numeroExpediente = $numExpedente;
     $frm[$iA]["FRM_NOMBRE"] = $arista["FRM_NOMBRE"];
@@ -241,7 +249,7 @@ if($descPExpediente){
   <tr><td>
   <span class="dropdown">
   <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-Estado<b class="caret"></b></a>
+    <small>Estado</small><b class="caret"></b></a>
 		<ul class="dropdown-menu dropdown-menu-large row">
 			<?
 
@@ -265,33 +273,38 @@ Estado<b class="caret"></b></a>
 				</li>
 		</ul>
 	</span>
+	</Td><td>
 	<?
-	if($frm){
+	if($frm && trim($arista["FRM_LINK"])){
+	?>
+	<span class="dropdown">
+ 	 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><small><?=ucwords(strtolower($descFldExp))?></small>
+		<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu dropdown-menu-large row">
+		<?
 		foreach($frm as $arista){
 	?>
-		</Td><td><span class="dropdown">
-		  <lu>
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?=$descFldExp?>
-		<b class="caret"></b>
-			</a>
-		<ul class="dropdown-menu dropdown-menu-large row">
-		<li>
-		<a href="#" onClick="window.open('<?=$arista["FRM_LINK"]?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=$arista["FRM_NOMBRE"]?></a>
-	 </lu>
+			<li>
+				<a href="#" onClick="window.open('<?=$arista["FRM_LINK"]?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=trim($arista["FRM_NOMBRE"])?>
+				</a>
+			</li>  
+	<?php
+	}
+	?>
+	 </ul>
 	 </span>
  	</td>
 	<?php
-	}
 	}else{
 	?>
-
-		</B></Td><td><?=$descFldExp?>
+		<small><?=ucwords(strtolower($descFldExp))?></small>
 		</td><?
 		}
 		?>
 		</tr>
-		<tr><td>
-     Fecha Inicio: </td><td><?php print $arrTRDExp['fecha']; ?></td>
+		<tr><td><small>
+     Fecha Inicio</small></td><td><small><?php print $arrTRDExp['fecha']; ?></small></td>
     </tr>
     </table>
   </td>
@@ -301,7 +314,7 @@ Estado<b class="caret"></b></a>
 	<?php
 }
 ?>
-<table width="100%" align=left><tr><td>
+<table width="100%" align=left  colspacing=0 cellspacing=0><tr><td>
 <?
  include "$ruta_raiz/expediente/expedienteTree.php";
 ?>
