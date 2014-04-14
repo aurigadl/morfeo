@@ -15,7 +15,7 @@ foreach($chips["chip"] as $key => $chip){
    //echo "$res";
    $sPos = "No form was returned by the controller";
    $pos = strpos($res, $sPos, 1);
-   if($pos>=0) echo $chip . " Agregado Corectamente en $numeroExpediente<br>"; else "No se ha encontrado el Chip $chip <br>";
+   if($pos>=1) echo $chip . " Agregado Corectamente en $numeroExpediente<br>"; else "No se ha encontrado el Chip $chip <br>";
 
    $i++;
 }

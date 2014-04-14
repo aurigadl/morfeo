@@ -83,7 +83,7 @@ contadorVentanas=contadorVentanas+1;
 nombreventana="ventanaDetalles"+contadorVentanas;
 url="detalle_archivos.php?usua=<?=$krd?>&radi=<?=$verrad?>&anexo="+anexo;
 url="<?=$ruta_raiz?>/nuevo_archivo.php?codigo="+anexo+"&<?=session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?><?=$datos_envio?>&ruta_raiz=<?=$ruta_raiz?>"+"&tpradic="+tpradic+"&aplinteg="+aplinteg+optAsigna;
-window.open(url,nombreventana,'top=0,height=580,width=640,scrollbars=yes,resizable=yes');
+window.open(url,nombreventana,'top=0,height=780,width=870,scrollbars=yes,resizable=yes');
 return;
 }
 
@@ -191,7 +191,7 @@ if (asigna==1){
 
 nombreventana="ventanaNuevo"+contadorVentanas;
 url="<?=$ruta_raiz?>/nuevo_archivo.php?codigo=&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?>"+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&tdoc=<?=$tdoc?>"+optAsigna;
-window.open(url,nombreventana,'height=630,width=640,scrollbars=yes,resizable=yes');
+window.open(url,nombreventana,'height=730,width=840,scrollbars=yes,resizable=yes');
 return;
 }
 
@@ -257,7 +257,6 @@ function regresar(){
     <td  width='20%'  class='alert alert-info' align=center>CREADOR</td>
     <td  width='20%'  class='alert alert-info' align=center>DESCRIPCION</td>
     <td  width='12%'  class='alert alert-info' align=center>ANEXADO</td>
-    <td  width='13%'  class='alert alert-info' align=center>NUMERADO</td>
     <td  width='35%' colspan='5'   class='alert alert-info' align=center >ACCION</td>
 </tr>
 <?php
@@ -425,17 +424,7 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
  <td><font size=1> <?=$rs->fields["CREA"]?> </font></td>
  <td><font size=1> <?=$rs->fields["DESCR"]?> </font></td>
  <td><font size=1> <?=$rs->fields["FEANEX"]?> </font></td>
- <td><font size=1>
- <?
-	if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0&& strlen($rs->fields["SGD_DOC_SECUENCIA"])>0 )
-	{
-		$anex->anexoRadicado($verrad,$rs->fields["DOCU"]);
-		echo ($anex->get_doc_secuencia_formato($dependencia)."<BR>".$rs->fields["FECDOC"]);
-	}
-?>
-</font>
-</td>
-  <td ><font size=1>
+ <td ><font size=1>
 	<?php
         
 	if($origen!=1 and $linkarchivo  and $verradPermisos == "Full" )
@@ -519,9 +508,7 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 			}
 			else
 				if ($puedeRadicarAnexo!=1)
-				{	$objError = new AplExternaError();
-					$objError->setMessage($puedeRadicarAnexo);
-					echo ($objError->getMessage());
+				{	
 				}
 				else
 				{	if((substr($verrad,-1)!=2) and $num_archivos==1 and !$rs->fields["SGD_PNUFE_CODI"] and $swRadDesdeAnex==false )
