@@ -260,7 +260,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <script type="text/javascript" src="<?=$ruta_raiz?>/js/bootstrap.js"></script>
     </head>
 
-    <body>
+    <body style="overflow:auto; zoom: 1;">
       <div id="wrapper">
         <!-- Sidebar -->
           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
