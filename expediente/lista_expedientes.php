@@ -285,7 +285,7 @@ $time_start = microtime_float();
 					</li>
 					<li>
 						<a href="#" onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
-					</li>
+					</li> 
 					<?
 					}
 				?>
