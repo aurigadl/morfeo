@@ -264,6 +264,7 @@ $time_start = microtime_float();
 				<ul class="nav nav-tabs tabs-left" id="demo-pill-nav" height="100%">
 				<?php
 				$iExp = 1;
+				if($arrExpediente){
 				foreach($arrExpedientes as $numExpediente => $datosExp){
 				if($iExp==1) $datoss = " active "; else  $datoss = " ";
 				?>
@@ -272,6 +273,26 @@ $time_start = microtime_float();
 					</li>
 				<?php
 					$iExp++;
+				}
+				
+				}else{
+					if ( $usuaPermExpediente ) {
+   ?> <span class="dropdown">
+    		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><small>Expediente </small><b class="caret"></b> </a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="#" onClick="insertarExpediente();">Incluir en...</a>
+					</li>
+					<li>
+						<a href="#" onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
+					</li>
+					<?
+					}
+				?>
+			</ul>
+			</span>
+			
+				<?php
 				}
 				?>
 				</ul>

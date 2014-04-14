@@ -38,7 +38,7 @@ unset($frm);
     		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><small>Expediente </small><b class="caret"></b> </a>
 				<ul class="dropdown-menu">
 				<?
-				if($usuaPermExpediente) {
+				if($usuaPermExpediente || !$numExpediente) {
 					?>
 					<li>
 						<a href="#" onClick="insertarExpediente();">Incluir en...</a>
