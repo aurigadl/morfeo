@@ -398,7 +398,7 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 					<a href="#tabs-d">Expediente</a>
 				</li>
 				<li>
-					<a href="#tabs-gis">Gis - Añadir Predios</a>
+					<a href="#tabs-gis">Gis - Añadir Predios </a>
 				</li>				
 			</ul>
 			<ul>
