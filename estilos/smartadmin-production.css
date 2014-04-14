@@ -9710,23 +9710,28 @@ html {
     padding: 0;
 }
 body {
-    background: url("../img/mybg.png") repeat scroll 0 0 #FFFFFF;
-    direction: ltr;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+    background : url("../img/mybg.png") repeat scroll 0 0 #FFFFFF;
+    direction  : ltr;
+    height     : 100%;
+    margin     : 0;
+    padding    : 0;
+    overflow   : auto;
 }
+
 a:active, a:focus, a:hover, button, button:active, button:focus, embed, input::-moz-focus-inner, object {
     outline: 0 none;
 }
+
 h1, h2, h3, h4 {
     font-family: "Open Sans",Arial,Helvetica,Sans-Serif;
     font-weight: 300;
     margin: 0;
 }
+
 .page-title {
     margin: 12px 0 28px;
 }
+
 .page-title span {
     color: #333333;
     display: inline-block;
