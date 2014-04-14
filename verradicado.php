@@ -319,7 +319,7 @@ $datosaenviar = "fechaf=$fechaf&mostrar_opc_envio=$mostrar_opc_envio&tipo_carp=$
 <?php
 if($verradPermisos=="Full" && !($carpeta==66 || $carpeta==8 ) )
 {
- include "$ruta_raiz/tx/txOrfeo.php";
+ // include "$ruta_raiz/tx/txOrfeo.php";
 }
 ?>
 <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
@@ -397,6 +397,9 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 				<li>
 					<a href="#tabs-d">Expediente</a>
 				</li>
+				<li>
+					<a href="#tabs-gis">Gis - Añadir Predios</a>
+				</li>				
 			</ul>
 			<ul>
 			<div id="tabs-a">
@@ -416,6 +419,9 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 		<div id="tabs-d">
 				<?php include "./expediente/lista_expedientes.php"; ?>
 			</div>		
+				<div id="tabs-gis" width="100%">
+				<?php include "./gis/verGis.php"; ?>
+			</div>			
 			</ul>
 		</div>
   </div>
