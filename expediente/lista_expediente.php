@@ -32,10 +32,11 @@ unset($frm);
   <td >
    <?php
 	if ( $usuaPermExpediente ) {
-   ?><table width="100%"  colspacing=0 cellspacing=0>
+   ?><table width="100%"  class="table table-bordered table-striped" colspacing=0 cellspacing=0>
      <tr><td width=140>
        <span class="dropdown">
-    		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><small>Expediente </small><b class="caret"></b> </a>
+        <a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+          &nbsp;&nbsp;Expediente&nbsp;&nbsp;<b class="caret"></b> </a>
 				<ul class="dropdown-menu">
 				<?
 				if($usuaPermExpediente || !$numExpediente) {
@@ -179,33 +180,37 @@ if ( $expIncluido != "" ) {
 
   </small></td></tr>
 	<tr>
-	<td><span class="dropdown">		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><small> Proceso </small><b class="caret"> </b> </a>
-	
-	<ul class="dropdown-menu">
-	<?
-		if($usuaPermExpediente) {
-			?>
-			<li>
-				<a href="#" onClick="verHistExpediente('<?=$numExpediente?>');">Historial del Proceso/Exp</a>
-			</li>
-			<li>
-				<a href="#" onClick="verWorkFlow('<?=$numExpediente?>','<?=$texp?>');">Ver WorkFlow</a>
-			</li>
-			<li>
-				<a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
-			</li>
-				<?
-			}
-			?>
-		</ul>
-		</span>
+  <td>
+    <span class="dropdown">
+
+      <a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+        &nbsp;&nbsp;Procedimiento&nbsp;&nbsp;
+        <b class="caret"></b>
+      </a>
+
+      <ul class="dropdown-menu">
+       <?  if($usuaPermExpediente) { ?>
+        <li>
+          <a href="#" onClick="verHistExpediente('<?=$numExpediente?>');">Historial del Proceso/Exp</a>
+        </li>
+        <li>
+          <a href="#" onClick="verWorkFlow('<?=$numExpediente?>','<?=$texp?>');">Ver WorkFlow</a>
+        </li>
+        <li>
+          <a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
+        </li>
+       <?  } ?>
+      </ul>
+
+    </span>
+
 		</td><td><small>
 					<?php
 			if( $arrTRDExp['proceso'] != "" ) {
 			  echo $arrTRDExp['proceso']." / ".$arrTRDExp['terminoProceso'];
 			}
 			?></small>
-			
+
 </td></tr>
  
 <?
@@ -248,8 +253,9 @@ if($descPExpediente){
 ?>
   <tr><td>
   <span class="dropdown">
-  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-    <small>Estado</small><b class="caret"></b></a>
+  <a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+    &nbsp;&nbsp;Estado&nbsp;&nbsp; <b class="caret"></b>
+  </a>
 		<ul class="dropdown-menu dropdown-menu-large row">
 			<?
 
