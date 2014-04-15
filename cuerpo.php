@@ -122,168 +122,169 @@ $_SESSION['numExpedienteSelected'] = null;
 
 </head>
 <body onLoad="window_onload();">
-<FORM name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/>
-<div >
-	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-		<h1 class="page-title txt-color-blueDark">
-			<i class="fa fa-table fa-fw "></i>
-				Bandeja
-			<span>>
-			<?=$nomcarpeta?>
-			</span>
-		</h1>
-	</div>
-	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-		<ul id="sparks" class="">
-			<li class="sparks-info">
-				<h5> Radicados <span class="txt-color-blue"><?=$numeroRadicados?></span></h5>
-				<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
-					1300, 1877, 2500, 2577
-				</div>
-			</li>
-			<li class="sparks-info">
-				<h5> Vencidos <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45</span></h5>
-				<div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
-					110,150,300,130,400,240
-				</div>
-			</li>
-			<li class="sparks-info">
-				<h5> Ok <span class="txt-color-greenDark">&nbsp;2447</span></h5>
-				<div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
-					110,150,300,130,400,240
-				</div>
-			</li>
-		</ul>
-	</div>
-</div>
+  <FORM name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/>
+  <div id="content" style="opacity: 1;">
 
-<!-- widget grid -->
-<section id="widget-grid" class="">
+    <div class="row">
+      <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+        <h1 class="page-title txt-color-blueDark">
+          <i class="fa fa-table fa-fw "></i>
+            Bandeja
+          <span>>
+          <?=$nomcarpeta?>
+          </span>
+        </h1>
+      </div>
+      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+        <ul id="sparks" class="">
+          <li class="sparks-info">
+            <h5> Radicados <span class="txt-color-blue"><?=$numeroRadicados?></span></h5>
+            <div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
+              1300, 1877, 2500, 2577
+            </div>
+          </li>
+          <li class="sparks-info">
+            <h5> Vencidos <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45</span></h5>
+            <div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
+              110,150,300,130,400,240
+            </div>
+          </li>
+          <li class="sparks-info">
+            <h5> Ok <span class="txt-color-greenDark">&nbsp;2447</span></h5>
+            <div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
+              110,150,300,130,400,240
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-	<!-- row -->
-	<div >
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
 
-		<!-- NEW WIDGET START -->
-		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <!-- row -->
+      <div class="row" >
 
-			<!-- Widget ID (each widget will need unique ID)-->
-			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-				<header>
-					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-					<h2><?=$carpeta?> </h2>
-				</header>
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-				<!-- widget div-->
-				<div>
+          <!-- Widget ID (each widget will need unique ID)-->
+          <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+            <header>
+              <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+              <h2><?=$carpeta?> </h2>
+            </header>
 
-					<!-- widget edit box -->
-					<div class="jarviswidget-editbox">
-						<!-- This area used as dropdown edit box -->
+            <!-- widget div-->
+            <div>
 
-					</div>
-					<!-- end widget edit box -->
+              <!-- widget edit box -->
+              <div class="jarviswidget-editbox">
+                <!-- This area used as dropdown edit box -->
 
-					<!-- widget content -->
-					<div class="widget-body no-padding">
-						<div class="widget-body-toolbar">
-							<div style="position:absolute; left: 195; top:5;">
-								<span class="smart-form">
-										<label class="select" style="width:230px">
-										<select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
-										  <option value="9" selected="selected">Escoja una accion...</option>
-											<option value="9" >Enviar a...</option>
-											<option value="15" >Enviar a Visto Bueno.</option>
-											<option value="10">Mover a Carpeta...</option>
-											<option value="9">Enviar a Visto Bueno...</option>
-											<option value="8	">Informar...</option>
-											<option value="12	">Devolver...</option>
-											<option value="13">Archivar...</option>
-											<option value="14">Agendar...</option>
-										</select>
-								</span>
-							</div>
-							<?php
-								$controlAgenda=1;
-								if($carpeta==11 and !$tipo_carp and $codusuario!=1){
-								}else{
-								  ?>
-								  	<div style="position:absolute; left: 430; top:5;">
-										<span class="smart-form">
-										<label class="select" style="width:230px">
-										<?
-											include "./tx/txOrfeo.php";
-										}
-										?>
-									  </label>
-										</span>
-									</span>
-							</div>
-						</div>
-						<table id="dt_basic" class="table table-striped table-bordered table-hover">
-							<thead>
-								<tr>
-									<th>Radicado</th>
-									<th>Fecha Radicado</th>
-									<th>Asunto</th>
-									<th>Remitente</th>
-									<th>Tipo Documento</th>
-									<th>Dias Restantes</th>
-									<th>Enviado Por</th>
-									<th><input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll"> </th>
-								</tr>
-							</thead>
-							<tbody>
-							<?php
-							  include "$ruta_raiz/include/query/queryCuerpo.php";
-									// $db->conn->debug = true;
-									$rs     =$db->conn->Execute($isql);
+              </div>
+              <!-- end widget edit box -->
 
-							 while(!$rs->EOF){
-							  $numeroRadicado = $rs->fields["HID_RADI_NUME_RADI"];
-							  $fechaRadicado = $rs->fields["HID_RADI_FECH_RADI"];
-							  $asuntoRadicado = $rs->fields["ASUNTO"];
-							  $remitenteRadicado = $rs->fields["REMITENTE"];
-							  $tipoDocumentoRadicado = $rs->fields["TIPO DOCUMENTO"];
-							  $diasRadicado = $rs->fields["DIAS RESTANTES"];
-							  $enviadoPor = $rs->fields["ENVIADO POR"];
-							  $radiPath = $rs->fields["HID_RADI_PATH"];
+              <!-- widget content -->
+              <div class="widget-body no-padding">
+                <div class="widget-body-toolbar">
+                  <div style="position:absolute; left: 195; top:5;">
+                    <span class="smart-form">
+                        <label class="select" style="width:230px">
+                        <select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
+                          <option value="9" selected="selected">Escoja una accion...</option>
+                          <option value="9" >Enviar a...</option>
+                          <option value="15" >Enviar a Visto Bueno.</option>
+                          <option value="10">Mover a Carpeta...</option>
+                          <option value="9">Enviar a Visto Bueno...</option>
+                          <option value="8	">Informar...</option>
+                          <option value="12	">Devolver...</option>
+                          <option value="13">Archivar...</option>
+                          <option value="14">Agendar...</option>
+                        </select>
+                    </span>
+                  </div>
+                  <?php
+                    $controlAgenda=1;
+                    if($carpeta==11 and !$tipo_carp and $codusuario!=1){
+                    }else{
+                      ?>
+                        <div style="position:absolute; left: 430; top:5;">
+                        <span class="smart-form">
+                        <label class="select" style="width:230px">
+                        <?
+                          include "./tx/txOrfeo.php";
+                        }
+                        ?>
+                        </label>
+                        </span>
+                      </span>
+                  </div>
+                </div>
+                <table id="dt_basic" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Radicado</th>
+                      <th>Fecha Radicado</th>
+                      <th>Asunto</th>
+                      <th>Remitente</th>
+                      <th>Tipo Documento</th>
+                      <th>Dias Restantes</th>
+                      <th>Enviado Por</th>
+                      <th><input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll"> </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php
+                    include "$ruta_raiz/include/query/queryCuerpo.php";
+                      // $db->conn->debug = true;
+                      $rs     =$db->conn->Execute($isql);
 
-							  $linkVerRadicado = "./verradicado.php?verrad=$numeroRadicado&".session_name()."=".session_id()."&nomcarpeta=$nomcarpeta#tabs-a";
-							  $linkImagen = "$ruta_raiz/bodega/$radiPath";
-							?>
-								<tr>
-									<td><A onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=200,height=100');" href='#'> <?=$numeroRadicado?></a></td>
-									<td><a href='<?=$linkVerRadicado?>'><?=$fechaRadicado?></a></td>
-									<td><?=$asuntoRadicado?></td>
-									<td><?=$remitenteRadicado?></td>
-									<td><?=$tipoDocumentoRadicado?></td>
-									<td><?=$diasRadicado?>35728</td>
-									<td><?=$enviadoPor?></td>
-									<td><input id="<?=$numeroRadicado?>" type="checkbox" value="CHKANULAR" name="checkValue[<?=$numeroRadicado?>]"></td>
-								</tr>
-							<?php
-							 $rs->MoveNext();
-							} ?>
-							</tbody>
-						</table>
+                  while(!$rs->EOF){
+                    $numeroRadicado = $rs->fields["HID_RADI_NUME_RADI"];
+                    $fechaRadicado = $rs->fields["HID_RADI_FECH_RADI"];
+                    $asuntoRadicado = $rs->fields["ASUNTO"];
+                    $remitenteRadicado = $rs->fields["REMITENTE"];
+                    $tipoDocumentoRadicado = $rs->fields["TIPO DOCUMENTO"];
+                    $diasRadicado = $rs->fields["DIAS RESTANTES"];
+                    $enviadoPor = $rs->fields["ENVIADO POR"];
+                    $radiPath = $rs->fields["HID_RADI_PATH"];
 
-					</div>
-					<!-- end widget content -->
+                    $linkVerRadicado = "./verradicado.php?verrad=$numeroRadicado&".session_name()."=".session_id()."&nomcarpeta=$nomcarpeta#tabs-a";
+                    $linkImagen = "$ruta_raiz/bodega/$radiPath";
+                  ?>
+                    <tr>
+                      <td><A onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=200,height=100');" href='#'> <?=$numeroRadicado?></a></td>
+                      <td><a href='<?=$linkVerRadicado?>'><?=$fechaRadicado?></a></td>
+                      <td><?=$asuntoRadicado?></td>
+                      <td><?=$remitenteRadicado?></td>
+                      <td><?=$tipoDocumentoRadicado?></td>
+                      <td><?=$diasRadicado?>35728</td>
+                      <td><?=$enviadoPor?></td>
+                      <td><input id="<?=$numeroRadicado?>" type="checkbox" value="CHKANULAR" name="checkValue[<?=$numeroRadicado?>]"></td>
+                    </tr>
+                  <?php
+                  $rs->MoveNext();
+                  } ?>
+                  </tbody>
+                </table>
 
-				</div>
-				<!-- end widget div -->
+              </div>
+              <!-- end widget content -->
 
-			</div>
-			<!-- end widget -->
+            </div>
+            <!-- end widget div -->
 
+            </div>
+          <!-- end widget -->
+          </article>
 
-			</div>
-			<!-- end widget -->
+      </div>
+      <!-- end row -->
 
-	<!-- end row -->
-
-</section>
-<!-- end widget grid -->
+    </section>
+    <!-- end widget grid -->
+  </div>
 </form>
 
 <script type="text/javascript">
@@ -404,5 +405,6 @@ $_SESSION['numExpedienteSelected'] = null;
 	}
 
 </script>
+
 </body>
 </html>
