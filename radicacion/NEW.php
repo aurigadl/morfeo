@@ -92,21 +92,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <html>
   <head>
   <?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
-  <script language="JavaScript">
-  <?
-  // Convertimos los vectores de los paises, dptos y municipios creados en crea_combos_universales.php a vectores en JavaScript.
-  echo arrayToJsArray($vpaisesv, 'vp');
-  echo arrayToJsArray($vdptosv, 'vd');
-  echo arrayToJsArray($vmcposv, 'vm');
-  ?>
-
-  function buscar_usuario(){
-    document.write('<form target=Buscar_Usuario name=formb action=buscar_usuario.php?envio_salida=true&ent=<?=$ent?> method=POST>');
-    document.write("<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>");
-    document.write("<input type='hidden' name=no_documento value='" + documento +"'>");
-    document.write("</form> ");
-  }
-  </script>
 </head>
 
 <body>
@@ -302,10 +287,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }
   $var_envio="ent=$ent&carp_per=$carp_per&carp_codi=$carp_codi&rad=$nurad&coddepe=$coddepe&depende=$depende";
 ?>
-<form action='NEW.php?<?=$var_envio?>' class="smart-form"  method="post" name="formulario" id="formulario">
-
-  <div id="content" style="opacity: 1;">
-    <div class="col-lg-12">
+  <form action='NEW.php?<?=$var_envio?>' method="post" name="formulario" id="formulario">
+    <div id="content" style="opacity: 1;">
+      <div class="col-lg-12">
         <div class="col-lg-4">
             <?
               if($tpRadicado) {
@@ -338,21 +322,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </div>
 
 
-        <div class="col-lg-8">
-            <input type=hidden name=radicadopadre value='<?=$radicadopadre ?>'>
+        <div class="col-lg-8 smart-form">
+            <input type='hidden' name=radicadopadre value='<?=$radicadopadre ?>'>
             <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
-            <input type=hidden name=tipoanexo    value='<?=$tipoanexo ?>'>
-            <input type=hidden name='noradicar'  value='<?=$noradicar ?>'>
-            <input type=hidden name='noradicar1' value='<?=$noradicar1 ?>'>
-            <input type=hidden name='noradicar2' value='<?=$noradicar2 ?>'>
-            <input type=hidden name='atrasRad0'  value='<?=$rad0 ?>'>
-            <input type=hidden name='atrasRad1'  value='<?=$rad1 ?>'>
-            <input type=hidden name='atrasRad2'  value='<?=$rad2 ?>'>
-            <input type=hidden name='faxPath'    value='<?=$faxPath ?>'>
+            <input type='hidden' name=tipoanexo    value='<?=$tipoanexo ?>'>
+            <input type='hidden' name='noradicar'  value='<?=$noradicar ?>'>
+            <input type='hidden' name='noradicar1' value='<?=$noradicar1 ?>'>
+            <input type='hidden' name='noradicar2' value='<?=$noradicar2 ?>'>
+            <input type='hidden' name='atrasRad0'  value='<?=$rad0 ?>'>
+            <input type='hidden' name='atrasRad1'  value='<?=$rad1 ?>'>
+            <input type='hidden' name='atrasRad2'  value='<?=$rad2 ?>'>
+            <input type='hidden' name='faxPath'    value='<?=$faxPath ?>'>
 
             <section class="col col-2">
               <label class="label">
-                dd / mm / aaaa
+                DD / MM / AAAA
               </label>
               <h3><?=$ddate?> / <?=$mdate?> / <?=$adate?>
               </h3>
@@ -386,1007 +370,932 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <input type="text" name="fecha_gen_doc" id="date" placeholder="Fecah de radicacion" value="<?=$fecha_gen_doc ?>">
               </label>
             </section>
+          </div>
         </div>
-    </div>
 
+        <section id="widget-grid">
 
+          <!-- row -->
+          <div class="row">
 
-   <!-- Inicio destinatarios -->
-   <div>
-    <article>
-          <!-- widget div-->
-          <div>
-            <!-- widget edit box -->
-            <div class="jarviswidget-editbox">
-              <!-- This area used as dropdown edit box -->
-            </div>
-            <!-- end widget edit box -->
-            <!-- widget content -->
-            <div class="widget-body no-padding">
+            <!-- NEW WIDGET START -->
+            <article class="col-lg-12">
 
-              <section class="col col-2">
-                  <label class="label">
-                    Documento
-                  </label>
-                  <label class="input">
-                    <div class="row">
-                      <section class="col col-11">
-                        <input type=text name='cc_documento_us<?=$i?>' value='<?=$cc_documento?>' readonly="true" >
-                      </section>
+              <div data-widget-editbutton="false" id="wid-id-0" class="jarviswidget jarviswidget-sortable" style="" role="widget">
+
+                  <!-- widget content -->
+                  <div class="widget-body">
+
+                      <div class="form-inline smart-form">
+
+                        <section class="col col-2">
+                          <label class="select">
+                            <select name="tipo_ususario" class="form-control input-sm">
+                              <option value='0'>Usuario     </option>
+                              <option value='2'>Empresas    </option>
+                              <option value='6'>Funcionarios</option>
+                            </select>
+                          </label>
+                        </section>
+
+                        <section class="col col-2">
+                          <label class="input">
+                            <i class="icon-prepend fa fa-search"></i>
+                            <input type=text name='documento_us' placeholder="Documento">
+                          </label>
+                        </section>
+
+                        <section class="col col-2">
+                          <label class="input">
+                            <i class="icon-prepend fa fa-search"></i>
+                            <INPUT type=text name='nombre_us' placeholder="Nombre">
+                          </label>
+                        </section>
+
+                        <section class="col col-2">
+                          <label class="input">
+                            <i class="icon-prepend fa fa-search"></i>
+                            <input type=text name='telefono_us' placeholder="Tel&eacute;fono">
+                          </label>
+                        </section>
+
+                        <section class="col col-2">
+                          <label class="input">
+                            <i class="icon-prepend fa fa-search"></i>
+                            <INPUT type=text name='mail_us' placeholder="Correo Electronico">
+                          </label>
+                        </section>
+
+                        <button type="button" name="Button" value="Crear" class="btn btn-success btn-sm pull-right" onClick="Start('buscar_usuario.php?&nombreTp1=<?=$nombreTp1?>&nombreTp2=<?=$nombreTp2?>&nombreTp3=<?=$nombreTp3?>&busq_salida=<?=$busq_salida?>&ent=<?=$ent?>',1024,400);">
+                          Crear
+                        </button>
+
+                      </div>
+
+                      <!--Muestra Resultados de la busqueda-->
+                      <div id="resBusqueda"></div>
+
+                      <table class="table table-bordered table-striped">
+                          <thead>
+                            <tr>
+                              <th>Documento</th>
+                              <th>Nombre</th>
+                              <th>1er Apellido</th>
+                              <th>2do Apellido</th>
+                              <th>Telefono</th>
+                              <th>Direcci&oacute;n</th>
+                              <th>Correo Electronico</th>
+                              <th>Dignatario</th>
+                              <th>Pais</th>
+                              <th>Departamento</th>
+                              <th>Municipio</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><a class="btn btn-default btn-circle" href="javascript:void(0);"><i class="glyphicon glyphicon-minus"></i></a> 123123213 </td>
+                              <td>Row 2</td>
+                              <td>Row 3</td>
+                              <td>Row 4</td>
+                              <td>Row 5</td>
+                              <td>Row 6</td>
+                              <td>Row 7</td>
+                              <td>Row 8</td>
+                              <td>Row 9</td>
+                              <td>Row 10</td>
+                              <td>Row 11</td>
+                            </tr>
+                          </tbody>
+
+                      </table>
+                      <!-- end widget content -->
                     </div>
+                <!-- end widget div -->
+              </div>
+            </article>
+            <!-- WIDGET END -->
+          </div>
+        </section>
+
+
+        <?
+            unset($contcodi);
+            unset($paiscodi);
+            unset($deptocodi);
+            unset($municodi);
+
+            if(empty($asu)){
+                $asu =  $eMailsubject;
+            }
+
+            $asu = htmlspecialchars(stripcslashes($asu));
+        ?>
+        <div class="well">
+          <section class="smart-form">
+            <div class="row">
+              <section class="col col-6">
+                <label class="label">
+                  Asunto
+                </label>
+                <label class="textarea">
+                  <textarea name="asu" cols="70"  rows="2" ><?=$asu?></textarea>
+                </label>
+              </section>
+
+              <section class="col col-6">
+                  <label class="label">
+                  <?php if($ent==2){
+                    echo "Medio Recepci&oacute;n";
+                  } else {
+                        echo "Medio Env&iacute;o";
+                  }
+
+                  if($faxPath) $med=2;
+                  if($tipoMedio) $med=4;
+                  ?>
+                  </label>
+                  <label class="select">
+                  <?php
+                    $query = "Select MREC_DESC, MREC_CODI from MEDIO_RECEPCION WHERE MREC_CODI <>0 ";
+                    $rs=$db->conn->query($query);
+                    $varQuery = $query;
+                    if($rs){
+                      print $rs->GetMenu2("med", $med, "$opcMenu", false,"","class='select' " );
+                    }
+                  ?>
+                  </label>
+              </section>
+            </div>
+
+            <div class="row">
+
+              <section class="col col-2">
+                  <label class="label">
+                    No. Folios
+                  </label>
+                  <label class="input">
+                    <input name="nofolios" id="nofolios" type="text" size="10"  value="<?php echo htmlspecialchars(stripcslashes($nofolios));?>">
                   </label>
               </section>
               <section class="col col-2">
                   <label class="label">
-                  Tipo
-                  </label>
-                  <label class="select">
-                    <select name="tipo_emp_us<?=$i?>" class="input-sm">
-                    <option value=0 '<?=$datos ?>'>Usuario       </option>
-                    <option value=1 '<?=$datos ?>'>Entidades     </option>
-                    <option value=2 '<?=$datos ?>'>Empresas      </option>
-                    <option value=6 '<?=$datos ?>'>Funcionarios  </option>
-                  </select>
-                  </label>
-              </section>
-            </div>
-
-            <footer>
-              <input type="button" name="Button" value="BUSCAR" class="btn btn-success btn-xs" onClick="Start('buscar_usuario.php?&nombreTp1=<?=$nombreTp1?>&nombreTp2=<?=$nombreTp2?>&nombreTp3=<?=$nombreTp3?>&busq_salida=<?=$busq_salida?>&ent=<?=$ent?>',1024,400);">
-              <input type='hidden' name='depende22' value="<?php echo $depende;?>">
-            </footer>
-
-            <div class="row">
-              <section class="col col-3">
-                  <label class="label">
-                    Nombre
+                    No. Anexos
                   </label>
                   <label class="input">
-                    <INPUT type=text name='nombre_us<?=$i ?>' value='<?=$nombre ?>'  readonly="true"   size=40>
+                    <input name="noanexos" id="noanexos" type="text" size="10"  value="<?php echo htmlspecialchars(stripcslashes($noanexos));?>">
                   </label>
               </section>
-              <section class="col col-3">
+              <section class="col col-2">
                   <label class="label">
-                    Primer Apellido
+                    Descripci&oacute; Anexos
                   </label>
                   <label class="input">
-                    <input type=text name='prim_apel_us<?=$i ?>' value='<?=$papel ?>'   readonly="true"  size="35">
-                  </label>
-              </section>
-              <section class="col col-3">
-                  <label class="label">
-                    Segundo Apellido
-                  </label>
-                  <label class="input">
-                    <input type=text name='seg_apel_us<?=$i ?>' value='<?=$sapel ?>'  readonly="true"   size=40>
-                  </label>
-              </section>
-              <section class="col col-3">
-                  <label class="label">
-                    Tel&eacute;fono
-                  </label>
-                  <label class="input">
-                    <input type=text name='telefono_us<?=$i ?>' value='<?=$tel ?>' <?=$bloqEdicion?>  size=35>
-                  </label>
-              </section>
-            </div>
-
-            <div class="row">
-              <section class="col col-3">
-                  <label class="label">
-                  Direcci&oacute;n
-                  </label>
-                  <label class="input">
-                      <INPUT type=text name='direccion_us<?=$i ?>' value='<?=$dir ?>' <?=$bloqEdicion?>  size=40>
+                      <input name="ane" id="ane" type="text" size="70"  value="<?php echo htmlspecialchars(stripcslashes($ane));?>">
                   </label>
               </section>
 
               <section class="col col-3">
                   <label class="label">
-                    Mail
-                  </label>
-                  <label class="input">
-                    <INPUT type=text name='mail_us<?=$i ?>' value='<?=$mail ?>' <?=$bloqEdicion?>  size=35>
-                  </label>
-              </section>
-
-              <?  if($i!=3) { ?>
-              <section class="col col-3">
-                  <label class="label">
-                    Dignatario
-                  </label>
-                  <label class="input">
-                    <INPUT type='text' name='otro_us<?=$i ?>' value="<?php echo htmlspecialchars(stripcslashes($otro)); ?>"  size='40' maxlength='50'>
-                  </label>
-              </section>
-              <?  } ?>
-
-            </div>
-
-            <div class="row">
-              <section class="col col-3">
-                  <label class="label">
-                    Continente
-                  </label>
-                  <label class="select">
-
-                  <?php
-                        /*  En este segmento trabajaremos macrosusticiï¿½n, lo que en el argot php se denomina Variables variables.
-                    *	El objetivo es evitar realizar codigo con las mismas asignaciones y comparaciones cuya diferencia es el
-                    *	valor concatenado de una variable + $i.
-                    */
-                        $var_cnt = "idcont".$i;
-                        $var_pai = "idpais".$i;
-                        $var_dpt = "codep_us".$i;
-                        $var_mcp = "muni_us".$i;
-
-                        /*	Se crean las variables cuyo contenido es el valor por defecto para cada combo, esto segï¿½n el siguiente orden:
-                    *	1. Se pregunta si existe idcont1, idcont2 e idcont3 (segï¿½n iteracciï¿½n del ciclo), si es asï¿½ se asigna a $contcodi.
-                    *	2. Sino existe (osea que no viene de buscar_usuario.php) se pregunta si existe "localidad" y se asigna el
-                    *	   respectivo cï¿½digo; de ser negativa la "localidad", $contcodi toma el valor de 0. Esto para cada
-                    *	   variable de continente, pais, dpto y mncpio respectivamente.
-                    */
-
-                        (${$var_cnt}) ? $contcodi = ${$var_cnt} : ($_SESSION['cod_local'] ? $contcodi = (substr($_SESSION['cod_local'],0,1)*1) : $contcodi = 0 ) ;
-                        (${$var_pai}) ? $paiscodi = ${$var_pai} : ($_SESSION['cod_local'] ? $paiscodi = (substr($_SESSION['cod_local'],2,3)*1) : $paiscodi = 0 ) ;
-                        (${$var_dpt}) ? $deptocodi = ${$var_dpt} : ($_SESSION['cod_local'] ? $deptocodi = $paiscodi."-".(substr($_SESSION['cod_local'],6,3)*1) : $deptocodi = 0 ) ;
-                        (${$var_mcp}) ? $municodi = ${$var_mcp} : ($_SESSION['cod_local'] ? $municodi = $deptocodi."-".substr($_SESSION['cod_local'],10,3)*1 : $municodi = 0 ) ;
-
-                        //	Visualizamos el combo de continentes.
-                        echo $Rs_Cont->GetMenu2("idcont$i",$contcodi,"0:<< seleccione >>",false,0," id=\"idcont$i\" CLASS=\"select\" onchange=\"cambia(this.form, 'idpais$i', 'idcont$i')\" ");
-                        $Rs_Cont->Move(0);
-                    ?>
-                  </label>
-              </section>
-              <section class="col col-3">
-                  <label class="label">
-                    Pa&iacute;s
+                    Dependencia
                   </label>
                   <label class="select">
                     <?php
-                    //	Visualizamos el combo de paises.
-                    echo "<SELECT NAME=\"idpais$i\" ID=\"idpais$i\" CLASS=\"select\" onchange=\"cambia(this.form, 'codep_us$i', 'idpais$i')\">";
-                    while (!$Rs_pais->EOF and !( $Submit4)){
-                      if ($_SESSION['cod_local'] and ($Rs_pais->fields['ID0'] == $contcodi)){
-                        ($paiscodi == $Rs_pais->fields['ID1'])? $s = " selected='selected'" : $s = "";
-                        echo "<option".$s." value='".$Rs_pais->fields['ID1']."'>".$Rs_pais->fields['NOMBRE']."</option>";
+                    // Busca las dependencias existentes en la Base de datos...
+                    if($radi_depe_actu_padre and $tipoanexo==0 and !$coddepeinf)  $coddepe = $radi_depe_actu_padre;
+                      if(!$coddepe)
+                      {
+                        $coddepe=$dependencia;
                       }
-                      $Rs_pais->MoveNext();
-                    }
-                    echo "</SELECT>";
-                    $Rs_pais->Move(0); ?>
+                      /** Solo los documentos de entrada (ent=2) muestra la posibilidad de redireccion a otras dependencias
+                        * @queryWhere String opcional para la consulta.
+                        */
+                      if($ent!=2 || $dependencia=="4240" )
+                      {
+                        $queryWhere =" and d.depe_codi = $dependencia ";
+                      }
+                      else
+                      {
+                        $queryWhere = "";
+                      }
+                      // Modificado SGD 11-Jul-2007
+                      //$query = "select DEPE_NOMB,DEPE_CODI from dependencia $queryWhere order by depe_nomb";
+                      switch( $GLOBALS['entidad'] )
+                      {
+                        case 'SGD':
+                          $query = "SELECT ".$db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
+                          FROM DEPENDENCIA d
+                                            INNER JOIN usuario u ON u.depe_codi = d.depe_codi
+                                            and u.usua_codi = 1
+                                            and u.usua_esta = '1'
+                                            and d.depe_estado = 1
+                          $queryWhere
+                          ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
+                          break;
+                        default:
+                          $query = "select DEPE_NOMB,DEPE_CODI from dependencia $queryWhere order by depe_nomb";
+                          $query = "SELECT ".$db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
+                          FROM DEPENDENCIA d
+                                            INNER JOIN usuario u ON u.depe_codi = d.depe_codi
+                                            and u.usua_codi = 1
+                                            and u.usua_esta = '1'
+                                            and d.depe_estado = 1
+                          $queryWhere
+                          ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
+                      }
+                      $ADODB_COUNTRECS = true;
+                      $rs=$db->conn->query($query);
+                      $numRegs = "!".$rs->RecordCount();
+                      $varQuery = $query;
+                      $comentarioDev = "Muestra las dependencias";
+
+                      if ($ent!=2  || $dependencia=="4240"  )
+                        print $rs->GetMenu2("coddepe",$coddepe, "0:-- Seleccione una Dependencia --", false,false,"class='select'");
+                      else
+                        print $rs->GetMenu2("coddepe","", "0:-- Seleccione una Dependencia --", false,false,"class='select'");
+
+                      $ADODB_COUNTRECS = false;
+                    ?>
                   </label>
               </section>
 
               <section class="col col-3">
-                  <label class="label">
-                    Departamento
-                  </label>
-                  <label class="select">
-                      <?php
-                      echo "<SELECT NAME=\"codep_us$i\" ID=\"codep_us$i\" CLASS=\"select\" onchange=\"cambia(this.form, 'muni_us$i', 'codep_us$i')\">";
-                    while (!$Rs_dpto->EOF and !( $Submit4)){
-                      if ($_SESSION['cod_local'] and ($Rs_dpto->fields['ID0'] == $paiscodi)){
-                        ($deptocodi == $Rs_dpto->fields['ID1'])? $s = " selected='selected'" : $s = "";
-                        echo "<option".$s." value='".$Rs_dpto->fields['ID1']."'>".$Rs_dpto->fields['NOMBRE']."</option>";
-                      }
-                      $Rs_dpto->MoveNext();
-                      }
-                      echo "</SELECT>";
-                      $Rs_dpto->Move(0); ?>
-                  </label>
-              </section>
+                <label class="label">
+                  Tipo Documental
+                </label>
+                <label class="select">
+                  <input name="hoj" type=hidden value="<? echo $hoj; ?>">
+                  <?php
+                    $query = "SELECT
+                      SGD_TPR_DESCRIP
+                      ,SGD_TPR_CODIGO
+                      FROM
+                        SGD_TPR_TPDCUMENTO
+                    WHERE
+                      SGD_TPR_TP$ent='1'
+                      and SGD_TPR_RADICA='1'
+                      ORDER BY SGD_TPR_DESCRIP ";
+                  $opcMenu = "0:-- Seleccione un tipo --";
+                  $fechaHoy = date("Y-m-d");
+                  $fechaHoy = $fechaHoy . "";
+                  $ADODB_COUNTRECS = true;
 
-              <section class="col col-3">
-                  <label class="label">
-                    Municipio
-                  </label>
-                  <label class="select">
-                      <?php
-                      echo "<SELECT NAME=\"muni_us$i\" ID=\"muni_us$i\" CLASS=\"select\" >";
-                      while (!$Rs_mcpo->EOF and !( $Submit4)){
-                        if ($_SESSION['cod_local']){
-                          ($municodi == $Rs_mcpo->fields['ID1'])? $s = " selected='selected'" : $s = "";
-                          echo "<option".$s." value='".$Rs_mcpo->fields['ID1']."'>".$Rs_mcpo->fields['NOMBRE']."</option>";
-                        }
-                        $Rs_mcpo->MoveNext();
-                      }
-                      echo "</SELECT>";
-                      $Rs_mcpo->Move(0);
-                      $municodi=0;$muninomb="";$deptocodi=0; ?>
-                  </label>
+                  $rs=$db->conn->query($query);
+                  if ($rs && !$rs->EOF ) {
+                    $numRegs = "!".$rs->RecordCount();
+                    $varQuery = $query;
+                    print $rs->GetMenu2("tdoc", $tdoc, "$opcMenu", false,"","class='ecajasfecha' " );
+                  }else {
+                    $tdoc = 0;
+                  }
+                  $ADODB_COUNTRECS = false;
+                  ?>
+                </label>
               </section>
             </div>
-          </div>
-      </article>
-    </div>
-    <!-- Fin destinatarios -->
-    <?
-      unset($contcodi);
-      unset($paiscodi);
-      unset($deptocodi);
-      unset($municodi);
 
-      if(empty($asu)){
-          $asu =  $eMailsubject;
-      }
+            </section>
 
-      $asu = htmlspecialchars(stripcslashes($asu));
-    ?>
-
-      <div class="row">
-        <section class="col col-6">
-          <label class="label">
-            Asunto
-          </label>
-          <label class="textarea">
-            <textarea name="asu" cols="70"  rows="2" ><?=$asu?></textarea>
-          </label>
-        </section>
-
-        <section class="col col-6">
-            <label class="label">
-            <?php if($ent==2){
-              echo "Medio Recepci&oacute;n";
-            } else {
-                  echo "Medio Env&iacute;o";
-            }
-
-            if($faxPath) $med=2;
-            if($tipoMedio) $med=4;
-            ?>
-            </label>
-            <label class="select">
-            <?php
-              $query = "Select MREC_DESC, MREC_CODI from MEDIO_RECEPCION WHERE MREC_CODI <>0 ";
-              $rs=$db->conn->query($query);
-              $varQuery = $query;
-              if($rs){
-                print $rs->GetMenu2("med", $med, "$opcMenu", false,"","class='select' " );
-              }
-            ?>
-            </label>
-        </section>
-      </div>
-
-      <div class="row">
-
-        <section class="col col-2">
-            <label class="label">
-              No. Folios
-            </label>
-            <label class="input">
-              <input name="nofolios" id="nofolios" type="text" size="10"  value="<?php echo htmlspecialchars(stripcslashes($nofolios));?>">
-            </label>
-        </section>
-        <section class="col col-2">
-            <label class="label">
-              No. Anexos
-            </label>
-            <label class="input">
-              <input name="noanexos" id="noanexos" type="text" size="10"  value="<?php echo htmlspecialchars(stripcslashes($noanexos));?>">
-            </label>
-        </section>
-        <section class="col col-2">
-            <label class="label">
-              Descripci&oacute; Anexos
-            </label>
-            <label class="input">
-                <input name="ane" id="ane" type="text" size="70"  value="<?php echo htmlspecialchars(stripcslashes($ane));?>">
-            </label>
-        </section>
-
-        <section class="col col-3">
-            <label class="label">
-              Dependencia
-            </label>
-            <label class="select">
-              <?php
-              // Busca las dependencias existentes en la Base de datos...
-              if($radi_depe_actu_padre and $tipoanexo==0 and !$coddepeinf)  $coddepe = $radi_depe_actu_padre;
-                if(!$coddepe)
-                {
-                  $coddepe=$dependencia;
-                }
-                /** Solo los documentos de entrada (ent=2) muestra la posibilidad de redireccion a otras dependencias
-                  * @queryWhere String opcional para la consulta.
-                  */
-                if($ent!=2 || $dependencia=="4240" )
-                {
-                  $queryWhere =" and d.depe_codi = $dependencia ";
-                }
-                else
-                {
-                  $queryWhere = "";
-                }
-                // Modificado SGD 11-Jul-2007
-                //$query = "select DEPE_NOMB,DEPE_CODI from dependencia $queryWhere order by depe_nomb";
-                switch( $GLOBALS['entidad'] )
-                {
-                  case 'SGD':
-                    $query = "SELECT ".$db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
-                    FROM DEPENDENCIA d
-                                      INNER JOIN usuario u ON u.depe_codi = d.depe_codi
-                                      and u.usua_codi = 1
-                                      and u.usua_esta = '1'
-                                      and d.depe_estado = 1
-                    $queryWhere
-                    ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
-                    break;
-                  default:
-                    $query = "select DEPE_NOMB,DEPE_CODI from dependencia $queryWhere order by depe_nomb";
-                    $query = "SELECT ".$db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
-                    FROM DEPENDENCIA d
-                                      INNER JOIN usuario u ON u.depe_codi = d.depe_codi
-                                      and u.usua_codi = 1
-                                      and u.usua_esta = '1'
-                                      and d.depe_estado = 1
-                    $queryWhere
-                    ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
-                }
-                $ADODB_COUNTRECS = true;
-                $rs=$db->conn->query($query);
-                $numRegs = "!".$rs->RecordCount();
-                $varQuery = $query;
-                $comentarioDev = "Muestra las dependencias";
-
-                if ($ent!=2  || $dependencia=="4240"  )
-                  print $rs->GetMenu2("coddepe",$coddepe, "0:-- Seleccione una Dependencia --", false,false,"class='select'");
-                else
-                  print $rs->GetMenu2("coddepe","", "0:-- Seleccione una Dependencia --", false,false,"class='select'");
-
-                $ADODB_COUNTRECS = false;
-              ?>
-            </label>
-        </section>
-        <section class="col col-3">
-          <label class="label">
-            Tipo Documental
-          </label>
-          <label class="select">
-            <input name="hoj" type=hidden value="<? echo $hoj; ?>">
-            <?php
-              $query = "SELECT
-                SGD_TPR_DESCRIP
-                ,SGD_TPR_CODIGO
-                FROM
-                  SGD_TPR_TPDCUMENTO
-              WHERE
-                SGD_TPR_TP$ent='1'
-                and SGD_TPR_RADICA='1'
-                ORDER BY SGD_TPR_DESCRIP ";
-            $opcMenu = "0:-- Seleccione un tipo --";
-            $fechaHoy = date("Y-m-d");
-            $fechaHoy = $fechaHoy . "";
-            $ADODB_COUNTRECS = true;
-
-            $rs=$db->conn->query($query);
-            if ($rs && !$rs->EOF ) {
-              $numRegs = "!".$rs->RecordCount();
-              $varQuery = $query;
-              print $rs->GetMenu2("tdoc", $tdoc, "$opcMenu", false,"","class='ecajasfecha' " );
-            }else {
-              $tdoc = 0;
-            }
-            $ADODB_COUNTRECS = false;
-            ?>
-          </label>
-        </section>
-      </div>
-
-
-      <?php
-      // Comprueba si el documento es una radicaci�n nueva de entrada....
-      if($tipoanexo==0 and $radicadopadre and !$radicadopadreseg and (!$Submit3  and !$Submit4)){
-        if($radi_depe_actu_padre==999){
-          echo "<font color=red >Documento padre se encuentra en Archivo</font>";
-        } elseif($radi_depe_actu_padre and $rad0){
-          $query= "select USUA_NOMB, USUA_CODI from usuario where depe_codi=$radi_depe_actu_padre and usua_codi=$radi_usua_actu_padre";
-          $ADODB_COUNTRECS = true;
-          $rs              = $db->conn->query($query);
-          $numRegs         = "!".$rs->RecordCount();
-          $ADODB_COUNTRECS = false;
-          $varQuery        = $query;
-          $comentarioDev   = "Muestra las dependencias";
-          $usuario_padre   = $rs->fields["USUA_NOMB"];
-          $cod_usuario_inf = $rs->fields["USUA_CODI"];
-          $coddepeinf      = $radi_depe_actu_padre;
-          $informar_rad    = "Informar";
-          $observa_inf     = "(Se ha generado un anexo pero ha sido enviado a la dependencia $coddepe)";
-          ?>
-          <input type=hidden name=radi_depe_actu_padre value="<?=$radi_depe_actu_padre?>">
-          <input type=hidden name=coddepeinf value="<?=$coddepeinf?>">
-          <input type=hidden name=cod_usuario_inf value="<?=$cod_usuario_inf?>">
-          <?
-        }
-      }
-
-      include "$ruta_raiz/include/tx/Tx.php";
-      include("../include/tx/Radicacion.php");
-      include("../class_control/Municipio.php");
-
-      $hist = new Historico($db);
-      $Tx = new Tx($db);
-
-      if($Submit3 == "Radicar"){
-
-        $ddate     = date("d");
-        $mdate     = date("m");
-        $adate     = date("Y");
-        $fechproc4 = substr($adate,2,4);
-        $fechrd    = $ddate.$mdate.$fechproc4;
-
-        if($fechproc12 == ''){
-          $fechproc12=date('d');
-          $fechproc22=date('m');
-          $fechproc32=date('y');
-        }
-
-        $fechrdoc       = $fecha_gen_doc;
-        $apl           .= "";
-        $apl            = trim(substr($apl,0,50));
-        $sapl          .= "";
-        $sapl           = trim(substr($sapl,0,50));
-        $pnom          .= "";
-        $pnom           = trim(substr($pnom,0,89));
-        $adress        .= "";
-        $tip_rem       += 0;
-        $tip_doc       += 0;
-        $numdoc        .= '';
-        $numdoc         = trim(substr($numdoc,0,13));
-        $long           = strlen($cod);
-        $codep         += 0;
-        $tel           += 0;
-        $cod           += 0;
-        $radicadopadre .= '';
-        $asu           .= '';
-        $tip_rem        = $tip_rem-1;
-        $rem2          .= '';
-        $dep           += 0;
-        $hoj           += 0;
-        $codieesp      += 0;
-        $ane           .= '';
-        $med           += 0;
-        $acceso         = 1;
-
-        if($acceso != 0){
-          if($tip_rem<0){
-            $tip_rem=0;
-          }
-
-          if(!$documento_us3) {	$documento_us3=0;	}
-
-          if($ent != 2) {
-            $carp_codi =$ent;
-            $carp_per = "0";
-            $radi_usua_actu = $codusuario;
-          } else {
-            $carp_codi ="0";
-            $carp_per = "0";
-            if($cod_usuario_inf!=1 and $coddepeinf==$coddepe)
-            {
-              $radi_usua_actu = $cod_usuario_inf;
-            }
-            else
-            {
-              $radi_usua_actu = 1;
-            }
-          }
-
-          if(!$radi_usua_actu and $ent == 2) $radi_usua_actu = $codusuario;
-
-          if(!$radi_usua_actu) $radi_usua_actu = 1;
-
-          if($coddepe==999){
-            $carp_codi=substr($dependencia,0,2);
-            $carp_per=1;
-            $radi_usua_actu = 1;
-          }
-
-          if(!$radi_usua_actu) $radi_usua_actu==1;
-
-          if($radi_usua_actu_padre and $radi_depe_actu_padre){
-                $radi_usua_actu= "$radi_usua_actu_padre";
-                $coddepe= "$radi_depe_actu_padre";
-          }
-
-          if($ent==2 && $dependencia=="4240") $radi_usua_actu = $codusuario;
-          // Buscamos Nivel de Usuario Destino
-          $tmp_mun           = new Municipio($db);
-          $tmp_mun->municipio_codigo($codep_us1,$muni_us1);
-          $rad               = new Radicacion($db);
-          $rad->radiTipoDeri = $tpRadicado;
-          $rad->radiCuentai  = "'".trim($cuentai)."'";
-          $rad->eespCodi     = $documento_us3;
-          $rad->mrecCodi     = $med; // "dd/mm/aaaa"
-          $fecha_gen_doc_YMD = substr($fecha_gen_doc,6 ,4)."-".substr($fecha_gen_doc,3 ,2)."-".substr($fecha_gen_doc,0 ,2);
-          $rad->radiFechOfic =  "".$fecha_gen_doc_YMD."";
-
-          if(!$radicadopadre)  $radicadopadre = null;
-
-          $rad->radiNumeDeri = trim($radicadopadre);
-          $rad->radiPais     = $tmp_mun->get_pais_codi();
-          $rad->descAnex     = $ane;
-          $rad->radiDepeActu = "'".$coddepe."'";
-          $rad->radiDepeRadi = "'".$coddepe."'";
-          $rad->radiUsuaActu = $radi_usua_actu;
-          $rad->trteCodi     = $tip_rem;
-          $rad->tdocCodi     = $tdoc;
-          $rad->nofolios     = $nofolios;
-          $rad->noanexos     = $noanexos;
-          $rad->guia         = $guia;
-          $rad->tdidCodi     = $tip_doc;
-          $rad->carpCodi     = $carp_codi;
-          $rad->carPer       = $carp_per;
-          $rad->trteCodi     = $tip_rem;
-          $rad->raAsun       = substr(htmlspecialchars(stripcslashes($asu)),0,349);
-
-          if (strlen(trim($aplintegra)) == 0)
-            $aplintegra = "0";
-
-          $rad->sgd_apli_codi = $aplintegra;
-          $codTx = 2;
-          $flag = 1;
-
-          $noRad = $rad->newRadicado($ent, $tpDepeRad[$ent]);
-
-          if ($noRad=="-1"){
-            die("
-                <div class=\"col col-4\">
-                  <div class=\"well\">
-                    <h1><span class=\"semi-bold\">
-                      Error no genero un Numero de Secuencia o Inserto el radicado
-                      <br><br><br>
-                      <small class=\"text-error slideInRight fast animated\">
-                        <strong>
-                        </strong>
-                      </small></h1>
-                  </div>
-                </div>
-            ");
-          }
-
-          $radicadosSel[0] = $noRad;
-          $hist->insertarHistorico($radicadosSel,  $dependencia , $codusuario, $coddepe, $radi_usua_actu, " ", $codTx);
-          $nurad = $noRad;
-
-          echo "<INPUT TYPE=HIDDEN NAME=nurad value=$nurad>";
-          echo "<INPUT TYPE=HIDDEN NAME=flag value=$flag>";
-
-            if($noRad){
-              $var_envio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&verrad=$nurad&ent=$ent"; ?>
-
-              <div class="col col-4">
-                <div class="well">
-                  <fieldset>
-                    <h1>
-                      <span class="semi-bold">Se ha generado el radicado</span> <span class="glyphicon glyphicon-ok text-success"></span><br><br>
-                      <small class="text-success slideInRight fast animated">
-                        <strong>
-                          No. <?=$nurad?>
-                        </strong>
-                      </small>
-                    </h1>
-                    <br>
-                    <p>
-                      <?php if($_SESSION["enviarMailMovimientos"]==1){
-                        $rutaImagen = substr($nurad,0,4)."/".substr($nurad,4,3)."/".$nurad.".tif";
-                        $linkImagenes = "<a href='*SERVIDOR_IMAGEN*".$rutaImagen."'> Documento</a>";
-                        $radicadosSelText = $nurad;
-                        $usuaCodiMail = $radi_usua_actu;
-                        $depeCodiMail = $coddepe;
-
-                        include "../include/mail/mailInformar.php";
-                      }
-                      if($faxPath){
-                        $varEnvio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&faxPath=$faxPath&nurad=$nurad&ent=$ent";
-                        ?>
-                        <input class="botones_largo" value ="SUBIR IMAGEN DE FAX" type=button target= 'UploadFax' onclick="window.open('uploadFax.php?<?=$varEnvio?>','Cargar Archivos de Fax', 'height=300, width=400,left=350,top=300')">
-                      <?php }
-
-                      if($tipoMedio=="eMail"){
-                        $varEnvio = session_name()."=".session_id()."&nurad=$nurad";
-                        ?>
-                        <input class="botones_largo" value ="ASOCIAR EMAIL A RADICADO" type=button target= 'UploadFax' onclick="window.open('../email/uploadMail.php?<?=$varEnvio?>','formulario', 'height=400, width=640,left=350,top=300')">
-                        <?php
-                      }?>
-                    </p>
-                    <input type=hidden id=numeroRadicado name=numeroRadicado value='<?=$nurad?>' />
-                  </fieldset>
-                </div>
-              </div>
+            </div>
           <?php
-          }else{
-            echo "
-                <div class=\"col-sm-12\">
-                  <div class=\"well\">
-                    <h1><span class=\"semi-bold\">
-                      Ha ocurrido un Problema<br>Verfique los datos e intente de nuevo
-                      <br><br>
-                      <small class=\"text-error slideInRight fast animated\">
-                        <strong>
-                        </strong>
-                      </small></h1>
-                  </div>
-                </div>";
+          // Comprueba si el documento es una radicaci�n nueva de entrada....
+          if($tipoanexo==0 and $radicadopadre and !$radicadopadreseg and (!$Submit3  and !$Submit4)){
+            if($radi_depe_actu_padre==999){
+              echo "<font color=red >Documento padre se encuentra en Archivo</font>";
+            } elseif($radi_depe_actu_padre and $rad0){
+              $query= "select USUA_NOMB, USUA_CODI from usuario where depe_codi=$radi_depe_actu_padre and usua_codi=$radi_usua_actu_padre";
+              $ADODB_COUNTRECS = true;
+              $rs              = $db->conn->query($query);
+              $numRegs         = "!".$rs->RecordCount();
+              $ADODB_COUNTRECS = false;
+              $varQuery        = $query;
+              $comentarioDev   = "Muestra las dependencias";
+              $usuario_padre   = $rs->fields["USUA_NOMB"];
+              $cod_usuario_inf = $rs->fields["USUA_CODI"];
+              $coddepeinf      = $radi_depe_actu_padre;
+              $informar_rad    = "Informar";
+              $observa_inf     = "(Se ha generado un anexo pero ha sido enviado a la dependencia $coddepe)";
+              ?>
+              <input type=hidden name=radi_depe_actu_padre value="<?=$radi_depe_actu_padre?>">
+              <input type=hidden name=coddepeinf value="<?=$coddepeinf?>">
+              <input type=hidden name=cod_usuario_inf value="<?=$cod_usuario_inf?>">
+              <?
+            }
           }
-          $sgd_dir_us2=2;
-          $conexion = $db;
-          include("grb_direcciones.php");
-          $verradicado = $nurad;
-        }
-        echo  "<INPUT TYPE=HIDDEN NAME=nurad value=$nurad>";
-        echo  "<INPUT TYPE=HIDDEN NAME=codusuarioActu value=$codusuarioActu>";
-        echo  "<INPUT TYPE=HIDDEN NAME='codieesp' value='$codieesp'>";
-        echo  "<INPUT TYPE=HIDDEN NAME='flag' value='$flag'>";
-      }
-      $vector = $coddepeinf;
-      if($vector){
-        error_reporting(0);
-        foreach ($vector as $key => $coddepeinf){
 
-          if( ($coddepeinf!=999) and ($Submit3 or $Submit4)){
-            $flag=0;
-            if(($coddepeinf!=$coddepe or ($cod_usuario_inf!=1 and $coddepeinf==$coddepe)) and $Submit3 and $ent==2){
+          include("$ruta_raiz/include/tx/Tx.php");
+          include("$ruta_raiz/include/tx/Radicacion.php");
+          include("$ruta_raiz/class_control/Municipio.php");
+
+          $hist = new Historico($db);
+          $Tx   = new Tx($db);
+
+          if($Submit3 == "Radicar") {
+
+            echo  "<input type=hidden name='nurad'          value='$nurad'>";
+            echo  "<input type=hidden name='codusuarioActu' value='$codusuarioActu'>";
+            echo  "<input type=hidden name='codieesp'       value='$codieesp'>";
+            echo  "<input type=hidden name='flag'           value='$flag'>";
+
+
+            $ddate     = date("d");
+            $mdate     = date("m");
+            $adate     = date("Y");
+            $fechproc4 = substr($adate,2,4);
+            $fechrd    = $ddate.$mdate.$fechproc4;
+
+            if($fechproc12 == ''){
+              $fechproc12=date('d');
+              $fechproc22=date('m');
+              $fechproc32=date('y');
+            }
+
+            $fechrdoc       = $fecha_gen_doc;
+            $apl           .= "";
+            $apl            = trim(substr($apl,0,50));
+            $sapl          .= "";
+            $sapl           = trim(substr($sapl,0,50));
+            $pnom          .= "";
+            $pnom           = trim(substr($pnom,0,89));
+            $adress        .= "";
+            $tip_rem       += 0;
+            $tip_doc       += 0;
+            $numdoc        .= '';
+            $numdoc         = trim(substr($numdoc,0,13));
+            $long           = strlen($cod);
+            $codep         += 0;
+            $tel           += 0;
+            $cod           += 0;
+            $radicadopadre .= '';
+            $asu           .= '';
+            $tip_rem        = $tip_rem-1;
+            $rem2          .= '';
+            $dep           += 0;
+            $hoj           += 0;
+            $codieesp      += 0;
+            $ane           .= '';
+            $med           += 0;
+            $acceso         = 1;
+
+            if($acceso != 0){
+              if($tip_rem < 0){
+                $tip_rem=0;
+              }
+
+              if(!$documento_us3){
+                $documento_us3 = 0;
+              }
+
+              if($ent != 2) {
+                $carp_codi =$ent;
+                $carp_per = "0";
+                $radi_usua_actu = $codusuario;
+              } else {
+                $carp_codi ="0";
+                $carp_per = "0";
+                if($cod_usuario_inf!=1 and $coddepeinf==$coddepe){
+                  $radi_usua_actu = $cod_usuario_inf;
+                } else {
+                  $radi_usua_actu = 1;
+                }
+              }
+
+              if(!$radi_usua_actu and $ent == 2){
+                $radi_usua_actu = $codusuario;
+              }
+
+              if(!$radi_usua_actu){
+                $radi_usua_actu = 1;
+              }
+
+              if($coddepe==999){
+                $carp_codi=substr($dependencia,0,2);
+                $carp_per=1;
+                $radi_usua_actu = 1;
+              }
+
+              if(!$radi_usua_actu){
+                $radi_usua_actu==1;
+              }
+
+              if($radi_usua_actu_padre and $radi_depe_actu_padre){
+                    $radi_usua_actu= "$radi_usua_actu_padre";
+                    $coddepe= "$radi_depe_actu_padre";
+              }
+
+              if($ent==2 && $dependencia=="4240"){
+                $radi_usua_actu = $codusuario;
+              }
+
+              // Buscamos Nivel de Usuario Destino
+              $tmp_mun           = new Municipio($db);
+              $tmp_mun->municipio_codigo($codep_us1,$muni_us1);
+              $rad               = new Radicacion($db);
+              $rad->radiTipoDeri = $tpRadicado;
+              $rad->radiCuentai  = "'".trim($cuentai)."'";
+              $rad->eespCodi     = $documento_us3;
+              $rad->mrecCodi     = $med; // "dd/mm/aaaa"
+              $fecha_gen_doc_YMD = substr($fecha_gen_doc,6 ,4)."-".substr($fecha_gen_doc,3 ,2)."-".substr($fecha_gen_doc,0 ,2);
+              $rad->radiFechOfic =  "".$fecha_gen_doc_YMD."";
+
+              if(!$radicadopadre){
+                $radicadopadre = null;
+              }
+
+              $rad->radiNumeDeri = trim($radicadopadre);
+              $rad->radiPais     = $tmp_mun->get_pais_codi();
+              $rad->descAnex     = $ane;
+              $rad->radiDepeActu = "'".$coddepe."'";
+              $rad->radiDepeRadi = "'".$coddepe."'";
+              $rad->radiUsuaActu = $radi_usua_actu;
+              $rad->trteCodi     = $tip_rem;
+              $rad->tdocCodi     = $tdoc;
+              $rad->nofolios     = $nofolios;
+              $rad->noanexos     = $noanexos;
+              $rad->guia         = $guia;
+              $rad->tdidCodi     = $tip_doc;
+              $rad->carpCodi     = $carp_codi;
+              $rad->carPer       = $carp_per;
+              $rad->trteCodi     = $tip_rem;
+              $rad->raAsun       = substr(htmlspecialchars(stripcslashes($asu)),0,349);
+
+              if (strlen(trim($aplintegra)) == 0){
+                $aplintegra = "0";
+              }
+
+              $rad->sgd_apli_codi = $aplintegra;
+              $codTx = 2;
+              $flag = 1;
+
+              $noRad = $rad->newRadicado($ent, $tpDepeRad[$ent]);
+
+              if ($noRad=="-1"){
+                die("
+                    <div class=\"col col-4\">
+                      <div class=\"well\">
+                        <h1><span class=\"semi-bold\">
+                          Error no genero un Numero de Secuencia o Inserto el radicado
+                          <br><br><br>
+                          <small class=\"text-error slideInRight fast animated\">
+                            <strong>
+                            </strong>
+                          </small></h1>
+                      </div>
+                    </div>
+                ");
+              }
+
+              $radicadosSel[0] = $noRad;
+              $hist->insertarHistorico($radicadosSel,  $dependencia , $codusuario, $coddepe, $radi_usua_actu, " ", $codTx);
+              $nurad = $noRad;
+
+              echo "<INPUT TYPE=HIDDEN NAME=nurad value=$nurad>";
+              echo "<INPUT TYPE=HIDDEN NAME=flag value=$flag>";
+
+                if($noRad){
+                  $var_envio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&verrad=$nurad&ent=$ent"; ?>
+
+                  <div class="col col-4">
+                    <div class="well">
+                      <fieldset>
+                        <h1>
+                          <span class="semi-bold">Se ha generado el radicado</span> <span class="glyphicon glyphicon-ok text-success"></span><br><br>
+                          <small class="text-success slideInRight fast animated">
+                            <strong>
+                              No. <?=$nurad?>
+                            </strong>
+                          </small>
+                        </h1>
+                        <br>
+                        <p>
+                          <?php if($_SESSION["enviarMailMovimientos"]==1){
+                            $rutaImagen = substr($nurad,0,4)."/".substr($nurad,4,3)."/".$nurad.".tif";
+                            $linkImagenes = "<a href='*SERVIDOR_IMAGEN*".$rutaImagen."'> Documento</a>";
+                            $radicadosSelText = $nurad;
+                            $usuaCodiMail = $radi_usua_actu;
+                            $depeCodiMail = $coddepe;
+
+                            include "../include/mail/mailInformar.php";
+                          }
+                          if($faxPath){
+                            $varEnvio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&faxPath=$faxPath&nurad=$nurad&ent=$ent";
+                            ?>
+                            <input class="botones_largo" value ="SUBIR IMAGEN DE FAX" type=button target= 'UploadFax' onclick="window.open('uploadFax.php?<?=$varEnvio?>','Cargar Archivos de Fax', 'height=300, width=400,left=350,top=300')">
+                          <?php }
+
+                          if($tipoMedio=="eMail"){
+                            $varEnvio = session_name()."=".session_id()."&nurad=$nurad";
+                            ?>
+                            <input class="botones_largo" value ="ASOCIAR EMAIL A RADICADO" type=button target= 'UploadFax' onclick="window.open('../email/uploadMail.php?<?=$varEnvio?>','formulario', 'height=400, width=640,left=350,top=300')">
+                            <?php
+                          }?>
+                        </p>
+                        <input type=hidden id=numeroRadicado name=numeroRadicado value='<?=$nurad?>' />
+                      </fieldset>
+                    </div>
+                  </div>
+              <?php
+              }else{
+                echo "
+                    <div class=\"col-sm-12\">
+                      <div class=\"well\">
+                        <h1><span class=\"semi-bold\">
+                          Ha ocurrido un Problema<br>Verfique los datos e intente de nuevo
+                          <br><br>
+                          <small class=\"text-error slideInRight fast animated\">
+                            <strong>
+                            </strong>
+                          </small></h1>
+                      </div>
+                    </div>";
+              }
+              $sgd_dir_us2 = 2;
+              $conexion    = $db;
+              $verradicado = $nurad;
+              include("grb_direcciones.php");
+            }
+          }
+
+          $vector = $coddepeinf;
+          if($vector){
+            error_reporting(0);
+            foreach ($vector as $key => $coddepeinf){
+
+              if( ($coddepeinf!=999) and ($Submit3 or $Submit4)){
+                $flag=0;
+                if(($coddepeinf!=$coddepe or ($cod_usuario_inf!=1 and $coddepeinf==$coddepe)) and $Submit3 and $ent==2){
+
+                  /**
+                    * INFORMACION DE ENVIO DE UN RADICADO EL CUAL EL PADRE ESTA EN UNA DEPENDENCIA DIFERENTE
+                    * $observa_add   contiene el mensaje que se enviara al informado
+                    * El mensaje cambia dependiendo a la persona que va.
+                    * Si va a un funcinario le informa al jefe de lo contrario informa a la otra dependencia
+                    **/
+                  if($cod_usuario_inf!=1 and $coddepeinf==$coddepe and $ent==2){
+                    $observa_inf = "El documento Anexo del Radicado $radicadopadre se envio directamente al funcionario";
+                    $cod_usuario_inf = 1;
+                  } else {
+                    $observa_inf = "El documento Anexo del Radicado $radicadopadre se envio a la dep. $coddepe";
+                    $cod_usuario_inf = 1;
+                  }
+                } else {
+                  if(!$Submit4){
+                    $observa_add = "";
+                    $coddepeinf="";
+                  }
+                }
+                /** AQUI SE ENTRA A MODIFICAR EL RADICADO * */
+
+                if(( ($Submit4 and $coddepeinf!=$coddepe)) ){
 
               /**
-                * INFORMACION DE ENVIO DE UN RADICADO EL CUAL EL PADRE ESTA EN UNA DEPENDENCIA DIFERENTE
-                * $observa_add   contiene el mensaje que se enviara al informado
-                * El mensaje cambia dependiendo a la persona que va.
-                * Si va a un funcinario le informa al jefe de lo contrario informa a la otra dependencia
-                **/
-              if($cod_usuario_inf!=1 and $coddepeinf==$coddepe and $ent==2){
-                $observa_inf = "El documento Anexo del Radicado $radicadopadre se envio directamente al funcionario";
-                $cod_usuario_inf = 1;
-              } else {
-                $observa_inf = "El documento Anexo del Radicado $radicadopadre se envio a la dep. $coddepe";
-                $cod_usuario_inf = 1;
-              }
-            } else {
-              if(!$Submit4){
-                $observa_add = "";
-                $coddepeinf="";
+                *	La siguiente decicion pregunta si la dependencia con la cual sale el radicado es
+                * a misma que se pretende informar, ademas si es el jefe. En este caso no informa.
+                */
+                $observa = "$observa_inf";
+                if(!$cod_usuario_inf) $cod_usuario_inf=1;
+                $nombTx = "Informar Documentos";
+                $radicadoSel[0] = $nurad;
+                $txSql = $Tx->informar($radicadoSel, $krd,"'".$coddepeinf."'","'".$dependencia."'", $cod_usuario_inf,$codusuario, $observa, $_SESSION['usua_doc'], $ruta_raiz);
+                $flagHistorico = true;
+                }
               }
             }
-            /** AQUI SE ENTRA A MODIFICAR EL RADICADO * */
+          }
 
-            if(( ($Submit4 and $coddepeinf!=$coddepe)) ){
+          $coddepeinf = $vector;
+          if($Submit4 and !$Buscar){
+              $secuens=str_pad($consec,6,"0",STR_PAD_LEFT);
+              $fechproc4=substr($adate,2,4);
+              $fechrd=$ddate.$mdate.$fechproc4;
+              $fechrdoc=$fechproc12.$fechproc22.$fechproc32;
+              $apl .=' ';$apl=trim(substr($apl,0,50));
+              $sapl .=' ';$sapl=substr($sapl,0,50);
+              $pnom .=' ';$pnom =substr($pnom,0,89);
+              $adress .=' ';
+              $tip_rem +=0;$tip_doc +=0;$numdoc .='';$numdoc =trim(substr($numdoc,0,13));
+              $codieesp +=0;$radicadopadre +=0;$long=strlen($cod);
+              $codep +=0;$tel +=0;$cod +=0;$asu.='';$tip_rem=$tip_rem-1;
+              $guia +=0;
+              $nofolios +=0;
+              $noanexos +=0;
+              $rem2.='';
+              $dep +=0;
+              $hoj +=0;
+              $ane .='';
+              $med +=0;
+              if($tip_rem<0)
+              {
+                $tip_rem=0;
+              }
+              if(!$documento_us3)
+              {
+                $documento_us3 = 0;
+              }
+              /**  En esta linea si la dependencia es 999 ke es la dep. de salida envia el radicado a una
+                *	 carpeta con el codigo de los dos primeros digitos de la dependencia
+                */
+              $carp_codi=$ent;
+              $carp_per=0;
+              if(!$radi_usua_actu) $radi_usua_actu = 1;
 
-          /**
-            *	La siguiente decicion pregunta si la dependencia con la cual sale el radicado es
-            * a misma que se pretende informar, ademas si es el jefe. En este caso no informa.
-            */
-            $observa = "$observa_inf";
-            if(!$cod_usuario_inf) $cod_usuario_inf=1;
-            $nombTx = "Informar Documentos";
-            $radicadoSel[0] = $nurad;
-            $txSql = $Tx->informar($radicadoSel, $krd,"'".$coddepeinf."'","'".$dependencia."'", $cod_usuario_inf,$codusuario, $observa, $_SESSION['usua_doc'], $ruta_raiz);
-            $flagHistorico = true;
+              if($coddepe==999){
+                $carp_codi=substr($dependencia,0,2);
+                $carp_per=1;
+                $radi_usua_actu = 1;
+              }
+
+              $rad                                = new Radicacion($db);
+              $rad->radiTipoDeri                  = $tpRadicado;
+              $rad->radiCuentai                   = "'$cuentai'";
+              $rad->eespCodi                      = $documento_us3;
+              $rad->mrecCodi                      = $med;
+              $rad->radiFechOfic                  = $fecha_gen_docF;
+              $fecha_gen_doc_YMD                  = substr($fecha_gen_doc,6 ,4)."-".substr($fecha_gen_doc,3 ,2)."-".substr($fecha_gen_doc,0 ,2);
+              $rad->radiFechOfic                  = $fecha_gen_doc_YMD;
+
+              if(!$radicadopadre)  $radicadopadre = null;
+              $rad->radiNumeDeri                  = $radicadopadre;
+              $rad->radiPais                      = "'$pais'";
+              $rad->descAnex                      = $ane; $rad->raAsun = substr(htmlspecialchars(stripcslashes($asu)),0,349);
+              $rad->radiDepeActu                  = $coddepe;
+              $rad->radiUsuaActu                  = $radi_usua_actu;
+              $rad->trteCodi                      = $tip_rem;
+              $rad->tdocCodi                      = $tdoc;
+              $rad->tdidCodi                      = $tip_doc;
+              $rad->nofolios                      = $nofolios;
+              $rad->noanexos                      = $noanexos;
+              $rad->guia                          = $guia;
+              $rad->carPer                        = $carp_per;
+              $rad->trteCodi                      = $tip_rem;
+              $rad->ra_asun                       = $asu;
+
+              if (strlen(trim($aplintegra)) == 0)
+                $aplintegra = "0";
+
+              $rad->sgd_apli_codi = $aplintegra;
+              $resultado = $rad->updateRadicado($nurad);
+              $conexion = $db;
+              include "grb_direcciones.php";
+              if($resultado) {
+                echo "
+                <div class=\"col col-4\">
+                  <div class=\"well\">
+                    <fieldset>
+                      <h1>
+                        <span class=\"semi-bold\">Se ha modificado el radicado</span> <span class=\"glyphicon glyphicon-ok text-success\"></span><br><br>
+                        <small class=\"text-success slideInRight fast animated\">
+                          <strong>
+                            No. $nurad
+                          </strong>
+                        </small>
+                      </h1>
+                      <br>
+                      <p>
+                      </p>
+                    </fieldset>
+                  </div>
+                </div>";
+
+                $radicadosSel[] = $nurad;
+                $codTx = 11;
+                $hist->insertarHistorico($radicadosSel,  $dependencia , $codusuario, $coddepe, $radi_usua_actu, "Modificacion Documento.", $codTx);
+              }
+
+              if($borrarradicado) {
+                $flag             = 0;
+                $observa          = "Se borro de Inf. ($krd)";
+                $depbrr           = substr($borrarradicado,0,3);
+                $fechbrr          = substr($borrarradicado,3,20);
+                $data6            = substr($borrarradicado,3,50);
+                $radicadosSel [0] = $nurad;
+                $nombTx           = "Borrar Informados";
+                $codTx            = 7;
+                //$txSql = $rs->borrarInformado( $radicadosSel, $krd,$depbrr,$dependencia,$usCodSelect, $codusuario);
+                $isql_inf= "delete from informados where depe_codi=$depbrr and radi_nume_radi=$nurad and info_desc like '%$data6%'";
+                $rs=$db->conn->query($isql_inf);
+                $hist->insertarHistorico($radicadosSel,  $dependencia , $codusuario, $coddepe, $radi_usua_actu, $observa, $codTx);
+                if($flag==1) {
+                  echo "
+                      <div class=\"col col-4\">
+                        <div class=\"well\">
+                          <fieldset>
+                            <h4>
+                              <span class=\"semi-bold\">
+                              Se ha borrado un Inf. y registrado en eventos
+                            </h4>
+                            <br>
+                          </fieldset>
+                        </div>
+                      </div>";
+
+                }else{
+                  echo "
+                      <div class=\"col-col-4\">
+                        <div class=\"well\">
+                          <fieldset>
+                            <h4>
+                              <span class=\"semi-bold\">
+                                No se ha borrado la inf. de la dependencia $depbrr
+                            </h4>
+                            <br>
+                          </fieldset>
+                        </div>
+                      </div>";
+                }
+              }
             }
-          }
-        }
-      }
 
-      $coddepeinf = $vector;
-      if($Submit4 and !$Buscar){
-          $secuens=str_pad($consec,6,"0",STR_PAD_LEFT);
-          $fechproc4=substr($adate,2,4);
-          $fechrd=$ddate.$mdate.$fechproc4;
-          $fechrdoc=$fechproc12.$fechproc22.$fechproc32;
-          $apl .=' ';$apl=trim(substr($apl,0,50));
-          $sapl .=' ';$sapl=substr($sapl,0,50);
-          $pnom .=' ';$pnom =substr($pnom,0,89);
-          $adress .=' ';
-          $tip_rem +=0;$tip_doc +=0;$numdoc .='';$numdoc =trim(substr($numdoc,0,13));
-          $codieesp +=0;$radicadopadre +=0;$long=strlen($cod);
-          $codep +=0;$tel +=0;$cod +=0;$asu.='';$tip_rem=$tip_rem-1;
-          $guia +=0;
-          $nofolios +=0;
-          $noanexos +=0;
-          $rem2.='';
-          $dep +=0;
-          $hoj +=0;
-          $ane .='';
-          $med +=0;
-          if($tip_rem<0)
-          {
-            $tip_rem=0;
-          }
-          if(!$documento_us3)
-          {
-            $documento_us3 = 0;
-          }
-          /**  En esta linea si la dependencia es 999 ke es la dep. de salida envia el radicado a una
-            *	 carpeta con el codigo de los dos primeros digitos de la dependencia
-            */
-          $carp_codi=$ent;
-          $carp_per=0;
-          if(!$radi_usua_actu) $radi_usua_actu = 1;
+            echo "<INPUT TYPE=HIDDEN NAME=codusuarioActu value=$codusuarioActu>";
+            echo "<INPUT TYPE=HIDDEN NAME=radicadopadre value=$radicadopadre>";
+            echo "<INPUT TYPE=HIDDEN NAME=radicadopadreseg value=2>";
+            echo "<INPUT TYPE=HIDDEN NAME='codieesp' value='$codieesp'>";
+            echo "<INPUT TYPE=HIDDEN NAME='consec' value='$consec'>";
+            echo "<INPUT TYPE=HIDDEN NAME='seri_tipo' value='$seri_tipo'>";
+            echo "<INPUT TYPE=HIDDEN NAME='radi_usua_actu' value='$radi_usua_actu'>";
+            $nombre = $nombre_us1 . " ".$prim_apel_us1. " ".$sseg_apel_us2;
 
-          if($coddepe==999){
-            $carp_codi=substr($dependencia,0,2);
-            $carp_per=1;
-            $radi_usua_actu = 1;
-          }
+            if(!$Submit3 and !$Submit4){?>
 
-          $rad                                = new Radicacion($db);
-          $rad->radiTipoDeri                  = $tpRadicado;
-          $rad->radiCuentai                   = "'$cuentai'";
-          $rad->eespCodi                      = $documento_us3;
-          $rad->mrecCodi                      = $med;
-          $rad->radiFechOfic                  = $fecha_gen_docF;
-          $fecha_gen_doc_YMD                  = substr($fecha_gen_doc,6 ,4)."-".substr($fecha_gen_doc,3 ,2)."-".substr($fecha_gen_doc,0 ,2);
-          $rad->radiFechOfic                  = $fecha_gen_doc_YMD;
+            <footer>
+              <center>
+                <input type='button' onClick='radicar_doc()' name='Submit33' value='Radicar' class="btn btn-primary">
+                <input type='hidden'  name='Submit3' value='Radicar' class='ebuttons2'>
+              </center>
+            </footer>
 
-          if(!$radicadopadre)  $radicadopadre = null;
-          $rad->radiNumeDeri                  = $radicadopadre;
-          $rad->radiPais                      = "'$pais'";
-          $rad->descAnex                      = $ane; $rad->raAsun = substr(htmlspecialchars(stripcslashes($asu)),0,349);
-          $rad->radiDepeActu                  = $coddepe;
-          $rad->radiUsuaActu                  = $radi_usua_actu;
-          $rad->trteCodi                      = $tip_rem;
-          $rad->tdocCodi                      = $tdoc;
-          $rad->tdidCodi                      = $tip_doc;
-          $rad->nofolios                      = $nofolios;
-          $rad->noanexos                      = $noanexos;
-          $rad->guia                          = $guia;
-          $rad->carPer                        = $carp_per;
-          $rad->trteCodi                      = $tip_rem;
-          $rad->ra_asun                       = $asu;
-
-          if (strlen(trim($aplintegra)) == 0)
-            $aplintegra = "0";
-
-          $rad->sgd_apli_codi = $aplintegra;
-          $resultado = $rad->updateRadicado($nurad);
-          $conexion = $db;
-          include "grb_direcciones.php";
-          if($resultado) {
-            echo "
-            <div class=\"col col-4\">
-              <div class=\"well\">
-                <fieldset>
-                  <h1>
-                    <span class=\"semi-bold\">Se ha modificado el radicado</span> <span class=\"glyphicon glyphicon-ok text-success\"></span><br><br>
-                    <small class=\"text-success slideInRight fast animated\">
-                      <strong>
-                        No. $nurad
-                      </strong>
-                    </small>
-                  </h1>
-                  <br>
-                  <p>
-                  </p>
-                </fieldset>
-              </div>
-            </div>";
-
-            $radicadosSel[] = $nurad;
-            $codTx = 11;
-            $hist->insertarHistorico($radicadosSel,  $dependencia , $codusuario, $coddepe, $radi_usua_actu, "Modificacion Documento.", $codTx);
-          }
-
-          if($borrarradicado) {
-            $flag             = 0;
-            $observa          = "Se borro de Inf. ($krd)";
-            $depbrr           = substr($borrarradicado,0,3);
-            $fechbrr          = substr($borrarradicado,3,20);
-            $data6            = substr($borrarradicado,3,50);
-            $radicadosSel [0] = $nurad;
-            $nombTx           = "Borrar Informados";
-            $codTx            = 7;
-            //$txSql = $rs->borrarInformado( $radicadosSel, $krd,$depbrr,$dependencia,$usCodSelect, $codusuario);
-            $isql_inf= "delete from informados where depe_codi=$depbrr and radi_nume_radi=$nurad and info_desc like '%$data6%'";
-            $rs=$db->conn->query($isql_inf);
-            $hist->insertarHistorico($radicadosSel,  $dependencia , $codusuario, $coddepe, $radi_usua_actu, $observa, $codTx);
-            if($flag==1) {
-              echo "
-                  <div class=\"col col-4\">
-                    <div class=\"well\">
-                      <fieldset>
-                        <h4>
-                          <span class=\"semi-bold\">
-                          Se ha borrado un Inf. y registrado en eventos
-                        </h4>
-                        <br>
-                      </fieldset>
-                    </div>
-                  </div>";
-
-            }else{
-              echo "
-                  <div class=\"col-col-4\">
-                    <div class=\"well\">
-                      <fieldset>
-                        <h4>
-                          <span class=\"semi-bold\">
-                            No se ha borrado la inf. de la dependencia $depbrr
-                        </h4>
-                        <br>
-                      </fieldset>
-                    </div>
-                  </div>";
-            }
-          }
-        }
-
-        echo "<INPUT TYPE=HIDDEN NAME=codusuarioActu value=$codusuarioActu>";
-        echo "<INPUT TYPE=HIDDEN NAME=radicadopadre value=$radicadopadre>";
-        echo "<INPUT TYPE=HIDDEN NAME=radicadopadreseg value=2>";
-        echo "<INPUT TYPE=HIDDEN NAME='codieesp' value='$codieesp'>";
-        echo "<INPUT TYPE=HIDDEN NAME='consec' value='$consec'>";
-        echo "<INPUT TYPE=HIDDEN NAME='seri_tipo' value='$seri_tipo'>";
-        echo "<INPUT TYPE=HIDDEN NAME='radi_usua_actu' value='$radi_usua_actu'>";
-        $nombre = $nombre_us1 . " ".$prim_apel_us1. " ".$sseg_apel_us2;
-
-        if(!$Submit3 and !$Submit4){?>
-
-        <footer>
-          <center>
-            <input type='button' onClick='radicar_doc()' name='Submit33' value='Radicar' class="btn btn-primary">
-            <input type='hidden'  name='Submit3' value='Radicar' class='ebuttons2'>
-          </center>
-        </footer>
-
-        <?php }else{
-          $varEnvio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&faxPath=$faxPath&verrad=$nurad&nurad=$nurad&ent=$ent&remite=$nombre&dependenciaDestino=$dependencia";
-        ?>
-            <div class="col col-4">
-              <div class="well">
-                <fieldset>
-                  <ul class="demo-btns">
-                    <li>
-                      <input type='button' onClick='modificar_doc()' name='Submit44' value='Modificar datos' class="btn btn-success btn-sm">
-                    </li>
-                    <li>
-                      <a class="btn btn-info  btn-sm" href="hojaResumenRad.php?<?=$varEnvio?>" target="HojaResumen<?=$nurad?>">Ver Hoja Resumen</a><br>
-                    </li>
-                    <li>
-                      <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('stickerWeb/index.php?<?=$varEnvio?>&alineacion=Center','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');">Sticker</a>
-                    </li>
-                    <li>
-                      <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('../uploadFiles/uploadFileRadicado.php?busqRadicados=<?=$nurad?>&Buscar=Buscar&<?=$varEnvio?>&alineacion=Center','busqRadicados=<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');">Asociar Imagen</a>
-                    </li>
-                  </ul>
-                  <input type='hidden'  name='Submit4' value='MODIFICAR DATOS' class='ebuttons2'>
-                  <input type='hidden' name='nurad' value='<?=$nurad?>'></center>
-                </fieldset>
-              </div>
-            </div>
-
-        <?}
-
-        if(($Submit4 or $Submit3) AND !$Buscar){
-          if($ent==1 and !$Submit3){
-            $radicar_documento = "true";
-            if($num_archivos==1 and $radicado=="false"){
-              $generar_numero = "no";
-              $vp = "n";
-              $radicar_a="$nurad";
-              error_reporting(0);
-            }
-          }
-
-          switch( $GLOBALS['entidad'] ){
-            case 'SGD':
-              $query = "SELECT  ".$db->conn->Concat( "DEPE_CODI", "' - '", "DEPE_NOMB" ).", DEPE_CODI
-                FROM DEPENDENCIA
-                ORDER BY DEPE_CODI, DEPE_NOMB";
-              break;
-            default:
-              $query ="select  ". $db->conn->concat('d.depe_nomb',"' ('",'u.USUA_LOGIN',"')'") ." AS DEPE_NOMB, d.DEPE_CODI
-                from DEPENDENCIA d, usuario u
-                WHERE
-                u.depe_codi=d.depe_codi
-                and u.usua_codi=1
-                ORDER BY d.DEPE_NOMB
-                ";
-            }
-            $rs=$db->conn->query($query);
-            $varQuery = $query;
+            <?php }else{
+              $varEnvio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&faxPath=$faxPath&verrad=$nurad&nurad=$nurad&ent=$ent&remite=$nombre&dependenciaDestino=$dependencia";
             ?>
-            <div class="col col-4">
-              <div class="well">
-                <fieldset>
-                  <label class="label">
-                    <input type='button' onClick='modificar_doc()' name='Submit44' value='Modificar datos' class="btn btn-success btn-xs">
-                  </label>
-                  <label class="select">
-                    <?php print $rs->GetMenu2("coddepeinf", $coddepeinf, false, true,10,"")?>
-                  </label>
+                <div class="col col-4">
+                  <div class="well">
+                    <fieldset>
+                      <ul class="demo-btns">
+                        <li>
+                          <input type='button' onClick='modificar_doc()' name='Submit44' value='Modificar datos' class="btn btn-success btn-sm">
+                        </li>
+                        <li>
+                          <a class="btn btn-info  btn-sm" href="hojaResumenRad.php?<?=$varEnvio?>" target="HojaResumen<?=$nurad?>">Ver Hoja Resumen</a><br>
+                        </li>
+                        <li>
+                          <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('stickerWeb/index.php?<?=$varEnvio?>&alineacion=Center','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');">Sticker</a>
+                        </li>
+                        <li>
+                          <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('../uploadFiles/uploadFileRadicado.php?busqRadicados=<?=$nurad?>&Buscar=Buscar&<?=$varEnvio?>&alineacion=Center','busqRadicados=<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');">Asociar Imagen</a>
+                        </li>
+                      </ul>
+                      <input type='hidden'  name='Submit4' value='MODIFICAR DATOS' class='ebuttons2'>
+                      <input type='hidden' name='nurad' value='<?=$nurad?>'></center>
+                    </fieldset>
+                  </div>
+                </div>
 
-                  <table class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>Informado a</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                        $query2 = "select b.DEPE_NOMB
-                              ,a.INFO_DESC
-                              ,b.DEPE_NOMB
-                              ,a.DEPE_CODI
-                              ,a.info_fech as INFO_FECH
-                              ,INFO_DESC
-                              from informados a,dependencia b
-                              where a.depe_codi=b.depe_codi and a.radi_nume_radi ='$nurad'
-                              order by info_fech desc ";
+            <?}
 
-                        $k = 1;
-                        $rs=$db->conn->query($query2);
-                        if ($rs){
-                          while (!$rs->EOF){
-                            $data = $rs->fields['INFO_DESC'];
-                            $data2 = $rs->fields['DEPE_NOMB'];
-                            $data3 = $rs->fields['DEPE_CODI'];
-                            $data4 = date("dMy",$rs->fields['INFO_FECH']);
-                            $data5 = date( "d-m-Y", $db->conn->UnixTimeStamp( $rs->fields['INFO_FECH'] ) );
-                            $data6 = $db->conn->UnixTimeStamp( $rs->fields['INFO_DESC'] );
-                            ?>
-                            <tr><td class="text-success">
-                              <input type='radio' name='borrarradicado' value='<?=$data3.$data6?>'>
-                              <?=$data?> <?=$data2?> <?=$data5?>
-                            </td></tr>
-                            <?php
-                            $k = $k +1;
-                            $rs->MoveNext();
-                          }
-                        }?>
-                    </tbody>
-                  </table>
-                  <p>Seleccione un doc. de Informado para borrar</p>
-                </fieldset>
-              </div>
-            </div>
-            <?php
-          }
-
-          ?>
-          <input type='hidden' name='depende' value='<?php echo $depende; ?>'><BR>
-          <?php
-          $verrad = $nurad;
-          $radi   = $nurad;
-          $contra = $drde;
-          $tipo   = 1;
-
-          if($Submit3 or $Submit4 or $rad0 or $rad1 or $rad2){
-            echo "<script language='JavaScript'>";
-            for ($i=1; $i<=3; $i++){
-              $var_pai = "idpais".$i;
-              $var_dpt = "codep_us".$i;
-              $var_mcp = "muni_us".$i;
-              $muni_tmp = ${$var_mcp};
-              if (!(is_null($muni_tmp))){
-                echo "\n";
-                echo "cambia(document.formulario, 'idpais$i', 'idcont$i');
-                  formulario.idpais$i.value = ${$var_pai};
-                  cambia(document.formulario, 'codep_us$i', 'idpais$i');
-                  formulario.codep_us$i.value = '${$var_dpt}';
-                  cambia(document.formulario, 'muni_us$i', 'codep_us$i');
-                  formulario.muni_us$i.value = '${$var_mcp}';";
+            if(($Submit4 or $Submit3) AND !$Buscar){
+              if($ent==1 and !$Submit3){
+                $radicar_documento = "true";
+                if($num_archivos==1 and $radicado=="false"){
+                  $generar_numero = "no";
+                  $vp = "n";
+                  $radicar_a="$nurad";
+                  error_reporting(0);
+                }
               }
-            }
-            echo "</script>";
-          } ?>
-  </div>
 
- </form>
+              switch( $GLOBALS['entidad'] ){
+                case 'SGD':
+                  $query = "SELECT  ".$db->conn->Concat( "DEPE_CODI", "' - '", "DEPE_NOMB" ).", DEPE_CODI
+                    FROM DEPENDENCIA
+                    ORDER BY DEPE_CODI, DEPE_NOMB";
+                  break;
+                default:
+                  $query ="select  ". $db->conn->concat('d.depe_nomb',"' ('",'u.USUA_LOGIN',"')'") ." AS DEPE_NOMB, d.DEPE_CODI
+                    from DEPENDENCIA d, usuario u
+                    WHERE
+                    u.depe_codi=d.depe_codi
+                    and u.usua_codi=1
+                    ORDER BY d.DEPE_NOMB
+                    ";
+                }
+                $rs=$db->conn->query($query);
+                $varQuery = $query;
+                ?>
+                <div class="col col-4">
+                  <div class="well">
+                    <fieldset class="smart-form">
+                      <label class="label">
+                        <input type='button' onClick='modificar_doc()' name='Submit44' value='Modificar datos' class="btn btn-success btn-xs">
+                      </label>
+                      <label class="select select-multiple">
+                        <?php print $rs->GetMenu2("coddepeinf", $coddepeinf, false, true,3,"class='custom-scroll'")?>
+                      </label>
+
+                      <table class="table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>Informado a</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                            $query2 = "select b.DEPE_NOMB
+                                  ,a.INFO_DESC
+                                  ,b.DEPE_NOMB
+                                  ,a.DEPE_CODI
+                                  ,a.info_fech as INFO_FECH
+                                  ,INFO_DESC
+                                  from informados a,dependencia b
+                                  where a.depe_codi=b.depe_codi and a.radi_nume_radi ='$nurad'
+                                  order by info_fech desc ";
+
+                            $k = 1;
+                            $rs=$db->conn->query($query2);
+                            if ($rs){
+                              while (!$rs->EOF){
+                                $data = $rs->fields['INFO_DESC'];
+                                $data2 = $rs->fields['DEPE_NOMB'];
+                                $data3 = $rs->fields['DEPE_CODI'];
+                                $data4 = date("dMy",$rs->fields['INFO_FECH']);
+                                $data5 = date( "d-m-Y", $db->conn->UnixTimeStamp( $rs->fields['INFO_FECH'] ) );
+                                $data6 = $db->conn->UnixTimeStamp( $rs->fields['INFO_DESC'] );
+                                ?>
+                                <tr><td class="text-success">
+                                  <input type='radio' name='borrarradicado' value='<?=$data3.$data6?>'>
+                                  <?=$data?> <?=$data2?> <?=$data5?>
+                                </td></tr>
+                                <?php
+                                $k = $k +1;
+                                $rs->MoveNext();
+                              }
+                            }?>
+                        </tbody>
+                      </table>
+                      <p>Seleccione un doc. de Informado para borrar</p>
+                    </fieldset>
+                  </div>
+                </div>
+                <?php
+              }
+
+              ?>
+              <input type='hidden' name='depende' value='<?php echo $depende; ?>'><BR>
+              <?php
+              $verrad = $nurad;
+              $radi   = $nurad;
+              $contra = $drde;
+              $tipo   = 1;
+
+              if($Submit3 or $Submit4 or $rad0 or $rad1 or $rad2){
+                echo "<script language='JavaScript'>";
+                for ($i=1; $i<=3; $i++){
+                  $var_pai = "idpais".$i;
+                  $var_dpt = "codep_us".$i;
+                  $var_mcp = "muni_us".$i;
+                  $muni_tmp = ${$var_mcp};
+                  if (!(is_null($muni_tmp))){
+                    echo "\n";
+                    echo "cambia(document.formulario, 'idpais$i', 'idcont$i');
+                      formulario.idpais$i.value = ${$var_pai};
+                      cambia(document.formulario, 'codep_us$i', 'idpais$i');
+                      formulario.codep_us$i.value = '${$var_dpt}';
+                      cambia(document.formulario, 'muni_us$i', 'codep_us$i');
+                      formulario.muni_us$i.value = '${$var_mcp}';";
+                  }
+                }
+                echo "</script>";
+              } ?>
+      </div>
+  </form>
+
   <script type="text/javascript">
+
     $(document).ready(function() {
+
       // DO NOT REMOVE : GLOBAL FUNCTIONS!
       pageSetUp();
 
+
+      // DATEPICKER MUESTRA FECHA
       $('#date').datepicker({
         dateFormat : 'yy/mm/dd',
-        prevText : '<i class="fa fa-chevron-left"></i>',
-        nextText : '<i class="fa fa-chevron-right"></i>',
         onSelect : function(selectedDate) {
           $('#date').datepicker('option', 'maxDate', selectedDate);
         }
       });
 
+      // AUTOCOMPLETE BUSQUEDA DE USUARIOS
+      $("#documento_us, nombre_us, telefono_us, mail_us").autocomplete({
+        source: function( request, respond ) {
+          $.post( "./NEW.php", {student: request.term },
+            function( response ) {
+              //do something
+            }
+          );
+        }
+      });
+
     });
+
   </script>
 </body>
 </html>
