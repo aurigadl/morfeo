@@ -452,7 +452,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <!-- /.navbar-collapse -->
           </nav>
 
-          <iframe name='mainFrame' frameBorder="0" width="100%" height="100%" src='cuerpo.php?<?=session_name()."=".session_id()?>&swLog=<?=$swLog?>&fechah=<?=$fechah?>&tipo_alerta=1' scrolling='no'/></iframe>
+          <iframe name='mainFrame' frameBorder="0" width="100%" height="100%" src='cuerpo.php?<?=session_name()."=".session_id()?>&swLog=<?=$swLog?>&fechah=<?=$fechah?>&tipo_alerta=1' scrolling='auto'/></iframe>
 
       </div>
     </body>
