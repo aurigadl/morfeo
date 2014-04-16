@@ -413,12 +413,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </ul>
                   </li>
 
+                  <? if(!empty($linkrad)){?>
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Radicaci&oacute;n <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Radicaci&oacute;n<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                       <?=$linkrad?>
                     </ul>
                   </li>
+                  <?}?>
 
                 </ul>
 
@@ -429,7 +431,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <ul class="dropdown-menu">
                       <li><a href="plantillas.php?<?=session_name()."=".session_id()?>&fechah=$fechah&krd=$krd&info=false" target="mainFrame"> Plantillas </a></li>
                       <li><a href="http://wiki-siim2.infometrika.net" target="mainFrame"> Ayuda </a></li>
-                      <!--<li><a href="./Administracion/tbasicas/adm_soportes.php?<?=$sendSession?>" target='mainFrame'>Soportes</a></li>-->
                     </ul>
                   </li>
 
@@ -437,11 +438,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?=$nombUser?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                       <li><a href="mod_datos.php?<?=session_name()."=".session_id()."&fechah=$fechah&krd=$krd&info=false"?>" target="mainFrame"><i class="fa fa-user"></i> Perfil </a></li>
-                     <!-- <li><a href="menu/creditos.php?<?=session_name()."=".session_id()."&fechah=$fechah&krd=$krd&info=false"?>" target="mainFrame"> Creditos </a></li> -->
-
-                      <?php if ($_SESSION["autentica_por_LDAP"] != 1){?>
+                      <? if ($_SESSION["autentica_por_LDAP"] != 1){?>
                       <li> <a href='contraxx.php?<?=session_name()."=".session_id()."&fechah=$fechah"?>' target=mainFrame> Cambio de clave </a></li>
-                      <?php } ?>
+                      <? } ?>
                       <li class="divider"></li>
                       <li><a href="cerrar_session.php?<?= session_name()."=".session_id()?>"><i class="fa fa-power-off"></i> Salir </a></li>
                     </ul>

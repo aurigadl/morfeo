@@ -60,8 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </head>
 <body>
 <form name='frmCrear' action='<?=$action?>' method="post">
-    <div class="col-sm-12">
-      <!-- widget grid -->
+    <div class="col-sm-12"> <!-- widget grid -->
       <h2></h2>
       <section id="widget-grid">
         <!-- row -->
@@ -80,7 +79,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <!-- widget div-->
               <div>
                 <!-- widget content -->
-                <div class="widget-body no-padding">
+                <div class="widget-body">
                   <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                       <tr class=timparr>

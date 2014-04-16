@@ -1,7 +1,31 @@
-<?php 
+<?php
+
+/**
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 session_start();
 
-    $ruta_raiz = "."; 
+    $ruta_raiz = ".";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
 
@@ -18,26 +42,27 @@ $tip3desc    = $_SESSION["tip3desc"];
 $tip3img     = $_SESSION["tip3img"];
 
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-$db = new ConnectionHandler($ruta_raiz);	 
+$db = new ConnectionHandler($ruta_raiz);
 
 $numeroa =
 $numero  =
-$numeros = 
+$numeros =
 $numerot =
-$numerop = 
+$numerop =
 $numeroh =0;
 
-$isql    = "select  
+$isql    = "select
                  a.*
-                 ,b.depe_nomb 
-            from 
+                 ,b.depe_nomb
+            from
                  usuario a
-                 ,dependencia b 
-             where 
+                 ,dependencia b
+             where
                 a.depe_codi=b.depe_codi
-                and a.USUA_CODI = $codusuario 
+                and a.USUA_CODI = $codusuario
                 and b.DEPE_CODI = $dependencia";
-$rs=$db->query($isql);	
+
+$rs     = $db->query($isql);
 
 $dependencianomb = $rs->fields["DEPE_NOMB"];
 $usua_login      = $rs->fields["USUA_LOGIN"];
@@ -46,6 +71,7 @@ $usua_login      = $rs->fields["USUA_LOGIN"];
 <html>
 <head>
     <script language="JavaScript" type="text/JavaScript">
+
         function MM_findObj(n, d){
             var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
                 d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
@@ -70,33 +96,59 @@ $usua_login      = $rs->fields["USUA_LOGIN"];
         }
     </script>
     <title>Cambio de Contrase&ntilde;as</title>
-    <link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$ESTILOS_PATH?>/orfeo.css">
+    <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </head>
 
 <body>
     <form action='usuarionuevo.php' method="post" onSubmit="MM_validateForm('contradrd','','R','contraver','','R');return document.MM_returnValue">
-	    <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
-	    <CENTER>
-	        <table border=0 cellspacing="0" width="300px">
-                <br/><br/><br/>
-                <tr>
-                    <td class=listado2 colspan="2">
-	                    <center>Introduzca la nueva contrase&ntilde;a <b><?=$usua_login?></b>
-                    </td>
-                </tr>
-                <tr>
-	                <td class=listado2><center>Contrase&ntilde;a</td>
-	                <td class=listado2><input type="password" name="contradrd" class="tex_area"></td>
-	            </tr>
-                <tr>
-                    <td class=listado2><center>Re-escriba<br>la contrase&ntilde;a</td>
-	                <td class=listado2><input type="password" name="contraver" class="tex_area"></td>
-                </tr>					 
-                <tr>
-                    <td class=listado2 colspan="2"><center><input type="submit" value="Aceptar" class="botones"></td>
-                </tr>
-	        </table>
-	    </CENTER>
+	  <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
+    <div class="col-sm-12"> <!-- widget grid -->
+      <h2></h2>
+      <section id="widget-grid">
+        <!-- row -->
+        <div class="row">
+          <!-- NEW WIDGET START -->
+          <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+
+              <header>
+                <h2>
+                  Cambio de contraseña<br>
+                  <small><?=$tituloCrear ?></small>
+                </h2>
+              </header>
+              <!-- widget div-->
+              <div>
+                <!-- widget content -->
+                <div class="widget-body">
+                  <div class="table-responsive smart-form">
+                    <table class="table table-bordered table-striped ">
+                      <tr>
+                          <td class=listado2 colspan="2">
+                            <center>Introduzca la nueva contrase&ntilde;a <b><?=$usua_login?></b>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class=listado2><center>Contrase&ntilde;a</td>
+                          <td class=listado2><label class="input"><input type="password" name="contradrd"></label></td>
+                      </tr>
+                      <tr>
+                          <td class=listado2><center>Re-escriba<br>la contrase&ntilde;a</td>
+                          <td class=listado2><label class="input"><input type="password" name="contraver"></label></td>
+                      </tr>
+                      <tr>
+                          <td class=listado2 colspan="2"><center><input class="btn btn-primary btn-sm" type="submit" value="Aceptar"></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
 	 </form>
 </body>
 </html>
