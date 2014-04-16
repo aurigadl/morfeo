@@ -254,13 +254,13 @@ $_SESSION['numExpedienteSelected'] = null;
                     $linkImagen = "$ruta_raiz/bodega/$radiPath";
                   ?>
                     <tr>
-                      <td><A onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=200,height=100');" href='#'> <?=$numeroRadicado?></a></td>
-                      <td><a href='<?=$linkVerRadicado?>'><?=$fechaRadicado?></a></td>
-                      <td><?=$asuntoRadicado?></td>
-                      <td><?=$remitenteRadicado?></td>
-                      <td><?=$tipoDocumentoRadicado?></td>
-                      <td><?=$diasRadicado?>35728</td>
-                      <td><?=$enviadoPor?></td>
+                      <td><small><A onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=200,height=100');" href='#'> <?=$numeroRadicado?></a></small></td>
+                      <td><small><a href='<?=$linkVerRadicado?>' target="mainFrame"><?=$fechaRadicado?></a></small></td>
+                      <td><small><?=$asuntoRadicado?></small></td>
+                      <td><small><?=$remitenteRadicado?></small></td>
+                      <td><small><?=$tipoDocumentoRadicado?></small></td>
+                      <td><small><?=$diasRadicado?>35728</small></td>
+                      <td><small><?=$enviadoPor?></small></td>
                       <td><input id="<?=$numeroRadicado?>" type="checkbox" value="CHKANULAR" name="checkValue[<?=$numeroRadicado?>]"></td>
                     </tr>
                   <?php

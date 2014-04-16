@@ -45,7 +45,7 @@ $fechaAgenda = $_POST["fechaAgenda"];
 	* @$encabezado  Incluye las variables que deben enviarse a la singuiente pagina.
 	* @$linkPagina  Link en caso de recarga de esta pagina.
 	*/
-	$encabezado = "".session_name()."=".session_id()."&krd=$krd&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion";
+	$encabezado = "".session_name()."=".session_id()."&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion";
 
    if($checkValue){
        $num = count($checkValue);

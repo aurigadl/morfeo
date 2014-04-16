@@ -50,7 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $phpsession     = session_name()."=".session_id();
   $fechah         = date("Ymdhms");
   $ruta_raiz      = ".";
-  $enlace         = "href=\"cuerpo.php?$phpsession&adodb_next_page=1&fechah=";
+  $enlace         = "href=\"bandeja.php?$phpsession&adodb_next_page=1&fechah=";
   $enlace1        = "href=\"cuerpoAgenda.php?$phpsession&agendado=1&fechah=";
   $enlace2        = "href=\"cuerpoAgenda.php?$phpsession&agendado=2&fechah=";
   $enlace3        = "href=\"cuerpoinf.php?$phpsession&<?=mostrar_opc_envio=1&orderNo=2&fechaf=$fechah&
