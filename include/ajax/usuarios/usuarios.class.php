@@ -1,4 +1,5 @@
 <?php
+include("../../../config.php");
 require_once 'HTML/AJAX/Action.php';
 ini_set("display_errors",1);
 /**
@@ -123,30 +124,35 @@ class usuarios{
 		  if(!$indexSelected) $indexSelected = "0";
 		  $cadena .= ' document.getElementById("'.$idObjetoHtml.'").options['.$indexSelected.'].selected = true;';
 	
-		// echo "alert(' $cadena ')";
+		//echo "alert(' $cadena ')";
 		$response->insertScript($cadena);
 		
 		return $response;
 	}
     function informarUsuario($idObjetoHtml,$radicado,$loginOrigen,$depeCodiOrigen,$usuaCodiOrigen,$depeCodiDestino,$usuaCodiDestino,$observacion,$txInformar,$txReasignar,$infConjunto=false,$usuaDocOrigen=null) {
-	
+	  
     $response = new HTML_AJAX_Action();
     $iSql = "select * from usuario where depe_codi=$depeCodiDestino and usua_esta='1'"; 
+    //return "$iSql   $depeCodiOrigen   $usuaCodiOrigen";
     $this->depeCodi = $depeCodiOrigen;
     $this->usuaCodi = $usuaCodiOrigen;
-    //return $isql;
+    
     $rsUs = $this->db->conn->Execute($iSql);
     $radicados = array_filter(explode(",", $radicado));
     //$var1 = "--> $idObjetoHtml+$radicados+$depeCodiOrigen+$usuaCodiOrigen+$depeCodiDestino+$usuaCodiDestino+{$observacion}";
 	
     $ruta_raiz = $this->ruta_raiz;
     include "$ruta_raiz/include/tx/Tx.php";
+  //return var_dump($radicados);  
 	$tx = new Tx($this->db);
+	
 	if($txInformar){
 	  if($infConjunto==true)  $infConjunto=1; else $infConjunto=0;
 	  $rta = $tx->informar($radicados,$loginOrigen,$depeCodiDestino,$depeCodiOrigen,$usuaCodiDestino,$usuaCodiOrigen,$observacion ,'',"..",$infConjunto);
+	  
 	}
 	$cadena = $this->listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen);
+	//return "$cadena";
 	$response->insertScript($cadena);
 	return $response;
 	
@@ -162,7 +168,6 @@ class usuarios{
 function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
 {
 
-
 	$cadena = "";
 	$iSql = "select
 		inf.INFO_DESC, dep.DEPE_NOMB, us.USUA_NOMB, inf.DEPE_CODI, inf.USUA_CODI,inf.INFO_FECH
@@ -174,10 +179,11 @@ function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
 		AND info_conjunto =0
 		AND USUA_DOC_ORIGEN = '$usuaDocOrigen'
 		order by info_fech desc";
+		//echo "$iSql";
 	$rsUs = $this->db->conn->Execute($iSql);
 	
 	$cadena .= "seleccion = document.getElementById('$idObjetoHtml'); ";
-	$cadena .= "valor = ".'"<span class=titulos5>SE HA INFORMADO A:</span><TABLE class=borde_tab width=100%>';
+	$cadena .= "valor = ".'"<small>SE HA INFORMADO A:</small><TABLE class='."'".'table table-striped table-bordered'."'".' width=100%>';
 	while (!$rsUs->EOF) 
 	{
 	 $infoDesc = htmlentities(strtoupper(trim($rsUs->fields["INFO_DESC"])));
@@ -186,9 +192,9 @@ function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
 	 $fechaInf = htmlentities(substr(trim($rsUs->fields["INFO_FECH"]),0,16));
 	 $depeNomb =  $rsUs->fields["DEPE_NOMB"];
 	 $usuaNomb =  strtoupper($rsUs->fields["USUA_NOMB"]);
-	 $cadena .= "<tr><td class=listado5>$infoDesc</td><td class=listado5>$fechaInf</td>";
-	 $cadena .= "<td class='listado5'> ($depeCodiBorrar) $depeNomb </td>";
-	 $cadena .= "<td class='listado5'> $usuaNomb (<a href=\'#informados\'  onClick=".'\"'."remote.borrarInformado('$idObjetoHtml','$radicado',".$this->depeCodi.",".$this->usuaCodi.",$depeCodiBorrar,$usuaCodiBorrar,'Borrado de Informado')".'\"'." href='#reasignado'><span style='color: RED;'>Borrar</ span></a>)</td>";
+	 $cadena .= "<tr><td ><small>$infoDesc</small></td><td ><small>$fechaInf</small></td>";
+	 $cadena .= "<td ><small> ($depeCodiBorrar) $depeNomb </small></td>";
+	 $cadena .= "<td ><small> $usuaNomb (<a href=\'#informados\'  onClick=".'\"'."remote.borrarInformado('$idObjetoHtml','$radicado',".$this->depeCodi.",".$this->usuaCodi.",$depeCodiBorrar,$usuaCodiBorrar,'Borrado de Informado')".'\"'." href='#reasignado'><span style='color: RED;'>Borrar</ span></a>)</small></td>";
 
 	 $cadena .= "</tr>";
 	 $rsUs->moveNext();
@@ -205,7 +211,7 @@ function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
 		AND USUA_DOC_ORIGEN = '$usuaDocOrigen'
                 order by info_fech desc";
         $rsUs = $this->db->conn->Execute($iSql);
-        $cadena .= "<span class=titulos5>TRAMITE EN CONJUNTO:</span><TABLE class=borde_tab width=100%>";
+        //$cadena .= "<small >TRAMITE EN CONJUNTO:</small><TABLE class=table-bordered width=100%>";
         while (!$rsUs->EOF)
         {
          $infoDesc = htmlentities(strtoupper(trim($rsUs->fields["INFO_DESC"])));
@@ -214,9 +220,9 @@ function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
          $fechaInf = htmlentities(substr(trim($rsUs->fields["INFO_FECH"]),0,16));
          $depeNomb =  $rsUs->fields["DEPE_NOMB"];
          $usuaNomb =  strtoupper($rsUs->fields["USUA_NOMB"]);
-         $cadena .= "<tr><td class=listado5>$infoDesc</td><td class=listado5>$fechaInf</td>";
-         $cadena .= "<td class='listado5'> ($depeCodiBorrar) $depeNomb </td>";
-         $cadena .= "<td class='listado5'> $usuaNomb (<a href=\'#informados\'  onClick=".'\"'."remote.borrarInformado('$idObjetoHtml','$radicado',".$this->depeCodi.",".$this->usuaCodi.",$depeCodiBorrar,$usuaCodiBorrar,'Borrado de Informado')".'\"'." href='#reasignado'><span style='color: RED;'>Borrar</ span></a>)</td>";
+         $cadena .= "<tr><td ><small>$infoDesc</small></td><td >$fechaInf</small></td>";
+         $cadena .= "<td ><small> ($depeCodiBorrar) $depeNomb </small></td>";
+         $cadena .= "<td ><small> $usuaNomb (<a href=\'#informados\'  onClick=".'\"'."remote.borrarInformado('$idObjetoHtml','$radicado',".$this->depeCodi.",".$this->usuaCodi.",$depeCodiBorrar,$usuaCodiBorrar,'Borrado de Informado')".'\"'." href='#reasignado'><span style='color: RED;'>Borrar</ span></a>)</small></td>";
 
          $cadena .= "</tr>";
          $rsUs->moveNext();
@@ -262,9 +268,9 @@ function listaDerivados($radicado,$idObjetoHtml)
 	 $depeNomb = $rsUs->fields["DEPE_NOMB"];
 	 $usuaNomb = $rsUs->fields["USUA_NOMB"];
 	 $idDerivado = $rsUs->fields["ID"];
-	 $cadena .= "<tr><td class=listado5>$infoDesc</td>";
-	 $cadena .= "<td class='listado5'> ($depeCodiBorrar) $depeNomb </td>";
-	 $cadena .= "<td class='listado5'> $usuaNomb (<a href=\'#Derivados\'  onClick=".'\"'."remote.borrarDerivado('$idObjetoHtml','$radicado',".$this->depeCodi.",".$this->usuaCodi.",$depeCodiBorrar,$usuaCodiBorrar,$idDerivado,'Borrado por Formulario de Radicacion')".'\"'." href='#Derivados'><span style='color: RED;'>Borrar</ span></a>)</td>";
+	 $cadena .= "<tr><td >$infoDesc</td>";
+	 $cadena .= "<td > ($depeCodiBorrar) $depeNomb </td>";
+	 $cadena .= "<td > $usuaNomb (<a href=\'#Derivados\'  onClick=".'\"'."remote.borrarDerivado('$idObjetoHtml','$radicado',".$this->depeCodi.",".$this->usuaCodi.",$depeCodiBorrar,$usuaCodiBorrar,$idDerivado,'Borrado por Formulario de Radicacion')".'\"'." href='#Derivados'><span style='color: RED;'>Borrar</ span></a>)</td>";
 	 $cadena .= "</tr>";
 	 $rsUs->moveNext();
 	}
@@ -282,6 +288,7 @@ function borrarInformado($idObjetoHtml,$radicado,$depeCodi,$usuaCodi,$depeCodiBo
 	$this->depeCodi = $depeCodi;
 	$this->usuaCodi = $usuaCodi;	
 	$ruta_raiz = $this->ruta_raiz;
+	
 	include "$ruta_raiz/include/tx/Tx.php";
 	$tx = new Tx($this->db);
 	$loginOrigen = "";

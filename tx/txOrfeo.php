@@ -247,7 +247,6 @@ function masivaIncluir(){
   function window_onload()
   {
       document.getElementById('depsel').style.display = 'none';
-      document.getElementById('depsel8').style.display = 'none';
       document.getElementById('carpper').style.display = 'none';
       document.getElementById('Enviar').style.display = 'none';
 
@@ -382,13 +381,6 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 	// genera las dependencias para informar
 	$row1 = array();
 
-	$dependencianomb=substr($dependencianomb,0,35);
-        $subDependencia = $db->conn->substr ."(".$db->conn->Concat($db->conn->IfNull('DEP_SIGLA', "'XT'"),"' - '","depe_nomb").",0,50)";
-
-	$subDependencia = $db->conn->substr ."(depe_nomb,0,80)";
-	$sql = "select $subDependencia, depe_codi from DEPENDENCIA ORDER BY DEPE_NOMB";
-	$rs = $db->conn->Execute($sql);
-	print $rs->GetMenu2('depsel8[]',$dependencia,false,true,5," id='depsel8' class='select' ");
 	// Aqui se muestran las carpetas Personales
 
 	$dependencianomb=substr($dependencianomb,0,35);

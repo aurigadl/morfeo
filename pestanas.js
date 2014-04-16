@@ -28,20 +28,17 @@ function changedepesel(enviara)
   document.form1.codTx.value = enviara;
   document.getElementById('depsel').style.display = 'none';
   document.getElementById('carpper').style.display = 'none';
-  document.getElementById('depsel8').style.display = 'none';
   document.getElementById('Enviar').style.display = 'none';
  if(enviara==10 )
   {    
   document.getElementById('depsel').style.display = 'none';
 	document.getElementById('carpper').style.display = '';
-	document.getElementById('depsel8').style.display = 'none';
 	document.getElementById('Enviar').style.display = '';
   }
  //Archivar
   if(enviara==13 )
   {    
    document.getElementById('depsel').style.display = 'none';
-	 document.getElementById('depsel8').style.display = 'none';
 	 document.getElementById('carpper').style.display = 'none';
 	 envioTx();
   }
@@ -50,7 +47,6 @@ function changedepesel(enviara)
    if(enviara==16 )
   {    
     document.getElementById('depsel').style.display = 'none';
-	  document.getElementById('depsel8').style.display = 'none';
 	  document.getElementById('carpper').style.display = 'none';
 	  envioTx();
   }
@@ -67,7 +63,6 @@ function changedepesel(enviara)
   if(enviara==9 ){
    document.getElementById('depsel').style.display = '';
 	 document.getElementById('carpper').style.display = 'none';
-	 document.getElementById('depsel8').style.display = 'none';
 	 document.getElementById('Enviar').style.display = '';
   }
   
@@ -76,7 +71,6 @@ function changedepesel(enviara)
   {
    document.getElementById('depsel').style.display = '';
 	 document.getElementById('carpper').style.display = 'none';
-	 document.getElementById('depsel8').style.display = 'none';
 	 document.getElementById('Enviar').style.display = '';
 	}
   
@@ -84,10 +78,7 @@ function changedepesel(enviara)
   //Informar
   if(enviara==8 )
   {
-    document.getElementById('depsel').style.display = 'none';
-		document.getElementById('depsel8').style.display = '';
-		document.getElementById('carpper').style.display = 'none';
-		document.getElementById('Enviar').style.display = '';
+    envioTx();
   }
 }
 </script>

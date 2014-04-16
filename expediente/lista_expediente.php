@@ -27,6 +27,9 @@ unset($frm);
 	$rsb=$db->conn->Execute($sqlb);
 	$arch=$rsb->fields['SGD_EXP_ARCHIVO'];
 	$mostrar=true;
+	if(!$tsub)$tsub = "0";
+	if(!$tdoc)$tdoc = "0";
+	if(!$codserie)$codserie = "0";
 ?>
 <tr >
   <td >

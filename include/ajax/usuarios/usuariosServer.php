@@ -28,7 +28,6 @@ class UsuariosServer extends HTML_AJAX_Server {
 	// init method for the testHaa class, includes needed files an registers it for ajax, directly passes in methods to register to specify case in php4
 	function initUsuarios() {
     $ruta_raiz = "../../..";
-    //alert("Entro a initUsuarios");
 		include 'usuarios.class.php';
 		$this->registerClass(new usuarios($this->db,$this->ruta_raiz),'usuarios',array('getUsuarios','informarUsuario','borrarInformado','borrarDerivado'));
 	}

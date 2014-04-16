@@ -45,7 +45,7 @@ $entidad_depsal = 999;	//Guarda el codigo de la dependencia de salida por defect
 // Esta es la ubicacion de nuestra carpeta orfeo 
 // ejm: linux    /var/www/miorfeo
 //      windows  c:\apache2.0\hpdocs\miorfeo
-$ABSOL_PATH              = "/var/www/siim/";
+$ABSOL_PATH              = "/var/www/orfeoNew/";
 
 /**
 *	Se crea la variable $ADODB_PATH.

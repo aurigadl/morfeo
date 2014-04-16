@@ -41,6 +41,7 @@ if($checkValue)
 	$resultadoJGL = "";
 	while (list($recordid,$tmp) = each($checkValue))
 	{	$record_id = $recordid;
+	  $radicadosTx .= $record_id.",";
 		switch ($codTx)
 		{	case  7:
 			case  8:
@@ -327,13 +328,14 @@ if($checkValue)
 	}
 
 	if(substr($whereFiltro,-2)=="or")
-	{	$whereFiltro = substr($whereFiltro,0,strlen($whereFiltro)-2);
+	{
+	  $whereFiltro = substr($whereFiltro,0,strlen($whereFiltro)-2);
 	}
 	if(trim($whereFiltro))
 	{	$whereFiltro = "and ( $whereFiltro ) ";
 	}
 
-  $radicadosTx .= $record_id.",";
+  
 }
 else
 {	$mensaje_error="NO HAY REGISTROS SELECCIONADOS";
@@ -493,16 +495,16 @@ function okTx()
 	 */
 if ($mensaje_errorEXP || $mensaje_error )
 {
-	die ("<center><table class='borde_tab' width=100% CELSPACING=5><tr class=titulosError><td align='center'>$mensaje_errorEXP <br> $mensaje_error</td></tr></table></CENTER>");
+	die ("<center><table class='table table-bordered' width=100% CELSPACING=5><tr class=titulosError><td align='center'>$mensaje_errorEXP <br> $mensaje_error</td></tr></table></CENTER>");
 }
 else
 {
 ?>
-<table width=70% cellpadding="0" cellspacing="0" ALIGN=CENTER CLASS='form-contol input-sm'>
+<table width="80%" cellpadding="0" cellspacing="0" ALIGN=CENTER CLASS='form-contol input-sm'>
 <tr>
-	<td width=100%>
+	<td width="100%">
 	<br>
-	<form action='realizarTx.php?<?=$encabezado?>' method='POST'  name="realizarTx" >
+	<form action='realizarTx.php?<?=$encabezado?>' method='POST'  name="realizarTx" class="smart-form" >
 	<input type='hidden' name=depsel8 value="<?=implode($depsel8,',')?>">
 	<input type='hidden' name=codTx value='<?=$codTx?>'>
 	<input type='hidden' name=EnviaraV value='<?=$EnviaraV?>'>
@@ -521,12 +523,12 @@ switch ($codTx)
 			//$cad2 = $db->conn->Concat($db->conn->IfNull("d.DEP_SIGLA", "'N.N.'"),"'-'","RTRIM(u.usua_nomb)");
 			$cad = $db->conn->Concat("CAST(u.depe_codi as char(10))","'-'","cast(u.usua_codi as char(10))");
 			$cad2 = $db->conn->Concat($db->conn->IfNull("d.DEP_SIGLA", "'N.N.'"),"'-'","RTRIM(u.usua_nomb)");
-			$sql = "select $cad2 as usua_nomb, $cad as usua_codi from usuario u,dependencia d where u.depe_codi in(".implode($depsel8,',').")
-					$whereReasignar and u.USUA_ESTA='1' and u.depe_codi = d.depe_codi ORDER BY usua_nomb";
-				$rs = $db->conn->Execute($sql);
+			//&$sql = "select $cad2 as usua_nomb, $cad as usua_codi from usuario u,dependencia d where u.depe_codi in(".implode($depsel8,',').")
+			//		$whereReasignar and u.USUA_ESTA='1' and u.depe_codi = d.depe_codi ORDER BY usua_nomb";
+			//	$rs = $db->conn->Execute($sql);
 			$usuario = $codUsuario;
 			print "Informados</td><td>";
-			print $rs->GetMenu2('usCodSelect[]',$usDefault,false,true,10," id='usCodSelect'  class='form-control input-sm'");
+			//print $rs->GetMenu2('usCodSelect[]',$usDefault,false,true,10," id='usCodSelect'  class='form-control input-sm'");
 			break;
 	case 9:	$whereDep = "and u.depe_codi=$depsel ";
 		if($dependencia==$depsel)
@@ -662,14 +664,14 @@ switch ($codTx)
 		<BR>
 		</td>
 		<td width='5' class="grisCCCCCC">
+		<?php
+		 if($codTx!=8){
+		?>
 			<input type=button value=REALIZAR 
-			onClick="<?php if($codTx==8){ ?> if(document.getElementById('usCodSelect').value==''){ alert('Debe seleccionar al menos un funcionario.'); return false;  }<?php } ?> <?php if ($codTx==9) { ?>
-		if(document.realizarTx.usCodSelect.value=='-1')
-		{	
-			alert('Debe seleccionar un funcionario.');
-			return false;
-		}
-	<?php } ?> okTx();" name=enviardoc align=bottom class=botones id=REALIZAR>
+			onClick="okTx();" name=enviardoc align=bottom class="btn btn-sm btn-primary" id=REALIZAR>
+	<?php
+	}
+	?>
 		</td>
 	</TR>
 	<tr align="center">
@@ -681,11 +683,13 @@ switch ($codTx)
         <span class="info">Tramite Conjunto  </span> 
         <?
 	}
-		if((($codusuario==1) || ($usuario_reasignacion == 1)) && $codTx!=13)
+		if((($codusuario==1) || ($usuario_reasignacion == 1)) && ($codTx!=13 && $codTx!=8))
 		{						
-		?>		
-        <input type=checkbox name=chkNivel checked class=ebutton>
-		<span class="info">El documento tomara el nivel del usuario destino.</span>
+		?><label class="checkbox alert alert-info" align=left>		
+        <input type=checkbox name=chkNivel checked >
+        <i></i>
+        El documento tomara el nivel del usuario destino
+      </label>
 			<?
 		}elseif($codTx==13){
 			?>
@@ -696,11 +700,11 @@ switch ($codTx)
 		}
 		?>
 		<center>
-		<table width="100%"  border=0 align="center" bgcolor="White">
-		<TR bgcolor="White"><TD width="100%" colspan=3>
+		<table width="100%"  align="center" class="table table-bordered">
+		<TR bgcolor="White"><TD width="100%" colspan=4>
 	        <label class="textarea">
 					<i class="icon-append fa fa-comment"></i>
-					<textarea name=observa id=observa placeholder="Escriba un Comentario" rows="4"></textarea>
+					<textarea name=observa id=observa placeholder="Escriba un Comentario" rows="3"></textarea>
 					</label>	
 					
 			</TD></TR>
@@ -711,48 +715,49 @@ switch ($codTx)
 		<input type=hidden name=carpper value=10001>
 	</td>
 	</tr>
-	
-        <?php
-        if ($codTx=="9")
-        {
-            $scriptCargarUsuarios = " onClick=".'"'."remote.getUsuarios('usuariosInformar',document.getElementById('coddepeinf').value,0)".'";';
-            ?>
-	    <tr bgcolor=white>
-            <td class="titulos2" bgcolor="white" colspan=4>
-            <? if($varTramiteConjunto==1){  ?>
-	     <input type=checkbox name=chkConjunto Value="Si" id="chkConjunto" >
-             <span class="info">Tramite Conjunto  </span>
+  <?php
+		if ($codTx=="9" || $codTx=="8")
+		{
+			$scriptCargarUsuarios = " onClick=".'"'."remote.getUsuarios('usuariosInformar',document.getElementById('coddepeinf').value,0)".'";';
+			?>
+			<tr >
+				<td  colspan=4>
+				<? if($varTramiteConjunto==1){  ?>
+				<input type=checkbox name=chkConjunto Value="Si" id="chkConjunto" >
+				<span class="info">Tramite Conjunto  </span>
 	    <? }else{    ?>
-		<input type=checkbox name=chkConjunto id="chkConjunto" disabled >
-
-
-	     <? }  ?>
+					<input type=checkbox name=chkConjunto id="chkConjunto" disabled >
+     <? }  ?>
 	    </td>
 	    </tr>
-            <tr bgcolor=white>
-            <td class="titulos2" bgcolor="white"><font face="Verdana" size="1"><b>
-            Informar   A:</td><td class=listado2>
+			<tr >
+			<td ><font face="Verdana" size="1"><b>
+			Informar   A:</td><td >
+					<label class='select select-multiple'>
                 <?php
-	$query ="SELECT DEPE_NOMB, DEPE_CODI
-            from DEPENDENCIA
-            where depe_estado=1
-            ORDER BY 1";
-						$rs=$db->conn->Execute($query);
-						$varQuery = $query;
-						print $rs->GetMenu2("coddepeinf", $coddepeinf, false, true,5," $scriptCargarUsuarios class='form-control custom-scroll' id='coddepeinf' width=200");
-						$observaInf = "document.getElementById('observa').value";
+			$query ="SELECT DEPE_NOMB, DEPE_CODI
+					from DEPENDENCIA
+					where depe_estado=1
+					ORDER BY 1";
+					$rs=$db->conn->Execute($query);
+					$varQuery = $query;
+					print $rs->GetMenu2("coddepeinf", $coddepeinf, false, true,5," $scriptCargarUsuarios class='custom-scroll' multiple='' id='coddepeinf' ");
+					$observaInf = "document.getElementById('observa').value";
         ?>
+     </label>
             </td>	
-        <td align=center class=titulos2>
+        <td align=center  colspan=2>
+        <label class='select select-multiple'>
 	 <select name="usuariosInformar" id="usuariosInformar" size="5" width=450
-    onclick="remote.informarUsuario('usuariosInformados','<?=$radicadosTx?>','<?=$krd?>','<?=$dependencia?>','<?=$codusuario ?>',document.getElementById('coddepeinf').value,document.getElementById('usuariosInformar').value,<?=$observaInf?> , document.getElementById('accionInformar').checked, 0,  document.getElementById('chkConjunto').checked,'<?=$usua_doc?>') ; " 
-     class="form-control custom-scroll" align="LEFT" >
+    onclick="remote.informarUsuario('usuariosInformados','<?=$radicadosTx?>','<?=$krd?>','<?=$dependencia?>','<?=$codusuario ?>',document.getElementById('coddepeinf').value,document.getElementById('usuariosInformar').value,<?=$observaInf?> , 1, 0,  document.getElementById('chkConjunto').checked,'<?=$usua_doc?>') ; " 
+     class="custom-scroll"   align="LEFT" >
+     </label>
    </select>
 
 	</td>	
         </tr>
-            <tr bgcolor=white>
-            <td class="ecajasfecha" bgcolor="white"><font face="Verdana" size="1"><b>
+            <tr >
+            <td class="ecajasfecha"><font face="Verdana" size="1"><b>
             Agendar </b></font></td><td class="ecajasfecha">
             <input type="text" id="calendar" name="fechaAgenda"/>
             <button id="trigger"><img src="../include/zpcal/calendar2.ico" width="25" height="25"></button>
@@ -786,7 +791,7 @@ switch ($codTx)
         }
         ?>
             <tr><td colspan=6>
-        <div id="usuariosInformados">
+        <div id="usuariosInformados"> No Existen Usuarios Informados
         </div>
                 </td></tr>
 </TABLE>

@@ -33,8 +33,7 @@ error_reporting(7);
 $db = new ConnectionHandler(".");
 $db->conn->SetFetchMode(3);
 
-if($carpeta==8)
-{	$info=8;
+if($carpeta==8){	$info=8;
 	$nombcarpeta = "Informados";
 }
 
@@ -85,9 +84,8 @@ if($verradPermisos == "Full" or $datoVer=="985")
 {	if($datoVer=="985")
 	{
 ?>
-function  window_onload()
-{	<?	if($verradPermisos == "Full" or $datoVer=="985")
-{
+function  window_onload(){
+<?	if($verradPermisos == "Full" or $datoVer=="985"){
 ?>
 window_onload2();
 <?
