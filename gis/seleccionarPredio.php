@@ -1,10 +1,10 @@
 <?
-ini_set("display_errors",0);
+ini_set("display_errors",1);
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 $chips = json_decode($_GET["predios_seleccionados"], true);
 $i=0;
-$numeroExpediente = "2008900999900003E";
+//$numeroExpediente = "2008900999900003E";
 $numeroExpediente = $_GET["numeroExpediente"];
 foreach($chips["chip"] as $key => $chip){
    //echo "<br>$key>>>".$chip."<br>";
@@ -12,7 +12,7 @@ foreach($chips["chip"] as $key => $chip){
    $url = "http://200.118.122.176:5380/py/pyforms/seleccion_predios/select_predio?expediente=$numeroExpediente&chip=$chip";
    //echo $url;
    $res = file_get_contents($url);
-   //echo "$res";
+   echo "$res";
    $sPos = "No form was returned by the controller";
    $pos = strpos($res, $sPos, 1);
    if($pos>=1) echo $chip . " Agregado Corectamente en $numeroExpediente<br>"; else "No se ha encontrado el Chip $chip <br>";

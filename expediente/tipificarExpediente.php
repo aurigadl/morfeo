@@ -56,7 +56,7 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
 <html>
 
   <head>
-    <title>Tipificar Expediente</title>
+    <title>..:: Expediente ::..</title>
     <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
     <script>
       function regresar(){
@@ -74,7 +74,7 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
   <div id="spiffycalendar" class="text"></div>
   <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
   <script language="JavaScript" src="../js/spiffyCal/spiffyCal_v2_1.js"></script>
-  <form method="post" action="<?=$encabezadol?>" name="TipoDocu">
+  <form method="post" action="<?=$encabezadol?>" name="TipoDocu" class="smart-form" >
     <?  /* * Adicion nuevo Registro */
     if ($Actualizar && $tsub !=0 && $codserie !=0 ) {
       if(!$digCheck) {
@@ -129,31 +129,15 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
       $objFlujo->cambioNodoExpediente($numeroExpediente,$nurad,$expEstadoActual,$aristaActual,1,"Creacion Expediente",$_POST['codProc']);
     } ?>
 
-    <div class="col-sm-12">
-      <!-- widget grid -->
-      <h2></h2>
-      <section id="widget-grid">
-        <!-- row -->
-        <div class="row">
-          <!-- NEW WIDGET START -->
-          <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+<div class="widget-body no-padding" width=80% align=center>
+<div class="alert alert-info no-margin fade in" width=80%>
+<i class="fa-fw fa fa-info"></i>
+Creacion yo Adicion de Expediente y/o Carpteta Virtual
+</div>
 
-              <header>
-                <h2>
-                  Administraci&oacute;n de flujos<br>
-                  <small><?=$tituloCrear ?></small>
-                </h2>
-              </header>
-              <!-- widget div-->
-              <div>
-                <!-- widget content -->
-                <div class="widget-body no-padding">
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped" width=80%>
                       <?php if( $numeroExpedienteE != 0 ) { ?>
-                        <tr align="center" class="listado2">
+                        <tr align="center" >
                           <td width="33%" height="25" align="center" colspan="2">
                               <font color="#CC0000" face="arial" size="2">
                                 Se ha creado el Expediente No.
@@ -169,26 +153,22 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                         </tr>
                       <?php } ?>
 
-                        <tr align="center" class="titulos2">
-                          <td height="15" class="titulos2" colspan="2">APLICACION DE LA TRD EL EXPEDIENTE</td>
-                        </tr>
-
                       <?php if( $numeroExpedienteE != 0 ) {
                             $arrTRDExp = $expediente->getTRDExp( $numeroExpediente, $codserie, $tsub, $codProc );
                        ?>
-                        <tr class="titulos5">
+                        <tr >
                           <td>SERIE</td>
                           <td>
                             <?php print $arrTRDExp['serie']; ?>
                         </td>
                       </tr>
-                      <tr class="titulos5">
+                      <tr >
                         <td>SUBSERIE</td>
                         <td>
                             <?php print $arrTRDExp['subserie']; ?>
                         </td>
                       </tr>
-                      <tr class="titulos5">
+                      <tr >
                           <td>PROCESO</td>
                           <td>
                             <?php print $arrTRDExp['proceso']; ?>
@@ -198,11 +178,12 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                     </table>
                   </div>
                   <?php if (!isset( $Actualizar )){?>
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
+                  <div ">
+                    <table class="table table-bordered table-striped" style="width:650;" align=center >
                       <tr>
-                        <td width="62%" class="titulos5" >SERIE</td>
-                        <td width="38%" class=listado5 >
+                        <td width="10"  >SERIE</td>
+                        <td width="200"  >
+                        <label class=select>
                           <?php
                           if(!$tdoc) $tdoc = 0;
                           if(!$codserie) $codserie = 0;
@@ -229,12 +210,13 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                           $comentarioDev = "Muestra las Series Docuementales";
                           include "$ruta_raiz/include/tx/ComentarioTx.php";
                           print $rsD->GetMenu2("codserie", $codserie, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
-                        ?>
+                        ?><i></i>
+                        </label>
                          </td>
                       </tr>
                       <tr>
-                        <td class="titulos5" >SUBSERIE</td>
-                        <td class=listado5 > <?
+                        <td  >SUBSERIE</td>
+                        <td  ><label class=select> <?
                           $nomb_varc = "su.sgd_sbrd_codigo";
                           $nomb_varde = "su.sgd_sbrd_descrip";
                           include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
@@ -263,12 +245,14 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
 
                         $rs=$db->conn->Execute($queryPEXP);
                         $texp = $rs->fields["SGD_PEXP_CODIGO"];
-                        ?>
+                        ?><i></i>
+                        </label>
                         </td>
                       </tr>
                       <tr>
-                        <td class="titulos5" >PROCESO</td>
+                        <td  >PROCESO</td>
                         <td class="listado5" colspan="2" >
+                        <label class=select>
                               <?
                                 $comentarioDev = "Muestra los procesos segun la combinacion Serie-Subserie";
                                 include "$ruta_raiz/include/tx/ComentarioTx.php";
@@ -293,20 +277,21 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                                     $expTerminos = $rs->fields["SGD_PEXP_TERMINOS"];
                                     if ( $expTerminos != "" )
                                     {
-                                        $expDesc = " $expTerminos Dias Calendario de Termino Total";
+                                        $expDesc = "<small> $expTerminos Dias Calendario de Termino Total </small>";
                                     }
                                 }
-                                print "&nbsp;".$expDesc;
+                                print "<small>&nbsp;".$expDesc ."</small>";
                               ?>
+                              <i></i>
+                          </label>
                         </td>
                       </tr>
                     </table>
                   </div>
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
+                  <div >
+                    <table class="table table-bordered table-striped"  style="width:650;" align=center >
                       <tr align="center">
-                        <td width="13%" height="25" class="titulos5" align="center">
-                        Nombre de Expediente</TD>
+                        <td width="5" colspan=2>
                         <?
                         if(!$digCheck){
                           $digCheck = "E";
@@ -322,8 +307,8 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                         $consecutivoExp = substr("00000".$secExp,-5);
                         if(!$anoExp) $anoExp = date("Y");
                         ?>
-                        <td width="33%" class="listado2" height="25">
-                        <p>
+                        <section class="col col-3">
+                        <label  class=select>
                         <select name=anoExp  class=select onChange="submit();">
                           <?
                             if($anoExp==(date('Y'))) $datoss = " selected "; else $datoss= "";
@@ -358,26 +343,28 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                           </option>
 
                           </select>
-                        <input type=text name=depExp value='<?=$dependencia?>' class=select maxlength="3" size="2">
-                        <input type=text name=depExp value='<?=$trdExp?>' class=select maxlength="4" size="5">
-                        <input type=text name=consecutivoExp value='<?=$consecutivoExp?>'  class=select maxlength="5" size=4>
-                        <input type=text name=digCheckExp value='<?=$digCheck?>' class=select maxlength="1" size="1">
+                          <i></i>
+                          </label>
+                         </section> 
+                         <section class="col col-2"><label class=input><input type=text name=depExp value='<?=$dependencia?>' class=select maxlength="3" size="2"> </label></section> 
+                         <section class="col col-2"><label class=input><input type=text name=depExp value='<?=$trdExp?>' class=select maxlength="4" size="5"> </label></section> 
+                         <section class="col col-2"><label class=input><input type=text name=consecutivoExp value='<?=$consecutivoExp?>'  class=select maxlength="5" size=4> </label></section> 
+                         <section class="col col-1"><label class=input><input type=text name=digCheckExp value='<?=$digCheck?>' class=select maxlength="1" size="1"> </label></section> 
                         <?
-                              $cDependencia = str_pad($dependencia, $digitosDependencia, "0", STR_PAD_LEFT);
+                        $cDependencia = str_pad($dependencia, $digitosDependencia, "0", STR_PAD_LEFT);
                         $numeroExpediente = $anoExp . $cDependencia . $trdExp . $consecutivoExp . $digCheck;
                         ?>
                         </center>
-                        <br>
-                            A&ntilde;o-Dependencia-Serie Subserie-Consecutivo-E<br>
-                            El consecutivo "<?=$consecutivoExp?>" es temporal y puede cambiar en el momento de crear el expediente.
+                        </td></tr><tr><td colspan=2 align=center>
+                         <small>   A&ntilde;o-Dependencia-Serie Subserie-Consecutivo-E<br>
+                            El consecutivo "<?=$consecutivoExp?>" es temporal y puede cambiar en el momento de crear el expediente.</small>
                         <br>
                         <?=$numeroExpediente?>
                         </td>
                       </tr>
                       <tr align="center">
-                        <td width="13%" height="25" class="titulos5" align="center">
-                        Consecutivo de Expediente Manual</TD>
-                        <td class=listado2>
+                        <td width="13%" height="25"  align="center" colspan=2>
+                        Consecutivo de Expediente Manual
                         <?
                             if($expManual) $datoss=" checked "; else $datoss = "";
                         ?>
@@ -394,7 +381,7 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                       $rsParExp = $db->conn->Execute( $sqlParExp );
                       while ( !$rsParExp->EOF ){ ?>
                       <tr align="center">
-                        <td width="13%" height="25" class="titulos5" align="left">
+                        <td width="13%" height="25"  align="left">
                           <?php
                           $valorTxt = "";
                                 print $rsParExp->fields['SGD_PAREXP_ETIQUETA'];
@@ -415,15 +402,19 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                             }
                           ?>
                         </td>
-                        <td width="13%" height="25" class="titulos5" align="left">
-                          <input type="text" name="parExp_<?php print $rsParExp->fields['SGD_PAREXP_ORDEN']; ?>" value="<?=$valorTxt?>" size="60" <?php print $readonly; ?>>
+                        <td width="13%" height="25"  align="left">
+                        <?
+                          $nombreInput ="parExp_".$rsParExp->fields['SGD_PAREXP_ORDEN'];
+                          if(!trim($valorTxt)) $valorTxt = $nombreInput;
+                        ?>
+                          <input type="text" name="<?=$nombreInput?>" value="<?=$valorTxt?>" size="60" <?php print $readonly; ?>>
                         </td>
                       </tr>
                         <?php $rsParExp->MoveNext(); } ?>
 
                       <tr align="center">
-                        <td width="13%" height="25" class="titulos5" align="center" colspan="2">
-                          <input type="button" name="Button" value="BUSCAR" class="botones" onClick="Start('buscarParametro.php?busq_salida=<?=$busq_salida?>&krd=<?=$krd?>',1024,420);">
+                        <td width="13%" height="25"  align="center" colspan="2">
+                          <input type="button" name="Button" value="Buscar Etiqueta" class="btn btn-primary btn-xs" onClick="Start('buscarParametro.php?busq_salida=<?=$busq_salida?>&krd=<?=$krd?>',1024,420);">
                         </td>
                       </tr>
 
@@ -431,7 +422,7 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                         <td class=titulos5>
                           Fecha de Inicio del Proceso.
                         </td>
-                        <td class=listado2>
+                        <td >
                               <script language="javascript">
                               <?  if(!$fechaExp) $fechaExp = date("d/m/Y"); ?>
                               var dateAvailable1 = new ctlSpiffyCalendarBox("dateAvailable1", "TipoDocu", "fechaExp","btnDate1","<?=$fechaExp?>",scBTNMODE_CUSTOMBLUE);
@@ -447,7 +438,8 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                         <td class=titulos5>
                           Usuario Responsable del Proceso
                         </td>
-                        <td class=listado2>
+                        <td >
+                        <label class=select>
                           <?
                             $queryUs = "select d.depe_codi || '-' ||  u.usua_nomb, u.usua_doc, d.depe_codi, d.dep_direccion
                           From Usuario U, Dependencia D
@@ -459,42 +451,44 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                           $rsUs = $db->conn->Execute($queryUs);//var_dump($rsUS);
                           print $rsUs->GetMenu2("usuaDocExp", "$usuaDocExp", "0:-- Seleccione --", false,""," class='select' onChange='submit()'");
                           ?>
+                          </label>
+                          <i></i>
                         </td>
                     </tr>
                   </table>
                 </div>
                 <? if( $crearExpediente ) { ?>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped">
+                <div class="">
+                  <table class="table table-bordered table-striped" width=650>
                     <tr align="center">
-                      <td width="33%" height="25" class="listado2" align="center">
-                        <center class="titulosError2">
+                      <td align="center">
+                        <center class="alert alert-info no-margin fade in">
                             ESTA SEGURO DE CREAR EL EXPEDIENTE ? <BR>
                             EL EXPEDIENTE QUE VA HA CREAR ES EL :
                         </center><b><center class="style1"><?=$numeroExpediente?></center> </b>
                         <div align="justify"><br>
-                              <strong><b>Recuerde:</b>No podr&aacute; modificar el numero de expediente si hay un error en el expediente, mas adelante tendr&aacute; que excluir este radicado del expediente y si es el caso solicitar la anulaci&oacute;n del mismo. Ademas debe tener en cuenta que apenas coloca un nombre de expediente, en Archivo crean una carpeta f&iacute;sica en el cual empezaran a incluir los documentos pertenecientes al mismo. </strong>
+                              <small><b>Recuerde:</b>No podr&aacute; modificar el numero de expediente si hay un error en el expediente, mas adelante tendr&aacute; que excluir este radicado del expediente y si es el caso solicitar la anulaci&oacute;n del mismo. Ademas debe tener en cuenta que apenas coloca un nombre de expediente, en Archivo crean una carpeta f&iacute;sica en el cual empezaran a incluir los documentos pertenecientes al mismo. </small>
                         </div>
                       </td>
                     </tr>
                   </table>
                 </div>
                 <?} } ?>
-                <div class="table-responsive">
+                <div>
                   <table class="table table-bordered table-striped">
                     <tr align="center">
-                      <td width="33%" height="25" class="listado2" align="center">
+                      <td width="33%" height="25"  align="center">
                         <center>
                         <?php
                           if($tsub and $codserie && !$Actualizar and $usuaDocExp){
                             if(!$crearExpediente){
                               if( is_array( $arrProceso ) && $codProc == 0 ){
-                                echo "<input name=\"crearExpediente\" type=\"button\" class=\"botones_funcion\" value=\" Crear Expediente \" onClick=\"alert('Por favor seleccione un proceso.'); document.TipoDocu.codProc.focus();\">";
+                                echo "<input name=\"crearExpediente\" type=\"button\" class=\"btn btn-primary btn-xs\" value=\" Crear Expediente \" onClick=\"alert('Por favor seleccione un proceso.'); document.TipoDocu.codProc.focus();\">";
                               }else{
-                                echo "<input name=\"crearExpediente\" type=submit class=\"botones_funcion\" value=\" Crear Expediente \">";
+                                echo "<input name=\"crearExpediente\" type=submit class=\"btn btn-primary btn-xs\" value=\" Crear Expediente \">";
                               }
                             }else{
-                              echo "<input name=\"Actualizar\" type=submit class=\"botones_funcion\" value=\" Confirmacion Creacion de Expediente \">";
+                              echo "<input name=\"Actualizar\" type=submit class=\"btn btn-primary btn-xs\" value=\" Confirmacion Creacion de Expediente \">";
                             }
                           }
                         ?>
@@ -502,9 +496,9 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
                       </td>
                     </tr>
                     <tr>
-                      <td width="33%" class="listado2" height="25">
+                      <td width="650">
                         <center>
-                          <input name="cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar ">
+                          <input name="cerrar" type="button" class="btn btn-primary btn-xs" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar ">
                         </center>
                       </td>
                    </tr>
