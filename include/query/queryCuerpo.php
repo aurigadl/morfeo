@@ -1,5 +1,5 @@
 <?
-$coltp3Esp = '"'.$tip3Nombre[3][2].'"';	
+$coltp3Esp = '"'.$tip3Nombre[3][2].'"';
 switch($db->driver)
 	{
 	case 'mssql':
@@ -11,7 +11,7 @@ switch($db->driver)
 			,UPPER(b.RA_ASUN)  as "Asunto"'.
 			$colAgendado.
 			',d.NOMBRE_DE_LA_EMPRESA "'.$tip3Nombre[3][2].'"
-			,c.SGD_TPR_DESCRIP as "Tipo Documento" 
+			,c.SGD_TPR_DESCRIP as "Tipo Documento"
 			,b.RADI_USU_ANTE "Enviado Por"
 			,CAST (((radi_fech_radi+(c.sgd_tpr_termino * 7/5))-GETDATE()) AS NUMERIC) as "Dias RestanteS"
 			,convert(char(20),b.RADI_NUME_RADI) "CHK_CHKANULAR"
@@ -28,13 +28,13 @@ switch($db->driver)
 	on b.tdoc_codi=c.sgd_tpr_codigo
 	left outer join BODEGA_EMPRESAS d
 	on b.eesp_codi=d.identificador_empresa
-    where 
+    where
 		b.radi_nume_radi is not null
 		and b.radi_depe_actu='.$dependencia.
 		$whereUsuario.$whereFiltro.'
 		'.$whereCarpeta.'
 		'.$sqlAgendado.'
-	  order by '.$order .' ' .$orderTipo;	
+	  order by '.$order .' ' .$orderTipo;
 	break;
 	case 'oracle':
 	case 'oci8':
@@ -48,7 +48,7 @@ switch($db->driver)
 				,UPPER(b.RA_ASUN)  as "Asunto"'.
 				$colAgendado.
 				',d.NOMBRE_DE_LA_EMPRESA "'.$tip3Nombre[3][2].'"
-				,c.SGD_TPR_DESCRIP as "Tipo Documento" 
+				,c.SGD_TPR_DESCRIP as "Tipo Documento"
 				,round(((radi_fech_radi+(c.sgd_tpr_termino * 7/5))-sysdate)) as "Dias Restantes"
 				,b.RADI_USU_ANTE "Enviado Por"
 				,to_char(b.RADI_NUME_RADI) "CHK_CHKANULAR"
@@ -63,7 +63,7 @@ switch($db->driver)
 		 radicado b,
 		 SGD_TPR_TPDCUMENTO c,
 		 BODEGA_EMPRESAS d
-	 where 
+	 where
 		b.radi_nume_radi is not null
 		and b.radi_depe_actu='.$dependencia.
 		$whereUsuario.$whereFiltro.
@@ -71,7 +71,7 @@ switch($db->driver)
 		and b.eesp_codi=d.identificador_empresa (+)
 		'.$whereCarpeta.'
 		'.$sqlAgendado.'
-	  order by '.$order .' ' .$orderTipo;	
+	  order by '.$order .' ' .$orderTipo;
 	break;
 	case 'postgres':
 	   $whereFiltro = str_replace("b.radi_nume_radi","cast(b.radi_nume_radi as varchar(20))",$whereFiltro);
@@ -94,7 +94,7 @@ switch($db->driver)
 				,b.RA_ASUN  as "Asunto"'.
 				$colAgendado.
 				',d.SGD_DIR_NOMREMDES  as "Remitente"
-				,c.SGD_TPR_DESCRIP as "Tipo Documento" 
+				,c.SGD_TPR_DESCRIP as "Tipo Documento"
                 ,- extract(days from date_trunc('."'".'days'."'".', NOW()) - date_trunc('."'".'days'."'".',fech_vcmto)) as "Dias Restantes"
 				,b.RADI_USU_ANTE as "Enviado Por"
 				,b.RADI_NUME_RADI as "CHK_CHKANULAR"
@@ -111,7 +111,7 @@ switch($db->driver)
 	on b.tdoc_codi=c.sgd_tpr_codigo
 	left outer join SGD_DIR_DRECCIONES d
 	on b.radi_nume_radi=d.radi_nume_radi
-    where 
+    where
 		b.radi_nume_radi is not null
 		and d.sgd_dir_tipo=1
 		and b.radi_depe_actu='.$dependencia.
@@ -119,6 +119,6 @@ switch($db->driver)
 		'.$whereCarpeta.'
 		'.$sqlAgendado.'
 	  order by '.$order .' ' .$orderTipo;
-	break;	
+	break;
 	}
 ?>

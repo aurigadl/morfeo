@@ -12623,7 +12623,6 @@ img.away {
     box-sizing: content-box;
     display: inline-block;
     max-height: 47px;
-    overflow: hidden;
     text-align: left;
 }
 #sparks li h5 {

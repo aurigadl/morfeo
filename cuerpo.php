@@ -48,7 +48,6 @@ $_SESSION['numExpedienteSelected'] = null;
   include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 	if (!$db) $db = new ConnectionHandler($ruta_raiz);
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-	//$db->conn->debug = true;
 	$sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_RADI");
 	  if(strlen($orderNo)==0){
       $orderNo="2";
@@ -57,54 +56,91 @@ $_SESSION['numExpedienteSelected'] = null;
       $order = $orderNo +1;
   }
 
-		if(trim($orderTipo)=="") $orderTipo="DESC";
-		if($orden_cambio==1){
-				if(trim($orderTipo)!="DESC"){
-						$orderTipo="DESC";
-				}else{
-						$orderTipo="ASC";
-				}
-		}
+  if(trim($orderTipo)=="") $orderTipo="DESC";
+  if($orden_cambio==1){
+      if(trim($orderTipo)!="DESC"){
+          $orderTipo="DESC";
+      }else{
+          $orderTipo="ASC";
+      }
+  }
 
-			if(!$carpeta) $carpeta=0;
-			if(!$tipo_carp) $tipo_carp=0;
+  if(!$carpeta) $carpeta=0;
+  if(!$nomcarpeta) $nomcarpeta = "Entrada";
 
-		/**
-		* Este if verifica si se debe buscar en los radicados de todas las carpetas.
-		* @$chkCarpeta char  Variable que indica si se busca en todas las carpetas.
-		*
-		*/
-		if($chkCarpeta){
-				$chkValue=" checked ";
-				$whereCarpeta = " ";
-		}else{
-				$chkValue="";
-				$whereCarpeta = " and b.carp_codi=$carpeta ";
-				$whereCarpeta   = $whereCarpeta ." and b.carp_per=$tipo_carp ";
-		}
+  if(!$tipo_carp) $tipo_carp=0;
+
+  /**
+  * Este if verifica si se debe buscar en los radicados de todas las carpetas.
+  * @$chkCarpeta char  Variable que indica si se busca en todas las carpetas.
+  *
+  */
+  if($chkCarpeta){
+      $chkValue=" checked ";
+      $whereCarpeta = " ";
+  }else{
+      $chkValue="";
+      $whereCarpeta = " and b.carp_codi=$carpeta ";
+      $whereCarpeta   = $whereCarpeta ." and b.carp_per=$tipo_carp ";
+  }
 
 
-		$fecha_hoy      = Date("Y-m-d");
-		$sqlFechaHoy    = $db->conn->DBDate($fecha_hoy);
+  $fecha_hoy      = Date("Y-m-d");
+  $sqlFechaHoy    = $db->conn->DBDate($fecha_hoy);
 
-		//Filtra el query para documentos agendados
-		if ($agendado==1){
-			$sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos
-		}else  if ($agendado==2){
-			$sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
-		}
+  //Filtra el query para documentos agendados
+  if ($agendado==1){
+    $sqlAgendado=" and (radi_agend=1 and radi_fech_agend > $sqlFechaHoy) "; // No vencidos
+  }else  if ($agendado==2){
+    $sqlAgendado=" and (radi_agend=1 and radi_fech_agend <= $sqlFechaHoy)  "; // vencidos
+  }
 
-		if ($agendado){
-			$colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
-			$whereCarpeta="";
-		}
+  if ($agendado){
+    $colAgendado = "," .$db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_AGEND").' as "Fecha Agendado"';
+    $whereCarpeta="";
+  }
 
-		//Filtra teniendo en cienta que se trate de la carpeta Vb.
-		if($carpeta==11 && $codusuario !=1 && $_GET['tipo_carp']!=1){
-				$whereUsuario = " and  b.radi_usu_ante ='$krd' ";
-		}else{
-			$whereUsuario = " and b.radi_usua_actu='$codusuario' ";
-		}
+  //Filtra teniendo en cienta que se trate de la carpeta Vb.
+  if($carpeta==11 && $codusuario !=1 && $_GET['tipo_carp']!=1){
+      $whereUsuario = " and  b.radi_usu_ante ='$krd' ";
+  }else{
+    $whereUsuario = " and b.radi_usua_actu='$codusuario' ";
+  }
+
+
+  $sqlNoRad = "
+               select
+                    b.carp_codi as carp, count(1) as COUNT
+               from
+                    radicado b left outer join SGD_TPR_TPDCUMENTO c on
+                    b.tdoc_codi=c.sgd_tpr_codigo left outer join SGD_DIR_DRECCIONES d on
+                    b.radi_nume_radi=d.radi_nume_radi
+               where
+                    b.radi_nume_radi is not null
+                    and d.sgd_dir_tipo = 1
+		                and b.radi_depe_actu= $dependencia
+                    $whereUsuario
+                    GROUP BY carp";
+
+  $rs          = $db->conn->Execute($sqlNoRad);
+
+  while(!$rs->EOF){
+    $numRad    .= empty($numRad)? $rs->fields["COUNT"] : ", ".$rs->fields["COUNT"];
+    $totrad    += $rs->fields["COUNT"];
+    $rs->MoveNext();
+  }
+
+  $sqlTotalRad = "select count(1) as TOTAL
+                  from  radicado b left outer join SGD_TPR_TPDCUMENTO c on
+                        b.tdoc_codi=c.sgd_tpr_codigo left outer join SGD_DIR_DRECCIONES d on b.radi_nume_radi=d.radi_nume_radi
+                  where
+                        b.radi_nume_radi is not null
+                        and d.sgd_dir_tipo = 1";
+
+  $rs          = $db->conn->Execute($sqlTotalRad);
+  $numTotal      = $rs->fields["TOTAL"];
+
+
 
 ?>
 <html>
@@ -117,43 +153,27 @@ $_SESSION['numExpedienteSelected'] = null;
         <meta name="keywords" content="siim, metrovivienda, gestion, misional">
         <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
         <!-- Bootstrap core CSS -->
-
         <?php include_once "htmlheader.inc.php"; ?>
-
 </head>
+
 <body onLoad="window_onload();">
-  <FORM name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/>
+  <form name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/>
   <div id="content" style="opacity: 1;">
 
     <div class="row">
       <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-        <h1 class="page-title txt-color-blueDark">
-          <i class="fa fa-table fa-fw "></i>
-            Bandeja
-          <span>>
-          <?=$nomcarpeta?>
-          </span>
-        </h1>
+      <h1 class="page-title txt-color-blueDark"><i class="glyphicon glyphicon-th-large"></i> Bandeja <span><?=$nomcarpeta?></span></h1>
       </div>
       <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
         <ul id="sparks" class="">
           <li class="sparks-info">
-            <h5> Radicados <span class="txt-color-blue"><?=$numeroRadicados?></span></h5>
+            <h5> Radicados <span class="txt-color-blue"> <?=$totrad?> </span></h5>
             <div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
-              1300, 1877, 2500, 2577
+            <?=$numRad?>
             </div>
           </li>
           <li class="sparks-info">
-            <h5> Vencidos <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45</span></h5>
-            <div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
-              110,150,300,130,400,240
-            </div>
-          </li>
-          <li class="sparks-info">
-            <h5> Ok <span class="txt-color-greenDark">&nbsp;2447</span></h5>
-            <div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
-              110,150,300,130,400,240
-            </div>
+            <h5>Total Radicados <span class="txt-color-blue"> <?=$numTotal?> </span></h5>
           </li>
         </ul>
       </div>
@@ -170,20 +190,10 @@ $_SESSION['numExpedienteSelected'] = null;
 
           <!-- Widget ID (each widget will need unique ID)-->
           <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-            <header>
-              <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-              <h2><?=$carpeta?> </h2>
-            </header>
+            <header> </header>
 
             <!-- widget div-->
             <div>
-
-              <!-- widget edit box -->
-              <div class="jarviswidget-editbox">
-                <!-- This area used as dropdown edit box -->
-
-              </div>
-              <!-- end widget edit box -->
 
               <!-- widget content -->
               <div class="widget-body no-padding">
@@ -237,7 +247,6 @@ $_SESSION['numExpedienteSelected'] = null;
                   <tbody>
                   <?php
                     include "$ruta_raiz/include/query/queryCuerpo.php";
-                      // $db->conn->debug = true;
                       $rs     =$db->conn->Execute($isql);
 
                   while(!$rs->EOF){
