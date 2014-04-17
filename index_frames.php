@@ -23,6 +23,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
   session_start();
 
   $ruta_raiz = ".";
@@ -76,8 +77,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }
 
 	if ($_SESSION["usua_masiva"]==1) {
-      $enlace10 = "href=\"radsalida/masiva/menu_masiva.php?$phpsessio&krd=$krd&fechah=$fechah \"";
-      $linkrad .= "<li><a $enlace10 target=\"mainFrame\">Masiva</a></li>";
+      $enlace10 = "href=\"#\" onclick=\"return false;\"";
+      $enlacea1 = "href=\"./radsalida/masiva/upload2PorExcel.php?$phpsession&krd=$krd&fechah=$fechah\"";
+      $enlacea2 = "href=\"./radsalida/cuerpo_masiva_recuperar_listado.php?$phpsession&krd=$krd&fechah=$fechah\"";
+      $linkint  = "<li><a tabindex=\"-1\" $enlacea1 target=\"mainFrame\">Masiva externa</a></li>";
+      $linkint .= "<li><a tabindex=\"-1\" $enlacea2 target=\"mainFrame\">Recuperar Listado</a></li>";
+      $linkrad .= "<li class=\"dropdown-submenu\">
+                    <a $enlace10 target=\"mainFrame\">Masiva</a>
+                    <ul class=\"dropdown-menu\">
+                      $linkint
+                    </ul>
+                   </li>";
 	}
 
   if ($_SESSION["perm_radi"]>=1){
