@@ -109,11 +109,12 @@ else
                         <?= $_SESSION['depe_nomb']?>
                           </td>
                       <? } else { ?>
-                        <form name=formboton action="<?=$accion ?>">
+                        <form name=formboton class="smart-form" action="<?=$accion ?>">
                         <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
                         <input type=hidden name=estado_sal value='<?=$estado_sal?>'>
                         <input type=hidden name=estado_sal_max value='<?=$estado_sal_max?>'>
                         <td>
+                          <label class="input">
                           <?php
                           include_once "$ruta_raiz/include/query/envios/queryPaencabeza.php";
                           $sqlConcat = $db->conn->Concat($conversion, "'-'", depe_nomb);
@@ -124,6 +125,7 @@ else
                               $depeBuscada = $dependencia;
                           print $rsDep->GetMenu2("dep_sel", "$dep_sel", false, false, 0, " onChange='submit();' class='select'");
                           ?>
+                          </label>
                         </td>
                         </form>
                       <? } ?>
