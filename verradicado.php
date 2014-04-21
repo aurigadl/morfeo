@@ -144,7 +144,8 @@ function ver_temas(){
    window.open("./tipo_documento.php?<?=session_name()."=".session_id()?>&verrad=<?=$verrad?>","Temas","height=350,width=450,scrollbars=yes");
 }
 
-  document.getElementById('AccionCaliope').style.display = '';
+  
+
 </script>
 <div id="spiffycalendar" class="text"></div>
 <script language="JavaScript" src="js/spiffyCal/spiffyCal_v2_1.js"></script>
@@ -290,9 +291,9 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 }else {echo "<center><b><span class='eerrores'>NO TIENE AUTORIZACION PARA INGRESAR</span><BR><span class='eerrores'><a href='login.php' target=_parent>Por Favor intente validarse de nuevo. Presione aca!</span></a>";}
 
 ?>
-
-			<div align=right>
-						<label class="select" style="width:230px">
+    <table width=100% ><tr><td width=50%> </td><td width=300> <td>
+			<div  width=100>
+						<label class="select" >
 						<select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
 							<option value="9" selected="selected">Escoja una accion...</option>
 							<option value="9" >Enviar a...</option>
@@ -305,15 +306,18 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 							<option value="14">Agendar...</option>
 						</select>
 						</label>
-				<span class="smart-form">
-				<label class="select" style="width:230px">
+				</div>
+				</td><td width=350> 
+				<div>
+				<label class="select" >
 				<?
 					include "./tx/txOrfeo.php";
-			
 				?>
+				</div>
 				</label>
-				</span>
-			</div>
+				
+	</td></tr>
+	</table>
    </form>               
 <!-- row -->
 
@@ -371,7 +375,8 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 
 	// Dynamic tabs
 	var tabTitle = $("#tab_title"), tabContent = $("#tab_content"), tabTemplate = "<li style='position:relative;'> <span class='air air-top-left delete-tab' style='top:7px; left:7px;'><button class='btn btn-xs font-xs btn-default hover-transparent'><i class='fa fa-times'></i></button></span></span><a href='#{href}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{label}</a></li>", tabCounter = 2;
-  document.getElementById('AccionCaliope').style.display = '';
+
+	document.getElementById('AccionCaliope').style.display = '';
   document.getElementById('chkr').style.display = 'none';
   document.getElementById('depsel').style.display = 'none';
   document.getElementById('carpper').style.display = 'none';

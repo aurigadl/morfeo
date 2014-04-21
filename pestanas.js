@@ -33,7 +33,7 @@ function changedepesel(enviara)
   {    
   document.getElementById('depsel').style.display = 'none';
 	document.getElementById('carpper').style.display = '';
-	document.getElementById('Enviar').style.display = '';
+	document.getElementById('Enviar').style.display = 'none';
   }
  //Archivar
   if(enviara==13 )
@@ -63,7 +63,7 @@ function changedepesel(enviara)
   if(enviara==9 ){
    document.getElementById('depsel').style.display = '';
 	 document.getElementById('carpper').style.display = 'none';
-	 document.getElementById('Enviar').style.display = '';
+	 document.getElementById('Enviar').style.display = 'none';
   }
   
    //Visto bueno
@@ -71,7 +71,7 @@ function changedepesel(enviara)
   {
    document.getElementById('depsel').style.display = '';
 	 document.getElementById('carpper').style.display = 'none';
-	 document.getElementById('Enviar').style.display = '';
+	 document.getElementById('Enviar').style.display = 'none';
 	}
   
 

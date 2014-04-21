@@ -294,8 +294,8 @@ function masivaIncluir(){
       }
       if($carpeta==11 and $_SESSION['codusuario']==1){
        echo "document.getElementById('salida').style.display = ''; ";
-       echo "document.getElementById('enviara').style.display = ''; ";
-       echo "document.getElementById('Enviar').style.display = ''; ";
+       echo "document.getElementById('enviara').style.display = 'none'; ";
+       echo "document.getElementById('Enviar').style.display = 'none'; ";
         }ELSE{
           echo " ";
       }
@@ -440,13 +440,9 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 	?>
 		<INPUT TYPE=hidden name=enviara value=9>
 		<INPUT TYPE=hidden name=EnviaraV id=EnviaraV value=''>
-			<input type="button" value='>>' name="Enviar" id="Enviar" valign='middle' class='botones_2' onClick="envioTx();">
+			<input type="button" value='' name="Enviar" id="Enviar" valign='middle' class='botones_2' onClick="envioTx();">
 			<input type="hidden" name="codTx" value=9>
 <?
 /* Fin no mostrar opc_envio*/
 }
-/**  FIN DE VISTA DE TRANSACCIONES
-  *
-  *
-  */
 ?>
