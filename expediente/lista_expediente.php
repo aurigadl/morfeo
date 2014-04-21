@@ -223,6 +223,7 @@ if($descPExpediente){
 	$expediente->consultaTipoExpediente($num_expediente);
 	include_once ("$ruta_raiz/include/tx/Flujo.php");
 	$objFlujo = new Flujo($db, $texp, $usua_doc);
+	
 	$kk = $objFlujo->getArista($texp, $codigoFldExp);
 	$aristasSig = $objFlujo->aristasSig;
  $frm = array();
@@ -231,7 +232,7 @@ if($descPExpediente){
  if($aristasSig){
  unset($frm);
  $frm = array();
- 
+ $frms = 0;
  foreach($aristasSig as $key => $arista){
   if(trim($arista["FRM_NOMBRE"]) && trim($arista["FRM_LINK"])){
     $ventana = "Max";
@@ -255,6 +256,7 @@ if($descPExpediente){
 		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{nombreUsuario}","$usua_nomb", $frm[$iA]["FRM_LINKSELECT"]);
 		$frm[$iA]["FRM_LINKSELECT"] = $frm[$iA]["FRM_LINKSELECT"] . "&PHPSESSID=".session_id();
 		$iA++;
+		$frms = 1;
 	}
 	} // Fin si hay Aristas....
  }
@@ -290,7 +292,7 @@ if($descPExpediente){
 	</span>
 	</Td><td>
 	<?
-	if($frm && trim($arista["FRM_LINK"])){
+	if( $frms == 1){
 	?>
 	<span class="dropdown">
  	 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><small><?=ucwords(strtolower($descFldExp))?></small>
