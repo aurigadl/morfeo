@@ -158,7 +158,7 @@ $_SESSION['numExpedienteSelected'] = null;
 </head>
 
 <body onLoad="window_onload();">
-  <form name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/>
+  <form name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/  >
   <div id="content" style="opacity: 1;">
 
     <div class="row">
@@ -232,16 +232,14 @@ $_SESSION['numExpedienteSelected'] = null;
                       </span>
                   </div>
                 </div>
-                <table id="dt_basic" class="table table-striped table-hover">
+                <table id="dt_basic" class="table table-striped table-hover smart-form"">
                   <thead>
                     <tr>
-                      <th class="inbox-table-icon">
-                        <div class="checkbox">
-                          <label>
+                      <th  width=20>
+                          <label class="checkbox">
                             <input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll"> 
-                            <span></span>
+                            <i></i>
                           </label>
-                        </div>
                       </th>
                       <th>Radicado</th>
                       <th>Fecha Radicado</th>
@@ -278,15 +276,16 @@ $_SESSION['numExpedienteSelected'] = null;
                   ?>
                     <tr <?=$leido?>>
 
-                      <td class="inbox-table-icon">
-                        <div class="checkbox">
-                          <label>
-                            <input id="<?=$numeroRadicado?>" onChange="clickTx();" name="checkValue[<?=$numeroRadicado?>]" value="CHKANULAR" type="checkbox" class="checkbox style-2">
-                            <span></span> </label>
+                      <td class="inbox-table-icon sorting_1" >
+                        <div  >
+                          <label class="checkbox">
+                            <input id="<?=$numeroRadicado?>" onChange="clickTx();" name="checkValue[<?=$numeroRadicado?>]" value="CHKANULAR" type="checkbox">
+                            <i></i> 
+                          </label>
                         </div>
                       </td>
 
-                      <td class="inbox-data-from"> <div><small><a onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=500,height=400');" href='#'> <?=$numeroRadicado?></a></small></div></td>
+                      <td class="inbox-data-from"> <div><small> <a onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=500,height=400');" href='#'> <?=$numeroRadicado?></a></small> </div></td>
                       <td class="inbox-data-from"> <div><small><a href='<?=$linkVerRadicado?>' target="mainFrame"><?=$fechaRadicado?></a></small></div></td>
                       <td class="inbox-data-from"> <div><span><small><?=$asuntoRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$remitenteRadicado?></small> </div> </td>
