@@ -603,7 +603,7 @@ function runAllForms() {
 
 	/*
 	 * JQUERY UI DATE
-	 * Dependency: js/libs/jquery-ui-1.10.3.min.js
+	 * Dependency: js/libs/jquery-ui-1.10.4.min.js
 	 * Usage:
 	 */
 	if ($.fn.datepicker) {

@@ -49,7 +49,7 @@ $str = <<<EOF
 			<script src="$ruta_raiz/js/jquery.min.js"></script>
       <script src="$ruta_raiz/js/jsplumb/lib/jquery-1.9.0-min.js"></script>
       <script src="$ruta_raiz/js/jsplumb/lib/jquery-1.9.0.js"></script>
-		  <script src="$ruta_raiz/js/jsplumb/lib/jquery-ui-1.9.2-min.js"></script>
+		  <script src="$ruta_raiz/js/libs/jquery-ui-1.10.4.js"></script>
 
       <script type="text/javascript" src="$ruta_raiz/js/jarvis.widget.min.js"></script>
 
