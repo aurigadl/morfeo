@@ -139,7 +139,7 @@ function solonumeros(){
    <?}?>
    </fieldset>
    <footer>
-     <input type="submit" name="Submit" onClick="solonumeros();" value="Buscar" onSelect="solonumeros();" class="btn btn-primary">
+     <input type="submit" name="Submit" onClick="solonumeros();" value="buscar" onSelect="solonumeros();" class="btn btn-primary">
      </input>
    </footer>
    <input type='hidden' name='pnom' value='<?=$pnomb ?>'>
