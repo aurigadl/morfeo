@@ -195,6 +195,7 @@ function masivaIncluir(){
 				document.form1.elements[i].checked=0;
 			}
 		}
+		clickTx();
 	}
 
 

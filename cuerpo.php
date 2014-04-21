@@ -281,7 +281,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <td class="inbox-table-icon">
                         <div class="checkbox">
                           <label>
-                            <input id="<?=$numeroRadicado?>" name="checkValue[<?=$numeroRadicado?>]" value="CHKANULAR" type="checkbox" class="checkbox style-2">
+                            <input id="<?=$numeroRadicado?>" onChange="clickTx();" name="checkValue[<?=$numeroRadicado?>]" value="CHKANULAR" type="checkbox" class="checkbox style-2">
                             <span></span> </label>
                         </div>
                       </td>
