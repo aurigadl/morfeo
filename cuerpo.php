@@ -144,16 +144,17 @@ $_SESSION['numExpedienteSelected'] = null;
 
 ?>
 <html>
+
 <head>
-    <meta charset="utf-8">
-        <title>Sistema de informaci&oacute;n integrado de Metrovivienda</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="SIIM2">
-        <meta name="keywords" content="siim, metrovivienda, gestion, misional">
-        <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
-        <!-- Bootstrap core CSS -->
-        <?php include_once "htmlheader.inc.php"; ?>
+  <title>Sistema de informaci&oacute;n integrado de Metrovivienda</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SIIM2">
+  <meta name="keywords" content="siim, metrovivienda, gestion, misional">
+  <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "htmlheader.inc.php"; ?>
+  <script src="./js/grabRadSessCarrito.js"></script>
 </head>
 
 <body onLoad="window_onload();">
@@ -231,9 +232,17 @@ $_SESSION['numExpedienteSelected'] = null;
                       </span>
                   </div>
                 </div>
-                <table id="dt_basic" class="table table-striped table-bordered table-hover">
+                <table id="dt_basic" class="table table-striped table-hover">
                   <thead>
                     <tr>
+                      <th class="inbox-table-icon">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll"> 
+                            <span></span>
+                          </label>
+                        </div>
+                      </th>
                       <th>Radicado</th>
                       <th>Fecha Radicado</th>
                       <th>Asunto</th>
@@ -241,36 +250,49 @@ $_SESSION['numExpedienteSelected'] = null;
                       <th>Tipo Documento</th>
                       <th>Dias Restantes</th>
                       <th>Enviado Por</th>
-                      <th><input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll"> </th>
                     </tr>
                   </thead>
                   <tbody>
                   <?php
                     include "$ruta_raiz/include/query/queryCuerpo.php";
                       $rs     =$db->conn->Execute($isql);
-
                   while(!$rs->EOF){
-                    $numeroRadicado = $rs->fields["HID_RADI_NUME_RADI"];
-                    $fechaRadicado = $rs->fields["HID_RADI_FECH_RADI"];
-                    $asuntoRadicado = $rs->fields["ASUNTO"];
-                    $remitenteRadicado = $rs->fields["REMITENTE"];
+
+                    $numeroRadicado        = $rs->fields["HID_RADI_NUME_RADI"];
+                    $fechaRadicado         = $rs->fields["HID_RADI_FECH_RADI"];
+                    $asuntoRadicado        = $rs->fields["ASUNTO"];
+                    $remitenteRadicado     = $rs->fields["REMITENTE"];
                     $tipoDocumentoRadicado = $rs->fields["TIPO DOCUMENTO"];
-                    $diasRadicado = $rs->fields["DIAS RESTANTES"];
-                    $enviadoPor = $rs->fields["ENVIADO POR"];
-                    $radiPath = $rs->fields["HID_RADI_PATH"];
+                    $diasRadicado          = $rs->fields["DIAS RESTANTES"];
+                    $enviadoPor            = $rs->fields["ENVIADO POR"];
+                    $radiPath              = $rs->fields["HID_RADI_PATH"];
+                    $radiLeido             = $rs->fields["HID_RADI_LEIDO"];
 
                     $linkVerRadicado = "./verradicado.php?verrad=$numeroRadicado&".session_name()."=".session_id()."&nomcarpeta=$nomcarpeta#tabs-a";
                     $linkImagen = "$ruta_raiz/bodega/$radiPath";
+
+                    unset($leido);
+                    if(!$radiLeido){
+                      $leido = "class=\"unread\"";
+                    }
                   ?>
-                    <tr>
-                      <td><small><A onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=200,height=100');" href='#'> <?=$numeroRadicado?></a></small></td>
-                      <td><small><a href='<?=$linkVerRadicado?>' target="mainFrame"><?=$fechaRadicado?></a></small></td>
-                      <td><small><?=$asuntoRadicado?></small></td>
-                      <td><small><?=$remitenteRadicado?></small></td>
-                      <td><small><?=$tipoDocumentoRadicado?></small></td>
-                      <td><small><?=$diasRadicado?>35728</small></td>
-                      <td><small><?=$enviadoPor?></small></td>
-                      <td><input id="<?=$numeroRadicado?>" type="checkbox" value="CHKANULAR" name="checkValue[<?=$numeroRadicado?>]"></td>
+                    <tr <?=$leido?>>
+
+                      <td class="inbox-table-icon">
+                        <div class="checkbox">
+                          <label>
+                            <input id="<?=$numeroRadicado?>" name="checkValue[<?=$numeroRadicado?>]" value="CHKANULAR" type="checkbox" class="checkbox style-2">
+                            <span></span> </label>
+                        </div>
+                      </td>
+
+                      <td class="inbox-data-from"> <div><small><a onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=500,height=400');" href='#'> <?=$numeroRadicado?></a></small></div></td>
+                      <td class="inbox-data-from"> <div><small><a href='<?=$linkVerRadicado?>' target="mainFrame"><?=$fechaRadicado?></a></small></div></td>
+                      <td class="inbox-data-from"> <div><span><small><?=$asuntoRadicado?></small></span> </div> </td>
+                      <td class="inbox-data-from"> <div> <small><?=$remitenteRadicado?></small> </div> </td>
+                      <td class="inbox-data-from"> <div> <small><?=$tipoDocumentoRadicado?></small> </div> </td>
+                      <td class="inbox-data-from"> <div> <small><?=$diasRadicado?>35728</small> </div> </td>
+                      <td class="inbox-data-from"> <div> <small><?=$enviadoPor?></small> </div> </td>
                     </tr>
                   <?php
                   $rs->MoveNext();

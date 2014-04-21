@@ -411,7 +411,7 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 		<div id="tabs">
 			<ul>
 				<li>
-					<div><a href="#tabs-a">Informacion del Radicado</a></div>
+					<div><a href="#tabs-a">Informaci&oacute;n del Radicado</a></div>
 				</li>
 
 				<li>
@@ -419,7 +419,7 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 				</li>
 
 				<li>
-					<a href="#tabs-c">Documeto Anexos</a>
+					<a href="#tabs-c">Documentos Anexos</a>
 				</li>
 
 				<li>

@@ -1,32 +1,32 @@
 <?php
+/**
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 session_start();
 
     $ruta_raiz = "."; 
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
-/*************************************************************************************/
-/* ORFEO GPL:Sistema de Gestion Documental		http://www.orfeogpl.org	     */
-/*	Idea Original de la SUPERINTENDENCIA DE SERVICIOS PUBLICOS DOMICILIARIOS     */
-/*				COLOMBIA TEL. (57) (1) 6913005  orfeogpl@gmail.com   */
-/* ===========================                                                       */
-/*                                                                                   */
-/* Este programa es software libre. usted puede redistribuirlo y/o modificarlo       */
-/* bajo los terminos de la licencia GNU General Public publicada por                 */
-/* la "Free Software Foundation"; Licencia version 2. 			             */
-/*                                                                                   */
-/* Copyright (c) 2005 por :	  	  	                                     */
-/* SSPS "Superintendencia de Servicios Publicos Domiciliarios"                       */
-/*   Jairo Hernan Losada  jlosada@gmail.com                Desarrollador             */
-/*   Sixto Angel Pinzón López --- angel.pinzon@gmail.com   Desarrollador             */
-/* C.R.A.  "COMISION DE REGULACION DE AGUAS Y SANEAMIENTO AMBIENTAL"                 */ 
-/*   Liliana Gomez        lgomezv@gmail.com                Desarrolladora            */
-/*   Lucia Ojeda          lojedaster@gmail.com             Desarrolladora            */
-/* D.N.P. "Departamento Nacional de Planeación"                                      */
-/*   Hollman Ladino       hollmanlp@gmail.com                Desarrollador          */
-/*                                                                                   */
-/* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
-/*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
-/*************************************************************************************/
+
 $lkGenerico = "&usuario=$krd&nsesion=".trim(session_id())."&nro=$verradicado"."$datos_envio";
 ?>
 <script>
@@ -61,7 +61,7 @@ window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?<?=session_name()?>=<?=sessio
 </tr>
 <tr>
 <td><small><b>
-Descripcion Anexos</b></small></td><td><small> <?=$radi_desc_anex ?></small></td><td><small><b> Anexo/Asociado</b></small></td><td><small>
+Descripci&oacute;n Anexos</b></small></td><td><small> <?=$radi_desc_anex ?></small></td><td><small><b> Anexo/Asociado</b></small></td><td><small>
 	<?	
 	if($radi_tipo_deri!=1 and $radi_nume_deri)
 	   {	echo $radi_nume_deri;
@@ -133,7 +133,7 @@ Descripcion Anexos</b></small></td><td><small> <?=$radi_desc_anex ?></small></td
 	?>
 	</small></td><tr>
 	<tr>
-	<th>Clasificacion Documental</th><td><small>
+	<th>Clasificaci&oacute;n Documental</th><td><small>
 	<?
 		if(!$codserie) $codserie = "0";
 		if(!$tsub) $tsub = "0";
@@ -192,7 +192,7 @@ Descripcion Anexos</b></small></td><td><small> <?=$radi_desc_anex ?></small></td
 	  } 
 	  ?>
 	  </small></td></tr><td><small><b>
-    Poblacion</b><td><small> <?=$tema_nombre ?>
+    Poblaci&oacute;n</b><td><small> <?=$tema_nombre ?>
       <? 
 	  if ($verradPermisos == "Full"  or $datoVer=="985") {
 	  ?>
