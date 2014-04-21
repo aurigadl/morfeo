@@ -99,6 +99,7 @@ window_onload2();
 <?
 include "pestanas.js";
 ?>
+
 <script >
 <?
 }
@@ -230,6 +231,7 @@ function hidden_tipodocumento()
   * Esta funcion es la que produce el efecto de pertanas de mover a,
   * Reasignar, Informar, Devolver, Vobo y Archivar
   */
+  document.getElementById('AccionCaliope').style.display = '';
 </script>
 <div id="spiffycalendar" class="text"></div>
 <script language="JavaScript" src="js/spiffyCal/spiffyCal_v2_1.js"></script>
@@ -376,7 +378,35 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 }else {echo "<center><b><span class='eerrores'>NO TIENE AUTORIZACION PARA INGRESAR</span><BR><span class='eerrores'><a href='login.php' target=_parent>Por Favor intente validarse de nuevo. Presione aca!</span></a>";}
 
 ?>
+
+			<div>
+						<label class="select" style="width:230px">
+						<select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
+							<option value="9" selected="selected">Escoja una accion...</option>
+							<option value="9" >Enviar a...</option>
+							<option value="15" >Enviar a Visto Bueno.</option>
+							<option value="10">Mover a Carpeta...</option>
+							<option value="9">Enviar a Visto Bueno...</option>
+							<option value="8">Informar...</option>
+							<option value="12	">Devolver...</option>
+							<option value="13">Archivar...</option>
+							<option value="14">Agendar...</option>
+						</select>
+						</label>
+			</div>
+                        <div >
+                        <span class="smart-form">
+                        <label class="select" style="width:230px">
+                        <?
+                          include "./tx/txOrfeo.php";
+                     
+                        ?>
+                        </label>
+                        </span>
+                  </div>
+                  
 <!-- row -->
+
 	<div class="well well-sm well-light">
 		<div id="tabs">
 			<ul>
@@ -396,8 +426,9 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 					<a href="#tabs-d">Expediente</a>
 				</li>
 				<li>
-					<a href="#tabs-gis">Gis - Añadir Predios </a>
-				</li>				
+					<a href="#tabs-gis">Gis</a>
+				</li>
+				  
 			</ul>
 			<ul>
 			<div id="tabs-a">

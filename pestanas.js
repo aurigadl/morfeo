@@ -22,7 +22,7 @@ function changedepesel1()
 	changedepesel(codAccion);
 }
 
-<!-- Cuando existe una señan de cambio el program ejecuta esta funcion mostrando el combo seleccionado -->
+<!-- Cuando existe una señal de cambio el programa ejecuta esta funcion mostrando el combo seleccionado -->
 function changedepesel(enviara)
 {
   document.form1.codTx.value = enviara;
@@ -81,4 +81,5 @@ function changedepesel(enviara)
     envioTx();
   }
 }
+document.getElementById('AccionCaliope').style.display = '';
 </script>

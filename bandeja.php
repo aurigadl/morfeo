@@ -202,6 +202,7 @@ $_SESSION['numExpedienteSelected'] = null;
                           <option value="13">Archivar...</option>
                           <option value="14">Agendar...</option>
                         </select>
+                        </label>
                     </span>
                   </div>
                   <?php
@@ -214,12 +215,14 @@ $_SESSION['numExpedienteSelected'] = null;
                         <label class="select" style="width:230px">
                         <?
                           include "./tx/txOrfeo.php";
-                        }
+                     
                         ?>
                         </label>
                         </span>
-                      </span>
                   </div>
+                  <?
+                  }
+                  ?>
                 </div>
                 <table id="dt_basic" class="table table-striped table-bordered table-hover">
                   <thead>
@@ -231,7 +234,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <th>Tipo Documento</th>
                       <th>Dias Restantes</th>
                       <th>Enviado Por</th>
-                      <th><input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll"> </th>
+                      <th><input type="checkbox" onclick="markAll(); clickTx();" value="checkAll" name="checkAll" id="checkAll"> </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -261,7 +264,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <td><small><?=$tipoDocumentoRadicado?></small></td>
                       <td><small><?=$diasRadicado?>35728</small></td>
                       <td><small><?=$enviadoPor?></small></td>
-                      <td><input id="<?=$numeroRadicado?>" type="checkbox" value="CHKANULAR" name="checkValue[<?=$numeroRadicado?>]"></td>
+                      <td><input id="<?=$numeroRadicado?>" onChange="clickTx();" type="checkbox" value="CHKANULAR" name="checkValue[<?=$numeroRadicado?>]"></td>
                     </tr>
                   <?php
                   $rs->MoveNext();
@@ -404,6 +407,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
 	}
 
+	
 </script>
 
 </body>

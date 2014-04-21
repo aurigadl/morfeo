@@ -298,7 +298,7 @@ $time_start = microtime_float();
 					if ( $usuaPermExpediente ) {
 						if(!$tsub)$tsub = "0";
 	if(!$tdoc)$tdoc = "0";
-	if(!$codserie)$codserie = "0";
+	if(!$codserie)$codserie = "0";	
    ?> <span class="dropdown">
     		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><small>Expediente </small><b class="caret"></b> </a>
 				<ul class="dropdown-menu">

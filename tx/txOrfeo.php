@@ -145,8 +145,7 @@ function masivaIncluir(){
      };
 
 
-  function envioTx()
-  {
+  function envioTx(){
       sw=0;
       <?
       if(!$verrad)
@@ -165,7 +164,38 @@ function masivaIncluir(){
     ?>
       document.form1.submit();
   }
-
+  function clickTx(){
+     sw=0;
+    for(i=1;i<document.form1.elements.length;i++)
+    if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
+        sw=1;
+    if (sw==0)
+    {
+     document.getElementById('AccionCaliope').style.display = 'none';
+    return;
+    }else{
+     document.getElementById('AccionCaliope').style.display = '';
+    }
+    
+  }
+  
+  function markAll()
+	{
+		if(document.form1.elements.checkAll.checked)
+		{
+			for(i=2;i<document.form1.elements.length;i++)
+			{
+				document.form1.elements[i].checked=1;
+			}
+		}
+		else
+		{
+			for(i=2;i<document.form1.elements.length;i++)
+			{
+				document.form1.elements[i].checked=0;
+			}
+		}
+	}
 
 
 
@@ -246,6 +276,7 @@ function masivaIncluir(){
 
   function window_onload()
   {
+      document.getElementById('AccionCaliope').style.display = 'none';
       document.getElementById('depsel').style.display = 'none';
       document.getElementById('carpper').style.display = 'none';
       document.getElementById('Enviar').style.display = 'none';
