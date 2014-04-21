@@ -99,7 +99,6 @@ window_onload2();
 <?
 include "pestanas.js";
 ?>
-
 <script >
 <?
 }
@@ -116,59 +115,15 @@ function changedepesel(xx)
 function window_onload2()
 {
 <?
-if ($menu_ver==3)
-{
-	echo "ocultar_mod(); ";
-	if ($ver_causal) {echo "ver_causales();"; }
-	if ($ver_sectores) {echo "ver_sector();"; }
-	if ($ver_flujo) {echo "ver_flujo();"; }
-	if ($ver_VinAnexo) {echo "verVinculoDocto();"; }
-}
- ?>
-}
-function verNotificacion() {
-   mostrar("mod_notificacion");
-   ocultar("tb_general");
-   ocultar("mod_causales");
-   ocultar("mod_sector");
-   ocultar("mod_flujo");
-}
-function ver_datos()
-{
-   mostrar("tb_general");
-   ocultar("mod_causales");
-   ocultar("mod_sector");
-   ocultar("mod_flujo");
-}
-function ocultar_mod()
-{
-   ocultar("mod_causales");
-   ocultar("mod_sector");
-   ocultar("mod_flujo");
-}
-
-function ver_tipodocumental()
-{
-<?
-	if($menu_ver_tmp!=2)
+	if ($menu_ver==3)
 	{
-?>
-	   ocultar("tb_general");
-	   ocultar("mod_causales");
-	   ocultar("mod_flujo");
-<?	} ?>
-}
-function ver_tipodocumento()
-{
-   ocultar("tb_general");
-   ocultar("mod_causales");
-   ocultar("mod_flujo");
-}
-function verDecision()
-{
-   ocultar("tb_general");
-   ocultar("mod_causales");
-   ocultar("mod_flujo");
+		?>
+		document.getElementById('depsel').style.display = 'none';
+		document.getElementById('carpper').style.display = 'none';
+		document.getElementById('Enviar').style.display = 'none';
+		<?
+	}
+	?>
 }
 function ver_tipodocuTRD(codserie,tsub)
  {
@@ -184,53 +139,11 @@ function ver_tipodocuTRD(codserie,tsub)
    window.open("./radicacion/tipificar_documento.php?<?=session_name()."=".session_id()?>&nurad=<?=$verrad?>&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&codusuario=<?=$codusuario?>&dependencia=<?=$dependencia?>&tsub="+tsub+"&codserie="+codserie,"Tipificacion_Documento","height=600,width=850,scrollbars=yes");
  }
 
-function verVinculoDocto()
-{
-<?php
-		echo "ver_tipodocumental(); ";
-  ?>
-  window.open("./vinculacion/mod_vinculacion.php?verrad=<?=$verrad?>&codusuario=<?=$codusuario?>&dependencia=<?=$dependencia?>","Vinculacion_Documento","height=500,width=750,scrollbars=yes");
-}
-
-
-function verResolucion()
-{
-   ocultar("tb_general");
-   ocultar("mod_causales");
-   ocultar("mod_flujo");
-   ocultar("mod_tipodocumento");
-   mostrar("mod_resolucion");
-   ocultar("mod_notificacion");
-}
 
 function ver_temas(){
    window.open("./tipo_documento.php?<?=session_name()."=".session_id()?>&verrad=<?=$verrad?>","Temas","height=350,width=450,scrollbars=yes");
 }
 
-function ver_flujo()
-{
-   ocultar("tb_general");
-   ocultar("mod_tipodocumento");
-   ocultar("mod_causales");
-   ocultar("mod_sector");
-   ocultar("mod_resolucion");
-   ocultar("mod_notificacion");
-}
-function hidden_tipodocumento()
-{
-  <?
-  if(!$ver_tipodoc)
-  {
-  ?>
-      //ocultar_mod();
-  <?
-  }
-  ?>
-}
-/** FUNCION DE JAVA SCRIPT DE LAS PESTA�S
-  * Esta funcion es la que produce el efecto de pertanas de mover a,
-  * Reasignar, Informar, Devolver, Vobo y Archivar
-  */
   document.getElementById('AccionCaliope').style.display = '';
 </script>
 <div id="spiffycalendar" class="text"></div>
@@ -244,7 +157,7 @@ if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" )
  $body = "document.location.href='#t1';";
 }
 ?>
-<body bgcolor="#FFFFFF" topmargin="0" onLoad="window_onload();<? print $body; ?>">
+<body bgcolor="#FFFFFF" topmargin="0" onLoad="window_onload2();<? print $body; ?>">
 <?
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$fechah=date("dmy_h_m_s") . " ". time("h_m_s");
@@ -315,7 +228,7 @@ if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" )
 <?
 $datosaenviar = "fechaf=$fechaf&mostrar_opc_envio=$mostrar_opc_envio&tipo_carp=$tipo_carp&carpeta=$carpeta&nomcarpeta=$nomcarpeta&datoVer=$datoVer&ascdesc=$ascdesc&orno=$orno";
 ?>
-<form name="form1" id="form1" action="<?=$ruta_raiz?>/tx/formEnvio.php?<?=session_name()?>=<?=session_id()?>" method="GET">
+<form name="form1" id="form1" action="<?=$ruta_raiz?>/tx/formEnvio.php?<?=session_name()?>=<?=session_id()?>" method="GET" class="smart-form">
 <?php
 if($verradPermisos=="Full" && !($carpeta==66 || $carpeta==8 ) )
 {
@@ -323,10 +236,9 @@ if($verradPermisos=="Full" && !($carpeta==66 || $carpeta==8 ) )
 }
 ?>
 <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
-<input type=hidden name='checkValue[<?=$verrad?>]' value='CHKANULAR'>
 <input type=hidden name=enviara value='9'>
-</form>
-<form action='verradicado.php?<?=session_name()?>=<?=trim(session_id())?>&verrad=<?=$verrad?>&datoVer=<?=$datoVer?>&chk1=<?=$verrad."&carpeta=$carpeta&nomcarpeta=$nomcarpeta"?>' method='GET' name='form2'>
+<input type=hidden name=codTx value='9'>
+<input id="chkr" type="checkbox" value="CHKANULAR" name="checkValue[<?=$verradicado?>]" checked  >
  <?
 echo "<input type='hidden' name='fechah' value='$fechah'>";
 // Modificado Infom�trika 22-Julio-2009
@@ -365,21 +277,21 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 	}else {
 	?>
 </form>
-<form name='form1' action='enviar.php' method='GET'>
+<form name='form11' action='enviar.php' method='GET'>
 <input type=hidden name=depsel>
 <input type=hidden name=depsel8>
 <input type=hidden name=carpper>
 <CENTER>
 	<span class='titulosError'>SU SESION HA TERMINADO O HA SIDO INICIADA EN OTRO EQUIPO</span><BR>
 	<span class='eerrores'>
-	</CENTER></form>
+	</CENTER>
 		<?
 	}
 }else {echo "<center><b><span class='eerrores'>NO TIENE AUTORIZACION PARA INGRESAR</span><BR><span class='eerrores'><a href='login.php' target=_parent>Por Favor intente validarse de nuevo. Presione aca!</span></a>";}
 
 ?>
 
-			<div>
+			<div align=right>
 						<label class="select" style="width:230px">
 						<select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
 							<option value="9" selected="selected">Escoja una accion...</option>
@@ -393,18 +305,16 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 							<option value="14">Agendar...</option>
 						</select>
 						</label>
+				<span class="smart-form">
+				<label class="select" style="width:230px">
+				<?
+					include "./tx/txOrfeo.php";
+			
+				?>
+				</label>
+				</span>
 			</div>
-                        <div >
-                        <span class="smart-form">
-                        <label class="select" style="width:230px">
-                        <?
-                          include "./tx/txOrfeo.php";
-                     
-                        ?>
-                        </label>
-                        </span>
-                  </div>
-                  
+   </form>               
 <!-- row -->
 
 	<div class="well well-sm well-light">
@@ -461,7 +371,11 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 
 	// Dynamic tabs
 	var tabTitle = $("#tab_title"), tabContent = $("#tab_content"), tabTemplate = "<li style='position:relative;'> <span class='air air-top-left delete-tab' style='top:7px; left:7px;'><button class='btn btn-xs font-xs btn-default hover-transparent'><i class='fa fa-times'></i></button></span></span><a href='#{href}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{label}</a></li>", tabCounter = 2;
-
+  document.getElementById('AccionCaliope').style.display = '';
+  document.getElementById('chkr').style.display = 'none';
+  document.getElementById('depsel').style.display = 'none';
+  document.getElementById('carpper').style.display = 'none';
+  document.getElementById('Enviar').style.display = 'none';
 </script>
 
 

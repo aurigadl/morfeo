@@ -1,13 +1,12 @@
 <?php
 session_start();
-
 $ruta_raiz = "."; 
 if (!$_SESSION['dependencia'])
     header ("Location: $ruta_raiz/cerrar_session.php");
 
- foreach ($_GET as $key => $valor)  ${$key} = $valor;
+ 
  foreach ($_POST as $key => $valor) ${$key} = $valor;
-
+ foreach ($_GET as $key => $valor)  ${$key} = $valor;
  $krd         = $_SESSION["krd"];
  $dependencia = $_SESSION["dependencia"];
  $usua_doc    = $_SESSION["usua_doc"];
@@ -20,13 +19,9 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 if (!isset($db))	$db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 require_once("$ruta_raiz/class_control/Dependencia.php");
+
+//$db->conn->debug = true;
 $objDep = new Dependencia($db);
-/*
-* Generamos el encabezado que envia las variable a la paginas siguientes.
-* Por problemas en las sesiones enviamos el usuario.
-* @$encabezado  Incluye las variables que deben enviarse a la singuiente pagina.
-* @$linkPagina  Link en caso de recarga de esta pagina.
-*/
 $encabezado = "".session_name()."=".session_id()."&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion";
 $linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=";
 
@@ -523,8 +518,7 @@ switch ($codTx)
 			//$cad2 = $db->conn->Concat($db->conn->IfNull("d.DEP_SIGLA", "'N.N.'"),"'-'","RTRIM(u.usua_nomb)");
 			$cad = $db->conn->Concat("CAST(u.depe_codi as char(10))","'-'","cast(u.usua_codi as char(10))");
 			$cad2 = $db->conn->Concat($db->conn->IfNull("d.DEP_SIGLA", "'N.N.'"),"'-'","RTRIM(u.usua_nomb)");
-			//&$sql = "select $cad2 as usua_nomb, $cad as usua_codi from usuario u,dependencia d where u.depe_codi in(".implode($depsel8,',').")
-			//		$whereReasignar and u.USUA_ESTA='1' and u.depe_codi = d.depe_codi ORDER BY usua_nomb";
+			//&$sql = "select $cad2 as usua_nomb, $cad as usua_codi bi = d.depe_codi ORDER BY usua_nomb";
 			//	$rs = $db->conn->Execute($sql);
 			$usuario = $codUsuario;
 			print "Informados</td><td>";
