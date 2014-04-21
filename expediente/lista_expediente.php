@@ -231,6 +231,7 @@ if($descPExpediente){
  if($aristasSig){
  unset($frm);
  $frm = array();
+ 
  foreach($aristasSig as $key => $arista){
   if(trim($arista["FRM_NOMBRE"]) && trim($arista["FRM_LINK"])){
     $ventana = "Max";
@@ -241,13 +242,18 @@ if($descPExpediente){
 		$frm[$iA]["FRM_LINK"] = str_replace("{numeroExpediente}","$numeroExpediente", $frm[$iA]["FRM_LINK"]);
 		$frm[$iA]["FRM_LINK"] = str_replace("{dependencia}","$dependencia", $frm[$iA]["FRM_LINK"]);
 		$frm[$iA]["FRM_LINK"] = str_replace("{documentoUsuario}","$usua_doc", $frm[$iA]["FRM_LINK"]);
+		$frm[$iA]["FRM_LINK"] = str_replace("{usuarioDoc}","$usua_doc", $frm[$iA]["FRM_LINK"]);
 		$frm[$iA]["FRM_LINK"] = str_replace("{nombreUsuario}","$usua_nomb", $frm[$iA]["FRM_LINK"]);
+		$frm[$iA]["FRM_LINK"] = str_replace("{usuarioDoc}","$usua_doc", $frm[$iA]["FRM_LINK"]);
+		$frm[$iA]["FRM_LINK"] = $frm[$iA]["FRM_LINK"] . "&PHPSESSID=".session_id();
 
 		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{numeroRadicado}","$numRad", $frm[$iA]["FRM_LINKSELECT"]);
 		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{numeroExpediente}","$numeroExpediente", $frm[$iA]["FRM_LINKSELECT"]);
 		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{dependencia}","$dependencia", $frm[$iA]["FRM_LINKSELECT"]);
 		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{documentoUsuario}","$usua_doc", $frm[$iA]["FRM_LINKSELECT"]);
+		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{usuarioDoc}","$usua_doc", $frm[$iA]["FRM_LINKSELECT"]);
 		$frm[$iA]["FRM_LINKSELECT"] = str_replace("{nombreUsuario}","$usua_nomb", $frm[$iA]["FRM_LINKSELECT"]);
+		$frm[$iA]["FRM_LINKSELECT"] = $frm[$iA]["FRM_LINKSELECT"] . "&PHPSESSID=".session_id();
 		$iA++;
 	}
 	} // Fin si hay Aristas....

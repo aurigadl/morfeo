@@ -87,12 +87,14 @@ function verificaModificacion(){
 	$frmLink = str_replace("{dependencia}","$dependencia", $frmLink);
 	$frmLink = str_replace("{documentoUsuario}","$usua_doc", $frmLink);
 	$frmLink = str_replace("{nombreUsuario}","$usua_nomb", $frmLink);
+	$frmLink = $frmLink . "&PHPSESSID=".session_id();
 	
 	$frmLinkSelect = str_replace("{numeroRadicado}","$numRad", $frmLinkSelect);
 	$frmLinkSelect = str_replace("{numeroExpediente}","$numeroExpediente", $frmLinkSelect);
 	$frmLinkSelect = str_replace("{dependencia}","$dependencia", $frmLinkSelect);
 	$frmLinkSelect = str_replace("{documentoUsuario}","$usua_doc", $frmLinkSelect);
 	$frmLinkSelect = str_replace("{nombreUsuario}","$usua_nomb", $frmLinkSelect);
+	$frmLinkSelect = $frmLinkSelect . "&PHPSESSID=".session_id();
 
 
 ?>
