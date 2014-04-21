@@ -132,7 +132,7 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
 <div class="widget-body no-padding" width=80% align=center>
 <div class="alert alert-info no-margin fade in" width=80%>
 <i class="fa-fw fa fa-info"></i>
-Creacion yo Adicion de Expediente y/o Carpteta Virtual
+Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual) 
 </div>
 
                     <table class="table table-bordered table-striped" width=80%>
