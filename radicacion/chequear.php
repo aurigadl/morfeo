@@ -13,7 +13,7 @@ Copyright (C) 2013 Infometrika Ltda.
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,15 +23,12 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 	session_start();
 
-	    $ruta_raiz = "..";
-	    if (!$_SESSION['dependencia'])
+  $ruta_raiz = "..";
+  if (!$_SESSION['dependencia'])
 		header ("Location: $ruta_raiz/cerrar_session.php");
-	/**
-	  * Modificacion Variables Globales Infometrika 2009-05
-	  * Licencia GNU/GPL
-	  */
 
 	foreach ($_GET as $key => $valor)   ${$key} = $valor;
 	foreach ($_POST as $key => $valor)   ${$key} = $valor;
@@ -57,18 +54,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	$fechah = date("dmy") . "_" . time("hms");
 	if($buscar_por_radicado) $buscar_por_radicado = trim($buscar_por_radicado);
-	/** RADICA UN DOCUMENTO TIPO $ent EN LA DEP $dependencia \n Trae la secuencia de la dependencia **/
 
-	/**
-	 * RESERVA DE FAX. Aqui se reservan los fax, cuando un usuario entra a radicarlo.
-	 * @author      Jairo Hernan Losada
-	 * @version     3.0
-	 */
-	/** var $faxPath;
-	   * Variable que trae la ruta actual de un fax entrante.
-	   * @var string
-	   * @access public
-	   */
 	if($faxPath) {
 		$iSql= " SELECT SGD_RFAX_FAX, USUA_LOGIN, SGD_RFAX_FECHRADI
 								FROM   SGD_RFAX_RESERVAFAX
@@ -168,7 +154,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
       <h1 class="page-title txt-color-blueDark">
-        RADICACION PREVIA <?=$tRadicacionDesc ?> (<?=$dependencia ?> <?=$tpDepeRad[$ent]?>) <?=$tipoMed ?>
+        Radicaci&oacute;n previa <?=$tRadicacionDesc ?> (<?=$dependencia ?>)
       </h1>
     </div>
 
@@ -204,15 +190,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<input type=hidden name=ent value='<?=$ent?>'>
 	<tr>
 	 <td colspan="3"> <div align="center">
-		<?php
-		if($Submit)
-		{
-		?>
+		<?php if($Submit) { ?>
 <div class="widget-body">
   <div class="row">
       <h1>RADICAR COMO...</h1>
       <br />
-      <p> Selecciona, una opcion para copiar los dots y crear un anexo apartir de uno anterior ó crea uno nuevo.  </p>
+      <p> Selecciona, una opci&oacute;n para copiar los datos y crear un anexo apartir de uno anterior ó crea uno nuevo.  </p>
       <br />
       <section class="col col-4">
         <input class="btn btn-success btn-sm" name="rad1" type=submit value="Nuevo (Copia Datos)">
@@ -255,7 +238,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	}
 	$nombres = strtoupper(trim($buscar_por_nombres));
 	$nombres= ConnectionHandler::fullUpper($nombres);
-//echo $nombres;
+
 	if(trim($nombres)) {	$array_nombre = explode(" ",$nombres);
 		$strCamposConcat = $db->conn->Concat("UPPER(d.SGD_DIR_NOMREMDES)","UPPER(d.SGD_DIR_NOMBRE)");
 		for($i=0;$i<count($array_nombre);$i++)
@@ -275,9 +258,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	$dato=2;
 	echo "</table>";
-	error_reporting(7);
-	if($primera!=1 and $Submit=="BUSCAR" and ($buscar_por_cuentai or $buscar_por_radicado or $buscar_por_nombres or $buscar_por_doc or $buscar_por_dep_rad or $buscar_por_exp ) )
-	{
+	if($primera!=1 and $Submit=="buscar" and ($buscar_por_cuentai or $buscar_por_radicado or $buscar_por_nombres or $buscar_por_doc or $buscar_por_dep_rad or $buscar_por_exp )) {
 
 	$db = new ConnectionHandler("..");
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -288,19 +269,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	switch ($iBusqueda) {
 	case 1:
 		$query = $query1;
-		$eTitulo = "<table><tr><td></td></tr></table><table class='t_bordeGris' width=100%><tr class=eTitulo><td><span class=tpar>Resultados Busqueda por Ciudadanos</td></tr></table>";
+		$eTitulo = "<table class=\"table table-bordered table-striped\"><tr><td></td></tr></table><table class=\"table table-bordered table-striped\" width=100%><tr class=eTitulo><td><span class=tpar>Resultados B&uacute;squeda por Ciudadanos</td></tr></table>";
 		break;
 	case 2:
 		$query = $query2;
-		$eTitulo ="<table class='t_bordeGris' width=100%><tr><td><span class=tpar>Resultados Busqueda por Otras Empresas</td></tr></table>";
+		$eTitulo ="<table class=\"table table-bordered table-striped\" ><tr><td><span class=tpar>Resultados B&uacute;squeda por Otras Empresas</td></tr></table>";
 		break;
 	case 3:
 		$query = $query3;
-		$eTitulo ="<table class='t_bordeGris' width=100%><tr><td><span class=tpar>Resultados Busqueda por Esp</td></tr></table>";
+		$eTitulo ="<table class=\"table table-bordered table-striped\" ><tr><td><span class=tpar>Resultados B&uacute;squeda por Esp</td></tr></table>";
 		break;
 	case 4:
 		$query = $query4;
-		$eTitulo ="<table class='t_bordeGris' width=100%><tr><td><span class=tpar>Resultados Busqueda por Funcionarios</td></tr></table>";
+		$eTitulo ="<table class=\"table table-bordered table-striped\" ><tr><td><span class=tpar>Resultados B&uacute;squeda  por Funcionarios</td></tr></table>";
 		break;
 	}
 
@@ -332,11 +313,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		$whereTrd .= "4";
 	}
 	$whereTrd = "";
-	// if($whereTrd) $whereTrd = " AND d.SGD_TRD_CODIGO IN ($whereTrd)"; else $whereTrd = "";
 	include "$ruta_raiz/include/query/queryChequear.php";
 	$query = $query1;
-	//$db->debug = true;
-	//echo $query;
 	$rsCheck=$db->query($query);
 
 
@@ -348,7 +326,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	  echo "<center><font size='3' face='arial' class='etextomenu'><b>No se encontraron datos con las caracteristicas solicitadas</b></font>";
 	}else {
 	?>
-	  <table width='100%' class="borde_tab">
+	  <table class="table table-bordered table-striped">
 	<?
 		if($tpBuscarSel=="ok"){
 	?>
@@ -364,15 +342,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	$cent=0;
 	$varjh=2;
 	$radicado_anterior=0;
-
-	/**
-		*  Busqueda de radicados
-		*/
-	/*
-	 * Ajuste validacion permisos unificados
-	 * @author Liliana Gomez Velasquez
-	 * @since 10 noviembre 2009
-	*/
 
 	$ruta_raiz = "..";
 
@@ -481,7 +450,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
       ?>
       <tr class='borde_tab'><?=$fila ?>
-	      <td class="listado2">		<table class="borde_tab" width="100%">
+	      <td class="listado2">		<table  class="table table-bordered table-striped">
 	<tr>
 	  <td width="18%" class="titulos5"><input name='radicadopadre' type='radio' value='<?=$nume_radi ?>' title='Radicado No <?=$nume_radi ?>' >
     Radicado </td>
@@ -507,8 +476,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <td class="titulos5" ><?=$nombreTp1?></td>
       <td class=listado5 >
 <?
-  //if($nomOtro["x1"]) $nombret_us1 = $nomOtro["x1"] ." (". $nomRemDes["x1"].")";
-  //if($nomOtro["x2"]) $nombret_us2 = $nomOtro["x2"];
    if( $nomRemDes["x1"]) $nombret_us1 =  $nomRemDes["x1"] ." (". $nomOtro["x1"].")";
    if( $nomRemDes["x2"]) $nombret_us2 =  $nomRemDes["x2"];
 ?>
@@ -549,7 +516,7 @@ $rsCheck->MoveNext();
 	if($Submit)
 	{
 		?>
-		<center><table></table><table class="borde_tab" width="100%"><tr><td class="titulosError"><center>Debe digitar un Dato para realizar la busqueda !! </center></td></tr></table></center>
+		<center><table class="table table-bordered table-striped" ></table><table class="table table-bordered table-striped" width="100%"><tr><td class="titulosError"><center>¡Debe digitar un Dato para realizar la b&uacute;squeda! </center></td></tr></table></center>
 		<?
 		$nobuscar = "No Buscar";
 	}
@@ -587,7 +554,6 @@ if($varjh==2)
 	echo"<input type='hidden' name='depende' value='$depende'>";
 	echo"<input type='hidden' name='contra' value='$contra'>";
 	echo"<input type='hidden' name='pnom' value='$pnom'>";
-	//echo"<input type='hidden' name='pnom' value='$pnom'>";
 	echo"<input type='hidden' name='sapl' value='$sapl'>";
 	echo"<input type='hidden' name='papl' value='$papl'>";
 	echo"<input type='hidden' name='numdoc' value='$numdoc'>";
@@ -596,8 +562,6 @@ if($varjh==2)
 	echo"<input type='hidden' name='codusuario' value='$codusuario'>";
 	echo"<input type='hidden' name='pcodi' value='$pcodi'>";
 	echo"<input type='hidden' name='hoj' value='$hoj'>";
-	//echo"<input type='hidden' name='buscareesp' value='$buscareesp'>";
-	//<input name="Radicar" type=submit class='ebuttons2' value="TIENE DOCUMENTO PADRE">
 ?>
 <br>
 <br>

@@ -41,7 +41,6 @@ $db->conn->SetFetchMode(ADODB_FETCH_NUM);
 <head>
 <title>Busqueda Remitente / Destino</title>
 <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
-<link rel="stylesheet" href="../estilos/orfeo.css" type="text/css">
 <SCRIPT Language="JavaScript" SRC="../js/crea_combos_2.js"></SCRIPT>
 <script LANGUAGE="JavaScript">
 
@@ -268,7 +267,7 @@ if(!$formulario)
 
               <header>
                 <h2>
-                  Administracion de dependencias<br>
+                  B&uacute;squeda Remitente / Destinatario<br>
                   <small><?=$tituloCrear ?></small>
                 </h2>
               </header>
