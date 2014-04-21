@@ -349,7 +349,7 @@
             	$isql = "SELECT
                             d.ID_CONT,
                 			d.ID_PAIS,
-                			d.DPTO_CODI,
+                			d.DPTO_CODI, 
                 			d.MUNI_CODI,
                 			m.MUNI_NOMB
                 		FROM
