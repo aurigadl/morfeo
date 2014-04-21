@@ -507,7 +507,7 @@
                          WHERE
                         USUA_LOGIN ='$krd'  ";
 
-                $recordSet["USUA_SESION"]                = "'".SUBSTR(session_id(),1,30)."'";
+                $recordSet["USUA_SESION"]                = "'".session_id()."'";
                 $recordSet["USUA_FECH_SESION"]           = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
                 $recordWhere["USUA_LOGIN"]               = "'$krd'";
                 $db->update("USUARIO", $recordSet,$recordWhere);
