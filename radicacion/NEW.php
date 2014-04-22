@@ -67,7 +67,6 @@ $descTp3   = "alt  = '".$tip3desc[3][$ent]."' title = '".$tip3desc[3][$ent]."'";
 $nombreTp1 = $tip3Nombre[1][$ent];
 $nombreTp2 = $tip3Nombre[2][$ent];
 $nombreTp3 = $tip3Nombre[3][$ent];
-
 ?>
 <HTML>
 <head>
@@ -722,7 +721,7 @@ var contadorVentanas=0
 	$tRadicacionDesc = $rs->fields["SGD_TRAD_DESCR"];
 ?>
   <h1 class="txt-color-blueDark">
-    Modulo de radicaci&oacute;n
+    Modulo de radicacion
     <?=$tRadicacionDesc?>
     (Dep <?=$dependencia?>)
     <?php
@@ -757,7 +756,7 @@ var contadorVentanas=0
 
    <fieldset>
     <div class="row">
-      <section class="col col-2">
+      <section class="col col-1">
         <label class="label">
 			    Fecha: dd/mm/aaaa
         </label>
@@ -778,7 +777,7 @@ var contadorVentanas=0
 
       <section class="col col-2">
           <label class="label">
-            Gu&iacute;a
+            Guia
           </label>
           <label class="input">
             <input type=text name='guia'name='id' value='<?=$guia ?>' <?=$bloqEdicion?>  size=35>
@@ -791,7 +790,7 @@ var contadorVentanas=0
           Fecha Doc. dd/mm/aaaa
         </label>
         <label class="input"> <i class="icon-append fa fa-calendar"></i>
-          <input type="text" name="fecha_gen_doc" id="date" placeholder="Fecah de radicaci&oacute;n" value="<?=$fecha_gen_doc ?>">
+          <input type="text" name="fecha_gen_doc" id="date" placeholder="Fecah de radicacion" value="<?=$fecha_gen_doc ?>">
         </label>
       </section>
 
@@ -894,6 +893,9 @@ var contadorVentanas=0
             <div class="row">
               <section class="col col-11">
                 <input type=text name='cc_documento_us<?=$i?>' value='<?=$cc_documento?>' readonly="true" >
+              </section>
+              <section class="col col-1">
+                <input typ=etext name='documento_us<?=$i ?>' value='<?=$documento?>' readonly="true"  size="1">
               </section>
             </div>
           </label>
@@ -1195,7 +1197,7 @@ var contadorVentanas=0
     </section>
     <section class="col col-2">
         <label class="label">
-          Descripci&oacute;n Anexos
+          Descripci&oacute; Anexos
         </label>
         <label class="input">
             <input name="ane" id="ane" type="text" size="70"  value="<?php echo htmlspecialchars(stripcslashes($ane));?>">
