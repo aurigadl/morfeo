@@ -1,3 +1,6 @@
+<?
+ini_set("display_errors",1);
+?>
 <!-- NEW WIDGET START -->
 <article class="col-sm-12 col-md-12" align=left>
 <!--widget content -->
@@ -58,9 +61,9 @@
 	}
 			
 		$url = "http://200.118.122.176:5380/py/pyforms/seleccion_predios/get_predios_list?expediente=$numExpediente";
-		$predios = file_get_contents($url);
+		$predios2 = file_get_contents($url);
 		$predios = str_replace('"',"'",$predios);
-		$arrPredios = json_decode($predios);
+		$arrPredios = json_decode($predios2);
 		if(is_array($arrPredios)){
 			?>
 			<li  style="display:none">
