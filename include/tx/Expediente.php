@@ -175,7 +175,7 @@ class Expediente
 			                 from sgd_exp_expediente exp, radicado r, SGD_TPR_TPDCUMENTO t
 			             where exp.sgd_exp_numero='".$numExpediente."'
 			               and exp.radi_nume_radi = r.radi_nume_radi
-			               and r.tdoc_codi=t.sgd_tpr_codigo 
+			               and r.tdoc_codi=t.sgd_tpr_codigo  AND exp.sgd_exp_estado <>2
 			               ";  // $this->db->conn->debug = true;
 			   $rsRad = $this->db->conn->query($query);
 			   
@@ -202,6 +202,8 @@ class Expediente
 												and a.sgd_tpr_codigo=t.sgd_tpr_codigo";
 											//$this->db->conn->debug = true;
 						$rsAnex = $this->db->conn->query($query);
+
+						
 						//$this->db->conn->debug = false;
 						$arrAnexos = array();
 						$iA =0;
@@ -211,11 +213,30 @@ class Expediente
 						  $arrAnexos[$iA]["RADI_SALIDA"] = $rsAnex->fields['RADI_NUME_SALIDA'];
 						  $arrAnexos[$iA]["ANEX_NUMERO"] = $rsAnex->fields['ANEX_NUMERO'];
 						  $arrAnexos[$iA]["ANEX_PATH"] = $rsAnex->fields['ANEX_NOMB_ARCHIVO'];
-						  
 						  $rsAnex->MoveNext();
 						  $iA++;
 						}
-					 if($iA>=1) $expArr[$numExpediente][$iRr]["ANEXOS"] = $arrAnexos;
+						if($iA>=1) $expArr[$numExpediente][$iRr]["ANEXOS"] = $arrAnexos;
+						$querySE = "select exp.SGD_EXP_NUMERO, sexp.sgd_sexp_PAREXP1, sexp.sgd_sexp_PAREXP2, sexp.sgd_sexp_PAREXP4, sexp.sgd_sexp_PAREXP4, sexp.sgd_sexp_PAREXP5
+													from SGD_EXP_EXPEDIENTE exp, sgd_sexp_secexpedientes sexp
+											where exp.radi_nUme_radi='$numRadicado' and exp.sgd_exp_numero <> '$numExpediente'
+											  and exp.sgd_exp_numero=sexp.sgd_exp_numero AND exp.sgd_exp_estado <>2";
+											//$this->db->conn->debug = true;
+						$rsSE = $this->db->conn->query($querySE);
+						//$this->db->conn->debug = FALSE;
+												$iE=0;
+						if($rsSE){
+						while(!$rsSE->EOF){
+						  $arrSE[$iE]["NUMERO"] = $rsSE->fields['SGD_EXP_NUMERO'];
+						  $arrSE[$iE]["PARAM1"] = $rsSE->fields['SGD_SEXP_PAREXP1'];
+						  $arrSE[$iE]["PARAM2"] = $rsSE->fields['SGD_SEXP_PAREXP2'];
+						  $arrSE[$iE]["PARAM3"] = $rsSE->fields['SGD_SEXP_PAREXP3'];
+						  $rsSE->MoveNext();
+						  $iE++;
+						}
+						if($iA>=1) $expArr[$numExpediente][$iRr]["SEXPEDIENTES"] = $arrSE;
+						}
+					 
 			     $iRr++;
 			     $rsRad->MoveNext();
 			   }

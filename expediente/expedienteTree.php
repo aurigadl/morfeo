@@ -12,14 +12,26 @@
 			?>
 			<li  style="display:none">
 				<span>
-				<? echo "<TABLE  WIDTH='950'><TR><TD WIDTH=30><i class='icon-leaf'></i> </TD>
-				<TD width=150>";
+				<?
+				 $sExp = $value["SEXPEDIENTES"];
+				 
+				 if($sExp){
+				 $SExps = "<table><TR><TD COLSPAN=5></small>Expedientes Adicionales :</small><TD></TR>";
+				 foreach($sExp as $valueExpedientes){
+				    $SExps .= "<tr><td><small>".$valueExpedientes["NUMERO"]."&nbsp; </small> </td><td> <small>".$valueExpedientes["PARAM1"]."&nbsp; </small></td><td><small>".$valueExpedientes["PARAM2"]."</small></td></tr>";
+				 }
+				 $SExps .= "</table>";
+				 }
+				$numRadicado = $value["NUM_RADICADO"];
+				$fechaRad = "<a href='verradicado.php?verrad=$numRadicado&".session_name()."=".session_id()."&nomcarpeta=".$nomcarpeta."#tabs-d'>".$value["FECHA_RADICADO"] . "</a>";
+				echo "<TABLE  WIDTH='1050'><TR><TD WIDTH=30><i class='icon-leaf'></i> </TD>
+				<TD width=140 align=left>";
 				if($valueAnexos["PATH_RADICADO"]) echo "<a href='$ruta_raiz/".$value["PATH_RADICADO"]."' target='".date("ymdhis")."'>";
-				echo $value["NUM_RADICADO"];
+				echo $numRadicado;
 				if($valueAnexos["PATH_RADICADO"]) echo "</a>" ;
 				echo "</TD>
-				<TD width=150>".$value["FECHA_RADICADO"]."</TD><TD width=150>".$value["TIPO_DRADICADO"]."</TD><TD width=450>".$value["ASUNTO_RADICADO"]."</TD>
-				</TR>
+				<TD width=140>$fechaRad</TD><TD width=120>".$value["TIPO_DRADICADO"]."</TD><TD width=450>".$value["ASUNTO_RADICADO"]."</TD>
+				<TD width=350>$SExps</TD></TR>
 				</TABLE>"; ?></span>
 
 				<ul>

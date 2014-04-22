@@ -1,5 +1,5 @@
 <div style="border:1; position:absolute; top:120;  left:650;">
-<?php include "./proceso/workFlowParcial.php"; ?>
+<?php // include "./proceso/workFlowParcial.php"; ?>
 </div>
 <input type="hidden" name="menu_ver_tmp" value=4>
 <input type="hidden" name="menu_ver" value=4>
@@ -197,7 +197,7 @@ if ( $expIncluido != "" ) {
           <a href="#" onClick="verHistExpediente('<?=$numExpediente?>');">Historial del Proceso/Exp</a>
         </li>
         <li>
-          <a href="#" onClick="verWorkFlow('<?=$numExpediente?>','<?=$texp?>');">Ver WorkFlow</a>
+           <a href="#" onClick="verWorkFlow('<?=$numExpediente?>','<?=$texp?>');">Ver WorkFlow</a>
         </li>
         <li>
           <a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
