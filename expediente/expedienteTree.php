@@ -23,7 +23,7 @@
 				</TABLE>"; ?></span>
 				<ul>
 				<?
-				  $carpetaDep = intval(substr($value["NUM_RADICADO"],4,$digitosDependencia));
+ 				  $carpetaDep = intval(substr($value["NUM_RADICADO"],4,$digitosDependencia));
 					$rutaAnexos = "".substr($value["NUM_RADICADO"],0,4). "/$carpetaDep/docs/";
 					$anexos = $value["ANEXOS"];
 					if($anexos){
