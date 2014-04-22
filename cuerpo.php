@@ -163,7 +163,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
     <div class="row">
       <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-      <h1 class="page-title txt-color-blueDark"><i class="glyphicon glyphicon-th-large"></i> Bandeja <span><?=$nomcarpeta?></span></h1>
+      <h1 class="page-title txt-color-blueDark"><i class="glyphicon glyphicon-inbox"></i> Bandeja <span><?=$nomcarpeta?></span></h1>
       </div>
       <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
         <ul id="sparks" class="">

@@ -185,7 +185,7 @@ if($okTx== -1)  $okTxDesc = " No ";
 <header role="heading" style="opacity: 1; width=80%;">
 
 <span class="widget-icon">
-<h2>Transacciones de Documentos de Documentos </h2>
+<h2>Transacciones</h2>
 <span class="jarviswidget-loader">
 </header>
 
