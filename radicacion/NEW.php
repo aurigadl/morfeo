@@ -50,11 +50,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $eMailsubject         = $_SESSION['eMailSubject'];
   $tipoMedio            = $_SESSION['eMailtipoMedio'];
 
-  /*
-  * Variables de Session de Radicacion de Mails
-  * Estas son variables que traen los valores con radicacoin de un correo Electronico
-  */
-
   if($tipoMedio=="eMail"){
     if(empty($mail_us1)){
       $mail_us1 = $eMailRemitente;
@@ -386,11 +381,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <!-- widget content -->
                   <div class="widget-body">
 
-                      <div class="form-inline smart-form">
+                      <section id="formsearch" class="form-inline smart-form">
 
-                        <section class="col col-2">
+                        <section  class="col col-2">
                           <label class="select">
-                            <select name="tipo_ususario" class="form-control input-sm">
+                            <select name="tipo_ususario" id="tipo_ususario" class="form-control input-sm">
                               <option value='0'>Usuario     </option>
                               <option value='2'>Empresas    </option>
                               <option value='6'>Funcionarios</option>
@@ -401,14 +396,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <section class="col col-2">
                           <label class="input">
                             <i class="icon-prepend fa fa-search"></i>
-                            <input type=text name='documento_us' placeholder="Documento">
+                            <input type=text id='documento_us' class="required alphanumeric" name='documento_us' placeholder="Documento">
                           </label>
                         </section>
 
                         <section class="col col-2">
                           <label class="input">
                             <i class="icon-prepend fa fa-search"></i>
-                            <INPUT type=text name='nombre_us' placeholder="Nombre">
+                            <INPUT type=text id='nombre_us' name='nombre_us' placeholder="Nombre">
                           </label>
                         </section>
 
@@ -430,53 +425,54 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                           Crear
                         </button>
 
-                      </div>
-
+                      </section>
                       <!--Muestra Resultados de la busqueda-->
-                      <div id="resBusqueda"></div>
-
-                      <table class="table table-bordered table-striped">
-                          <thead>
-                            <tr>
-                              <th>Documento</th>
-                              <th>Nombre</th>
-                              <th>1er Apellido</th>
-                              <th>2do Apellido</th>
-                              <th>Telefono</th>
-                              <th>Direcci&oacute;n</th>
-                              <th>Correo Electronico</th>
-                              <th>Dignatario</th>
-                              <th>Pais</th>
-                              <th>Departamento</th>
-                              <th>Municipio</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td><a class="btn btn-default btn-circle" href="javascript:void(0);"><i class="glyphicon glyphicon-minus"></i></a> 123123213 </td>
-                              <td>Row 2</td>
-                              <td>Row 3</td>
-                              <td>Row 4</td>
-                              <td>Row 5</td>
-                              <td>Row 6</td>
-                              <td>Row 7</td>
-                              <td>Row 8</td>
-                              <td>Row 9</td>
-                              <td>Row 10</td>
-                              <td>Row 11</td>
-                            </tr>
-                          </tbody>
-
-                      </table>
-                      <!-- end widget content -->
+                      <section class="col-lg-12">
+                        <ul id="resBusqueda" class="inbox-download-list"> </ul>
+                      </section>
                     </div>
-                <!-- end widget div -->
+                    <section class="well col-lg-12">
+                      <table class="table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>Documento</th>
+                            <th>Nombre</th>
+                            <th>1er Apellido</th>
+                            <th>2do Apellido</th>
+                            <th>Telefono</th>
+                            <th>Direcci&oacute;n</th>
+                            <th>Correo Electronico</th>
+                            <th>Dignatario</th>
+                            <th>Pais</th>
+                            <th>Departamento</th>
+                            <th>Municipio</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td><a class="btn btn-default btn-circle" href="javascript:void(0);"><i class="glyphicon glyphicon-minus"></i></a> 123123213 </td>
+                            <td>Row 2</td>
+                            <td>Row 3</td>
+                            <td>Row 4</td>
+                            <td>Row 5</td>
+                            <td>Row 6</td>
+                            <td>Row 7</td>
+                            <td>Row 8</td>
+                            <td>Row 9</td>
+                            <td>Row 10</td>
+                            <td>Row 11</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                  </section>
               </div>
             </article>
             <!-- WIDGET END -->
           </div>
         </section>
 
+        <div class="col-lg-12">
+        </div>
 
         <?
             unset($contcodi);
@@ -1271,8 +1267,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     $(document).ready(function() {
 
+
+
       // DO NOT REMOVE : GLOBAL FUNCTIONS!
       pageSetUp();
+
 
 
       // DATEPICKER MUESTRA FECHA
@@ -1283,15 +1282,50 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         }
       });
 
+
+      function valida(objData){
+        var pass = false;
+        var min = 3;
+
+        if(!$.isEmptyObject(objData)){
+
+          $.each(objData, function(key, val) {
+            var valdata = val.value;
+
+            if((valdata.length < min && valdata.length != 0) || /^a-zA-Z0-9áéíóúÁÉÍÓÚÑñ ]+$/.test(valdata)){
+              $('#' + objData[key].id).parent().removeClass('state-success').addClass('state-error');
+            }else if (valdata.length == 0){
+              $('#' + objData[key].id).parent().removeClass('state-success state-error');
+            }else{
+              $('#' + objData[key].id).parent().removeClass('state-error').addClass('state-success');
+              pass = true;
+            }
+          });
+
+        }
+        return pass;
+      };
+
+      function formatAnswer(data){
+        var dataformat;
+        return dataformat;
+      };
+
       // AUTOCOMPLETE BUSQUEDA DE USUARIOS
-      $("#documento_us, nombre_us, telefono_us, mail_us").autocomplete({
-        source: function( request, respond ) {
-          $.post( "./NEW.php", {student: request.term },
-            function( response ) {
-              //do something
+      $("#documento_us, #nombre_us").on('keyup', function () {
+        var data  = {}
+        data.docu = { value : $("#documento_us").val(), id : "documento_us"};
+        data.name = { value : $("#nombre_us").val(),    id : "nombre_us"};
+
+        if(valida(data)){
+          data.tdoc = $("#tipo_ususario").val()
+          $.post( "ajax_buscarUsuario.php", {search : JSON.stringify(data)}).done(
+            function( data ) {
+              $('#resBusqueda').html(formatAnswer( data ));
             }
           );
         }
+
       });
 
     });
