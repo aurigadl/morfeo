@@ -32,12 +32,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   include_once("$ruta_raiz/include/db/ConnectionHandler.php");
   $db     = new ConnectionHandler("$ruta_raiz");
   $search = json_decode($_POST['search']);
-var_dump($search["tdoc"]);die;
+  $tipo   = $search->tdoc;
 
   //Filtro por el tipo de usuario
-  switch ($test) {
+  switch ( $tipo ) {
     case 0:
-      $data = array("cod"            => "12312312",
+      $data[] = array("cod"            => "12312312",
+                    "nombre"         => "un nombre de un usuairo",
+                    "direccion"      => "una direccion que es como larga",
+                    "color de ojos"  => "Blancos",
+                    "telefono"       => "un tefelfono 1232132");
+
+      $data[] = array("cod"            => "12312312",
+                    "nombre"         => "un nombre de un usuairo",
+                    "direccion"      => "una direccion que es como larga",
+                    "color de ojos"  => "Blancos",
+                    "telefono"       => "un tefelfono 1232132");
+
+      $data[] = array("cod"            => "12312312",
                     "nombre"         => "un nombre de un usuairo",
                     "direccion"      => "una direccion que es como larga",
                     "color de ojos"  => "Blancos",

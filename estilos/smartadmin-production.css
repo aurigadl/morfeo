@@ -8999,13 +8999,11 @@ tr.highlight td, tr.unread.highlight td {
     width: 150px;
 }
 .inbox-download-list li > *:first-child:hover {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border-color: #C0C0C0;
+    background: none repeat scroll 0 0 #F4FCE7;
+    border-color: #666666;
 }
 .inbox-download-list li > *:first-child > *:first-child {
-    color: #D6D6D6;
     display: block;
-    text-align: center;
 }
 .inbox-download-list li > *:first-child > *:first-child > .fa {
     font-size: 150px;

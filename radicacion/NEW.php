@@ -1308,6 +1308,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
       function formatAnswer(data){
         var dataformat;
+        var indiv = $('#resBusqueda');
+        indiv.empty();
+        $.each(data, function(i){
+          var li = $('<li/>').appendTo(indiv);
+
+          var div = $('<div/>')
+                .addClass('well well-sm')
+                .html('<h6 class=" text-success semi-bold">' + data[i].cod + '</h6>'
+                    + '<strong>'   + data[i].nombre          + '</strong>'
+                    + '<p>'        + data[i].direccion       + '</p>'
+                    + '<p>'        + data[i].telefono        + '</p>')
+                .appendTo(li);
+        });
         return dataformat;
       };
 
@@ -1321,7 +1334,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           data.tdoc = $("#tipo_ususario").val()
           $.post( "ajax_buscarUsuario.php", {search : JSON.stringify(data)}).done(
             function( data ) {
-              $('#resBusqueda').html(formatAnswer( data ));
+              formatAnswer( data );
             }
           );
         }
