@@ -32,7 +32,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }
 
   include_once "$ruta_raiz/include/db/ConnectionHandler.php";
+  include_once "$ruta_raiz/config.php";
+
   $db = new ConnectionHandler("$ruta_raiz");
+
 
   $krd            = $_SESSION["krd"];
   $dependencia    = $_SESSION["dependencia"];
@@ -455,7 +458,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <a href="#" onclick="return false;" data-toggle="dropdown" class="dropdown-toggle"> Opciones <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                       <li><a href="plantillas.php?<?=session_name()."=".session_id()?>&fechah=$fechah&krd=$krd&info=false" target="mainFrame"> Plantillas </a></li>
-                      <li><a href="http://wiki-siim2.infometrika.net" target="mainFrame"> Ayuda </a></li>
+                      <li><a href="<?php echo $url_ayuda ?>" target="mainFrame"> Ayuda </a></li>
                     </ul>
                   </li>
 
