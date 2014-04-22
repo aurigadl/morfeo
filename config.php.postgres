@@ -123,4 +123,9 @@ ini_set('include_path', '.:'.$PEAR_PATH);
 $varTramiteConjunto     =0;
 
 
+//Variable que define en que dirección se encuentra la ayuda.
+
+$url_ayuda ="http://manual-siim2.infometrika.net"
+
+
 ?>
