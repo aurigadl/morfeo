@@ -47,6 +47,7 @@
 			
 		$url = "http://200.118.122.176:5380/py/pyforms/seleccion_predios/get_predios_list?expediente=$numExpediente";
 		$predios = file_get_contents($url);
+		$predios = str_replace('"',"'",$predios);
 		$arrPredios = json_decode($predios);
 		if($arrPredios){
 			?>
@@ -58,7 +59,7 @@
 					foreach($arrPredios as $key => $valor){
 					?>
 				<li style="display:none">
-				  <a href='http://localhost/orfeoNew/verradicado.php?verrad=<?=$verrad?>&<?=session_name()?>=<?=session_id()?>&nomcarpeta=<?=nomcarpeta?>&prediosExp=<?=$predios?>#tabs-gis'>
+				  <a href="http://localhost/orfeoNew/verradicado.php?verrad=<?=$verrad?>&<?=session_name()?>=<?=session_id()?>&nomcarpeta=<?=nomcarpeta?>&prediosExp=<?=$predios?>#tabs-gis">
 					<?="Chip : ".$valor->chip; ?>
 					</a>
 				</li>	
