@@ -32,7 +32,8 @@ $lkGenerico = "&usuario=$krd&nsesion=".trim(session_id())."&nro=$verradicado"."$
 <script>
 function regresar()	
 {	//window.history.go(0);
-	window.location.reload();
+	//window.location.reload();
+    window.location.href=window.location.href
 }
 function CambiarE(est,numeroExpediente) {
         window.open("<?=$ruta_raiz?>/archivo/cambiar.php?<?=session_name()?>=<?=session_id()?>&numRad=<?=$verrad?>&expediente="+ numeroExpediente +"&est="+ est +"&","Cambio Estado Expediente","height=100,width=100,scrollbars=yes");

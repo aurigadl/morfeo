@@ -273,20 +273,20 @@ if($descPExpediente){
 			if($usuaPermExpediente) {
 				?>
 				<li>
-					<a href="#" onClick="verHistExpediente('<?=$num_expediente?>');"></a>
+					<a onClick="verHistExpediente('<?=$num_expediente?>');"></a>
 				</li>
 				<li>
-					<a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
+					<a onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
 				</li>
 
 				<li>
-					<a href="#" onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
+					<a onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
 				</li>
 					<?
 				}
 				?>
 				<li>
-					<a href="#" onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')">Modificar Estado</a>
+					<a onClick="modFlujo('<?=$num_expediente?>',<?=$texp?>,<?=$codigoFldExp?>,'<?=$ventana?>')">Modificar Estado</a>
 				</li>
 		</ul>
 	</span>

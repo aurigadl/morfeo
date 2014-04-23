@@ -237,7 +237,7 @@ return;
 function regresar(){
 	//window.history.go(0);
 	window.location.reload();
-	window.close();
+    window.close();
 
 }
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
