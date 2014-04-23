@@ -36,7 +36,7 @@ function verificaModificacion(){
   <?php 
   if ( $grabarFlujo  ) {
   ?>
-   alert("El cambio se ejecuto con exito." );
+   alert("El cambio se ejecutó con exito." );
    opener.regresar(); 
 	window.close();
 	<?php 
