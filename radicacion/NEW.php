@@ -379,7 +379,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <div data-widget-editbutton="false" id="wid-id-0" class="jarviswidget jarviswidget-sortable" style="" role="widget">
 
                   <!-- widget content -->
-                  <div class="widget-body">
+                  <div class="col col-12">
 
                       <section id="formsearch" class="form-inline smart-form">
 
@@ -427,14 +427,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                       </section>
                       <!--Muestra Resultados de la busqueda-->
-                      <section class="col-lg-12">
+                      <section id="showAnswer" class="col-lg-12 hide well">
                         <ul id="resBusqueda" class="inbox-download-list"> </ul>
                       </section>
+
                     </div>
-                    <section class="well col-lg-12">
-                      <table class="table table-bordered table-striped">
+                    <section id="tableSection" class="well col-lg-12 hide">
+                      <table class="table table-bordered">
                         <thead>
                           <tr>
+                            <th></th>
                             <th>Documento</th>
                             <th>Nombre</th>
                             <th>1er Apellido</th>
@@ -448,21 +450,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <th>Municipio</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            <td><a class="btn btn-default btn-circle" href="javascript:void(0);"><i class="glyphicon glyphicon-minus"></i></a> 123123213 </td>
-                            <td>Row 2</td>
-                            <td>Row 3</td>
-                            <td>Row 4</td>
-                            <td>Row 5</td>
-                            <td>Row 6</td>
-                            <td>Row 7</td>
-                            <td>Row 8</td>
-                            <td>Row 9</td>
-                            <td>Row 10</td>
-                            <td>Row 11</td>
-                          </tr>
-                        </tbody>
+                        <tbody id="tableshow"> </tbody>
                     </table>
                   </section>
               </div>
@@ -1267,14 +1255,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     $(document).ready(function() {
 
-
-
+      var ALLDATA;
       // DO NOT REMOVE : GLOBAL FUNCTIONS!
       pageSetUp();
 
-
-
-      // DATEPICKER MUESTRA FECHA
+      //Datepicker muestra fecha
       $('#date').datepicker({
         dateFormat : 'yy/mm/dd',
         onSelect : function(selectedDate) {
@@ -1283,9 +1268,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       });
 
 
+      //Deja en blanco los campos de busqueda al seleccionar
+      //un nuevo usuario.
+      $("#tipo_ususario").on('change',function(){
+        $('#documento_us, #nombre_us').val("").parent().removeClass('state-success state-error');
+        $('#resBusqueda').empty();
+      });
+
+      //Valida los campos antes de ser enviados al servidor
       function valida(objData){
         var pass = false;
-        var min = 3;
+        var min  = 3;
 
         if(!$.isEmptyObject(objData)){
 
@@ -1301,30 +1294,97 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               pass = true;
             }
           });
-
         }
+
         return pass;
+
       };
 
+      function passDataToTable(iddata){
+
+        var trTable = ALLDATA[iddata];
+        var tRow    = $('<tr>');
+
+        tCell = $('<td>').html( "<td class='search-table-icon'>"
+                                + "<a href='javascript:void(0);' rel='tooltip'"
+                                + "data-placement='right' data-original-title='Eliminar Usuario'"
+                                + "class='txt-color-darken'><i class='fa fa-minus'></i>"
+                                + "</a>" +
+                               "</td>")
+                .on("click", function(){
+                  var codUser = $(this).parent().remove();
+                  var tds     = $('table').children('tbody').children('tr').length;
+
+                  $('div[name="cod_'+ iddata +'"]').removeClass('hide');
+                  $('#showAnswer').removeClass('hide');
+
+
+                  if(tds === 0){
+                    $('#tableSection').addClass('hide');
+                  };
+                })
+
+        tRow.append(tCell)
+
+        $.each(trTable, function(key, val) {
+          tCell = $('<td>').html(trTable[key]);
+          tRow.append(tCell)
+        });
+
+        $('table').append(tRow);
+        $('#tableSection').removeClass('hide');
+
+      }
+
+      //Modifica respuesta del servidor para presentarla
+      //con formato.
       function formatAnswer(data){
         var dataformat;
         var indiv = $('#resBusqueda');
+
         indiv.empty();
+
         $.each(data, function(i){
+
           var li = $('<li/>').appendTo(indiv);
 
           var div = $('<div/>')
                 .addClass('well well-sm')
-                .html('<h6 class=" text-success semi-bold">' + data[i].cod + '</h6>'
+                .html('<div  class="col col-12">'
+                      + '<h6 class=" text-success semi-bold">'
+                      + data[i].cod
+                      + ' <i class="fa fa-plus-square"></i>'
+                      + '</h6>'
+                    + '</div>'
                     + '<strong>'   + data[i].nombre          + '</strong>'
                     + '<p>'        + data[i].direccion       + '</p>'
                     + '<p>'        + data[i].telefono        + '</p>')
+                .attr('name', 'cod_' + i)
+                .on("click", function(){
+                  var codUser = $(this).attr('name').substring(4);
+                  var count   = 0;
+                  var datali  = $('#showAnswer').children('ul').children('li');
+                  passDataToTable(codUser);
+                  $(this).addClass('hide');
+
+                  datali.each(function() {
+                    var ishide = $( this ).children('div').hasClass("hide");
+                    if(ishide){
+                      count++;
+                    }
+                  });
+                  if(datali.length === count){
+                    $('#showAnswer').addClass('hide');
+                  }
+                })
                 .appendTo(li);
         });
-        return dataformat;
+
+        $('#showAnswer').removeClass('hide');
+
       };
 
-      // AUTOCOMPLETE BUSQUEDA DE USUARIOS
+      //Autocomplete busqueda de usuarios
       $("#documento_us, #nombre_us").on('keyup', function () {
         var data  = {}
         data.docu = { value : $("#documento_us").val(), id : "documento_us"};
@@ -1334,13 +1394,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           data.tdoc = $("#tipo_ususario").val()
           $.post( "ajax_buscarUsuario.php", {search : JSON.stringify(data)}).done(
             function( data ) {
+              ALLDATA = data;
               formatAnswer( data );
             }
           );
         }
-
       });
-
     });
 
   </script>

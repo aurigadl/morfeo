@@ -1,4 +1,5 @@
 
+
 article.sortable-grid {
     min-height: 30px;
 }
@@ -8808,6 +8809,11 @@ tr.fc-last td {
     text-align: left;
     width: 28px;
 }
+
+.search-table-icon {
+    width: 28px;
+}
+
 .inbox-data-from {
     width: 200px;
 }

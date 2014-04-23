@@ -37,19 +37,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   //Filtro por el tipo de usuario
   switch ( $tipo ) {
     case 0:
-      $data[] = array("cod"            => "12312312",
+      $data[] = array("cod"          => "zzzzz312",
                     "nombre"         => "un nombre de un usuairo",
                     "direccion"      => "una direccion que es como larga",
                     "color de ojos"  => "Blancos",
                     "telefono"       => "un tefelfono 1232132");
 
-      $data[] = array("cod"            => "12312312",
+      $data[] = array("cod"          => "xxxxx12",
                     "nombre"         => "un nombre de un usuairo",
                     "direccion"      => "una direccion que es como larga",
                     "color de ojos"  => "Blancos",
                     "telefono"       => "un tefelfono 1232132");
 
-      $data[] = array("cod"            => "12312312",
+      $data[] = array("cod"          => "yyyyk12",
                     "nombre"         => "un nombre de un usuairo",
                     "direccion"      => "una direccion que es como larga",
                     "color de ojos"  => "Blancos",
