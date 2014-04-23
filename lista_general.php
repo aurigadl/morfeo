@@ -117,8 +117,8 @@ Descripci&oacute;n Anexos</b></small></td><td><small> <?=$radi_desc_anex ?></sma
 		<?
 			}
 		?>
-		</Td><td><small><b>
-	, Nivel de Seguridad</b></small></td><td><small>
+	</Td><td><small><b>
+	Nivel de Seguridad</b></small></td><td><small>
 	<?
 		if($nivelRad==1)
 		{	echo "Confidencial";	}
