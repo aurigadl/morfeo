@@ -464,7 +464,7 @@ function okTx()
 			document.realizarTx.submit();
 	}else
 	{
-		alert("Atencion:  Falta la observacion, el numero de caracteres minimo es de 6 letras, (Digito :"+numCaracteres+")");
+		alert("Atención:  Falta la observación, el número de caracteres minimo es de 6 letras, (Digitó :"+numCaracteres+")");
 	}
 }
 </script>
