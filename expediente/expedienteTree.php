@@ -42,7 +42,7 @@ ini_set("display_errors",1);
 				$carpetaDep = intval(substr($value["NUM_RADICADO"],4,$digitosDependencia));
 				$rutaAnexos = "".substr($value["NUM_RADICADO"],0,4). "/$carpetaDep/docs/";
 				$anexos = $value["ANEXOS"];
-				// if($anexos){
+				if($anexos){
 				foreach($anexos as $valueAnexos){
 			?>
 			<li style="display:none">
@@ -53,7 +53,7 @@ ini_set("display_errors",1);
 			</li>
 			<?
 				}
-			//}
+			}
 			?>
 			</ul>
 	</li>
