@@ -1,4 +1,5 @@
 <?php
+ini_set("display_errors",1);
 $ruta_raiz = "."; 
 $ln          = $_SESSION["digitosDependencia"];
 if (!$ruta_raiz) $ruta_raiz= ".";

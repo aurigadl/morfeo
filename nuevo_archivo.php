@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 if($subir_archivo!="si ..."){
     $ruta_raiz = ".";
     if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
@@ -293,7 +292,8 @@ if(!$radicado_rem){
 ?>
 <div class="row">
 	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
-	<section id="widget-grid" class="">
+	<section id="widget-grid" class="">
+
 <table width="100%" class="table table-bordered">
 <tr>
   <td>
@@ -412,6 +412,12 @@ if($us_1 or $us_2 or $us_3)
   Este documento no puede ser radicado ya que faltan datos.<br>
   (Para envio son obligatorios Nombre, Direccion, Departamento,
   Municipio)
+    <input type="checkbox" class="select" name="radicado_salida" value="radsalida"
+		<?php
+			if (!$radicado_salida and $ent==1)  $radicado_salida=1;
+			if($radicado_salida==1 or $datoss)
+			{ echo " checked "; }
+		?> onClick="doc_radicado();" id="radicado_salida">  Este documento ser&aacute; radicado
 <?php
 }
 ?>
