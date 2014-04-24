@@ -22,30 +22,23 @@
 ?>
 <table  width="80%"  align="center"  class="table table-bordered ">
   <tr   align="left" >
-    <td width=10% class='alert alert-info' >Usuario Actual</td>
-    <td  width=15%   align="left"><?=$usuario_actual?></td>
-    <td width=10%  class='alert alert-info' >Dependencia Actual</td>
-    <td  width=15%  ><?=$dependencia_actual?></td>
+    <td width=10% class='alert alert-info' ><small>Usuario Actual</small></td>
+    <td  width=15%   align="left"><small><?=$usuario_actual?></small></td>
+    <td width=10%  class='alert alert-info' ><small>Dependencia Actual</small></td>
+    <td  width=15%  ><small><?=$dependencia_actual?></small></td>
  </table>
- <table><tr><td> &nbsp;&nbsp;</td></tr></table>
- <table width="100%"  class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox" align="center">
-  <tr>
-    <td height="25" class="titulos4"> </td>
-  </tr>
-</table>
-<table><tr><td>&nbsp;&nbsp;</td></tr></table>
 <table  width="100%" align="center" class="table table-bordered"  >
   <tr   align="center" class='alert alert-info' >
-    <td width=10%  class='alert alert-info'>DEPENDENCIA</td>
-    <td  width=5%  class='alert alert-info'>FECHA</td>
-     <td  width=15% class='alert alert-info' >TRANSACCION</td>  
-    <td  width=15%  class='alert alert-info' >US. ORIGEN</td>
+    <td width=10%  class='alert alert-info'><small>DEPENDENCIA</small></td>
+    <td  width=5%  class='alert alert-info'><small>FECHA</small></td>
+     <td  width=15% class='alert alert-info' ><small>TRANSACCION</small></td>  
+    <td  width=15%  class='alert alert-info' ><small>US. ORIGEN</small></td>
 		<?
 		 /** Esta es la columna que se elimino de forma Temporal  USUARIO - DESTINO
 			 * <td  width=15% class="grisCCCCCC"  ><font face="Arial, Helvetica, sans-serif"> US. DESTINO</font></td>
 			 */
 		?>
-    <td  width=40%  >COMENTARIO</td>
+    <td  width=40%  ><small>COMENTARIO</small></td>
   </tr>
   <?
   $sqlFecha = $db->conn->SQLDate("d-m-Y H:i A","a.HIST_FECH");
@@ -107,16 +100,16 @@
 		    $i=1;
 			}
 			 ?>
-    <td  >
+    <td  ><small>
 	<?=$objDep->getDepe_nomb()?></td>
-    <td >
+    <td ></small>
 	<?=$rs->fields["HIST_FECH1"]?>
  </td>
-<td   >
+<td   ><small>
   <?=$trans->getDescripcion()?>
-</td>
-<td   >
-   <?=$objUs->get_usua_nomb()?>
+</small></td>
+<td   ><small>
+   <?=$objUs->get_usua_nomb()?></small>
 </td>
 		<?
 		 /**
@@ -125,7 +118,7 @@
 			 * <?=$usua_destino?> </td> 
 			 */
 		?>
-			 <td ><?=$rs->fields["HIST_OBSE"]?></td>
+			 <td ><small><?=$rs->fields["HIST_OBSE"]?></small></td>
   </tr>
   <?
 	$rs->MoveNext();
@@ -180,25 +173,24 @@ $isql = "select $sqlFechaEnvio AS SGD_RENV_FECH,
 		order by a.SGD_RENV_FECH desc ";
 $rs = $db->query($isql);
 ?>
-<table><tr><td>&nbsp;&nbsp;</td></tr></table>
  <table width="100%" align="center"  >
   <tr>
-    <td height="25" class="titulos4">DATOS DE ENVIO</td>
+    <td height="25" class="titulos4"><small>DATOS DE ENVIO</small></td>
   </tr>
 </table>
 <table width="80%"  align="center"  class="table table-bordered"  >
   <tr  align="center">
-    <td width=10%  class='alert alert-info'>RADICADO </td>
-    <td width=10%   class='alert alert-info'>DEPENDENCIA</td>
-    <td  width=15%   class='alert alert-info'>FECHA </td>
-    <td  width=15%   class='alert alert-info'>Destinatario</td>      
-    <td  width=15%   class='alert alert-info' >DIRECCION </td>
-    <td  width=15%  class='alert alert-info'  >DEPARTAMENTO </td>
-    <td  width=15%  class='alert alert-info'  >MUNICIPIO</td>
-    <td  width=15%  class='alert alert-info'  >TIPO DE ENVIO</td>
-    <td  width=5%  class='alert alert-info' > No. PLANILLA</td>
-    <td  width=15%   class='alert alert-info'>OBSERVACIONES</td>      
- <td  width=15%   class='alert alert-info'>Realizo Envio</td>
+    <td width=10%  class='alert alert-info'><small>RADICADO </small></td>
+    <td width=10%   class='alert alert-info'><small>DEPENDENCIA</small></td>
+    <td  width=15%   class='alert alert-info'><small>FECHA </small></td>
+    <td  width=15%   class='alert alert-info'><small>Destinatario</small></td>      
+    <td  width=15%   class='alert alert-info' ><small>DIRECCION </small></td>
+    <td  width=15%  class='alert alert-info'  ><small>DEPARTAMENTO </small></td>
+    <td  width=15%  class='alert alert-info'  ><small>MUNICIPIO</small></td>
+    <td  width=15%  class='alert alert-info'  ><small>TIPO DE ENVIO</small></td>
+    <td  width=5%  class='alert alert-info' ><small> No. PLANILLA</small></td>
+    <td  width=15%   class='alert alert-info'><small>OBSERVACIONES</small></td>      
+ <td  width=15%   class='alert alert-info'><small>Realizo Envio</small></td>
   </tr>
   <?
 $i=1;
@@ -232,30 +224,30 @@ while(!$rs->EOF)
 			}
 			 ?>
     <td  >
-	<?=$imgRadDev?><?=$radEnviado?></td>
+	<small><?=$imgRadDev?><?=$radEnviado?></small></td>
     <td  >
-	<?=$rs->fields["DEPE_NOMB"]?></td>
-    <td >
+	<small><?=$rs->fields["DEPE_NOMB"]?></small></td>
+    <td ><small>
 	<?
 		echo "<a class=vinculos href='./verradicado.php?verrad=$radEnviado&krd=$krd' target='verrad$radEnviado'><span class='timpar'>".$rs->fields["SGD_RENV_FECH"]."</span></a>";
-	?> </td>
-    <td >
+	?></small> </td>
+    <td ><small>
 	<?=$rs->fields["SGD_RENV_NOMBRE"]
-	?> </td>
+	?> </small></td>
     <td   >
-	<?=$rs->fields["SGD_RENV_DIR"]?> </td>
+	<small><?=$rs->fields["SGD_RENV_DIR"]?> </small></td>
     <td   >
-	 <?=$rs->fields["SGD_RENV_DEPTO"] ?> </td>
+	 <small><?=$rs->fields["SGD_RENV_DEPTO"] ?> </small></td>
     <td   >
-	 <?=$rs->fields["SGD_RENV_MPIO"] ?> </td>
+	 <small><?=$rs->fields["SGD_RENV_MPIO"] ?> </small></td>
     <td   >
-	 <?=$rs->fields["SGD_FENV_DESCRIP"] ?> </td>
+	 <small><?=$rs->fields["SGD_FENV_DESCRIP"] ?> </small></td>
     <td   >
-	 <?=$rs->fields["SGD_RENV_PLANILLA"] ?> </td>
+	 <small><?=$rs->fields["SGD_RENV_PLANILLA"] ?> </small></td>
     <td   >
-	 <?=$rs->fields["SGD_RENV_OBSERVA"] ?> </td>
+	 <small><?=$rs->fields["SGD_RENV_OBSERVA"] ?> </small></td>
    <td   >
-         <?=$rs->fields["USUA_LOGIN"] ?> </td>
+         <small><?=$rs->fields["USUA_LOGIN"] ?> </small></td>
 
   </tr>
   <?

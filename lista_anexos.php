@@ -1,11 +1,6 @@
 <?php
-//session_start();
 $ruta_raiz = "."; 
 $ln          = $_SESSION["digitosDependencia"];
-//empieza Anexos   por  Julian Rolon
-//lista los documentos del radicado y proporciona links para ver historicos de cada documento
-//este archivo se incluye en la pagina verradicado.php
-//print ("uno");
 if (!$ruta_raiz) $ruta_raiz= ".";
 include_once("$ruta_raiz/class_control/anexo.php");
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
@@ -20,10 +15,7 @@ $objTipoDocto  = new TipoDocumento($db);
 $objTipoDocto->TipoDocumento_codigo($tdoc);
 $objFirma      = new  FirmaRadicado($db);
 $objCtrlAplInt = new ControlAplIntegrada($db);
-
-//$db->conn->SetFetchMode(ADODB_FETCH_NUM);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db2->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $num_archivos=0;
 $anex = & new Anexo($db);
 $sqlFechaDocto = $db->conn->SQLDate("Y-m-D H:i:s A","sgd_fech_doc");
@@ -247,28 +239,21 @@ function regresar(){
 	<th >
 		<img src="<?=$ruta_raiz?>/imagenes/estadoDoc.gif">
 	</th>
-    <td width='10%'  class='alert alert-info' align=center>RADICADO</td>
-    <td  width='5%'  class='alert alert-info' align=center>TIPO</td>
-	 <td  width='5%'  class='alert alert-info' align=center>TRD</font></td>
-    <td  width='1%'  class='alert alert-info' align=center></td>
-    <td  width='10%' class='alert alert-info' align=center>DESTINO</td>
-    <td  width='5%'   class='alert alert-info' align=center>TAMA&Ntilde;O (Kb)</td>
-    <td  width='5%'   class='alert alert-info' align=center>SOLO LECTURA</td>
-    <td  width='20%'  class='alert alert-info' align=center>CREADOR</td>
-    <td  width='20%'  class='alert alert-info' align=center>DESCRIPCION</td>
-    <td  width='12%'  class='alert alert-info' align=center>ANEXADO</td>
-    <td  width='35%' colspan='5'   class='alert alert-info' align=center >ACCION</td>
+    <td width='10%'  class='alert alert-info' align=center><small>RADICADO</small></td>
+    <td  width='5%'  class='alert alert-info' align=center><small>TIPO</small></td>
+	 <td  width='5%'  class='alert alert-info' align=center><small>TRD</font></small></td>
+    <td  width='1%'  class='alert alert-info' align=center><small></small></td>
+    <td  width='10%' class='alert alert-info' align=center><small>DESTINO</small></td>
+    <td  width='5%'   class='alert alert-info' align=center><small>TAMA&Ntilde;O (Kb)</small></td>
+    <td  width='5%'   class='alert alert-info' align=center><small>SOLO LECTURA</small></td>
+    <td  width='20%'  class='alert alert-info' align=center><small>CREADOR</small></td>
+    <td  width='20%'  class='alert alert-info' align=center><small>DESCRIPCION</small></td>
+    <td  width='12%'  class='alert alert-info' align=center><small>ANEXADO</small></td>
+    <td  width='35%' colspan='5'   class='alert alert-info' align=center ><small>ACCION</small></td>
 </tr>
 <?php
-/*
- * Ajuste validacion permisos unificados
- * @author Liliana Gomez Velasquez
- * @since 10 noviembre 2009 
- */
 include_once "$ruta_raiz/tx/verLinkArchivo.php";
 $verLinkArchivo = new verLinkArchivo($db);
-
-//Fin Modificacion
 $rowan = array();
 $rs=$db->query($isql);
 
@@ -316,34 +301,29 @@ if($anex_estado==4) {$img_estado = "<img src=$ruta_raiz/imagenes/docEnviado.gif>
 </TD>
  <TD><font size=1> 
 <?php
-    /*
-     * Ajuste validacion permisos unificados
-     * @author Liliana Gomez Velasquez
-     * @since 17 noviembre 2009
-    */
-         $total_digitos = 11 + $ln;
+   $total_digitos = 11 + $ln;
 	 if (strlen($cod_radi) <= $total_digitos){
-         //Se trata de un Radicado
-         $resulVali = $verLinkArchivo->valPermisoRadi($cod_radi);
-         $valImg = $resulVali['verImg'];
+		//Se trata de un Radicado
+		$resulVali = $verLinkArchivo->valPermisoRadi($cod_radi);
+		$valImg = $resulVali['verImg'];
 	 }else{
-	    //Se trata de un Anexo sin Radicar
-	     $resulValiA = $verLinkArchivo->valPermisoAnex($coddocu);
-         $valImg = $resulValiA['verImg'];
+		//Se trata de un Anexo sin Radicar
+		$resulValiA = $verLinkArchivo->valPermisoAnex($coddocu);
+		$valImg = $resulValiA['verImg'];
 	}
 	if(trim($linkarchivo)){
-           if($valImg == "SI"){
- 	        echo "<b><a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$coddocu','$ruta_raiz');\"> $cod_radi </a>";
-          }else{
-          	echo "<a class='vinculos' href='javascript:noPermiso()' > $cod_radi </a>";
-           }
+		if($valImg == "SI"){
+	   echo "<b><a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$coddocu','$ruta_raiz');\"> $cod_radi </a>";
+	}else{
+		 echo "<a class='vinculos' href='javascript:noPermiso()' > $cod_radi </a>";
+		}
 	}else{
 		echo trim(strtolower($cod_radi));
 	}
    ?>
  </font> 
-</td>
-	<TD><font size=1> <?
+</small></td>
+	<TD><small> <?
 		if(trim($linkarchivo))
 			{
 				echo $rs->fields["EXT"];
@@ -354,9 +334,8 @@ if($anex_estado==4) {$img_estado = "<img src=$ruta_raiz/imagenes/docEnviado.gif>
 		}
     if($rs->fields["SGD_DIR_TIPO"]==7) $msg = " - "; else $msg=" - ";
 	?> 
-</font> 
-</td>
-<td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif" class="etextomenu">
+</small></td>
+<td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif" class="etextomenu"><small>
   <?
 	/*
 	* Indica si el Radicado Ya tiene asociado algun TRD
@@ -381,32 +360,17 @@ if($anex_estado==4) {$img_estado = "<img src=$ruta_raiz/imagenes/docEnviado.gif>
 				?>
 </center>
 </font>
-</td>
+</small></td>
 
 	<td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif">
 	<?php
-	    /**
-		  *  $perm_radi_sal  Viene del campo PER_RADI_SAL y Establece permiso en la rad. de salida
-		  *  1 Radicar documentos,  2 Impresion de Doc's, 3 Radicacion e Impresion.
-		  *  (Por. Jh)
-	*  Ademas verifica que el documento no este radicado con $rowwan[9] y [10]
-	*  El jefe con $codusuario=1 siempre podra radicar
-	*/
 if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]=="odt" or $rs->fields["EXT"]=="xml") AND $rs->fields["ANEX_ESTADO"]<=3)
 	{
-	/*
-        * Incluir manejo de seguridad de imagenes
-	* @author Liliana Gomez Velasquez
-	* @since 10 noviembre 2009
-	*/
-	      if($valImg == "SI"){
-
- 	        echo"<a class=\"vinculos\" style='cursor:pointer;cursor:hand;' onclick=\"vistaPreliminar('$coddocu','$linkarchivo','$linkarchivotmp');\">";
-
-          }else{
-
-          	echo "<a class='vinculos' style='cursor:pointer;cursor:hand;' href='javascript:noPermiso()' >";
-          }
+	if($valImg == "SI"){
+		 echo"<a class=\"vinculos\" style='cursor:pointer;cursor:hand;' onclick=\"vistaPreliminar('$coddocu','$linkarchivo','$linkarchivotmp');\">";
+		}else{
+		 echo "<a class='vinculos' style='cursor:pointer;cursor:hand;' href='javascript:noPermiso()' >";
+		}
 	?>
 	<img src="<?=$ruta_raiz?>/iconos/vista_preliminar.gif" alt="Vista Preliminar" border="0">
 	<font face="Arial, Helvetica, sans-serif" class="etextomenu">
@@ -418,12 +382,12 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
 		?>
 	</font>
 </TD>
- <td><font size=1> <?=substr($rs->fields["DESTINO"],0,18)?> </font></td>
- <td><font size=1> <?=$rs->fields["TAMA"]?> </font></td>
- <td><font size=1> <?=$rs->fields["RO"]?> </font></td>
- <td><font size=1> <?=$rs->fields["CREA"]?> </font></td>
- <td><font size=1> <?=$rs->fields["DESCR"]?> </font></td>
- <td><font size=1> <?=$rs->fields["FEANEX"]?> </font></td>
+ <td><font size=1> <?=substr($rs->fields["DESTINO"],0,18)?> </font></small></td>
+ <td><font size=1> <?=$rs->fields["TAMA"]?> </font></small></td>
+ <td><font size=1> <?=$rs->fields["RO"]?> </font></small></td>
+ <td><font size=1> <?=$rs->fields["CREA"]?> </font></small></td>
+ <td><font size=1> <?=$rs->fields["DESCR"]?> </font></small></td>
+ <td><font size=1> <?=$rs->fields["FEANEX"]?> </font></small></td>
  <td ><font size=1>
 	<?php
         
@@ -433,7 +397,7 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
 	}
 	?>
 		</font>
-	</td>
+	</small></td>
 	<?
 		//Estas variables se utilizan para verificar si se debe mostrar la opci�n de tipificaci�n de anexo .TIF
 		$anexTipo = $rs->fields["ANEX_TIPO"];
@@ -462,46 +426,26 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
 		}
 	?>
  	</font>
- 	</td>
+ 	</small></td>
 	<td ><font size=1>
 	<?php
 if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fields["ANEX_CREADOR"])==trim($krd) OR $codusuario==1)
 		)
 		{
 			if($origen!=1  and $linkarchivo)
-			{	/*
-
-		         * Incluir manejo de seguridad de imagenes
-			 * @author Liliana Gomez Velasquez
-			 * @since 10 noviembre 2009
-			 */
-
+			{	
 			  $v = $rs->fields["SGD_PNUFE_CODI"];
 			  echo "<a class=\"vinculos\" href=\"#\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> Borrar </a>"; 	}
 		}
 		?>
 	</font>
-	</td>
+	</small></td>
 	<td ><font size=1>
 	<?php
-			
-		/**
-		*  $perm_radi_sal  Viene del campo PER_RADI_SAL y Establece permiso en la rad. de salida
-		*  1 Radicar documentos,  2 Impresion de Doc's, 3 Radicacion e Impresion.
-		*  (Por. Jh)
-		*  Ademas verifica que el documento no este radicado con $rowwan[9] y [10]
-		*  El jefe con $codusuario=1 siempre podra radicar
-		*/
-
 	if  ($tpPerRad[$tpradic]==2 or $tpPerRad[$tpradic]==3) 
 	{	if (!$rs->fields["RADI_NUME_SALIDA"])
 		{	if(substr($verrad,-1)==2 && $puedeRadicarAnexo==1 )
 			{	$rs->fields["SGD_PNUFE_CODI"]=0;
-			    /* Incluir manejo de seguridad de imagenes
-			      * para que el link no muestre la ruta completa
-			      * @author Liliana Gomez Velasquez
-			      * @since 10 noviembre 2009
-			    */
 			echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> Radicar(-$tpradic) </a>";
 					$radicado = "false";
 					$anexo = $cod_radi;
@@ -513,24 +457,12 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 				else
 				{	if((substr($verrad,-1)!=2) and $num_archivos==1 and !$rs->fields["SGD_PNUFE_CODI"] and $swRadDesdeAnex==false )
 					{
-						/*
-			               * Incluir manejo de seguridad de imagenes
-			               * para que el link no muestre la ruta completa
-			               * @author Liliana Gomez Velasquez
-			               * @since 10 noviembre 2009
-			               */
-					     echo "<a class=\"vinculos\" href=\"#\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> Asignar Rad </a>";
-                                            $radicado = "false";
-					    $anexo = $cod_radi;
+			     echo "<a class=\"vinculos\" href=\"#\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> Asignar Rad </a>";
+           $radicado = "false";
+			    $anexo = $cod_radi;
 					}
 else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0 && !$anex->seHaRadicadoUnPaquete($rs->fields["SGD_DOC_PADRE"]))
-	{	/*
-	   * Incluir manejo de seguridad de imagenes
-	  * para que el link no muestre la ruta completa
-	  * @author Liliana Gomez Velasquez
-	  * @since 10 noviembre 2009
-	  */
-
+	{	
          echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> Radicar(-$tpradic) </a>";
 
 				$radicado = "false";
@@ -539,13 +471,6 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 		else if ($puedeRadicarAnexo==1)
 		{
 				$rs->fields["SGD_PNUFE_CODI"]=0;
-			 /*
-		 * Incluir manejo de seguridad de imagenes
-		* para que el link no muestre la ruta completa
-		* @author Liliana Gomez Velasquez
-		* @since 10 noviembre 2009
-		*/
-
 		echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> Radicar(-$tpradic) </a>"; 
 				$radicado = "false";
 				$anexo = $cod_radi;
@@ -553,15 +478,9 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 	else
 			{	if (!$rs->fields["SGD_PNUFE_CODI"])$rs->fields["SGD_PNUFE_CODI"]=0;
 				if ($anex_estado<4)
-				{	/*
-			          * Incluir manejo de seguridad de imagenes
-			          * para que el link no muestre la ruta completa
-			          * @author Liliana Gomez Velasquez
-			          * @since 10 noviembre 2009
-			          */
-
-				    echo "<a class=vinculos href=javascript:radicarArchivo('$coddocu','$linkarchivo','$cod_radi',".$rs->fields["SGD_PNUFE_CODI"].",'','',$numextdoc)>Re-Generar</a>"; 
-		    		$radicado = "true";
+				{
+				 echo "<a class=vinculos href=javascript:radicarArchivo('$coddocu','$linkarchivo','$cod_radi',".$rs->fields["SGD_PNUFE_CODI"].",'','',$numextdoc)>Re-Generar</a>"; 
+		     $radicado = "true";
 		}	}	}
 		else if ( $rs->fields["SGD_PNUFE_CODI"]  && ($usua_perm_numera_res==1) && $ruta_raiz != ".." && !$rs->fields["SGD_DOC_SECUENCIA"] && strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0) // SI ES PAQUETE DE DOCUMENTOS Y EL USUARIO TIENE PERMISOS
 			{	/*
@@ -576,7 +495,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 	  		if($rs->fields["RADI_NUME_SALIDA"]) {$radicado="true";}
 		?>
 		</font>
-		</td>
+		</small></td>
 		
 	<?
 	}else { 
@@ -586,14 +505,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 		<?php
 		if ( $origen!=1  and $linkarchivo and $perm_borrar_anexo == 1 && $anexTipo == 4 )
 		{
-			/*
-			   * Incluir manejo de seguridad de imagenes
-			   * @author Liliana Gomez Velasquez
-			   * @since 10 noviembre 2009
-			  */
-
 			   $v = $rs->fields["SGD_PNUFE_CODI"];
-
 			   echo "<a class=\"vinculoTipifAnex\" href=\"#\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> Borrar </a>";
 		}
 		if ( $perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == '' ) 
@@ -611,7 +523,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 
 	?>
 	</font>
-	</td>
+	</small></td>
 		
 	<?php
 	
@@ -641,31 +553,17 @@ if($verradPermisos == "Full")
 <br>
 <table  width="100%" align="center" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr align="center">
-     <td >
-          <? if ($permRespuesta == 1) { ?>
-                    <a class="titulos5" href="javascript:respuestaTx2()"> Respuesta en PDF</a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
+     <td ><small>
+		<? if ($permRespuesta == 1) { ?>
+			<a class="titulos5" href="javascript:respuestaTx2()"> Respuesta en PDF</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;
      <? } ?>
      <a class="vinculos" href='javascript:nuevoArchivo(<? if ( $num_archivos==0 && $swRadDesdeAnex==false)  echo "1"; else echo "0";  ?>)' class="timpar">
 Anexar Archivo</a>
-      </td>
-      
+      </small></td>
     <script>
     	 swradics=<?=$num_archivos?>;
     </script>
-    <?
-	/* Anexar plantillas, keda por ahora aplazado el proyecto
-	<td class="celdaGris"> <a href='javascript:Plantillas(0)' class="timparr">Anexar
-      Plantilla ...</a>
-      <!-- <a href='plantilla.php?<?=SID ?>'>Anexar Plantilla ... </a> </td>-->
-    </TD>
-
-    <td class="celdaGris"> <a href='javascript:Plantillas_pb(0)' class="timparr">A</a>
-      <!-- <a href='plantilla.php?<?=SID ?>'>Anexar Plantilla ... </a> </td>-->
-    </TD>
-	*/
-
-	?>
   </tr>
 </table>
    <?
