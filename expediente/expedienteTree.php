@@ -72,10 +72,24 @@ ini_set("display_errors",1);
 				<ul>
 				<?
 					foreach($arrPredios as $key => $valor){
+					  $isqlPredio = "SELECT *
+							FROM LOTE4686
+							WHERE chip = '".$valor->chip."' ";
+					    $rsPredio = $db->conn->Execute($isqlPredio);
+					    if($rsPredio){
+					      $propietarios = $rsPredio->fields["PROPIETARIOS_ACTUALES"];
+					      $areaLeng = $rsPredio->fields["SHAPE_LENG"];
+					      $area = $rsPredio->fields["SHAPE_AREA"];
+					      $direccion = $rsPredio->fields["FUENTE_DIRECCION"];
+					      $matricula = $rsPredio->fields["MATRICULA_INMOBILIARIA"];
+					      $avaluoCatastral = $rsPredio->fields["AVALUO_CATASTRAL_TERRENO"];
+					      $avaluoComercial = $rsPredio->fields["AVALUO_COMERCIAL"];
+					    
+					    }
 					?>
 				<li style="display:none">
-				  <a href="http://localhost/orfeoNew/verradicado.php?verrad=<?=$verrad?>&<?=session_name()?>=<?=session_id()?>&nomcarpeta=<?=nomcarpeta?>&prediosExp=<?=$predios?>#tabs-gis">
-					<?="Chip : ".$valor->chip; ?>
+				  <a href="verradicado.php?verrad=<?=$verrad?>&<?=session_name()?>=<?=session_id()?>&nomcarpeta=<?=nomcarpeta?>&prediosExp=<?=$predios?>#tabs-gis">
+					<?="Chip : ".$valor->chip; ?> - <?="Propietarios : ".$propietarios ?> - <?="Direccion : ".$direccion ?>  - <?="Matricula : ".$matricula ?> - <?="Area : ".$area ?> - <?="Avaluo : ".number_format($avaluoCatastral) ?>- <?="A. Comercial : ".number_format($avaluoComercial) ?>
 					</a>
 				</li>	
 				<?
