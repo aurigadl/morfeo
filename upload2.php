@@ -73,7 +73,7 @@ $lnr         = 11+$ln;
             $auxnumero=substr($codigo,-4);
             $codigo=trim($numrad).trim(str_pad($auxnumero,5,"0",STR_PAD_LEFT));
         }
-
+l.
         if($radicado_salida)
         {	$anex_salida = 1;	}
         else

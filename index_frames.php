@@ -346,7 +346,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <a href="#" onclick="return false;">Editor Flujos</a>
                         <ul class="dropdown-menu">
                           <li><a href='./Administracion/flujos/texto_version2/creaProceso.php?<?=$phpsession ?>&accion=1' class="vinculos" target='mainFrame'>Crear Proceso</a></li>
-                          <li><a href='./Administracion/flujos/texto_version2/seleccionaProceso.php?<?=$phpsession ?>&accion=1' class="vinculos" target='mainFrame'>Editar Flujo</a></li>
+                          <li><a href='./Administracion/flujos/texto_version2/seleccionaProceso.php?<?=$phpsession ?>&accion=2' class="vinculos" target='mainFrame'>Editar Flujo</a></li>
                         </ul>
                       </li>
                       <?php }

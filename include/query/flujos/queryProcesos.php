@@ -41,7 +41,8 @@ switch ( $db->driver ) {
 		         order by $codDescrip
 				 ";
 				
-		$sqlSerie = "select SGD_SRD_CODIGO, SGD_SBRD_CODIGO from sgd_pexp_procexpedientes where sgd_pexp_codigo = $procesoSelected";
+		$sqlSerie = "select SGD_SRD_CODIGO, SGD_SBRD_CODIGO 
+		       from sgd_pexp_procexpedientes where sgd_pexp_codigo = $procesoSelected";
 	
 
 ?>
