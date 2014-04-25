@@ -4,16 +4,15 @@
     <head>
         <title>Respuesta Rapida</title>
         <meta   http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link   href="../estilos/orfeo.css"           type="text/css"  rel="stylesheet" />
         <link   href="../estilos/jquery.treeview.css" type="text/css"  rel="stylesheet" />
         <link   href="../estilos/jquery-ui.css"       type="text/css"  rel="stylesheet" />
-        <script src="../js/jquery-1.8.3.min.js"       type="text/javascript"></script>
+        <script src="../js/libs/jquery-2.0.2.min.js"       type="text/javascript"></script>
         <script src='../js/jquery.form.js'            type="text/javascript" language="javascript"></script>
         <script src='../js/jquery.MetaData.js'        type="text/javascript" language="javascript"></script>
         <script src='../js/jquery.MultiFile.pack.js'  type="text/javascript" language="javascript"></script>
         <script src='../js/jquery.blockUI.js'         type="text/javascript" language="javascript"></script>
         <script src='../js/jquery.treeview.js'        type="text/javascript" language="javascript"></script>
-        <script src='../js/jquery-ui.js'              type="text/javascript" language="javascript"></script>
+        <script src='../js/libs/jquery-ui-1.10.4.js'              type="text/javascript" language="javascript"></script>
 
         <script language="javascript">
 
@@ -186,7 +185,7 @@
                 <tr>
                     <td colspan=2>
                         <table border="0" width="100%" align="center" cellspacing="0" cellpadding="0">
-                            <tr>
+     <!--                       <tr>
                                <td  class="listado1">Envio:</td>
                                <td  colspan="5"  class="listado1" >
                                 <input type="radio" value="1" checked="" name="medioRadicar"></input>
@@ -196,9 +195,10 @@
                                 <input type="radio" value="2" name="medioRadicar"></input>
                                   Envio Fisico y electronico
                                </td>
-                            </tr>
+                            </tr> -->
                             <tr>
-                               <td class="titulos">Adjuntar</td>
+                               
+                               <td class="titulos">Adjuntar <input type="hidden" value="2" name="medioRadicar"></td>
                                <td colspan=2>
                                   <input class="select_resp" name="archs[]" type="file" id="T7" accept="<!--{$extn}-->"/>
                                   <div id="T7-list" class="select_resp" ></div>

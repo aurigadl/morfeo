@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.20, created on 2014-04-03 20:36:17
+<?php /* Smarty version 2.6.20, created on 2014-04-25 07:39:12
          compiled from salidaRespuesta.tpl */ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -6,6 +6,8 @@
         <title>Respuesta Rapida</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link href="../estilos/orfeo.css" type="text/css"  rel="stylesheet" />
+        <?php echo $this->_tpl_vars['estilosCaliope']; ?>
+
         <style type="text/css">
 
             HTML, BODY{

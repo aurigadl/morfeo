@@ -1,9 +1,10 @@
 <?
 $verrad = $radicado;
 if(!$verradicado) $verradicado = $verrad;
+if(!$verradicado) $verradicado = $numrad;
 include "../ver_datosrad.php";
 
-$plan_plantilla = str_replace("RAD_E_PADRE",$radicado_p, $plan_plantilla);
+$plan_plantilla = str_replace("RAD_E_PADRE",$radi_fech_radi, $plan_plantilla);
 $plan_plantilla = str_replace("CTA_INT",$cuentai, $plan_plantilla);
 $plan_plantilla = str_replace("ASUNTO",$ra_asun, $plan_plantilla);
 $plan_plantilla = str_replace("F_RAD_E",$fecha_e, $plan_plantilla);
@@ -33,7 +34,7 @@ $plan_plantilla = str_replace("MAIL_E",$mail_us3, $plan_plantilla);
 $plan_plantilla = str_replace("NIT_E",$cc_documento_us3, $plan_plantilla);
 $plan_plantilla = str_replace("NUIR_E",$nuir_e, $plan_plantilla);
 // $plan_plantilla = str_replace("F_RAD_S",$fecha_hoy_corto, $plan_plantilla);
-$plan_plantilla = str_replace("RAD_E",$radicado_p, $plan_plantilla);
+$plan_plantilla = str_replace("RAD_E",$verrad, $plan_plantilla);
 $plan_plantilla = str_replace("SAN_RADICACION",$radicado_p, $plan_plantilla);			 
 $plan_plantilla = str_replace("SECTOR",$sector_nombre, $plan_plantilla);
 $plan_plantilla = str_replace("NRO_PAGS",$radi_nume_hoja, $plan_plantilla);
@@ -59,8 +60,8 @@ $plan_plantilla = str_replace("DEPE_CODI",$dependencia, $plan_plantilla);
 $plan_plantilla = str_replace("DEPENDENCIA",$dependencia, $plan_plantilla);
 $plan_plantilla = str_replace("DEPENDENCIA_NOMBRE",$dependencia_nombre, $plan_plantilla);
 $plan_plantilla = str_replace("NOM_R",$nombret_us1_u, $plan_plantilla);
-$plan_plantilla = str_replace("F_RAD",$fecha_hoy_corto, $plan_plantilla);
-// $plan_plantilla = str_replace("RAD_S",$rad_salida, $plan_plantilla);
+//$plan_plantilla = str_replace("F_RAD_S",$fecha_hoy_corto, $plan_plantilla);
+//$plan_plantilla = str_replace("RAD_S",$rad_salida, $plan_plantilla);
 $plan_plantilla = str_replace("DEPTO_R",$dpto_nombre_us1, $plan_plantilla);
 $plan_plantilla = str_replace("MPIO_R",$muni_nombre_us1, $plan_plantilla);
 $plan_plantilla = str_replace("RAD_ASUNTO",$ra_asun, $plan_plantilla);
@@ -68,5 +69,6 @@ $plan_plantilla = str_replace("LOGINORFEO",$krd, $plan_plantilla);
 $plan_plantilla = str_replace("DIR_R",$direccion_us1, $plan_plantilla);
 $plan_plantilla = str_replace("DEPENDENCIAORFEO",$dependencia, $plan_plantilla);
 $plan_plantilla = str_replace("DEPE_CODI",$dependencia, $plan_plantilla);
+
 
 ?>

@@ -1,7 +1,7 @@
 <?php
     session_start();
-    error_reporting(E_ALL);
-		ini_set('display_errors', '1');
+    //error_reporting(E_ALL);
+		//ini_set('display_errors', '1');
     set_time_limit(0);
     if($_SESSION["krd"]){
         $krd = $_SESSION["krd"];
@@ -12,8 +12,9 @@
 
     $dependencia = $_SESSION["dependencia"] * 1 ;
     
-	$ruta_raiz = "../";
-    require_once($ruta_raiz."include/db/ConnectionHandler.php");
+	  $ruta_raiz = "..";
+	  include $ruta_raiz."/htmlheader.inc.php";
+    require_once($ruta_raiz."/include/db/ConnectionHandler.php");
 
     $db      = new ConnectionHandler("$ruta_raiz");
     $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);                 
@@ -111,6 +112,7 @@
 	$smarty->assign("nurad"	    , $nurad);
 	$smarty->assign("sali"      , $sali);
 	$smarty->assign("salida"    , $salida);
+	$smarty->assign("estilosCaliope"    ,$estilosCaliope);
 	$smarty->assign("sid"	    , SID); //Envio de session por get
 	$smarty->assign("dependencia"	, $dependencia); //Envio de session por get
 
