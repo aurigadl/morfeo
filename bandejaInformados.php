@@ -251,7 +251,7 @@ $_SESSION['numExpedienteSelected'] = null;
                   while(!$rs->EOF){
 
                     $numeroRadicado        = $rs->fields["HID_RADI_NUME_RADI"];
-                    $fechaRadicado         = $rs->fields["HID_RADI_FECH_RADI"];
+                    $fechaRadicado         = $rs->fields["DAT_FECHA RADICADO"];
                     $asuntoRadicado        = $rs->fields["ASUNTO"];
                     $remitenteRadicado     = $rs->fields["REMITENTE"];
                     $tipoDocumentoRadicado = $rs->fields["TIPO DOCUMENTO"];

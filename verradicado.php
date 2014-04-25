@@ -290,6 +290,7 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 	}
 }else {echo "<center><b><span class='eerrores'>NO TIENE AUTORIZACION PARA INGRESAR</span><BR><span class='eerrores'><a href='login.php' target=_parent>Por Favor intente validarse de nuevo. Presione aca!</span></a>";}
 
+if($verradPermisos=="Full"){
 ?>
     <table width=100% ><tr><td width=50%> </td><td width=300> <td>
 			<div  width=100>
@@ -311,13 +312,17 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 				<div>
 				<label class="select" >
 				<?
+	
 					include "./tx/txOrfeo.php";
 				?>
 				</div>
 				</label>
-				
+
 	</td></tr>
 	</table>
+		<?php
+	}
+	?>
    </form>               
 <!-- row -->
 
