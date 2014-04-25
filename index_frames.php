@@ -57,7 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $enlace         = "href=\"cuerpo.php?$phpsession&adodb_next_page=1&fechah=";
   $enlace1        = "href=\"cuerpoAgenda.php?$phpsession&agendado=1&fechah=";
   $enlace2        = "href=\"cuerpoAgenda.php?$phpsession&agendado=2&fechah=";
-  $enlace3        = "href=\"cuerpoinf.php?$phpsession&<?=mostrar_opc_envio=1&orderNo=2&fechaf=$fechah&
+  $enlace3        = "href=\"bandejaInformados.php?$phpsession&<?=mostrar_opc_envio=1&orderNo=2&fechaf=$fechah&
                      carpeta=8&nomcarpeta=Informados&orderTipo=desc&adodb_next_page=1\"";
   $enlace4        = "href=\"tx/cuerpoInfConjunto.php?$phpsession&mostrar_opc_envio=1&orderNo=2&fechaf=$fechah&
                      carpeta=66&nomcarpeta=Informados&orderTipo=desc&adodb_next_page=1\"";
