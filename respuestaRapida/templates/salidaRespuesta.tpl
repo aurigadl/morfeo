@@ -4,6 +4,7 @@
         <title>Respuesta Rapida</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link href="../estilos/orfeo.css" type="text/css"  rel="stylesheet" />
+        <!--{$estilosCaliope}-->
         <style type="text/css">
 
             HTML, BODY{

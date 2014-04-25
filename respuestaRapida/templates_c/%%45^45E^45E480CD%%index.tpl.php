@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.20, created on 2014-04-09 11:14:51
+<?php /* Smarty version 2.6.20, created on 2014-04-25 07:16:09
          compiled from index.tpl */ ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -6,16 +6,15 @@
     <head>
         <title>Respuesta Rapida</title>
         <meta   http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link   href="../estilos/orfeo.css"           type="text/css"  rel="stylesheet" />
         <link   href="../estilos/jquery.treeview.css" type="text/css"  rel="stylesheet" />
         <link   href="../estilos/jquery-ui.css"       type="text/css"  rel="stylesheet" />
-        <script src="../js/jquery-1.8.3.min.js"       type="text/javascript"></script>
+        <script src="../js/libs/jquery-2.0.2.min.js"       type="text/javascript"></script>
         <script src='../js/jquery.form.js'            type="text/javascript" language="javascript"></script>
         <script src='../js/jquery.MetaData.js'        type="text/javascript" language="javascript"></script>
         <script src='../js/jquery.MultiFile.pack.js'  type="text/javascript" language="javascript"></script>
         <script src='../js/jquery.blockUI.js'         type="text/javascript" language="javascript"></script>
         <script src='../js/jquery.treeview.js'        type="text/javascript" language="javascript"></script>
-        <script src='../js/jquery-ui.js'              type="text/javascript" language="javascript"></script>
+        <script src='../js/libs/jquery-ui-1.10.4.js'              type="text/javascript" language="javascript"></script>
 
         <script language="javascript">
 
@@ -204,7 +203,7 @@
                 <tr>
                     <td colspan=2>
                         <table border="0" width="100%" align="center" cellspacing="0" cellpadding="0">
-                            <tr>
+     <!--                       <tr>
                                <td  class="listado1">Envio:</td>
                                <td  colspan="5"  class="listado1" >
                                 <input type="radio" value="1" checked="" name="medioRadicar"></input>
@@ -214,9 +213,10 @@
                                 <input type="radio" value="2" name="medioRadicar"></input>
                                   Envio Fisico y electronico
                                </td>
-                            </tr>
+                            </tr> -->
                             <tr>
-                               <td class="titulos">Adjuntar</td>
+                               
+                               <td class="titulos">Adjuntar <input type="hidden" value="2" name="medioRadicar"></td>
                                <td colspan=2>
                                   <input class="select_resp" name="archs[]" type="file" id="T7" accept="<?php echo $this->_tpl_vars['extn']; ?>
 "/>

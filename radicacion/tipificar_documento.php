@@ -214,15 +214,17 @@ if($seriesVistaTodos!=1){
 <html>
 <head>
 <title>Tipificar Documento</title>
-<link href="../estilos/orfeo.css" rel="stylesheet" type="text/css">
+<?php
+include $ruta_raiz."/htmlheader.inc.php";
+?>
 <script>
 function regresar(){   	
 	document.TipoDocu.submit();
 }
 </script>
 </head>
-<body bgcolor="#FFFFFF">
-<form method="GET" action="<?=$encabezadol?>" name="TipoDocu"> 
+<body >
+<form method="GET" action="<?=$encabezadol?>" name="TipoDocu" class=smart-form> 
 
 <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
 <input type='hidden' name='nurad'               value='<?=$nurad?>'> 
@@ -232,15 +234,15 @@ function regresar(){
 <input type='hidden' name='ind_ProcAnex'        value='<?=$ind_ProcAnex?>'> 
 
 
-    <table border=0 width=70% align="center" class="borde_tab" cellspacing="0">
-	  <tr align="center" class="titulos2">
-	    <td height="15" class="titulos2">CUADRO DE CLASIFICACION DOCUMENTAL - Radicado No <?=$nurad?></td>
+    <table border=0 width=70% align="center" class="table table-bordered" cellspacing="0">
+	  <tr align="center" >
+	    <td height="15" >CUADRO DE CLASIFICACION DOCUMENTAL - Radicado No <?=$nurad?></td>
       </tr>
 	 </table> 
- 	<table width="70%" border="0" cellspacing="1" cellpadding="0" align="center" class="borde_tab">
+ 	<table width="70%" border="0" cellspacing="1" cellpadding="0" align="center" class="table table-bordered">
       <tr >
-	  <td class="titulos5" >SERIE</td>
-	  <td class=listado5 >
+	  <td  >SERIE</td>
+	  <td  >
         <?php
   
     if(!$tdoc) $tdoc = 0;
@@ -278,8 +280,8 @@ function regresar(){
       </td>
      </tr>
    <tr>
-     <td class="titulos5" >SUBSERIE</td>
-	 <td class=listado5 >
+     <td  >SUBSERIE</td>
+	 <td  >
 	<?php
 	$nomb_varc = "su.sgd_sbrd_codigo";
 	$nomb_varde = "su.sgd_sbrd_descrip";
@@ -306,8 +308,8 @@ function regresar(){
      </td>
      </tr>
    <tr>
-     <td class="titulos5" >TIPO DE DOCUMENTO</td>
- 	 <td class=listado5 >
+     <td  >TIPO DE DOCUMENTO</td>
+ 	 <td  >
 <?php
 	$nomb_varc = "t.sgd_tpr_codigo";
 	$nomb_varde = "t.sgd_tpr_descrip";
@@ -335,17 +337,17 @@ function regresar(){
     </tr>
    </table>
 <br>
-	<table border=0 width=70% align="center" class="borde_tab">
+	<table border=0 width=70% align="center" class="table table-bordered">
 	  <tr align="center">
-		<td width="33%" height="25" class="listado2" align="center">
+		<td width="33%" height="25"  align="center">
          <center><input name="insertar_registro" type=submit class="botones_funcion" value=" Insertar "></center></TD>
-		 <td width="33%" class="listado2" height="25">
+		 <td width="33%"  height="25">
 	 <center><input name="actualizar" type="button" class="botones_funcion" id="envia23" onClick="procModificar();"value=" Modificar "></center></TD>
-        <td width="33%" class="listado2" height="25">
+        <td width="33%"  height="25">
 		 <center><input name="Cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar();window.close();"value="Cerrar"></center></TD>
 	   </tr>
 	</table>
-	<table width="70%" border="0" cellspacing="1" cellpadding="0" align="center" class="borde_tab">
+	<table width="70%" border="0" cellspacing="1" cellpadding="0" align="center" class="table table-bordered">
 	  <tr align="center">
 	    <td>
 		<?php

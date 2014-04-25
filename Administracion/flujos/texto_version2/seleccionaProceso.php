@@ -32,9 +32,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   if($_POST["tsub"]) $tsub = $_POST["tsub"];
   if($_GET["accion"]) $accion = $_GET["accion"];
 
+  echo $accion;
   include "$ruta_raiz/config.php";
   include_once "$ruta_raiz/include/db/ConnectionHandler.php";
   $db = new ConnectionHandler( "$ruta_raiz" );
+  $db->conn->debug = true;
   if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
   $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
@@ -49,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     $action =  'creaEtapa.php?&crear=0';
   }elseif ( $accion == 3 ) {
     $tituloCrear = "Consulta de flujo - seleccionar Proceso";
-    $action =  'modEtapas.php';
+    $action =  'basico/modEtapas.php';
   }
 ?>
 

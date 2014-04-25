@@ -1,5 +1,6 @@
 <?php
 session_start();
+//ini_set("display_errors",1);
 
     $ruta_raiz = ".";
     if (!$_SESSION['dependencia'])
@@ -42,6 +43,7 @@ $lnr         = 11+$ln;
 
     if (!$db)	$db = new ConnectionHandler($ruta_raiz);
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
+    //$db->conn->debug = true;
     $anex       = & new Anexo($db);
     $anexTip    = & new Anex_tipo($db);
 
@@ -71,7 +73,7 @@ $lnr         = 11+$ln;
             $auxnumero=substr($codigo,-4);
             $codigo=trim($numrad).trim(str_pad($auxnumero,5,"0",STR_PAD_LEFT));
         }
-
+l.
         if($radicado_salida)
         {	$anex_salida = 1;	}
         else
@@ -150,7 +152,7 @@ $lnr         = 11+$ln;
                          ,$anex_salida
                          ,$radicado_rem
                          ,$dependencia
-                         ,null
+                         ,0
                          ,$sqlFechaHoy
                          ,$aplinteg    
                          ,$tpradic

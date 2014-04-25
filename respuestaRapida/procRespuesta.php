@@ -18,7 +18,7 @@
     $ruta_libs = $ruta_raiz."/respuestaRapida/";
     define('ADODB_ASSOC_CASE', 0);
     define('SMARTY_DIR', $ruta_libs . 'libs/');
-
+    $fecharad = date("Y-m-d h:i");
     //formato para fecha en documentos
     function fechaFormateada($FechaStamp){
         $ano = date('Y', $FechaStamp); //<-- Ano
@@ -122,6 +122,7 @@
 
     $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
     $anexTip->anex_tipo_codigo(7);
+    //$db->conn->debug = true;
     $sqlFechaHoy      = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
     $numRadicadoPadre = $_POST["radPadre"];
 
@@ -496,10 +497,10 @@
                                 1,
                                 $radicado_rem,
                                 $coddepe,
-                                NULL,
+                                0,
                                 $sqlFechaHoy,
                                 NULL,
-                                1,
+                                0,
                                 $nurad,
                                 $medioRadicar,
                                 NULL)";
@@ -514,6 +515,7 @@
 // REMPLAZAR DATOS EN EL ASUNTO
 ***********************************************/
     //REMPLAZO DE DATOS
+    $asu = str_replace("F_RAD_S", $fecharad, $asu);
     $asu = str_replace("RAD_S", $nurad, $asu);
     $asu = str_replace("\xe2\x80\x8b", '', $asu);
 
@@ -546,7 +548,9 @@
       // Position at 15 mm from bottom
       $this->SetY(-20);
       // Page number
-            $txt = "<div align='center'> Carrera 13 No. 32- 76 Bogot&aacute;, D.C., Colombia PBX (57-1) 330 50 00 www.minsalud.gov.co";
+      include "../config.php";
+
+            $txt = "<div align='center'> $entidad_dir Contacto: <?=$entidad_tel?>";
             $this->writeHTMLCell($w=0, $h=3, $x='32', $y='', $txt, $border=0, $ln=1, $fill=0, $reseth=true);
     }
   }
