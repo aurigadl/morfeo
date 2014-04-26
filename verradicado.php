@@ -325,7 +325,7 @@ if($verradPermisos=="Full"){
 	?>
    </form>               
 <!-- row -->
-
+ <input type=hidden name=reftab id=reftab >
 	<div class="well well-sm well-light">
 		<div id="tabs">
 			<ul>
@@ -350,6 +350,7 @@ if($verradPermisos=="Full"){
 				  
 			</ul>
 			<ul>
+			
 			<div id="tabs-a">
 					<?php include "lista_general.php"; ?>
 			</div>
@@ -379,6 +380,7 @@ if($verradPermisos=="Full"){
 	$('#tabs').tabs();
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
         window.location.href = ui.newTab.find('a.ui-tabs-anchor').attr('href');
+
     } );
 
 	// Dynamic tabs

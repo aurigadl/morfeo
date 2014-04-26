@@ -45,22 +45,22 @@ unset($frm);
 				if($usuaPermExpediente || !$numExpediente) {
 					?>
 					<li>
-						<a href="#" onClick="insertarExpediente();">Incluir en...</a>
+						<a  onClick="insertarExpediente();">Incluir en...</a>
 					</li>
 					<li>
-						<a href="#" onClick="excluirExpediente();">Excluir de...</a>
+						<a onClick="excluirExpediente();">Excluir de...</a>
 					</li>
 					<li>
-						<a href="#" onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
+						<a  onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
 					</li>
 					<li>
-						<a href="#" onClick="Responsable('<?=$num_expediente?>');">Cambiar Responsable</a>
+						<a onClick="Responsable('<?=$num_expediente?>');">Cambiar Responsable</a>
 					</li>
 					<li>
-						<a href="#" onClick="CambiarE(2,'<?=$num_expediente?>');">Cerrar Expediente</a>
+						<a  onClick="CambiarE(2,'<?=$num_expediente?>');">Cerrar Expediente</a>
 					</li>
 					<li>
-						<a href="#" onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
+						<a  onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
 					</li>
 
 					<?
@@ -194,13 +194,13 @@ if ( $expIncluido != "" ) {
       <ul class="dropdown-menu">
        <?  if($usuaPermExpediente) { ?>
         <li>
-          <a href="#" onClick="verHistExpediente('<?=$numExpediente?>');">Historial del Proceso/Exp</a>
+          <a onClick="verHistExpediente('<?=$numExpediente?>');">Historial del Proceso/Exp</a>
         </li>
         <li>
-           <a href="#" onClick="verWorkFlow('<?=$numExpediente?>','<?=$texp?>');">Ver WorkFlow</a>
+           <a  onClick="verWorkFlow('<?=$numExpediente?>','<?=$texp?>');">Ver WorkFlow</a>
         </li>
         <li>
-          <a href="#" onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
+          <a onClick="crearProc('<?=$num_expediente?>');">Adicionar Proceso</a>
         </li>
        <?  } ?>
       </ul>
@@ -295,7 +295,7 @@ if($descPExpediente){
 	if( $frms == 1){
 	?>
 	<span class="dropdown">
- 	 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><small><?=ucwords(strtolower($descFldExp))?></small>
+ 	 <a class="dropdown-toggle" data-toggle="dropdown" ><small><?=ucwords(strtolower($descFldExp))?></small>
 		<b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu dropdown-menu-large row">
@@ -303,7 +303,7 @@ if($descPExpediente){
 		foreach($frm as $arista){
 	?>
 			<li>
-				<a href="#" onClick="window.open('<?=$arista["FRM_LINK"]?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=trim($arista["FRM_NOMBRE"])?>
+				<a onClick="window.open('<?=$arista["FRM_LINK"]?>','frm<?=date('ymdhis')?>','fullscreen=yes, scrollbars=auto')"><?=trim($arista["FRM_NOMBRE"])?>
 				</a>
 			</li>  
 	<?php
