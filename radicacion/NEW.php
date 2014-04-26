@@ -220,7 +220,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     if(!$Buscar and !$Submit4){
       $varQuery = $query;
       $comentarioDev = 'Entro a Anexar un radicado ';
-      $cuentaii =$rs->fields["RADI_CUENTAI"];
+      $cuentaii = $rs->fields["RADI_CUENTAI"];
       if($cuentaii){$cuentai=$cuentaii;}
       $pnom=$rs->fields["RADI_NOMB"];
       $papl     = $rs->fields["RADI_PRIM_APEL"];
@@ -316,7 +316,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </h1>
         </div>
 
-
         <div class="col-lg-8 smart-form">
             <input type='hidden' name=radicadopadre value='<?=$radicadopadre ?>'>
             <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
@@ -403,21 +402,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <section class="col col-2">
                           <label class="input">
                             <i class="icon-prepend fa fa-search"></i>
-                            <INPUT type=text id='nombre_us' name='nombre_us' placeholder="Nombre">
+                            <INPUT type=text id='nombre_us' name='nombre_us' value="" placeholder="Nombre">
                           </label>
                         </section>
 
                         <section class="col col-2">
                           <label class="input">
                             <i class="icon-prepend fa fa-search"></i>
-                            <input type=text name='telefono_us' placeholder="Tel&eacute;fono">
+                            <input type=text id='telefono_us' name='telefono_us' value="" placeholder="Tel&eacute;fono">
                           </label>
                         </section>
 
                         <section class="col col-2">
                           <label class="input">
                             <i class="icon-prepend fa fa-search"></i>
-                            <INPUT type=text name='mail_us' placeholder="Correo Electronico">
+                            <INPUT type=text id='mail_us' name='mail_us' value="" placeholder="Correo Electronico">
                           </label>
                         </section>
 
@@ -438,16 +437,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                           <tr>
                             <th></th>
                             <th>Documento</th>
-                            <th>Nombre</th>
-                            <th>1er Apellido</th>
-                            <th>2do Apellido</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
                             <th>Telefono</th>
                             <th>Direcci&oacute;n</th>
                             <th>Correo Electronico</th>
-                            <th>Dignatario</th>
+                            <th>Ubicaci&oacute;n</th>
                             <th>Pais</th>
-                            <th>Departamento</th>
-                            <th>Municipio</th>
                           </tr>
                         </thead>
                         <tbody id="tableshow"> </tbody>
@@ -1271,24 +1267,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       //Deja en blanco los campos de busqueda al seleccionar
       //un nuevo usuario.
       $("#tipo_ususario").on('change',function(){
-        $('#documento_us, #nombre_us').val("").parent().removeClass('state-success state-error');
+        $('#documento_us, #nombre_us, #telefono_us, #mail_us').val("").parent().removeClass('state-success state-error');
         $('#resBusqueda').empty();
+        $('#showAnswer').addClass('hide');
       });
 
+      function uppFirs(txt){
+        return  txt.charAt(0).
+          toUpperCase() + txt.substr(1).
+          toLowerCase();
+      }
+
       //Valida los campos antes de ser enviados al servidor
-      function valida(objData){
-        var pass = false;
-        var min  = 3;
+      function validate(objData){
+        var pass     = false;
+        var min      = 3;
+        var allempty =
+            alldata  = 0;
 
         if(!$.isEmptyObject(objData)){
 
           $.each(objData, function(key, val) {
             var valdata = val.value;
-
+            alldata++;
             if((valdata.length < min && valdata.length != 0) || /^a-zA-Z0-9áéíóúÁÉÍÓÚÑñ ]+$/.test(valdata)){
               $('#' + objData[key].id).parent().removeClass('state-success').addClass('state-error');
+              delete objData[key];
             }else if (valdata.length == 0){
               $('#' + objData[key].id).parent().removeClass('state-success state-error');
+              delete objData[key];
+              allempty++;
             }else{
               $('#' + objData[key].id).parent().removeClass('state-error').addClass('state-success');
               pass = true;
@@ -1296,9 +1304,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           });
         }
 
+        if(alldata === allempty){
+          $('#resBusqueda').empty();
+          $('#showAnswer').addClass('hide');
+        }
+
         return pass;
 
       };
+
+
 
       function passDataToTable(iddata){
 
@@ -1308,8 +1323,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         tCell = $('<td>').html( "<td class='search-table-icon'>"
                                 + "<a href='javascript:void(0);' rel='tooltip'"
                                 + "data-placement='right' data-original-title='Eliminar Usuario'"
-                                + "class='txt-color-darken'><i class='fa fa-minus'></i>"
-                                + "</a>" +
+                                + "class='text-danger'><i class='fa fa-minus'></i>"
+                                + "</a>"
+                                + "<input class='hide' name='usuario' value='" + trTable.CODIGO +"'>" +
                                "</td>")
                 .on("click", function(){
                   var codUser = $(this).parent().remove();
@@ -1318,18 +1334,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   $('div[name="cod_'+ iddata +'"]').removeClass('hide');
                   $('#showAnswer').removeClass('hide');
 
-
                   if(tds === 0){
                     $('#tableSection').addClass('hide');
                   };
-                })
+                });
 
-        tRow.append(tCell)
+        tRow.append(tCell);
 
-        $.each(trTable, function(key, val) {
-          tCell = $('<td>').html(trTable[key]);
-          tRow.append(tCell)
-        });
+        tRow.append($('<td>').html(trTable.CEDULA));
+        tRow.append($('<td>').html(trTable.NOMBRE.replace(/\w\S*/g, uppFirs)));
+        tRow.append($('<td>').html(trTable.APELLIDO.replace(/\w\S*/g, uppFirs)));
+        tRow.append($('<td>').html(trTable.TELEF));
+        tRow.append($('<td>').html(trTable.DIRECCION.toLowerCase()));
+        tRow.append($('<td>').html(trTable.EMAIL.toLowerCase()));
+        tRow.append($('<td>').html(trTable.MUNIDEP.replace(/\w\S*/g, uppFirs)));
+        tRow.append($('<td>').html(trTable.PAIS.replace(/\w\S*/g, uppFirs)));
 
         $('table').append(tRow);
         $('#tableSection').removeClass('hide');
@@ -1340,25 +1359,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       //con formato.
       function formatAnswer(data){
         var dataformat;
-        var indiv = $('#resBusqueda');
+        var indiv   = $('#resBusqueda');
 
         indiv.empty();
 
         $.each(data, function(i){
 
-          var li = $('<li/>').appendTo(indiv);
+          var li     = $('<li/>').appendTo(indiv);
+          var nombre = data[i].NOMBRE.replace(/\w\S*/g, uppFirs);
+          var apell  = data[i].APELLIDO.replace(/\w\S*/g, uppFirs);
+          var codig  = data[i].CODIGO;
+          var direc  = data[i].DIRECCION.toLowerCase();
+          var telef  = data[i].TELEF;
+          var email  = data[i].EMAIL.toLowerCase();
+          var cedula = data[i].CEDULA;
 
-          var div = $('<div/>')
+          var div    = $('<div/>')
                 .addClass('well well-sm')
                 .html('<div  class="col col-12">'
                       + '<h6 class=" text-success semi-bold">'
-                      + data[i].cod
+                      + cedula
                       + ' <i class="fa fa-plus-square"></i>'
                       + '</h6>'
                     + '</div>'
-                    + '<strong>'   + data[i].nombre          + '</strong>'
-                    + '<p>'        + data[i].direccion       + '</p>'
-                    + '<p>'        + data[i].telefono        + '</p>')
+                    + '<div class="showdot176" ><b>'  + nombre +' '+ apell + '</b></div>'
+                    + '<div class="showdot176">'       + telef      + '</div>'
+                    + '<div class="showdot176">'       + email      + '</div>')
                 .attr('name', 'cod_' + i)
                 .on("click", function(){
                   var codUser = $(this).attr('name').substring(4);
@@ -1379,23 +1405,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 })
                 .appendTo(li);
         });
-
         $('#showAnswer').removeClass('hide');
-
       };
 
       //Autocomplete busqueda de usuarios
-      $("#documento_us, #nombre_us").on('keyup', function () {
-        var data  = {}
+      $("#documento_us, #nombre_us, #telefono_us, #mail_us").on('keyup', function () {
+        var data  = {};
+
         data.docu = { value : $("#documento_us").val(), id : "documento_us"};
         data.name = { value : $("#nombre_us").val(),    id : "nombre_us"};
+        data.tele = { value : $("#telefono_us").val(),  id : "telefono_us"};
+        data.mail = { value : $("#mail_us").val(),      id : "mail_us"};
 
-        if(valida(data)){
+        if(validate(data)){
           data.tdoc = $("#tipo_ususario").val()
           $.post( "ajax_buscarUsuario.php", {search : JSON.stringify(data)}).done(
             function( data ) {
               ALLDATA = data;
-              formatAnswer( data );
+              if(data !== null){
+                formatAnswer( data );
+              }
             }
           );
         }

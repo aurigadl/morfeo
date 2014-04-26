@@ -8972,6 +8972,15 @@ tr.highlight td, tr.unread.highlight td {
     text-transform: uppercase;
     vertical-align: middle;
 }
+
+.showdot176{
+    overflow      : hidden;
+    text-overflow : ellipsis;
+    width         : 176px;
+    white-space   : nowrap;
+}
+
+
 .inbox-info-bar {
     border-bottom: 1px solid #BFBFBF;
     padding: 10px 0;
@@ -9000,9 +9009,9 @@ tr.highlight td, tr.unread.highlight td {
     vertical-align: top;
 }
 .inbox-download-list li > *:first-child {
-    margin-bottom: 0;
+    margin-bottom: 5px;
     overflow: hidden;
-    width: 150px;
+    width: 196px;
 }
 .inbox-download-list li > *:first-child:hover {
     background: none repeat scroll 0 0 #F4FCE7;
