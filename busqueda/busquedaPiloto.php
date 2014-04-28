@@ -128,77 +128,36 @@ $nomcarpeta  = $_GET["nomcarpeta"];
 
 </script>
 
-<body class="PageBODY" onLoad='document.getElementById("cajarad").focus();'>
-  <div class="col-sm-12">
-    <!-- widget grid -->
-    <section id="widget-grid">
-      <!-- row -->
-      <div class="row">
-        <!-- NEW WIDGET START -->
-        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <!-- Widget ID (each widget will need unique ID)-->
-          <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
-            <div>
-              <!-- widget content -->
-              <div class="widget-body no-padding">
-
-                  <table class="table table-bordered table-striped">
-                    <tr>
-                      <td valign="top">
-                        <?php Search_show() ?>
-                      </td>
-                      <td valign="top">
-                              </td>
-                    </tr>
-                  </table>
-
-                  <table class="table table-bordered table-striped">
-                    <tr>
-                      <td valign="top">
-                  <?php
-                  if($Busqueda or $s_entrada){
-                    if($s_Listado=="VerListado"){
-                      echo "<tr><td valign='top'>";
-                        if($flds_ciudadano=="CIU") $whereFlds .= "1,";
-                        if($flds_empresaESP=="ESP") $whereFlds .= "2,";
-                        if($flds_oEmpresa=="OEM") $whereFlds .= "3,";
-                        if($flds_FUNCIONARIO=="FUN") $whereFlds .= "4,";
-                        $whereFlds .= "0";
-                        Ciudadano_show($nivelus,9,$whereFlds);
-                        echo "</td></tr>";
+<body onLoad='document.getElementById("cajarad").focus();'>
+  <header class="page-title txt-color-blueDark"> </header>
+  <?php Search_show() ?>
+              <?php
+              if($Busqueda or $s_entrada){
+                if($s_Listado=="VerListado"){
+                    if($flds_ciudadano=="CIU") $whereFlds .= "1,";
+                    if($flds_empresaESP=="ESP") $whereFlds .= "2,";
+                    if($flds_oEmpresa=="OEM") $whereFlds .= "3,";
+                    if($flds_FUNCIONARIO=="FUN") $whereFlds .= "4,";
+                    $whereFlds .= "0";
+                    Ciudadano_show($nivelus,9,$whereFlds);
+                }
+                else{
+                  if (!$etapa)
+                    if($flds_ciudadano=="CIU"){
+                      Ciudadano_show($nivelus,1,1);
+                    }else{
+                      if(!strlen($flds_ciudadano)
+                        && !strlen($flds_empresaESP)
+                        && !strlen($flds_oEmpresa)
+                        && !strlen($flds_FUNCIONARIO)){
+                          Ciudadano_show($nivelus,9,1);
+                        }
                     }
-                      else{
-                          if (!$etapa)
-                              if($flds_ciudadano=="CIU"){
-                                    Ciudadano_show($nivelus,1,1);
-                                  }else{
-                        if(!strlen($flds_ciudadano)
-                            && !strlen($flds_empresaESP)
-                            && !strlen($flds_oEmpresa)
-                            && !strlen($flds_FUNCIONARIO)){
-                                    Ciudadano_show($nivelus,9,1);
-                                  }
-                                  }
-                          echo "</td></tr><tr><td valign='top'>";
-                          if($flds_empresaESP=="ESP") Ciudadano_show($nivelus,3,3);
-                          echo "</td></tr><tr><td valign='top'>";
-                          if($flds_oEmpresa=="OEM") Ciudadano_show($nivelus,2,2);
-                          echo "</td></tr><tr><td valign='top'>";
-                          if($flds_FUNCIONARIO=="FUN") Ciudadano_show($nivelus,4,4);
-                          echo "</td></tr>";
-                      }
-                  }
-                  ?>
-                  </table>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-  </div>
-</body>
-</html>
+                  if($flds_empresaESP=="ESP") Ciudadano_show($nivelus,3,3);
+                  if($flds_oEmpresa=="OEM") Ciudadano_show($nivelus,2,2);
+                  if($flds_FUNCIONARIO=="FUN") Ciudadano_show($nivelus,4,4);
+                }
+              } ?>
 <?php
 
 //===============================
@@ -318,17 +277,10 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <!-- Widget ID (each widget will need unique ID)-->
           <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
-
-            <header>
-              <h2>
-                Administracion de dependencias<br>
-                <small><?=$tituloCrear ?></small>
-              </h2>
-            </header>
             <!-- widget div-->
             <div>
               <!-- widget content -->
-              <div class="widget-body no-padding">
+              <div class="widget-body">
 
                   <table class="table table-bordered table-striped">
 
@@ -534,6 +486,13 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
                         </td>
                       </tr>
                     </table>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
 </form>
 
 <?php
@@ -548,8 +507,7 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 //===============================
 // Display Grid Form
 //-------------------------------
-function Ciudadano_show($nivelus, $tpRemDes, $whereFlds)
-{
+function Ciudadano_show($nivelus, $tpRemDes, $whereFlds) {
 //-------------------------------
 // Initialize variables
 //-------------------------------
@@ -658,327 +616,329 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
         case   24: $sOrder = " order by dir.sgd_dir_nombre" . $sDirection; break;
     }
   }
-
 //-------------------------------
 // Encabezados HTML de las Columnas (Titulos)
 //-------------------------------
- if ($indiVinculo != 2){?>
-	<table class="table table-bordered table-striped">
-	<?}else {?>
-	<table class="table table-bordered table-striped">
-	<?}?>
-	<tr>
-		<td class="titulos4" colspan="20"><a name="RADICADO"><?=$sFormTitle?></a></td>
-	</tr>
-	<tr>
-	<?
-	if ($indiVinculo >= 1)
-	{	?>
-		<td class="titulos5"><font class="ColumnFONT"> </td>
-	<?	}
-	 if ($indiVinculo != 2)
-	  {	?>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=1&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Radicado</a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=2&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Fecha Radicacion</a></td>
-        <td class="titulos5"><font class="ColumnFONT">Expediente</td>
-        <? } else	  {	?>
-	    <td class="titulos5"><font class="ColumnFONT">Expediente</td>
-        <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=1&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Radicado vinculado al expediente</a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=2&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Fecha Radicacion</a></td>
-          <? } ?>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=3&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Asunto</a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=4&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Tipo de Documento</a></td>
-		<td class="titulos5"><font class="ColumnFONT">Tipo</td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=5&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Numero de Hojas</a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=6&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Direccion contacto</a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=7&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Telefono contacto</a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=8&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Mail Contacto</a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=23&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Dignatario</a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=9&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Nombre </a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=14&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Documento</a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=15&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Usuario Actual</a></td>
-		<td class="titulos5"><font class="ColumnFONT">Dependencia Actual</td>
-		<td class="titulos5"><font class="ColumnFONT">Usuario Anterior</td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=20&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Pais</a></td>
-		<td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=21&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Dias Restantes</a></td>
-	</tr>
-<?
-
-//-------------------------------
-// Build WHERE statement
-//-------------------------------
-// Se crea la $ps_desde_RADI_FECH_RADI con los datos ingresados.
-//------------------------------------
-  $ps_desde_RADI_FECH_RADI = mktime(0,0,0,$_GET["s_desde_mes"],$_GET["s_desde_dia"],$_GET["s_desde_ano"]);
-  $ps_hasta_RADI_FECH_RADI = mktime(23,59,59,$_GET["s_hasta_mes"],$_GET["s_hasta_dia"],$_GET["s_hasta_ano"]);
-
-
-
-  if(strlen($ps_desde_RADI_FECH_RADI) && strlen($ps_hasta_RADI_FECH_RADI))
-  {
-    $HasParam = true;
-    $sWhere = $sWhere . $db->conn->SQLDate('Y-m-d','r.radi_fech_radi')." >= ".$db->conn->DBDate($ps_desde_RADI_FECH_RADI) ;
-    //$sWhere = $sWhere . "r.radi_fech_radi>=".$db->conn->DBTimeStamp($ps_desde_RADI_FECH_RADI) ; //by HLP.
-    $sWhere .= " and ";
-    $sWhere = $sWhere . $db->conn->SQLDate('Y-m-d','r.radi_fech_radi')." <= ".$db->conn->DBDate($ps_hasta_RADI_FECH_RADI) ;
-    //$sWhere = $sWhere . "r.radi_fech_radi<=".$db->conn->DBTimeStamp($ps_hasta_RADI_FECH_RADI); //by HLP.
-  }
-
-/* Se recibe la dependencia actual para busqueda */
-  $ps_RADI_DEPE_ACTU = $_GET["s_RADI_DEPE_ACTU"];
-  if(is_number($ps_RADI_DEPE_ACTU) && strlen($ps_RADI_DEPE_ACTU))
-    $ps_RADI_DEPE_ACTU = tosql($ps_RADI_DEPE_ACTU, "Number");
-  else
-    $ps_RADI_DEPE_ACTU = "";
-
-  if(strlen($ps_RADI_DEPE_ACTU))
-  {
-    if($sWhere != "")
-      $sWhere .= " and ";
-    $HasParam = true;
-    $sWhere = $sWhere . "r.radi_depe_actu=" . $ps_RADI_DEPE_ACTU;
-  }
-
- /* Se recibe el nmero del radicado para busqueda */
-  $ps_RADI_NUME_RADI = $_GET["s_RADI_NUME_RADI"];
-  if(!$ps_RADI_NUME_RADI) $ps_RADI_NUME_RADI="2";
-  $ps_DOCTO =  $_GET["s_DOCTO"];
-  if(strlen($ps_RADI_NUME_RADI))
-  {
-    if($sWhere != "")
-      $sWhere .= " and ";
-    $HasParam = true;
-    $sWhere = $sWhere . "cast(r.radi_nume_radi as varchar(15)) like " . tosql("%".trim($ps_RADI_NUME_RADI) ."%", "Text");
-  }
-
-    if(strlen($ps_DOCTO))
-  {
-    if($sWhere != "")
-      $sWhere .= " and ";
-    $HasParam = true;
-    $sWhere = $sWhere . " dir.SGD_DIR_DOC = '$ps_DOCTO' " ;
-  }
-
-  /**
-    * Se recibe el numero del expediente para busqueda
-    * Fecha de modificacion: 30-Junio-2006
-    * Modificador: Supersolidaria
-    */
-    $ps_SGD_EXP_SUBEXPEDIENTE = $_GET["s_SGD_EXP_SUBEXPEDIENTE"];
-    if( strlen( $ps_SGD_EXP_SUBEXPEDIENTE ) != 0 )
-    {
-        if( $sWhere != "" )
-        {
-            $sWhere .= " and ";
-        }
-        $HasParam = true;
-        $sWhere = $sWhere . " R.RADI_NUME_RADI = EXP.RADI_NUME_RADI";
-        $sWhere = $sWhere . " AND EXP.SGD_EXP_NUMERO = SEXP.SGD_EXP_NUMERO";
-        /**
-          * No se tienen en cuenta los radicados que han sido excluidos de un expediente.
-          * Fecha de modificacion: 12-Septiembre-2006
-          * Modificador: Supersolidaria
-          * Aqui se hace la consulta en los diferentes campos agregar campos si es nescesario
-          */
-  $sWhere = $sWhere . " AND EXP.SGD_EXP_ESTADO <> 2";
-  $sWhere = $sWhere . " AND ( EXP.SGD_EXP_NUMERO LIKE '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%'";
-  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP1 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
-  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP2 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
-  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP3 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
-  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP4 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
-  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP5 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
-  $sWhere = $sWhere . " )";
- }
-
-/* Se decide si busca en radicado de entrada o de salida o ambos */
-  $ps_entrada = strip($_GET["s_entrada"]);
-  $eLen = strlen($ps_entrada);
-  $ps_salida = strip($_GET["s_salida"]);
-  $sLen = strlen($ps_salida);
-
-  if($ps_entrada!="9999" ){
-    if($sWhere != "")
-      $sWhere .= " and ";
-    $HasParam = true;
-    $sWhere = $sWhere . "cast(r.radi_nume_radi as varchar(15)) like " . tosql("%".trim($ps_entrada), "Text");
-  }
-
-
-/* Se recibe el tipo de documento para la bsqueda */
-  $ps_TDOC_CODI = $_GET["s_TDOC_CODI"];
-  if(is_number($ps_TDOC_CODI) && strlen($ps_TDOC_CODI) && $ps_TDOC_CODI != "9999")
-    $ps_TDOC_CODI = tosql($ps_TDOC_CODI, "Number");
-  else
-    $ps_TDOC_CODI = "";
-  if(strlen($ps_TDOC_CODI))
-  {
-    if($sWhere != "")
-      $sWhere .= " and ";
-
-    $HasParam = true;
-    $sWhere = $sWhere . "r.tdoc_codi=" . $ps_TDOC_CODI;
-  }
- /* Se recibe la caadena a buscar y el tipo de busqueda (All) (Any) */
-  $ps_RADI_NOMB = strip($_GET["s_RADI_NOMB"]);
-  $ps_solo_nomb = $_GET["s_solo_nomb"];
-  $yaentro=false;
-  if(strlen($ps_RADI_NOMB)) //&& $ps_solo_nomb == "Any")
-  {
-    if($sWhere != "")
-      $sWhere .= " and (";
-	$HasParam=true;
-	$sWhere .= " ";
-
-	$ps_RADI_NOMB = strtoupper($ps_RADI_NOMB);
-	$tok = strtok($ps_RADI_NOMB," ");
-	$sWhere .= "(";
-	while ($tok) {
-		$sWhere .= "";
-		if ($yaentro == true ) {
-			$sWhere .= " and ";
-		}
-		$sWhere .= "UPPER(dir.sgd_dir_nomremdes) LIKE '%".$tok."%' ";
-	    $tok = strtok(" ");
-		$yaentro=true;
-	}
-	$sWhere .=") or (";
-	$tok = strtok($ps_RADI_NOMB," ");
-	$yaentro=false;
-	while ($tok) {
-		$sWhere .= "";
-		if ($yaentro == true ) {
-			$sWhere .= " and ";
-		}
-		$sWhere .= "UPPER(dir.sgd_dir_nombre) LIKE '%".$tok."%' ";
-	    $tok = strtok(" ");
-		$yaentro=true;
-	}
-	$sWhere .= ") or (";
-    $yaentro=false;
-$tok = strtok($ps_RADI_NOMB," ");
-if ($yaentro == true ) $sWhere .= " and (";
-
-$sWhere .= "UPPER(".$db->conn->Concat("r.ra_asun","r.radi_cuentai","dir.sgd_dir_telefono","dir.sgd_dir_direccion","r.radi_nume_guia") . ") LIKE '%".$ps_RADI_NOMB."%' ";
-   $tok = strtok(" ");
-if ($yaentro == true ) $sWhere .= ")";
-
-	$yaentro=true;
-	$sWhere .="))";
-
-  }
-
-  if(strlen($ps_RADI_NOMB) && $ps_solo_nomb == "AllTTT")
-  {
-    if($sWhere != "")
-		    $sWhere .= " AND (";
-    $HasParam=true;
-    $sWhere .= " ";
-
-    $ps_RADI_NOMB = strtoupper($ps_RADI_NOMB);
-    $tok = strtok($ps_RADI_NOMB," ");
-    $sWhere .= "(";
-      $sWhere .= "";
-      if ($yaentro == true ) {
-	      $sWhere .= " AND ";
-      }
-      $sWhere .= "UPPER(dir.sgd_dir_nomremdes) LIKE '%".$ps_RADI_NOMB."%' ";
-	      $tok = strtok(" ");
-      $yaentro=true;
-    $sWhere .=") OR (";
-    $tok = strtok($ps_RADI_NOMB," ");
-    $yaentro=false;
-      $sWhere .= "";
-      if ($yaentro == true ) {
-	      $sWhere .= " AND ";
-      }
-      $sWhere .= "UPPER(dir.sgd_dir_nombre) LIKE '%".$ps_RADI_NOMB."%' ";
-	      $tok = strtok(" ");
-      $yaentro=true;
-    $sWhere .= ") OR (";
-	    $yaentro=false;
-    $tok = strtok($ps_RADI_NOMB," ");
-    if ($yaentro == true ) $sWhere .= " AND (";
-	    $sWhere .= "UPPER(".$db->conn->Concat("r.ra_asun","r.radi_cuentai","dir.sgd_dir_telefono","dir.sgd_dir_direccion").") LIKE '%".$ps_RADI_NOMB."%' ";
-   echo " kkkk $ps_RADI_NOMB";
-   $tok = strtok(" ");
-   if ($yaentro == true ) $sWhere .= ")";
-	$yaentro=true;
-   $sWhere .="))";
-  }
-  if($HasParam)
-    $sWhere = " AND (" . $sWhere . ") ";
-
-//-------------------------------
-// Build base SQL statement - Construccion de consulta
-//-------------------------------
-require_once("../include/query/busqueda/busquedaPiloto1.php");
-
-$sSQL = "SELECT ".
-			$radi_nume_radi." AS RADI_NUME_RADI,".
-	        $db->conn->SQLDate('Y-m-d H:i:s','R.RADI_FECH_RADI')." AS RADI_FECH_RADI,
-			r.RA_ASUN,
-			td.sgd_tpr_descrip, ".
-			$redondeo." as diasr,
-			r.RADI_NUME_HOJA,
-			r.RADI_PATH,
-			dir.SGD_DIR_DIRECCION,
-			dir.SGD_DIR_MAIL,
-			dir.SGD_DIR_NOMREMDES,
-			dir.SGD_DIR_TELEFONO,
-			dir.SGD_DIR_DIRECCION,
-			dir.SGD_DIR_DOC,
-			r.RADI_USU_ANTE,
-			r.RADI_PAIS,
-			dir.SGD_DIR_NOMBRE,
-			dir.SGD_TRD_CODIGO,
-			r.RADI_DEPE_ACTU,
-			r.RADI_USUA_ACTU,
-			r.CODI_NIVEL,
-			r.SGD_SPUB_CODIGO";
-
-/**
-  * Busqueda por parameto del expediente
-  * Fecha de modificacion: 11-Agosto-2006
-  * Modificador: Supersolidaria
-  */
-if( strlen( $ps_SGD_EXP_SUBEXPEDIENTE ) != 0 )	$sSQL .= " ,EXP.SGD_EXP_NUMERO";
-
-$sSQL .= " FROM sgd_dir_drecciones dir, radicado r, sgd_tpr_tpdcumento td";
-
-/**
-  * Busqueda por expediente
-  * Fecha de modificacion: 30-Junio-2006
-  * Modificador: Supersolidaria
-  */
-if( strlen( $ps_SGD_EXP_SUBEXPEDIENTE ) != 0 )
-{
-    $sSQL .= ", SGD_EXP_EXPEDIENTE EXP, SGD_SEXP_SECEXPEDIENTES SEXP";
-}
-$sSQL .= " WHERE dir.sgd_dir_tipo = 1 AND dir.RADI_NUME_RADI=r.RADI_NUME_RADI AND r.TDOC_CODI=td.SGD_TPR_CODIGO";
-//-------------------------------
-// Assemble full SQL statement
-//-------------------------------
-$sSQL .= $sWhere . $whereTrd . $sOrder;
-//-------------------------------
-// Execute SQL statement
-//-------------------------------
-$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-$rs=$db->query($sSQL);
-
-$db->conn->SetFetchMode(ADODB_FETCH_NUM);
-
-//-------------------------------
-// Process empty recordset
-//-------------------------------
-  if($rs->EOF || !$rs)
-  {
 ?>
-     <tr>
-      <td colspan="20" class="alarmas">No hay resultados</td>
-     </tr>
-    <tr>
-     <td colspan="20" class="ColumnTD"><font class="ColumnFONT">
-  </table>
+  <div class="col-sm-12">
+    <!-- row -->
+    <div class="row">
+      <!-- NEW WIDGET START -->
+      <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <!-- Widget ID (each widget will need unique ID)-->
+        <div style="width: 100%; overflow-x: scroll;" class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+          <!-- widget content -->
+          <div style="width: 100%; overflow-x: scroll;" class="widget-body">
+
+              <table class="table table-bordered table-striped">
+              <tr>
+                <td class="titulos4" colspan="20"><a name="RADICADO"><?=$sFormTitle?></a></td>
+              </tr>
+              <tr>
+              <?
+              if ($indiVinculo >= 1) {	?>
+                <td class="titulos5"><font class="ColumnFONT"> </td>
+              <?	}
+              if ($indiVinculo != 2)
+                {	?>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=1&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Radicado</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=2&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Fecha Radicacion</a></td>
+                    <td class="titulos5"><font class="ColumnFONT">Expediente</td>
+                    <? } else	  {	?>
+                  <td class="titulos5"><font class="ColumnFONT">Expediente</td>
+                    <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=1&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Radicado vinculado al expediente</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=2&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Fecha Radicacion</a></td>
+                      <? } ?>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=3&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Asunto</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=4&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Tipo de Documento</a></td>
+                <td class="titulos5"><font class="ColumnFONT">Tipo</td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=5&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Numero de Hojas</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=6&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Direccion contacto</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=7&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Telefono contacto</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=8&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Mail Contacto</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=23&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Dignatario</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=9&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Nombre </a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=14&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Documento</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=15&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Usuario Actual</a></td>
+                <td class="titulos5"><font class="ColumnFONT">Dependencia Actual</td>
+                <td class="titulos5"><font class="ColumnFONT">Usuario Anterior</td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=20&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Pais</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=21&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Dias Restantes</a></td>
+              </tr>
+
+            <?
+              //-------------------------------
+              // Build WHERE statement
+              //-------------------------------
+              // Se crea la $ps_desde_RADI_FECH_RADI con los datos ingresados.
+              //------------------------------------
+              $ps_desde_RADI_FECH_RADI = mktime(0,0,0,$_GET["s_desde_mes"],$_GET["s_desde_dia"],$_GET["s_desde_ano"]);
+              $ps_hasta_RADI_FECH_RADI = mktime(23,59,59,$_GET["s_hasta_mes"],$_GET["s_hasta_dia"],$_GET["s_hasta_ano"]);
+
+              if(strlen($ps_desde_RADI_FECH_RADI) && strlen($ps_hasta_RADI_FECH_RADI)){
+                $HasParam = true;
+                $sWhere = $sWhere . $db->conn->SQLDate('Y-m-d','r.radi_fech_radi')." >= ".$db->conn->DBDate($ps_desde_RADI_FECH_RADI) ;
+                //$sWhere = $sWhere . "r.radi_fech_radi>=".$db->conn->DBTimeStamp($ps_desde_RADI_FECH_RADI) ; //by HLP.
+                $sWhere .= " and ";
+                $sWhere = $sWhere . $db->conn->SQLDate('Y-m-d','r.radi_fech_radi')." <= ".$db->conn->DBDate($ps_hasta_RADI_FECH_RADI) ;
+                //$sWhere = $sWhere . "r.radi_fech_radi<=".$db->conn->DBTimeStamp($ps_hasta_RADI_FECH_RADI); //by HLP.
+              }
+
+              /* Se recibe la dependencia actual para busqueda */
+              $ps_RADI_DEPE_ACTU = $_GET["s_RADI_DEPE_ACTU"];
+              if(is_number($ps_RADI_DEPE_ACTU) && strlen($ps_RADI_DEPE_ACTU))
+                $ps_RADI_DEPE_ACTU = tosql($ps_RADI_DEPE_ACTU, "Number");
+              else
+                $ps_RADI_DEPE_ACTU = "";
+
+              if(strlen($ps_RADI_DEPE_ACTU)){
+                if($sWhere != "")
+                  $sWhere .= " and ";
+                $HasParam = true;
+                $sWhere = $sWhere . "r.radi_depe_actu=" . $ps_RADI_DEPE_ACTU;
+              }
+
+            /* Se recibe el nmero del radicado para busqueda */
+              $ps_RADI_NUME_RADI = $_GET["s_RADI_NUME_RADI"];
+              if(!$ps_RADI_NUME_RADI) $ps_RADI_NUME_RADI="2";
+              $ps_DOCTO =  $_GET["s_DOCTO"];
+              if(strlen($ps_RADI_NUME_RADI)){
+                if($sWhere != "")
+                  $sWhere .= " and ";
+                $HasParam = true;
+                $sWhere = $sWhere . "cast(r.radi_nume_radi as varchar(15)) like " . tosql("%".trim($ps_RADI_NUME_RADI) ."%", "Text");
+              }
+
+              if(strlen($ps_DOCTO)){
+                if($sWhere != "")
+                  $sWhere .= " and ";
+                $HasParam = true;
+                $sWhere = $sWhere . " dir.SGD_DIR_DOC = '$ps_DOCTO' " ;
+              }
+
+              /**
+                * Se recibe el numero del expediente para busqueda
+                * Fecha de modificacion: 30-Junio-2006
+                * Modificador: Supersolidaria
+                */
+                $ps_SGD_EXP_SUBEXPEDIENTE = $_GET["s_SGD_EXP_SUBEXPEDIENTE"];
+                if( strlen( $ps_SGD_EXP_SUBEXPEDIENTE ) != 0 ){
+                  if( $sWhere != "" ){
+                    $sWhere .= " and ";
+                  }
+                  $HasParam = true;
+                  $sWhere = $sWhere . " R.RADI_NUME_RADI = EXP.RADI_NUME_RADI";
+                  $sWhere = $sWhere . " AND EXP.SGD_EXP_NUMERO = SEXP.SGD_EXP_NUMERO";
+                  /**
+                  * No se tienen en cuenta los radicados que han sido excluidos de un expediente.
+                  * Fecha de modificacion: 12-Septiembre-2006
+                  * Modificador: Supersolidaria
+                  * Aqui se hace la consulta en los diferentes campos agregar campos si es nescesario
+                  */
+                  $sWhere = $sWhere . " AND EXP.SGD_EXP_ESTADO <> 2";
+                  $sWhere = $sWhere . " AND ( EXP.SGD_EXP_NUMERO LIKE '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%'";
+                  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP1 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
+                  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP2 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
+                  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP3 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
+                  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP4 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
+                  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP5 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
+                  $sWhere = $sWhere . " )";
+                }
+
+            /* Se decide si busca en radicado de entrada o de salida o ambos */
+              $ps_entrada = strip($_GET["s_entrada"]);
+              $eLen = strlen($ps_entrada);
+              $ps_salida = strip($_GET["s_salida"]);
+              $sLen = strlen($ps_salida);
+
+              if($ps_entrada!="9999" ){
+                if($sWhere != "")
+                  $sWhere .= " and ";
+                $HasParam = true;
+                $sWhere = $sWhere . "cast(r.radi_nume_radi as varchar(15)) like " . tosql("%".trim($ps_entrada), "Text");
+              }
+
+
+            /* Se recibe el tipo de documento para la bsqueda */
+              $ps_TDOC_CODI = $_GET["s_TDOC_CODI"];
+              if(is_number($ps_TDOC_CODI) && strlen($ps_TDOC_CODI) && $ps_TDOC_CODI != "9999")
+                $ps_TDOC_CODI = tosql($ps_TDOC_CODI, "Number");
+              else
+                $ps_TDOC_CODI = "";
+              if(strlen($ps_TDOC_CODI))
+              {
+                if($sWhere != "")
+                  $sWhere .= " and ";
+
+                $HasParam = true;
+                $sWhere = $sWhere . "r.tdoc_codi=" . $ps_TDOC_CODI;
+              }
+            /* Se recibe la caadena a buscar y el tipo de busqueda (All) (Any) */
+              $ps_RADI_NOMB = strip($_GET["s_RADI_NOMB"]);
+              $ps_solo_nomb = $_GET["s_solo_nomb"];
+              $yaentro=false;
+              if(strlen($ps_RADI_NOMB)) //&& $ps_solo_nomb == "Any")
+              {
+                if($sWhere != "")
+                  $sWhere .= " and (";
+              $HasParam=true;
+              $sWhere .= " ";
+
+              $ps_RADI_NOMB = strtoupper($ps_RADI_NOMB);
+              $tok = strtok($ps_RADI_NOMB," ");
+              $sWhere .= "(";
+              while ($tok) {
+                $sWhere .= "";
+                if ($yaentro == true ) {
+                  $sWhere .= " and ";
+                }
+                $sWhere .= "UPPER(dir.sgd_dir_nomremdes) LIKE '%".$tok."%' ";
+                  $tok = strtok(" ");
+                $yaentro=true;
+              }
+              $sWhere .=") or (";
+              $tok = strtok($ps_RADI_NOMB," ");
+              $yaentro=false;
+              while ($tok) {
+                $sWhere .= "";
+                if ($yaentro == true ) {
+                  $sWhere .= " and ";
+                }
+                $sWhere .= "UPPER(dir.sgd_dir_nombre) LIKE '%".$tok."%' ";
+                  $tok = strtok(" ");
+                $yaentro=true;
+              }
+              $sWhere .= ") or (";
+                $yaentro=false;
+            $tok = strtok($ps_RADI_NOMB," ");
+            if ($yaentro == true ) $sWhere .= " and (";
+
+            $sWhere .= "UPPER(".$db->conn->Concat("r.ra_asun","r.radi_cuentai","dir.sgd_dir_telefono","dir.sgd_dir_direccion","r.radi_nume_guia") . ") LIKE '%".$ps_RADI_NOMB."%' ";
+              $tok = strtok(" ");
+            if ($yaentro == true ) $sWhere .= ")";
+
+              $yaentro=true;
+              $sWhere .="))";
+
+              }
+
+              if(strlen($ps_RADI_NOMB) && $ps_solo_nomb == "AllTTT")
+              {
+                if($sWhere != "")
+                    $sWhere .= " AND (";
+                $HasParam=true;
+                $sWhere .= " ";
+
+                $ps_RADI_NOMB = strtoupper($ps_RADI_NOMB);
+                $tok = strtok($ps_RADI_NOMB," ");
+                $sWhere .= "(";
+                  $sWhere .= "";
+                  if ($yaentro == true ) {
+                    $sWhere .= " AND ";
+                  }
+                  $sWhere .= "UPPER(dir.sgd_dir_nomremdes) LIKE '%".$ps_RADI_NOMB."%' ";
+                    $tok = strtok(" ");
+                  $yaentro=true;
+                $sWhere .=") OR (";
+                $tok = strtok($ps_RADI_NOMB," ");
+                $yaentro=false;
+                  $sWhere .= "";
+                  if ($yaentro == true ) {
+                    $sWhere .= " AND ";
+                  }
+                  $sWhere .= "UPPER(dir.sgd_dir_nombre) LIKE '%".$ps_RADI_NOMB."%' ";
+                    $tok = strtok(" ");
+                  $yaentro=true;
+                $sWhere .= ") OR (";
+                  $yaentro=false;
+                $tok = strtok($ps_RADI_NOMB," ");
+                if ($yaentro == true ) $sWhere .= " AND (";
+                  $sWhere .= "UPPER(".$db->conn->Concat("r.ra_asun","r.radi_cuentai","dir.sgd_dir_telefono","dir.sgd_dir_direccion").") LIKE '%".$ps_RADI_NOMB."%' ";
+              echo " kkkk $ps_RADI_NOMB";
+              $tok = strtok(" ");
+              if ($yaentro == true ) $sWhere .= ")";
+              $yaentro=true;
+              $sWhere .="))";
+              }
+              if($HasParam)
+                $sWhere = " AND (" . $sWhere . ") ";
+
+            //-------------------------------
+            // Build base SQL statement - Construccion de consulta
+            //-------------------------------
+            require_once("../include/query/busqueda/busquedaPiloto1.php");
+
+            $sSQL = "SELECT ".
+                  $radi_nume_radi." AS RADI_NUME_RADI,".
+                      $db->conn->SQLDate('Y-m-d H:i:s','R.RADI_FECH_RADI')." AS RADI_FECH_RADI,
+                  r.RA_ASUN,
+                  td.sgd_tpr_descrip, ".
+                  $redondeo." as diasr,
+                  r.RADI_NUME_HOJA,
+                  r.RADI_PATH,
+                  dir.SGD_DIR_DIRECCION,
+                  dir.SGD_DIR_MAIL,
+                  dir.SGD_DIR_NOMREMDES,
+                  dir.SGD_DIR_TELEFONO,
+                  dir.SGD_DIR_DIRECCION,
+                  dir.SGD_DIR_DOC,
+                  r.RADI_USU_ANTE,
+                  r.RADI_PAIS,
+                  dir.SGD_DIR_NOMBRE,
+                  dir.SGD_TRD_CODIGO,
+                  r.RADI_DEPE_ACTU,
+                  r.RADI_USUA_ACTU,
+                  r.CODI_NIVEL,
+                  r.SGD_SPUB_CODIGO";
+
+            /**
+              * Busqueda por parameto del expediente
+              * Fecha de modificacion: 11-Agosto-2006
+              * Modificador: Supersolidaria
+              */
+            if( strlen( $ps_SGD_EXP_SUBEXPEDIENTE ) != 0 )	$sSQL .= " ,EXP.SGD_EXP_NUMERO";
+
+            $sSQL .= " FROM sgd_dir_drecciones dir, radicado r, sgd_tpr_tpdcumento td";
+
+            /**
+              * Busqueda por expediente
+              * Fecha de modificacion: 30-Junio-2006
+              * Modificador: Supersolidaria
+              */
+            if( strlen( $ps_SGD_EXP_SUBEXPEDIENTE ) != 0 )
+            {
+                $sSQL .= ", SGD_EXP_EXPEDIENTE EXP, SGD_SEXP_SECEXPEDIENTES SEXP";
+            }
+            $sSQL .= " WHERE dir.sgd_dir_tipo = 1 AND dir.RADI_NUME_RADI=r.RADI_NUME_RADI AND r.TDOC_CODI=td.SGD_TPR_CODIGO";
+            //-------------------------------
+            // Assemble full SQL statement
+            //-------------------------------
+            $sSQL .= $sWhere . $whereTrd . $sOrder;
+            //-------------------------------
+            // Execute SQL statement
+            //-------------------------------
+            $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+            $rs=$db->query($sSQL);
+
+            $db->conn->SetFetchMode(ADODB_FETCH_NUM);
+
+            //-------------------------------
+            // Process empty recordset
+            //-------------------------------
+              if($rs->EOF || !$rs)
+              {
+            ?>
+                <tr>
+                  <td colspan="20" class="alarmas">No hay resultados</td>
+                </tr>
+                <tr>
+                <td colspan="20" class="ColumnTD"><font class="ColumnFONT">
+              </table>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
 <?php
 
     return;
@@ -1632,3 +1592,5 @@ function buscar($nivelus, $tpRemDes, $whereFlds){
     Ciudadano_show($nivelus, $tpRemDes, $whereFlds);
 }
 ?>
+</body>
+</html>
