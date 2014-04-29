@@ -63,10 +63,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   include_once("$ruta_raiz/include/db/ConnectionHandler.php");
   $db     = new ConnectionHandler("$ruta_raiz");
 
-  include_once("$ruta_raiz/class_control/AplIntegrada.php");
-  include("crea_combos_universales.php");
-  $objApl = new AplIntegrada($db);
-
   if($nurad){
     $nurad = trim($nurad);
     $ent   = substr($nurad,-1);
@@ -282,90 +278,127 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }
   $var_envio="ent=$ent&carp_per=$carp_per&carp_codi=$carp_codi&rad=$nurad&coddepe=$coddepe&depende=$depende";
 ?>
-  <form action='NEW.php?<?=$var_envio?>' method="post" name="formulario" id="formulario">
-    <div id="content" style="opacity: 1;">
-      <div class="col-lg-12">
-        <div class="col-lg-4">
-            <?
-              if($tpRadicado) {
-                echo "<input type=hidden name=tpRadicado value=$tpRadicado>";
-              }
-              $query = "select SGD_TRAD_CODIGO
-                            , SGD_TRAD_DESCR from sgd_trad_tiporad
-                          where SGD_TRAD_CODIGO=$ent";
-              $rs=$db->conn->query($query);
-              $tRadicacionDesc = $rs->fields["SGD_TRAD_DESCR"];
-            ?>
-            <h1 class="page-title txt-color-blueDark">
-                Modulo de radicacion
-                <?=$tRadicacionDesc?>
-                (Dep <?=$dependencia?>)
-                <?php
-                  if($nurad){
-                    echo "<br>
-                          <small class=\"text-success slideInRight fast animated\">
-                              <strong>
-                                No. $nurad
-                              </strong>
-                          </small>
-                          <br>";
-                    $ent = substr($nurad,-1);
-                  }
-                ?>
-                <p><small><?=$encabezado?></small></p>
-              </h1>
-        </div>
 
-        <div class="col-lg-8 smart-form">
-            <input type='hidden' name=radicadopadre value='<?=$radicadopadre ?>'>
-            <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
-            <input type='hidden' name=tipoanexo    value='<?=$tipoanexo ?>'>
-            <input type='hidden' name='noradicar'  value='<?=$noradicar ?>'>
-            <input type='hidden' name='noradicar1' value='<?=$noradicar1 ?>'>
-            <input type='hidden' name='noradicar2' value='<?=$noradicar2 ?>'>
-            <input type='hidden' name='atrasRad0'  value='<?=$rad0 ?>'>
-            <input type='hidden' name='atrasRad1'  value='<?=$rad1 ?>'>
-            <input type='hidden' name='atrasRad2'  value='<?=$rad2 ?>'>
-            <input type='hidden' name='faxPath'    value='<?=$faxPath ?>'>
 
-            <section class="col col-2">
+
+
+<form action='NEW.php?<?=$var_envio?>' method="post" name="formulario" id="formulario">
+  <div id="content" style="opacity: 1;">
+    <div class="row">
+      <div class="col-lg-3">
+          <?
+            if($tpRadicado) {
+              echo "<input type=hidden name=tpRadicado value=$tpRadicado>";
+            }
+            $query = "select SGD_TRAD_CODIGO
+                          , SGD_TRAD_DESCR from sgd_trad_tiporad
+                        where SGD_TRAD_CODIGO=$ent";
+            $rs=$db->conn->query($query);
+            $tRadicacionDesc = $rs->fields["SGD_TRAD_DESCR"];
+          ?>
+          <h1 class="page-title txt-color-blueDark">
+              Modulo de radicacion
+              <?=$tRadicacionDesc?>
+              (Dep <?=$dependencia?>)
+              <?php
+                if($nurad){
+                  echo "<br>
+                        <small class=\"text-success slideInRight fast animated\">
+                            <strong>
+                              No. $nurad
+                            </strong>
+                        </small>
+                        <br>";
+                  $ent = substr($nurad,-1);
+                }
+              ?>
+              <p><small><?=$encabezado?></small></p>
+            </h1>
+      </div>
+
+      <div class="col-lg-8 smart-form">
+          <input type='hidden' name=radicadopadre value='<?=$radicadopadre ?>'>
+          <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
+          <input type='hidden' name=tipoanexo    value='<?=$tipoanexo ?>'>
+          <input type='hidden' name='noradicar'  value='<?=$noradicar ?>'>
+          <input type='hidden' name='noradicar1' value='<?=$noradicar1 ?>'>
+          <input type='hidden' name='noradicar2' value='<?=$noradicar2 ?>'>
+          <input type='hidden' name='atrasRad0'  value='<?=$rad0 ?>'>
+          <input type='hidden' name='atrasRad1'  value='<?=$rad1 ?>'>
+          <input type='hidden' name='atrasRad2'  value='<?=$rad2 ?>'>
+          <input type='hidden' name='faxPath'    value='<?=$faxPath ?>'>
+
+          <section class="col col-2">
+            <label class="label">
+              DD / MM / AAAA
+            </label>
+            <h3><?=$ddate?> / <?=$mdate?> / <?=$adate?>
+            </h3>
+          </section>
+
+
+          <section class="col col-2">
+            <label class="label">
+              Referencia
+            </label>
+            <label class="input">
+              <input name="cuentai" type="text"  maxlength="20" value='<?php echo $cuentai; ?>' >
+            </label>
+          </section>
+
+          <section class="col col-2">
               <label class="label">
-                DD / MM / AAAA
-              </label>
-              <h3><?=$ddate?> / <?=$mdate?> / <?=$adate?>
-              </h3>
-            </section>
-
-
-            <section class="col col-2">
-              <label class="label">
-                Referencia
+                Guia
               </label>
               <label class="input">
-                <input name="cuentai" type="text"  maxlength="20" value='<?php echo $cuentai; ?>' >
+                <input type=text name='guia'name='id' value='<?=$guia ?>' <?=$bloqEdicion?>  size=35>
+                <input name="VERIFICAR" type='hidden' class="ebuttons2" value="Verifique Radicaci&oacute;n">
               </label>
-            </section>
+          </section>
 
-            <section class="col col-2">
-                <label class="label">
-                  Guia
-                </label>
-                <label class="input">
-                  <input type=text name='guia'name='id' value='<?=$guia ?>' <?=$bloqEdicion?>  size=35>
-                  <input name="VERIFICAR" type='hidden' class="ebuttons2" value="Verifique Radicaci&oacute;n">
-                </label>
-            </section>
-
-            <section class="col col-2">
-              <label class="label">
-                Fecha Doc. dd/mm/aaaa
-              </label>
-              <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                <input type="text" name="fecha_gen_doc" id="date" placeholder="Fecah de radicacion" value="<?=$fecha_gen_doc ?>">
-              </label>
-            </section>
-          </div>
+          <section class="col col-2">
+            <label class="label">
+              Fecha Doc. dd/mm/aaaa
+            </label>
+            <label class="input"> <i class="icon-append fa fa-calendar"></i>
+              <input type="text" id="fecha_gen_doc"  name="fecha_gen_doc" placeholder="Fecah de radicacion" value="<?=$fecha_gen_doc ?>">
+            </label>
+          </section>
         </div>
+
+        <div class="col-lg-1">
+            <?php if(!$Submit3 and !$Submit4){?>
+              <a data-toggle="modal" id="radicarNuevo" name='Submit33' value='Radicar'  class="btn btn-primary btn-lg pull-right header-btn"><i class="fa fa-circle-arrow-up fa-lg"></i>Radicar documento</a>
+              <input type='hidden'  name='Submit3' value='Radicar' class='ebuttons2'>
+            <?php }else{
+              $varEnvio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&faxPath=$faxPath&verrad=$nurad&nurad=$nurad&ent=$ent&remite=$nombre&dependenciaDestino=$dependencia";
+            ?>
+              <div class="well">
+                <fieldset>
+                  <ul class="demo-btns">
+                    <li>
+                      <input type='button' onClick='modificar_doc()' name='Submit44' value='Modificar datos' class="btn btn-success btn-sm">
+                    </li>
+                    <li>
+                      <a class="btn btn-info  btn-sm" href="hojaResumenRad.php?<?=$varEnvio?>" target="HojaResumen<?=$nurad?>">Ver Hoja Resumen</a><br>
+                    </li>
+                    <li>
+                      <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('stickerWeb/index.php?<?=$varEnvio?>&alineacion=Center','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');">Sticker</a>
+                    </li>
+                    <li>
+                      <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('../uploadFiles/uploadFileRadicado.php?busqRadicados=<?=$nurad?>&Buscar=Buscar&<?=$varEnvio?>&alineacion=Center','busqRadicados=<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');">Asociar Imagen</a>
+                    </li>
+                  </ul>
+                  <input type='hidden'  name='Submit4' value='MODIFICAR DATOS' class='ebuttons2'>
+                  <input type='hidden' name='nurad' value='<?=$nurad?>'></center>
+                </fieldset>
+              </div>
+            <?}?>
+        </div>
+
+     </div>
+
+     <div id="alertmessage"></div>
 
         <section id="widget-grid">
 
@@ -457,19 +490,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <div class="col-lg-12">
         </div>
-
         <?
-            unset($contcodi);
-            unset($paiscodi);
-            unset($deptocodi);
-            unset($municodi);
 
-            if(empty($asu)){
-                $asu =  $eMailsubject;
-            }
+        if(empty($asu)){
+            $asu =  $eMailsubject;
+        }
 
-            $asu = htmlspecialchars(stripcslashes($asu));
+        $asu = htmlspecialchars(stripcslashes($asu));
+
         ?>
+
+
         <div class="well">
           <section class="smart-form">
             <div class="row">
@@ -478,7 +509,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   Asunto
                 </label>
                 <label class="textarea">
-                  <textarea name="asu" cols="70"  rows="2" ><?=$asu?></textarea>
+                  <textarea id="asu" name="asu" cols="70"  rows="2" ><?=$asu?></textarea>
                 </label>
               </section>
 
@@ -633,11 +664,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </section>
             </div>
 
-            </section>
+          </section>
 
-            </div>
-          <?php
-          // Comprueba si el documento es una radicaci�n nueva de entrada....
+        </div>
+        <?php
+          // Comprueba si el documento es una radicacion nueva de entrada....
           if($tipoanexo==0 and $radicadopadre and !$radicadopadreseg and (!$Submit3  and !$Submit4)){
             if($radi_depe_actu_padre==999){
               echo "<font color=red >Documento padre se encuentra en Archivo</font>";
@@ -1094,42 +1125,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             echo "<INPUT TYPE=HIDDEN NAME='radi_usua_actu' value='$radi_usua_actu'>";
             $nombre = $nombre_us1 . " ".$prim_apel_us1. " ".$sseg_apel_us2;
 
-            if(!$Submit3 and !$Submit4){?>
-
-            <footer>
-              <center>
-                <input type='button' onClick='radicar_doc()' name='Submit33' value='Radicar' class="btn btn-primary">
-                <input type='hidden'  name='Submit3' value='Radicar' class='ebuttons2'>
-              </center>
-            </footer>
-
-            <?php }else{
-              $varEnvio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&faxPath=$faxPath&verrad=$nurad&nurad=$nurad&ent=$ent&remite=$nombre&dependenciaDestino=$dependencia";
-            ?>
-                <div class="col col-4">
-                  <div class="well">
-                    <fieldset>
-                      <ul class="demo-btns">
-                        <li>
-                          <input type='button' onClick='modificar_doc()' name='Submit44' value='Modificar datos' class="btn btn-success btn-sm">
-                        </li>
-                        <li>
-                          <a class="btn btn-info  btn-sm" href="hojaResumenRad.php?<?=$varEnvio?>" target="HojaResumen<?=$nurad?>">Ver Hoja Resumen</a><br>
-                        </li>
-                        <li>
-                          <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('stickerWeb/index.php?<?=$varEnvio?>&alineacion=Center','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');">Sticker</a>
-                        </li>
-                        <li>
-                          <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('../uploadFiles/uploadFileRadicado.php?busqRadicados=<?=$nurad?>&Buscar=Buscar&<?=$varEnvio?>&alineacion=Center','busqRadicados=<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');">Asociar Imagen</a>
-                        </li>
-                      </ul>
-                      <input type='hidden'  name='Submit4' value='MODIFICAR DATOS' class='ebuttons2'>
-                      <input type='hidden' name='nurad' value='<?=$nurad?>'></center>
-                    </fieldset>
-                  </div>
-                </div>
-
-            <?}
 
             if(($Submit4 or $Submit3) AND !$Buscar){
               if($ent==1 and !$Submit3){
@@ -1179,14 +1174,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <tbody>
                           <?php
                             $query2 = "select b.DEPE_NOMB
-                                  ,a.INFO_DESC
-                                  ,b.DEPE_NOMB
-                                  ,a.DEPE_CODI
-                                  ,a.info_fech as INFO_FECH
-                                  ,INFO_DESC
-                                  from informados a,dependencia b
-                                  where a.depe_codi=b.depe_codi and a.radi_nume_radi ='$nurad'
-                                  order by info_fech desc ";
+                                        ,a.INFO_DESC
+                                        ,b.DEPE_NOMB
+                                        ,a.DEPE_CODI
+                                        ,a.info_fech as INFO_FECH
+                                        ,INFO_DESC
+                                        from informados a,dependencia b
+                                        where a.depe_codi=b.depe_codi and a.radi_nume_radi ='$nurad'
+                                        order by info_fech desc ";
 
                             $k = 1;
                             $rs=$db->conn->query($query2);
@@ -1256,8 +1251,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       pageSetUp();
 
       //Datepicker muestra fecha
-      $('#date').datepicker({
-        dateFormat : 'yy/mm/dd',
+      $('#fecha_gen_doc').datepicker({
+        dateFormat : 'dd/mm/yy',
         onSelect : function(selectedDate) {
           $('#date').datepicker('option', 'maxDate', selectedDate);
         }
@@ -1317,15 +1312,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
       function passDataToTable(iddata){
 
-        var trTable = ALLDATA[iddata];
-        var tRow    = $('<tr>');
+        var trTable   = ALLDATA[iddata];
+        var tRow      = $('<tr>');
+        var cotUser   = $('#tipo_ususario').val() +"_"+ trTable.CODIGO;
 
         tCell = $('<td>').html( "<td class='search-table-icon'>"
                                 + "<a href='javascript:void(0);' rel='tooltip'"
                                 + "data-placement='right' data-original-title='Eliminar Usuario'"
                                 + "class='text-danger'><i class='fa fa-minus'></i>"
                                 + "</a>"
-                                + "<input class='hide' name='usuario' value='" + trTable.CODIGO +"'>" +
+                                + "<input class='hide' name='usuario[]' value='" + cotUser +"'>" +
                                "</td>")
                 .on("click", function(){
                   var codUser = $(this).parent().remove();
@@ -1368,8 +1364,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           var li     = $('<li/>').appendTo(indiv);
           var nombre = data[i].NOMBRE.replace(/\w\S*/g, uppFirs);
           var apell  = data[i].APELLIDO.replace(/\w\S*/g, uppFirs);
-          var codig  = data[i].CODIGO;
-          var direc  = data[i].DIRECCION.toLowerCase();
           var telef  = data[i].TELEF;
           var email  = data[i].EMAIL.toLowerCase();
           var cedula = data[i].CEDULA;
@@ -1429,6 +1423,84 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           );
         }
       });
+    });
+
+   //Mostar validacion del formulario
+   function mostarAlert(objAlert) {
+     var type    = objAlert.type;
+     var message = objAlert.message;
+
+
+     var div    = $('<div/>')
+       .addClass('alert alert-block alert-' + type)
+       .html(
+            '<a class="close" data-dismiss="alert" href="#">×</a>'
+          + '<h4 class="alert-heading">' + message + '</h4>'
+       ).appendTo('#alertmessage');
+   };
+
+   function borrarAlert(){
+     $('#alertmessage').empty();
+   }
+
+
+   //Radicar documento nuevo
+   $('#radicarNuevo').on("click", function(){
+        $('#alertmessage').empty();
+        var pass = true;
+        /* Realizar validaciones antes de enviar el radicado*/
+
+        //Folios y Anexos
+        if(/[A-Za-z]+$/.test($("#nofolios").val()) ||
+           /[A-Za-z]+$/.test($("#noanexos").val())){
+            mostarAlert({type : 'danger', message : 'Escriba un número válido en No de folios o anexos.'});
+            pass = false;
+        }
+
+        //Fecha del radicado
+        var fechaActual = new Date();
+        var	fecha_doc   = $('#fecha_gen_doc').val();
+        var dias_doc    = fecha_doc.substring(0,2);
+        var mes_doc     = fecha_doc.substring(3,5);
+        var ano_doc     = fecha_doc.substring(6,10);
+
+        var fecha       = new Date(ano_doc,mes_doc-1, dias_doc);
+        var tiempoRestante = fechaActual.getTime() - fecha.getTime();
+        var dias = Math.floor(tiempoRestante / (1000 * 60 * 60 * 24));
+
+        if (dias >960 && dias < 1500){
+          mostarAlert({type : 'danger', message : 'El documento tiene fecha anterior a 60 dias!!.'});
+          pass = false;
+        }else if (dias > 1500){
+          mostarAlert({type : 'danger', message : 'Verifique la fecha del documento!!'});
+          pass = false;
+        }else if (dias < 0) {
+          mostarAlert({type : 'danger', message : 'Verifique la fecha del documento !!, es Una fecha Superior a la Del dia de Hoy'});
+          pass = false;
+        };
+
+
+        //Usuarios
+        if($('input[name^="usuario"]').length === 0){
+          mostarAlert({type : 'danger', message : 'Seleccione un usuario'});
+          pass = false;
+        };
+
+        //Asunto
+        var asu = $('#asu').val();
+        var min = 30;
+        if(asu.length < min){
+          mostarAlert({type : 'danger', message : 'Asunto no es mayor de ' + min + ' Caracteres. '});
+          pass = false;
+        };
+
+        if(!/^[0-9A-Za-z áéíóúÁÉÍÓÚÑñ]+$/.test(asu)){
+          mostarAlert({type : 'danger', message : 'Asunto con caracteres no permitidos'});
+          pass = false;
+        };
+
+        //Dejar alertas en blanco
+        //borrarAlert();
     });
 
   </script>
