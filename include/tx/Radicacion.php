@@ -155,7 +155,6 @@ function newRadicado($tpRad, $tpDepeRad)
 		$recordR["carp_codi"]       = $this->carpCodi;
 		$recordR["CARP_PER"]        = $this->carpPer;
 		$recordR["RADI_NUME_RADI"]  = $newRadicado;
-		$recordR["TRTE_CODI"]       = $this->trteCodi;
 		$recordR["RADI_FECH_RADI"]  = $this->db->conn->OffsetDate(0,$this->db->conn->sysTimeStamp);
 		$recordR["RADI_DEPE_ACTU"]  = $this->radiDepeActu;
 		$recordR["TDOC_CODI"]       = $this->tdocCodi;
@@ -168,7 +167,6 @@ function newRadicado($tpRad, $tpDepeRad)
 			      $recordR["RADI_NUME_ANEXO"] = $this->noanexos;
 		  }
 
-		$recordR["TDID_CODI"]       = $this->tdidCodi;
 		$recordR["depe_codi"]       = $this->dependencia;
 		$recordR["sgd_trad_codigo"] = $tpRad;
 
@@ -205,8 +203,6 @@ function newRadicado($tpRad, $tpDepeRad)
 		$recordR["radi_fech_ofic"]  = $this->db->conn->DBDate($this->radiFechOfic);
 		$recordR["ra_asun"]         = "'".$this->raAsun."'";
 		$recordR["radi_desc_anex"]  = "'".$this->descAnex."'";
-		$recordR["trte_codi"]       = $this->trteCodi;
-		$recordR["tdid_codi"]       = $this->tdidCodi;
 		$recordR["radi_nume_radi"]  = $radicado;
 		$recordR["SGD_APLI_CODI"]   = $this->sgd_apli_codi;
 		$recordR["RADI_NUME_FOLIO"] = $this->nofolios;

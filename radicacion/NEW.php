@@ -111,30 +111,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <body>
 
-<form action='NEW.php' method="post" name="formulario" id="formulario">
+<form  method="post" name="formulario" id="formulario">
+
+  <input type=hidden name='ent' value='<?=$ent?>'>
+
   <div id="content" style="opacity: 1;">
     <div class="row">
       <div class="col-lg-3">
           <h1 class="page-title txt-color-blueDark">
-              Modulo de radicacion
+              Modulo de radicaci&oacute;n
               <?=$tRadicacionDesc?>
               (Dep <?=$dependencia?>)
               <p><small><?=$encabezado?></small></p>
             </h1>
       </div>
 
-      <div class="col-lg-8 smart-form">
+      <div class="col-lg-6 smart-form">
 
-          <section class="col col-2">
+          <section class="col col-3">
             <label class="label">
               DD / MM / AAAA
             </label>
-            <h3><?=$ddate?> / <?=$mdate?> / <?=$adate?>
-            </h3>
+            <h6> <?=$ddate?> / <?=$mdate?> / <?=$adate?> </h6>
           </section>
 
 
-          <section class="col col-2">
+          <section class="col col-3">
             <label class="label">
               Referencia
             </label>
@@ -143,16 +145,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </label>
           </section>
 
-          <section class="col col-2">
+          <section class="col col-3">
               <label class="label">
                 Guia
               </label>
               <label class="input">
-                <input type=text name='guia'name='id' value='<?=$guia ?>' <?=$bloqEdicion?>  size=35>
+                <input type=text name='guia' id='guia' value='<?=$guia ?>' <?=$bloqEdicion?>  size=35>
               </label>
           </section>
 
-          <section class="col col-2">
+          <section class="col col-3">
             <label class="label">
               Fecha Doc. dd/mm/aaaa
             </label>
@@ -162,10 +164,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </section>
         </div>
 
-        <div class="col-lg-1">
-              <a data-toggle="modal" id="radicarNuevo" name='Submit3' value='Radicar'  class="btn btn-primary btn-lg pull-right header-btn"><i class="fa fa-circle-arrow-up fa-lg"></i>Radicar documento</a>
+        <div id="showRadicar" class="col-lg-3">
+            <a data-toggle="modal" id="radicarNuevo" name='Submit3' value='Radicar' class="btn btn-primary btn-lg btn-block pull-right header-btn">
+              <i class="fa fa-circle-arrow-up fa-lg"></i>
+              Radicar documento
+            </a>
         </div>
 
+        <div id="showModificar" class="col-lg-3 hide">
+
+          <a data-toggle="modal" id="modificaRad" name="Submit44" class="btn bg-color-greenDark txt-color-white btn-lg btn-block">
+            Modificar el radicado
+          </a>
+
+          <label>
+            <a href="javascript:void(0);" class="btn btn-link">Ver Hoja Resumen</a>
+          </label>
+
+          <label>
+            <a href="javascript:void(0);" class="btn btn-link">Sticker</a>
+          </label>
+
+          <label>
+            <a href="javascript:void(0);" class="btn btn-link">Asociar Imagen</a>
+          </label>
+
+        </div>
      </div>
 
      <div id="alertmessage"></div>
@@ -178,12 +202,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <!-- NEW WIDGET START -->
             <article class="col-lg-12">
 
-              <div data-widget-editbutton="false" id="wid-id-0" class="jarviswidget jarviswidget-sortable" style="" role="widget">
+              <div data-widget-editbutton="false" id="wid-id-0" role="widget">
 
                   <!-- widget content -->
                   <div class="col col-12">
 
+                      <label class"label"> Buscar usuario radicador </label>
                       <section id="formsearch" class="form-inline smart-form">
+
 
                         <section  class="col col-2">
                           <label class="select">
@@ -224,7 +250,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </section>
 
                         <button type="button" name="Button" value="Crear" class="btn btn-success btn-sm pull-right">
-                          Crear
+                          Crear un usuario
                         </button>
 
                       </section>
@@ -269,7 +295,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   Asunto
                 </label>
                 <label class="textarea">
-                  <textarea id="asu" name="asu" cols="70"  rows="2" ><?=$asu?></textarea>
+                  <textarea id="asu" name="asu" cols="70"  rows="4" ><?=$asu?></textarea>
                 </label>
               </section>
 
@@ -279,6 +305,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   </label>
                   <label class="select">
                     <?=$medioRec?>
+                  </label>
+                  <label class="label">
+                    Dignatario
+                  </label>
+                  <label class="input">
+                    <input type="text" value="" name="otro_us">
                   </label>
               </section>
             </div>
@@ -517,8 +549,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       });
     });
 
-   //Mostar validacion del formulario
-   function mostarAlert(objAlert) {
+   //Mostrar validacion del formulario
+   function mostrarAlert(objAlert) {
      var type    = objAlert.type;
      var message = objAlert.message;
 
@@ -545,7 +577,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         //Folios y Anexos
         if(/[A-Za-z]+$/.test($("#nofolios").val()) ||
            /[A-Za-z]+$/.test($("#noanexos").val())){
-            mostarAlert({type : 'danger', message : 'Escriba un número válido en No de folios o anexos.'});
+            mostrarAlert({type : 'danger', message : 'Escriba un número válido en No de folios o anexos.'});
             pass = false;
         }
 
@@ -561,20 +593,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         var dias = Math.floor(tiempoRestante / (1000 * 60 * 60 * 24));
 
         if (dias >960 && dias < 1500){
-          mostarAlert({type : 'danger', message : 'El documento tiene fecha anterior a 60 dias!!.'});
+          mostrarAlert({type : 'danger', message : 'El documento tiene fecha anterior a 60 dias!!.'});
           pass = false;
         }else if (dias > 1500){
-          mostarAlert({type : 'danger', message : 'Verifique la fecha del documento!!'});
+          mostrarAlert({type : 'danger', message : 'Verifique la fecha del documento!!'});
           pass = false;
         }else if (dias < 0) {
-          mostarAlert({type : 'danger', message : 'Verifique la fecha del documento !!, es Una fecha Superior a la Del dia de Hoy'});
+          mostrarAlert({type : 'danger', message : 'Verifique la fecha del documento !!, es Una fecha Superior a la Del dia de Hoy'});
           pass = false;
         };
 
 
         //Usuarios
         if($('input[name^="usuario"]').length === 0){
-          mostarAlert({type : 'danger', message : 'Seleccione un usuario'});
+          mostrarAlert({type : 'danger', message : 'Seleccione un usuario'});
           pass = false;
         };
 
@@ -582,37 +614,50 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         var asu = $('#asu').val();
         var min = 30;
         if(asu.length < min){
-          mostarAlert({type : 'danger', message : 'Asunto no es mayor de ' + min + ' Caracteres. '});
+          mostrarAlert({type : 'danger', message : 'Asunto no es mayor de ' + min + ' Caracteres. '});
           pass = false;
         };
 
-        if(!/^[0-9A-Za-z áéíóúÁÉÍÓÚÑñ]+$/.test(asu)){
-          mostarAlert({type : 'danger', message : 'Asunto con caracteres no permitidos'});
+        if(!/^[0-9A-Za-z áéíóúÁÉÍÓÚÑñ]+$/.test(asu) && asu.length > 0){
+          mostrarAlert({type : 'danger', message : 'Asunto con caracteres no permitidos'});
           pass = false;
         };
-
-        //Dependencia
-        if(parseInt($('select[name="coddepe"]').val()) === 0){
-          mostarAlert({type : 'danger', message : 'Selecciona una dependencia'});
+        //GUIA
+        if(parseInt($('input[name="guia"]').val()) > 20){
+          mostrarAlert({type : 'danger', message : 'Guia con mas de 20 caracteres'});
           pass = false;
         }
 
-        //Dejar alertas en blanco
-        //borrarAlert();
-        if(pass){
-          borrarAlert();
-          var jqxhr = $.post( "./ajax_radicarNuevo.php",$( "#formulario").serialize()
-          ).done(function() {
-            alert( "second success"  );
-          }).fail(function() {
-            alert( "error"  );
-          }).always(function() {
-            alert( "finished"  );
-          });
+        //REFERENCIA CUENTA_I
+        if(parseInt($('input[name="cuentai"]').val()) > 20){
+          mostrarAlert({type : 'danger', message : 'Referencia con mas de 20 caracteres'});
+          pass = false;
+        }
 
-          jqxhr.always(function() {
-              alert( "second finished"  );
-          });
+        //Dependencia
+        if(parseInt($('select[name="coddepe"]').val()) === 0){
+          mostrarAlert({type : 'danger', message : 'Selecciona una dependencia'});
+          pass = false;
+        }
+
+        if(pass){
+          //Dejar alertas en blanco
+          borrarAlert();
+          var jqxhr = $.post( "./ajax_radicarNuevo.php",$( "#formulario").serialize(),function(data) {
+            for(var k in data) {
+              if(data[k].error !== undefined){
+                mostrarAlert({type : 'danger', message : data[k].error});
+              }else{
+                $('#showRadicar').remove();
+                $('#modificaRad').append(data[k].answer);
+                $('#showModificar').removeClass('hide');
+              }
+            };
+          }).done(function(data) {
+            alert( "second success"  + data );
+          }).fail(function() {
+            mostrarAlert({type : 'danger', message : 'Error de conexion al servidor'})
+          })
         };
     });
 

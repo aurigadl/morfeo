@@ -11741,6 +11741,14 @@ img.away {
     border-radius: 0;
     border-right: 0 none;
 }
+
+.btn-block {
+  display: inline-block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .btn-circle {
     border-radius: 50%;
     font-size: 12px;

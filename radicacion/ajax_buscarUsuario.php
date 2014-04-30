@@ -86,9 +86,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 $where
                 and m.muni_codi = s.muni_codi
                 and m.dpto_codi = s.dpto_codi
+                and d.dpto_codi = s.dpto_codi
                 and p.id_pais   = s.id_pais
                 and p.id_cont   = s.id_cont
-                and d.dpto_codi = s.dpto_codi
                 and d.id_pais   = s.id_pais
                 and d.id_cont   = s.id_cont
               ORDER BY s.SGD_CIU_NOMBRE, s.SGD_CIU_APELL1, s.SGD_CIU_APELL2
@@ -145,9 +145,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 $where
                 and m.muni_codi = s.muni_codi
                 and m.dpto_codi = s.dpto_codi
+                and d.dpto_codi = s.dpto_codi
                 and p.id_pais   = s.id_pais
                 and p.id_cont   = s.id_cont
-                and d.dpto_codi = s.dpto_codi
                 and d.id_pais   = s.id_pais
                 and d.id_cont   = s.id_cont
                 ORDER  BY sgd_oem_oempresa
@@ -187,7 +187,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       }
 
       $isql = "SELECT
-             s.usua_codi    AS codigo
+             s.id           AS codigo
             ,s.usua_nomb    AS nombre
             ,dp.depe_nomb   AS direccion
             ,s.usua_email   AS email
@@ -206,9 +206,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             $where
             and s.usua_esta  = '1'
             and d.dpto_codi  = dp.dpto_codi
-            and dp.depe_codi = s.depe_codi
             and m.muni_codi  = dp.muni_codi
             and m.dpto_codi  = d.dpto_codi
+            and dp.depe_codi = s.depe_codi
             and p.id_pais    = s.id_pais
             and p.id_cont    = s.id_cont
           ORDER  BY usua_nomb
