@@ -36,6 +36,7 @@ if (!$db)
 	$db = new ConnectionHandler("$ruta_raiz");
   $db->conn->SetFetchMode( ADODB_FETCH_ASSOC );
 	// $db->conn->SetFetchMode(ADODB_FETCH_NUM);
+	//b->conn->debug = true;
 
     // Consulta los par�etros creados para la dependencia
     $sqlBuscarPor  = "SELECT SGD_PAREXP_CODIGO, SGD_PAREXP_ETIQUETA, SGD_PAREXP_ORDEN";
@@ -216,7 +217,8 @@ echo "<input type=hidden name=radicados value='$radicados_old'>";
                                     CE.SGD_CAMEXP_CAMPOFK END AS FILTRO,
                             CASE	WHEN SGD_CAMEXP_FK = 0 THEN PE.SGD_PAREXP_TABLA
                               WHEN SGD_CAMEXP_FK = 1 THEN CE.SGD_CAMEXP_TABLAFK END AS TABLA,
-                            CE.SGD_CAMPEXP_ORDEN
+                            CE.SGD_CAMPEXP_ORDEN,
+                            CE.SGD_CAMEXP_CAMPOVALOR  AS CAMPO_GUARDAR
                           FROM SGD_CAMEXP_CAMPOEXPEDIENTE CE,
                             SGD_PAREXP_PARAMEXPEDIENTE PE
                           WHERE PE.SGD_PAREXP_CODIGO = CE.SGD_PAREXP_CODIGO AND
@@ -224,8 +226,10 @@ echo "<input type=hidden name=radicados value='$radicados_old'>";
                           $q_select .= " ORDER BY  CE.sgd_campexp_orden";
 
                           $rs_select = $db->query( $q_select );
+                          
                           $c = 0;
                           $tmp_tabla = "";
+                          if ( $rs_select->fields['CAMPO_GUARDAR'] != "" ) $campoGuardar = ",".$rs_select->fields['CAMPO_GUARDAR'];
                           while( !$rs_select->EOF ){
                               if ( $rs_select->fields['CAMPO'] != "" ) {
                                   $arr_select['campo'][ $c ] = $rs_select->fields['CAMPO'];
@@ -241,8 +245,8 @@ echo "<input type=hidden name=radicados value='$radicados_old'>";
                               $tmp_tabla = $rs_select->fields['TABLA'];
                               $rs_select->MoveNext();
                           }
-
-                          $q_buscar  = "SELECT ".implode( ", ", $arr_select['campo'] );
+													
+                          $q_buscar  = "SELECT ".implode( ", ", $arr_select['campo'] ) ." $campoGuardar ";
                           $q_buscar .= " FROM ".implode( ", ", $arr_select['tabla'] );
                           $q_buscar .= " WHERE 1 = 1";
                           foreach( $arr_select['filtro'] as $valorFiltro ){
@@ -254,7 +258,7 @@ echo "<input type=hidden name=radicados value='$radicados_old'>";
                               {
                                   $strOR = " OR";
                               }
-                              $q_filtro .= " ".$strOR." ".$valorCampo." LIKE '%".strtoupper( $_POST['campoBuscar'] )."%'";
+                              $q_filtro .= " ".$strOR." upper(".$valorCampo.") LIKE '%".strtoupper( $_POST['campoBuscar'] )."%'";
                           }
 
                           $q_buscar .= $q_filtro;
@@ -367,20 +371,8 @@ echo "<input type=hidden name=radicados value='$radicados_old'>";
                       <tr class="listado2">
                         <TD colspan="10">
                         <center>DATOS A COLOCAR EN EL EXPEDIENTE</center>
-                          <center><b>NOTA: Para pasar el dato al formulario de creacion del expediente, por favor haga click en el campo deseado.</b></center>
-                        </TD>
-                      </tr>
-                      <tr align="center" >
-                        <td class="titulos5" >&nbsp;</td>
-                        <td class="titulos5" width="110">DOCUMENTO</td>
-                        <td class="titulos5" width="88"> NOMBRE </td>
-                        <td class="titulos5" width="82">PRIM.<BR>
-                        APELLIDO o SIGLA</td>
-                        <td class="titulos5" width="82">SEG.<BR>
+                          <center><b>NOTA: Para pasar el dato al formulario de creacion del expediente, por favor haga click en el B
                           APELLIDO o REP LEGAL</font></td>
-                        <td class="titulos5" width="88">DIRECCION</td>
-                        <td class="titulos5" width="58">DPTO</td>
-                        <td class="titulos5" width="94">MUNIC</td>
                       </tr>
 
                       <?php foreach ( $arrParametro as $idParametro => $valorParametro ){ ?>
@@ -410,17 +402,6 @@ echo "<input type=hidden name=radicados value='$radicados_old'>";
                             <input type='text' name='seg_apell_us<?= $idParametro; ?>' value='<?= $_POST['seg_apell_us'.$idParametro]; ?>' class='ecajasfecha' size='14' onClick="pasar_datos( '<?= $idParametro; ?>', 'seg_apell_us<?= $idParametro; ?>' );" onMouseOver="this.style.cursor='pointer'" readonly>
                         </td>
 
-                        <td align="center" class="listado5">
-                              <input type='text' name='direccion_us<?= $idParametro; ?>' value='<?= $_POST['direccion_us'.$idParametro]; ?>' class='ecajasfecha' size='15' onClick="pasar_datos( '<?= $idParametro; ?>', 'direccion_us<?= $idParametro; ?>' );" onMouseOver="this.style.cursor='pointer'" readonly>
-                        </td>
-
-                        <td align="center" class="listado5">
-                            <input type='text' name='dpto_us<?= $idParametro; ?>' value='<?= $_POST['dpto_us'.$idParametro]; ?>' class='ecajasfecha' size='10' onClick="pasar_datos( '<?= $idParametro; ?>', 'dpto_us<?= $idParametro; ?>' );" onMouseOver="this.style.cursor='pointer'" readonly>
-                        </td>
-
-                        <td align="center" class="listado5">
-                            <input type='text' name='muni_us<?= $idParametro; ?>' value='<?= $_POST['muni_us'.$idParametro]; ?>' class='ecajasfecha' size='16' onClick="pasar_datos( '<?= $idParametro; ?>', 'muni_us<?= $idParametro; ?>' );" onMouseOver="this.style.cursor='pointer'" readonly>
-                        </td>
                       </tr>
                   <?php } ?>
                     </table>

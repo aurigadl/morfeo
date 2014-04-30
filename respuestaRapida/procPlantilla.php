@@ -14,8 +14,8 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 //$db->conn->debug = true;
 
 $usuario     = $_SESSION["usua_nomb"];
-$dependencia = $_SESSION["depe_nomb"];
-$dep_code    = $_SESSION["dependencia"];
+$dependencia = $_SESSION["depecodi"];
+$dep_code    = $_SESSION["depecodi"];
 $usu_code    = $_SESSION["codusuario"];
 
 //Borramos la planilla
