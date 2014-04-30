@@ -36,16 +36,13 @@ $db->conn->SetFetchMode(3);
 if($carpeta==8){	$info=8;
 	$nombcarpeta = "Informados";
 }
-
+include_once "$ruta_raiz/config.php";
 include_once "$ruta_raiz/class_control/Radicado.php";
+
 $objRadicado = new Radicado($db);
 $objRadicado->radicado_codigo($verradicado);
 $path = $objRadicado->getRadi_path();
-/*
-  * @author Modificacion Liliana Gomez Velasquez
-  * @since 10 noviembre 2009
-  * @category imagenes
- */
+
 include_once "$ruta_raiz/tx/verLinkArchivo.php";
 $verLinkArchivo = new verLinkArchivo($db);
 
@@ -186,13 +183,8 @@ if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" )
 	{
 	$isql = "select * From usuario where USUA_LOGIN ='$krd' and USUA_SESION='". substr(session_id(),0,29)."' ";
 	$rs = $db->query($isql);
-	// Validacion de Usuario y COntrase� MD5
-	//echo "** $krd *** $drde";
-	//Modificado por idrd
 	if (($krd))
 	{
-	//  $iusuario = " and us_usuario='$krd'";
-	//  $isql = "select a.* from radicado a where radi_depe_actu=$dependencia  and radi_nume_radi=$verrad";
   ?><small>
 	DOCUMENTO N.
 	<?

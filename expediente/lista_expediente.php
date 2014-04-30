@@ -51,17 +51,33 @@ unset($frm);
 						<a onClick="excluirExpediente();">Excluir de...</a>
 					</li>
 					<li>
-						<a  onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
+						<a  onClick="verTipoExpediente('<?=$numExpediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
 					</li>
 					<li>
-						<a onClick="Responsable('<?=$num_expediente?>');">Cambiar Responsable</a>
+						<a onClick="Responsable('<?=$numExpediente?>');">Cambiar Responsable</a>
 					</li>
 					<li>
-						<a  onClick="CambiarE(2,'<?=$num_expediente?>');">Cerrar Expediente</a>
+						<a  onClick="CambiarE(2,'<?=$numExpediente?>');">Cerrar Expediente</a>
 					</li>
 					<li>
-						<a  onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
+						<a  onClick="seguridadExp('<?=$numExpediente?>','<?=$nivelExp?>');">Seguridad</a>
 					</li>
+					<li>
+					<?php
+							$url = "http://200.118.122.176:5380/py/pyforms/seleccion_predios/get_predios_list?expediente=$numExpediente";
+							$predios2 = file_get_contents($url);
+							$predios = str_replace('"',"'",$predios2);
+							$arrPredios = json_decode($predios2);
+							$listPredios = "";
+							foreach($arrPredios as $key => $valor){
+							  $listPredios .= "'".$valor->chip ."',";
+							}
+							$listPredios .= "'0'";
+							$vars = "&nombreProyecto=$param1($numExpediente)";
+						?>
+						<a  onClick="reportePredios(&quot;<?=$numExpediente?>&quot;,&quot;<?=$listPredios?>&quot;,&quot;<?=$vars?>&quot;);">Reporte Inventario de Predios </a>
+					</li>
+					
 
 					<?
 					}

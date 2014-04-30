@@ -27,8 +27,11 @@ window.open("<?=$ruta_raiz?>/expediente/verHistoricoExp.php?sessid=<?=session_id
 function crearProc(numeroExpediente){
   window.open("<?=$ruta_raiz?>/expediente/crearProceso.php?sessid=<?=session_id()?>&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=450,width=680,scrollbars=yes");
 }
-function seguridadExp(numeroExpediente,nivelExp){
+function seguridadExp(numeroExpediente,nivelExp=0){
   window.open("<?=$ruta_raiz?>/seguridad/expediente.php?<?=session_name()?>=<?=session_id()?>&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>&nivelExp="+nivelExp+"&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=350,width=700,scrollbars=yes");
+}
+function reportePredios(numeroExpediente,predios,vars){
+  window.open("<?=$servidorBirt?>modeloPredial.rptdesign&chip="+predios+"&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>"+vars,"HistExp<?=$fechaH?>","fullscreen=yes,scrollbars=yes");
 }
 function verTipoExpedienteOld(numeroExpediente)
 {
@@ -208,17 +211,7 @@ function microtime_float()
    return ((float)$usec + (float)$sec);
 }
 $time_start = microtime_float();
-	/*
-	 *  Modificado: 23-Agosto-2006 Supersolidaria
-	 *  Ajuste para ver los anexos borrados de un radicado al ingresar a la pesta�a EXPEDIENTES.
-	 */
-	 // Modificado Infom�trika 23-Julio-2009
-	// Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
-	//if( !isset( $_POST['verBorrados'] ) ) {
 	if( !isset( $verBorrados ) ) {
-		// Modificado Infom�trika 23-Julio-2009
-		// Ajuste para adaptarse al cambio de m�todo (de POST a GET) en el script verradicado.php
-		//print '<input type="hidden" name="verBorrados" id="verBorrados" value="'.$_POST['anexosRadicado'].'">';
 		print '<input type="hidden" name="verBorrados" id="verBorrados" value="'.$anexosRadicado.'">';
 	}
 

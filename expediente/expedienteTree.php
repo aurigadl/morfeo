@@ -89,7 +89,7 @@ ini_set("display_errors",1);
 					?>
 				<li style="display:none">
 				  <a href="verradicado.php?verrad=<?=$verrad?>&<?=session_name()?>=<?=session_id()?>&nomcarpeta=<?=nomcarpeta?>&prediosExp=<?=$predios?>#tabs-gis">
-					<?="Chip : ".$valor->chip; ?> - <?="Propietarios : ".$propietarios ?> - <?="Direccion : ".$direccion ?>  - <?="Matricula : ".$matricula ?> - <?="Area : ".$area ?> - <?="Avaluo : ".number_format($avaluoCatastral) ?>- <?="A. Comercial : ".number_format($avaluoComercial) ?>
+					<?="Chip : ".$valor->chip; ?> - <?="Propietarios : ".$propietarios ?> - <?="Direccion : ".$direccion ?>  - <?="Matricula : ".$matricula ?>
 					</a>
 				</li>	
 				<?
