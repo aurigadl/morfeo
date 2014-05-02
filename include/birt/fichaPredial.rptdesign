@@ -1642,9 +1642,6 @@ from modeloPredial]]></xml-property>
         </simple-master-page>
     </page-setup>
     <body>
-        <text id="8">
-            <property name="contentType">auto</property>
-        </text>
         <grid id="9">
             <property name="height">9.125in</property>
             <property name="width">8.114583333333334in</property>
