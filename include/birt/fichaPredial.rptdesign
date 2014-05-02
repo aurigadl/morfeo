@@ -1634,8 +1634,9 @@ from modeloPredial]]></xml-property>
             </page-header>
             <page-footer>
                 <text id="3">
+                    <property name="textAlign">center</property>
                     <property name="contentType">html</property>
-                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                    <text-property name="content"><![CDATA[Fecha de Generacion<value-of>new Date()</value-of>]]></text-property>
                 </text>
             </page-footer>
         </simple-master-page>
