@@ -86,10 +86,11 @@ ini_set("display_errors",1);
 					      $avaluoComercial = $rsPredio->fields["AVALUO_COMERCIAL"];
 					    
 					    }
+					  $linkFichaPredial ="reportePredios('$numeroExpediente','".$valor->chip."','','fichaPredial');";
 					?>
 				<li style="display:none">
-				  <a href="verradicado.php?verrad=<?=$verrad?>&<?=session_name()?>=<?=session_id()?>&nomcarpeta=<?=nomcarpeta?>&prediosExp=<?=$predios?>#tabs-gis">
-					<?="Chip : ".$valor->chip; ?> - <?="Propietarios : ".$propietarios ?> - <?="Direccion : ".$direccion ?>  - <?="Matricula : ".$matricula ?>
+				  <a href="verradicado.php?verrad=<?=$verrad?>&<?=session_name()?>=<?=session_id()?>&nomcarpeta=<?=nomcarpeta?>&prediosExp=<?=$predios?>#tabs-gis">Gis</a>
+					<a href="#" onClick="<?=$linkFichaPredial?>" ><?="Chip : ".$valor->chip; ?> </a> - <?="Propietarios : ".$propietarios ?> - <?="Direccion : ".$direccion ?>  - <?="Matricula : ".$matricula ?>
 					</a>
 				</li>	
 				<?

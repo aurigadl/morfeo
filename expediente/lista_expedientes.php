@@ -30,8 +30,8 @@ function crearProc(numeroExpediente){
 function seguridadExp(numeroExpediente,nivelExp=0){
   window.open("<?=$ruta_raiz?>/seguridad/expediente.php?<?=session_name()?>=<?=session_id()?>&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>&nivelExp="+nivelExp+"&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=350,width=700,scrollbars=yes");
 }
-function reportePredios(numeroExpediente,predios,vars){
-  window.open("<?=$servidorBirt?>modeloPredial.rptdesign&chip="+predios+"&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>"+vars,"HistExp<?=$fechaH?>","fullscreen=yes,scrollbars=yes");
+function reportePredios(numeroExpediente,predios,vars, tipoReporte='modeloPredial'){
+  window.open("<?=$servidorBirt?>"+tipoReporte+".rptdesign&chip="+predios+"&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>"+vars,"HistExp<?=$fechaH?>","fullscreen=yes,scrollbars=yes");
 }
 function verTipoExpedienteOld(numeroExpediente)
 {
