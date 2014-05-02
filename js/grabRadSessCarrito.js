@@ -27,7 +27,7 @@
                     "&rad="     + radicados +
                     "&krd="     + returnKrd(),
             success: function(html){
-                        parent.topFrame.document.getElementById('numeroCarrito').innerHTML = html;                        
+                        // parent.topFrame.document.getElementById('numeroCarrito').innerHTML = html;                        
                     }      
         });
     };

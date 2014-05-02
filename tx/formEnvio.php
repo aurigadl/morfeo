@@ -161,7 +161,6 @@ if($checkValue)
 	
 					if ( $codTx == 13 && $archivado_requiere_exp )
 					{
-												
 					    include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 					    $db = new ConnectionHandler("$ruta_raiz");
 				
