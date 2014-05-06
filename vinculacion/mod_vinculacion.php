@@ -1,11 +1,11 @@
 <?
 session_start();
 /**
-  * Pagina de Anexos / Asociados
+  * gplgina de Anexos / Asociados
 	* Se añadio a la 3.8.0 por
   * @autor Carlos Barrero 2009-10-06 -SES
   *        Modificado Jairo Losada 2013 - Fundacion Correlibre.org
-  * @licencia AGPL V3
+  * @licencia GPL V3+
   */
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;

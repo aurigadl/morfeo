@@ -1,7 +1,7 @@
 <?php
 class Radicacion
 {
-  /** Aggregations: */
+  /** gplgregations: */
 
   /** Compositions: */
 
@@ -29,7 +29,7 @@ class Radicacion
 	var $tdidCodi;
 	var $descAnex;
 	var $radiNumeHoja;
-	var $radiPais;
+	var $radigplis;
 	var $raAsun;
 	var $radiDepeRadi;
 	var $radiUsuaActu;
@@ -48,7 +48,7 @@ class Radicacion
     var	$guia;
 
 	var $estaCodi;
-	var $radiPath;
+	var $radigplth;
 	var $nguia;
 	var $tsopt;
 	var $urgnt;
@@ -56,7 +56,7 @@ class Radicacion
 	
 	/*
 	 * Código de verificación para consultar radicado vía consultaWeb
-	 * @author Sebastian Ortiz AGPLV3 Ministerio de la Protección Social 2012
+	 * @author Sebastian Ortiz GPLV3+ Ministerio de la Protección Social 2012
 	 */
 	
 	var $codigoverificacion;
@@ -154,7 +154,7 @@ function newRadicado($tpRad, $tpDepeRad)
    
 		$recordR["RADI_NUME_DERI"]  = $this->radiNumeDeri;
 		$recordR["RADI_USUA_RADI"]  = $this->usuaCodi;
-		$recordR["RADI_PAIS"]       = "'".$this->radiPais."'";
+		$recordR["RADI_PAIS"]       = "'".$this->radigplis."'";
 		$this->raAsun = str_replace("'"," ",$this->raAsun);
 		$recordR["RA_ASUN"]         = "'".$this->raAsun."'";
  		$this->descAnex = str_replace("'"," ",$this->descAnex);		
@@ -183,7 +183,7 @@ function newRadicado($tpRad, $tpDepeRad)
 
 		if(!$usNivel) $usNivel=1;
 		$recordR["CODI_NIVEL"]=$usNivel;
-		if($this->radiPath)  $recordR["RADI_PATH"] = "'".$this->radiPath."'";
+		if($this->radigplth)  $recordR["RADI_PATH"] = "'".$this->radiPath."'";
 		
 		/*
 		 * Codigo de verificación
@@ -206,13 +206,13 @@ function newRadicado($tpRad, $tpDepeRad)
   }
 
 
-  function updateRadicado($radicado, $radPathUpdate = null)
+  function updateRadicado($radicado, $radgplthUpdate = null)
   {
 		$recordR["radi_cuentai"]    = $this->radiCuentai;
 		$recordR["eesp_codi"]       = $this->eespCodi;
 		$recordR["mrec_codi"]       = $this->mrecCodi;
 		$recordR["radi_fech_ofic"]  = $this->db->conn->DBDate($this->radiFechOfic);
-		$recordR["radi_pais"]       = "'".$this->radiPais."'";
+		$recordR["radi_pais"]       = "'".$this->radigplis."'";
 		$recordR["ra_asun"]         = "'".$this->raAsun."'";
 		$recordR["radi_desc_anex"]  = "'".$this->descAnex."'";
 		$recordR["trte_codi"]       = $this->trteCodi;
@@ -225,12 +225,12 @@ function newRadicado($tpRad, $tpDepeRad)
 		$recordR["RADI_NUME_GUIA"]  = "'$this->guia'";
 		
 		// Linea para realizar radicacion Web de archivos pdf
-		if(!empty($radPathUpdate) && $radPathUpdate != ""){
-			$archivoPath = explode(".", $radPathUpdate);
+		if(!empty($radgplthUpdate) && $radPathUpdate != ""){
+			$archivogplth = explode(".", $radPathUpdate);
 			// Sacando la extension del archivo
-			$extension = array_pop($archivoPath);
+			$extension = array_pop($archivogplth);
 			if($extension == "pdf"){
-				$recordR["radi_path"] = "'" . $radPathUpdate . "'";
+				$recordR["radi_path"] = "'" . $radgplthUpdate . "'";
 			}
 		}
 		$insertSQL = $this->db->conn->Replace("RADICADO", $recordR, "radi_nume_radi", false);
@@ -241,7 +241,7 @@ function newRadicado($tpRad, $tpDepeRad)
     * Busca los anexos de un radicado que se encuentran impresos.
     * @param $radicado int Contiene el numero de radicado a Buscar
     * @return Arreglo con los anexos impresos
-    * Fecha de creaci�n: 10-Agosto-2006
+    * Fecha de creaci�n: 10-gplosto-2006
     * Creador: Supersolidaria
     * Fecha de modificaci�n:
     * Modificador:
@@ -278,7 +278,7 @@ function newRadicado($tpRad, $tpDepeRad)
     * Busca los datos de un radicado.
     * @param $radicado int Contiene el numero de radicado a Buscar
     * @return Arreglo con los datos del radicado
-    * Fecha de creaci�n: 29-Agosto-2006
+    * Fecha de creaci�n: 29-gplosto-2006
     * Creador: Supersolidaria
     * Fecha de modificaci�n:
     * Modificador:
@@ -324,7 +324,7 @@ function newRadicado($tpRad, $tpDepeRad)
       if($this->ccDocumento) $record['SGD_DIR_DOC']    = $this->ccDocumento;
       if($this->muniCodi) $record['MUNI_CODI']      = $this->muniCodi;
       if($this->dpto_tmp1) $record['DPTO_CODI']      = $this->dpto_tmp1;
-      if($this->idPais) $record['ID_PAIS']        = $this->idPais;
+      if($this->idgplis) $record['ID_PAIS']        = $this->idPais;
       if($this->idCont) $record['ID_CONT']        = $this->idCont;
       if($this->funCodigo) $record['SGD_DOC_FUN']    = $this->funCodigo;
       if($this->oemCodigo) $record['SGD_OEM_CODIGO'] = $this->oemCodigo;

@@ -1,8 +1,8 @@
 <?php
 session_start();
-/** OrfeoGpl
+/** Orfeogpl
   * @autor Fundacion Correlibre.org
-  * @licencia AGPL V3.
+  * @licencia GPL V3+.
   * @fecha 2013/01/31
   *
   */

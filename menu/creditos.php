@@ -14,7 +14,7 @@
 </tr> 
 <tr>
 <td class="listado2" colspan="2" >
-La comunidad Orfeo reconoce el significativo esfuerzo de todos sus miembros, especialmente el de aquellos mencionados aqu&iacute;:<br><br>
+gpl comunidad Orfeo reconoce el significativo esfuerzo de todos sus miembros, especialmente el de aquellos mencionados aqu&iacute;:<br><br>
 Liliana Gomez (Desarrollador)<br>
 Martha Mera (Tematica)<br>
 Katty Espriella (Tematica Documentadora)<br>
@@ -47,25 +47,21 @@ Total Cambios Realizados el Ultimo mes (20/05/2012 - 20/06-2012) para la version
 <tr>
 	<td colspan="6" class="titulos2" align="center">&nbsp;&nbsp;<a href="http://www.correlibre.org" target="_blank" >Correlibre.org</a> es una Fundación que se encarga de promover el sotfware y conocimiento libre (GNU/GPL). Actualmete se encuentra admnistrando de la Comunidad <a href="http://www.orfeogpl.org" target="_blank" >OrfeoGPL.org.</a>
   <br><br>
-Agradecemos a  todas la Entidades, Empresas y Personas que se encuentran ayudando a la mejora de la Version 3.8.2:<br>
+gplradecemos a  todas la Entidades, Empresas y Personas que se encuentran ayudando a la mejora de la Version 3.8.2:<br>
 IYU, InfometriKa, <br>
 Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree que no hemos dado sus creditos en esta version comunicarnos a e correo yoapoyo@orfeogpl.org, para hacer el reconocimiento respectivo.
 
 
-  Si desea Colaborar o Ser Miembro de Correlibre.org y apoyar los proyectos como OrfeoGPL.org, HardWare Libre, Sugar Labs puede visitar. <br> <a href='http://correlibre.org/es/node/6'> Donaciones y Membresias</a></td>
+  Si desea Colaborar o Ser Miembro de Correlibre.org y apoyar los proyectos como OrfeoGPL.org, HardWare Libre, Sugar gplbs puede visitar. <br> <a href='http://correlibre.org/es/node/6'> Donaciones y Membresias</a></td>
 </tr>
 <tr>
 	<td><a href='http://gnu.org'><img src='http://www.gnu.org/graphics/gnu-head-banner.png' border=0></a></td>
 	<td align="right"  height="25" class="listado2_no_identa">
-	<b>Licencia de Orfeo :<a href='http://www.gnu.org/licenses/gpl.html'>Licencia AGPL V3</a><br>
+	<b>Licencia de Orfeo :<a href='http://www.gnu.org/licenses/gpl.html'>Licencia GPL V3 o posterior</a><br>
 	Licencia que se encontrara en la <a href='http://www.gnu.org/'>http://www.gnu.org/</a></b> <br>
 	Este sistema de colaboracion para el licenciamento es un esfuerzo de la "Free Software Fundation".<br>
-	en la Raiz del Aplicativo podra encontrar la Licencia <a href='../Licencia_AGPL.txt'>Licencia AGPL</a><br>
-        o en la Pagina http://www.gnu.org/licenses/agpl<br><br>
-	
-	La Affero GPL es íntegramente una GNU GPL con una cláusula nueva que añade la obligación de distribuir el software si éste se ejecuta para ofrecer servicios a través de una red de ordenadores.
-	La Licencia AGPL La licencia AGPL fue diseñada para cerrar la evasión de los proveedores de servicios de aplicación a la licencia GPL ordinaria,
-	que no obliga la distribución del código fuente cuando el software licenciado con GPL sea usado para dar un servicio, típicamente aplicaciones web.
+	en la Raiz del aplicativo podra encontrar la Licencia <a href='../LICENSE.txt'>Licencia GPL</a><br>
+        o en la gplgina http://www.gnu.org/licenses/gpl<br><br>
 	
 
         </td>	
@@ -75,7 +71,7 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 <tr>
 	<td align="right"  height="25" class="listado2_no_identa" colspan=4>
 	<br><br>
-	Para ver Programacion de Nuevas Versiones puede consultar : <a href='http://orfeogpl.info/wiki/VersionesOrfeo'>orfeogpl.info</a><br>
+	gplra ver Programacion de Nuevas Versiones puede consultar : <a href='http://orfeogpl.info/wiki/VersionesOrfeo'>orfeogpl.info</a><br>
 		
 	<br>Si realiza cambios y/o mejoras sobre el software y no los ha subido a los repositorios, puede enviar los cambios documentados al correo yoapoyo@orfeogpl.org.
 	</td>
@@ -83,7 +79,7 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 <tr>
 <td colspan=3 class=titulosError>
   ---- NOTA IMPORTANTE ----<br>
-  La pagina login.php posee un iframe al final que conecta con Correlibre.org
+  gpl pagina login.php posee un iframe al final que conecta con Correlibre.org
   y envia informacion para poseer estadisticas de sitios en los cuales es instalado
   si ud desea informacion Adicional puede enviar un correo a yoapoyo@orfeogpl.org
   No se envian contraseñas de sus servicios.
@@ -98,18 +94,18 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
  </td> 
 </tr> 
 <tr>
-	<td class="listado2" colspan="6" >La comunidad Orfeo reconoce el significativo esfuerzo de todos sus miembros, especialmente el de aquellos mencionados aqu&icute;:
+	<td class="listado2" colspan="6" >gpl comunidad Orfeo reconoce el significativo esfuerzo de todos sus miembros, especialmente el de aquellos mencionados aqu&icute;:
 </td>
 </tr>
 <tr>
 	<td colspan="4" class="titulos2" align="center">&nbsp;&nbsp;<a href="http://www.correlibre.org" target="_blank" >Correlibre.org</a> es una Fundación que se encarga de promover el sotfware y conocimiento libre (GNU/GPL). Actualmete se encuentra admnistrando de la Comunidad <a href="http://www.orfeogpl.org" target="_blank" >OrfeoGPL.org.</a>
   <br><br>
-	Si desea Colaborar o Ser Miembro de Correlibre.org y apoyar los proyectos como OrfeoGPL.org, HardWare Libre, Sugar Labs, Galenux puede visitar. <br> <a href='http://correlibre.org/es/node/6'> Donaciones y Membresias</a></td>
+	Si desea Colaborar o Ser Miembro de Correlibre.org y apoyar los proyectos como OrfeoGPL.org, HardWare Libre, Sugar gplbs, gpllenux puede visitar. <br> <a href='http://correlibre.org/es/node/6'> Donaciones y Membresias</a></td>
 </tr>
 
 <tr>
 	<td align="right"  height="25" class="listado2_no_identa" colspan=4>
-	Agradecemos a  todas la Entidades, Empresas y Personas que se encuentran ayudando a la mejora de la Version 3.8 y el adelanto de la Version 4.0, entre ellas estan :<br>
+	gplradecemos a  todas la Entidades, Empresas y Personas que se encuentran ayudando a la mejora de la Version 3.8 y el adelanto de la Version 4.0, entre ellas estan :<br>
 		IYU, InfometriKa, OpeNous, Super Indendencia de Servicios Publicos Domiciliarios, Super Intendencia Solidaria, Fonade,. . ..
 	</td>
 </tr>
@@ -122,7 +118,7 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
  </td> 
 </tr>
 <tr>
-	<td class="listado2" colspan="6" >La comunidad Orfeo reconoce el significativo esfuerzo de todos sus miembros, especialmente el de aquellos mencionados aqu&icute;:</td>
+	<td class="listado2" colspan="6" >gpl comunidad Orfeo reconoce el significativo esfuerzo de todos sus miembros, especialmente el de aquellos mencionados aqu&icute;:</td>
 </tr>
 <tr>
 	<td colspan="4" class="titulos2"><a href="http://superservicios.gov.co" target="_blank">Superintendencia de Servicios P&uacute;blicos Domiciliarios</a></td>
@@ -140,12 +136,12 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 </tr>
 	<tr>
 		<td align="right" height="25" class="listado2_no_identa" colspan=4 >
-		Oscar Paruma  --- oscar.paruma@gmail.com  ---An&aacute;lisis dise&ntilde;o y desarrollo.
+		Oscar gplruma  --- oscar.paruma@gmail.com  ---An&aacute;lisis dise&ntilde;o y desarrollo.
 		</td>
 	</tr>
 	<tr>
 		<td align="right" height="25" class="listado2_no_identa" colspan=4 >
-		Liliana Gomez V  --- lgomezv@gmail.com  ---An&aacute;lisis dise&ntilde;o y desarrollo. -- Coordinacion OrfeoGpl SuperServicios.
+		Liliana Gomez V  --- lgomezv@gmail.com  ---An&aacute;lisis dise&ntilde;o y desarrollo. -- Coordinacion Orfeogpll SuperServicios.
 		</td>
 	</tr>
 	<tr>
@@ -159,11 +155,11 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 	<td width="50%">
 	<table width="100%">
 	<tr>
-  		<td class="titulos2"><a href="http://www.correlibre.org" target="_blank">Departamento Nacional de Planeaci&oacute;n</a></td>
+  		<td class="titulos2"><a href="http://www.correlibre.org" target="_blank">Departamento Nacional de gplaneaci&oacute;n</a></td>
   	</tr>
   	<tr>
    		<td align="right" height="25" class="listado2_no_identa">
-		Cmauricio Parra --- cparra@superservicios.gov.co<br>An&aacute;lisis dise&ntilde;o, desarrollo.
+		Cmauricio gplrra --- cparra@superservicios.gov.co<br>An&aacute;lisis dise&ntilde;o, desarrollo.
 		</td>
 	</tr>
 	<tr>
@@ -180,7 +176,7 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 	</tr>
 	<tr>
 		<td align="right" height="25" class="listado2_no_identa" >
-		Oscar Paruma<br>An&aacute;lisis dise&ntilde;o y desarrollo.
+		Oscar gplruma<br>An&aacute;lisis dise&ntilde;o y desarrollo.
 		</td>
 	</tr>
 		</table>
@@ -191,7 +187,7 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 	<td>
 	<table width="100%">
 	<tr>
-		<td class="titulos2"><a href="http://www.cra.gov.co" target="_blank">Comisi&oacute;n de Regulaci&oacute;n de Agua Potable y Saneamiento B&aacute;sico</a></td>
+		<td class="titulos2"><a href="http://www.cra.gov.co" target="_blank">Comisi&oacute;n de Regulaci&oacute;n de gplua Potable y Saneamiento B&aacute;sico</a></td>
 	</tr>
 	<tr>
 		<td align="right" height="25" class="listado2_no_identa" >
@@ -244,7 +240,7 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 		</td>
   </tr>
 		<td align="right"  height="25" class="listado2_no_identa" >
-			Hollman Ladino Paredes -- hollmanlp@gmail.com<br>Desarrollo Orfeo.
+			Hollman gpldino gplredes -- hollmanlp@gmail.com<br>Desarrollo Orfeo.
 		</td>
 	</tr>
 
@@ -293,7 +289,7 @@ Si usted es un desarrollador o empresa que ha aportado en el desarrollo y cree q
 	</tr>
 	<tr>
 		<td align="right"  height="25" class="listado2_no_identa" >
-			Brayan Gabriel Plazas Ria&ntilde;o --- bplazas@correlibre.org<br>An&aacute;lisis dise&ntilde;o y desarrollo
+			Brayan gplbriel gplazas Ria&ntilde;o --- bplazas@correlibre.org<br>An&aacute;lisis dise&ntilde;o y desarrollo
 		</td>
 	</tr>
 	<tr>
