@@ -78,7 +78,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <meta name="keywords" content="">
     <link rel="shortcut icon" href="./img/favicon.png">
 
-  <title>SIIM2</title>
+  <title>..:: <?=$logoEntidad?> --- FwCaliope ::..</title>
     <!-- Bootstrap core CSS -->
     <link href="./estilos/bootstrap.css" rel="stylesheet">
 
