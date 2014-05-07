@@ -68,7 +68,7 @@
 			$etapaFlujoTerminos = $rs2->fields["SGD_FEXP_TERMINOS"];
 			$etapaFlujoNombres[$colsProc]=$etapaFlujo;
 				?>
-						<TD class="titulos3" align="center"><?=$etapaFlujo?></TD>
+						<TD class="titulos3" align="center"><small><?=$etapaFlujo?></small></TD>
 				<?
 			$colsProc++;
 			$rs2->MoveNext();

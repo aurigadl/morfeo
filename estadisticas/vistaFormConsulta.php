@@ -491,7 +491,7 @@ $objUsuario = new Usuario($db);
                     }
                     ?>
                     <tr>
-                      <td colspan="2" class="titulos2">
+                      <td colspan="2" class="titulos2"> 
                         <center>
                           <input name="Submit" type="submit" class="btn btn-primary btn-sm" value="Limpiar">
                           <input type="submit" class="btn btn-primary btn-sm" value="Generar" name="generarOrfeo">
