@@ -78,7 +78,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <meta name="keywords" content="">
     <link rel="shortcut icon" href="./img/favicon.png">
 
-  <title>..:: <?=$logoEntidad?> --- FwCaliope ::..</title>
+  <title>..:: <?=$entidad?> fwCaliope  ::..</title>
     <!-- Bootstrap core CSS -->
     <link href="./estilos/bootstrap.css" rel="stylesheet">
 
