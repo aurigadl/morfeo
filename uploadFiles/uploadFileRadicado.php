@@ -1,36 +1,17 @@
 <?php
-/**
-* @author Jairo Losada   <jlosada@gmail.com>
-* @author Cesar Gonzalez <aurigadl@gmail.com>
-* @license  GNU AFFERO GENERAL PUBLIC LICENSE
-* @copyright
-
-SIIM2 Models are the data definition of SIIM2 Information System
-Copyright (C) 2013 Infometrika Ltda.
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 session_start();
-
-$krd         = $_SESSION["krd"];
+/**
+  * Se añadio compatibilidad con variables globales en Off
+  * @autor Jairo Losada 2009-05
+  * @licencia GNU/GPL V 3
+  */
+$krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
-$usua_doc    = $_SESSION["usua_doc"];
-$codusuario  = $_SESSION["codusuario"];
-$tip3Nombre  = $_SESSION["tip3Nombre"];
-$tip3desc    = $_SESSION["tip3desc"];
-$tip3img     = $_SESSION["tip3img"];
+$usua_doc = $_SESSION["usua_doc"];
+$codusuario = $_SESSION["codusuario"];
+$tip3Nombre=$_SESSION["tip3Nombre"];
+$tip3desc = $_SESSION["tip3desc"];
+$tip3img =$_SESSION["tip3img"];
 
 if (isset($_GET["carpeta"]))
     $nomcarpeta = $_GET["carpeta"];
@@ -59,6 +40,7 @@ $ruta_raiz = "..";
 if(!isset($_SESSION['dependencia']))	include "$ruta_raiz/rec_session.php";
 require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler($ruta_raiz);
+$db->conn->debug = true;
 error_reporting(7);
 $verrad = "";
 ?>
@@ -66,6 +48,7 @@ $verrad = "";
 <head>
 <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
+<!-- Adicionado Carlos Barrero SES 02/10/09-->
 <script>
 	function borrad(ruta)
 		{
@@ -86,6 +69,22 @@ $verrad = "";
 </head>
 <BODY>
 <FORM ACTION="<?=$_SERVER['PHPSELF']?>?<?=session_name()?>=<?=session_id()?>" method="POST">
+    <div class="col-sm-12">
+      <!-- widget grid -->
+      <h2></h2>
+      <section id="widget-grid">
+        <!-- row -->
+        <div class="row">
+          <!-- NEW WIDGET START -->
+          <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+
+              <!-- widget div-->
+              <div>
+                <!-- widget content -->
+                <div class="widget-body no-padding">
+                  <div class="table-responsive">
 <?
 $varBuscada = "RADI_NUME_RADI";
 include "$ruta_raiz/envios/paEncabeza.php";
@@ -100,16 +99,12 @@ Modificación Carlos Barrero -SES- permite borrar imagen vinculadas
 <FORM ACTION="formUpload.php?krd=<?=$krd?>&<?=session_name()?>=<?=session_id()?>" method="POST">
 -->
 <FORM ACTION="formUpload.php?krd=<?=$krd?>&<?=session_name()?>=<?=session_id()?>" method="POST" name="formulario">
-<div class="col-sm-12"> <!-- widget grid -->
-  <section id="widget-grid">
-  <div class="well">
-    <center>
-      <input type="submit" value="Asociar Imagen del Radicado" name=asocImgRad class="btn btn-sm btn-primary">
-      <input type="button" value="Borrar Imagen del Radicado" name=borraImgRad class="btn btn-sm btn-primary" onClick="return borrad('borraPath.php?krd=<?=$krd?>&<?=session_name()?>=<?=session_id()?>&numrad=');">
-    </center>
-  </div>
-  </section>
-</div>
+<center><input type="submit" value="Asociar Imagen del Radicado" name=asocImgRad class="botones_largo">
+  <input type="button" value="Borrar Imagen del Radicado" name=borraImgRad class="botones_largo" onClick="return borrad('borraPath.php?krd=<?=$krd?>&<?=session_name()?>=<?=session_id()?>&numrad=');">
+
+<!--
+<center><input type="submit" value="Asociar Imagen del Radicado" name=asocImgRad class="botones_largo"></center>
+-->
 <?
 
 if($Buscar AND $busq_radicados_tmp)
@@ -136,6 +131,14 @@ if($Buscar AND $busq_radicados_tmp)
 	}
 }
 ?>
+              </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
 </FORM>
 </BODY>
 </HTML>

@@ -36,7 +36,7 @@ function return_bytes($val)
 <html>
 <head>
 <title>Enviar Datos</title>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <script>
 function notSupported(){ alert('Su browser no soporta las funciones Javascript de esta p�ina.'); }
 function setSel(start,end){
@@ -150,6 +150,23 @@ function markAll(noRad)
 </head>
 <body bgcolor="#FFFFFF" topmargin="0" onLoad="markAll(1);">
 <form action="uploadTx.php?<?=$encabezado?>" method="post" name="realizarTx" enctype="multipart/form-data">
+    <div class="col-sm-12">
+      <!-- widget grid -->
+      <h2></h2>
+      <section id="widget-grid">
+        <!-- row -->
+        <div class="row">
+          <!-- NEW WIDGET START -->
+          <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+
+              <!-- widget div-->
+              <div>
+                <!-- widget content -->
+                <div class="widget-body no-padding">
+                  <div class="table-responsive">
+
 <table border=0 width=100% cellpadding="0" cellspacing="0">
 	<tr>
 	<td width=100%>
@@ -185,12 +202,7 @@ function markAll(noRad)
 				<center>
 				<table width="500"  border=0 align="center" bgcolor="White">
 					<TR bgcolor="White">
-						<TD width="100">
-							<center>
-							<img src="<?=$ruta_raiz?>/iconos/tuxTx.gif" alt="Tux Transaccion" title="Tux Transaccion">
-							</center>
-						</td>
-						<TD align="left">
+						<TD colspan="2" align="left">
         					<textarea name="observa" id="observa" cols=70 rows=3 class=tex_area></textarea>
 						</TD>
 					</TR>
@@ -240,6 +252,14 @@ function markAll(noRad)
 	$pager->Render($rows_per_page=20,$linkPagina,$checkbox=chkAnulados);
 ?>
 <input type='hidden' name=depsel value='<?=$depsel?>'>
+              </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
 </form>
 </body>
 </html>
