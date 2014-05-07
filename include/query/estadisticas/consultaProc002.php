@@ -62,9 +62,10 @@ switch($db->driver)
 	case 'oci8':
 	case 'oci805':
 	case 'ocipo':
+	case 'postgres':
 //AND TO_CHAR(a.radi_fech_radi,'yyyy/mm/dd') BETWEEN '$fecha_ini'  AND '$fecha_fin' 
 	$whereProceso = (isset($codProceso) && $codProceso != '') ? "AND sExp.SGD_PEXP_CODIGO = $codProceso" : '';
-	$whereDependencia = ($dependencia_busq != 99999) ? "WHERE sExp.DEPE_CODI = 1$dependencia_busq" : '';
+	$whereDependencia = ($dependencia_busq != 99999) ? "WHERE sExp.DEPE_CODI = $dependencia_busq" : '';
 	$andUsua = ($codus != 0) ? "AND u.USUA_DOC = sExp.USUA_DOC_RESPONSABLE AND u.USUA_CODI = $codus" : '';
 	$tablaUs = ($codus != 0) ? ", USUARIO u" : '';
 	

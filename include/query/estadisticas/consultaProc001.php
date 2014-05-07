@@ -63,6 +63,7 @@ switch($db->driver)
 	case 'oci8':
 	case 'oci805':
 	case 'ocipo':
+	case 'postgres':
 	$queryE = "
 	    SELECT b.USUA_NOMB USUARIO
 			, count(1) TOTAL_PROCESOS

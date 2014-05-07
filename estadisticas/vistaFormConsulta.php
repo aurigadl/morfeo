@@ -336,6 +336,7 @@ $objUsuario = new Usuario($db);
                                     where  $whereUsSelect
                                     order by u.USUA_NOMB";
                               //if($codusuario!=1) $isqlus .= " and a.usua_codi=$codusuario ";
+                              echo "<hr>".$isqlus;
                               $rs1=$db->query($isqlus);
                               while(!$rs1->EOF)  {
                                 $codigo = $rs1->fields["USUA_CODI"];

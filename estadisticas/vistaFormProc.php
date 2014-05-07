@@ -1,36 +1,44 @@
-<?
+<?php
+/**
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 session_start();
-/*************************************************************************************/
-/* ORFEO GPL:Sistema de Gestion Documental		http://www.orfeogpl.org	     */
-/*	Idea Original de la SUPERINTENDENCIA DE SERVICIOS PUBLICOS DOMICILIARIOS     */
-/*				COLOMBIA TEL. (57) (1) 6913005  orfeogpl@gmail.com   */
-/* ===========================                                                       */
-/*                                                                                   */
-/* Este programa es software libre. usted puede redistribuirlo y/o modificarlo       */
-/* bajo los terminos de la licencia GNU General Public publicada por                 */
-/* la "Free Software Foundation"; Licencia version 2. 			             */
-/*                                                                                   */
-/* Copyright (c) 2005 por :	  	  	                                     */
-/* SSPS "Superintendencia de Servicios Publicos Domiciliarios"                       */
-/*   Jairo Hernan Losada  jlosada@gmail.com                Desarrollador             */
-/*   Sixto Angel Pinzón López --- angel.pinzon@gmail.com   Desarrollador             */
-/* C.R.A.  "COMISION DE REGULACION DE AGUAS Y SANEAMIENTO AMBIENTAL"                 */ 
-/*   Liliana Gomez        lgomezv@gmail.com                Desarrolladora            */
-/*   Lucia Ojeda          lojedaster@gmail.com             Desarrolladora            */
-/* D.N.P. "Departamento Nacional de Planeación"                                      */
-/*   Hollman Ladino       hladino@gmail.com                Desarrollador             */
-/*                                                                                   */
-/* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
-/*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
-/*************************************************************************************/
-define('ADODB_ASSOC_CASE', 2);
+
+    $ruta_raiz = "..";
+    if (!$_SESSION['dependencia'])
+        header ("Location: $ruta_raiz/cerrar_session.php");
+
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
-$usua_doc = $_SESSION["usua_doc"];
-$codusuario = $_SESSION["codusuario"];
-$tip3Nombre=$_SESSION["tip3Nombre"];
-$tip3desc = $_SESSION["tip3desc"];
-$tip3img =$_SESSION["tip3img"];
+$usua_doc              = $_SESSION["usua_doc"];
+$codusuario            = $_SESSION["codusuario"];
+$tip3Nombre            = $_SESSION["tip3Nombre"];
+$tip3desc              = $_SESSION["tip3desc"];
+$tip3img               = $_SESSION["tip3img"];
+$usua_perm_estadistica = $_SESSION["usua_perm_estadistica"];
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
+
+
 
 $nomcarpeta=$_GET["carpeta"];
 $tipo_carpt=$_GET["tipo_carpt"];
@@ -88,8 +96,10 @@ if(!$fecha_fin) $fecha_fin = $fecha_busq;
 ?>	  
 <html>
 <head>
-<title>principal</title>
-<link rel="stylesheet" href="../estilos/orfeo.css" type="text/css">
+<title>..:: Caliope ::..</title>
+<?
+  include_once("$ruta_raiz/htmlheader.inc.php");
+?>
 <link rel="stylesheet" type="text/css" href="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.css">
 <script type="text/javascript" src="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.js"></script>
 <script type="text/javascript" language="javascript">
@@ -109,16 +119,16 @@ if(!$fecha_fin) $fecha_fin = $fecha_busq;
 --></script>
 </head>
 <?
-include "$ruta_raiz/envios/paEncabeza.php";
+// include "$ruta_raiz/envios/paEncabeza.php";
 ?>
 <br />
-<body bgcolor="#ffffff"  topmargin="0">
+<body topmargin="0"  style="overflow-x:scroll">
 <div id="spiffycalendar" class="text"></div>
-<form name="formulario"  method=post action='vistaFormProc.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>'>
+<form name="formulario"  method=post action='vistaFormProc.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>' class='smart-form'>
 
-<table width="100%"  border="0" cellpadding="0" cellspacing="5" class="borde_tab">
+<table width="100%"  class="table table-bordered">
   <tr>
-    <td colspan="2" class="titulos4"><A href='vistaFormConsulta.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>' style="color: #FFFFCC;">Estadisticas </A> - <center>PROCESOS </center> </td>
+    <td colspan="2" class="titulos4"><A href='vistaFormConsulta.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>' >Estadisticas </A> - <center>PROCESOS </center> </td>
   </tr>
   <tr>
     <td colspan="2" class="titulos3"><span class="cal-TextBox"><?=$helpE[$tipoEstadistica]?></span></td>
@@ -126,6 +136,7 @@ include "$ruta_raiz/envios/paEncabeza.php";
   <tr>
     <td width="30%" class="titulos2">Tipo de Consulta / Estadistica</td>
     <td class="listado2" align="left">
+    <label class=select>  
 	   <select name="tipoEstadistica"  class="select" onChange="formulario.submit();">
 		<?	
 		foreach($tituloE as $key=>$value){
@@ -133,13 +144,16 @@ include "$ruta_raiz/envios/paEncabeza.php";
 			<option value=<?=$key?> <?=$selectE?>><?=$tituloE[$key]?></option>
 		<?	} ?>
 		</select>
+		</label>
 	</td>
 	</tr>
 	<tr>
     <td width="30%" class="titulos2">Dependencia</td>
     <td class="listado2">
+  <label class=select>  
 	<select name="dependencia_busq"  class="select"  onChange="formulario.submit();">
 	<?
+	// $db->debug = true;
 	if($usua_perm_estadistica>1){
 		$datoss=($dependencia_busq==99999)? " selected ":"";
 		?>
@@ -161,7 +175,7 @@ include "$ruta_raiz/envios/paEncabeza.php";
 	}
 	//if($codusuario!=1) $isqlus .= " and a.usua_codi=$codusuario "; 
     //echo "--->".$isqlus;
-
+//$db->conn->debug = true;
 $rs1=$db->query($isqlus);
 
 do{
@@ -174,6 +188,7 @@ do{
 }while(!$rs1->EOF);
 	?>
 	</select>
+	</label>
 </td>
 </tr>
 <?
@@ -184,7 +199,7 @@ do{
 
 /*if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or $tipoEstadistica==4 or $tipoEstadistica==5 or $tipoEstadistica==6 or $tipoEstadistica==7)*/
 
-if($tipoEstadistica >=1 && $tipoEstadistica<=7 )
+if($tipoEstadistica >=1 && $tipoEstadistica<=17 )
 {
 ?>
 <tr id="cUsuario">
@@ -194,11 +209,12 @@ if($tipoEstadistica >=1 && $tipoEstadistica<=7 )
 	<input name="usActivos" type="checkbox" class="select" <?=$datoss?> onChange="formulario.submit();">
 	Incluir Usuarios Inactivos  </td>
 	<td class="listado2">
+	<label class=select>  
 	<select name="codus"  class="select"  onChange="formulario.submit();">
 	<? 	if ($usua_perm_estadistica > 0){	?>
 			<option value=0> -- AGRUPAR POR TODOS LOS USUARIOS --</option>
 	<?	}
-		$whereUsSelect=(!isset($_POST['usActivos']))?" u.USUA_ESTA = 1 ":"";
+		$whereUsSelect=(!isset($_POST['usActivos']))?" u.USUA_ESTA = '1' ":"";
 		$whereUsSelect=($usua_perm_estadistica < 1)?
 					(($whereUsSelect!="")?$whereUsSelect." AND u.USUA_LOGIN='$krd' ":" u.USUA_LOGIN='$krd' "):$whereUsSelect;	
         
@@ -222,6 +238,7 @@ if($tipoEstadistica >=1 && $tipoEstadistica<=7 )
 		}
 		?>
 		</select>
+		</label>
 	&nbsp;</td>
   </tr>
   <tr id="cPFecha">
@@ -229,6 +246,7 @@ if($tipoEstadistica >=1 && $tipoEstadistica<=7 )
 		<BR>
 	</td>
 	<td class="listado2">
+	<label class=select>
 	<select name=codAno  class="select"  onChange="formulario.submit();">
 		<option value='0'> -- MOSTRAR CONSOLIDADOS LOS A&Ntilde;OS --</option>
 		<?
@@ -238,6 +256,7 @@ if($tipoEstadistica >=1 && $tipoEstadistica<=7 )
 					<option value=<?=$iAno?>  <?=$datoss?> ><?=$iAno?></option>		
 		<?	} ?>
 		</select>
+		</label>
 	&nbsp;</td>
   </tr>
   <?
@@ -248,6 +267,7 @@ if($tipoEstadistica >=1 && $tipoEstadistica<=7 )
 		<BR>
 	</td>
 	<td class="listado2">
+	<label class=select>
 	<?php
   		// Muestra todos los procesos
   		$sqlprocesos = "SELECT SGD_PEXP_DESCRIP,SGD_PEXP_CODIGO FROM SGD_PEXP_PROCEXPEDIENTES";
@@ -259,13 +279,14 @@ if($tipoEstadistica >=1 && $tipoEstadistica<=7 )
 		echo $rs1->GetMenu2($nmenu, $default_str, $blank1stItem = "$valor:$itemBlanco",false,'0',' class=select');
 		$codAno = isset($_POST['codAno'])&&($_POST['codAno']!= '0') ? $_POST['codAno']: ""	;
   	?>
+  	</label>
 	&nbsp;</td>
   </tr>
   <tr>
     <td colspan="2" class="titulos2">
 	<center>
-	<input name="Submit" type="submit" class="botones_funcion" value="Limpiar"> 
-	<input type="submit" class="botones_funcion" value="Generar" name="generarOrfeo">
+	<input name="Submit" type="submit"  class="btn btn-primary btn-sm"  value="Limpiar"> 
+	<input type="submit"  class="btn btn-primary btn-sm"  value="Generar" name="generarOrfeo">
 	</center>
 	</td>
   </tr>

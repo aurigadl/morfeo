@@ -1,12 +1,15 @@
+<?
+ 
+?>
 <html>
-<title>ORFEO - IMAGEN ESTADISTICAS </title>
+<title>..:: IMAGEN ESTADISTICAS ::.. </title>
 		<link rel="stylesheet" href="../estilos/orfeo.css" />
 <body>
 <CENTER>
-   <table border="0" cellpadding="0" cellspacing="2" class="borde_tab">
+   <table  class="table table-bordered">
 	<tr >
 		<td class="titulos3" width="1">	
-		# <?=$estadoProc?>
+		<smal># <?=$estadoProc?></smal>
 		</td>
 		<?
 		$fieldCount = $rsE->FieldCount();
@@ -33,7 +36,7 @@
 		?>
 		<a href='<?=$linkPaginaActual?>?<?=$datosaenviar?>&ascdesc=<?=$ascdesc?>&orno=<?=($iE+1)?>&generarOrfeo=Busquedasss&genDetalle=<?=$genDetalle?>&genTodosDetalle=<?=$genTodosDetalle?>&fenvCodi=<?=$fenvCodi?>&tipoDocumento=<?=$tipoDocumento?>' >
 			<?
-				echo $fld->name;
+				echo "<smal>".$fld->name . "</smal>";
 			?>
 		</a>
 		</td>
@@ -208,7 +211,8 @@
 					hFld.SGD_FARS_CODIGO=fArs.SGD_FARS_CODIGO AND
 					fArs.SGD_FEXP_CODIGOFIN=fExp.SGD_FEXP_CODIGO AND
 					hFld.SGD_EXP_NUMERO = '$expNumeroActual'
-					AND hFld.USUA_DOC = u.USUA_DOC";
+					AND hFld.USUA_CODI = u.USUA_CODI AND hFld.DEPE_CODI = u.DEPE_CODI";
+					// -- AND hFld.USUA_DOC = u.USUA_DOC";
 			$rsFlujo = $db->query($queryFlujo);
 			$estados = "";
 			$codEstado =array();
@@ -258,7 +262,7 @@ $rs2 = $db->query($isqlEstados);
 			$etapaFlujoTerminos = $rs2->fields["SGD_FEXP_TERMINOS"];
 			$etapaFlujoNombres[$colsProc]=$etapaFlujo;
 				?>
-						<TD class="titulos3" align="center"><?=$etapaFlujo?></TD>
+						<TD class="titulos3" align="center"><small><?=$etapaFlujo?></small></TD>
 				<?
 			$colsProc++;
 			$rs2->MoveNext();

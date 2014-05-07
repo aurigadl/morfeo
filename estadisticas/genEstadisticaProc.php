@@ -15,10 +15,11 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 require_once("$ruta_raiz/class_control/Mensaje.php");
 include("$ruta_raiz/class_control/usuario.php");
 
+define('ADODB_ASSOC_CASE', 2);
 $db = &new ConnectionHandler($ruta_raiz);	 
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
-//$db->conn->debug = true;
+$db->conn->debug = true;
 $objUsuario = new Usuario($db);
 error_reporting(7);
 ?>
@@ -35,7 +36,6 @@ if( isset($_GET['genDetalle']) && $_GET['dendetalle']=1){
 </head>
 <?php	
 }
-require_once("$ruta_raiz/envios/paEncabeza.php");
 
 $datosaenviar = "fechaf=$fechaf&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&krd=$krd&dependencia_busq=$dependencia_busq&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&codProc="; 
 }
@@ -59,9 +59,7 @@ $datosaenviar = "fechaf=$fechaf&genDetalle=$genDetalle&tipoEstadistica=$tipoEsta
 	$whereDependencia.=$where.$whereProc;
 	$whereEstadoProc.=$whereProc.$wheretapaProc.$where;
 	
-	
-	
-	
+
 switch($tipoEstadistica){
 	case "1":
 	include "$ruta_raiz/include/query/estadisticas/consultaProc001.php";
@@ -77,7 +75,11 @@ if($generar == "ok") {
 	//$db->conn->debug=true;
 	if($genDetalle==1) $queryE = $queryEDetalle;
 	if($genTodosDetalle==1) $queryE = $queryETodosDetalle;
+	
+	$rsE = $db->conn->query($queryE);
 	if ($tipoEstadistica==2) include ("./tablaProcHtml42.php");
     else include ("./tablaProcHtml.php");
+    
+    	
  }
 ?>
