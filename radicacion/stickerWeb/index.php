@@ -1,7 +1,7 @@
 <?php
 session_start();
 //ini_set('display_errors',1);
-$ruta_raiz 		= "../.."; 
+$ruta_raiz 		= "../..";
 include_once "$ruta_raiz/config.php";
 $verradicado        = $_GET["verrad"];
 define('ADODB_ASSOC_CASE', 1);
@@ -19,9 +19,9 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 if ($verradicado) $verrad = $verradicado;
 
 $numrad = $verrad;
-$db             = new ConnectionHandler($ruta_raiz);    
+$db             = new ConnectionHandler($ruta_raiz);
 
-include $ruta_raiz.'/ver_datosrad.php';    
+include $ruta_raiz.'/ver_datosrad.php';
 $copias = empty($copias)? 0: $copias;
 ?>
 <html>
@@ -39,16 +39,16 @@ body {
     padding-left:0;
     padding-right:0;
     padding-top:0
-    font-family: Arial, Helvetica, sans-serif;            
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 span{
     font-size: 9px;
-    line-height: 10px; 
+    line-height: 10px;
     clear:both;
 }
 h3,p{
-    margin: 0px; 
+    margin: 0px;
 }
 td{
     width:auto;
@@ -64,16 +64,16 @@ $noRad = $_REQUEST['nurad'];
         <tr>
             <td rowspan=2>
                 <center>
-                    <img src='../../logoEntidad3.png' width='70'>
+                    <img src='../../logoEntidad.png' width='70'>
                 </center>
             </td>
-            <td  align=left width="300px"> 
+            <td  align=left width="300px">
                 <span>&nbsp;<span>
                <!-- <center>
-               <p><span><b><h3><?=$entidad_largo?></h3><b></span></p> 
+               <p><span><b><h3><?=$entidad_largo?></h3><b></span></p>
                 </center> -->
-                <span><center><img src="barcode_img.php?num=<?php echo($numrad) ?>&type=Code39&imgtype=png" width=200><center><span>
-<!--                  <p><span><b>Destino: <?=substr($dependenciaDestino,0,20)?><p><span><b>    --> 
+                <span><center><img src="barcode_img.php?num=<?php echo($nurad) ?>&type=Code39&imgtype=png" width="200px"><center><span>
+<!--                  <p><span><b>Destino: <?=substr($dependenciaDestino,0,20)?><p><span><b>    -->
                 <p><span><b> - Rem: <?=substr($remite,0,20); ?> </b></span></p>
                 <p><span  align="left"><b>
                     Folios: <?=$radi_nume_folio?> &nbsp;&nbsp; Anexos: <?=$radi_nume_anexo?> &nbsp;&nbsp; Copias: <?=$copias?>   </b>
@@ -83,18 +83,9 @@ $noRad = $_REQUEST['nurad'];
                     <?=substr($radi_fech_radi,0,16). " "?>  &nbsp;&nbsp; C&oacute;d veri: <?=$sgd_rad_codigoverificacion?> </b>
                 </span>
                 <!-- <p><span><b>Consulte su tr&aacute;mite en http://www.correlibre.org</b></span></p> -->
-                 <p><span><b>Visitenos en http://veeduriadistrital.gov.co</b></span></p>
-            </td>                     
+                 <p><span><b><?=$entidad_largo?></b></span></p>
+            </td>
         </tr>
-<!--
-        <tr>
-            <td colspan=2 align=center>
-                <font size="1">
-                    <?=$entidad_largo?>
-                </font>
-            </td>                     
-        </tr>
---!>
     </table>
 </body>
 </html>

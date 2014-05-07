@@ -21,6 +21,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+  ini_set("display_errors",1);
+
   session_start();
 
   $ruta_raiz = "..";
@@ -32,15 +34,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   /**  Fin variables de session de Radicacion de Mail. **/
   include_once("$ruta_raiz/include/db/ConnectionHandler.php");
-  $db     = new ConnectionHandler("$ruta_raiz");
+  include_once("$ruta_raiz/include/tx/usuario.php");
+  $db              = new ConnectionHandler("$ruta_raiz");
+  $usuario         = new Usuario($db);
 
-  $ddate       = date('d');
-  $mdate       = date('m');
-  $adate       = date('Y');
-  $nurad       = trim($nurad);
-  $hora        = date('H:i:s');
-  $fechaf      = $date.$mdate.$adate.$hora;
-  $dependencia = $_SESSION["dependencia"];
+  $showtable       = "hide";
+  $hidetable       = "";
+  $ddate           = date('d');
+  $mdate           = date('m');
+  $adate           = date('Y');
+  $nurad           = trim($nurad);
+  $hora            = date('H:i:s');
+  $fechaf          = $date.$mdate.$adate.$hora;
+  $dependencia     = $_SESSION["dependencia"];
   $ADODB_COUNTRECS = true;
 
   if(!$fecha_gen_doc || $fecha_gen_doc=='//'){
@@ -50,15 +56,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $coddepe  = $dependencia;
 
+  //CARGAR INFORMACION SI SE ENVIA NUMERO DE RADICADO PARA MODIFICAR
+  if($nurad){
+	  $nurad = trim($nurad);
+    $query = "SELECT
+                a.*
+              FROM
+                RADICADO A
+              WHERE
+                A.RADI_NUME_RADI = $nurad";
+
+	  $rs    = $db->conn->query($query);
+
+	  if(!$rs->EOF){
+      $asu             = $rs->fields["RA_ASUN"];
+		  $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
+		  $ane             = $rs->fields["RADI_DESC_ANEX"];
+		  $cuentai         = $rs->fields["RADI_CUENTAI"];
+		  $tdoc            = $rs->fields["TDOC_CODI"];
+		  $med             = $rs->fields["MREC_CODI"];
+		  $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
+		  $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
+      $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
+		  $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
+      $guia            = $rs->fields["RADI_NUME_GUIA"];
+    }
+
+    $date1         = date_create($radi_fecha);
+    list($adate, $mdate, $ddate)    = explode( '-', date_format($date1, 'Y-m-d') );
+    list($adate1, $mdate1, $ddate1) = explode( '-', substr($fecha_gen_doc,0,10));
+    $fecha_gen_doc = "$adate1-$mdate1-$ddate1";
+
+	  $ent = substr($nurad,-1);
+
+    //Filtro por el tipo de usuario
+    $result = $usuario->usuarioPorRadicado($nurad);
+
+    if($result){
+      $showUsers = $usuario->resRadicadoHtml();
+      $showtable = '';
+      $hidetable = 'hide';
+    }
+
+    $varEnvio = session_name()."=".session_id()."&nurad=$nurad&ent=$ent";
+    $senddata = "<input name='nurad' value='$nurad' type=hidden>";
+  }
+
   $query    = "SELECT ".
-              $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
-            FROM
-              DEPENDENCIA d
-              INNER JOIN usuario u ON u.depe_codi = d.depe_codi
-              and u.usua_codi   = 1
-              and u.usua_esta   ='1'
-              and d.depe_estado = 1
-            ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
+                $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
+              FROM
+                DEPENDENCIA d
+                INNER JOIN usuario u ON u.depe_codi = d.depe_codi
+                and u.usua_codi   = 1
+                and u.usua_esta   ='1'
+                and d.depe_estado = 1
+              ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
 
   $rs        = $db->conn->query($query);
   $depselect = $rs->GetMenu2("coddepe",
@@ -81,15 +133,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             "",
                             "class='select'" );
 
-  $query = "SELECT
-              SGD_TPR_DESCRIP
-              ,SGD_TPR_CODIGO
-            FROM
-              SGD_TPR_TPDCUMENTO
-            WHERE
-              SGD_TPR_TP$ent     ='1'
-              and SGD_TPR_RADICA ='1'
-              ORDER BY SGD_TPR_DESCRIP ";
+  $query    = "SELECT
+                  SGD_TPR_DESCRIP
+                  ,SGD_TPR_CODIGO
+                FROM
+                  SGD_TPR_TPDCUMENTO
+                WHERE
+                  SGD_TPR_TP$ent     ='1'
+                  and SGD_TPR_RADICA ='1'
+                  ORDER BY SGD_TPR_DESCRIP ";
 
   $opcMenu  = "0:-- Seleccione un tipo --";
   $fechaHoy = date("Y-m-d");
@@ -135,13 +187,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <h6> <?=$ddate?> / <?=$mdate?> / <?=$adate?> </h6>
           </section>
 
-
           <section class="col col-3">
             <label class="label">
               Referencia
             </label>
             <label class="input">
-              <input name="cuentai" type="text"  maxlength="20" value='<?php echo $cuentai; ?>' >
+              <input name="cuentai" type="text"  maxlength="20" value='<?= $cuentai; ?>' >
             </label>
           </section>
 
@@ -150,7 +201,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Guia
               </label>
               <label class="input">
-                <input type=text name='guia' id='guia' value='<?=$guia ?>' <?=$bloqEdicion?>  size=35>
+                <input type=text name='guia' id='guia' value='<?=$guia ?>' size=35>
               </label>
           </section>
 
@@ -162,31 +213,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <input type="text" id="fecha_gen_doc"  name="fecha_gen_doc" placeholder="Fecah de radicacion" value="<?=$fecha_gen_doc ?>">
             </label>
           </section>
+
         </div>
 
-        <div id="showRadicar" class="col-lg-3">
+        <div id="showRadicar" class="col-lg-3 <?=$hidetable?>">
+
             <a data-toggle="modal" id="radicarNuevo" name='Submit3' value='Radicar' class="btn btn-primary btn-lg btn-block pull-right header-btn">
               <i class="fa fa-circle-arrow-up fa-lg"></i>
               Radicar documento
             </a>
+
         </div>
 
-        <div id="showModificar" class="col-lg-3 hide">
+        <div id="showModificar" class="col-lg-3 <?=$showtable?>">
 
           <a data-toggle="modal" id="modificaRad" name="Submit44" class="btn bg-color-greenDark txt-color-white btn-lg btn-block">
-            Modificar el radicado
+            Modificar el radicado <?=$nurad?>
+            <?=$senddata?>
           </a>
 
           <label>
-            <a href="javascript:void(0);" class="btn btn-link">Ver Hoja Resumen</a>
+            <a href="javascript:void(0);" onClick="window.open ('./stickerWeb/index.php?<?=$varEnvio?>&alineacion=Center','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');" class="btn btn-link">Sticker</a>
           </label>
 
           <label>
-            <a href="javascript:void(0);" class="btn btn-link">Sticker</a>
-          </label>
-
-          <label>
-            <a href="javascript:void(0);" class="btn btn-link">Asociar Imagen</a>
+            <a  href="javascript:void(0);" onClick="window.open ('../uploadFiles/uploadFileRadicado.php?busqRadicados=<?=$nurad?>&Buscar=Buscar&<?=$varEnvio?>&alineacion=Center','busqRadicados=<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');" class="btn btn-link">Asociar Imagen</a>
           </label>
 
         </div>
@@ -261,7 +312,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       </section>
 
                     </div>
-                    <section id="tableSection" class="well col-lg-12 hide">
+                    <section id="tableSection" class="well col-lg-12 <?=$showtable?>">
                       <table class="table table-bordered">
                         <thead>
                           <tr>
@@ -276,7 +327,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <th>Pais</th>
                           </tr>
                         </thead>
-                        <tbody id="tableshow"> </tbody>
+                        <tbody id="tableshow"><?=$showUsers?></tbody>
                     </table>
                   </section>
               </div>
@@ -338,7 +389,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     Descripci&oacute; Anexos
                   </label>
                   <label class="input">
-                      <input name="ane" id="ane" type="text" size="70"  value="">
+                  <input name="ane" id="ane" type="text" size="70"  value="<?=$ane?>">
                   </label>
               </section>
 
@@ -376,7 +427,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
       //Datepicker muestra fecha
       $('#fecha_gen_doc').datepicker({
-        dateFormat : 'dd/mm/yy',
+        dateFormat : 'yy-mm-dd',
         onSelect : function(selectedDate) {
           $('#date').datepicker('option', 'maxDate', selectedDate);
         }
@@ -389,6 +440,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         $('#documento_us, #nombre_us, #telefono_us, #mail_us').val("").parent().removeClass('state-success state-error');
         $('#resBusqueda').empty();
         $('#showAnswer').addClass('hide');
+      });
+
+      //Eliminar usuarios y borrar el campo de seleccionados
+      //si no existe ningun usuario
+      $("input[name*='usuario']").parent().on("click", function(){
+        var codUser = $(this).parent().remove();
+        var tds     = $('table').children('tbody').children('tr').length;
+        if(tds === 0){
+          $('#tableSection').addClass('hide');
+        };
       });
 
       function uppFirs(txt){
@@ -440,13 +501,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         var tRow      = $('<tr>');
         var cotUser   = $('#tipo_usuario').val() +"_"+ trTable.CODIGO;
 
-        tCell = $('<td>').html( "<td class='search-table-icon'>"
-                                + "<a href='javascript:void(0);' rel='tooltip'"
+        tCell = $('<td class="search-table-icon">').html(
+                                  "<a href='javascript:void(0);' rel='tooltip'"
                                 + "data-placement='right' data-original-title='Eliminar Usuario'"
                                 + "class='text-danger'><i class='fa fa-minus'></i>"
                                 + "</a>"
-                                + "<input class='hide' name='usuario[]' value='" + cotUser +"'>" +
-                               "</td>")
+                                + "<input class='hide' name='usuario[]' value='" + cotUser +"'>")
                 .on("click", function(){
                   var codUser = $(this).parent().remove();
                   var tds     = $('table').children('tbody').children('tr').length;
@@ -567,17 +627,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
      $('#alertmessage').empty();
    }
 
-
    //Radicar documento nuevo
-   $('#radicarNuevo').on("click", function(){
+   $('#radicarNuevo, #modificaRad').on("click", function(){
         $('#alertmessage').empty();
-        var pass = true;
+        var acction = $(this).attr("id");
+        var pass    = true;
         /* Realizar validaciones antes de enviar el radicado*/
 
         //Folios y Anexos
         if(/[A-Za-z]+$/.test($("#nofolios").val()) ||
            /[A-Za-z]+$/.test($("#noanexos").val())){
-            mostrarAlert({type : 'danger', message : 'Escriba un número válido en No de folios o anexos.'});
+             mostrarAlert({ type : 'danger'
+                          , message : 'Escriba un número válido en No de folios o anexos.'});
             pass = false;
         }
 
@@ -643,22 +704,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         if(pass){
           //Dejar alertas en blanco
           borrarAlert();
-          var jqxhr = $.post( "./ajax_radicarNuevo.php",$( "#formulario").serialize(),function(data) {
+          var datos = $("form").serialize();
+
+          if(acction === "modificaRad"){
+            datos = datos + "&modificar=true";
+          }
+
+          var jqxhr = $.post( "./ajax_radicarNuevo.php", datos ,function(data) {
             for(var k in data) {
               if(data[k].error !== undefined){
                 mostrarAlert({type : 'danger', message : data[k].error});
               }else{
+
+                if(acction !== "modificaRad"){
+                  $('#modificaRad').append(data[k].answer);
+                }
+
                 $('#showRadicar').remove();
-                $('#modificaRad').append(data[k].answer);
                 $('#showModificar').removeClass('hide');
+
               }
             };
-          }).done(function(data) {
+          }).done(function(data){
             alert( "second success"  + data );
           }).fail(function() {
             mostrarAlert({type : 'danger', message : 'Error de conexion al servidor'})
           })
         };
+
     });
 
   </script>

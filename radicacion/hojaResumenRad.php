@@ -23,26 +23,29 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-session_start();
 
-foreach ($_GET  as $key => $val){ ${$key} = $val;}
-foreach ($_POST as $key => $val){ ${$key} = $val;}
+  ini_set("display_errors",1);
+  echo "<pre>";
 
-$ruta      = '/include';
-while(!is_dir($ruta_raiz.$ruta)) $ruta_raiz .=  empty($ruta_raiz)? "../" : "..";
+  session_start();
+
+  foreach ($_GET  as $key => $val){ ${$key} = $val;}
+  foreach ($_POST as $key => $val){ ${$key} = $val;}
+
+  $ruta_raiz = "../";
 
 
-if (!$_SESSION['dependencia'])
-header ("Location: $ruta_raiz/cerrar_session.php");
+  if (!$_SESSION['dependencia'])
+  header ("Location: $ruta_raiz/cerrar_session.php");
 
-include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-$verradicado     = $verrad;
-if($verradicado) $verrad= $verradicado;
+  $krd = $_SESSION['krd'];
 
-$numrad = $verrad;
-$db = new ConnectionHandler($ruta_raiz);
-$db->conn->SetFetchMode(3);
-include "$ruta_raiz/ver_datosrad.php";
+  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
+
+  $db = new ConnectionHandler($ruta_raiz);
+  $db->conn->SetFetchMode(3);
+  $db->conn->debug = true;
+  include "$ruta_raiz/ver_datosrad.php";
 ?>
 
 <html>
@@ -51,13 +54,17 @@ include "$ruta_raiz/ver_datosrad.php";
 </head>
 <body bgcolor="#FFFFFF" topmargin="0">
 <FORM
-	ACTION='hojaResumenRad.php?krd=<?=$krd?>&verrad=<?=$verrad?>&ent=<?=$ent?>&<?=session_name()?>=<?=session_id()?>'
+	ACTION='hojaResumenRad.php?krd=<?=$krd?>&nurad=<?=$nurad?>&ent=<?=$ent?>&<?=session_name()?>=<?=session_id()?>'
 	METHOD=POST><?
 	$fechah=date("dmy_h_m_s") . " ". time("h_m_s");
-	$check=1;
-	$numeroa=0;$numero=0;$numeros=0;$numerot=0;$numerop=0;$numeroh=0;
+	$check   = 1;
+  $numeroa = 0;
+  $numero  = 0;
+  $numeros = 0;
+  $numerot = 0;
+  $numerop = 0;
+  $numeroh = 0;
 
-	$nurad = $verrad;
 	include "$ruta_raiz/include/barcode/index.php";
 	$inf1= '
     <TABLE BORDER="0" >
@@ -72,16 +79,12 @@ include "$ruta_raiz/ver_datosrad.php";
     </TR><TR>
     <TD WIDTH=450>.</TD>
     <TD WIDTH=300 HEIGHT=50>
-    <b>RADICADO No $verrad</b>
-    </TD>
-    </TR><TR>    
-    <TD WIDTH=750 HEIGHT=80>
-    Dependencia rad. $dependenciaOrigen
+    <b>RADICADO No $nurad</b>
     </TD>
     </TR>
     <TR>
     <TD WIDTH=750>
-    Fecha de Generacion ".date("Y-m-d h:i:s")." 
+    Fecha de Generacion ".date("Y-m-d h:i:s")."
     </TD>
     </TR>
     </TABLE>
@@ -99,22 +102,22 @@ include "$ruta_raiz/ver_datosrad.php";
 	}
 
 	$inf .="
-    
+
     <TABLE BORDER=1>
     <TR WIDTH=750>
     <TD BGCOLOR='#CCCCCC' WIDTH=150>FECHA DE RAD</TD>
     <TD WIDTH=600>$radi_fech_radi</TD>
     </TR>
     <TR WIDTH=750>
-    <TD BGCOLOR='#CCCCCC' WIDTH=150> 
+    <TD BGCOLOR='#CCCCCC' WIDTH=150>
     USUARIO </TD>
-    <TD WIDTH=600> 
+    <TD WIDTH=600>
     $nombret_us1
     </td>
     </tr>
     <tr WIDTH=750>
     <td WIDTH=150 bgcolor='#CCCCCC'>DIRECCION</td>
-    <td  WIDTH=600> 
+    <td  WIDTH=600>
     $direccion_us1
     ($dpto_nombre_us1 / $muni_nombre_us1)
     </td>
@@ -148,7 +151,7 @@ $ra_asun_split[6]
 <tr WIDTH=750>
 $ra_asun_split[7]
 </tr>
-</TD>    
+</TD>
 </TR>
 <TR>
 <TD BGCOLOR='#CCCCCC' WIDTH='750' colspan=2><CENTER><B>TEMA / SUBTEMA</B></CENTER>
@@ -179,7 +182,7 @@ $ra_asun_split[7]
     $pdf->AddPage();
     $pdf->SetFont('Arial','',8);
     $pdf->WriteHTML($inf1 . $inf.$espacio.$inf1 . $inf);
-    $arpdf_tmp = "../bodega/pdfs/planillas/envios/$krd"."_".$verrad."_".microtime(FALSE).".pdf";
+    $arpdf_tmp = "../bodega/pdfs/planillas/envios/$krd"."_".$nurad."_".microtime(FALSE).".pdf";
     $pdf->Output($arpdf_tmp);
 
     echo "<br>";
@@ -198,23 +201,23 @@ $ra_asun_split[7]
 	</tr>
 </table>
 		<?
-		if($subirImagen and $verrad)
+		if($subirImagen and $nurad)
 		{
-			$depeDir = substr($verrad,4,$_SESSION['digitosDependencia']);
+			$depeDir = substr($nurad,4,$_SESSION['digitosDependencia']);
 			//Truco para pasar de  0900 a 900
 			//http://php.net/manual/en/language.types.type-juggling.php
 			$depeDir += 0;
-			$rutaNew = "/" . substr($verrad,0,4)."/".$depeDir."/$verrad".".pdf";
-			//$rutaNew = "/". substr($verrad,0,4)."/".substr($verrad,4,3)."/".$nurad.".pdf";
+			$rutaNew = "/" . substr($nurad,0,4)."/".$depeDir."/$nurad".".pdf";
+			//$rutaNew = "/". substr($nurad,0,4)."/".substr($nurad,4,3)."/".$nurad.".pdf";
 			//ini_set("display_errors", 1);
 			//shell_exec("cp $arpdf_tmp $ruta_raiz/bodega$rutaNew");
 			//exec ("cp $arpdf_tmp $ruta_raiz/bodega$rutaNew",$output,$returnS);
 
 			if(@copy($arpdf_tmp, $ruta_raiz."bodega".$rutaNew)){
-				$sql = "UPDATE RADICADO SET RADI_PATH='$rutaNew' where radi_nume_radi=$verrad";
+				$sql = "UPDATE RADICADO SET RADI_PATH='$rutaNew' where radi_nume_radi=$nurad";
 				if($db->conn->Execute($sql))
 				{
-					$radicadosSel[] = $verrad;
+					$radicadosSel[] = $nurad;
 					$codTx = 42;	//Código de la transacción digitalización
 					include "$ruta_raiz/include/tx/Historico.php";
 					$hist = new Historico($db);

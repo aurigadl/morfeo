@@ -197,17 +197,24 @@ function newRadicado($tpRad, $tpDepeRad)
 
   function updateRadicado($radicado, $radPathUpdate = null)
   {
-		$recordR["radi_cuentai"]    = $this->radiCuentai;
-		$recordR["eesp_codi"]       = $this->eespCodi;
+		$recordR["radi_cuentai"]    = "'$this->radiCuentai'";
+		$recordR["eesp_codi"]       = empty($this->eespCodi)? 0 : $this->eespCodi ;
 		$recordR["mrec_codi"]       = $this->mrecCodi;
 		$recordR["radi_fech_ofic"]  = $this->db->conn->DBDate($this->radiFechOfic);
 		$recordR["ra_asun"]         = "'".$this->raAsun."'";
 		$recordR["radi_desc_anex"]  = "'".$this->descAnex."'";
 		$recordR["radi_nume_radi"]  = $radicado;
 		$recordR["SGD_APLI_CODI"]   = $this->sgd_apli_codi;
-		$recordR["RADI_NUME_FOLIO"] = $this->nofolios;
-		$recordR["TDOC_CODI"] 		= $this->tdocCodi;
-		$recordR["RADI_NUME_ANEXO"] = $this->noanexos;
+
+    if(!empty($this->nofolios)){
+		  $recordR["RADI_NUME_FOLIO"] = $this->nofolios;
+    }
+
+		$recordR["TDOC_CODI"] 		  = $this->tdocCodi;
+
+    if(!empty($this->noanexos)){
+      $recordR["RADI_NUME_ANEXO"] = $this->noanexos;
+    }
 		$recordR["RADI_NUME_GUIA"]  = "'$this->guia'";
 
 		// Linea para realizar radicacion Web de archivos pdf

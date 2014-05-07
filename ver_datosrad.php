@@ -14,6 +14,10 @@ $nombre_us1 = "";$nombre_us2 = "";$nombre_us3 = "";
 $prim_apel_us1 = ""; $prim_apel_us2 = ""; $prim_apel_us3 = "";
 $seg_apel_us1 = ""; $seg_apel_us2 = ""; $seg_apel_us3 = "";
 
+if($nurad){
+  $verrad = $nurad;
+}
+
 if(!$verradicado and $verrad) $verradicado = $verrad;
 
 if(!$verradicado) die("<!-- No viene un numero de radicado a buscar -->");
@@ -31,14 +35,15 @@ die ("<span class='titulosError'>No se ha podido obtener la informacion del radi
 
 //numero de copias
 $sqlcopias =  "  SELECT
-                  COUNT(*) AS EXISTE 
-              FROM 
-                  INFORMADOS 
-              WHERE 
+                  COUNT(*) AS EXISTE
+              FROM
+                  INFORMADOS
+              WHERE
                   RADI_NUME_RADI = $verradicado";
 
 $nocopi  = $db->conn->Execute($sqlcopias);
 $copias  = $nocopi->fields["EXISTE"];
+
 if($menu_ver != 5) {
 	$nombre = $rs->fields["RADI_NOMB"] . " " .
 	$rs->fields["RADI_PRIM_APEL"] . " " .
@@ -58,7 +63,6 @@ $cuentai              = $rs->fields["RADI_CUENTAI"];
 $radi_usua_ante       = $rs->fields["RADI_USU_ANTE"];
 $radi_usua_actu       = $rs->fields["RADI_USUA_ACTU"];
 $radi_depe_actu       = $rs->fields["RADI_DEPE_ACTU"];
-//$radi_depe_radicacion = substr($verradicado,4,3);
 $radi_depe_radicacion = $rs->fields["DEPE_CODI"];
 $radi_depe_radi       = $rs->fields["RADI_DEPE_RADI"];
 $radi_usua_radi       = $rs->fields["RADI_USUA_RADI"];
@@ -70,12 +74,12 @@ if($rs->fields["CARP_PER"]==1) {
 	$personal=" ";
 }
 
-$carpeta_rad = $rs->fields["CARP_CODI"];
+$carpeta_rad    = $rs->fields["CARP_CODI"];
 $radi_nume_deri = $rs->fields["RADI_NUME_DERI"];
-$nivelRad = $rs->fields["NIVEL_SEGURIDAD"];
-$isql = "select depe_nomb
+$nivelRad       = $rs->fields["NIVEL_SEGURIDAD"];
+$isql           = "select depe_nomb
                 FROM dependencia
-                WHERE depe_codi = $radi_depe_radi 
+                WHERE depe_codi = $radi_depe_radi
 		 ";
 //echo $isql;
 $rsU = $db->conn->Execute($isql);
@@ -84,7 +88,7 @@ $dependenciaOrigen = $rsU->fields["DEPE_NOMB"];
 
 $isql = "select depe_nomb
                 FROM dependencia
-                WHERE depe_codi = $radi_depe_actu 
+                WHERE depe_codi = $radi_depe_actu
 		 ";
 //echo $isql;
 $rsU = $db->conn->Execute($isql);
@@ -124,7 +128,7 @@ if ($rs->fields["RADI_PATH"]){
 	 */
 
 	include_once "$ruta_raiz/tx/verLinkArchivo.php";
-	
+
 	$verLinkArch = new verLinkArchivo($db);
 	$resulVal = $verLinkArch->valPermisoRadi($verradicado);
 	$verImg = $resulVal['verImg'];
@@ -233,7 +237,6 @@ if($no_tipo!="true") {
 			sgd_sbrd_subserierd su,
 			sgd_tpr_tpdcumento t
 		WHERE r.sgd_mrd_codigo = m.sgd_mrd_codigo AND
-			r.depe_codi='$dependencia' AND
 			r.RADI_NUME_RADI = '$verradicado' AND
 			s.sgd_srd_codigo = m.sgd_srd_codigo AND
 			su.sgd_srd_codigo = m.sgd_srd_codigo AND
@@ -366,11 +369,11 @@ if($no_tipo!="true") {
 	// EXTRAE LA CAUSAL DEL DOCUMENTO
 
 	$sqlSelect = "SELECT caux.SGD_CAUX_CODIGO,
-						cau.SGD_CAU_CODIGO,		
+						cau.SGD_CAU_CODIGO,
 						dcau.SGD_DCAU_CODIGO,
 						ddcau.SGD_DDCA_CODIGO,
 						cau.SGD_CAU_DESCRIP,
-						dcau.SGD_DCAU_DESCRIP,												
+						dcau.SGD_DCAU_DESCRIP,
 						ddcau.SGD_DDCA_DESCRIP,
 						ddcau.PAR_SERV_SECUE,
 						serv.PAR_SERV_NOMBRE
@@ -477,7 +480,7 @@ if($no_tipo!="true") {
 
 	}
 	// echo "<hr> $ruta_raiz <hr>";
-	
+
 	include_once ("$ruta_raiz/include/tx/Expediente.php");
 	//$db->conn->debug=true;
 	$trdExp          = new Expediente($db);
@@ -496,7 +499,7 @@ if($no_tipo!="true") {
 	//echo "<hr>++ $numExpediente $verrad";
   if(!$tdoc){
   $isql = "select sgd_tpr_codigo, sgd_tpr_descrip, fech_vcmto, sgd_tpr_termino, date(fech_vcmto)-date(now()) diasparavencimiento, date(fech_vcmto)-date(radi_fech_radi)  diasplazo, date(now())-date(radi_fech_radi)  diashoy
-		 from sgd_tpr_tpdcumento tpr, radicado r 
+		 from sgd_tpr_tpdcumento tpr, radicado r
 		where r.tdoc_codi=tpr.sgd_tpr_codigo and  r.radi_nume_radi=$verradicado   ";
                   $rs=$db->query($isql);
                   if  (!$rs->EOF){
