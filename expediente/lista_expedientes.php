@@ -5,6 +5,7 @@ function verTipoExpediente(numeroExpediente,codserie,tsub,tdoc,opcionExp) {
 				RADI_USUA_ACTU
 				FROM radicado
 				WHERE RADI_NUME_RADI = '$numrad'";
+				// $db->conn->debug = true;
 		$rsDepR = $db->conn->Execute($isqlDepR);
 		$coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
 		$codusua = $rsDepR->fields['RADI_USUA_ACTU'];
@@ -31,7 +32,7 @@ function seguridadExp(numeroExpediente,nivelExp=0){
   window.open("<?=$ruta_raiz?>/seguridad/expediente.php?<?=session_name()?>=<?=session_id()?>&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>&nivelExp="+nivelExp+"&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=350,width=700,scrollbars=yes");
 }
 function reportePredios(numeroExpediente,predios='',vars, tipoReporte='modeloPredial'){
-  window.open("<?=$servidorBirt?>"+tipoReporte+".rptdesign&chip="+predios+"&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>"+vars,"HistExp<?=$fechaH?>"+predios+","fullscreen=yes,scrollbars=yes");
+  window.open("<?=$servidorBirt?>"+tipoReporte+".rptdesign&chip="+predios+"&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>"+vars,"HistExp<?=$fechaH?>"+predios,"fullscreen=yes,scrollbars=yes");
 }
 function verTipoExpedienteOld(numeroExpediente)
 {
@@ -348,6 +349,7 @@ $time_start = microtime_float();
     </td>
     <td>
    <?
+     if($radicadoAnexo){
      	$resulVal = $verLinkArch->valPermisoRadi($radicadoAnexo);
         $verImg = $resulVal['verImg'];
       	if ($verImg == "NO") {
@@ -358,6 +360,7 @@ $time_start = microtime_float();
 	  <a href='<?=$ruta_raiz?>/verradicado.php?verrad=<?=$radicadoAnexo?>&<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>' target="VERRAD<?=$radicadoAnexo?>">
 
 	 <? }  print $arrDatosRad['fechaRadicacion'];
+	 }
 
       ?>
       </a>

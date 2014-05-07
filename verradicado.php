@@ -357,12 +357,12 @@ if($verradPermisos=="Full"){
 					<?php include "./lista_anexos.php"; ?>
 				</p>
 			</div>
-		<div id="tabs-d">
+			<div id="tabs-d">
 				<?php include "./expediente/lista_expedientes.php"; ?>
 			</div>		
 				<div id="tabs-gis" width="100%">
 				<?php include "./gis/verGis.php"; ?>
-			</div>			
+			</div>
 			</ul>
 		</div>
   </div>
