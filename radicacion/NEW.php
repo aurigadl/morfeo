@@ -35,6 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   /**  Fin variables de session de Radicacion de Mail. **/
   include_once("$ruta_raiz/include/db/ConnectionHandler.php");
   include_once("$ruta_raiz/include/tx/usuario.php");
+
   $db              = new ConnectionHandler("$ruta_raiz");
   $usuario         = new Usuario($db);
 
@@ -48,13 +49,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $fechaf          = $date.$mdate.$adate.$hora;
   $dependencia     = $_SESSION["dependencia"];
   $ADODB_COUNTRECS = true;
-
-  if(!$fecha_gen_doc || $fecha_gen_doc=='//'){
-    $fecha_busq = date("d-m-Y");
-    $fecha_gen_doc = $fecha_busq;
-  }
-
-  $coddepe  = $dependencia;
+  $fecha_gen_doc   = date("Y-m-d");
+  $coddepe         = $dependencia;
 
   //CARGAR INFORMACION SI SE ENVIA NUMERO DE RADICADO PARA MODIFICAR
   if($nurad){
@@ -98,8 +94,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       $hidetable = 'hide';
     }
 
-    $varEnvio = session_name()."=".session_id()."&nurad=$nurad&ent=$ent";
-    $senddata = "<input name='nurad' value='$nurad' type=hidden>";
+    $varEnvio  = session_name()."=".session_id()."&nurad=$nurad&ent=$ent";
+    $senddata  = "<input name='nurad' value='$nurad' type=hidden>";
+    $senddata .= "<input name='idCodigo' value='$nurad' type=hidden>";
   }
 
   $query    = "SELECT ".
@@ -174,7 +171,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               Modulo de radicaci&oacute;n
               <?=$tRadicacionDesc?>
               (Dep <?=$dependencia?>)
-              <p><small><?=$encabezado?></small></p>
+              <p><small id="idrad"> <?=$nurad?> <?=$encabezado?></small></p>
             </h1>
       </div>
 
@@ -192,7 +189,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               Referencia
             </label>
             <label class="input">
-              <input name="cuentai" type="text"  maxlength="20" value='<?= $cuentai; ?>' >
+              <input id="cuentai" name="cuentai" type="text"  maxlength="20" value='<?= $cuentai; ?>' >
             </label>
           </section>
 
@@ -201,7 +198,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Guia
               </label>
               <label class="input">
-                <input type=text name='guia' id='guia' value='<?=$guia ?>' size=35>
+                <input type=text name='guia' id='guia' value='<?=$guia?>' size=35>
               </label>
           </section>
 
@@ -312,7 +309,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       </section>
 
                     </div>
-                    <section id="tableSection" class="well col-lg-12 <?=$showtable?>">
+                    <section id="tableSection" class="well col-lg-12 smart-form <?=$showtable?>">
                       <table class="table table-bordered">
                         <thead>
                           <tr>
@@ -433,6 +430,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         }
       });
 
+      $('.fa-check').click( function(){
+        $('label[name^="inp_"]').addClass('hide');
+        $('div[name^="div_"]').removeClass('hide');
+        var iddiv = $(this).parent().attr('name').substring(4);
+        var tex_nuevo = $('label[name=inp_' + iddiv + ']').find('input').val();
+        var div_nuevo = $('div[name=div_' + iddiv + ']').clone();
+        $('div[name=div_' + iddiv + ']').text(tex_nuevo);
+        $('div[name=div_' + iddiv + ']').append(div_nuevo.children());
+      });
+
+      $('div[name^="div_"]').each(function(){
+        $(this).click(function(){
+          var texto = $(this).attr('name').substring(4);
+          $('label[name="inp_' + texto + '"]').removeClass('hide');
+          $('label[name="inp_' + texto + '"]').focus();
+          $(this).addClass('hide');
+        });
+      });
 
       //Deja en blanco los campos de busqueda al seleccionar
       //un nuevo usuario.
@@ -490,7 +505,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         }
 
         return pass;
-
       };
 
 
@@ -653,6 +667,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         var tiempoRestante = fechaActual.getTime() - fecha.getTime();
         var dias = Math.floor(tiempoRestante / (1000 * 60 * 60 * 24));
 
+
+
         if (dias >960 && dias < 1500){
           mostrarAlert({type : 'danger', message : 'El documento tiene fecha anterior a 60 dias!!.'});
           pass = false;
@@ -684,13 +700,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           pass = false;
         };
         //GUIA
-        if(parseInt($('input[name="guia"]').val()) > 20){
+        if($('#guia').val().length > 20){
           mostrarAlert({type : 'danger', message : 'Guia con mas de 20 caracteres'});
           pass = false;
         }
 
         //REFERENCIA CUENTA_I
-        if(parseInt($('input[name="cuentai"]').val()) > 20){
+        if($('#cuentai').val().length  > 20){
           mostrarAlert({type : 'danger', message : 'Referencia con mas de 20 caracteres'});
           pass = false;
         }
@@ -718,6 +734,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 if(acction !== "modificaRad"){
                   $('#modificaRad').append(data[k].answer);
+                  $('#modificaRad').append("<input type=\"hidden\" name=\"nurad\" value=\"" + data[k].answer + "\" />");
+                  $('#idrad').append(data[k].answer);
                 }
 
                 $('#showRadicar').remove();

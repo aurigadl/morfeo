@@ -12,33 +12,246 @@ class Usuario {
     $this->db=$db;
   }
 
+  /**
+    *@param  array $borrar usuarios del radicado
+    *@return bool
+  */
+  public function borrarUsuarios(){
+
+  }
+
+
+  /**
+    *@param  int $nurad Numero del radicado
+    *@param  int $codigo del usuario
+    *@param  int $sgdTrd tipo de usuario Funcionario, Usuairo, Entidad
+    *@param  string  $modifica si puede existir el o no el Usuario con este radicado
+    *@param  int $idCodigo codigo de identificacion en la tabla sgd_dir_direcciones
+    *@return bool
+  */
+  public function guardarUsuarioRadicado($nurad, $codigo, $sgdTrd, $modificar, $idCodigo){
+
+    $filter = array('RADI_NUME_RADI','SGD_TRD_CODIGO');
+
+    switch ( $sgdTrd ) {
+      // Usuario ....................................................................
+      case 0:
+
+        $sgd_ciu_codigo = $codigo;
+        $filter[] = 'SGD_CIU_CODIGO';
+
+        $isql = "SELECT
+                   s.MUNI_CODI
+                  ,s.DPTO_CODI
+                  ,s.ID_CONT
+                  ,s.ID_PAIS
+                  ,s.SGD_CIU_NOMBRE    as nombre
+                  ,s.SGD_CIU_DIRECCION as direccion
+                  ,s.SGD_CIU_TELEFONO  as telef
+                  ,s.SGD_CIU_EMAIL     as email
+                  ,s.SGD_CIU_CEDULA    as cedula
+                  ,CONCAT(s.SGD_CIU_APELL1,' ', s.SGD_CIU_APELL2) as apellido
+                FROM
+                  SGD_CIU_CIUDADANO s
+                WHERE
+                  s.SGD_CIU_CODIGO = $codigo
+              ";
+        break;
+
+      // Empresas ....................................................................
+      case 2:
+
+        $sgd_oem_codigo = $codigo;
+        $filter[] = 'SGD_OEM_CODIGO';
+
+        $isql = "SELECT
+                  s.MUNI_CODI
+                  ,s.DPTO_CODI
+                  ,s.ID_CONT
+                  ,s.ID_PAIS
+                  ,s.sgd_oem_oempresa  AS nombre
+                  ,s.sgd_oem_direccion AS direccion
+                  ,s.sgd_oem_telefono  AS telef
+                  ,s.sgd_oem_email     AS email
+                  ,s.sgd_oem_nit       AS cedula
+                  ,CONCAT(s.sgd_oem_sigla, ' ' ,s.SGD_OEM_REP_LEGAL) AS apellido
+                FROM
+                  SGD_OEM_OEMPRESAS s
+                WHERE
+                  s.SGD_OEM_CODIGO = $codigo
+              ";
+        break;
+
+      // Funcionario .................................................................
+      case 6:
+
+        $sgd_fun_codigo = $codigo;
+        $filter[] = 'SGD_DOC_FUN';
+
+        $isql = "SELECT
+                  s.ID_PAIS
+                  s.ID_CONT
+                  m.MUNI_CODI
+                  d.DPTO_CODI
+                  ,s.usua_nomb    AS nombre
+                  ,dp.depe_nomb   AS direccion
+                  ,s.usua_email   AS email
+                  ,s.usua_doc     AS cedula
+                  ,p.NOMBRE_PAIS  AS pais
+                  ,s.usua_login   AS apellido
+                  ,CONCAT(s.usu_telefono1,' / ', s.usua_ext) AS telef
+                FROM
+                  USUARIO s
+                  ,DEPARTAMENTO d
+                  ,MUNICIPIO m
+                  ,SGD_DEF_PAISES p
+                  ,DEPENDENCIA dp
+                WHERE
+                  s.id             = $codigo
+                  and d.dpto_codi  = dp.dpto_codi
+                  and m.muni_codi  = dp.muni_codi
+                  and m.dpto_codi  = d.dpto_codi
+                  and dp.depe_codi = s.depe_codi
+                  and p.id_pais    = s.id_pais
+                  and p.id_cont    = s.id_cont";
+        break;
+
+    }
+
+    $rs = $this->db->query($isql);
+
+    $idcont          = $rs->fields['ID_CONT'];
+    $idpais          = $rs->fields['ID_PAIS'];
+    $dpto_tmp        = $rs->fields['DPTO_CODI'];
+    $muni_tmp        = $rs->fields['MUNI_CODI'];
+    $grbNombresUs    = $rs->fields['NOMBRE']." ".$rs->fields['APELLIDO'];
+    $direccion_us    = $rs->fields['DIRECCION'];
+    $mail_us         = $rs->fields['EMAIL'];
+    $cc_documento_us = $rs->fields['CEDULA'];
+    $telefono_us     = $rs->fields['TELEF'];
+
+    if(!empty($modificar)){
+      $nextval = $this->db->nextId("sec_dir_direcciones");
+      if ($nextval==-1){
+        $this->result[] = array( "error"  => 'No se encontr&oacute; la secuencia para grabar el usuario seleccionado');
+        return false;
+      }
+    }
+
+    $record = array();
+
+    $record['MUNI_CODI']         = $muni_tmp;
+    $record['DPTO_CODI']         = $dpto_tmp;
+    $record['ID_PAIS']           = $idpais;
+    $record['ID_CONT']           = $idcont;
+    $record['SGD_TRD_CODIGO']    = $sgdTrd; // Tipo de documento
+
+    $record['SGD_DIR_DIRECCION'] = $direccion_us;
+    $record['SGD_DIR_TELEFONO']  = trim($telefono_us);
+    $record['SGD_DIR_MAIL']      = $mail_us;
+    $record['SGD_DIR_TIPO']      = 1;
+    $record['SGD_DIR_CODIGO']    = $nextval; // Identificador unico
+    $record['SGD_DIR_NOMBRE']    = $otro_us;
+
+    $record['SGD_DIR_NOMREMDES'] = $grbNombresUs;
+    $record['SGD_DIR_DOC']       = $cc_documento_us;
+    $record['SGD_DOC_FUN']       = empty($sgd_fun_codigo)? 0 : $sgd_fun_codigo;
+    $record['SGD_OEM_CODIGO']    = empty($sgd_oem_codigo)? 0 : $sgd_oem_codigo;
+    $record['SGD_CIU_CODIGO']    = empty($sgd_ciu_codigo)? "" : $sgd_ciu_codigo;
+    $record['RADI_NUME_RADI']    = $nurad; // No de radicado
+    $record['SGD_SEC_CODIGO']    = 0;
+
+    $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
+                  $record,
+                  $filter,
+                  $autoquote = true);
+
+    if($insertSQL){
+        $this->result[] = $codigo;
+        return true;
+    }
+
+  }
 
   public function resRadicadoHtml(){
 
     foreach ($this->result as $result){
+
+      $tipo = $result["TIPO"];
+
+      switch ( $tipo ) {
+        case 0:
+          $codigo = $result["SGD_DOC_FUN"];
+          break;
+        case 2:
+          $codigo = $result["SGD_OEM_CODIGO"];
+          break;
+        case 6:
+          $codigo = $result["SGD_OEM_CODIGO"];
+          break;
+      }
+
+      $idtx = $result["TIPO"].'_'.$codigo.'_'.$result["CODDIRDIREC"];
+
       $html = '<td class="search-table-icon">
                 <a href="javascript:void(0);"
                   rel="tooltip"
                   data-placement="right"
                   data-original-title="Eliminar Usuario"
                   class="text-danger">
-
                   <i class="fa fa-minus"></i>
                 </a>
-                <input class="hide" name="usuario[]" value="'.$result["TIPO"].'_'.$result["CODIGO"].'">
+                <input type="hidden" class="hide" name="usuario[]" value="'.$idtx.'">
               </td>';
 
       $html .= '<td>'.$result["CEDULA"].'</td>';
 
       $html .= '<td colspan="2">'.$result["NOMBRE"].'</td>';
 
-      $html .= '<td>'.$result["TELEF"].'</td>';
+      $html .= '<td>
+                  <div name="div_'.$idtx.'_tel">'
+                    .$result["TELEF"].'
+                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
+                   </div>
+                  <label name="inp_'.$idtx.'_tel" class="input hide">
+                    <i class="icon-append fa fa-check"></i>
+                    <input type="text" name="telef'.$idtx.'_tel" value="'.$result["TELEF"].'">
+                  </label>
+                </td>';
 
-      $html .= '<td>'.$result["DIRECCION"].'</td>';
+      $html .= '<td>
+                  <div name="div_'.$idtx.'_dire">'
+                    .$result["DIRECCION"].'
+                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
+                   </div>
+                  <label name="inp_'.$idtx.'_dire" class="input hide">
+                    <i class="icon-append fa fa-check"></i>
+                    <input type="text" name="direc'.$idtx.'_dire" value="'.$result["DIRECCION"].'">
+                  </label>
+                </td>';
 
-      $html .= '<td>'.$result["EMAIL"].'</td>';
+      $html .= '<td>
+                  <div name="div_'.$idtx.'_email">'
+                    .$result["EMAIL"].'
+                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
+                   </div>
+                  <label name="inp_'.$idtx.'_email" class="input hide">
+                    <i class="icon-append fa fa-check"></i>
+                    <input type="text" name="direc'.$idtx.'_email" value="'.$result["EMAIL"].'">
+                  </label>
+                </td>';
 
-      $html .= '<td>'.$result["MUNIDEP"].'</td>';
+
+      $html .= '<td>
+                  <div name="div_'.$idtx.'_muni">'
+                    .$result["MUNIDEP"].'
+                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
+                   </div>
+                  <label name="inp_'.$idtx.'_muni" class="input hide">
+                    <i class="icon-append fa fa-check"></i>
+                    <input type="text" name="direc'.$idtx.'_muni" value="'.$result["MUNIDEP"].'">
+                  </label>
+                </td>';
 
       $html .= '<td>'.$result["PAIS"].'</td>';
 
@@ -50,7 +263,7 @@ class Usuario {
 
     $isql = "
             select
-                s.SGD_DIR_CODIGO    as codigo
+                s.SGD_DIR_CODIGO    as coddirdirec
               , s.SGD_DIR_NOMREMDES as nombre
               , s.SGD_DIR_DIRECCION as direccion
               , s.SGD_DIR_TELEFONO  as telef
@@ -59,6 +272,9 @@ class Usuario {
               , s.SGD_DIR_DOC       as cedula
               , p.NOMBRE_PAIS       as pais
               , CONCAT(d.DPTO_NOMB,' / ', m.MUNI_NOMB) as munidep
+              , s.SGD_DOC_FUN
+              , s.SGD_OEM_CODIGO
+              , s.SGD_CIU_CODIGO
             from
                 sgd_dir_drecciones s
               , DEPARTAMENTO d
