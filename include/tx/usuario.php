@@ -173,12 +173,21 @@ class Usuario {
 
   }
 
+
+
+
+  /**
+   * Retorna un html que se integra con el codigo javascript escrito
+   * en el modulo en que se implemente. Inicialmente esta funcion
+   * esta hecha para radicacion incluida en New.php.
+    *@return html from $this->result
+    *
+  */
+
   public function resRadicadoHtml(){
 
     foreach ($this->result as $result){
-
       $tipo = $result["TIPO"];
-
       switch ( $tipo ) {
         case 0:
           $codigo = $result["SGD_DOC_FUN"];
@@ -244,20 +253,46 @@ class Usuario {
 
       $html .= '<td>
                   <div name="div_'.$idtx.'_muni">'
-                    .$result["MUNIDEP"].'
+                    .$result["MUNI"].'
                     <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-                   </div>
-                  <label name="inp_'.$idtx.'_muni" class="input hide">
+                  </div>
+                  <label name="inp_'.$idtx.'_muni" class="select hide">
                     <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="direc'.$idtx.'_muni" value="'.$result["MUNIDEP"].'">
+                    <select class="step1" name="screen">
+                    <option value="">Screen size</option><option value="4">4.0"</option><option value="4.3">4.3"</option><option value="4.7">4.7"</option><option value="5">5.0"</option></select>
                   </label>
                 </td>';
 
-      $html .= '<td>'.$result["PAIS"].'</td>';
+      $html .= '<td>
+                  <div name="div_'.$idtx.'_dep">'
+                    .$result["DEP"].'
+                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
+                  </div>
+                  <label name="inp_'.$idtx.'_dep" class="select hide">
+                    <i class="icon-append fa fa-check"></i>
+                    <select class="step1" name="screen">
+                    <option value="">Screen size</option><option value="4">4.0"</option><option value="4.3">4.3"</option><option value="4.7">4.7"</option><option value="5">5.0"</option></select>
+                  </label>
+                </td>';
+
+      $html .= '<td>
+                  <div name="div_'.$idtx.'_pais">'
+                    .$result["PAIS"].'
+                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
+                  </div>
+                  <label name="inp_'.$idtx.'_pais" class="select hide">
+                    <i class="icon-append fa fa-check"></i>
+                    <select class="step1" name="screen">
+                    <option value="">Screen size</option><option value="4">4.0"</option><option value="4.3">4.3"</option><option value="4.7">4.7"</option><option value="5">5.0"</option></select>
+                  </label>
+                </td>';
 
       return '<tr>'.$html.'</tr>';
     }
   }
+
+
+
 
   public function usuarioPorRadicado($nurad) {
 
@@ -271,7 +306,8 @@ class Usuario {
               , s.SGD_TRD_CODIGO    as tipo
               , s.SGD_DIR_DOC       as cedula
               , p.NOMBRE_PAIS       as pais
-              , CONCAT(d.DPTO_NOMB,' / ', m.MUNI_NOMB) as munidep
+              , d.DPTO_NOMB         as dep
+              , m.MUNI_NOMB         as muni
               , s.SGD_DOC_FUN
               , s.SGD_OEM_CODIGO
               , s.SGD_CIU_CODIGO
@@ -302,6 +338,9 @@ class Usuario {
     break;
 
   }
+
+
+
 
   public function buscarPorParametros($search) {
 
@@ -353,7 +392,8 @@ class Usuario {
                   ,s.SGD_CIU_EMAIL     as email
                   ,s.SGD_CIU_CEDULA    as cedula
                   ,p.NOMBRE_PAIS       as pais
-                  ,CONCAT(d.DPTO_NOMB,' / ', m.MUNI_NOMB) as munidep
+                  ,d.DPTO_NOMB         as dep
+                  ,m.MUNI_NOMB         as muni
                   ,CONCAT(s.SGD_CIU_APELL1,' ', s.SGD_CIU_APELL2) as apellido
                 FROM
                   SGD_CIU_CIUDADANO s
@@ -418,7 +458,8 @@ class Usuario {
                   ,s.sgd_oem_email     AS email
                   ,s.sgd_oem_nit       AS cedula
                   ,p.NOMBRE_PAIS       AS pais
-                  ,CONCAT(d.DPTO_NOMB,' / ', m.MUNI_NOMB) AS munidep
+                  ,d.DPTO_NOMB         AS dep
+                  ,m.MUNI_NOMB         AS munid
                   ,CONCAT(s.sgd_oem_sigla, ' / ' ,s.SGD_OEM_REP_LEGAL) AS apellido
                 FROM
                   SGD_OEM_OEMPRESAS s

@@ -320,7 +320,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <th>Telefono</th>
                             <th>Direcci&oacute;n</th>
                             <th>Correo Electronico</th>
-                            <th>Ubicaci&oacute;n</th>
+                            <th>Municipio</th>
+                            <th>Departamento</th>
                             <th>Pais</th>
                           </tr>
                         </thead>
@@ -640,6 +641,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
    function borrarAlert(){
      $('#alertmessage').empty();
    }
+
+
+
+  //Selector cascading
+  $('#example1').cascadingDropdown({
+    selectBoxes: [
+      {
+        selector: '.step1',
+        selected: '4.3'
+
+      },
+      {
+        selector: '.step2',
+        requires: ['.step1']
+      },
+      {
+        selector: '.step3',
+        requires: ['.step1', '.step2'],
+        onChange: function(event, value, requiredValues) {
+        }
+      }
+    ]
+  });
 
    //Radicar documento nuevo
    $('#radicarNuevo, #modificaRad').on("click", function(){
