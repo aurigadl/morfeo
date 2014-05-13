@@ -1,4 +1,4 @@
-<SCRIPT>
+<script language="javascript">
 function validaAgendar(argumento){
 
 	fecha_hoy =  '<?=date('Y')."-".date('m')."-".date('d')?>';
@@ -30,42 +30,42 @@ function changedepesel(enviara)
   document.getElementById('carpper').style.display = 'none';
   document.getElementById('Enviar').style.display = 'none';
  if(enviara==10 )
-  {    
+  {
   document.getElementById('depsel').style.display = 'none';
 	document.getElementById('carpper').style.display = '';
 	document.getElementById('Enviar').style.display = 'none';
   }
  //Archivar
   if(enviara==13 )
-  {    
+  {
    document.getElementById('depsel').style.display = 'none';
 	 document.getElementById('carpper').style.display = 'none';
 	 envioTx();
   }
   //nrr
-  
+
    if(enviara==16 )
-  {    
+  {
     document.getElementById('depsel').style.display = 'none';
 	  document.getElementById('carpper').style.display = 'none';
 	  envioTx();
   }
-   
+
    //Devolver
-   if(enviara==12)  {    
+   if(enviara==12)  {
     envioTx();
   }
-     
+
   if(enviara==11)
   {
      //document.getElementById('Enviar').value = "ARCHIVAR";
-  }  
+  }
   if(enviara==9 ){
    document.getElementById('depsel').style.display = '';
 	 document.getElementById('carpper').style.display = 'none';
 	 document.getElementById('Enviar').style.display = 'none';
   }
-  
+
    //Visto bueno
   if(enviara==14 )
   {
@@ -73,7 +73,7 @@ function changedepesel(enviara)
 	 document.getElementById('carpper').style.display = 'none';
 	 document.getElementById('Enviar').style.display = 'none';
 	}
-  
+
 
   //Informar
   if(enviara==8 )
@@ -81,5 +81,4 @@ function changedepesel(enviara)
     envioTx();
   }
 }
-document.getElementById('AccionCaliope').style.display = '';
 </script>

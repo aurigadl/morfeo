@@ -128,7 +128,7 @@ $nomcarpeta  = $_GET["nomcarpeta"];
 
 </script>
 
-<body onLoad='document.getElementById("cajarad").focus();'>
+<body onLoad='document.getElementById("cajarad").focus();' style="margin-bottom: 30px;">
   <header class="page-title txt-color-blueDark"> </header>
   <?php Search_show() ?>
               <?php
@@ -939,6 +939,7 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
       </article>
     </div>
   </div>
+
 <?php
 
     return;

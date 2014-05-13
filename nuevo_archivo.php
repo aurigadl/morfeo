@@ -1,13 +1,13 @@
 <?php
 session_start();
+
+$ruta_raiz = ".";
+if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
+
 if($subir_archivo!="si ..."){
-    $ruta_raiz = ".";
-    if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
 
-    foreach ($_GET as $key => $valor)   ${$key} = $valor;
-    foreach ($_POST as $key => $valor)   ${$key} = $valor;
-
-    $ruta_raiz = ".";
     $krd         = $_SESSION["krd"];
     $dependencia = $_SESSION["dependencia"];
     $usua_doc    = $_SESSION["usua_doc"];
@@ -44,7 +44,7 @@ $isql = "select USUA_LOGIN,USUA_PASW,CODI_NIVEL from usuario where (usua_login =
 $rs   = $db->conn->Execute($isql);
 if ($rs->EOF){
     $mensaje="No tiene permisos para ver el documento";
-}else{//$db->conn->debug=true;
+}else{
     $nivel=$rs->fields["CODI_NIVEL"];
     ($tipo==0) ? $psql = " where  anex_tipo_codi<50 " : $psql=" ";
     $isql = "select ANEX_TIPO_CODI, ANEX_TIPO_DESC, ANEX_TIPO_EXT ".
@@ -86,6 +86,11 @@ $consultaRUPS = "select FLAG_RUPS from bodega_empresas where ARE_ESP_SECUE = $co
 
 $rsESPRUPS = $db->conn->Execute( $consultaRUPS );
 $espEnRUPS = $rsESPRUPS->fields[ "FLAG_RUPS" ];
+
+$datos_envio= "&otro_us11=$otro_us11&codigo=$codigo&dpto_nombre_us11=$dpto_nombre_us11&direccion_us11=".urlencode($direccion_us11)."&muni_nombre_us11=$muni_nombre_us11&nombret_us11=$nombret_us11";
+$datos_envio.="&otro_us2=$otro_us2&dpto_nombre_us2=$dpto_nombre_us2&muni_nombre_us2=$muni_nombre_us2&direccion_us2=".urlencode($direccion_us2)."&nombret_us2=$nombret_us2";
+$datos_envio.="&dpto_nombre_us3=$dpto_nombre_us3&muni_nombre_us3=$muni_nombre_us3&direccion_us3=".urlencode($direccion_us3)."&nombret_us3=$nombret_us3";
+$variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$datos_envio";
 ?>
 <html>
 <head>
@@ -94,143 +99,139 @@ $espEnRUPS = $rsESPRUPS->fields[ "FLAG_RUPS" ];
 	<link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
 	<!-- Bootstrap core CSS -->
 	<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
-  <SCRIPT Language="JavaScript" SRC="js/crea_combos_2.js"></SCRIPT><script language="javascript">
-<?php
-// Convertimos los vectores de los paises, dptos y municipios creados en crea_combos_universales.php a vectores en JavaScript.
-echo arrayToJsArray($vpaisesv, 'vp');
-echo arrayToJsArray($vdptosv, 'vd');
-echo arrayToJsArray($vmcposv, 'vm');
-//$swIntegraAps = $objApl->comboRadiAplintegra($usua_doc);
-//$objApl->comboRadiAplisel();
-?>
-function mostrar(nombreCapa)
-{
-  document.getElementById(nombreCapa).style.display="";
-}
+  <SCRIPT Language="JavaScript" SRC="js/crea_combos_2.js"></SCRIPT>
+<script language="javascript">
+  var datasend = '<?=$variables?>'
+  console.log(datasend);
+  <?php
+  // Convertimos los vectores de los paises, dptos y municipios creados en crea_combos_universales.php a vectores en JavaScript.
+  echo arrayToJsArray($vpaisesv, 'vp');
+  echo arrayToJsArray($vdptosv, 'vd');
+  echo arrayToJsArray($vmcposv, 'vm');
+  ?>
 
-function continuar_grabar()
-{
-  document.formulario.tpradic.disabled=false;
-  document.formulario.action=document.formulario.action+"&cc=GrabarDestinatario";
-  document.formulario.submit();
-}
-
-function mostrarNombre(nombreCapa)
-{
-  document.formulario.elements[nombreCapa].style.display="";
-}
-
-function ocultarNombre(nombreCapa)
-{
-  document.formulario.elements[nombreCapa].style.display="none";
-}
-
-function ocultar(nombreCapa)
-{
-  document.getElementById(nombreCapa).style.display="none";
-}
-
-function Start(URL, WIDTH, HEIGHT)
-{
- windowprops = "top=0,left=0,location=no,status=no, menubar=no,scrollbars=yes, resizable=yes,width=1020,height=500";
- preview = window.open(URL , "preview", windowprops);
-}
-
-function doc_radicado(){
-    if (document.formulario.radicado_salida.checked){
-        document.formulario.tpradic.disabled=false;
-    }else{
-        document.formulario.tpradic.disabled=true;
-    }
-}
-
-function f_close(){
-  opener.regresar();
-  window.close();
-}
-
-function regresar(){
-  f_close();
-}
-function william()
-{ if(document.getElementById('radicado_salida').checked)
-  { document.getElementById('tipo').disabled = false;
+  function mostrar(nombreCapa){
+    document.getElementById(nombreCapa).style.display="";
   }
-  else
-  { document.getElementById('tipo').disabled = true;
-   }
-}
-function escogio_archivo(){
-    var largo;
-    var valor;
-    var extension;
-    archivo_up = document.getElementById('userfile').value;
-    valor=0;
-    var mySplitResult = archivo_up.split(".");
 
-    for(i = 0; i < (mySplitResult.length); i++){
-        extension = mySplitResult[i];
-    }
-    extension = extension.toLowerCase();
-    <? while (!$rs->EOF){
-    echo "
-        if (  extension=='".$rs->fields["ANEX_TIPO_EXT"]."'){
-            valor=".$rs->fields["ANEX_TIPO_CODI"].";
-        }\n";
-      $rs->MoveNext();
-    }
-
-    $anexos_isql = $isql;
-    ?>
-    document.getElementById('tipo_clase').value = valor;
-
-    if(document.getElementById('radicado_salida').checked==true && valor!=14 && valor!=16){
-        alert("Atenci\363n. Si el archivo no es el correcto, no podr\341" +
-            "realizar combinaci\363n de correspondencia. \n\n otros archivos no facilitan su acceso");
-    }
-}
-
-function validarGenerico(){
-
-    var i     = 0;
-    var marca = 0;
-
-    if (document.formulario.radicado_salida.checked && document.formulario.tpradic.value=='null'){
-        alert ("Debe seleccionar el tipo de radicacion");
-        return false;
-    }
-
-    archivo=document.getElementById('userfile').value;
-
-    if (archivo==""){
-        <?php
-          if($tipo==0 and !$codigo){echo "alert('Por favor escoja un archivo'); return false;";}
-          else{echo "return true;";}
-        ?>
-    }
-
-    copias = document.getElementById('i_copias').value;
-
-    if(copias==0 && document.getElementById('radicado_salida').checked==true){
-        document.getElementById('radicado_salida').checked=false;
-    }
-
-    return true;
-}
-
-
-
-
-function actualizar(){
-
-    if (!validarGenerico()) return;
-
-    var integracion = document.formulario.tpradic.value;
-
-    document.formulario.radicado_salida.disabled=false;
+  function continuar_grabar(){
     document.formulario.tpradic.disabled=false;
+    document.formulario.action=document.formulario.action+"&cc=GrabarDestinatario&" + datasend;
     document.formulario.submit();
-}
+  }
+
+  function mostrarNombre(nombreCapa){
+    document.formulario.elements[nombreCapa].style.display="";
+  }
+
+  function ocultarNombre(nombreCapa){
+    document.formulario.elements[nombreCapa].style.display="none";
+  }
+
+  function ocultar(nombreCapa){
+    document.getElementById(nombreCapa).style.display="none";
+  }
+
+  function Start(URL, WIDTH, HEIGHT){
+  windowprops = "top=0,left=0,location=no,status=no, menubar=no,scrollbars=yes, resizable=yes,width=1020,height=500";
+  preview = window.open(URL , "preview", windowprops);
+  }
+
+  function doc_radicado(){
+      if (document.formulario.radicado_salida.checked){
+          document.formulario.tpradic.disabled=false;
+      }else{
+          document.formulario.tpradic.disabled=true;
+      }
+  }
+
+  function f_close(){
+    opener.regresar();
+    window.close();
+  }
+
+  function regresar(){
+    f_close();
+  }
+  function william(){
+    if(document.getElementById('radicado_salida').checked){
+      document.getElementById('tipo').disabled = false;
+    } else {
+      document.getElementById('tipo').disabled = true;
+    }
+  }
+
+  function escogio_archivo(){
+      var largo;
+      var valor;
+      var extension;
+      archivo_up = document.getElementById('userfile').value;
+      valor=0;
+      var mySplitResult = archivo_up.split(".");
+
+      for(i = 0; i < (mySplitResult.length); i++){
+          extension = mySplitResult[i];
+      }
+      extension = extension.toLowerCase();
+      <? while (!$rs->EOF){
+      echo "
+          if (  extension=='".$rs->fields["ANEX_TIPO_EXT"]."'){
+              valor=".$rs->fields["ANEX_TIPO_CODI"].";
+          }\n";
+        $rs->MoveNext();
+      }
+
+      $anexos_isql = $isql;
+      ?>
+      document.getElementById('tipo_clase').value = valor;
+
+      if(document.getElementById('radicado_salida').checked==true && valor!=14 && valor!=16){
+          alert("Atenci\363n. Si el archivo no es el correcto, no podr\341" +
+              "realizar combinaci\363n de correspondencia. \n\n otros archivos no facilitan su acceso");
+      }
+  }
+
+  function validarGenerico(){
+
+      var i     = 0;
+      var marca = 0;
+
+      if (document.formulario.radicado_salida.checked && document.formulario.tpradic.value=='null'){
+          alert ("Debe seleccionar el tipo de radicacion");
+          return false;
+      }
+
+      archivo=document.getElementById('userfile').value;
+
+      if (archivo==""){
+          <?php
+            if($tipo==0 and !$codigo){echo "alert('Por favor escoja un archivo'); return false;";}
+            else{echo "return true;";}
+          ?>
+      }
+
+      copias = document.getElementById('i_copias').value;
+
+      if(copias==0 && document.getElementById('radicado_salida').checked==true){
+          document.getElementById('radicado_salida').checked=false;
+      }
+
+      return true;
+  }
+
+
+
+
+  function actualizar(){
+
+      if (!validarGenerico()) return;
+
+      var integracion = document.formulario.tpradic.value;
+
+      document.formulario.radicado_salida.disabled=false;
+      document.formulario.tpradic.disabled=false;
+      document.formulario.submit();
+  }
 
 </script>
 </head>
@@ -267,8 +268,8 @@ if ($codigo){
   if (!$rs->EOF){
     $docunivel        = ($rs->fields["CODI_NIVEL"]);
     $sololect         = ($rs->fields["ANEX_SOLO_LECT"]=="S");
-   echo  $remitente        = $rs->fields["SGD_DIR_TIPO"].'remitenteee';
-   echo  $extension        = $rs->fields["ANEX_TIPO_EXT"].'PP';
+    $remitente        = $rs->fields["SGD_DIR_TIPO"].'remitenteee';
+    $extension        = $rs->fields["ANEX_TIPO_EXT"].'PP';
     $radicado_salida  = $rs->fields["ANEX_SALIDA"];
     $anex_estado      = $rs->fields["ANEX_ESTADO"];
     $descr            = $rs->fields["ANEX_DESC"];
@@ -291,18 +292,12 @@ if(!$radicado_rem){
 
 ?>
 <div class="row">
-	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+	<div class="col-lg-12">
 	<section id="widget-grid" class="">
 
 <table width="100%" class="table table-bordered">
 <tr>
   <td>
-<?php
-$datos_envio= "&otro_us11=$otro_us11&codigo=$codigo&dpto_nombre_us11=$dpto_nombre_us11&direccion_us11=".urlencode($direccion_us11)."&muni_nombre_us11=$muni_nombre_us11&nombret_us11=$nombret_us11";
-$datos_envio.="&otro_us2=$otro_us2&dpto_nombre_us2=$dpto_nombre_us2&muni_nombre_us2=$muni_nombre_us2&direccion_us2=".urlencode($direccion_us2)."&nombret_us2=$nombret_us2";
-$datos_envio.="&dpto_nombre_us3=$dpto_nombre_us3&muni_nombre_us3=$muni_nombre_us3&direccion_us3=".urlencode($direccion_us3)."&nombret_us3=$nombret_us3";
-$variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$datos_envio";
-?>
 <input type="hidden" name="anex_origen" value="<?=$tipo?>">
 <input type="hidden" name="tipo" value="<?=$tipo?>">
 <input type="hidden" name="numrad" value="<?=$numrad?>">
@@ -644,7 +639,7 @@ if( $rs_exp->RecordCount() == 0 ){
           echo "
               <tr>
               <td colspan='2'>
-              <table>";
+              <table width='100%' class='table table-bordered'> ";
 
           while(!$rs->EOF){
               $i_copias++;
@@ -757,14 +752,15 @@ if( $rs_exp->RecordCount() == 0 ){
     </tr>
     <tr>
       <td colspan="2">
-      <table  >
+
+      <table width="100%" class="table table-bordered">
       <tr align="center" >
         <td width="203" CLASS=titulos2 >Documento</td>
         <td CLASS=titulos2  >Nombre</td>
         <td CLASS=titulos2 >Dirigido a</td>
         <td CLASS=titulos2 width="103" colspan='2'>Direccion</td>
         <td CLASS=titulos2 width="68">Email</td>
-        <td CLASS=titulos2 width="68">Otros</td>
+        <td CLASS=titulos2 width="68" colspan="2">Otros</td>
       </tr>
       <tr class='<?=$grilla ?>'>
         <TD align="center" >
@@ -788,9 +784,11 @@ if( $rs_exp->RecordCount() == 0 ){
         <TD align="center" >
           <input type=text name=direccion_us1 value='' class=tex_area  size=6>
         </TD>
-        <TD width="68" align="center"  colspan="2">
+        <TD width="68" align="center">
           <input type=text name=mail_us1 value='' class=tex_area size=11>
-        <input type=text name=otro_us1 value='' class=tex_area size=11>
+        </TD>
+        <TD width="68" align="center" colspan="2">
+          <input type=text name=otro_us1 value='' class=tex_area size=11>
         </TD>
       </tr>
       <tr>
@@ -804,8 +802,6 @@ if( $rs_exp->RecordCount() == 0 ){
       <input type="button" name="cc" value="Grabar Destinatario" class="botones_mediano"  onClick="continuar_grabar()" >
       <br/><?=$grabar?>
         </center>
-        </td>
-        <td colspan="3"  align="center">
         </td>
       </tr>
       </table>
@@ -830,7 +826,7 @@ if( $rs_exp->RecordCount() == 0 ){
 						</label>
 						<div class="note note-error">Archivo debe ser menor a  <?php echo number_format((return_bytes(ini_get('upload_max_filesize')))/1000000,2); ?>Mb.</div>
 				 </section>
-            
+
           </td>
     </tr>
 

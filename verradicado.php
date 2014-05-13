@@ -1,6 +1,6 @@
 <?php
 session_start();
-$ruta_raiz = "."; 
+$ruta_raiz = ".";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
@@ -57,9 +57,8 @@ include "$ruta_raiz/tx/verifSession.php";
 <?php include_once "htmlheader.inc.php"; ?>
 <!-- seleccionar todos los checkboxes-->
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
-<SCRIPT LANGUAGE="JavaScript">
-function datosBasicos()
-{
+<script language="javascript">
+function datosbasicos(){
 	window.location='radicacion/NEW.PHP?<?=session_name()."=".session_id()?>&<?="nurad=$verrad&fechah=$fechah&ent=$ent&Buscar=Buscar Radicado&carpeta=$carpeta&nomcarpeta=$nomcarpeta"; ?>';
 }
 function mostrar(nombreCapa)
@@ -141,21 +140,21 @@ function ver_temas(){
    window.open("./tipo_documento.php?<?=session_name()."=".session_id()?>&verrad=<?=$verrad?>","Temas","height=350,width=450,scrollbars=yes");
 }
 
-  
+
 
 </script>
+
 <div id="spiffycalendar" class="text"></div>
 <script language="JavaScript" src="js/spiffyCal/spiffyCal_v2_1.js"></script>
 <link rel="stylesheet" type="text/css" href="js/spiffyCal/spiffyCal_v2_1.css">
 </head>
 <?php
 // Modificado Supersolidaria
-if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" )
-{
+if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" ){
  $body = "document.location.href='#t1';";
 }
 ?>
-<body bgcolor="#FFFFFF" topmargin="0" onLoad="window_onload2();<? print $body; ?>">
+<body <?=$body?>">
 <?
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$fechah=date("dmy_h_m_s") . " ". time("h_m_s");
@@ -164,7 +163,7 @@ if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" )
   include "ver_datosrad.php";
     $_SESSION['dir_doc_us1'] = $cc_documento_us1;
     $_SESSION['dir_doc_us2'] = $cc_documento_us2;
-      
+
 	if($verradPermisos == "Full" or $datoVer=="985")
  		{
 
@@ -199,7 +198,7 @@ if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" )
      *  Muestra el numero del expediente al que pertenece el radicado.
 	 */
 	if( $numExpediente && $_GET['expIncluido'][0] == "" )
-    { 
+    {
         echo "<span class=noleidos>&nbsp;&nbsp;&nbsp;PERTENECIENTE AL EXPEDIENTE No. ". ( $_SESSION['numExpedienteSelected'] != "" ?  $_SESSION['numExpedienteSelected'] : $numExpediente )."</span>";
 	}
     else if( $_GET['expIncluido'][0] != "" )
@@ -225,10 +224,9 @@ $datosaenviar = "fechaf=$fechaf&mostrar_opc_envio=$mostrar_opc_envio&tipo_carp=$
 <?php
 if($verradPermisos=="Full" && !($carpeta==66 || $carpeta==8 ) )
 {
- // include "$ruta_raiz/tx/txOrfeo.php";
 }
 ?>
-<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
+<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
 <input type=hidden name=enviara value='9'>
 <input type=hidden name=codTx value='9'>
 <input id="chkr" type="checkbox" value="CHKANULAR" name="checkValue[<?=$verradicado?>]" checked  >
@@ -300,13 +298,8 @@ if($verradPermisos=="Full"){
 						</select>
 						</label>
 				</div>
-				</td><td width=350> 
-				<div>
-				<label class="select" >
-				<?
-	
-					include "./tx/txOrfeo.php";
-				?>
+				</td><td width=350>
+				<div> <label class="select" > <?  include "./tx/txOrfeo.php"; ?>
 				</div>
 				</label>
 
@@ -315,7 +308,7 @@ if($verradPermisos=="Full"){
 		<?php
 	}
 	?>
-   </form>               
+   </form>
 <!-- row -->
  <input type=hidden name=reftab id=reftab >
 	<div class="well well-sm well-light">
@@ -339,10 +332,10 @@ if($verradPermisos=="Full"){
 				<li>
 					<a href="#tabs-gis">Gis</a>
 				</li>
-				  
+
 			</ul>
 			<ul>
-			
+
 			<div id="tabs-a">
 					<?php include "lista_general.php"; ?>
 			</div>
@@ -359,26 +352,25 @@ if($verradPermisos=="Full"){
 			</div>
 			<div id="tabs-d">
 				<?php include "./expediente/lista_expedientes.php"; ?>
-			</div>		
+			</div>
 				<div id="tabs-gis" width="100%">
 				<?php include "./gis/verGis.php"; ?>
 			</div>
 			</ul>
 		</div>
   </div>
-  
+
 <script type="text/javascript">
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	$('#tabs').tabs();
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
         window.location.href = ui.newTab.find('a.ui-tabs-anchor').attr('href');
-
+        console.log(window.location.href);
     } );
 
 	// Dynamic tabs
 	var tabTitle = $("#tab_title"), tabContent = $("#tab_content"), tabTemplate = "<li style='position:relative;'> <span class='air air-top-left delete-tab' style='top:7px; left:7px;'><button class='btn btn-xs font-xs btn-default hover-transparent'><i class='fa fa-times'></i></button></span></span><a href='#{href}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{label}</a></li>", tabCounter = 2;
 
-	document.getElementById('AccionCaliope').style.display = '';
   document.getElementById('chkr').style.display = 'none';
   document.getElementById('depsel').style.display = 'none';
   document.getElementById('carpper').style.display = 'none';

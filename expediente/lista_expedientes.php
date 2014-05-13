@@ -28,10 +28,13 @@ window.open("<?=$ruta_raiz?>/expediente/verHistoricoExp.php?sessid=<?=session_id
 function crearProc(numeroExpediente){
   window.open("<?=$ruta_raiz?>/expediente/crearProceso.php?sessid=<?=session_id()?>&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=450,width=680,scrollbars=yes");
 }
-function seguridadExp(numeroExpediente,nivelExp=0){
+function seguridadExp(numeroExpediente,nivelExp){
+  nivelExp = nivelExp || 0;
   window.open("<?=$ruta_raiz?>/seguridad/expediente.php?<?=session_name()?>=<?=session_id()?>&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>&nivelExp="+nivelExp+"&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=350,width=700,scrollbars=yes");
 }
-function reportePredios(numeroExpediente,predios='',vars, tipoReporte='modeloPredial'){
+function reportePredios(numeroExpediente,predios,vars, tipoReporte){
+  predios     = predios || '';
+  tipoReporte = tipoReporte || 'modeloPredial';
   window.open("<?=$servidorBirt?>"+tipoReporte+".rptdesign&chip="+predios+"&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>"+vars,"HistExp<?=$fechaH?>"+predios,"fullscreen=yes,scrollbars=yes");
 }
 function verTipoExpedienteOld(numeroExpediente)
@@ -46,8 +49,9 @@ function verTipoExpedienteOld(numeroExpediente)
   ?>
   window.open("<?=$ruta_raiz?>/expediente/tipificarExpedienteOld.php?numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","Tipificacion_Documento","height=450,width=750,scrollbars=yes");
 }
-function modFlujo(numeroExpediente,texp,codigoFldExp,ventana='default')
-{
+function modFlujo(numeroExpediente,texp,codigoFldExp,ventana) {
+
+  ventana = ventana || 'default';
 <?php
 	$isqlDepR = "SELECT RADI_DEPE_ACTU,RADI_USUA_ACTU from radicado
 							WHERE RADI_NUME_RADI = '$numrad'";
@@ -91,8 +95,9 @@ function insertarExpediente()
 {
   window.open( "<?=$ruta_raiz?>/expediente/insertarExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=900,width=1100,scrollbars=yes" );
 }
-function verWorkFlow(numeroExpediente='',codigoProceso=0)
-{
+function verWorkFlow(numeroExpediente, codigoProceso){
+  var numeroExpediente = numeroExpediente || '';
+  var codigoProceso    = codigoProceso    || 0;
 		<?php
 			//  include "./proceso/workFlow.php"; //?verrad=$verrad&numeroExpediente=$numExpediente&".session_name()."=".session_id()."";
 			$pWorkFlow = "./proceso/workFlow.php?verrad=$verrad&".session_name()."=".session_id()."";
@@ -242,14 +247,14 @@ $time_start = microtime_float();
 
 	  $verLinkArch = new verLinkArchivo($db);
 
-	  
+
 	  include_once ("$ruta_raiz/include/tx/Expediente.php");
 										$expediente = new Expediente($db);
 										$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 										if($verrad) $exp = $expediente->consultaExp($verrad);
 										$arrExpedientes = $expediente->expedientes;
 	?>
-  
+
 		<!-- widget content -->
 		<div class="widget-body"  height="100%">
 
@@ -257,7 +262,7 @@ $time_start = microtime_float();
 				<ul class="nav nav-tabs tabs-left" id="demo-pill-nav" height="100%">
 				<?php
 				$iExp = 1;
-				
+
 				foreach($arrExpedientes as $numExpediente => $datosExp){
 				if($iExp==1) $datoss = " active "; else  $datoss = " ";
 				?>
@@ -268,7 +273,7 @@ $time_start = microtime_float();
 					$iExp++;
 				}
 				?>
-				
+
 				</ul>
 				<div class="tab-content" align=left>
 				<?
@@ -292,7 +297,7 @@ $time_start = microtime_float();
 					if ( $usuaPermExpediente ) {
 						if(!$tsub)$tsub = "0";
 	if(!$tdoc)$tdoc = "0";
-	if(!$codserie)$codserie = "0";	
+	if(!$codserie)$codserie = "0";
    ?> <span class="dropdown">
     		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><small>Expediente </small><b class="caret"></b> </a>
 				<ul class="dropdown-menu">
@@ -301,13 +306,13 @@ $time_start = microtime_float();
 					</li>
 					<li>
 						<a href="#" onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
-					</li> 
+					</li>
 					<?
 					}
 				?>
 			</ul>
 			</span>
-			
+
 				<?php
 				}
 				?>

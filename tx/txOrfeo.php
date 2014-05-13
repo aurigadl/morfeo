@@ -13,270 +13,222 @@ $rad_asun_res 	= preg_replace($pattern, ' ', $rad_asun_res);
 
 <!--Incio Script para adjuntar y excluir radicados del carrito -->
 <script language="javascript">
-    function returnKrd(){
+$( document ).ready(function(){
+
+  function returnKrd(){
         return '<?=$krd?>';
-    }
-</script>
- <!-- <script type="text/javascript" src="<?=$ruta_raiz?>/js/grabRadSessCarrito.js"></script> -->
-  <!--Fin Script para adjuntar y excluir radicados del carrito -->
-  <script language="javascript">
+  }
+
   setRutaRaiz ('<?=$ruta_raiz?>');
-  <!--
-  <?
-  // print ("El control agenda en tx($controlAgenda");
-  $ano_ini = date("Y");
-  $mes_ini = substr("00".(date("m")-1),-2);
-  if ($mes_ini==0) {$ano_ini==$ano_ini-1; $mes_ini="12";}
-  $dia_ini = date("d");
-  if(!$fecha_ini) $fecha_ini = "$ano_ini/$mes_ini/$dia_ini";
-    $fecha_busq = date("Y/m/d") ;
-  if(!$fecha_fin) $fecha_fin = $fecha_busq;
-  ?>//-->
-</script>
+  function vistoBueno() {
 
-<script language="JavaScript" type="text/JavaScript">
-  // Variable que guarda la ultima opcion de la barra de herramientas de funcionalidades seleccionada
-  seleccionBarra = -1;
-  <!--
-  function MM_swapImgRestore() { //v3.0
-    var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+      changedepesel(9);
+      document.getElementById('EnviaraV').value = 'VoBo';
+      envioTx();
   }
 
-  function MM_preloadImages() { //v3.0
-    var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-      var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-      if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+  function enviar() {
+      envioTx();
   }
 
-  function MM_findObj(n, d) { //v4.01
-    var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-      d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-    if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-    for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-    if(!x && d.getElementById) x=d.getElementById(n); return x;
+
+  function devolver() {
+      changedepesel(12);
+      envioTx();
   }
 
-  function MM_swapImage() { //v3.0
-    var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-      if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+  function txAgendar() {
+      if (!validaAgendar('SI'))
+        return;
+    changedepesel(14);
+      envioTx();
   }
-  //-->
-</script>
 
-<script>
-function vistoBueno()
-{
+  function txNoAgendar() {
+      changedepesel(15);
+      envioTx();
+  }
 
-    changedepesel(9);
-    document.getElementById('EnviaraV').value = 'VoBo';
-    envioTx();
-}
+  function archivar() {
+      changedepesel(13);
+      envioTx();
+  }
 
-function enviar()
-{
-    envioTx();
-}
+  function nrr() {
+      changedepesel(16);
+      envioTx();
+  }
 
-
-function devolver()
-{
-    changedepesel(12);
+  function tipificar(){
+    changedepesel(19);
     envioTx();
-}
-function txAgendar()
-{
-    if (!validaAgendar('SI'))
-      return;
-  changedepesel(14);
-    envioTx();
-}
-function txNoAgendar()
-{
-    changedepesel(15);
-    envioTx();
-}
-function archivar()
-{
-    changedepesel(13);
-    envioTx();
-}
-function nrr()
-{
-    changedepesel(16);
-    envioTx();
-}
-function tipificar(){
-  changedepesel(19);
-  envioTx();
-
-}
-  function masivaTRD(){
-  sw=0;
-  var radicados = new Array();
-  var list = new Array();
-  for(i=1;i<document.form1.elements.length;i++){
-    if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll") {
-    sw++;
-    valor = document.form1.elements[i].name;
-    valor = valor.replace("checkValue[", "");
-    valor = valor.replace("]", "");
-    radicados[sw] = valor;
-    list.push(valor);
-    };
-  };
-  window.open("accionesMasivas/masivaAsignarTrd.php?<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>&radicados=" + list, "Masiva_Asignación_TRD", "height=650,width=750,scrollbars=yes");
-};
-
-function masivaIncluir(){
-  sw=0;
-    var list = new Array();
+  }
+    function masivaTRD(){
+    sw=0;
     var radicados = new Array();
+    var list = new Array();
     for(i=1;i<document.form1.elements.length;i++){
       if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll") {
-        sw++;
-        valor = document.form1.elements[i].name;
-        valor = valor.replace("checkValue[", "");
-        valor = valor.replace("]", "");
-        radicados[sw] = valor;
-        list.push(valor);
-};
- window.open("accionesMasivas/masivaIncluirExp.php?<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>&radicados=" + list, "Masiva_IncluirExp", "height=650,width=750,scrollbars=yes");
-    		};
-     };
+      sw++;
+      valor = document.form1.elements[i].name;
+      valor = valor.replace("checkValue[", "");
+      valor = valor.replace("]", "");
+      radicados[sw] = valor;
+      list.push(valor);
+      };
+    };
+    window.open("accionesMasivas/masivaAsignarTrd.php?<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>&radicados=" + list, "Masiva_Asignación_TRD", "height=650,width=750,scrollbars=yes");
+  };
+
+  function masivaIncluir(){
+    sw=0;
+      var list = new Array();
+      var radicados = new Array();
+      for(i=1;i<document.form1.elements.length;i++){
+        if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll") {
+          sw++;
+          valor = document.form1.elements[i].name;
+          valor = valor.replace("checkValue[", "");
+          valor = valor.replace("]", "");
+          radicados[sw] = valor;
+          list.push(valor);
+  };
+  window.open("accionesMasivas/masivaIncluirExp.php?<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>&radicados=" + list, "Masiva_IncluirExp", "height=650,width=750,scrollbars=yes");
+          };
+      };
 
 
-  function envioTx(){
-      sw=0;
-      <?
-      if(!$verrad)
+    function envioTx(){
+        sw=0;
+        <?
+        if(!$verrad)
+        {
+        ?>
+      for(i=1;i<document.form1.elements.length;i++)
+      if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
+          sw=1;
+      if (sw==0)
       {
+      alert ("Debe seleccionar uno o mas radicados");
+      return;
+      }
+      <?
+      }
       ?>
-    for(i=1;i<document.form1.elements.length;i++)
-    if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
-        sw=1;
-    if (sw==0)
+        document.form1.submit();
+    }
+    function clickTx(){
+      sw=0;
+      for(i=1;i<document.form1.elements.length;i++)
+      if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
+          sw=1;
+      if (sw==0)
+      {
+      document.getElementById('AccionCaliope').style.display = 'none';
+      return;
+      }else{
+      document.getElementById('AccionCaliope').style.display = '';
+      }
+
+    }
+
+    function markAll()
     {
-    alert ("Debe seleccionar uno o mas radicados");
-    return;
+      if(document.form1.elements.checkAll.checked)
+      {
+        for(i=2;i<document.form1.elements.length;i++)
+        {
+          document.form1.elements[i].checked=1;
+        }
+      }
+      else
+      {
+        for(i=2;i<document.form1.elements.length;i++)
+        {
+          document.form1.elements[i].checked=0;
+        }
+      }
+      clickTx();
     }
-    <?
-    }
-    ?>
-      document.form1.submit();
+
+
+
+  function respuestaTx(){
+      var valor = sw = 0;
+      var params      = 'width='+screen.width;
+          params      += ', height='+screen.height;
+          params      += ', top=0, left=0'
+          params      += ', scrollbars=yes'
+          params      += ', fullscreen=yes';
+
+    <?if(!$verrad){?>
+          for(i=1;i<document.form1.elements.length;i++){
+              if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll"){
+                  sw++;
+                  valor = document.form1.elements[i].name;
+                  valor = valor.replace("checkValue[", "");
+                  valor = valor.replace("]", "");
+              }
+          }
+
+          if (sw != 1){
+              alert("Debe seleccionar UN(1) radicado");
+              return;
+          }
+
+
+          var url         = "respuestaRapida/index.php?<?=session_name()?>=" +
+                            "<?=session_id()?>&radicadopadre=" +
+                              + valor + "&krd=<?=$krd?>";
+          window.open(url, "Respuesta Rapida", params);
+
+    <?}else{?>
+          window.open("respuestaRapida/index.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
+                      '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
+                      "&asunto=" + '<?php print_r($rad_asun_res)?>' +
+                      "&krd=<?=$krd?>", "Respuesta Rapida", params);
+    <?}?>
   }
-  function clickTx(){
-     sw=0;
-    for(i=1;i<document.form1.elements.length;i++)
-    if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
-        sw=1;
-    if (sw==0)
-    {
-     document.getElementById('AccionCaliope').style.display = 'none';
-    return;
-    }else{
-     document.getElementById('AccionCaliope').style.display = '';
-    }
-    
+
+
+  function respuestaTx2(){
+      var valor = sw = 0;
+      var params      = 'width='+screen.width;
+          params      += ', height='+screen.height;
+          params      += ', top=0, left=0'
+          params      += ', scrollbars=yes'
+          params      += ', fullscreen=yes';
+
+    <?if(!$verrad){?>
+          for(i=1;i<document.form1.elements.length;i++){
+              if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll"){
+                  sw++;
+                  valor = document.form1.elements[i].name;
+                  valor = valor.replace("checkValue[", "");
+                  valor = valor.replace("]", "");
+              }
+          }
+
+          if (sw != 1){
+              alert("Debe seleccionar UN(1) radicado");
+              return;
+          }
+
+
+          var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
+                            "<?=session_id()?>&radicadopadre=" +
+                              + valor + "&krd=<?=$krd?>";
+          window.open(url, "Respuesta Rapida", params);
+
+    <?}else{?>
+          window.open("respuestaRapida/index2.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
+                      '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
+                      "&asunto=" + '<?php print_r($rad_asun_res)?>' +
+                      "&krd=<?=$krd?>", "Respuesta Rapida", params);
+    <?}?>
   }
-  
-  function markAll()
-	{
-		if(document.form1.elements.checkAll.checked)
-		{
-			for(i=2;i<document.form1.elements.length;i++)
-			{
-				document.form1.elements[i].checked=1;
-			}
-		}
-		else
-		{
-			for(i=2;i<document.form1.elements.length;i++)
-			{
-				document.form1.elements[i].checked=0;
-			}
-		}
-		clickTx();
-	}
 
-
-
-    function respuestaTx(){
-        var valor = sw = 0;
-        var params      = 'width='+screen.width;
-            params      += ', height='+screen.height;
-            params      += ', top=0, left=0'
-            params      += ', scrollbars=yes'
-            params      += ', fullscreen=yes';
-
-      <?if(!$verrad){?>
-            for(i=1;i<document.form1.elements.length;i++){
-                if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll"){
-                    sw++;
-                    valor = document.form1.elements[i].name;
-                    valor = valor.replace("checkValue[", "");
-                    valor = valor.replace("]", "");
-                }
-            }
-
-            if (sw != 1){
-                alert("Debe seleccionar UN(1) radicado");
-                return;
-            }
-
-
-            var url         = "respuestaRapida/index.php?<?=session_name()?>=" +
-                              "<?=session_id()?>&radicadopadre=" +
-                                + valor + "&krd=<?=$krd?>";
-           window.open(url, "Respuesta Rapida", params);
-
-      <?}else{?>
-            window.open("respuestaRapida/index.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
-                        '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
-                        "&asunto=" + '<?php print_r($rad_asun_res)?>' +
-                        "&krd=<?=$krd?>", "Respuesta Rapida", params);
-      <?}?>
-    }
-
-
-    function respuestaTx2(){
-        var valor = sw = 0;
-        var params      = 'width='+screen.width;
-            params      += ', height='+screen.height;
-            params      += ', top=0, left=0'
-            params      += ', scrollbars=yes'
-            params      += ', fullscreen=yes';
-
-      <?if(!$verrad){?>
-            for(i=1;i<document.form1.elements.length;i++){
-                if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll"){
-                    sw++;
-                    valor = document.form1.elements[i].name;
-                    valor = valor.replace("checkValue[", "");
-                    valor = valor.replace("]", "");
-                }
-            }
-
-            if (sw != 1){
-                alert("Debe seleccionar UN(1) radicado");
-                return;
-            }
-
-
-            var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
-                              "<?=session_id()?>&radicadopadre=" +
-                                + valor + "&krd=<?=$krd?>";
-           window.open(url, "Respuesta Rapida", params);
-
-      <?}else{?>
-            window.open("respuestaRapida/index2.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
-                        '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
-                        "&asunto=" + '<?php print_r($rad_asun_res)?>' +
-                        "&krd=<?=$krd?>", "Respuesta Rapida", params);
-      <?}?>
-    }
-
-  function window_onload()
-  {
+  function window_onload() {
       document.getElementById('AccionCaliope').style.display = 'none';
       document.getElementById('depsel').style.display = 'none';
       document.getElementById('carpper').style.display = 'none';
@@ -305,6 +257,7 @@ function masivaIncluir(){
       }
     ?>
   }
+
   function optionSelect(control){
     var seleccionados=document.getElementById("seleccion");
     if(control.selected){
@@ -316,6 +269,7 @@ function masivaIncluir(){
     }
       }
   }
+});
 </script>
 
 <!--DWLayoutTable-->
