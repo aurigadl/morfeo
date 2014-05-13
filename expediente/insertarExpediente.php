@@ -139,25 +139,13 @@ function cambia_Exp(expId, expNo){
 	}
 </script>
 </head>
-<body bgcolor="#FFFFFF" onLoad="document.insExp.numeroExpediente.focus();">
-<form method="post" action="<?=$_SERVER['PHP_SELF']?>?nurad=<?=$nurad?>" name="insExpBus">
-<div class="col-sm-12">
-  <!-- widget grid -->
-  <h2></h2>
-  <section id="widget-grid">
-    <!-- row -->
-    <div class="row">
+<body onLoad="document.insExp.numeroExpediente.focus();">
+<article class="col-sm-12">
+<div class="content">
+<div class="widget-body no-padding">
+<form method="post" action="<?=$_SERVER['PHP_SELF']?>?nurad=<?=$nurad?>" name="insExpBus" class="smart-form">
       <!-- NEW WIDGET START -->
-      <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <!-- Widget ID (each widget will need unique ID)-->
         <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
-
-          <header>
-            <h2>
-              Buscar expediente por etiquetas
-            </h2>
-          </header>
-          <!-- widget div-->
           <div>
             <!-- widget content -->
             <div class="widget-body no-padding">
@@ -165,11 +153,11 @@ function cambia_Exp(expId, expNo){
 <form method="post" action="<?=$_SERVER['PHP_SELF']?>?nurad=<?=$nurad?>" name="insExpBus">
                 <table class="table table-bordered table-striped">
                   <tr align="center">
-                    <td class="listado5" valign="middle">
-                      <span class="titulos5">Expediente</span>
+                    <td  valign="middle"><br>
+                      <small >Parametro de Busqueda / Numero Expediente</small>
                     </td>
-                    <td class="listado5" valign="middle">
-                      <input type="text" name="criterio" id="criterio" size="30" value="<?=$_POST['criterio']?>" class="tex_area">
+                    <td  valign="middle">
+                      <br><input type="text" name="criterio" id="criterio" size="30" value="<?=$_POST['criterio']?>" class="tex_area">
                     </td>
                   </tr>
                 </table>
@@ -177,8 +165,8 @@ function cambia_Exp(expId, expNo){
               <div class="table-responsive">
               <table class="table table-bordered table-striped">
                 <tr align="center">
-                  <td width="33%" height="25" class="listado2">
-                    <input name="btnBuscaExp" type="submit" class="botones" id="btnBuscaExp" value="Buscar">
+                  <td width="33%" height="25" >
+                    <br><input name="btnBuscaExp" type="submit" class="btn btn-primary btn-xs" id="btnBuscaExp" value="Buscar">
                   </td>
                 </tr>
               </table>
@@ -190,7 +178,7 @@ function cambia_Exp(expId, expNo){
 /* Ejecucion de los QUERYS respectivos para		*/
 /* filtrar los expedientes coincidentes			*/
 /************************************************/
-
+//$db->conn->debug = true;
 $btnBuscaExp = $_POST['btnBuscaExp'];
 if($btnBuscaExp){
 	$criterio = strtoupper($_POST['criterio']);
@@ -200,7 +188,13 @@ if($btnBuscaExp){
 	}
 
 	$sql_rad = "SELECT * FROM SGD_SEXP_SECEXPEDIENTES
-			WHERE SGD_SEXP_PAREXP1 LIKE '%$criterio%' OR SGD_SEXP_PAREXP2 LIKE '%$criterio%' OR SGD_SEXP_PAREXP3 LIKE '%$criterio%'";
+			WHERE upper(SGD_SEXP_PAREXP1) LIKE '%$criterio%' 
+			OR upper(SGD_SEXP_PAREXP2) LIKE '%$criterio%' 
+			OR upper(SGD_SEXP_PAREXP3) LIKE '%$criterio%'  
+			OR upper(SGD_SEXP_PAREXP4) LIKE '%$criterio%'  
+			OR upper(SGD_SEXP_PAREXP5) LIKE '%$criterio%' 
+			OR SGD_EXP_NUMERO LIKE '%$criterio%'
+			";
 	}
 else{
 	$sql_rad = "SELECT * FROM RADICADO r, BODEGA_EMPRESAS b
@@ -222,7 +216,7 @@ else{
 			$sql_rad .= " or sexp.SGD_SEXP_PAREXP1 like '%$dir_doc_us1%'";
 			$sql_rad .= " or sexp.SGD_SEXP_PAREXP2 like '%$dir_doc_us1%'";
 			$sql_rad .= " or sexp.SGD_SEXP_PAREXP3 like '%$dir_doc_us1%'";
-			$sql_rad .= " or sexp.SGD_SEXP_PAREXP4 like '%$dir_doc_us1%'";
+			$sql_rad .= " or sexp.SGD_SEXP_PAREXP4 like '%$dir_doc_us1%' ";
 		}
 		if($dir_doc_us2){
 			$sql_rad .= " or dir.sgd_dir_doc like '%$dir_doc_us2%'";
@@ -251,6 +245,7 @@ else{
 		 $sql_Fin = "SELECT * FROM SGD_SEXP_SECEXPEDIENTES
 			WHERE SGD_SEXP_PAREXP1 LIKE '%$sgd_sexp_parexp1%'"; // OR SGD_SEXP_PAREXP2 LIKE '%$sgd_sexp_parexp2%'";
 		}
+		$sql_rad .="limit 5";
 	}
 //echo $sql_Fin;
 /*
@@ -271,45 +266,51 @@ else{
 
 	//echo $sql_Fin;
 	$rs_Fin = $db->conn->query($sql_rad);
+	
+	if(!$btnBuscaExp){
 	?>
-                  <header>
-                    <h2>
-                      Expedientes que coinciden con documento de remitente
-                    </h2>
-                  </header>
+                    <small>
+                      Expedientes que coinciden con documento de remitente (Ultimos 5)
+                    </small>
+   <?php
+   }
+   ?>
                   <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                     <?  if(!$rs_Fin->EOF){ ?>
                       <tr align="center">
-                      <td class="titulos5" align="left" width="15%">
-                      Fecha
+                      <td  align="left" width="15%">
+                      <small>Fecha
                       </td>
-                      <td class="titulos5" align="left" width="20%">
-                      No. Expediente
+                      <td  align="left" width="20%">
+                      <small>Expediente</small>
                       </td>
-                      <td class="titulos5" align="left" width="7%">
-                      NIT / DOC
+                      <td  align="left" width="7%">
+                      <small>Documento</small>
                       </td>
-                      <td class="titulos5" align="left" width="40%">
-                      Nombre Rel Radicado
+                      <td  align="left" width="40%">
+                      <small>Nombre Rel Radicado</small>
                       </td>
-                      <td class="titulos5" align="left" width="20%">
-                      Carpeta
+                      <td  align="left" width="20%">
+                      <small>Parametro Exp.</small>
                       </td>
-                      <td class="titulos5" align="left" width="20%">
-                      Usuario Resp.
+                      <td  align="left" width="10%">
+                      <small>Responsable</small>
                       </td>
-                      <td class="titulos5" align="left" width="20%">
-                      Acci&oacute;n
+                      <td  align="left" width="10%">
+                      <small>Acci&oacute;n</small>
                       </td>
+											<td  align="left" width="50%">
+                      <small></small>
+                      </td>                      
                       </tr>
                       <?
                       while(!$rs_Fin->EOF){
-                        $exp_Fecha = $rs_Fin->fields['SGD_SEXP_FECH'];
+                        $exp_Fecha = substr($rs_Fin->fields['SGD_SEXP_FECH'],0,11);
                         $exp_No = $rs_Fin->fields['SGD_EXP_NUMERO'];
                         $exp_Nit = $rs_Fin->fields['SGD_DIR_DOC'];
                         $exp_P02 = $rs_Fin->fields['SGD_DIR_NOMREMDES'];
-                        $exp_P03 = $rs_Fin->fields['SGD_SEXP_PAREXP3'];
+                        $exp_P03 = $rs_Fin->fields['SGD_SEXP_PAREXP1'] ." / ". $rs_Fin->fields['SGD_SEXP_PAREXP2']." / ". $rs_Fin->fields['SGD_SEXP_PAREXP3']." / ".$rs_Fin->fields['SGD_SEXP_PAREXP4']." / ".$rs_Fin->fields['SGD_SEXP_PAREXP5'];
                         $exp_Usu = $rs_Fin->fields['USUA_DOC_RESPONSABLE'];
 
                         $sql_Usu = "SELECT * FROM USUARIO
@@ -321,38 +322,39 @@ else{
 
                         ?>
                         <tr align="center">
-                        <td class="listado5" align="left" width="15%">
+                        <td  align="left" ><small>
                         <?
                         echo $exp_Fecha;
                         ?>
-                        </td>
-                        <td class="listado5" align="left" width="20%">
+                        </small></td>
+                        <td  align="left"><small>
                         <?=$exp_No?>
-                        </td>
-                        <td class="listado5" align="left" width="7%">
+                        </small></td>
+                        <td  align="left" width="7%"><small>
                         <?
                         echo $exp_Nit;
                         ?>
-                        </td>
-                        <td class="listado5" align="left" width="40%">
+                        </small></td>
+                        <td  align="left" width="30%"><small>
                         <?
                         echo $exp_P02; //$nom_Ent;
                         ?>
-                        </td>
-                        <td class="listado5" align="left" width="20%">
+                        </small></td>
+                        <td  align="left" width="15%"><small>
                         <?
                         echo $exp_P03; //$nom_Sig;
                         ?>
-                        </td>
-                        <td class="listado5" align="left" width="20%">
+                        </small></td>
+                        <td  align="left" width="15%"><small>
                         <?
                         echo $usu_Log;
                         ?>
-                        </td>
-                        <td class="listado5" align="left" width="20%">
+                        </small></td>
+                        <td  align="left" width="20%"><small>
                         <input type="hidden" id="<?=$exp_No?>" value="<?=$exp_No?>">
-                        <a href="#" onClick="cambia_Exp('<?=$exp_No?>', 'numeroExpediente');">IncLuir</a>
-                        </td>
+                        <a href="#" onClick="cambia_Exp('<?=$exp_No?>', 'numeroExpediente');">Seleccionar</a>
+                        </small></td>
+                        <td>-</td>
                         </tr>
                         <?
                         $rs_Fin->MoveNext();
@@ -363,9 +365,9 @@ else{
                     else{
                       ?>
                       <tr align="center">
-                      <td class="listado5" align="left" colspan="7">
+                      <td  align="left" colspan="7"><small>
                       No hay expedientes relacionados...
-                      </td>
+                      </small></td>
                       <?
                       }
                       ?>
@@ -374,11 +376,11 @@ else{
 
                   <div class="table-responsive">
                     <table class="table table-bordered table-striped">
-                      <form method="post" action="<?php print $encabezado; ?>" name="insExp">
+                      <form method="post" action="<?php print $encabezado; ?>" name="insExp" class="smart-form">
                       <input type="hidden" name='funExpediente' id='funExpediente' value="" >
                       <input type="hidden" name='confirmaIncluirExp' id='confirmaIncluirExp' value="" >
                       <tr align="center" class="titulos2">
-                        <td height="15" class="titulos2" colspan="2">INCLUIR EN  EL EXPEDIENTE</td>
+                        <td height="15" class="titulos2" colspan="2"><small>INCLUIR EN  EL EXPEDIENTE</td>
                       </tr>
                     </table>
                   </div>
@@ -386,11 +388,11 @@ else{
                   <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <tr align="center">
-                        <td class="titulos5" align="left" nowrap>
+                        <td  align="left" nowrap>
                     Nombre del Expediente </td>
-                        <td class="titulos5" align="left">
+                        <td  align="left"><small>
                           <input type="text" name="numeroExpediente" id="numeroExpediente" value="<?php print $_POST['numeroExpediente']; ?>" size="30">
-                        </td>
+                        </small></td>
                       </tr>
                   </table>
                 </div>
@@ -399,12 +401,12 @@ else{
                   <table class="table table-bordered table-striped">
                     <tr align="center">
 
-                    <td width="33%" height="25" class="listado2" align="center">
+                    <td width="33%" height="25"  align="center">
                     <center>
-                      <input name="btnIncluirExp" type="button" class="botones_funcion" id="btnIncluirExp" onClick="validarNumExpediente();" value="Incluir en Exp">
+                      <input name="btnIncluirExp" type="button" class="btn btn-primary btn-xs" id="btnIncluirExp" onClick="validarNumExpediente();" value="Incluir en Exp">
                       </center></TD>
-                    <td width="33%" class="listado2" height="25">
-                    <center><input name="btnCerrar" type="button" class="botones_funcion" id="btnCerrar" onClick="opener.regresar(); window.close();" value=" Cerrar "></center></TD>
+                    <td width="33%"  height="25">
+                    <center><input name="btnCerrar" type="button" class="btn btn-primary btn-xs" id="btnCerrar" onClick="opener.regresar(); window.close();" value=" Cerrar "></center></TD>
                     </tr>
                   </table>
                 </div>
@@ -415,8 +417,8 @@ if ( $expediente->existeExpediente( $_POST['numeroExpediente'] ) !== 0 ) {
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped">
                     <tr align="center">
-                      <td width="33%" height="25" class="listado2" align="center">
-                        <center class="titulosError2">
+                      <td width="33%" height="25"  align="center">
+                        <center >
                           ESTA SEGURO DE INCLUIR ESTE RADICADO EN EL EXPEDIENTE:
                         </center>
                         <B>
@@ -439,12 +441,12 @@ if ( $expediente->existeExpediente( $_POST['numeroExpediente'] ) !== 0 ) {
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped">
                     <tr align="center">
-                      <td width="33%" height="25" class="listado2" align="center">
+                      <td width="33%" height="25"  align="center">
                       <center>
                         <input name="btnConfirmar" type="button" onClick="confirmaIncluir();" class="botones_funcion" value="Confirmar">
                       </center>
                       </td>
-                    <td width="33%" class="listado2" height="25">
+                    <td width="33%"  height="25">
                     <center><input name="cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar "></center></TD>
                     </tr>
                   </table>

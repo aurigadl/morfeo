@@ -121,7 +121,7 @@ $_SESSION['numExpedienteSelected'] = null;
 		                and b.radi_depe_actu= $dependencia
                     $whereUsuario
                     GROUP BY carp";
-
+ //$db->conn->debug = true;
   $rs          = $db->conn->Execute($sqlNoRad);
 
   while(!$rs->EOF){
@@ -290,7 +290,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <td class="inbox-data-from"> <div><span><small><?=$asuntoRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$remitenteRadicado?></small> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$tipoDocumentoRadicado?></small> </div> </td>
-                      <td class="inbox-data-from"> <div> <small><?=$diasRadicado?>35728</small> </div> </td>
+                      <td class="inbox-data-from"> <div> <small><?=$diasRadicado?></small> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$enviadoPor?></small> </div> </td>
                     </tr>
                   <?php
