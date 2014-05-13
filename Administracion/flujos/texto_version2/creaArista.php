@@ -29,7 +29,9 @@ session_start();
   *        Correlibre.org 2013
   * @licencia GNU/GPL V 3
   */
-
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
+  
 if($_GET["crear"]) $crear = $_GET["crear"];
 if($_GET["proceso"]) $proceso = $_GET["proceso"];
 if($_GET["etapaCreaArista"]) $etapaCreaArista = $_GET["etapaCreaArista"];
@@ -70,6 +72,7 @@ if ( $tipificacion ) $deshabilitado =  ""; else $deshabilitado =  "disabled=true
  include "$ruta_raiz/config.php";
 	include_once "$ruta_raiz/include/db/ConnectionHandler.php";
     $db = new ConnectionHandler( "$ruta_raiz" );
+    //$db->conn->debug = true;
     if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	if( $_GET['proceso'] != '' ){
@@ -300,41 +303,39 @@ function regresar(){
   	<tr >
     <td colspan="2" >
 	<center>
-	<p><B><span class=etexto>ADMINISTRACI&Oacute;N DE FLUJOS</span></B> </p>
-	<p><B><span class=etexto> Crear conexi&oacute;n </span></B></p></center>
+	ADMINISTRACI&Oacute;N DE FLUJOS</span></BR>
+	Crear conexi&oacute;n</center>
 	</td>
 	</tr>
 </table>
 
 <table  width=93% class="table table-bordered" align="center">
-	<tr class=timparr>
+	<tr >
 			<td  ><small>Etapa Inicial</small></td>
-			<td  ><small><label class="select state-success">
+			<td  colspan=3><label class="select state-success">
 				<?
 				$rsDep = $db->conn->Execute( $sql );
 				print $rsDep->GetMenu2( "etapaInicial", $etapaInicial, false, false, 0," class='select'" );
 				
 				?>
 			</select>
-		</small></td>
+		</td>
 	</tr>
-	<tr class=timparr>
+	<tr >
 			<td  ><small>Etapa Final</small></td>
-			<td  height="1"><small><label class="select state-success">
+			<td  colspan=3><label class="select state-success">
 				<?
 				$rsDep = $db->conn->Execute( $sql );
 				print $rsDep->GetMenu2( "etapaFinal", $etapaFinal, false, false, 0," class='select'" );
 				?>
-				</label></small>
+				</label>
 		</td>
 	</tr>
-</table>
-<table width=93% class=t_bordeGris align="center">
                 <tr>
-                <td  align="left" colspan="3"  width="25%">
+                <td  >
                 <small>Descripci&oacute;n:</small>
                         </td>
-                        <td  colspan="3"  width="75%">
+                        <td    colspan=3>
                         <label class="input state-success">
                         <input type="text" name="descripcionArista"  id="descripcionArista" value="<?=$descripcionArista?>"  size=60 lenght=100 >
                         </label>
@@ -342,29 +343,27 @@ function regresar(){
                 </tr>
         </td>
   </tr>
-</table>
-<table width=93% class="table table-bordered" align="center">
 	   <tr>
-	        <td  colspan="4"  width="25%">
-	        	D&iacute;as M&iacute;nimo:
+	        <td    width="25%">
+	        	<small>D&iacute;as M&iacute;nimo:</small>
 	        </td>
-	        <td  colspan="4"  width="25%">
+	        <td   width="25%">
 	        	<small><label class="input state-success"><input type="text" name="diasMinimo" value="<?=$diasMinimo?>" size="15" lenght="3" ></label>
 	        	</small>
 	        </td>
-	        <td  colspan="4"  width="25%">
+	        <td    width="25%">
 	        	<small>D&iacute;as M&aacute;ximo</small>
 	        </td>
-	        <td  colspan="4"  width="25%">
+	        <td    width="25%">
 	        	<label class="input state-success"><input type="text" name="diasMaximo" value="<?=$diasMaximo?>" size="15" lenght="3">
 	        	</label>
 	        </td>
         </tr>
         <tr>
-            <td  colspan="4"  width="25%">
-            	Tipo de Radicado:
+            <td   width="25%">
+            	<small>Tipo de Radicado:</small>
             </td>
-            <td  colspan="4"  width="25%"><label class="select state-success">
+            <td    width="25%"><label class="select state-success">
             	<?
 				
 			 	include_once "$ruta_raiz/include/query/flujos/queryTiposDoc.php";									
@@ -374,36 +373,35 @@ function regresar(){
 				
 				?></label>
             </td>
-            <td  colspan="4"  width="25%">
-            	Autom&aacute;tico:
+            <td   width="25%">
+            	<small>Autom&aacute;tico:</small>
             </td>
-            <td  colspan="4"  width="25%">
+            <td    width="25%">
              	   <input type="checkbox" name="automatico" <? if ($automatico) echo "checked"; else echo "";?> >
             </td>
         </tr>
         <tr>
-        	<td  colspan="4"  width="25%">
-            	Tipificaci&oacute;n:
+        	<td  colspan=2>
+            	<small>Incluye Accion al Clasificar (Tipificaci&oacute;n:)
             </td>
-            <td  colspan="4"  width="25%">
+            <td >
                 <input type="checkbox" name="tipificacion" <? if ($tipificacion) echo "checked"; else echo "";?> onchange="submit();">
             </td>
-            <td  colspan="4"  width="25%">
-            	
-            </td>
-            <td  colspan="4"  width="25%">
+            <td    width="25%">
             	
             </td>
         </tr>
 </table>
-
- <table width="93%" align="center" class="table table-bordered" >
+<?php
+ if($tipificacion){
+ ?>
+ <table width="93%" align="center" class="table table-bordered" id=tablaTRD >
 	<tr align="center">
-		<td height="35" colspan="2" >Aplicaci&Oacute;n de la TRD para la Conexi&oacute;n</td>
+		<td height="35" colspan="2" ><small>Aplicaci&Oacute;n de la TRD para la Conexi&oacute;n</small></td>
 	</tr>
 	<tr align="center">
-		<td width="36%" >SERIE</td>
-		<td width="64%" height="35" >
+		<td width="36%" ><small>SERIE</small></td>
+		<td width="64%" height="35" ><label class="select state-success">
 		<?php
     include "$ruta_raiz/trd/actu_matritrd.php";  
     if(!$codserie) $codserie = 0;
@@ -428,34 +426,37 @@ function regresar(){
 	//$codserie = $_SESSION["serieProc"];
 	print $rsD->GetMenu2("codserie", $codserie, "0:-- Seleccione --", false,"","onChange='consulta(this);' class='select' " . $deshabilitado." id='codserie'"  );
 		?>
-				</td>
+				</label></td>
 	</tr>
 		 	<tr align="center">
-									<td width="36%" >SUBSERIE</td>
-									<td width="64%" height="35" >
+									<td width="36%" ><small>SUBSERIE</small></td>
+									<td width="64%" height="35" ><label class="select state-success">
 									<select name="tsub" id="tsub"  onChange="consulta(this);" class="select">
-									<option value="0" selected >"0:-- Seleccione --"</option>
+									<option value="0" selected >-- Seleccione --</option>
 									</select>
+									</label>
 									</td>
 								</tr>
 							  	<tr align="center">
-									<td width="36%" >TIPO DE DOCUMENTO</td>
-									<td width="64%" height="35" >
+									<td width="36%" ><small>TIPO DE DOCUMENTO</small></td>
+									<td width="64%" height="35" ><label class="select state-success">
 								<select name="tipo" id="tipo" class="select">
-									<option value="0" selected >"0:-- Seleccione --"</option>
-									</select>
+									<option value="0" selected >-- Seleccione --</option>
+									</select></label></td>
 						</tr>
 </table>
-
+<?php
+ }
+?>
 <input name='proceso' type='hidden' value='<?=$procesoSelected?>'>
 
 <table border=1 width=93% class="table table-bordered" align="center">
-	<tr class=timparr>
-	<td height="30" colspan="2" ><span class="celdaGris"> <span class="e_texto1">
-	<center> <input class="botones" type="submit" Value="Crear"  onClick=" return validarDatos();"  name="ClickCrea"> </center> </span> </span>
+	<tr >
+	<td height="30" colspan="2" >
+	<center> <input class="btn btn-primary btn-xs" type="submit" Value="Crear"  onClick=" return validarDatos();"  name="ClickCrea"> </center> 
 	</td>
 	<td height="30" colspan="2" ><span class="celdaGris">
-	<center><input class="botones" type=button name=Cerrar id=Cerrar Value=Cerrar onclick='cerrar();'></a></center>  </span>
+	<center><input class="btn btn-primary btn-xs" type=button name=Cerrar id=Cerrar Value=Cerrar onclick='cerrar();'></a></center>  </span>
 	</td>
 	</tr>
 </table>

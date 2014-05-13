@@ -11,6 +11,10 @@ session_start();
   * @autor Jairo Losada 2009-08
   * @licencia GNU/GPL V 3
   */
+  
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
+
 if($_GET["crear"]) $crear = $_GET["crear"];
 if($_GET["proceso"]) $proceso = $_GET["proceso"];
 if($_GET["etapaCreaArista"]) $etapaCreaArista = $_GET["etapaCreaArista"];
@@ -49,7 +53,7 @@ $salida = 0;
 <html>
 <head>
 <title>Modificaci&oacute;n de Etapa</title>
-<link rel="stylesheet" href="../../../estilos/orfeo.css">
+  <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 
 <script language="JavaScript">
 <!--
@@ -126,42 +130,37 @@ function regresar(){
 				$resultadoInsercion = $flujo-> modificaEtapa( $etapaAModificar  );
 	}
 ?>
-<form name='frmCrearEtapa' action='modificaEtapa.php?&crear=<?=$crear?>' method="post">
-<table width="93%"  border="1" align="center">
-  	<tr bordercolor="#FFFFFF">
-    <td colspan="2" class="titulos4">
+<form name='frmCrearEtapa' action='modificaEtapa.php?&crear=<?=$crear?>' method="post" form="smart-form">
+<table width="93%"   class="table table-bordered"   align="center">
+  	<tr >
+    <td colspan="2" >
 	<center>
-	<p><B><span class=etexto>ADMINISTRACI&Oacute;N DE FLUJOS</span></B> </p>
-	<p><B><span class=etexto> <?=$subtitulo?></span></B> </p></center>
+	ADMINISTRACI&Oacute;N DE FLUJOS</span></br>
+  <?=$subtitulo?></center>
 	</td>
 	</tr>
 </table>
-<table border=1 width=93% class=t_bordeGris align="center">
-	<tr class=timparr>
-			<td class="titulos2" height="26">Nombre Etapa:</td>
-			<td class="listado2" height="1">
-				<input type=text name=nombreEtapa value='<?=$nombreEtapa?>'>
+<table  class="table table-bordered"   width=80%  >
+	<tr >
+			<td  >Nombre Etapa:</td>
+			<td  >
+				<label class="input state-success"><input type=text name=nombreEtapa value='<?=$nombreEtapa?>'></label>
 		</td>
-		
-			<td class="titulos2" height="26" width="25%"> </td>
-			<td class="listado2" height="1" width="25%"> </td>
+
 	</tr>
-	<tr class=timparr>
-			<td class="titulos2" height="26">Orden:</td>
-			<td class="listado2" height="1">
-				<input type=text name=ordenEtapa value='<?=$ordenEtapa?>'>
+	<tr >
+			<td  >Orden:</td>
+			<td  >
+				<label class="input state-success"><input type=text name=ordenEtapa value='<?=$ordenEtapa?>'></label>
 		</td>
-		
-			<td class="titulos2" height="26" width="25%"> </td>
-			<td class="listado2" height="1" width="25%"> </td>
+
 	</tr>
-	<tr class=timparr>
-			<td class="titulos2" height="26" width="25%">T&eacute;rminos (d&iacute;as)</td>
-			<td class="listado2" height="1" width="25%">
-				<input type=text name=terminoEtapa value='<?=$terminoEtapa?>'>
+	<tr >
+			<td   width="25%">T&eacute;rminos (d&iacute;as)</td>
+			<td   width="25%">
+				<label class="input state-success"><input type=text name=terminoEtapa value='<?=$terminoEtapa?>'></label>
 			</td>
-			<td class="titulos2" height="26" width="25%"> </td>
-			<td class="listado2" height="1" width="25%"> </td>
+
 	</tr>
 </table>
 
@@ -169,12 +168,12 @@ function regresar(){
 <input type=hidden id="etapaAModificar" name="etapaAModificar" value='<?=$etapaAModificar?>'>
 
 
-<table border=1 width=93% class=t_bordeGris align="center">
-	<tr class=timparr>
-	      <td height="30" colspan="2" class="listado2"><span class="celdaGris"> <span class="e_texto1">
-		  <center> <input class="botones" type="submit" Value=<?=$nombreBoton?> onClick=" return validarDatos();"> </center> </span> </span></td>
-	      <td height="30" colspan="2" class="listado2"><span class="celdaGris"> <span class="e_texto1">
-			<center><input class="botones" type=button name=Cerrar id=Cerrar Value=Cerrar onclick='cerrar();'></a></center>  </span> </span>
+<table  class="table table-bordered"  width=93%  align="center">
+	<tr >
+	      <td height="30" colspan="2" > 
+		  <center> <input  class="btn btn-primary btn-xs" type="submit" Value=<?=$nombreBoton?> onClick=" return validarDatos();"> </center> </td>
+	      <td height="30" colspan="2" >
+			<center><input  class="btn btn-primary btn-xs" type=button name=Cerrar id=Cerrar Value=Cerrar onclick='cerrar();'></a></center> 
 		  </td>
 	</tr>
 </table>
