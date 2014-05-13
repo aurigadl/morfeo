@@ -1,5 +1,6 @@
 <?php
  // include the server class
+ini_set("display_errors",1);
 include("../../../config.php");
 include 'HTML/AJAX/Server.php';
 /**
