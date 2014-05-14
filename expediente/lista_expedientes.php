@@ -1,3 +1,9 @@
+<?php
+ session_start();
+ ini_set('display_errors',1);
+ if(!$ruta_raiz) $ruta_raiz = "..";
+ if(!$db) include_once "../conn.php";
+?>
 <script>
 function verTipoExpediente(numeroExpediente,codserie,tsub,tdoc,opcionExp) {
   <?php
@@ -12,7 +18,7 @@ function verTipoExpediente(numeroExpediente,codserie,tsub,tdoc,opcionExp) {
 		$ind_ProcAnex = "N";
 	  	$fechaH = Date("Ymdhis");
   ?>
-  window.open("<?=$ruta_raiz?>/expediente/tipificarExpediente.php?opcionExp="+opcionExp+"&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&codserie="+codserie+"&tsub="+tsub+"&tdoc="+tdoc+"&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","MflujoExp<?=$fechaH?>","height=650,width=750,scrollbars=yes");
+  window.open("./expediente/tipificarExpediente.php?opcionExp="+opcionExp+"&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&codserie="+codserie+"&tsub="+tsub+"&tdoc="+tdoc+"&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","MflujoExp<?=$fechaH?>","height=650,width=750,scrollbars=yes");
 }
 function verHistExpediente(numeroExpediente,codserie,tsub,tdoc,opcionExp) {
   <?php
@@ -23,14 +29,14 @@ function verHistExpediente(numeroExpediente,codserie,tsub,tdoc,opcionExp) {
 		$codusua = $rsDepR->fields['RADI_USUA_ACTU'];
 		$ind_ProcAnex = "N";
 ?>
-window.open("<?=$ruta_raiz?>/expediente/verHistoricoExp.php?sessid=<?=session_id()?>&opcionExp="+opcionExp+"&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=800,width=1060,scrollbars=yes");
+window.open("./expediente/verHistoricoExp.php?sessid=<?=session_id()?>&opcionExp="+opcionExp+"&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=800,width=1060,scrollbars=yes");
 }
 function crearProc(numeroExpediente){
-  window.open("<?=$ruta_raiz?>/expediente/crearProceso.php?sessid=<?=session_id()?>&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=450,width=680,scrollbars=yes");
+  window.open("./expediente/crearProceso.php?sessid=<?=session_id()?>&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=450,width=680,scrollbars=yes");
 }
 function seguridadExp(numeroExpediente,nivelExp){
   nivelExp = nivelExp || 0;
-  window.open("<?=$ruta_raiz?>/seguridad/expediente.php?<?=session_name()?>=<?=session_id()?>&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>&nivelExp="+nivelExp+"&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=350,width=700,scrollbars=yes");
+  window.open("./seguridad/expediente.php?<?=session_name()?>=<?=session_id()?>&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>&nivelExp="+nivelExp+"&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=350,width=700,scrollbars=yes");
 }
 function reportePredios(numeroExpediente,predios,vars, tipoReporte){
   predios     = predios || '';
@@ -47,7 +53,7 @@ function verTipoExpedienteOld(numeroExpediente)
   $codusua = $rsDepR->fields['RADI_USUA_ACTU'];
   $ind_ProcAnex="N";
   ?>
-  window.open("<?=$ruta_raiz?>/expediente/tipificarExpedienteOld.php?numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","Tipificacion_Documento","height=450,width=750,scrollbars=yes");
+  window.open("./expediente/tipificarExpedienteOld.php?numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","Tipificacion_Documento","height=450,width=750,scrollbars=yes");
 }
 function modFlujo(numeroExpediente,texp,codigoFldExp,ventana) {
 
@@ -68,7 +74,7 @@ if(ventana=="Max"){
    opcVentana = "height=250,width=750,scrollbars=yes";
   }
 
-window.open("<?=$ruta_raiz?>/flujo/modFlujoExp.php?codigoFldExp="+codigoFldExp+"&krd=<?=$krd?>&numeroExpediente="+numeroExpediente+"&numRad=<?=$verrad?>&texp="+texp+"&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","TexpE<?=$fechaH?>",opcVentana);
+window.open("./flujo/modFlujoExp.php?codigoFldExp="+codigoFldExp+"&krd=<?=$krd?>&numeroExpediente="+numeroExpediente+"&numRad=<?=$verrad?>&texp="+texp+"&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","TexpE<?=$fechaH?>",opcVentana);
 }
 function Responsable(numeroExpediente) {
 <?php
@@ -85,15 +91,15 @@ function Responsable(numeroExpediente) {
 	$responsable= $rs->fields['USUA_DOC_RESPONSABLE'];
 	$nivelExp= $rs->fields['SGD_EXP_PRIVADO'];
 ?>
-window.open("<?=$ruta_raiz?>/expediente/responsable.php?&numeroExpediente=" + numeroExpediente +
+window.open("./expediente/responsable.php?&numeroExpediente=" + numeroExpediente +
 				"&numRad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&responsable=<?=$responsable?>&coddepe=<?=$coddepe?>&codusua=<?=$codusua?>","Responsable","height=400,width=550,scrollbars=yes");
 }
 function CambiarE(est,numeroExpediente) {
-	window.open("<?=$ruta_raiz?>/archivo/cambiar.php?krd=<?=$krd?>&numRad=<?=$verrad?>&expediente="+ numeroExpediente +"&est="+ est +"&dependencia=<?=$dependencia?>","Cambio Estado Expediente","height=200,width=200,scrollbars=yes");
+	window.open("./archivo/cambiar.php?krd=<?=$krd?>&numRad=<?=$verrad?>&expediente="+ numeroExpediente +"&est="+ est +"&dependencia=<?=$dependencia?>","Cambio Estado Expediente","height=200,width=200,scrollbars=yes");
 }
 function insertarExpediente()
 {
-  window.open( "<?=$ruta_raiz?>/expediente/insertarExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=900,width=1100,scrollbars=yes" );
+  window.open( "./expediente/insertarExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=900,width=1100,scrollbars=yes" );
 }
 function verWorkFlow(numeroExpediente, codigoProceso){
   var numeroExpediente = numeroExpediente || '';
@@ -167,7 +173,7 @@ function cambiarImagen( imagen )
 }
 
 function excluirExpediente() {
-    window.open( "<?=$ruta_raiz?>/expediente/excluirExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=400,width=730,scrollbars=yes" );
+    window.open( "./expediente/excluirExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=400,width=730,scrollbars=yes" );
 }
 // Incluir Anexos y Asociados a un Expediente.
 function incluirDocumentosExp()
@@ -193,7 +199,7 @@ function incluirDocumentosExp()
     }
 
     if( strRadSeleccionados != "" ) {
-        window.open( "<?=$ruta_raiz?>/expediente/incluirDocumentosExp.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&strRadSeleccionados="+strRadSeleccionados,"HistExp<?=$fechaH?>","height=300,width=600,scrollbars=yes" );
+        window.open( "./expediente/incluirDocumentosExp.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&strRadSeleccionados="+strRadSeleccionados,"HistExp<?=$fechaH?>","height=300,width=600,scrollbars=yes" );
 	} else {
 		alert( "Error. Debe seleccionar por lo menos un \n\r documento a incluir en el expediente." );
 		return false;
@@ -202,7 +208,7 @@ function incluirDocumentosExp()
 // Crear Subexpediente
 function incluirSubexpediente( numeroExpediente, numeroRadicado )
 {
-    window.open( "<?=$ruta_raiz?>/expediente/datosSubexpediente.php?sessid=<?=session_id()?>&nurad="+numeroRadicado+"&krd=<?=$krd?>&num_expediente="+numeroExpediente,"HistExp<?=$fechaH?>","height=350,width=700,scrollbars=yes" );
+    window.open( "./expediente/datosSubexpediente.php?sessid=<?=session_id()?>&nurad="+numeroRadicado+"&krd=<?=$krd?>&num_expediente="+numeroExpediente,"HistExp<?=$fechaH?>","height=350,width=700,scrollbars=yes" );
 }
 </script>
 <script language="JavaScript" src="./js/funciones.js"></script>
@@ -362,7 +368,7 @@ $time_start = microtime_float();
 
         } else {
 	 ?>
-	  <a href='<?=$ruta_raiz?>/verradicado.php?verrad=<?=$radicadoAnexo?>&<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>' target="VERRAD<?=$radicadoAnexo?>">
+	  <a href='./verradicado.php?verrad=<?=$radicadoAnexo?>&<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>' target="VERRAD<?=$radicadoAnexo?>">
 
 	 <? }  print $arrDatosRad['fechaRadicacion'];
 	 }

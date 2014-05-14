@@ -294,7 +294,7 @@ include_once("$ruta_raiz/tx/txOrfeo.php");
 			</div>
 			<div id="tabs-b">
 				<p>
-					<?php // include "ver_historico.php"; ?>
+					Cargando . . .
 				</p>
 			</div>
 
@@ -304,7 +304,8 @@ include_once("$ruta_raiz/tx/txOrfeo.php");
 				</p>
 			</div>
 			<div id="tabs-d">
-				<?php include "./expediente/lista_expedientes.php"; ?>
+			  Cargando . . .
+				<?php  // include "./expediente/lista_expedientes.php"; ?>
 			</div>
 				<div id="tabs-gis" width="100%">
 				<?php include "./gis/verGis.php"; ?>
@@ -328,6 +329,7 @@ $( document ).ready(function(){
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
         window.location.href = ui.newTab.find('a.ui-tabs-anchor').attr('href');
         if($(ui.newTab).attr('aria-controls')=='tabs-b') cargarPagina('./ver_historico.php','tabs-b');
+        if($(ui.newTab).attr('aria-controls')=='tabs-d') cargarPagina('./expediente/lista_expedientes.php','tabs-d');
         console.log(window.location.href);
     } );
 
