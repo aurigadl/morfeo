@@ -80,7 +80,7 @@ if( $funExpediente == "INSERT_EXP" ){
 
             ?>
             <script language="JavaScript">
-              opener.regresar();
+              opener.cargarPagina('expediente/lista_expedientes.php','tabs-d');
               window.close();
             </script>
             <?php
@@ -406,7 +406,7 @@ else{
                       <input name="btnIncluirExp" type="button" class="btn btn-primary btn-xs" id="btnIncluirExp" onClick="validarNumExpediente();" value="Incluir en Exp">
                       </center></TD>
                     <td width="33%"  height="25">
-                    <center><input name="btnCerrar" type="button" class="btn btn-primary btn-xs" id="btnCerrar" onClick="opener.regresar(); window.close();" value=" Cerrar "></center></TD>
+                    <center><input name="btnCerrar" type="button" class="btn btn-primary btn-xs" id="btnCerrar" onClick="opener.cargarPagina('expediente/lista_expedientes.php','tabs-d'); window.close();" value=" Cerrar "></center></TD>
                     </tr>
                   </table>
                 </div>
@@ -447,7 +447,7 @@ if ( $expediente->existeExpediente( $_POST['numeroExpediente'] ) !== 0 ) {
                       </center>
                       </td>
                     <td width="33%"  height="25">
-                    <center><input name="cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar "></center></TD>
+                    <center><input name="cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.cargarPagina('expediente/lista_expedientes.php','tabs-d'); window.close();" value=" Cerrar "></center></TD>
                     </tr>
                   </table>
                 </div>
