@@ -294,7 +294,7 @@ include_once("$ruta_raiz/tx/txOrfeo.php");
 			</div>
 			<div id="tabs-b">
 				<p>
-					<?php include "ver_historico.php"; ?>
+					<?php // include "ver_historico.php"; ?>
 				</p>
 			</div>
 
@@ -313,12 +313,21 @@ include_once("$ruta_raiz/tx/txOrfeo.php");
 		</div>
   </div>
 
+  <script>
+function cargarPagina(pagina,nombreDiv){
+$.post( pagina,{verradicado:"<?=$verradicado?>"}, function( data ) {
+  $('#'+ nombreDiv).html(data);
+});
+}
+</script>  
+  
 <script type="text/javascript">
 $( document ).ready(function(){
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	$('#tabs').tabs();
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
         window.location.href = ui.newTab.find('a.ui-tabs-anchor').attr('href');
+        if($(ui.newTab).attr('aria-controls')=='tabs-b') cargarPagina('./ver_historico.php','tabs-b');
         console.log(window.location.href);
     } );
 
