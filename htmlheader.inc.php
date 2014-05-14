@@ -27,7 +27,7 @@ session_start();
 
 $str = <<<EOF
 
-      <title>Sistema de informaci&oacute;n integrado de Metrovivienda</title>
+      <title>..:: $entidad - Caliope ::..</title>
 
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -102,5 +102,5 @@ $str = <<<EOF
         <!-- jquery jsPlumb adapter -->
 		<script src="$ruta_raiz/js/jsplumb/src/jquery.jsPlumb.js"></script>
 EOF;
-echo $str;
+echo  $str;
 ?>

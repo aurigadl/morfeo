@@ -3,10 +3,9 @@ if (!$ruta_raiz) $ruta_raiz=".";
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 require_once("$ruta_raiz/class_control/TipoDocumento.php");
 
-define('ADODB_ASSOC_CASE', 2);
+define('ADODB_ASSOC_CASE', 1);
 
-if (!$db)
-$db = new ConnectionHandler("$ruta_raiz");
+if (!$db) $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $objTipoDocto = new TipoDocumento($db);
 
@@ -24,7 +23,7 @@ $radi_nume_deri as RADI_NUME_DERI,
 			a.SGD_SPUB_CODIGO AS NIVEL_SEGURIDAD
 		FROM radicado a
 		WHERE a.radi_nume_radi = $verradicado";
-
+//$db->conn->debug = true;
 $rs = $db->conn->Execute($isql);
 if ($rs->EOF)
 die ("<span class='titulosError'>No se ha podido obtener la informacion del radicado($isql)");
@@ -44,7 +43,6 @@ if($menu_ver != 5) {
 	$rs->fields["RADI_PRIM_APEL"] . " " .
 	$rs->fields["RADI_SEGU_APEL"];
 }
-
 $radi_nume_iden       = $rs->fields["RADI_NUME_IDEN"];
 $radi_fech_radi       = $rs->fields["RADI_FECH_RADI"];
 $mrec_codi            = $rs->fields["MREC_CODI"];
@@ -63,7 +61,6 @@ $radi_depe_radicacion = $rs->fields["DEPE_CODI"];
 $radi_depe_radi       = $rs->fields["RADI_DEPE_RADI"];
 $radi_usua_radi       = $rs->fields["RADI_USUA_RADI"];
 $sgd_rad_codigoverificacion = $rs->fields["SGD_RAD_CODIGOVERIFICACION"];
-
 if($rs->fields["CARP_PER"]==1) {
 	$personal="(personal)";
 } else {
@@ -233,8 +230,8 @@ if($no_tipo!="true") {
 			sgd_sbrd_subserierd su,
 			sgd_tpr_tpdcumento t
 		WHERE r.sgd_mrd_codigo = m.sgd_mrd_codigo AND
-			r.depe_codi='$dependencia' AND
-			r.RADI_NUME_RADI = '$verradicado' AND
+			r.depe_codi=$dependencia AND
+			r.RADI_NUME_RADI = $verradicado AND
 			s.sgd_srd_codigo = m.sgd_srd_codigo AND
 			su.sgd_srd_codigo = m.sgd_srd_codigo AND
 			su.sgd_sbrd_codigo = m.sgd_sbrd_codigo AND
@@ -480,8 +477,10 @@ if($no_tipo!="true") {
 	
 	include_once ("$ruta_raiz/include/tx/Expediente.php");
 	//$db->conn->debug=true;
+	
+	if(!$verrad) $verrad = $verradicado;
 	$trdExp          = new Expediente($db);
-	$numExpediente   = $trdExp->consulta_exp("$verrad");
+	$numExpediente   = $trdExp->consulta_exp("$verradicado");
 	$mrdCodigo       = $trdExp->consultaTipoExpediente($numExpediente);
 	$trdExpediente   = $trdExp->descSerie." / ".$trdExp->descSubSerie;
 	$descPExpediente = $trdExp->descTipoExp;
@@ -498,15 +497,15 @@ if($no_tipo!="true") {
   $isql = "select sgd_tpr_codigo, sgd_tpr_descrip, fech_vcmto, sgd_tpr_termino, date(fech_vcmto)-date(now()) diasparavencimiento, date(fech_vcmto)-date(radi_fech_radi)  diasplazo, date(now())-date(radi_fech_radi)  diashoy
 		 from sgd_tpr_tpdcumento tpr, radicado r 
 		where r.tdoc_codi=tpr.sgd_tpr_codigo and  r.radi_nume_radi=$verradicado   ";
-                  $rs=$db->query($isql);
-                  if  (!$rs->EOF){
-                        $tpdoc_grbTRD    = $rs->fields["SGD_TPR_CODIGO"];
-                        $tdoc = $rs->fields["SGD_TPR_CODIGO"];
-                        $tpdoc_nombreTRD = $rs->fields["SGD_TPR_DESCRIP"];
-                        $termino_doc     = $rs->fields["SGD_TPR_TERMINO"];
+			$rs=$db->query($isql);
+			if  (!$rs->EOF){
+				$tpdoc_grbTRD    = $rs->fields["SGD_TPR_CODIGO"];
+				$tdoc = $rs->fields["SGD_TPR_CODIGO"];
+				$tpdoc_nombreTRD = $rs->fields["SGD_TPR_DESCRIP"];
+				$termino_doc     = $rs->fields["SGD_TPR_TERMINO"];
 			$fechaVencimiento = $rs->fields["FECH_VCMTO"];
 			$diasParaVencimiento =  $rs->fields["DIASPARAVENCIMIENTO"];
-		        $diasPlazo = $rs->fields["DIASPLAZO"];
+				$diasPlazo = $rs->fields["DIASPLAZO"];
 			$diasHoy = $rs->fields["DIASHOY"];
 			//echo "$fechaVencimiento";
                    }

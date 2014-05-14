@@ -1,7 +1,11 @@
 <?php
+ini_set("display_errors",1);
+ if(!$ruta_raiz) $ruta_raiz = ".";
+ if(!$db) include "$ruta_raiz/conn.php";
 	   require_once("$ruta_raiz/class_control/Transaccion.php");
 		 require_once("$ruta_raiz/class_control/Dependencia.php");
 		 require_once("$ruta_raiz/class_control/usuario.php");
+
 	   error_reporting(7);
 	   $trans = new Transaccion($db);
 	   $objDep = new Dependencia($db);
@@ -22,17 +26,18 @@
 ?>
 <table  width="80%"  align="center"  class="table table-bordered ">
   <tr   align="left" >
-    <td width=10% class='alert alert-info' ><small>Usuario Actual</small></td>
+    <td width=10%  ><small>Usuario Actual</small></td>
     <td  width=15%   align="left"><small><?=$usuario_actual?></small></td>
-    <td width=10%  class='alert alert-info' ><small>Dependencia Actual</small></td>
+    <td width=10%   ><small>Dependencia Actual</small></td>
     <td  width=15%  ><small><?=$dependencia_actual?></small></td>
- </table>
+  </tr>
+</table>
 <table  width="100%" align="center" class="table table-bordered"  >
-  <tr   align="center" class='alert alert-info' >
-    <td width=10%  class='alert alert-info'><small>DEPENDENCIA</small></td>
-    <td  width=5%  class='alert alert-info'><small>FECHA</small></td>
-     <td  width=15% class='alert alert-info' ><small>TRANSACCION</small></td>  
-    <td  width=15%  class='alert alert-info' ><small>US. ORIGEN</small></td>
+  <tr   align="center"  >
+    <td width=10%  ><small>DEPENDENCIA</small></td>
+    <td  width=35  ><small>FECHA</small></td>
+     <td  width=15%  ><small>TRANSACCION</small></td>  
+    <td  width=15%   ><small>US. ORIGEN</small></td>
 		<?
 		 /** Esta es la columna que se elimino de forma Temporal  USUARIO - DESTINO
 			 * <td  width=15% class="grisCCCCCC"  ><font face="Arial, Helvetica, sans-serif"> US. DESTINO</font></td>
@@ -58,6 +63,7 @@
 			order by hist_fech desc ";  
 
 	$i=1;
+	//$db->conn->debug = true;
 	$rs = $db->query($isql);
 	IF($rs)
 	{
@@ -180,17 +186,17 @@ $rs = $db->query($isql);
 </table>
 <table width="80%"  align="center"  class="table table-bordered"  >
   <tr  align="center">
-    <td width=10%  class='alert alert-info'><small>RADICADO </small></td>
-    <td width=10%   class='alert alert-info'><small>DEPENDENCIA</small></td>
-    <td  width=15%   class='alert alert-info'><small>FECHA </small></td>
-    <td  width=15%   class='alert alert-info'><small>Destinatario</small></td>      
-    <td  width=15%   class='alert alert-info' ><small>DIRECCION </small></td>
-    <td  width=15%  class='alert alert-info'  ><small>DEPARTAMENTO </small></td>
-    <td  width=15%  class='alert alert-info'  ><small>MUNICIPIO</small></td>
-    <td  width=15%  class='alert alert-info'  ><small>TIPO DE ENVIO</small></td>
-    <td  width=5%  class='alert alert-info' ><small> No. PLANILLA</small></td>
-    <td  width=15%   class='alert alert-info'><small>OBSERVACIONES</small></td>      
- <td  width=15%   class='alert alert-info'><small>Realizo Envio</small></td>
+    <td width=10%  ><small>RADICADO </small></td>
+    <td width=10%   ><small>DEPENDENCIA</small></td>
+    <td  width=15%   ><small>FECHA </small></td>
+    <td  width=15%   ><small>Destinatario</small></td>      
+    <td  width=15%    ><small>DIRECCION </small></td>
+    <td  width=15%    ><small>DEPARTAMENTO </small></td>
+    <td  width=15%    ><small>MUNICIPIO</small></td>
+    <td  width=15%    ><small>TIPO DE ENVIO</small></td>
+    <td  width=5%   ><small> No. PLANILLA</small></td>
+    <td  width=15%   ><small>OBSERVACIONES</small></td>      
+ <td  width=15%   ><small>Realizo Envio</small></td>
   </tr>
   <?
 $i=1;
