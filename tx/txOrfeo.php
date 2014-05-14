@@ -115,6 +115,7 @@ $( document ).ready(function(){
       ?>
         document.form1.submit();
     }
+
     function clickTx(){
       sw=0;
       for(i=1;i<document.form1.elements.length;i++)
@@ -127,7 +128,6 @@ $( document ).ready(function(){
       }else{
       document.getElementById('AccionCaliope').style.display = '';
       }
-
     }
 
     function markAll()
@@ -357,7 +357,7 @@ if($verradPermisos=="Full"){ ?>
   <fieldset>
     <div class="col col-3">
         <label class="select" >
-          <select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
+          <select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic">
             <option value="9" selected="selected">Escoja una accion...</option>
             <option value="9" >Enviar a...</option>
             <option value="15" >Enviar a Visto Bueno.</option>

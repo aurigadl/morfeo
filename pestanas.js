@@ -24,24 +24,19 @@
   }
 
   <!-- Cuando existe una señal de cambio el programa ejecuta esta funcion mostrando el combo seleccionado -->
-  function changedepesel(enviara)
-  {
+  function changedepesel(enviara) {
     document.form1.codTx.value = enviara;
-    document.getElementById('depsel').style.display = 'none';
-    document.getElementById('carpper').style.display = 'none';
-    document.getElementById('Enviar').style.display = 'none';
-  if(enviara==10 )
-    {
-    document.getElementById('depsel').style.display = 'none';
-    document.getElementById('carpper').style.display = '';
-    document.getElementById('Enviar').style.display = 'none';
+    $('#depsel, #carpper, #Enviar').hide();
+  if(enviara==10 ){
+      document.getElementById('depsel').style.display = 'none';
+      document.getElementById('carpper').style.display = '';
+      document.getElementById('Enviar').style.display = 'none';
     }
   //Archivar
-    if(enviara==13 )
-    {
-    document.getElementById('depsel').style.display = 'none';
-    document.getElementById('carpper').style.display = 'none';
-    envioTx();
+    if(enviara==13){
+      document.getElementById('depsel').style.display = 'none';
+      document.getElementById('carpper').style.display = 'none';
+      envioTx();
     }
     //nrr
 
@@ -82,5 +77,8 @@
       envioTx();
     }
   }
+
+  $('#AccionCaliope').on('change', changedepesel1);
+
 });
 </script>
