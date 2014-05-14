@@ -500,7 +500,7 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                     <tr>
                       <td width="650">
                         <center>
-                          <input name="cerrar" type="button" class="btn btn-primary btn-xs" id="envia22" onClick="opener.regresar(); window.close();" value=" Cerrar ">
+                          <input name="cerrar" type="button" class="btn btn-primary btn-xs" id="envia22" onClick="opener.cargarPagina('expediente/lista_expedientes.php','tabs-d'); window.close();" value=" Cerrar ">
                         </center>
                       </td>
                    </tr>
