@@ -80,23 +80,15 @@ if($verradPermisos == "Full" or $datoVer=="985")
 {	if($datoVer=="985")
 	{
 ?>
+
 function  window_onload(){
-<?	if($verradPermisos == "Full" or $datoVer=="985"){
-?>
-window_onload2();
+  <?	if($verradPermisos == "Full" or $datoVer=="985"){ ?>
+  window_onload2();
+  <?  } ?>
+}
+
 <?
 }
-?>
-}
-<?
-}
-?>
-</script>
-<?
-include "pestanas.js";
-?>
-<script >
-<?
 }
 else
 {
@@ -108,19 +100,6 @@ function changedepesel(xx)
 }
 ?>
 
-function window_onload2()
-{
-<?
-	if ($menu_ver==3)
-	{
-		?>
-		document.getElementById('depsel').style.display = 'none';
-		document.getElementById('carpper').style.display = 'none';
-		document.getElementById('Enviar').style.display = 'none';
-		<?
-	}
-	?>
-}
 function ver_tipodocuTRD(codserie,tsub)
  {
    <?php
@@ -154,7 +133,7 @@ if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" ){
  $body = "document.location.href='#t1';";
 }
 ?>
-<body <?=$body?>">
+<body <?=$body?>>
 <?
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$fechah=date("dmy_h_m_s") . " ". time("h_m_s");
@@ -280,35 +259,9 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 	}
 }else {echo "<center><b><span class='eerrores'>NO TIENE AUTORIZACION PARA INGRESAR</span><BR><span class='eerrores'><a href='login.php' target=_parent>Por Favor intente validarse de nuevo. Presione aca!</span></a>";}
 
-if($verradPermisos=="Full"){
+include_once("$ruta_raiz/tx/txOrfeo.php");
 ?>
-    <table width=100% ><tr><td width=50%> </td><td width=300> <td>
-			<div  width=100>
-						<label class="select" >
-						<select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
-							<option value="9" selected="selected">Escoja una accion...</option>
-							<option value="9" >Enviar a...</option>
-							<option value="15" >Enviar a Visto Bueno.</option>
-							<option value="10">Mover a Carpeta...</option>
-							<option value="9">Enviar a Visto Bueno...</option>
-							<option value="8">Informar...</option>
-							<option value="12	">Devolver...</option>
-							<option value="13">Archivar...</option>
-							<option value="14">Agendar...</option>
-						</select>
-						</label>
-				</div>
-				</td><td width=350>
-				<div> <label class="select" > <?  include "./tx/txOrfeo.php"; ?>
-				</div>
-				</label>
-
-	</td></tr>
-	</table>
-		<?php
-	}
-	?>
-   </form>
+</form>
 <!-- row -->
  <input type=hidden name=reftab id=reftab >
 	<div class="well well-sm well-light">
@@ -361,6 +314,7 @@ if($verradPermisos=="Full"){
   </div>
 
 <script type="text/javascript">
+$( document ).ready(function(){
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	$('#tabs').tabs();
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
@@ -371,10 +325,9 @@ if($verradPermisos=="Full"){
 	// Dynamic tabs
 	var tabTitle = $("#tab_title"), tabContent = $("#tab_content"), tabTemplate = "<li style='position:relative;'> <span class='air air-top-left delete-tab' style='top:7px; left:7px;'><button class='btn btn-xs font-xs btn-default hover-transparent'><i class='fa fa-times'></i></button></span></span><a href='#{href}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{label}</a></li>", tabCounter = 2;
 
-  document.getElementById('chkr').style.display = 'none';
-  document.getElementById('depsel').style.display = 'none';
-  document.getElementById('carpper').style.display = 'none';
-  document.getElementById('Enviar').style.display = 'none';
+  $('#chkr, #depsel, #carpper, #Enviar').hide();
+
+});
 </script>
 
 

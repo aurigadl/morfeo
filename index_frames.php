@@ -273,7 +273,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <script type="text/javascript" src="<?=$ruta_raiz?>/js/bootstrap.js"></script>
     </head>
 
-    <body style="overflow:hidden; zoom: 1;">
+    <body>
       <div id="wrapper">
         <!-- Sidebar -->
           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

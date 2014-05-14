@@ -10,8 +10,6 @@ $rad_asun_res 	= preg_replace($pattern, ' ', $rad_asun_res);
 <link rel="stylesheet" type="text/css" href="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.css">
 <script language="JavaScript" src="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.js"></script>
 
-
-<!--Incio Script para adjuntar y excluir radicados del carrito -->
 <script language="javascript">
 $( document ).ready(function(){
 
@@ -228,30 +226,29 @@ $( document ).ready(function(){
     <?}?>
   }
 
-  function window_onload() {
-      document.getElementById('AccionCaliope').style.display = 'none';
-      document.getElementById('depsel').style.display = 'none';
-      document.getElementById('carpper').style.display = 'none';
-      document.getElementById('Enviar').style.display = 'none';
+  function window_onload2() {
+    <? if ($menu_ver==3) { ?>
+          $('#depsel, #carpper, #Enviar').hide();
+          $('#AccionCaliope').show();
+    <? } ?>
+  }
 
-        <?
-      if(!$verrad)
-      {
-      }
-      else
-      {
-      ?>
+  function window_onload() {
+      $('#AccionCaliope, #depsel, #carpper, #Enviar').hide();
+      <?  if($verrad){ ?>
       window_onload2();
-      <?
-      }
+      <? }
+
       if($carpeta==11 and $_SESSION['codusuario']==1){
        echo "document.getElementById('salida').style.display = ''; ";
        echo "document.getElementById('enviara').style.display = 'none'; ";
        echo "document.getElementById('Enviar').style.display = 'none'; ";
-        }ELSE{
-          echo " ";
+
+      }else{
+       echo " ";
       }
-        if($carpeta==11 and $_SESSION['codusuario']!=1){
+
+      if($carpeta==11 and $_SESSION['codusuario']!=1){
         echo "document.getElementById('enviara').style.display = 'none'; ";
         echo "document.getElementById('Enviar').style.display = 'none'; ";
       }
@@ -263,77 +260,39 @@ $( document ).ready(function(){
     if(control.selected){
       selecionados.value= selecionados.value+","+control.value;
     }else{
-          var posicion=selccionados.value.indexOf(control.value);
+      var posicion=selccionados.value.indexOf(control.value);
       if(posicion!=-1){
-      selccionados.value=selccionados.value.substr(0,posicion)+selccionados.value.substr(posicion+control.value.length);
-    }
+        selccionados.value=selccionados.value.substr(0,posicion)+selccionados.value.substr(posicion+control.value.length);
       }
+    }
   }
+
+  window_onload();
+
 });
 </script>
 
-<!--DWLayoutTable-->
 <?php
 include "pestanas.js";
-/* Si esta en la Carpeta de Visto Bueno no muesta las opciones de reenviar
- *
-*/
+// Si esta en la Carpeta de Visto Bueno no muesta las opciones de reenviar
 if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_SESSION['dependencia'] == $radi_depe_actu)) {
-?>
-
-		<?php
-		if ($controlAgenda==1)
-		{	//Si el esta consultando la carpeta de documentos agendados entonces muestra el boton de sacar de la agenda
-			if ($agendado)
-			{	 	echo ("<input name='Submit2' type='button' class='botones_mediano' value=' Sacar de La Agenda &gt;&gt;' onClick='txNoAgendar();'>");
-			}
-			else
-			{	echo(" ");
+  if ($controlAgenda==1){
+      //Si el esta consultando la carpeta de documentos agendados entonces muestra el boton de sacar de la agenda
+    if ($agendado){
+      echo ("<input name='Submit2' type='button' class='botones_mediano' value=' Sacar de La Agenda &gt;&gt;' onClick='txNoAgendar();'>");
+    } else{
+      echo(" ");
 		}
 	}
-if ($nomcarpeta)
-{
-?>
-<!-- INICIO Permisos de acciones masivas  -->
-	<?PHP
 
-		if ($accMasiva_trd != 1 and !$verradPermisos) {
-			// echo '<td valign="bottom">
-			//	<a href= "#" title="Asignar TRD" onmouseOver="document.ejemplo1.src=\''.$ruta_raiz.'/imagenes/internas/masTRDO.gif\';" onClick="masivaTRD();" onmouseOut="document.ejemplo1.src=\''.$ruta_raiz.'/imagenes/internas/masTRD.gif\';"><img name="ejemplo1"  alt="Asignar Trd masiva" src=\''.$ruta_raiz.'/imagenes/internas/masTRD.gif\'  border="0" ></a>
-			//	</td>';
-		}
-		if ($accMasiva_prestamo == 1) {
-			//echo '<td valign="bottom">
-			//	<a href= "#" title="Solicitud prestamo" onmouseOver="document.ejemplo2.src=\''.$ruta_raiz.'/imagenes/internas/masPrestO.gif\';" onClick="masivaPrestamo();" onmouseOut="document.ejemplo2.src=\''.$ruta_raiz.'/imagenes/internas/masPrest.gif\';"><img name="ejemplo2" src=\''.$ruta_raiz.'/imagenes/internas/masPrest.gif\' border="0" height=51></a>
-			//	</td>';
-		}
+  if (!$agendado) {
+	  if (($_SESSION['depe_codi_padre'] && $_SESSION['codusuario']==1) || $_SESSION['codusuario']!=1) {
+		if(!empty($permVobo) && $permVobo != 0){ ?>
+		  <a href="#" onmouseout="MM_swapImgRestore()" onclick="seleccionBarra = 14;vistoBueno();" onmouseover="MM_swapImage('Image12','','<?=$ruta_raiz?>/imagenes/internas/overVobo.gif',1)"></a>
+    <?}
+  }
 
-		if ($accMasiva_temas == 1) {
-			//echo '<td valign="bottom">
-			//		<a href= "#" title="Asignar Sector y Tema" onmouseOver="document.ejemplo3.src=\''.$ruta_raiz.'/imagenes/internas/masTemaO.gif\';" onClick="masivaTemaSector();" onmouseOut="document.ejemplo3.src=\''.$ruta_raiz.'/imagenes/internas/masTema.gif\';"><img name="ejemplo3" src=\''.$ruta_raiz.'/imagenes/internas/masTema.gif\' ></a>
-			//</td>';
-		}
-
-		if ($accMasiva_incluir != 1 and !$verradPermisos) {
-			//echo '<td valign="bottom">
-			//		<a href= "#" title="Incluir radicado en expediente" onmouseOver="document.ejemplo4.src=\''.$ruta_raiz.'/imagenes/internas/masInclO.gif\';" onClick="masivaIncluir();" onmouseOut="document.ejemplo4.src=\''.$ruta_raiz.'/imagenes/internas/masIncl.gif\';"><img name="ejemplo4" src=\''.$ruta_raiz.'/imagenes/internas/masIncl.gif\' border="0"></a>
-			//	</td>';
-		}
-	?>
-	<!-- FIN Permisos de acciones masivas  -->
-<?php
-}
-if (!$agendado) {
-	if (($_SESSION['depe_codi_padre'] && $_SESSION['codusuario']==1) || $_SESSION['codusuario']!=1) {
-		if(!empty($permVobo) && $permVobo != 0) {
-	?>
-		<a href="#" onmouseout="MM_swapImgRestore()" onclick="seleccionBarra = 14;vistoBueno();" onmouseover="MM_swapImage('Image12','','<?=$ruta_raiz?>/imagenes/internas/overVobo.gif',1)"></a>
-    <?
-    		}
-	}
-	?>
-		<?php
-		   if(!empty($_SESSION["usua_perm_trdmasiva"]) && $_SESSION["usua_perm_trdmasiva"]!=0 ){
+  if(!empty($_SESSION["usua_perm_trdmasiva"]) && $_SESSION["usua_perm_trdmasiva"]!=0 ){
 		   	?>
 		     <a href="#" onMouseOut="MM_swapImgRestore()" onClick="seleccionBarra = 19;tipificar();" onMouseOver="MM_swapImage('Image19','','<?=$ruta_raiz?>/imagenes/internas/tipificarA.gif',1)">
 		     </a>
@@ -345,30 +304,24 @@ if (!$agendado) {
 	}
 }
 /* Final de opcion de enviar para carpetas que no son 11 y 0(VoBo)
-*/
-/* si esta en la Carpeta de Visto Bueno no muesta las opciones de reenviar
-*/
+/* si esta en la Carpeta de Visto Bueno no muesta las opciones de reenviar */
 if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_SESSION['dependencia'] == $radi_depe_actu)) {
 	$row1 = array();
 	// Combo en el que se muestran las dependencias, en el caso  de que el usuario escoja reasignar.
 	$dependencianomb=substr($dependencianomb,0,35);
   $subDependencia = $db->conn->substr ."(depe_nomb,0,80)";
-  if($_SESSION["codusuario"]!=1 && $_SESSION["usuario_reasignacion"] !=1)
-	{
+  if($_SESSION["codusuario"]!=1 && $_SESSION["usuario_reasignacion"] !=1){
 	  $whereReasignar = " where depe_codi = $dependencia and depe_estado = 1";
-	}
-	else
-	{
+	}else{
 	  $whereReasignar = "where depe_estado = 1";
 	}
-	$sql = "select $subDependencia, depe_codi from DEPENDENCIA $whereReasignar ORDER BY DEPE_NOMB";
-	$rs = $db->query($sql);
-	print $rs->GetMenu2('depsel',0,"0:-- Escoja una Dependencia --",false,0," id=depsel class=select onChange='enviar();' ");
+	$sql      = "select $subDependencia, depe_codi from DEPENDENCIA $whereReasignar ORDER BY DEPE_NOMB";
+	$rs       = $db->query($sql);
+	$depencia = $rs->GetMenu2('depsel',0,"0:-- Escoja una Dependencia --",false,0," id='depsel' class=select onChange='enviar();' ");
 	// genera las dependencias para informar
 	$row1 = array();
 
 	// Aqui se muestran las carpetas Personales
-
 	$dependencianomb=substr($dependencianomb,0,35);
 	$datoPersonal = "(Personal)";
 	$nombreCarpeta = $db->conn->Concat("' $datoPersonal'",'nomb_carp');
@@ -388,15 +341,38 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 			and depe_codi = $dependencia
 			order by orden, carp_codi";
 	$rs = $db->conn->Execute($sql);
-	print $rs->GetMenu2('carpSel',1,false,false,0," id=carpper class=select ");
+	$rs->GetMenu2('carpSel',1,false,false,0," id=carpper class=select ");
 
 	// Fin de Muestra de Carpetas personales
 	?>
-		<INPUT TYPE=hidden name=enviara value=9>
-		<INPUT TYPE=hidden name=EnviaraV id=EnviaraV value=''>
-			<input type="button" value='' name="Enviar" id="Enviar" valign='middle' class='botones_2' onClick="envioTx();">
-			<input type="hidden" name="codTx" value=9>
-<?
-/* Fin no mostrar opc_envio*/
-}
-?>
+	<INPUT TYPE=hidden name=enviara value=9>
+	<INPUT TYPE=hidden name=EnviaraV id=EnviaraV value=''>
+	<input type="button" value='' name="Enviar" id="Enviar" valign='middle' class='botones_2' onClick="envioTx();">
+	<input type="hidden" name="codTx" value=9>
+
+<? }
+
+if($verradPermisos=="Full"){ ?>
+<div class="row">
+  <fieldset>
+    <div class="col col-3">
+        <label class="select" >
+          <select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
+            <option value="9" selected="selected">Escoja una accion...</option>
+            <option value="9" >Enviar a...</option>
+            <option value="15" >Enviar a Visto Bueno.</option>
+            <option value="10">Mover a Carpeta...</option>
+            <option value="9">Enviar a Visto Bueno...</option>
+            <option value="8">Informar...</option>
+            <option value="12	">Devolver...</option>
+            <option value="13">Archivar...</option>
+            <option value="14">Agendar...</option>
+          </select>
+        </label>
+    </div>
+    <div class="col-lg-3">
+        <label class="select" > <?=$depencia?> </label>
+    </div>
+  </fieldset>
+</div>
+<?php } ?>
