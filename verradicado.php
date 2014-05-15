@@ -46,9 +46,7 @@ $path = $objRadicado->getRadi_path();
 include_once "$ruta_raiz/tx/verLinkArchivo.php";
 $verLinkArchivo = new verLinkArchivo($db);
 
-/** verificacion si el radicado se encuentra en el usuario Actual
-*
-*/
+/** verificacion si el radicado se encuentra en el usuario Actual*/
 
 include "$ruta_raiz/tx/verifSession.php";
 

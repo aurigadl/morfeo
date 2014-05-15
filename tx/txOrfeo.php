@@ -61,7 +61,8 @@ $( document ).ready(function(){
     changedepesel(19);
     envioTx();
   }
-    function masivaTRD(){
+
+  function masivaTRD(){
     sw=0;
     var radicados = new Array();
     var list = new Array();
@@ -75,6 +76,7 @@ $( document ).ready(function(){
       list.push(valor);
       };
     };
+
     window.open("accionesMasivas/masivaAsignarTrd.php?<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>&radicados=" + list, "Masiva_Asignación_TRD", "height=650,width=750,scrollbars=yes");
   };
 
@@ -83,6 +85,7 @@ $( document ).ready(function(){
       var list = new Array();
       var radicados = new Array();
       for(i=1;i<document.form1.elements.length;i++){
+
         if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll") {
           sw++;
           valor = document.form1.elements[i].name;
@@ -90,30 +93,26 @@ $( document ).ready(function(){
           valor = valor.replace("]", "");
           radicados[sw] = valor;
           list.push(valor);
-  };
-  window.open("accionesMasivas/masivaIncluirExp.php?<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>&radicados=" + list, "Masiva_IncluirExp", "height=650,width=750,scrollbars=yes");
-          };
+        };
+
+        window.open("accionesMasivas/masivaIncluirExp.php?<?=session_name()?>=<?=session_id()?>&krd=<?=$krd?>&radicados=" + list, "Masiva_IncluirExp", "height=650,width=750,scrollbars=yes");
+
       };
+    };
 
 
     function envioTx(){
-        sw=0;
-        <?
-        if(!$verrad)
-        {
-        ?>
-      for(i=1;i<document.form1.elements.length;i++)
-      if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
-          sw=1;
-      if (sw==0)
-      {
-      alert ("Debe seleccionar uno o mas radicados");
-      return;
-      }
-      <?
-      }
-      ?>
-        document.form1.submit();
+      sw=0;
+      <? if(!$verrad){ ?>
+        for(i=1;i<document.form1.elements.length;i++)
+        if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
+            sw=1;
+        if (sw==0){
+          alert ("Debe seleccionar uno o mas radicados");
+          return;
+        }
+      <?}?>
+      document.form1.submit();
     }
 
     function clickTx(){
@@ -130,8 +129,7 @@ $( document ).ready(function(){
       }
     }
 
-    function markAll()
-    {
+    function markAll(){
       if(document.form1.elements.checkAll.checked)
       {
         for(i=2;i<document.form1.elements.length;i++)
@@ -269,11 +267,88 @@ $( document ).ready(function(){
 
   window_onload();
 
+  $('#depsel').on('change', enviar);
+
+
+  //pestanas.js
+  function validaAgendar(argumento){
+    fecha_hoy =  '<?=date('Y')."-".date('m')."-".date('d')?>';
+    fecha = document.form1.elements['fechaAgenda'].value;
+
+    if (fecha==""&&argumento=="SI"){
+      alert("Debe suministrar la fecha de agenda");
+      return false;
+    }
+    if (!fechas_comp_ymd(fecha_hoy,fecha) && argumento=="SI") {
+      alert("La fecha de agenda debe ser mayor que la fecha de hoy");
+      return false;
+    }
+    return true;
+  }
+  // JavaScript Document
+  <!-- Esta funcion esconde el combo de las dependencia e inforados Se activan cuando el menu envie una señal de cambio.-->
+  function changedepesel1(){
+    codAccion= $('#AccionCaliope').val();
+    changedepesel(codAccion);
+  }
+
+  <!-- Cuando existe una señal de cambio el programa ejecuta esta funcion mostrando el combo seleccionado -->
+
+  function changedepesel(enviara){
+
+    document.form1.codTx.value = enviara;
+    $('#depsel, #carpper, #Enviar').hide();
+
+    if(enviara==10 ){
+      $('#carpper').show();
+      $('#depsel, #Enviar').hide();
+    }
+
+    //Archivar
+    if(enviara==13){
+      document.getElementById('depsel').style.display = 'none';
+      document.getElementById('carpper').style.display = 'none';
+      envioTx();
+    }
+
+    //nrr
+    if(enviara==16 ){
+      document.getElementById('depsel').style.display = 'none';
+      document.getElementById('carpper').style.display = 'none';
+      envioTx();
+    }
+
+    //Devolver
+    if(enviara==12)  {
+      envioTx();
+    }
+
+    if(enviara==11){
+      //document.getElementById('Enviar').value = "ARCHIVAR";
+    }
+
+    //Visto bueno
+    if(enviara==9 || enviara==14){
+      $('#depsel').show();
+      $('#carpper, #Enviar').hide();
+    }
+
+    if(enviara==14){
+      $('#depsel').show();
+      $('#carpper, #Enviar').hide();
+    }
+    //Informar
+    if(enviara==8 ){
+      envioTx();
+    }
+  }
+
+  $('#AccionCaliope').on('change', changedepesel1);
+
 });
 </script>
 
 <?php
-include "pestanas.js";
 // Si esta en la Carpeta de Visto Bueno no muesta las opciones de reenviar
 if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_SESSION['dependencia'] == $radi_depe_actu)) {
   if ($controlAgenda==1){
@@ -317,7 +392,7 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 	}
 	$sql      = "select $subDependencia, depe_codi from DEPENDENCIA $whereReasignar ORDER BY DEPE_NOMB";
 	$rs       = $db->query($sql);
-	$depencia = $rs->GetMenu2('depsel',0,"0:-- Escoja una Dependencia --",false,0," id='depsel' class=select onChange='enviar();' ");
+	$depencia = $rs->GetMenu2('depsel',0,"0:-- Escoja una Dependencia --",false,0," id='depsel' class=select' ");
 	// genera las dependencias para informar
 	$row1 = array();
 
@@ -360,9 +435,8 @@ if($verradPermisos=="Full"){ ?>
           <select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic">
             <option value="9" selected="selected">Escoja una accion...</option>
             <option value="9" >Enviar a...</option>
-            <option value="15" >Enviar a Visto Bueno.</option>
+            <option value="14" >Enviar a Visto Bueno.</option>
             <option value="10">Mover a Carpeta...</option>
-            <option value="9">Enviar a Visto Bueno...</option>
             <option value="8">Informar...</option>
             <option value="12	">Devolver...</option>
             <option value="13">Archivar...</option>
