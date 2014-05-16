@@ -1,5 +1,6 @@
 <?php
 session_start();
+ini_set("display_errors",1);
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -31,6 +32,7 @@ if(!$ruta_raiz)	$ruta_raiz=".";
 $numrad = $verrad;
 error_reporting(7);
 $db = new ConnectionHandler(".");
+// $db->conn->debug = true;
 $db->conn->SetFetchMode(3);
 
 if($carpeta==8){	$info=8;
@@ -120,18 +122,8 @@ function ver_temas(){
 
 
 </script>
-
-<div id="spiffycalendar" class="text"></div>
-<script language="JavaScript" src="js/spiffyCal/spiffyCal_v2_1.js"></script>
-<link rel="stylesheet" type="text/css" href="js/spiffyCal/spiffyCal_v2_1.css">
 </head>
-<?php
-// Modificado Supersolidaria
-if( isset( $_GET['ordenarPor'] ) && $_GET['ordenarPor'] != "" ){
- $body = "document.location.href='#t1';";
-}
-?>
-<body <?=$body?>>
+<body >
 <?
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$fechah=date("dmy_h_m_s") . " ". time("h_m_s");

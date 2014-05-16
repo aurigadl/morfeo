@@ -71,7 +71,6 @@
 		$radi_nume_radi = "RADI_NUME_RADI";
 	if (!$buscar_d) $buscar_d = '0';
 	$isql = "select a.* from sgd_dir_drecciones a where a.RADI_NUME_RADI=$buscar_d $rem_isql"; 
-               
 	$rs = $db->query($isql);
     include_once "$ruta_raiz/jh_class/funciones_sgd.php";
            $nomOtro["x1"]="";

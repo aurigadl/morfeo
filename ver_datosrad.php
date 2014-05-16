@@ -1,4 +1,5 @@
 <?php
+ini_set("display_errors",1);
 if (!$ruta_raiz) $ruta_raiz=".";
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 require_once("$ruta_raiz/class_control/TipoDocumento.php");
@@ -91,6 +92,7 @@ $isql = "select u.USUA_LOGIN
                 FROM hist_eventos h, usuario u
                 WHERE h.radi_nume_radi = $verradicado
                  and h.usua_doc=u.usua_doc and h.sgd_ttr_codigo=2";
+
 //echo $isql;
 $rsU = $db->conn->Execute($isql);
 $usuarioLoginRadicador = $rsU->fields["USUA_LOGIN"];
