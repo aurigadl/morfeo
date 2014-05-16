@@ -50,8 +50,8 @@
     $usuaInformado= "";
     $isqlI = "select USUA_DOC
          from INFORMADOS
-         where RADI_NUME_RADI='$verrad'
-         and USUA_DOC= " .$_SESSION[ 'usua_doc' ];
+         where cast(RADI_NUME_RADI as varchar)='$verrad'
+         and USUA_DOC= '" .$_SESSION[ 'usua_doc' ]. "' ";
     $rsI=$db->conn->Execute($isqlI);
     if (!$rsI->EOF){
 	 $usuaInformado=$rsI->fields["USUA_DOC"];
