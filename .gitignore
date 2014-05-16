@@ -3,5 +3,6 @@ config.php
 conf/configPHPMailer.php
 img/login_background.jpeg
 respuestaRapida/templates_c/*
+.idea
 .svn
 *~
