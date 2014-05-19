@@ -59,7 +59,7 @@ $isql = "select anex_codigo AS DOCU
       where anex_radi_nume=$verrad and anex_tipo=anex_tipo_codi
 		   and anex_creador=usua_login and anex_borrado='N'
 	   order by AANEX_FECH_ANEX,sgd_dir_tipo,a.anex_radi_nume,a.radi_nume_salida";
-     error_reporting(7);
+     error_reporting(7); 
 
 ?>
 <script>
@@ -235,22 +235,20 @@ function regresar(){
 }
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 </script>
-<table WIDTH="100%" align="center" class="table table-bordered smart-form" >
+<table WIDTH="100%" align="center" class="table table-bordered " >
 <tr >
 	<th >
-		<img src="<?=$ruta_raiz?>/imagenes/estadoDoc.gif">
 	</th>
-    <td width='10%'  class='alert alert-info' align=center><small>RADICADO</small></td>
-    <td  width='5%'  class='alert alert-info' align=center><small>TIPO</small></td>
-	 <td  width='5%'  class='alert alert-info' align=center><small>TRD</font></small></td>
-    <td  width='1%'  class='alert alert-info' align=center><small></small></td>
-    <td  width='10%' class='alert alert-info' align=center><small>DESTINO</small></td>
-    <td  width='5%'   class='alert alert-info' align=center><small>TAMA&Ntilde;O (Kb)</small></td>
-    <td  width='5%'   class='alert alert-info' align=center><small>SOLO LECTURA</small></td>
-    <td  width='20%'  class='alert alert-info' align=center><small>CREADOR</small></td>
-    <td  width='20%'  class='alert alert-info' align=center><small>DESCRIPCION</small></td>
-    <td  width='12%'  class='alert alert-info' align=center><small>ANEXADO</small></td>
-    <td  width='35%' colspan='5'   class='alert alert-info' align=center ><small>ACCION</small></td>
+    <td width='10%' align=center><small>Documento</small></td>
+    <td  width='5%' align=center><small>Tipo</small></td>
+	  <td  width='5%' align=center><small>Trd</font></small></td>
+    <td  width='1%' align=center><small></small></td>
+    <td  width='10%' align=center><small>Destino</small></td>
+    <td  width='5%' align=center><small>Tama&ntilde;o (Kb)</small></td>
+    <td  width='20%' align=center><small>Creador</small></td>
+    <td  width='20%' align=center><small>Descripcion</small></td>
+    <td  width='12%' align=center><small>Fecha</small></td>
+    <td  width='35%' colspan='5' align=center ><small>Accion</small></td>
 </tr>
 <?php
 include_once "$ruta_raiz/tx/verLinkArchivo.php";
@@ -285,18 +283,18 @@ else
 {	$cod_radi =$coddocu;	}
 
 $anex_estado = $rs->fields["ANEX_ESTADO"];
-if($anex_estado<=1) {$img_estado = "<img src=$ruta_raiz/imagenes/docRecibido.gif "; }
+if($anex_estado<=1) {$img_estado = "<span class='glyphicon glyphicon-open' title='Se cargo un Archivo. . .'></span> "; }
 if($anex_estado==2)
 {	$estadoFirma = $objFirma->firmaCompleta($cod_radi);
 	if ($estadoFirma == "NO_SOLICITADA")
-		$img_estado = "<img src=$ruta_raiz/imagenes/docRadicado.gif  border=0>";
+		$img_estado = "<span class='glyphicon glyphicon-saved' title='El archivo ha sido Radicado . . .'></span>";
 	else if ($estadoFirma == "COMPLETA")
-		{	$img_estado = "<img src=$ruta_raiz/imagenes/docFirmado.gif  border=0>";
+		{	$img_estado = "<span class='glyphicon glyphicon-saved' title='El archivo ha sido Firmado . . .'></span>";
 		}else if ($estadoFirma == "INCOMPLETA")
-			{	$img_estado = "<img src=$ruta_raiz/imagenes/docEsperaFirma.gif border=0>";	}
+			{	$img_estado = "<span class='glyphicon glyphicon-saved' title='El archivo ha sido Firmado Mal . . .'></span>";	}
 }
-if($anex_estado==3) {$img_estado = "<img src=$ruta_raiz/imagenes/docImpreso.gif>"; }
-if($anex_estado==4) {$img_estado = "<img src=$ruta_raiz/imagenes/docEnviado.gif>"; }
+if($anex_estado==3) {$img_estado = "<span class='glyphicon glyphicon-saved' title='Se Archivo Radicao y listo para enviar . . .'></span>"; }
+if($anex_estado==4) {$img_estado = "<span class='glyphicon glyphicon-send' title='Archivo Enviado. . .'></span>"; }
 ?>
 <TD height="21" > <font size=1> <?=$img_estado?> </font>
 </TD>
@@ -385,7 +383,6 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
 </TD>
  <td><font size=1> <?=substr($rs->fields["DESTINO"],0,18)?> </font></small></td>
  <td><font size=1> <?=$rs->fields["TAMA"]?> </font></small></td>
- <td><font size=1> <?=$rs->fields["RO"]?> </font></small></td>
  <td><font size=1> <?=$rs->fields["CREA"]?> </font></small></td>
  <td><font size=1> <?=$rs->fields["DESCR"]?> </font></small></td>
  <td><font size=1> <?=$rs->fields["FEANEX"]?> </font></small></td>
