@@ -1,40 +1,7 @@
- <?php
-//ini_set("display_errors",1);
+<?php
+ini_set("display_errors",1);
 session_start();
-/*************************************************************************************/
-/* ORFEO GPL:Sistema de Gestion Documental		http://www.orfeogpl.org	             */
-/*	Idea Original de la SUPERINTENDENCIA DE SERVICIOS PUBLICOS DOMICILIARIOS         */
-/*	orfeogpl@gmail.com                   */
-/* ===========================                                                       */
-/*                                                                                   */
-/* Este programa es software libre.usted puede redistribuirlo y/o modificarlo       */
-/* bajo los terminos de la licencia GNU General Public publicada por                 */
-/* la "Free Software Foundation"; Licencia version 2. 			                     */
-/*                                                                                   */
-/* Copyright (c) 2005 por :	  	  	                                                 */
-/* SSPD "Superintendencia de Servicios Publicos Domiciliarios"                       */
-/*   Jairo Hernan Losada  jlosada@gmail.com                Desarrollador             */
-/*   Sixto Angel Pinzón López --- angel.pinzon@gmail.com   Desarrollador           */
-/* C.R.A.  "COMISION DE REGULACION DE AGUAS Y SANEAMIENTO AMBIENTAL"                 */
-/*   Liliana Gomez        lgomezv@gmail.com                Desarrolladora            */
-/*   Lucia Ojeda          lojedaster@gmail.com             Desarrolladora            */
-/* D.N.P. "Departamento Nacional de Planeación"                                     */
-/*   Hollman Ladino       hollmanlp@gmail.com                Desarrollador           */
-/*                                                                                   */
-/* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
-/*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
-/*  Infometrika            info@infometrika.com  05/2009  Arreglo Variables Globales */
-/*  Jairo Losada           jlosada@gmail.com     05/2009  Eliminacion Funciones-Procesos */
-/*                                               12/2011  Adaptacion Docx ;P         */
-/*************************************************************************************/
-/**
-  * Pagina Realiza la radicacion de Documentos.
-  * hay dos opciones ODT que realiza el mismo servidor para lo cual es requerido librerias xml
-	* 
-	* Se añadio compatibilidad con variables globales en Off
-  * @autor Jairo Losada 2009-05
-  * @licencia GNU/GPL
-  */
+
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
@@ -71,13 +38,15 @@ require_once("$ruta_raiz/class_control/ControlAplIntegrada.php");
 require_once("$ruta_raiz/include/tx/Expediente.php");
 require_once("$ruta_raiz/include/tx/Historico.php");
 
-error_reporting(0);
+
 $dep = new Dependencia($db);
 $espObjeto = new Esp($db);
 $radObjeto = new Radicado($db);
 $radObjeto->radicado_codigo($numrad);
+
 //objeto que maneja el tipo de documento del anexos
 $tdoc = new TipoDocumento($db);
+
 //objeto que maneja el tipo de documento del radicado
 $tdoc2 = new TipoDocumento($db);
 $tdoc2->TipoDocumento_codigo($radObjeto->getTdocCodi());
@@ -91,7 +60,6 @@ if($db->driver=="postgres") $sqlFechaHoy = "now()";
 //OBJETO EXPEDIENTE
 $objExpediente = new Expediente($db);
 $expRadi = $objExpediente->consulta_exp($numrad);
-
 
 $dep->Dependencia_codigo($dependencia);
 $dep_sigla = $dep->getDepeSigla();
@@ -129,12 +97,9 @@ $nom_recurso =  $tdoc2->get_sgd_tpr_descrip(); //
 <body>
 <?php
 if(!$numrad){$numrad=$verrad;}
-if(strlen(trim($radicar_a))==13 or strlen(trim($radicar_a))==18)
-{
+if(strlen(trim($radicar_a))==13 or strlen(trim($radicar_a))==18){
   $no_digitos = 5;
-}
-else
-{
+}else{
   $no_digitos = 6;
 }
 $linkArchSimple=strtolower($linkarchivo);
@@ -161,66 +126,46 @@ $tipoDocumentoDesc = $tdoc->get_sgd_tpr_descrip();
 if($radicar_documento) {
 	//GENERACION DE LA SECUENCIA PARA DOCUMENTOS ESPECIALES  *******************************
 	// Generar el Numero de Radicacion
-	if(($ent!=2) and $nurad and $vpppp=="ddd")
-	{
+	if(($ent!=2) and $nurad and $vpppp=="ddd"){
 		$sec     = $nurad;
 		$anoSec  = substr($nurad,0,4);
 		// @tipoRad define el tipo de radicado el -X
 		$tipoRad = substr($radicar_documento,-1);
-	}
-	else
-	{
+	}else{
 		if($vp=="n" and $radicar_a=="si")
 		{
-			if($generar_numero=="no")
-			{
+			if($generar_numero=="no"){
 				$sec = substr($nurad,7,$no_digitos);
 				$anoSec = substr($nurad,0,4);
 				$tipoRad = substr($radicar_documento,-1);
-			}
-			else
-			{
+			}else{
 				$isql = "select * from ANEXOS where ANEX_CODIGO='$anexo' AND ANEX_RADI_NUME=$numrad";
 				$rs=$db->query($isql);
-				if (!$rs->EOF)
-				{
+				if (!$rs->EOF){
 					$radicado_salida=$rs->fields['RADI_NUME_SALIDA'];
 					$expAnexoActual = $rs->fields['SGD_EXP_NUMERO'];
-					if ($expAnexoActual != '')
-					{
+					if ($expAnexoActual != ''){
 						$expRadi = $expAnexoActual;
 					}
-				}
-				else
-				{
-					$db->conn->RollbackTrans();
-					die ("<span class='etextomenu'>No se ha podido obtener la informacion del radicado");
+				}else{
+				    die ("<span class='etextomenu'>No se ha podido obtener la informacion del radicado");
 				}
 			
-				if (!$radicado_salida)
-				{ 
+				if (!$radicado_salida){
 					$no_digitos = 6;
 					$tipoRad = "1";
-				}
-				else
-				{
+				}else{
 					$sec = substr($radicado_salida,7,$no_digitos);
 					$tipoRad = substr($radicar_documento,-1);
 					$anoSec = substr($radicado_salida,0,4);
-					$db->conn->RollbackTrans();
 					die ("<span class='etextomenu'><br>Ya estaba radicado<br>");
 					$radicar_a = $radicado_salida;
 				}
 			}
-		}
-		else
-		{
-			if($vp=="s")
-			{
+		}else{
+			if($vp=="s"){
 				$sec = "XXX";
-			}
-			else
-			{
+			}else{
 				// EN ESTA PARTE ES EN LA CUAL SE ENTRA A ASIGNAR EL NUMERO DE RADICADO
 				$sec = substr($radicar_a,7,$no_digitos);
 				$anoSec = substr($radicar_a,0,4);
@@ -266,13 +211,10 @@ if($radicar_documento) {
 	echo "<font size='3' color='#000000'><span class='etextomenu'>";
 	
 	$extVal = strtoupper($ext);
-	if($extVal=="XLS" or $extVal=="PPT" or $extVal=="PDF")
-	{
+	if($extVal=="XLS" or $extVal=="PPT" or $extVal=="PDF"){
 		echo "<br><font size='3' ><span class='etextomenu'>Sobre formato ($ext) no se puede realizar combinaci&oacute;n de correspondencia</br>";
 		die;
-	}
-	else
-	{
+	}else{
 		require "$ruta_raiz/jh_class/funciones_sgd.php";
 		$verrad = $numrad;
 		$radicado_p = $verrad;
@@ -309,21 +251,15 @@ if($radicar_documento) {
 		$archSinExt = substr($archivoFinal,0, strpos($archivoFinal,$extension));
 		//Almacena el path completo hacia el archivo a producirse luego de la combinacion
 			
-		if(substr($archSinExt,-1) == "d")
-		{
+		if(substr($archSinExt,-1) == "d"){
 			$caracterDefinitivo = "";
-		}
-		else
-		{
+		}else{
 			$caracterDefinitivo = "d";
 		}
 		
-		if( $ext == 'xml' || $ext == 'XML' || $ext == 'odt' || $ext == 'ODT' || $ext == 'DOCX'  || $ext == 'docx' )
-		{
+		if( $ext == 'xml' || $ext == 'XML' || $ext == 'odt' || $ext == 'ODT' || $ext == 'DOCX'  || $ext == 'docx' )	{
 			$archivoFinal = $archSinExt . "." . $ext;
-		}
-		else
-		{
+		}else{
 			$archivoFinal = $archSinExt . $caracterDefinitivo . "." . $ext;
 		}
 		
@@ -357,21 +293,15 @@ if($sec and $vp=="n"){
 		$rad->radiPais     = "$pais";
 		$rad->raAsun       = $asunto;
 		
-		if ($tpradic==1)
-		{
-			if ($entidad_depsal !=0)
-			{
+		if ($tpradic==1){
+			if ($entidad_depsal !=0){
 				$rad->radiDepeActu = $entidad_depsal;
 				$rad->radiUsuaActu =1;
-			}
-			else
-			{
+			}else{
 				$rad->radiDepeActu = $dependencia;
 				$rad->radiUsuaActu =$codusuario;
 			}
-		}
-		else
-		{
+		}else{
 			$rad->radiDepeActu = $dependencia;
 			$rad->radiUsuaActu =$codusuario;
 		}
@@ -500,8 +430,7 @@ if($sec and $vp=="n"){
 		           where ANEX_CODIGO='$anexo' AND ANEX_RADI_NUME=$numrad";
 		
 		$rs=$db->query($isql);
-		if (!$rs)
-		{
+		if (!$rs){
 			//$db->conn->RollbackTrans();
 			die ("<span class='etextomenu'>No se ha podido actualizar la informacion de anexos");
 		}
@@ -509,9 +438,7 @@ if($sec and $vp=="n"){
 
 		$isql = "select * from ANEXOS where ANEX_CODIGO='$anexo' AND ANEX_RADI_NUME=$numrad";
 		$rs=$db->query($isql);
-		if ($rs==false)
-		{
-    	//$db->conn->RollbackTrans();
+		if ($rs==false)		{
 			die ("<span class='etextomenu'>No se ha podido obtener la informacion de anexo");
 		}
 		
@@ -658,31 +585,25 @@ if($sec and $vp=="n"){
 <p>
   <center>
 <?php
-	if($actualizados>0)
-	{
-	if($ent != 1)
-	{
+	if($actualizados>0){
+	if($ent != 1){
 		$mensaje="<input type='button' value='cerrar' onclick='opener.history.go(0); window.close()'>";
 		$mensaje = "";
-		if ($numerar!=1)
-		{	$numerar=$numerar;
-?>
-	<span class='etextomenu'>Ha sido Radicado el Documento con el N&uacute;mero <br><b>
-	<?=$rad_salida ?><p><?=$mensaje ?>
-<?php
+		if ($numerar!=1){
+            $numerar=$numerar;
+            ?>
+	        <span class='etextomenu'>Ha sido Radicado el Documento con el N&uacute;mero <br><b>
+	            <?=$rad_salida ?><p><?=$mensaje ?>
+            <?php
 			}
 		}
 		else	$mensaje = "";
-	}
-	else
-{
-?>
-<span class='etextomenu'>No se ha podido radicar el Documento con el N&uacute;mero
-<?php
-}
-?>
-	</center>
-<?php
+	}else{
+        ?>
+        <span class='etextomenu'>No se ha podido radicar el Documento con el N&uacute;mero
+        <?php
+    }
+    ?></center><?php
 	}
 }
 
@@ -813,15 +734,11 @@ for ($i_count=0;$i_count<count ($campos);$i_count++){
 }
 
 fclose($fp);
-
-//El include del servlet hace que se altere el valor 
-//de la variable  $estadoTransaccion como 0 si se 
-//pudo procesar el documento, -1 de lo contrario
 $estadoTransaccion=-1;
 
 
 if($ext=="ODT" || $ext=="odt"){
-    //Se incluye la clase que maneja la combinaci�n masiva
+    //Se incluye la clase que maneja la combinacion masiva
     include ( "$ruta_raiz/radsalida/masiva/OpenDocText.class.php" );
     define ( 'WORKDIR', './bodega/tmp/workDir/' );
     define ( 'CACHE', WORKDIR . 'cacheODT/' );
@@ -837,7 +754,7 @@ if($ext=="ODT" || $ext=="odt"){
 
     $accion = false;
     $odt    = new OpenDocText();
-    //$odt->debug = true;
+    $odt->debug = true;
 
     //Se carga el archivo odt Original 
     $archivoACargar = str_replace('../','',$linkarchivo);

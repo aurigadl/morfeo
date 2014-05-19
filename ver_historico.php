@@ -11,40 +11,37 @@ ini_set("display_errors",1);
 	   $objDep = new Dependencia($db);
 	   $objUs = new Usuario($db);
 	   $isql = "select USUA_NOMB from usuario where depe_codi=$radi_depe_actu and usua_codi=$radi_usua_actu";
-	   $rs = $db->query($isql);			      	   
+	   $rs = $db->query($isql);
 	   $usuario_actual = $rs->fields["USUA_NOMB"];
 	   $isql = "select DEPE_NOMB from dependencia where depe_codi=$radi_depe_actu";
-	   $rs = $db->query($isql);			      	   
+	   $rs = $db->query($isql);
 	   $dependencia_actual = $rs->fields["DEPE_NOMB"];
 	   $isql = "select USUA_NOMB from usuario where depe_codi=$radi_depe_radicacion and usua_codi=$radi_usua_radi";
 
-	   $rs = $db->query($isql);			      	   
+	   $rs = $db->query($isql);
 	   $usuario_rad = $rs->fields["USUA_NOMB"];
 	   $isql = "select DEPE_NOMB from dependencia where depe_codi=$radi_depe_radicacion";
-	   $rs = $db->query($isql);			      	   
+	   $rs = $db->query($isql);
 	   $dependencia_rad = $rs->fields["DEPE_NOMB"];
 ?>
 <table  width="80%"  align="center"  class="table table-bordered ">
   <tr   align="left" >
-    <td width=10%  ><small>Usuario Actual</small></td>
-    <td  width=15%   align="left"><small><?=$usuario_actual?></small></td>
-    <td width=10%   ><small>Dependencia Actual</small></td>
-    <td  width=15%  ><small><?=$dependencia_actual?></small></td>
+    <td width=10%><small>Usuario Actual</small></td>
+    <td  width=15% align="left"><small><?=$usuario_actual?></small></td>
+    <td width=10%><small>Dependencia Actual</small></td>
+    <td  width=15%><small><?=$dependencia_actual?></small></td>
   </tr>
 </table>
-<table  width="100%" align="center" class="table table-bordered"  >
-  <tr   align="center"  >
-    <td width=10%  ><small>DEPENDENCIA</small></td>
-    <td  width=35  ><small>FECHA</small></td>
-     <td  width=15%  ><small>TRANSACCION</small></td>  
-    <td  width=15%   ><small>US. ORIGEN</small></td>
-		<?
-		 /** Esta es la columna que se elimino de forma Temporal  USUARIO - DESTINO
-			 * <td  width=15% class="grisCCCCCC"  ><font face="Arial, Helvetica, sans-serif"> US. DESTINO</font></td>
-			 */
-		?>
-    <td  width=40%  ><small>COMENTARIO</small></td>
-  </tr>
+<table  width="100%" align="center" class="table table-striped table-hover"  >
+  <thead>
+    <tr align="center">
+      <th width=10%>DEPENDENCIA</th>
+      <th  width=35>FECHA</th>
+      <th  width=15%>TRANSACCION</th>
+      <th  width=15%>US. ORIGEN</th>
+      <th  width=40%>COMENTARIO</th>
+    </tr>
+  </thead>
   <?
   $sqlFecha = $db->conn->SQLDate("d-m-Y H:i A","a.HIST_FECH");
 
@@ -52,15 +49,15 @@ ini_set("display_errors",1);
       , a.DEPE_CODI
 			, a.USUA_CODI
 			,a.RADI_NUME_RADI
-			,a.HIST_OBSE 
+			,a.HIST_OBSE
 			,a.USUA_CODI_DEST
 			,a.USUA_DOC
 			,a.HIST_OBSE
 			,a.SGD_TTR_CODIGO
 			from hist_eventos a
-		 where 
+		 where
 			a.radi_nume_radi =$verrad
-			order by hist_fech desc ";  
+			order by hist_fech desc ";
 
 	$i=1;
 	//$db->conn->debug = true;
@@ -102,7 +99,7 @@ ini_set("display_errors",1);
 		if($i!=10000)
 			{
 		?>
-  <tr > <?  
+  <tr > <?
 		    $i=1;
 			}
 			 ?>
@@ -119,9 +116,9 @@ ini_set("display_errors",1);
 </td>
 		<?
 		 /**
-			 *  Campo qque se limino de forma Temporal USUARIO - DESTINO 
+			 *  Campo qque se limino de forma Temporal USUARIO - DESTINO
 			 * <td class="celdaGris"  >
-			 * <?=$usua_destino?> </td> 
+			 * <?=$usua_destino?> </td>
 			 */
 		?>
 			 <td ><small><?=$rs->fields["HIST_OBSE"]?></small></td>
@@ -138,7 +135,7 @@ ini_set("display_errors",1);
 include "$ruta_raiz/include/query/queryver_historico.php";
 
 $isql = "select $numero_salida from anexos a where a.anex_radi_nume=$verrad";
-$rs = $db->query($isql);			      	   	
+$rs = $db->query($isql);
 $radicado_d= "";
 while(!$rs->EOF)
 	{
@@ -147,8 +144,8 @@ while(!$rs->EOF)
 		   {
 		      $radicado_d .= "'".trim($valor) ."', ";
 		   }
-		$rs->MoveNext();   		  
-	}  
+		$rs->MoveNext();
+	}
 
 $radicado_d .= "$verrad";
 error_reporting(7);
@@ -189,13 +186,13 @@ $rs = $db->query($isql);
     <td width=10%  ><small>RADICADO </small></td>
     <td width=10%   ><small>DEPENDENCIA</small></td>
     <td  width=15%   ><small>FECHA </small></td>
-    <td  width=15%   ><small>Destinatario</small></td>      
+    <td  width=15%   ><small>Destinatario</small></td>
     <td  width=15%    ><small>DIRECCION </small></td>
     <td  width=15%    ><small>DEPARTAMENTO </small></td>
     <td  width=15%    ><small>MUNICIPIO</small></td>
     <td  width=15%    ><small>TIPO DE ENVIO</small></td>
     <td  width=5%   ><small> No. PLANILLA</small></td>
-    <td  width=15%   ><small>OBSERVACIONES</small></td>      
+    <td  width=15%   ><small>OBSERVACIONES</small></td>
  <td  width=15%   ><small>Realizo Envio</small></td>
   </tr>
   <?
@@ -212,7 +209,7 @@ while(!$rs->EOF)
 		$imgRadDev = "";
 	}
 	$numdata =  trim($rs->fields["CARP_CODI"]);
-	if($data =="") 
+	if($data =="")
 		$data = "NULL";
 	//$numerot = $rs->RecordCount();
 	if($carpeta==$numdata)
@@ -257,7 +254,7 @@ while(!$rs->EOF)
 
   </tr>
   <?
-	$rs->MoveNext();  
+	$rs->MoveNext();
   }
 
   // Finaliza Historicos

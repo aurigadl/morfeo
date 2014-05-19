@@ -235,21 +235,22 @@ function regresar(){
 }
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 </script>
-<table WIDTH="100%" align="center" class="table table-bordered " >
-<tr >
-	<th >
-	</th>
-    <td width='10%' align=center><small>Documento</small></td>
-    <td  width='5%' align=center><small>Tipo</small></td>
-	  <td  width='5%' align=center><small>Trd</font></small></td>
-    <td  width='1%' align=center><small></small></td>
-    <td  width='10%' align=center><small>Destino</small></td>
-    <td  width='5%' align=center><small>Tama&ntilde;o (Kb)</small></td>
-    <td  width='20%' align=center><small>Creador</small></td>
-    <td  width='20%' align=center><small>Descripcion</small></td>
-    <td  width='12%' align=center><small>Fecha</small></td>
-    <td  width='35%' colspan='5' align=center ><small>Accion</small></td>
-</tr>
+<table WIDTH="100%" align="center" class="table table-striped table-hover" >
+    <thead>
+        <tr>
+            <th width='1%'></th>
+            <th width='10%'>Documento</th>
+            <th width='5%'>Tipo</th>
+            <th width='5%'>Trd</th>
+            <th width='1%'></th>
+            <th width='10%'>Destino</th>
+            <th width='5%'> Tama&ntilde;o (Kb)</th>
+            <th width='20%'>Creador</th>
+            <th width='20%'>Descripcion</th>
+            <th width='12%'>Fecha</th>
+            <th width='35%' colspan="4">Acci&oacute;n</th>
+        </tr>
+    </thead>
 <?php
 include_once "$ruta_raiz/tx/verLinkArchivo.php";
 $verLinkArchivo = new verLinkArchivo($db);
@@ -371,7 +372,7 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
 		 echo "<a class='vinculos' style='cursor:pointer;cursor:hand;' href='javascript:noPermiso()' >";
 		}
 	?>
-	<img src="<?=$ruta_raiz?>/iconos/vista_preliminar.gif" alt="Vista Preliminar" border="0">
+    <span class="glyphicon glyphicon-search"></span>
 	<font face="Arial, Helvetica, sans-serif" class="etextomenu">
 	<?
 	echo "</a>";
@@ -388,10 +389,9 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
  <td><font size=1> <?=$rs->fields["FEANEX"]?> </font></small></td>
  <td ><font size=1>
 	<?php
-        
-	if($origen!=1 and $linkarchivo  and $verradPermisos == "Full" )
-	{	if ($anex_estado<4)
-	echo "<a class=vinculos href=javascript:verDetalles('$coddocu','$tpradic','$aplinteg')>Modificar</a> ";
+	if($origen!=1 and $linkarchivo  and $verradPermisos == "Full" ){
+        if ($anex_estado<4)
+	    echo "<a class=vinculos href=javascript:verDetalles('$coddocu','$tpradic','$aplinteg')>Modificar</a> ";
 	}
 	?>
 		</font>
