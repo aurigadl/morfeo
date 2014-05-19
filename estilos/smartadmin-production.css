@@ -1,3 +1,29 @@
+/* Nuevos estilos para caliope */
+
+/*Mostra acciones en bandejas principal*/
+.actions {
+    position: absolute !important;
+    top: 4px;
+    z-index: 1;
+    left: 196px;
+
+}
+
+.actions div{
+    display: inline-flex;
+}
+
+/*Mostra acciones en informacion del radicado */
+.actions2 {
+    margin:10px !important;
+}
+
+.actions2 div{
+    display: inline-flex;
+}
+
+
+
 
 article.sortable-grid {
     min-height: 30px;

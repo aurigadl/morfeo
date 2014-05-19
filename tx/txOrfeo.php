@@ -7,8 +7,6 @@ $permRespuesta = $_SESSION["usua_perm_respuesta"];
 $pattern 		= '/[^\w:()áéíóúÁÉÍÓÚ=#°,.ñÑ]+/';
 $rad_asun_res 	= preg_replace($pattern, ' ', $rad_asun_res);
 ?>
-<link rel="stylesheet" type="text/css" href="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.css">
-<script language="JavaScript" src="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.js"></script>
 
 <script language="javascript">
 $( document ).ready(function(){
@@ -17,7 +15,7 @@ $( document ).ready(function(){
         return '<?=$krd?>';
   }
 
-  setRutaRaiz ('<?=$ruta_raiz?>');
+
   function vistoBueno() {
 
       changedepesel(9);
@@ -306,15 +304,13 @@ $( document ).ready(function(){
 
     //Archivar
     if(enviara==13){
-      document.getElementById('depsel').style.display = 'none';
-      document.getElementById('carpper').style.display = 'none';
+      $('#depsel, #carpper').hide();
       envioTx();
     }
 
     //nrr
     if(enviara==16 ){
-      document.getElementById('depsel').style.display = 'none';
-      document.getElementById('carpper').style.display = 'none';
+      $('#depsel, #carpper').hide();
       envioTx();
     }
 
@@ -344,6 +340,7 @@ $( document ).ready(function(){
   }
 
   $('#AccionCaliope').on('change', changedepesel1);
+  $('input[name^="checkValue"]').on('change', clickTx);
 
 });
 </script>
@@ -428,9 +425,7 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 <? }
 
 if($verradPermisos=="Full"){ ?>
-<div class="row">
-  <fieldset>
-    <div class="col col-3">
+    <div>
         <label class="select" >
           <select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic">
             <option value="9" selected="selected">Escoja una accion...</option>
@@ -443,10 +438,7 @@ if($verradPermisos=="Full"){ ?>
             <option value="14">Agendar...</option>
           </select>
         </label>
-    </div>
-    <div class="col-lg-3">
         <label class="select" > <?=$depencia?> </label>
     </div>
-  </fieldset>
-</div>
+
 <?php } ?>

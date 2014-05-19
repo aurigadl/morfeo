@@ -42,6 +42,7 @@ $tip3desc       = $_SESSION["tip3desc"];
 $tip3img        = $_SESSION["tip3img"];
 $descCarpetasGen= $_SESSION["descCarpetasGen"] ;
 $descCarpetasPer= $_SESSION["descCarpetasPer"];
+$verradPermisos = "Full"; //Variable necesaria en tx/txorfeo para mostrar dependencias en transacciones
 
 $_SESSION['numExpedienteSelected'] = null;
 
@@ -154,7 +155,6 @@ $_SESSION['numExpedienteSelected'] = null;
   <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
   <!-- Bootstrap core CSS -->
   <?php include_once "htmlheader.inc.php"; ?>
-  <script src="./js/grabRadSessCarrito.js"></script>
 </head>
 
 <body>
@@ -195,43 +195,21 @@ $_SESSION['numExpedienteSelected'] = null;
 
             <!-- widget div-->
             <div>
-
-              <!-- widget content -->
-              <div class="widget-body no-padding">
-                <div class="widget-body-toolbar">
-                  <div style="position:absolute; left: 195; top:5;">
-                    <span class="smart-form">
-                        <label class="select" style="width:230px">
-                        <select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
-                          <option value="9" selected="selected">Escoja una accion...</option>
-                          <option value="9" >Enviar a...</option>
-                          <option value="15" >Enviar a Visto Bueno.</option>
-                          <option value="10">Mover a Carpeta...</option>
-                          <option value="9">Enviar a Visto Bueno...</option>
-                          <option value="8	">Informar...</option>
-                          <option value="12	">Devolver...</option>
-                          <option value="13">Archivar...</option>
-                          <option value="14">Agendar...</option>
-                        </select>
-                    </span>
-                  </div>
-                  <?php
+                <!-- widget content -->
+                <div class="actions smart-form">
+                    <?php
                     $controlAgenda=1;
                     if($carpeta==11 and !$tipo_carp and $codusuario!=1){
-                    }else{
-                      ?>
-                        <div style="position:absolute; left: 430; top:5;">
-                        <span class="smart-form">
-                        <label class="select" style="width:230px">
-                        <?
-                          include "./tx/txOrfeo.php";
-                        }
-                        ?>
-                        </label>
-                        </span>
-                      </span>
-                  </div>
+                    }else{?>
+                        <? include "./tx/txOrfeo.php";
+                    }
+                    ?>
                 </div>
+                <div class="widget-body no-padding">
+                    <div class="widget-body-toolbar">
+
+                    </div>
+
                 <table id="dt_basic" class="table table-striped table-hover smart-form"">
                   <thead>
                     <tr>
@@ -279,7 +257,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <td class="inbox-table-icon sorting_1" >
                         <div  >
                           <label class="checkbox">
-                            <input id="<?=$numeroRadicado?>" onChange="clickTx();" name="checkValue[<?=$numeroRadicado?>]" value="CHKANULAR" type="checkbox">
+                            <input id="<?=$numeroRadicado?>" name="checkValue[<?=$numeroRadicado?>]" value="CHKANULAR" type="checkbox">
                             <i></i>
                           </label>
                         </div>

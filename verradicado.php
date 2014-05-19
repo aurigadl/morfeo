@@ -249,8 +249,11 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 	}
 }else {echo "<center><b><span class='eerrores'>NO TIENE AUTORIZACION PARA INGRESAR</span><BR><span class='eerrores'><a href='login.php' target=_parent>Por Favor intente validarse de nuevo. Presione aca!</span></a>";}
 
-include_once("$ruta_raiz/tx/txOrfeo.php");
+echo "<div class='actions2'>";
+          include_once("$ruta_raiz/tx/txOrfeo.php");
+echo "</div>";
 ?>
+
 </form>
 <!-- row -->
  <input type=hidden name=reftab id=reftab >

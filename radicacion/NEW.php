@@ -1763,9 +1763,6 @@ var contadorVentanas=0
                   <input type='button' onClick='modificar_doc()' name='Submit44' value='Modificar datos' class="btn btn-success btn-sm">
                 </li>
                 <li>
-                  <a class="btn btn-info  btn-sm" href="hojaResumenRad.php?<?=$varEnvio?>" target="HojaResumen<?=$nurad?>">Ver Hoja Resumen</a><br>
-                </li>
-                <li>
                   <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('stickerWeb/index.php?<?=$varEnvio?>&alineacion=Center','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');">Sticker</a>
                 </li>
                 <li>

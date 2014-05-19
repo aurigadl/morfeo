@@ -54,25 +54,26 @@
          and USUA_DOC= '" .$_SESSION[ 'usua_doc' ]. "' ";
     // $db->conn->debug = true;
     $rsI=$db->conn->Execute($isqlI);
+
     if (!$rsI->EOF){
 	 $usuaInformado=$rsI->fields["USUA_DOC"];
     }         
 
-        $responsableExp = "";
-		$sql = "SELECT 
-					R.RADI_USUA_ACTU AS USU,
-					R.RADI_DEPE_ACTU AS DEPE,
-					R.RADI_USU_ANTE AS USUA_ANTE,
-					R.SGD_SPUB_CODIGO AS PRIVRAD,
-					U.USUA_DOC AS USUA_DOCU,
-					U.CODI_NIVEL AS CODI_NIVELR			
-				FROM 
-					RADICADO R,
-					USUARIO U
-				WHERE 
-					R.RADI_NUME_RADI=$verrad
-					AND R.RADI_USUA_ACTU = U.USUA_CODI
-                    AND R.RADI_DEPE_ACTU = U.DEPE_CODI";
+    $responsableExp = "";
+    $sql = "SELECT
+                R.RADI_USUA_ACTU AS USU,
+                R.RADI_DEPE_ACTU AS DEPE,
+                R.RADI_USU_ANTE AS USUA_ANTE,
+                R.SGD_SPUB_CODIGO AS PRIVRAD,
+                U.USUA_DOC AS USUA_DOCU,
+                U.CODI_NIVEL AS CODI_NIVELR
+            FROM
+                RADICADO R,
+                USUARIO U
+            WHERE
+                R.RADI_NUME_RADI=$verrad
+                AND R.RADI_USUA_ACTU = U.USUA_CODI
+                AND R.RADI_DEPE_ACTU = U.DEPE_CODI";
 
 		# Busca el usuairo Origen para luego traer sus datos.
 		$rs = $db->conn->Execute($sql); # Ejecuta la busqueda 
