@@ -326,11 +326,7 @@ $time_start = microtime_float();
 		</div>
 		<!-- end widget content -->
 </div>
-<table border=0 width="100%"  height=100>
-  <tr >
-    <td>
-    </td>
-    </tr></table>
+
 
 <table class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr>

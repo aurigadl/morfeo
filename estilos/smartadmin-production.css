@@ -1,5 +1,9 @@
 /* Nuevos estilos para caliope */
 
+ul,ol{
+    padding-left: 0px;
+}
+
 /*Mostra acciones en bandejas principal*/
 .actions {
     position: absolute !important;
@@ -11101,7 +11105,7 @@ hr.simple {
     border-color: #D5D5D5 rgba(0, 0, 0, 0) #D5D5D5 #DDDDDD;
 }
 .tabs-left > .tab-content {
-    margin-left: 109px;
+    margin-left: 195px;
 }
 .tabs-right > .nav-tabs {
     border-left: 1px solid #DDDDDD;

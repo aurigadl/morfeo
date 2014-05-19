@@ -3,7 +3,6 @@
 </div>
 <input type="hidden" name="menu_ver_tmp" value=4>
 <input type="hidden" name="menu_ver" value=4>
-<table width="92%"  class="table-condensed"  align="left" colspacing=0 cellspacing=0>
 <?
 unset($frm);
 	if($verrad) $expediente->expedienteArchivado( $verrad, $numExpediente );
@@ -31,11 +30,10 @@ unset($frm);
 	if(!$tdoc)$tdoc = "0";
 	if(!$codserie)$codserie = "0";
 ?>
-<tr >
-  <td >
+
    <?php
 	if ( $usuaPermExpediente ) {
-   ?><table width="100%"  class="table table-bordered table-striped" colspacing=0 cellspacing=0>
+   ?><table class="table table-bordered table-striped" colspacing=0 cellspacing=0>
      <tr><td width=140>
        <span class="dropdown">
         <a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
@@ -352,6 +350,3 @@ if($descPExpediente){
  include "$ruta_raiz/expediente/expedienteTree.php";
 ?>
 </td></tr></table>
-</td>
-<!-- </tr> -->
-</table>
