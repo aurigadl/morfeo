@@ -308,7 +308,7 @@ if(trim($linkarchivo))
 			echo $msg;
 		}
  ?>
- </td><td width="1" valign="middle">
+ </td><td width="1" valign="middle" align=right>
  <?
    $total_digitos = 11 + $ln;
 	 if (strlen($cod_radi) <= $total_digitos){
