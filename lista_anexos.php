@@ -239,16 +239,15 @@ function regresar(){
     <thead>
         <tr>
             <th width='1%'></th>
-            <th width='10%'>Documento</th>
-            <th width='5%'>Tipo</th>
-            <th width='5%'>Trd</th>
+            <th width='10%' colspan=2><center>Documento</center></th>
+            <th width='5%'><center>Trd</center></th>
             <th width='1%'></th>
             <th width='10%'>Destino</th>
             <th width='5%'> Tama&ntilde;o (Kb)</th>
             <th width='20%'>Creador</th>
             <th width='20%'>Descripcion</th>
             <th width='12%'>Fecha</th>
-            <th width='10' colspan="4">Acci&oacute;n</th>
+            <th width='10' colspan="4"><center>Acci&oacute;n</center></th>
         </tr>
     </thead>
 <?php
@@ -301,6 +300,16 @@ if($anex_estado==4) {$img_estado = "<span class='glyphicon glyphicon-send' title
 </TD>
  <TD>
 <?php
+if(trim($linkarchivo))
+			{
+				$ext = $rs->fields["EXT"];
+				echo "<img src='img/icono_$ext.jpg' title='$ext' width=30> ";
+		}else{
+			echo $msg;
+		}
+ ?>
+ </td><td width="1" valign="middle">
+ <?
    $total_digitos = 11 + $ln;
 	 if (strlen($cod_radi) <= $total_digitos){
 		//Se trata de un Radicado
@@ -321,19 +330,6 @@ if($anex_estado==4) {$img_estado = "<span class='glyphicon glyphicon-send' title
 		echo trim(strtolower($cod_radi));
 	}
    ?>
-</small></td>
-	<TD><small> <?
-		if(trim($linkarchivo))
-			{
-				$ext = $rs->fields["EXT"];
-				echo "<img src='img/icono_$ext.jpg' title='$ext' width=30> ";
-		}
-				else
-		{
-			echo $msg;
-		}
-    if($rs->fields["SGD_DIR_TIPO"]==7) $msg = " - "; else $msg=" - ";
-	?> 
 </small></td>
 <td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif" class="etextomenu"><small>
   <?
