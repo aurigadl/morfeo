@@ -99,6 +99,23 @@ ini_set("display_errors",1);
 			</ul>
 		</li>
 		<? } ?>
+		<?
+		
+		$iSql = "select *
+						from modelourbanistico mu, sgd_sexp_secexpedientes se
+						where mu.expediente_id = se.id and se.sgd_exp_numero like '$numExpediente'";
+		$rsMU = $db->conn->Execute($iSql);
+		if($rsMU){
+		 $nombreReporte = "modeloUrbanistico";
+			?>
+			<li  style="display:none">
+				<span  class="alert-success">
+				
+				<a  onClick="reportePredios(&quot;<?=$numExpediente?>&quot;,&quot;<?=$listPredios?>&quot;,&quot;<?=$vars?>&quot;,&quot;<?=$nombreReporte?>&quot;);">Modelo Urbanistico </a></span>
+				<ul>
+			</ul>
+		</li>
+		<? } ?>
 		</ul>
 	</div>
 </div>

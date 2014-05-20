@@ -40,7 +40,7 @@ function seguridadExp(numeroExpediente,nivelExp){
 }
 function reportePredios(numeroExpediente,predios,vars, tipoReporte){
   predios     = predios || '';
-  tipoReporte = tipoReporte || 'modeloPredial';
+  // tipoReporte = tipoReporte || 'modeloPredial';
   window.open("<?=$servidorBirt?>"+tipoReporte+".rptdesign&chip="+predios+"&num_expediente="+numeroExpediente+"&nurad=<?=$verrad?>"+vars,"HistExp<?=$fechaH?>"+predios,"fullscreen=yes,scrollbars=yes");
 }
 function verTipoExpedienteOld(numeroExpediente)

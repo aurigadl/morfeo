@@ -73,7 +73,7 @@ unset($frm);
 							$listPredios .= "'0'";
 							$vars = "&nombreProyecto=$param1($numExpediente)";
 						?>
-						<a  onClick="reportePredios(&quot;<?=$numExpediente?>&quot;,&quot;<?=$listPredios?>&quot;,&quot;<?=$vars?>&quot;);">Reporte Inventario de Predios </a>
+						<a  onClick="reportePredios(&quot;<?=$numExpediente?>&quot;,&quot;<?=$listPredios?>&quot;,&quot;<?=$vars?>&quot;,'modeloPredial');">Reporte Inventario de Predios </a>
 					</li>
 					
 
