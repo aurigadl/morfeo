@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
-    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130917-1035></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.2.2.v201301221637 Build &lt;4.2.2.v20130206-1509></property>
     <list-property name="propertyBindings">
         <structure>
             <property name="name">queryText</property>
@@ -54,9 +54,12 @@
                 </ex-property>
             </list-property>
             <property name="odaDriverClass">org.postgresql.Driver</property>
+            <!-- 
             <property name="odaURL">jdbc:postgresql://localhost/orfeo_db</property>
             <property name="odaUser">postgres</property>
             <encrypted-property name="odaPassword" encryptionID="base64">MTIzNDU=</encrypted-property>
+             -->
+            <property name="odaJndiName">java:comp/env/jdbc/siim2</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -4791,6 +4794,7 @@ from public.modelourbanistico]]></xml-property>
                 </cell>
             </row>
             <row id="256">
+                <property name="height">0.2916666666666667in</property>
                 <property name="borderBottomColor">#000000</property>
                 <property name="borderBottomStyle">solid</property>
                 <property name="borderBottomWidth">thin</property>
@@ -4803,7 +4807,6 @@ from public.modelourbanistico]]></xml-property>
                 <property name="borderTopColor">#000000</property>
                 <property name="borderTopStyle">solid</property>
                 <property name="borderTopWidth">thin</property>
-                <property name="height">0.2916666666666667in</property>
                 <cell id="257">
                     <property name="colSpan">2</property>
                     <property name="rowSpan">1</property>
@@ -4923,6 +4926,7 @@ from public.modelourbanistico]]></xml-property>
                 </cell>
             </row>
             <row id="235">
+                <property name="height">0.375in</property>
                 <property name="borderBottomStyle">solid</property>
                 <property name="borderBottomWidth">thin</property>
                 <property name="borderLeftStyle">solid</property>
@@ -4931,7 +4935,6 @@ from public.modelourbanistico]]></xml-property>
                 <property name="borderRightWidth">thin</property>
                 <property name="borderTopStyle">solid</property>
                 <property name="borderTopWidth">thin</property>
-                <property name="height">0.375in</property>
                 <cell id="236">
                     <property name="borderBottomColor">#000000</property>
                     <property name="borderBottomStyle">solid</property>
@@ -5376,7 +5379,7 @@ from public.modelourbanistico]]></xml-property>
                 ERfA+e8Pktpjdq8//7kG0CqwuJc3/wNtkq/T09NTC4m/0xrRzMPdKtxF6Fs5RJ5qtiKm8DyWu60OHTos
                 WLBg/PjxHh4e8Es9DR5p3S3tdwrL4MYx1t6Op75aPdldrVOrw/Of/x/r4TFTxcMXzwAAAABJRU5ErkJg
                 gg==
-</property>
+            </property>
         </structure>
         <structure>
             <property name="name">logoMetroOficio.png</property>
@@ -6031,7 +6034,7 @@ from public.modelourbanistico]]></xml-property>
                 acmkSZMmTZo0acmkSZMmTZq0ZNKkSZMmTZq0ZNKkSZMmTVoyadKkSZMmTVoyadKkSZMmLZk0adKkSZMm
                 LZk0adKkSZOWTJo0adKkSZOWTJo0adKkSZOWTJo0adKkSUsmTZo0adKkSUsmTZo0adKkJZMmTZo0adKk
                 JZMmTZo0adKSSZMmTZo0adKSSZMmTZo0/bLpfwMAP8HlS24KowAAAABJRU5ErkJggg==
-</property>
+            </property>
         </structure>
     </list-property>
 </report>
