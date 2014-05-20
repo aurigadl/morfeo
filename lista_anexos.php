@@ -327,7 +327,7 @@ if($anex_estado==4) {$img_estado = "<span class='glyphicon glyphicon-send' title
 		if(trim($linkarchivo))
 			{
 				$ext = $rs->fields["EXT"];
-				echo "<img src='img/icono_$ext.jpg' tile='$ext' width=30> ";
+				echo "<img src='img/icono_$ext.jpg' title='$ext' width=30> ";
 		}
 				else
 		{
