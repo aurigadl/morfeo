@@ -248,7 +248,7 @@ function regresar(){
             <th width='20%'>Creador</th>
             <th width='20%'>Descripcion</th>
             <th width='12%'>Fecha</th>
-            <th width='35%' colspan="4">Acci&oacute;n</th>
+            <th width='10' colspan="4">Acci&oacute;n</th>
         </tr>
     </thead>
 <?php
@@ -299,7 +299,7 @@ if($anex_estado==4) {$img_estado = "<span class='glyphicon glyphicon-send' title
 ?>
 <TD height="21" > <font size=1> <?=$img_estado?> </font>
 </TD>
- <TD><font size=1> 
+ <TD>
 <?php
    $total_digitos = 11 + $ln;
 	 if (strlen($cod_radi) <= $total_digitos){
@@ -321,7 +321,6 @@ if($anex_estado==4) {$img_estado = "<span class='glyphicon glyphicon-send' title
 		echo trim(strtolower($cod_radi));
 	}
    ?>
- </font> 
 </small></td>
 	<TD><small> <?
 		if(trim($linkarchivo))
@@ -360,7 +359,6 @@ if($anex_estado==4) {$img_estado = "<span class='glyphicon glyphicon-send' title
 		echo $msg_TRD;
 				?>
 </center>
-</font>
 </small></td>
 
 	<td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif">
@@ -392,7 +390,7 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
 	<?php
 	if($origen!=1 and $linkarchivo  and $verradPermisos == "Full" ){
         if ($anex_estado<4)
-	    echo "<a class=vinculos href=javascript:verDetalles('$coddocu','$tpradic','$aplinteg')>Modificar</a> ";
+	    echo "<a class=vinculos href=javascript:verDetalles('$coddocu','$tpradic','$aplinteg')><img src='img/icono_modificar.png' title='Modificar Archivo' width=35></a> ";
 	}
 	?>
 		</font>
@@ -404,29 +402,28 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
    	if ($verradPermisos == "Full")
 	{
     ?>
-		<td ><font size=1>
+		<td >
     	<?php
     	$radiNumeAnexo = $rs->fields["RADI_NUME_SALIDA"];
 		if($radiNumeAnexo>0 and trim($linkarchivo))
 		{
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
-			echo "<a class=vinculos href=javascript:ver_tipodocuATRD($radiNumeAnexo,$codserie,$tsub);>Tipificar</a> ";
+			echo "<a class=vinculos href=javascript:ver_tipodocuATRD($radiNumeAnexo,$codserie,$tsub);><img src='img/icono_clasificar.png' title='Clasificar Documento' width=45></a> ";
 		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == '') 
 		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo no ha sido tipificado
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
-			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> Tipificar </a> ";
+			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='Clasificar Documento' width=45> </a> ";
 		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual != '') 
 		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo YA ha sido tipificado antes
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
-			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> Re-Tipificar </a> ";
+			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='Volver a Clasificar Documento' width=45> </a> ";
 		}
 	?>
- 	</font>
  	</small></td>
-	<td ><font size=1>
+	<td >
 	<?php
 if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fields["ANEX_CREADOR"])==trim($krd) OR $codusuario==1)
 		)
@@ -434,18 +431,17 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 			if($origen!=1  and $linkarchivo)
 			{	
 			  $v = $rs->fields["SGD_PNUFE_CODI"];
-			  echo "<a class=\"vinculos\" href=\"#\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> Borrar </a>"; 	}
+			  echo "<a class=\"vinculos\" href=\"#\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> <img src='img/icono_borrar.png' title='Borrar Archivo' width=33> </a>"; 	}
 		}
 		?>
-	</font>
 	</small></td>
-	<td ><font size=1>
+	<td >
 	<?php
 	if  ($tpPerRad[$tpradic]==2 or $tpPerRad[$tpradic]==3) 
 	{	if (!$rs->fields["RADI_NUME_SALIDA"])
 		{	if(substr($verrad,-1)==2 && $puedeRadicarAnexo==1 )
 			{	$rs->fields["SGD_PNUFE_CODI"]=0;
-			echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> Radicar(-$tpradic) </a>";
+			echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)' width=52> </a>";
 					$radicado = "false";
 					$anexo = $cod_radi;
 			}
@@ -462,7 +458,7 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 					}
 else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0 && !$anex->seHaRadicadoUnPaquete($rs->fields["SGD_DOC_PADRE"]))
 	{	
-         echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> Radicar(-$tpradic) </a>";
+         echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)' width=52> </a>";
 
 				$radicado = "false";
 				$anexo = $cod_radi;
@@ -470,7 +466,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 		else if ($puedeRadicarAnexo==1)
 		{
 				$rs->fields["SGD_PNUFE_CODI"]=0;
-		echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> Radicar(-$tpradic) </a>"; 
+		echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)' width=52></a>"; 
 				$radicado = "false";
 				$anexo = $cod_radi;
 }		}		}
@@ -478,7 +474,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 			{	if (!$rs->fields["SGD_PNUFE_CODI"])$rs->fields["SGD_PNUFE_CODI"]=0;
 				if ($anex_estado<4)
 				{
-				 echo "<a class=vinculos href=javascript:radicarArchivo('$coddocu','$linkarchivo','$cod_radi',".$rs->fields["SGD_PNUFE_CODI"].",'','',$numextdoc)>Re-Generar</a>"; 
+				 echo "<a class=vinculos href=javascript:radicarArchivo('$coddocu','$linkarchivo','$cod_radi',".$rs->fields["SGD_PNUFE_CODI"].",'','',$numextdoc)><img src='img/icono_regenerar.png' title='Volver a Generar Radicado' width=52></a>"; 
 		     $radicado = "true";
 		}	}	}
 		else if ( $rs->fields["SGD_PNUFE_CODI"]  && ($usua_perm_numera_res==1) && $ruta_raiz != ".." && !$rs->fields["SGD_DOC_SECUENCIA"] && strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0) // SI ES PAQUETE DE DOCUMENTOS Y EL USUARIO TIENE PERMISOS
@@ -493,35 +489,32 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 			}
 	  		if($rs->fields["RADI_NUME_SALIDA"]) {$radicado="true";}
 		?>
-		</font>
 		</small></td>
 		
 	<?
 	}else { 
 	?>
 		<td >
-    <font size=1>
 		<?php
 		if ( $origen!=1  and $linkarchivo and $perm_borrar_anexo == 1 && $anexTipo == 4 )
 		{
 			   $v = $rs->fields["SGD_PNUFE_CODI"];
-			   echo "<a class=\"vinculoTipifAnex\" href=\"#\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> Borrar </a>";
+			   echo "<a class=\"vinculoTipifAnex\" href=\"#\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> <img src='img/icono_borrar.png' title='Borrar Archivo' width=33> </a>";
 		}
 		if ( $perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == '' ) 
 		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo no ha sido tipificado
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
-			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> Tipificar </a> ";
+			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='Clasificar Documento' width=45> </a> ";
 		}elseif ( $perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual != '' ) 
 		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo YA ha sido tipificado antes
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
-			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> Re-Tipificar </a> ";
+			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='MOdificar Clasificacion Documento' width=45> </a> ";
 		}
 		
 
 	?>
-	</font>
 	</small></td>
 		
 	<?php
