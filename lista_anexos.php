@@ -377,7 +377,7 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
 	echo "</a>";
 	$radicado = "false";
 	$anexo = $cod_radi;
-	}
+	} 
 		?>
 	</font>
 </TD>
