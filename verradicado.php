@@ -287,7 +287,7 @@ echo "</div>";
 			</div>
 			<div id="tabs-b">
 				<p>
-					Cargando . . .
+					<center><img src="img/ajax-loader.gif" align=center></center>
 				</p>
 			</div>
 
@@ -297,7 +297,7 @@ echo "</div>";
 				</p>
 			</div>
 			<div id="tabs-d">
-			  Cargando . . .
+			  <center><img src="img/ajax-loader.gif" align=center></center>
 				<?php  // include "./expediente/lista_expedientes.php"; ?>
 			</div>
 				<div id="tabs-gis" width="100%">
