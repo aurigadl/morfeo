@@ -1,5 +1,5 @@
 <? 
-  include_once('../config.php')
+  include_once('../config.php');
 
   $prediosGis = "";
   if($prediosExp) $prediosGis = "&prediosExp=$prediosExp";
