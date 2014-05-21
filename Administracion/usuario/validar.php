@@ -358,7 +358,10 @@ $ADODB_COUNTRECS = false;
           <input name="krd" type="hidden" value='<?=$krd?>'>
           <input name="nusua_codi" type="hidden" value='<?=$nusua_codi?>'>
           <input name="cedula" type="hidden" value='<?=$cedula?>'>
-          <center><input class="btn btn-primary" type="submit" name="Submit3" value="Grabar"></center>
+          <center><button class="btn btn-primary" type="submit" name="Submit3" value="Grabar">
+          <i class="fa fa-save"></i> Grabar
+					</button>
+          </center>
 	</td>
     <td height="30" colspan="2" >
           <center>

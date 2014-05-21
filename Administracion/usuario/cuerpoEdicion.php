@@ -61,7 +61,7 @@ $radSelec = "";
 ?>
 <html>
 <head>
-<title>Envio de Documentos. Orfeo...</title>
+<title>Administracion...</title>
 <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </head>
 <body>

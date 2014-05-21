@@ -351,7 +351,9 @@ if ($usModo ==2)
 	
        </fieldset>
 <footer>
-	<input type="submit" class="btn btn-primary" name=reg_crear id=Continuar_button Value=Continuar onClick="envio_datos();"></input>
+	<button type="submit" class="btn btn-primary" name=reg_crear id=Continuar_button Value=Continuar onClick="envio_datos();">
+	<i class="fa fa-save"></i>
+	</button>
 </footer>
 <div class="col-sm-12">
     <!-- widget grid -->
