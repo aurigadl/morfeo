@@ -233,6 +233,44 @@ function regresar(){
     window.close();
 
 }
+
+function respuestaTx2(){
+        var valor = sw = 0;
+        var params      = 'width='+screen.width;
+            params      += ', height='+screen.height;
+            params      += ', top=0, left=0'
+            params      += ', scrollbars=yes'
+            params      += ', fullscreen=yes';
+
+      <?if(!$verrad){?>
+            for(i=1;i<document.form1.elements.length;i++){
+                if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll"){
+                    sw++;
+                    valor = document.form1.elements[i].name;
+                    valor = valor.replace("checkValue[", "");
+                    valor = valor.replace("]", "");
+                }
+            }
+
+            if (sw != 1){
+                alert("Debe seleccionar UN(1) radicado");
+                return;
+            }
+
+
+            var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
+                              "<?=session_id()?>&radicadopadre=" +
+                                + valor + "&krd=<?=$krd?>";
+           window.open(url, "Respuesta Rapida", params);
+
+      <?}else{?>
+            window.open("respuestaRapida/index2.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
+                        '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
+                        "&asunto=" + '<?php print_r($rad_asun_res)?>' +
+                        "&krd=<?=$krd?>", "Respuesta Rapida", params);
+      <?}?>
+    }
+
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 </script>
 <table WIDTH="100%" align="center" class="table table-striped table-hover" >
