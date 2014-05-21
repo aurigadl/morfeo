@@ -14,7 +14,7 @@ if(!$verradicado) $verradicado = $verrad;
 define('ADODB_ASSOC_CASE', 1);
 
 $db = new ConnectionHandler("$ruta_raiz");
-//$db->conn->debug = true;
+
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $objTipoDocto = new TipoDocumento($db);
 

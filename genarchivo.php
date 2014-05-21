@@ -150,7 +150,7 @@ if($radicar_documento) {
 				}else{
 				    die ("<span class='etextomenu'>No se ha podido obtener la informacion del radicado");
 				}
-			
+
 				if (!$radicado_salida){
 					$no_digitos = 6;
 					$tipoRad = "1";
@@ -183,16 +183,16 @@ if($radicar_documento) {
 	if(!$tipoRad) {
 		   $tipoRad = "1";
 	}
-	
+
 	//Adicion para que no reemplace el numero de radicado de un anexo al ser reasignado a otra dependencia
 	if($generar_numero=="no") {
 	  	$rad_salida = $numrad;
 	} else {
 		//Es un anexo radicado en otra dependencia y no queremos que le genere un nuevo numero
-		if (  $radicar_a != null && $radicar_a != 'si' ) { 
+		if (  $radicar_a != null && $radicar_a != 'si' ) {
 			$rad_salida = $radicar_a;
 		}else {
-			$rad_salida = $anoSec . $dependencia . $sec .$tipoRad;	
+			$rad_salida = $anoSec . $dependencia . $sec .$tipoRad;
 		}	}
 
 
@@ -209,7 +209,7 @@ if($radicar_documento) {
   $ultimoValor =  count($extx)-1;
   $ext = $extx[$ultimoValor];
 	echo "<font size='3' color='#000000'><span class='etextomenu'>";
-	
+
 	$extVal = strtoupper($ext);
 	if($extVal=="XLS" or $extVal=="PPT" or $extVal=="PDF"){
 		echo "<br><font size='3' ><span class='etextomenu'>Sobre formato ($ext) no se puede realizar combinaci&oacute;n de correspondencia</br>";
@@ -235,34 +235,34 @@ if($radicar_documento) {
 		// Inicializacion de la fecha que va a pasar al reemplazable *F_RAD_S*
 		$fecha_hoy_corto = "";
 		include "$ruta_raiz/class_control/class_gen.php";
-		
+
 		$b = new CLASS_GEN();
 		$date =  date("m/d/Y");
 		$fecha_hoy = $b->traducefecha($date);
 		$fecha_e = $b->traducefecha($radi_fech_radi);
 		$fechaDocumento2 = $b->traducefecha_sinDia($fechaDocumento);
 		$fechaDocumento = $b->traducefechaDocto($fechaDocumento);
-		
+
 		if($vp=="n") $archivoFinal = $linkArchSimple;
 		else $archivoFinal = $linkArchivoTmpSimple;
-		
+
 		//almacena la extension del archivo a procedar
 		$extension = (strrchr ( $archivoFinal, "."));
 		$archSinExt = substr($archivoFinal,0, strpos($archivoFinal,$extension));
 		//Almacena el path completo hacia el archivo a producirse luego de la combinacion
-			
+
 		if(substr($archSinExt,-1) == "d"){
 			$caracterDefinitivo = "";
 		}else{
 			$caracterDefinitivo = "d";
 		}
-		
+
 		if( $ext == 'xml' || $ext == 'XML' || $ext == 'odt' || $ext == 'ODT' || $ext == 'DOCX'  || $ext == 'docx' )	{
 			$archivoFinal = $archSinExt . "." . $ext;
 		}else{
 			$archivoFinal = $archSinExt . $caracterDefinitivo . "." . $ext;
 		}
-		
+
 		//Almacena el nombre de archivo a producirse luego de la combinacion y que ha de actualizarce en la tabla de anexos
 		$archUpdate = substr($archivoFinal,
 					strpos( $archivoFinal,strrchr($archivoFinal, "/")) + 1,
@@ -292,7 +292,7 @@ if($sec and $vp=="n"){
 		$rad->descAnex     = $desc_anexos;
 		$rad->radiPais     = "$pais";
 		$rad->raAsun       = $asunto;
-		
+
 		if ($tpradic==1){
 			if ($entidad_depsal !=0){
 				$rad->radiDepeActu = $entidad_depsal;
@@ -305,7 +305,7 @@ if($sec and $vp=="n"){
 			$rad->radiDepeActu = $dependencia;
 			$rad->radiUsuaActu =$codusuario;
 		}
-		
+
 		$rad->radiDepeRadi = $dependencia ;
 		$rad->trteCodi =  "null";
 		$rad->tdocCodi = $tipo_docto;
@@ -315,18 +315,18 @@ if($sec and $vp=="n"){
 		$rad->trteCodi = "null";
 		$rad->ra_asun = "'$asunto'";
 		$rad->radiPath = "$archUpdateRad";
-		
+
 		if (strlen(trim($apliCodiaux)) > 0 && $apliCodiaux > 0)
 			$aplinteg = $apliCodiaux;
 		else $aplinteg = "0";
-		
+
 		$rad->sgd_apli_codi = $aplinteg;
 		$codTx = 2;
 		$flag = 1;
-		
+
 		// Se genera el numero de radicado del anexo
 		$noRad = $rad->newRadicado($tpradic, $tpDepeRad[$tpradic]);
-		
+
 		// Se instancia un objeto para el radicado generado y obtener la fecha real de radicacion
 		$radGenerado = new Radicado($db);
 		$radGenerado->radicado_codigo($noRad);
@@ -334,14 +334,14 @@ if($sec and $vp=="n"){
 		// Asgina la fecha de radicacion
 
 		$fecha_hoy_corto = $radGenerado->getRadi_fech_radi("d-m-Y");
-	
+
 		//BUSCA QUERYS ADICIONALES RESPECTO DE APLICATIVOS INTEGRADOS
 		$campos["P_RAD_E"] = $noRad;
 		$campos["P_USUA_CODI"] = $codusuario;
 		$campos["P_DEPENDENCIA"] = $dependencia;
 		$campos["P_USUA_DOC"] = $usua_doc;
 		$campos["P_COD_REF"] = $anexo;
-		
+
 		//El nuevo radicado hereda la informacion del expediente del radicado padre
 		if (isset($expRadi) && $expRadi!=0)
 		{
@@ -389,20 +389,20 @@ if($sec and $vp=="n"){
 			$linkarchivo_grabar = str_replace("./","",$linkarchivo_grabar);
   			$extdoctmp = explode('.',$linkarchivo_grabar);
   			$extdoc = $extdoctmp[count($extdoctmp)-1];
-		        if ($extdoc == 'doc') {		
+		        if ($extdoc == 'doc') {
 			   $posExt = strpos($linkarchivo_grabar,'d.doc');
 			   if($posExt === false){
-				
+
 				$temp = $linkarchivo_grabar;
 				$ruta = str_replace('.doc', 'd.doc',$temp);
 				$linkarchivo_grabar = $ruta;
 		           }
-                        }  
-			
-		  	$isql = "update RADICADO 
-				   set RADI_PATH='$linkarchivo_grabar' 
+                        }
+
+		  	$isql = "update RADICADO
+				   set RADI_PATH='$linkarchivo_grabar'
 				  where RADI_NUME_RADI = $rad_salida";
-						//echo "<hr> $isql <hr>";    			
+						//echo "<hr> $isql <hr>";
 			$radGenerado = new Radicado($db);
 			$radGenerado->radicado_codigo($rad_salida);
 			// Asgina la fecha de radicacion
@@ -416,7 +416,7 @@ if($sec and $vp=="n"){
 			  $archUpdate = $linkarchivo_grabar;
 			}
 		}
-		
+
 		if($ent==1 ) $rad_salida = $nurad;
 		// Update Anexos
 		$archUpdateFinal =  basename($archUpdate);
@@ -424,11 +424,11 @@ if($sec and $vp=="n"){
 			      ANEX_SOLO_LECT = 'S',
 			      ANEX_RADI_FECH = $sqlFechaHoy,
 			      ANEX_ESTADO = 2,
-			      ANEX_NOMB_ARCHIVO = '$archUpdateFinal', 
+			      ANEX_NOMB_ARCHIVO = '$archUpdateFinal',
 			      ANEX_TIPO='$numextdoc',
 			      SGD_DEVE_CODIGO = null
 		           where ANEX_CODIGO='$anexo' AND ANEX_RADI_NUME=$numrad";
-		
+
 		$rs=$db->query($isql);
 		if (!$rs){
 			//$db->conn->RollbackTrans();
@@ -441,7 +441,7 @@ if($sec and $vp=="n"){
 		if ($rs==false)		{
 			die ("<span class='etextomenu'>No se ha podido obtener la informacion de anexo");
 		}
-		
+
 		$sgd_dir_tipo      = $rs->fields["SGD_DIR_TIPO"];
 		$anex_desc         = $rs->fields["ANEX_DESC"];
 		$anex_numero       = $rs->fields["ANEX_NUMERO"];
@@ -452,14 +452,14 @@ if($sec and $vp=="n"){
 		$carp_codi = 1;
 
 		if (!$tipo_docto) $tipo_docto=0;
-		
+
 		$linkarchivo_grabar = str_replace("bodega","",$linkarchivo);
 		$linkarchivo_grabar = str_replace("./","",$linkarchivo_grabar);
 
 		if($sgd_dir_tipo==1){
 			$grbNombresUs1=$nombret_us1_u;
 		}
-		
+
 		//Adiciones para DIR_E SSPD, no quieren que se reemplace DIR_R con DIR_E
 		$campos = array();
 		$datos  = array();
@@ -527,7 +527,7 @@ if($sec and $vp=="n"){
 
 		$actualizados = 4;
 		$sgd_dir_tipo = 1;
-		
+
 		// Borro todo lo generando anteriormete .....  para el caso de regenerar
 		$isql = "delete from ANEXOS where RADI_NUME_SALIDA=$nurad
 			   and CAST( sgd_dir_tipo AS VARCHAR(4) ) like '7%' and sgd_dir_tipo !=7 ";
@@ -689,7 +689,7 @@ fputs ($fp,"*NIT_E*=$cc_documento_us3\n");
 fputs ($fp,"*NUIR_E*=$nuir_e\n");
 fputs ($fp,"*F_RAD_S*=$fecha_hoy_corto\n");
 fputs ($fp,"*RAD_E*=$radicado_p\n");
-fputs ($fp,"*SAN_RADICACION*=$radicado_p\n");			 
+fputs ($fp,"*SAN_RADICACION*=$radicado_p\n");
 fputs ($fp,"*SECTOR*=$sector_nombre\n");
 fputs ($fp,"*NRO_PAGS*=$radi_nume_hoja\n");
 fputs ($fp,"*DESC_ANEXOS*=$radi_desc_anex\n");
@@ -747,8 +747,8 @@ if($ext=="ODT" || $ext=="odt"){
     if ($fp){
         $contenidoCSV = file( "$ruta_raiz/bodega/masiva/$archInsumo" );
         fclose($fp);
-    }else{	
-        echo "<br><b>No hay acceso para crear el archivo $archInsumo <b>";	
+    }else{
+        echo "<br><b>No hay acceso para crear el archivo $archInsumo <b>";
         exit();
     }
 
@@ -756,24 +756,24 @@ if($ext=="ODT" || $ext=="odt"){
     $odt    = new OpenDocText();
     $odt->debug = true;
 
-    //Se carga el archivo odt Original 
+    //Se carga el archivo odt Original
     $archivoACargar = str_replace('../','',$linkarchivo);
     $odt->cargarOdt("$archivoACargar", $nombreArchivo);
     $odt->setWorkDir(WORKDIR);
     $accion = $odt->abrirOdt();
 
     if(!$accion){
-        die("<CENTER><table class=borde_tab><tr><td 
-                class=titulosError>Problemas en el servidor 
+        die("<CENTER><table class=borde_tab><tr><td
+                class=titulosError>Problemas en el servidor
               abriendo archivo ODT para combinaci&oacute;n.
               </td></tr></table>");
     }
-    
+
     $odt->cargarContenido();
-    
+
     //Se recorre el archivo de insumo
     foreach ( $contenidoCSV as $line_num => $line){
-        if($line_num > 1){	
+        if($line_num > 1){
             $cadaLinea                 = explode( "=",$line );
             $cadaVariable[$line_num-2] = $cadaLinea[0];
             $cadaValor[$line_num-2]    = $cadaLinea[1];
@@ -784,13 +784,13 @@ if($ext=="ODT" || $ext=="odt"){
 
     if($vp=="s"){
         $linkarchivo_grabar = str_replace("bodega/","",$linkarchivotmp);
-        $linkarchivo_grabar = str_replace("./","",$linkarchivo_grabar);	
+        $linkarchivo_grabar = str_replace("./","",$linkarchivo_grabar);
         $odt->setVariable( $cadaVariable, $cadaValor );
         $archivoDefinitivo = $odt->salvarCambios( null, $linkarchivo_grabar, '1' );
     }else{
-        $linkarchivo_grabar = str_replace("..","",$linkarchivo_grabar);	
+        $linkarchivo_grabar = str_replace("..","",$linkarchivo_grabar);
         $odt->setVariable( $cadaVariable, $cadaValor );
-        $archivoDefinitivo = $odt->salvarCambios( null, $linkarchivo_grabar, '1' );	
+        $archivoDefinitivo = $odt->salvarCambios( null, $linkarchivo_grabar, '1' );
     }
 
     $db->conn->CommitTrans();
@@ -799,33 +799,31 @@ if($ext=="ODT" || $ext=="odt"){
     echo "<B><CENTER><a class='vinculos' href=javascript:abrirArchivo('./bodega/". $linkarchivo_grabar ."')> Ver Archivo </a><br>";
 
     $odt->borrar();
-///////////////////////////////////////////////////////////////////
+
 
 } elseif ( $ext=="DOCX" || $ext=="docx" ){
-    //Se incluye la clase que maneja la combinaci�n masiva
+    //Se incluye la clase que maneja la combinacion masiva
     include ( "$ruta_raiz/radsalida/masiva/ooxml.class.php" );
     define ( 'WORKDIR', './bodega/tmp/workDir/' );
     define ( 'CACHE', WORKDIR . 'cacheODT/' );
     //Se abre archivo de insumo para lectura de los datos
     $fp=fopen("$ruta_raiz/bodega/masiva/$archInsumo",'r');
 
-    if ($fp){ 
+    if ($fp){
         $contenidoCSV = file( "$ruta_raiz/bodega/masiva/$archInsumo" );
         fclose($fp);
-    }else{ 
-        echo "<br><b>No hay acceso para crear el archivo $archInsumo <b>";  
+    }else{
+        echo "<br><b>No hay acceso para crear el archivo $archInsumo <b>";
         exit();
     }
 
     $accion = false;
     $docx = new OoXml();
-    //Se carga el archivo odt Original 
-    //$docx->setWorkDir( WORKDIR );
+    //Se carga el archivo odt Original
     $archivoACargar = str_replace('../','',$linkarchivo);
     $docx->cargarOdt( "$archivoACargar", $nombreArchivo );
     $docx->setWorkDir( WORKDIR );
     $accion = $docx->abrirOdt();
-    //$docx->debug = true;
     if(!$accion)
     {
         die( "<CENTER><table class=borde_tab><tr><td class=titulosError>Problemas en el servidor abriendo archivo DOCX para combinaci&oacute;n.</td></tr></table>" );
@@ -848,13 +846,13 @@ if($ext=="ODT" || $ext=="odt"){
     if($vp=="s")
     {
         $linkarchivo_grabar = str_replace("bodega/","",$linkarchivotmp);
-        $linkarchivo_grabar = str_replace("./","",$linkarchivo_grabar); 
+        $linkarchivo_grabar = str_replace("./","",$linkarchivo_grabar);
         $docx->setVariable( $cadaVariable, $cadaValor );
         $archivoDefinitivo = $odt->salvarCambios( null, $linkarchivo_grabar, '1' );
     } else {
         $docx->setVariable( $cadaVariable, $cadaValor );
         $linkarchivo_grabar = str_replace("..","", $linkarchivo_grabar);
-        $docx->salvarCambios( null, $linkarchivo_grabar, '1' );  
+        $docx->salvarCambios( null, $linkarchivo_grabar, '1' );
     }
     $db->conn->CommitTrans();
     echo "<script> function abrirArchivo(url){nombreventana='Documento'; window.open(url, nombreventana,  'status, width=900,height=500,screenX=100,screenY=75,left=50,top=75');return; }</script>
@@ -930,7 +928,7 @@ if($ext=="ODT" || $ext=="odt"){
         $resltx1 =  copy("$ruta_raiz/$linkarchivo","$ruta_raiz/bodega/masiva/$nombreArchivo.cb");
         $resltx2 =  copy("$ruta_raiz/bodega/masiva/$nombreArchivo","$ruta_raiz/$linkarchivo");
         if(empty($resltx2) || empty($resltx1)){
-            echo "Error copiando archivos: 1020"; 
+            echo "Error copiando archivos: 1020";
         }
     }
 
@@ -948,11 +946,11 @@ if($ext=="ODT" || $ext=="odt"){
   * Luego si no existe deja la Plantilla Original.
   **/
 
-$isql = "UPDATE 
-            RADICADO 
-         SET 
-            RADI_PATH = '$linkarchivo_grabar' 
-         WHERE 
+$isql = "UPDATE
+            RADICADO
+         SET
+            RADI_PATH = '$linkarchivo_grabar'
+         WHERE
             WHERE $db->conn->query($isql)";
 
 echo "<br>";
@@ -968,16 +966,16 @@ echo "Tama&ntilde;o Fila :". ($tam)/1000 ." kbytes  / --> $tamFuente";
 if ($tam>=100) {
     echo "<br>Comprobando Archivo Final Ok.";
 } else {
-    
-    $isql = "update RADICADO 
-				   set RADI_PATH='$linkFuente' 
+
+    $isql = "update RADICADO
+				   set RADI_PATH='$linkFuente'
 				  where RADI_NUME_RADI = $rad_salida";
     echo "<br>No se realizo Combinacion. Retornado Archivo Original. <hr> $isql";
     $db->conn->query($isql);
     if($linkarchivo_grabar){
     $filaGrabar = filedata($archUpdateFuente);
     $isql = "update anexos
-		  set ANEX_NOMB_ARCHIVO='".basename($linkFuente)."' 
+		  set ANEX_NOMB_ARCHIVO='".basename($linkFuente)."'
 		where ANEX_NOMB_ARCHIVO like '%".basename($link)."%'";
     $db->conn->query($isql);
     }

@@ -54,7 +54,7 @@ class OpenDocText {
         else
         {	$this->SO='G';
         $this->barra='/';
-        }	
+        }
     }
 
 /**
@@ -65,7 +65,7 @@ class OpenDocText {
  * @return
  **/
     function cargarOdt($nombreArchivo, $archivoSalida = null){
-        echo "-->".$this->nombreCompletoOdt;
+        $this->nombreCompletoOdt;
         $this->nombreCompletoOdt = realpath($nombreArchivo);
         $nom = explode( ".", $archivoSalida );
         $this->archivoSalida = $nom[0];
@@ -85,7 +85,7 @@ class OpenDocText {
             $this->_error 	  = "El ". $this->nombreCompleto ." no existe o no es un archivo.\n";
             $this->_debug();
             ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab>
-                <tr><td class=titulosError>El $this->nombreCompletoOdt o no 
+                <tr><td class=titulosError>El $this->nombreCompletoOdt o no
                 existe o no es un archivo.</td></tr></table>" ) : $error = '' ;
             echo $error;
             return false;
@@ -98,6 +98,7 @@ class OpenDocText {
      * Carga la informacion del contenido del archivo
      * @return
     **/
+
     function setWorkDir ($workDir) {
         $cambio = false;
         if (is_dir($workDir)) {
@@ -105,7 +106,7 @@ class OpenDocText {
             $cambio = chdir($this->workDir);
             if ($cambio) {
                 ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
-                    <td class=titulos2>Realiz&oacute; el cambio al directorio  
+                    <td class=titulos2>Realiz&oacute; el cambio al directorio
                     $this->workDir. </td></tr></table>" ) : $error = '' ;
                 echo $error;
                 $this->_success = "Realiz&oacute; el cambio al directorio $this->workDir.\n";
@@ -113,14 +114,14 @@ class OpenDocText {
                 $this->cacheDir = $this->workDir . 'cacheODT' .$this->barra;
             }else {
                 ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
-                    <td class=titulosError>NO Realiz&oacute; el cambio al 
+                    <td class=titulosError>NO Realiz&oacute; el cambio al
                     directorio  $this->nombreCompletoOdt. </td></tr></table>" ) : $error = '' ;
                 echo $error;
             }
             return true;
         }else {
             ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
-                <td class=titulosError>NO Existe; el directorio de trabajo temporal 
+                <td class=titulosError>NO Existe; el directorio de trabajo temporal
                 $this->workDir. </td></tr></table>" ) : $error = '' ;
             echo $error;
             return false;
@@ -132,6 +133,7 @@ class OpenDocText {
      * Carga la informacion del contenido del archivo
      * @return
      **/
+
     function setCacheDir ($path = null) {
         if (is_dir($path)) {
             $this->cacheDir = $path;
@@ -154,26 +156,28 @@ class OpenDocText {
         $creoDir      = false;
         $existeDir    = false;
 
-        if ($dirTmp == $this->workDir){	
+        if ($dirTmp == $this->workDir){
             $cmd_cp = "cp " . $this->nombreCompletoOdt . " " . $this->cacheDir;
 
-            switch ($this->SO){	
-                case 'W':{	
+            switch ($this->SO){
+                case 'W':{
                     $cmd_cp = "cmd /C copy /Y " . $this->nombreCompletoOdt . " " . $this->cacheDir;
                     $WshShell = new COM('wscript.shell');
-                    $verificacion = $WshShell->Run($cmd_cp, 0, false);	
+                    $verificacion = $WshShell->Run($cmd_cp, 0, false);
                     $WshShell = null;
                 }break;
-        default:
-        {
-            $verificacion = shell_exec($cmd_cp);
-        }break;
-        }			
-            if ($verificacion == ''){	
+
+                default:
+                {
+                    $verificacion = shell_exec($cmd_cp);
+                }break;
+                }
+
+            if ($verificacion == ''){
                 $nombreDir = explode('.',$this->nombreOdt);
                 ($this->debug == true)?(
                     $error = "<CENTER><table class=borde_tab><tr>
-                                <td class=titulos2>Copia el archivo : " .  $this->nombreCompletoOdt . " 
+                                <td class=titulos2>Copia el archivo : " .  $this->nombreCompletoOdt . "
                                 a " . $this->cacheDir ."</td></tr></table>" ) : $error = '' ;
         echo $error;
 
@@ -181,27 +185,34 @@ class OpenDocText {
 
         if (!$existeDir){
             ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
-                <td class=info>No existe DIR: " . $this->cacheDir . $nombreDir[0]. " 
+                <td class=info>No existe DIR: " . $this->cacheDir . $nombreDir[0]. "
                 luego se crea</td></tr></table>" ) : $error = '' ;
             echo $error;
 
             $creoDir = mkdir($this->cacheDir . $nombreDir[0], 0777);
-            if ($creoDir){	
+            if ($creoDir){
                 ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab>
-                    <tr><td class=titulos2>Cre&oacute el directorio: 
+                    <tr><td class=titulos2>Cre&oacute el directorio:
                     " . $this->cacheDir . $nombreDir[0]. " todo ok</td></tr></table>" ) : $error = '' ;
                 echo $error;
+
                 $varTemp = "unzip " . $this->cacheDir . $this->nombreOdt ." -d " . $this->cacheDir . $nombreDir[0];
-                switch ($this->SO){	
+
+
+
+                switch ($this->SO){
                 case 'W': {
                     $varTemp = "cmd /C unzip " . $this->cacheDir . $this->nombreOdt ." -d " . $this->cacheDir . $nombreDir[0];
                     $WshShell = new COM("WScript.Shell");
-                    $verificacion = $WshShell->Run($varTemp, 0, true);	
+                    $verificacion = $WshShell->Run($varTemp, 0, true);
                     $WshShell = null;
                 }
                 break;
                 default:
                 {
+                    if($this->debug == true){
+                        echo "Comando ejeutado en consola  ".$varTemp;
+                    }
                     $verificacion = shell_exec($varTemp);
                 }break;
                 }
@@ -209,19 +220,23 @@ class OpenDocText {
                 ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
                     <td class=titulos2>$result: Descomprime : " . $varTemp ."</td></tr></table>" ) : $error = '' ;
                 echo $error;
-
                 $varTemp = "cp -Rf " . $this->cacheDir . $nombreDir[0] . " " . $this->workDir . $this->archivoSalida;
-                switch ($this->SO)
-                {	case 'W':
-                {	
+
+
+                switch ($this->SO){
+                    case 'W':
+                {
                     $varTemp = "cmd /C xcopy " .$this->cacheDir.$nombreDir[0]." ".$this->workDir.$this->archivoSalida." /E /H /I";
                     $WshShell = new COM("WScript.Shell");
-                    $verificacion = $WshShell->Run($varTemp, 0, true);	
+                    $verificacion = $WshShell->Run($varTemp, 0, true);
                     $WshShell = null;
                 }
                 break;
                 default:
                 {
+                    if($this->debug == true){
+                        echo "Comando ejeutado en consola  ".$varTemp;
+                    }
                     $verificacion = shell_exec($varTemp);
                 }break;
                 }
@@ -239,35 +254,34 @@ class OpenDocText {
                 $this->_debug();
                 return false;
             }	}
-            else
-            {
+            else {
                 chmod($this->cacheDir . $nombreDir[0], 0777);
             }
-
-            $varTemp = "cp -rf " . $this->cacheDir . $nombreDir[0] . " " . $this->workDir . $this->archivoSalida;
-            switch ($this->SO)
-            {	case 'W':
-            {
-                $varTemp = "cmd /C xcopy /E /Y /I " . $this->cacheDir.$nombreDir[0]. " " .$this->workDir.$this->archivoSalida;
-                $WshShell = new COM("WScript.Shell");
-                $verificacion = $WshShell->Run($varTemp, 0, true);
-                $WshShell = null;
-            }break;
-            default:
-            {
-                $verificacion = shell_exec($varTemp);
-            }break;
+            if(is_file($this->workDir . $this->archivoSalida)){
+                $varTemp = "cp -rf " . $this->cacheDir . $nombreDir[0] . " " . $this->workDir . $this->archivoSalida;
+                    switch ($this->SO){
+                        case 'W': {
+                            $varTemp = "cmd /C xcopy /E /Y /I " . $this->cacheDir.$nombreDir[0]. " " .$this->workDir.$this->archivoSalida;
+                            $WshShell = new COM("WScript.Shell");
+                            $verificacion = $WshShell->Run($varTemp, 0, true);
+                            $WshShell = null;
+                        }break;
+                        default:{
+                        if($this->debug == true){
+                            echo "Comando ejeutado en consola  ".$varTemp;
+                        }
+                        $verificacion = shell_exec($varTemp);
+                        }break;
+                    }
+                    ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr><td class=titulos2>Copia Archivo salida: " . $varTemp. " </td></tr></table>" ) : $error = '' ;
+                    echo $error;
+                    return true;
             }
-            ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr><td class=titulos2>Copia Archivo salida: " . $varTemp. " </td></tr></table>" ) : $error = '' ;
-            echo $error;
-            return true;
         }
-        else
-        {
+        else{
             return false;
-        }	} 
-        else
-        {
+        }
+      }else{
             $this->_errorCode = 10;
             $this->_error = "No se encuentra en el directorio de trabajo $this->workDir.\n";
             $this->_debug();
@@ -425,23 +439,23 @@ class OpenDocText {
 
         //Funcion que eleimina recursivamente el contenido de un
         //directorio
-        function unlinkRecursive($dir){ 
-            if(!$dh = @opendir($dir)){ 
-                return; 
+        function unlinkRecursive($dir){
+            if(!$dh = @opendir($dir)){
+                return;
             }
-            while (false !== ($obj = readdir($dh))){ 
+            while (false !== ($obj = readdir($dh))){
 
-                if($obj == '.' || $obj == '..'){ 
-                    continue; 
-                } 
+                if($obj == '.' || $obj == '..'){
+                    continue;
+                }
 
-                if (!@unlink($dir . '/' . $obj)){ 
-                    $this->unlinkRecursive($dir.'/'.$obj, true); 
-                } 
-            } 
+                if (!@unlink($dir . '/' . $obj)){
+                    $this->unlinkRecursive($dir.'/'.$obj, true);
+                }
+            }
 
-            closedir($dh); 
-            return; 
+            closedir($dh);
+            return;
         }
 
         /**
@@ -453,7 +467,7 @@ class OpenDocText {
             $nombreDir    = array();
             $nombreDir = explode('.',$this->nombreOdt);
             ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
-                <td class=info>Borrando directorio temporal " . $this->cacheDir . $nombreDir[0]. " 
+                <td class=info>Borrando directorio temporal " . $this->cacheDir . $nombreDir[0]. "
                 </td></tr></table>" ) : $error = '' ;
             echo $error;
             $existeDir = is_dir($this->cacheDir . $nombreDir[0]);
@@ -466,16 +480,16 @@ class OpenDocText {
                    $this->_errorCode = 10;
                    $this->_error = "No ha sido posible borrar el directorio:" .	$this->cacheDir . $nombreDir[0] . ".\n" ;
                    $this->_debug();
-		} else { 
+		} else {
               	   ($this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
-                      <td class=info>directorio temporal borrado:" . $this->cacheDir . $nombreDir[0]. " 
+                      <td class=info>directorio temporal borrado:" . $this->cacheDir . $nombreDir[0]. "
                       </td></tr></table>" ) : $error = '' ;
                    echo $error;
 		}
 
 	    } else {
               ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
-                <td class=info>directorio temporal no existe:" . $this->cacheDir . $nombreDir[0]. " 
+                <td class=info>directorio temporal no existe:" . $this->cacheDir . $nombreDir[0]. "
                 </td></tr></table>" ) : $error = '' ;
               echo $error;
 
@@ -484,7 +498,7 @@ class OpenDocText {
         }
 
         /**
-         * 
+         *
          * Elimina una carpeta incluyendo TODO su contenido
          *
          * @param Char $folderPath
@@ -553,8 +567,7 @@ class OpenDocText {
          * @param string $contenido Contenido del archivo
          * @return
          **/
-        function salvarCambios( $archivoTmp, $archivoFinal, $tipoUnitario )
-        {
+        function salvarCambios( $archivoTmp, $archivoFinal, $tipoUnitario ){
             $esArchivo = false;
             $esArchivo = is_file($this->stylesXml);
 
@@ -564,8 +577,7 @@ class OpenDocText {
             $this->contenido = $this -> contenido . $this -> endDocTags;
             $error = '';
 
-            if ($esArchivo)
-            {
+            if ($esArchivo){
                 ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr><td class=titulos2>Existe el archivo del contenido XML odt! $this->stylesXml </td></tr></table>" ) : $error = '' ;
                 echo $error;
                 $this->fp = fopen($this->stylesXml,'w');
@@ -589,8 +601,7 @@ class OpenDocText {
                     fclose($this->fp);
 
                     $tamano = '';
-                    if($esArchivoStyles)
-                    {
+                    if($esArchivoStyles){
                         //Escribo cabeceras
                         if($tipoUnitario == '1')
                         {
@@ -613,10 +624,10 @@ class OpenDocText {
                             }
                         }
                         ( $this->debug == true) ? ( $error .= "<CENTER><table class=borde_tab><tr><td class=titulos2>Ya paso por verificacion unitario</td></tr></table>" ) : $error = '' ;
-                    } 
+                    }
 
                     $nombreZip = explode(".",$this->archivoSalida);
-                    $varTemp = "zip -r " . $this->workDir . $nombreZip[0] . ".odt *";
+                    $varTemp = "zip -r " . $this->workDir . $nombreZip[0] . ".odt * -x mimetype";
                     switch ($this->SO)
                     {	case 'W':
                     {	$varTemp = "cmd /C chdir /D ". $this->workDir.$nombreZip[0]." && zip -rq " . $this->workDir . $nombreZip[0] . ".odt *";
@@ -626,6 +637,9 @@ class OpenDocText {
                     }break;
                     default:
                     {
+                        if($this->debug == true){
+                            echo "Comando ejeutado en consola   ".$varTemp;
+                        }
                         $verificacion = shell_exec($varTemp);
                     }break;
                     }
@@ -668,7 +682,7 @@ class OpenDocText {
                         ( $this->debug == true) ? ( $error .= "<CENTER><table class=borde_tab><tr><td class=info> Archivo Final: " . $archivoFinal . "  </td></tr></table>" ) : $error = '' ;
 
                         if ($tipoUnitario == '1')
-                        {	
+                        {
                             $cmd_cp = "cp " . $this->workDir.$nombreZip[0].".odt ".str_replace($this->barra."tmp".$this->barra."workDir", "",$this->workDir).str_replace(".".$this->barra,"", $archivoFinal);
                             switch ($this->SO)
                             {	case 'W':
@@ -698,7 +712,7 @@ class OpenDocText {
                             exec($cmd_cp);
                         }break;
                         }
-                            } 
+                            }
                         ( $this->debug == true) ? ( $error .= "<CENTER><table class=borde_tab><tr><td class=info>Exec Copia: " . $cmd_cp ." </td></tr></table>" ) : $error = '' ;
                     }
 
@@ -709,7 +723,7 @@ class OpenDocText {
                         {
                             $cmd_del = "cmd /C rd /S /Q ".$this->workDir . $this->archivoSalida;
                             $WshShell = new COM("WScript.Shell");
-                            $verificacion = $WshShell->Run($cmd_del, 0, false);	
+                            $verificacion = $WshShell->Run($cmd_del, 0, false);
                             $WshShell = null;
                         }break;
                         default:
@@ -913,9 +927,9 @@ class OpenDocText {
             $string = str_replace ( 'í', '&iacute;', $string );
             $string = str_replace ( 'ó', '&oacute;', $string );
             $string = str_replace ( 'ú', '&uacute;', $string );
-            $string = str_replace ( '�?', '&Aacute;', $string );
+            $string = str_replace ( 'Á', '&Aacute;', $string );
             $string = str_replace ( 'É', '&Eacute;', $string );
-            $string = str_replace ( '�?', '&Iacute;', $string );
+            $string = str_replace ( 'Í', '&Iacute;', $string );
             $string = str_replace ( 'Ó', '&Oacute;', $string );
             $string = str_replace ( 'Ú', '&Uacute;', $string );
             $string = str_replace ( 'ñ', '&ntilde;', $string );
