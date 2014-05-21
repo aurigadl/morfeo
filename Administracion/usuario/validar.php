@@ -61,8 +61,14 @@ function mensaje(vari)
 	alert("evento lanzado: " + vari);
 }
 </SCRIPT>
-<title>Untitled Document</title>
-<link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
+  <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SIIM2">
+  <meta name="keywords" content="siim, metrovivienda, gestion, misional">
+  <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </head>
 <body>
 <?php
@@ -74,7 +80,7 @@ $nombreJefe =  $rs->fields["USUA_NOMB"];
 if ($nombreJefe && $perfil=="Jefe")
 {	if ($usuLogin != $rs->fields["USUA_LOGIN"])
 	{	$errorValida = "SI";
-?> <center><p><span class=etexto><B><?="En la dependencia " . $dep_sel . ", ya existe un usuario jefe, " . $nombreJefe . ", por favor verifique o realice los cambios necesarios para poder continuar con este proceso"?></B></span></p></center>
+?> <center><p><span ><B><?="En la dependencia " . $dep_sel . ", ya existe un usuario jefe, " . $nombreJefe . ", por favor verifique o realice los cambios necesarios para poder continuar con este proceso"?></B></span></p></center>
 <?php
 	}
 }
@@ -86,7 +92,7 @@ if (($usuDocSel != $cedula && $usModo == 2) || $usModo == 1)
 	$cedulaEncon = $rsCedula->fields["USUA_DOC"];
 	if ($cedulaEncon)
 	{	$errorValida = "SI";
-?> <center><p><span class=etexto><B>El numero de cedula ya existe en la tabla de usuario, por favor verifique</B></span></p></center>
+?> <center><p><span ><B>El numero de cedula ya existe en la tabla de usuario, por favor verifique</B></span></p></center>
 <?php
 	}
 }
@@ -97,7 +103,7 @@ if (($usuLoginSel != $usuLogin && $usModo == 2) || $usModo == 1)
 	$LoginEncon = $rsLogin->fields["USUA_LOGIN"];
 	if ($LoginEncon)
 	{	$errorValida = "SI";
-?> <center><p><span class=etexto><B>El Login que desea asignar ya existe, por favor verifique.</B></span></p></center>
+?> <center><p><span ><B>El Login que desea asignar ya existe, por favor verifique.</B></span></p></center>
 <?php
 	}
 }
@@ -105,7 +111,7 @@ $encabezado = "krd=$krd&usModo=$usModo&perfil=$perfil&dep_sel=$dep_sel&cedula=$c
 if ($errorValida == "SI")
 {
 ?>
-	<span class=etexto><center>
+	<span ><center>
 	<a href='crear.php?<?=session_name()."=".session_id()."&$encabezado"?>'>Volver a Formulario Anterior</a>
 	</center></span>
 <?php
@@ -115,15 +121,15 @@ else
 	$encabezado = "krd=$krd&usModo=$usModo&perfil=$perfil&perfilOrig=$perfilOrig&dep_sel=$dep_sel&cedula=$cedula&usuLogin=$usuLogin&nombre=$nombre&dia=$dia&mes=$mes&ano=$ano&ubicacion=$ubicacion&piso=$piso&extension=$extension&email=$email&email1=$email1&email2=$email2&usuDocSel=$usuDocSel&usuLoginSel=$usuLoginSel";
 ?>
 <center>
-<form name="frmPermisos" action='grabar.php?<?=session_name()."=".session_id()."&$encabezado"?>' method="post">
+<form name="frmPermisos" action='grabar.php?<?=session_name()."=".session_id()."&$encabezado"?>' method="post" class="smart-form">
 
 <tr>
 <td>
-<table border=1 width=80% class=t_bordeGris>
+<table  width=80% class="table table-bordered">
 	<tr>
-    <td colspan="2" class="titulos4">
+    <td colspan="2" >
 	<center>
-	<p><B><span class=etexto>ADMINISTRACI&Oacute;N DE USUARIOS Y PERFILES</span></B> </p>
+	<p><B><span >ADMINISTRACI&Oacute;N DE USUARIOS Y PERFILES</span></B> </p>
 <?php
 echo $tPermis;
 ?>
@@ -139,23 +145,23 @@ echo $tPermis;
 	}
 ?>
   	<tr>
-    <td width="40%" height="26" class="listado2"> <input type="checkbox" name="digitaliza" value="$digitaliza" <?php if ($digitaliza) echo "checked"; else echo "";?>>
+    <td width="40%" height="26" > <input type="checkbox" name="digitaliza" value="$digitaliza" <?php if ($digitaliza) echo "checked"; else echo "";?>>
       Digitalizaci&oacute;n de Documentos</td>
-    <td width="40%" height="26" class="listado2"> <input type="checkbox" name="tablas" value="$tablas" <?php if ($tablas) echo "checked"; else echo "";?>>
+    <td width="40%" height="26" > <input type="checkbox" name="tablas" value="$tablas" <?php if ($tablas) echo "checked"; else echo "";?>>
       Tablas de Retenci&oacute;n Documental</td>
 	</tr>
   	<tr>
-		<td width="40%" height="26" class="listado2">
+		<td width="40%" height="26" >
 			<input name="modificaciones" type="checkbox" value="$modificaciones" <?php if ($modificaciones) echo "checked"; else echo "";?>>
 			Modificaciones
 		</td>
-		<td width="40%" height="26" class="listado2">
+		<td width="40%" height="26" >
 			<input type="checkbox" name="masiva" value="$masiva" <?php if ($masiva) echo "checked"; else echo "";?>>
 			Radicaci&oacute;n Masiva
 		</td>
 	</tr>
 	<tr>
-	    <td width="40%" height="26" class="listado2"> Impresi&oacute;n
+	    <td width="40%" height="26" > Impresi&oacute;n
 	<?php
 	$contador = 0;
 	while($contador <= 2)
@@ -167,17 +173,17 @@ echo $tPermis;
 	}
 	?>
 	</td>
-    <td width="40%" height="26" class="listado2"><input type="checkbox" name="prestamo" value="$prestamo" <?php if ($prestamo) echo "checked"; else echo "";?>>
+    <td width="40%" height="26" ><input type="checkbox" name="prestamo" value="$prestamo" <?php if ($prestamo) echo "checked"; else echo "";?>>
       Prestamo de Documentos.</td>
   	</tr>
   	<tr>
-    <td width="40%" height="26" class="listado2"> <input type="checkbox" name="s_anulaciones" value="$s_anulaciones" <?php if ($s_anulaciones) echo "checked"; else echo "";?>>
+    <td width="40%" height="26" > <input type="checkbox" name="s_anulaciones" value="$s_anulaciones" <?php if ($s_anulaciones) echo "checked"; else echo "";?>>
       Solicitud de Anulaciones.</td>
-    <td width="40%" height="26" class="listado2"> <input type="checkbox" name="anulaciones" value="$anulaciones" <?php if ($anulaciones) echo "checked"; else echo "";?>>
+    <td width="40%" height="26" > <input type="checkbox" name="anulaciones" value="$anulaciones" <?php if ($anulaciones) echo "checked"; else echo "";?>>
       Anulaciones.</td>
 	</tr>
   	<tr>
-    <td width="40%" height="26" class="listado2"> <!--input type="checkbox" name="adm_archivo" value="$adm_archivo" <?php if ($adm_archivo) echo "checked"; else echo "";?>-->
+    <td width="40%" height="26" > <!--input type="checkbox" name="adm_archivo" value="$adm_archivo" <?php if ($adm_archivo) echo "checked"; else echo "";?>-->
       Administrador de Archivo. 
 	  <?php
 	$contador = 0;
@@ -190,19 +196,19 @@ echo $tPermis;
 	}
 ?>
 	  </td>
-    <td width="40%" height="26" class="listado2"> <input type="checkbox" name="dev_correo" value="$dev_correo" <?php if ($dev_correo) echo "checked"; else echo "";?>>
+    <td width="40%" height="26" > <input type="checkbox" name="dev_correo" value="$dev_correo" <?php if ($dev_correo) echo "checked"; else echo "";?>>
       Devoluciones de Correo.</td>
   	</tr>
   	<tr>
-    <td width="40%" height="26" class="listado2"> <input type="checkbox" name="adm_sistema" value="$adm_sistema" <?php if ($adm_sistema) echo "checked"; else echo "";?>>
+    <td width="40%" height="26" > <input type="checkbox" name="adm_sistema" value="$adm_sistema" <?php if ($adm_sistema) echo "checked"; else echo "";?>>
       Administrador del Sistema.</td>
-    <td width="40%" height="26" class="listado2"> <input type="checkbox" name="env_correo" value="$env_correo" <?php if ($env_correo) echo "checked"; else echo "";?>>
+    <td width="40%" height="26" > <input type="checkbox" name="env_correo" value="$env_correo" <?php if ($env_correo) echo "checked"; else echo "";?>>
       Envios de Correo.</td>
   	</tr>
 	<tr>
-	<td width="40%" height="26" class="listado2"> <input type="checkbox" name="reasigna" value="$reasigna" <?php if ($reasigna) echo "checked"; else echo "";?>>
+	<td width="40%" height="26" > <input type="checkbox" name="reasigna" value="$reasigna" <?php if ($reasigna) echo "checked"; else echo "";?>>
       Usuario Reasigna.</td>
-    <td width="40%" height="26" class="listado2"> Estad&iacute;sticas.
+    <td width="40%" height="26" > Estad&iacute;sticas.
 	<?php
 	$contador = 0;
 	while($contador <= 2)
@@ -216,10 +222,10 @@ echo $tPermis;
 	</td>
   	</tr>
 	<tr>
-	<td width="40%" height="26" class="listado2"> <input type="checkbox" name="usua_activo" value="$usua_activo" <?php if ($usua_activo == 1) echo "checked"; else echo "";?>>
+	<td width="40%" height="26" > <input type="checkbox" name="usua_activo" value="$usua_activo" <?php if ($usua_activo == 1) echo "checked"; else echo "";?>>
       Usuario Activo.
      </td>
-    <td width="40%" height="26" class="listado2">Nivel de Seguridad.
+    <td width="40%" height="26" >Nivel de Seguridad.
 	<?php
 	$contador = 1;
 	while($contador <= 5)
@@ -233,9 +239,9 @@ echo $tPermis;
 	</td>
   	</tr>
   	<tr>
-    <td width="40%" height="26" class="listado2"> <input type="checkbox" name="usua_nuevoM" value="$usua_nuevoM" <?php if ($usua_nuevoM == '0') echo "checked"; else echo "";?>>
+    <td width="40%" height="26" > <input type="checkbox" name="usua_nuevoM" value="$usua_nuevoM" <?php if ($usua_nuevoM == '0') echo "checked"; else echo "";?>>
       Usuario Nuevo.</td>
-    <td width="40%" height="26" class="listado2">Firma Digital.
+    <td width="40%" height="26" >Firma Digital.
 	<?php
 	$contador = 0;
 	while($contador <= 3)
@@ -249,17 +255,17 @@ echo $tPermis;
 	</td>
   	</tr>
   	<tr>
-	<td height='26' width='40%' class='listado2'>
+	<td height='26' width='40%' >
 		<input type="checkbox" name="permArchivar" value="$permArchivar" <?php if ($permArchivar) echo "checked"; else echo "";?>>
       Puede Archivar Documentos
 	</td>
-	<td height='26' width='40%' class='listado2'>
+	<td height='26' width='40%' >
 		<input type="checkbox" name="usua_publico" value="$usua_publico" <?php if ($usua_publico) echo "checked"; else echo "";?> >
 		Usuario P&uacute;blico.
 	</td>
 	</tr>
 	<tr>
-		<td width="40%" height="26" class="listado2">
+		<td width="40%" height="26" >
 			Creaci&oacute;n de expedientes.
 <?php
 	$contador = 0;
@@ -272,24 +278,24 @@ echo $tPermis;
 	}
 ?>
 		</td>
-		<td width="40%" height="26" class="listado2">
+		<td width="40%" height="26" >
 			<input type="checkbox" name="notifica" value="$notifica" <?php if ($notifica) echo "checked"; else echo "";?>>
 			Notificaci&oacute;n de Resoluciones.
 		</td>
 	</tr>
 	<tr>
-		<td width="40%" height="26" class="listado2"> <input type="checkbox" name="usua_radmail" value="$usua_radmail" <?php if ($usua_radmail) echo "checked"; else echo "";?>>
+		<td width="40%" height="26" > <input type="checkbox" name="usua_radmail" value="$usua_radmail" <?php if ($usua_radmail) echo "checked"; else echo "";?>>
       Radicaci&oacute;n correos electr&oacute;nicos.</td>
-	    <td height='26' width='40%' class='listado2'>
+	    <td height='26' width='40%' >
 			<input type="checkbox" name="respuesta" value="$respuesta" <?php if ($respuesta) echo "checked"; else echo "";?>>
 			Puede Enviar Respuesta Rapida
 	    </td>
 	</tr>
 </table>
-<table border=1 width=80% class=t_bordeGris>
+<table class="table table-bordered">
 <tr>
-	<td colspan="2" class="titulos4" align="center">
-		<p><B><span class=etexto>Permisos Tipos de Radicados</span></B></p>
+	<td colspan="2"  align="center">
+		<p><B><span >Permisos Tipos de Radicados</span></B></p>
 	</td>
 </tr>
 <?php
@@ -301,7 +307,7 @@ if ($rs_trad->RecordCount() >= 0)
 	$cad = "perm_tp";
 	while ($arr = $rs_trad->FetchRow())
 	{	(is_int($i/2)) ? print "" : print "<TR align='left'>";
-		echo "<td height='26' width='40%' class='listado2'>";
+		echo "<td height='26' width='40%' >";
 		$x = 0;
 		echo "&nbsp;"."(".$arr['SGD_TRAD_CODIGO'].")&nbsp;".$arr['SGD_TRAD_DESCR']."&nbsp;&nbsp;";
 		while ($x<4)
@@ -317,47 +323,47 @@ else echo "<tr><td align='center'> NO SE HAN GESTIONADO TIPOS DE RADICADOS</td><
 $ADODB_COUNTRECS = false;
 ?>
 </table>
-<table border=1 width=80% class=t_bordeGris>
+<table border=1 width=80% class="table table-bordered">
 <tr>
-	<td colspan="2" class="titulos4" align="center">
-		<p><B><span class=etexto>Otros Permisos Especiales</span></B></p>
+	<td colspan="2"  align="center">
+		<p><B><span >Otros Permisos Especiales</span></B></p>
 	</td>
 </tr>
 
 <tr>
-	<td height='26' width='40%' class='listado2'>
+	<td height='26' width='40%' >
 		<input type="checkbox" name="permBorraAnexos" value="$permBorraAnexos" <?php if ($permBorraAnexos) echo "checked"; else echo "";?>>
       Puede borrar Anexos .tif
 	</td>
-	<td height='26' width='40%' class='listado2'>
+	<td height='26' width='40%' >
 		<input type="checkbox" name="permTipificaAnexos" value="$permTipificaAnexos" <?php if ($permTipificaAnexos) echo "checked"; else echo "";?>>
       Puede Tipificar Anexos .tif
 	</td>
 </tr>
 <tr>
-	<td height='26' width='40%' class='listado2'>
+	<td height='26' width='40%' >
 		<input type="checkbox" name="autenticaLDAP" value="$autenticaLDAP" <?php if ($autenticaLDAP) echo "checked"; else echo "";?>>
       Se autentica por medio de LDAP
 	</td>
-	<td height='26' width='40%' class='listado2'>
+	<td height='26' width='40%' >
 		<input type="checkbox" name="perm_adminflujos" value="$$perm_adminflujos" <?php if ($perm_adminflujos) echo "checked"; else echo "";?>>
       Puede utilizar el editor de Flujos
 	</td>
 </tr>
 </table>
-<table border=1 width=80% class=t_bordeGris>
-    <td height="30" colspan="2" class="listado2">
+<table border=1 width=80% class="table table-bordered">
+    <td height="30" colspan="2" >
 		<input name="login" type="hidden" value='<?=$usuLogin?>'>
           <input name="PHPSESSID" type="hidden" value='<?=session_id()?>'>
           <input name="krd" type="hidden" value='<?=$krd?>'>
           <input name="nusua_codi" type="hidden" value='<?=$nusua_codi?>'>
           <input name="cedula" type="hidden" value='<?=$cedula?>'>
-          <center><input class="botones" type="submit" name="Submit3" value="Grabar"></center>
+          <center><input class="btn btn-primary" type="submit" name="Submit3" value="Grabar"></center>
 	</td>
-    <td height="30" colspan="2" class="listado2">
+    <td height="30" colspan="2" >
           <center>
 		  <a href='../formAdministracion.php?<?=session_name()."=".session_id()."&$encabezado"?>'>
-		  <input class="botones" type="reset" name="Submit4" value="Cancelar"></a></center>
+		  <input class="btn btn-primary" type="reset" name="Submit4" value="Cancelar"></a></center>
 	</td>
 </table>
 </td>

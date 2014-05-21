@@ -133,6 +133,7 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 ?>
   <form name=formEnviar action='crear.php?<?=$encabezado?>' method=GET>
   <input type=hidden name=usModo value=2>
+  <input type=hidden name=dep_sel value=<?=$dep_sel?>  >
   <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
  <?php
     if ($orderNo==98 or $orderNo==99) {

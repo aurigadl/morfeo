@@ -43,8 +43,14 @@ $sqlFechaHoy=$db->conn->DBTimeStamp(time());
 ?>
 <html>
 <head>
-<title>Untitled Document</title>
-<link rel="stylesheet" href="../../estilos/orfeo.css">
+  <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SIIM2">
+  <meta name="keywords" content="siim, metrovivienda, gestion, misional">
+  <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </head>
 <body>
 
@@ -110,13 +116,13 @@ if($usModo==2){
                 '".$usuLogin."')";
         $db->conn->Execute($isql);
     }elseif(trim($radicado) && (($rs->fields["DEPE_CODI"] != $dep_sel) || ($perfilOrig != $perfil))){
-    ?> 		<table align="center" border="2" bordercolor="#000000">
-            <form name="frmAbortar" action="../formAdministracion.php" method="post">
-                <tr bordercolor="#FFFFFF"> <td width="211" height="30" colspan="2" class="listado2"><p><span class=etexto>
+    ?> 		<table align="center" border="2" class="table table-bordered">
+            <form name="frmAbortar" action="../formAdministracion.php" method="post" class="smart-form">
+                <tr > <td width="211" height="30" colspan="2" ><p><span >
                     <center><B>El usuario <?=$usuLogin?>tiene radicados a su cargo, NO PUEDE CAMBIAR DE DEPENDENCIA</B></center>
                     </span></p> </td> </tr>
-                    <tr bordercolor="#FFFFFF">	<td height="30" colspan="2" class="listado2">
-                    <center><input class="botones" type="submit" name="Submit" value="Aceptar"></center>
+                    <tr >	<td height="30" colspan="2" >
+                    <center><input class="btn btn-primary" type="submit" name="Submit" value="Aceptar"></center>
                     <input name="PHPSESSID" type="hidden" value='<?=session_id()?>'>
                     <input name="krd" type="hidden" value='<?=$krd?>'>
                     </td>
@@ -199,13 +205,13 @@ if($usModo==2){
 	if (!$swConRadicado)
 	{
 ?>
-		<table align="center" border="2" bordercolor="#000000">
-		<form name="frmConfirmaCreacion" action="../formAdministracion.php" method="post">
-			<tr bordercolor="#FFFFFF"> <td width="211" height="30" colspan="2" class="listado2"><p><span class=etexto>
+		<table align="center" >
+		<form name="frmConfirmaCreacion" action="../formAdministracion.php" method="post" class="smart-form">
+			<tr > <td width="211" height="30" colspan="2" ><p><span >
 			<center><B>El usuario <?=$usuLogin?> ha sido Modificado con Exito</B></center>
 			</span></p> </td> </tr>
-			<tr bordercolor="#FFFFFF">	<td height="30" colspan="2" class="listado2">
-			<center><input class="botones" type="submit" name="Submit" value="Aceptar"></center>
+			<tr >	<td height="30" colspan="2" >
+			<center><input class="btn btn-primary" type="submit" name="Submit" value="Aceptar"></center>
 			<input name="PHPSESSID" type="hidden" value='<?=session_id()?>'>
 			<input name="krd" type="hidden" value='<?=$krd?>'>
 			</td> </tr>
@@ -398,15 +404,15 @@ else
 	?>
 		<form name="frmConfirmaCreacion" action="../formAdministracion.php" method="post">
 		<table align="center" border="2" bordercolor="#000000">
-		<tr bordercolor="#FFFFFF">
-			<td width="211" height="30" colspan="2" class="listado2">
-				<p><span class=etexto>
+		<tr >
+			<td width="211" height="30" colspan="2" >
+				<p><span >
 				<center><B>El usuario <?=$usuLogin?> ha sido creado con &Eacute;xito</B></center>
 				</span></p>
 			</td>
 		</tr>
-		<tr bordercolor="#FFFFFF">
-			<td height="30" colspan="2" class="listado2">
+		<tr >
+			<td height="30" colspan="2" >
 				<center><input class="botones" type="submit" name="Submit" value="Aceptar"></center>
 		      	<input name="PHPSESSID" type="hidden" value='<?=session_id()?>'>
 		      	<input name="krd" type="hidden" value='<?=$krd?>'>
