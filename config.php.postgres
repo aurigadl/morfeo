@@ -124,10 +124,10 @@ $varTramiteConjunto     =0;
 
 
 //Variable que define en que dirección se encuentra la ayuda.
-$url_ayuda ="http://manual-siim2.infometrika.net"
+$url_ayuda ="http://manual-siim2.infometrika.net";
 
 //Ruta servidor GIS
-$servidorGis = "http://siim2.infometrika.net:8080/mtvSIG/"
+$servidorGis = "http://siim2.infometrika.net:8080/mtvSIG/";
 
 //Nombre o IP del servidor en el cual funciona el reporteador en birt
 $servidorBirt = "http://siim2.infometrika.net:8080/birt/frameset?__report=";
