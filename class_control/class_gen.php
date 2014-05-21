@@ -1,7 +1,7 @@
 <?
 /**
  * CLASS_GEN es la clase que obtiene un string con una fecha (mm/dd/yyy) y lo convierte en diferentes formatos
- * @author      Sixto Angel Pinzón
+ * @author      Sixto Angel Pinzï¿½n
  * @author      Jairo Hernan Losada
  * @version     1.0
  */
@@ -19,11 +19,11 @@ class CLASS_GEN
 function traducefecha($fecha) 
     { 
     if (strlen(trim($fecha))==0)	
-    	return ("<NO ESPECIFICADA>");
+    	return ("NO ESPECIFICADA");
     
     
     $fecha= strtotime($fecha); // convierte la fecha de formato mm/dd/yyyy a marca de tiempo 
-    $diasemana=date("w", $fecha);// optiene el número del dia de la semana. El 0 es domingo 
+    $diasemana=date("w", $fecha);// optiene el nï¿½mero del dia de la semana. El 0 es domingo 
        switch ($diasemana) 
        { 
        case "0": 
@@ -48,8 +48,8 @@ function traducefecha($fecha)
           $diasemana="Sabado"; 
           break; 
        } 
-    $dia=date("d",$fecha); // día del mes en número 
-    $mes=date("m",$fecha); // número del mes de 01 a 12 
+    $dia=date("d",$fecha); // dï¿½a del mes en nï¿½mero 
+    $mes=date("m",$fecha); // nï¿½mero del mes de 01 a 12 
        switch($mes) 
        { 
        case "01": 
@@ -89,7 +89,7 @@ function traducefecha($fecha)
           $mes="Diciembre"; 
           break; 
        } 
-    $ano=date("Y",$fecha); // optenemos el año en formato 4 digitos 
+    $ano=date("Y",$fecha); // optenemos el aï¿½o en formato 4 digitos 
     $fecha= $diasemana.", ".$dia." de ".$mes." de ".$ano; // unimos el resultado en una unica cadena 
     return $fecha; //enviamos la fecha al programa 
     }
@@ -100,14 +100,14 @@ function traducefecha($fecha)
     
     	
     if (strlen(trim($fecha))==0)
-    	return ("<NO ESPECIFICADA>");
+    	return ("NO ESPECIFICADA");
     
     		
     $fecha= strtotime($fecha); // convierte la fecha de formato mm/dd/yyyy a marca de tiempo 
     
      
-    $dia=date("d",$fecha); // día del mes en número 
-    $mes=date("m",$fecha); // número del mes de 01 a 12 
+    $dia=date("d",$fecha); // dï¿½a del mes en nï¿½mero 
+    $mes=date("m",$fecha); // nï¿½mero del mes de 01 a 12 
        switch($mes) 
        { 
        case "01": 
@@ -247,7 +247,7 @@ function traducefecha($fecha)
 					
 					
        }	  
-    $ano=date("Y",$fecha); // obtenemos el año en formato 4 digitos 
+    $ano=date("Y",$fecha); // obtenemos el aï¿½o en formato 4 digitos 
     $fecha= $dia." dia(s) del mes de ".$mes." de ".$ano; // unimos el resultado en una unica cadena 
     return $fecha; //enviamos la fecha al programa 
     }
@@ -256,15 +256,15 @@ function traducefecha($fecha)
     { 
     	
     if (strlen(trim($fecha))==0)	
-    	return ("<NO ESPECIFICADA>");
+    	return ("NO ESPECIFICADA");
     	
   
     		
     $fecha= strtotime(trim($fecha)); // convierte la fecha de formato mm/dd/yyyy a marca de tiempo 
     
      
-    $dia=date("d",$fecha); // día del mes en número 
-    $mes=date("m",$fecha); // número del mes de 01 a 12 
+    $dia=date("d",$fecha); // dï¿½a del mes en nï¿½mero 
+    $mes=date("m",$fecha); // nï¿½mero del mes de 01 a 12 
        switch($mes) 
        { 
        case "01": 
@@ -404,7 +404,7 @@ function traducefecha($fecha)
 					
 					
        }	  
-    $ano=date("Y",$fecha); // obtenemos el año en formato 4 digitos 
+    $ano=date("Y",$fecha); // obtenemos el aï¿½o en formato 4 digitos 
     $fecha= $dia." de ".$mes." de ".$ano; // unimos el resultado en una unica cadena 
     return $fecha; //enviamos la fecha al programa 
     }

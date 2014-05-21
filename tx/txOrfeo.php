@@ -389,7 +389,7 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 	}
 	$sql      = "select $subDependencia, depe_codi from DEPENDENCIA $whereReasignar ORDER BY DEPE_NOMB";
 	$rs       = $db->query($sql);
-	$depencia = $rs->GetMenu2('depsel',0,"0:-- Escoja una Dependencia --",false,0," id='depsel' class=select' ");
+	$depencia = $rs->GetMenu2('depsel',0,"0:-- Escoja una Dependencia --",false,0," id='depsel' class='select' ");
 	// genera las dependencias para informar
 	$row1 = array();
 
@@ -413,7 +413,7 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 			and depe_codi = $dependencia
 			order by orden, carp_codi";
 	$rs = $db->conn->Execute($sql);
-	$rs->GetMenu2('carpSel',1,false,false,0," id=carpper class=select ");
+	$rs->GetMenu2('carpSel',1,false,false,0," id='carpper' class='select' ");
 
 	// Fin de Muestra de Carpetas personales
 	?>

@@ -257,7 +257,7 @@ class OpenDocText {
             else {
                 chmod($this->cacheDir . $nombreDir[0], 0777);
             }
-            if(is_file($this->workDir . $this->archivoSalida)){
+            if(!is_dir($this->workDir . $this->archivoSalida)){
                 $varTemp = "cp -rf " . $this->cacheDir . $nombreDir[0] . " " . $this->workDir . $this->archivoSalida;
                     switch ($this->SO){
                         case 'W': {
@@ -275,7 +275,9 @@ class OpenDocText {
                     }
                     ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr><td class=titulos2>Copia Archivo salida: " . $varTemp. " </td></tr></table>" ) : $error = '' ;
                     echo $error;
-                    return true;
+
+            }else{
+                return true;
             }
         }
         else{
@@ -322,7 +324,7 @@ class OpenDocText {
                             $contenido = substr($this->contenido, ($initIndex + strlen( $this -> bodyTagInit )) , strlen( $this -> contenido ));
                             ($this->debug == true) ? $error = "<br/> $this->contenido" : $error = '' ;
                             echo $error;
-
+                            //Delete tempContent from all xml content
                             $this -> contenido = str_replace($contenido, "", $this->contenido);
                             //$this -> contenido = str_replace('encoding="UTF-8"', 'encoding="ISO-8859-1"',$this->contenido );
                         } else {
@@ -568,10 +570,8 @@ class OpenDocText {
          * @return
          **/
         function salvarCambios( $archivoTmp, $archivoFinal, $tipoUnitario ){
-            $esArchivo = false;
             $esArchivo = is_file($this->stylesXml);
 
-            $esArchivoStyles = false;
             $esArchivoStyles = is_file($this->cabecerasXml);
 
             $this->contenido = $this -> contenido . $this -> endDocTags;

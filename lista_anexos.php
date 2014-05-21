@@ -1,6 +1,6 @@
 <?php
 ini_set("display_errors",1);
-$ruta_raiz = "."; 
+$ruta_raiz = ".";
 $ln          = $_SESSION["digitosDependencia"];
 if (!$ruta_raiz) $ruta_raiz= ".";
 include_once("$ruta_raiz/class_control/anexo.php");
@@ -54,225 +54,14 @@ $isql = "select anex_codigo AS DOCU
 			,$sqlFechaDocto as FECDOC
 			,$sqlFechaAnexo as FEANEX
 			,a.ANEX_TIPO as NUMEXTDOC
-			,(SELECT d.sgd_dir_nomremdes from sgd_dir_drecciones d where (d.sgd_anex_codigo=a.anex_codigo  or d.radi_nume_radi=a.radi_nume_salida) AND (a.sgd_dir_tipo=d.sgd_dir_tipo ) limit 1) destino 
+			,(SELECT d.sgd_dir_nomremdes from sgd_dir_drecciones d where (d.sgd_anex_codigo=a.anex_codigo  or d.radi_nume_radi=a.radi_nume_salida) AND (a.sgd_dir_tipo=d.sgd_dir_tipo ) limit 1) destino
 		from anexos a, anexos_tipo at ,usuario u
       where anex_radi_nume=$verrad and anex_tipo=anex_tipo_codi
 		   and anex_creador=usua_login and anex_borrado='N'
 	   order by AANEX_FECH_ANEX,sgd_dir_tipo,a.anex_radi_nume,a.radi_nume_salida";
-     error_reporting(7); 
+     error_reporting(7);
 
 ?>
-<script>
-swradics=0;
-radicando=0;
-
-function verDetalles(anexo,tpradic,aplinteg,num){
-optAsigna = "";
-if (swradics==0){
-	optAsigna="&verunico=1";
-}
-
-contadorVentanas=contadorVentanas+1;
-nombreventana="ventanaDetalles"+contadorVentanas;
-url="detalle_archivos.php?usua=<?=$krd?>&radi=<?=$verrad?>&anexo="+anexo;
-url="<?=$ruta_raiz?>/nuevo_archivo.php?codigo="+anexo+"&<?=session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?><?=$datos_envio?>&ruta_raiz=<?=$ruta_raiz?>"+"&tpradic="+tpradic+"&aplinteg="+aplinteg+optAsigna;
-window.open(url,nombreventana,'top=0,height=780,width=870,scrollbars=yes,resizable=yes');
-return;
-}
-
-function borrarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
-	if (confirm('Estas seguro de borrar este archivo anexo ?'))
-	{
-		contadorVentanas=contadorVentanas+1;
-		nombreventana="ventanaBorrar"+contadorVentanas;
-		//url="borrar_archivos.php?usua=<?=$krd?>&contra=<?=$drde?>&radi=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch;
-		
-		url="lista_anexos_seleccionar_transaccion.php?borrar=1&usua=<?=$krd?>&numrad=<?=$verrad?>&&contra=<?=$drde?>&radi=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&numfe="+procesoNumeracionFechado+"&dependencia=<?=$dependencia?>&codusuario=<?=$codusuario?>";
-		window.open(url,nombreventana,'height=100,width=180');
-	}
-return;
-}
-
-function radicarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado,tpradic,aplinteg,numextdoc){
-	if (radicando>0){
-	 	alert ("Ya se esta procesando una radicacion, para re-intentarlo hagla click sobre la pesta�a de documentos");
-	 	return;
-     }
-
-      radicando++;
-
-	if (confirm('Se asignar\xe1 un n\xfamero de radicado a \xe9ste documento. Est\xe1 seguro  ?'))
-	{
-		contadorVentanas=contadorVentanas+1;
-		nombreventana="mainFrame";
-		url="<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php?radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado+"&tpradic="+tpradic+"&aplinteg="+aplinteg+"&numextdoc="+numextdoc;
-		window.open(url,nombreventana,'height=450,width=600');
-	}
-return;
-}
-
-
-function numerarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
-if (confirm('Se asignar\xe1 un n\xfamero a \xe9ste documento. Est\xe1 seguro ?'))
-	{
-		contadorVentanas=contadorVentanas+1;
-		nombreventana="mainFrame";
-		url="<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php?numerar=1"+"&vp=n&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado;
-		window.open(url,nombreventana,'height=450,width=600');
-	}
-return;
-}
-
-
-function asignarRadicado(anexo,linkarch,radicar_a,numextdoc){
-
-	if (radicando>0){
-	 	alert ("Ya se esta procesando una radicacion, para re-intentarlo hagla click sobre la pesta�a de documentos");
-	 	return;
-     }
-
-     radicando++;
-
-	if (confirm('Esta seguro de asignarle el numero de Radicado a este archivo ?'))
-	{
-		contadorVentanas=contadorVentanas+1;
-		nombreventana="mainFrame";
-		url="<?=$ruta_raiz?>/genarchivo.php?generar_numero=no&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>"+"&numextdoc="+numextdoc;
-		window.open(url,nombreventana,'height=450,width=600');
-	}
-return;
-}
-function ver_tipodocuATRD(anexo,codserie,tsub)
-{
-  <?php
-		$isqlDepR = "SELECT RADI_DEPE_ACTU,RADI_USUA_ACTU from radicado
-		            WHERE RADI_NUME_RADI = '$numrad'";
-		$rsDepR = $db->conn->Execute($isqlDepR);
-	    $coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
-		$codusua = $rsDepR->fields['RADI_USUA_ACTU'];
-		$ind_ProcAnex="S";
-  ?>
-  window.open("./radicacion/tipificar_documento.php?<?=session_name()."=".session_id()?>&krd=<?=$krd?>&nurad="+anexo+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie+"&texp=<?=$texp?>","Tipificacion_Documento_Anexos","height=500,width=750,scrollbars=yes");
-}
-
-function noPermiso(){
-	alert ("No tiene permiso para acceder");
-}
-
-function ver_tipodocuAnex(cod_radi,codserie,tsub)
-{ 
- 
-  window.open("./radicacion/tipificar_anexo.php?krd=<?=$krd?>&nurad="+cod_radi+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie,"Tipificacion_Documento_Anexos","height=300,width=750,scrollbars=yes");
-}
-
-
-function vistaPreliminar(anexo,linkarch,linkarchtmp){
-		contadorVentanas=contadorVentanas+1;
-		nombreventana="mainFrame";
-		url="<?=$ruta_raiz?>/genarchivo.php?vp=s&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&linkarchivotmp="+linkarchtmp+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>";
-		window.open(url,nombreventana,'height=450,width=600');
-return;
-}
-
-function nuevoArchivo(asigna){
-contadorVentanas=contadorVentanas+1;
-optAsigna="";
-if (asigna==1){
-	optAsigna="&verunico=1";
-}
-//alert (asigna);
-
-nombreventana="ventanaNuevo"+contadorVentanas;
-url="<?=$ruta_raiz?>/nuevo_archivo.php?codigo=&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?>"+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&tdoc=<?=$tdoc?>"+optAsigna;
-window.open(url,nombreventana,'height=730,width=840,scrollbars=yes,resizable=yes');
-return;
-}
-
-
-function nuevoEditWeb(asigna){
-contadorVentanas=contadorVentanas+1;
-optAsigna="";
-if (asigna==1){
-	optAsigna="&verunico=1";
-}
-//alert (asigna);
-
-nombreventana="ventanaNuevo"+contadorVentanas;
-url="<?=$ruta_raiz?>/edicionWeb/editorWeb.php?codigo=&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?>"+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&tdoc=<?=$tdoc?>"+optAsigna;
-window.open(url,nombreventana,'height=800,width=700,scrollbars=yes,resizable=yes');
-return;
-}
-
-function Plantillas(plantillaper1){
-if(plantillaper1==0)
-{
-  plantillaper1="";
-}
-contadorVentanas=contadorVentanas+1;
-nombreventana="ventanaNuevo"+contadorVentanas;
-urlp="plantilla.php?<?="krd=$krd&".session_name()."=".trim(session_id()); ?>&verrad=<?=$verrad ?>&numrad=<?=$numrad ?>&plantillaper1="+plantillaper1;
-window.open(urlp,nombreventana,'top=0,left=0,height=800,width=850');
-return;
-}
-
-function Plantillas_pb(plantillaper1){
-if(plantillaper1==0)
-{
-  plantillaper1="";
-}
-contadorVentanas=contadorVentanas+1;
-nombreventana="ventanaNuevo"+contadorVentanas;
-urlp="crea_plantillas/plantilla.php?<?="krd=$krd&".session_name()."=".trim(session_id()); ?>&verrad=<?=$verrad ?>&numrad=<?=$numrad ?>&plantillaper1="+plantillaper1;
-window.open(urlp,nombreventana,'top=0,left=0,height=800,width=850');
-return;
-}
-
-function regresar(){
-	//window.history.go(0);
-	window.location.reload();
-    window.close();
-
-}
-
-function respuestaTx2(){
-        var valor = sw = 0;
-        var params      = 'width='+screen.width;
-            params      += ', height='+screen.height;
-            params      += ', top=0, left=0'
-            params      += ', scrollbars=yes'
-            params      += ', fullscreen=yes';
-
-      <?if(!$verrad){?>
-            for(i=1;i<document.form1.elements.length;i++){
-                if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll"){
-                    sw++;
-                    valor = document.form1.elements[i].name;
-                    valor = valor.replace("checkValue[", "");
-                    valor = valor.replace("]", "");
-                }
-            }
-
-            if (sw != 1){
-                alert("Debe seleccionar UN(1) radicado");
-                return;
-            }
-
-
-            var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
-                              "<?=session_id()?>&radicadopadre=" +
-                                + valor + "&krd=<?=$krd?>";
-           window.open(url, "Respuesta Rapida", params);
-
-      <?}else{?>
-            window.open("respuestaRapida/index2.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
-                        '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
-                        "&asunto=" + '<?php print_r($rad_asun_res)?>' +
-                        "&krd=<?=$krd?>", "Respuesta Rapida", params);
-      <?}?>
-    }
-
-<?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
-</script>
 <table WIDTH="100%" align="center" class="table table-striped table-hover" >
     <thead>
         <tr>
@@ -411,7 +200,7 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
 	echo "</a>";
 	$radicado = "false";
 	$anexo = $cod_radi;
-	} 
+	}
 		?>
 	</font>
 </TD>
@@ -444,12 +233,12 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
 			echo "<a class=vinculos href=javascript:ver_tipodocuATRD($radiNumeAnexo,$codserie,$tsub);><img src='img/icono_clasificar.png' title='Clasificar Documento' width=45></a> ";
-		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == '') 
+		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == '')
 		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo no ha sido tipificado
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
 			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='Clasificar Documento' width=45> </a> ";
-		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual != '') 
+		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual != '')
 		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo YA ha sido tipificado antes
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
@@ -463,7 +252,7 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 		)
 		{
 			if($origen!=1  and $linkarchivo)
-			{	
+			{
 			  $v = $rs->fields["SGD_PNUFE_CODI"];
 			  echo "<a class=\"vinculos\" href=\"#\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> <img src='img/icono_borrar.png' title='Borrar Archivo' width=33> </a>"; 	}
 		}
@@ -471,7 +260,7 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 	</small></td>
 	<td >
 	<?php
-	if  ($tpPerRad[$tpradic]==2 or $tpPerRad[$tpradic]==3) 
+	if  ($tpPerRad[$tpradic]==2 or $tpPerRad[$tpradic]==3)
 	{	if (!$rs->fields["RADI_NUME_SALIDA"])
 		{	if(substr($verrad,-1)==2 && $puedeRadicarAnexo==1 )
 			{	$rs->fields["SGD_PNUFE_CODI"]=0;
@@ -481,7 +270,7 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 			}
 			else
 				if ($puedeRadicarAnexo!=1)
-				{	
+				{
 				}
 				else
 				{	if((substr($verrad,-1)!=2) and $num_archivos==1 and !$rs->fields["SGD_PNUFE_CODI"] and $swRadDesdeAnex==false )
@@ -491,7 +280,7 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 			    $anexo = $cod_radi;
 					}
 else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0 && !$anex->seHaRadicadoUnPaquete($rs->fields["SGD_DOC_PADRE"]))
-	{	
+	{
          echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)' width=52> </a>";
 
 				$radicado = "false";
@@ -500,7 +289,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 		else if ($puedeRadicarAnexo==1)
 		{
 				$rs->fields["SGD_PNUFE_CODI"]=0;
-		echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)' width=52></a>"; 
+		echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)' width=52></a>";
 				$radicado = "false";
 				$anexo = $cod_radi;
 }		}		}
@@ -508,7 +297,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 			{	if (!$rs->fields["SGD_PNUFE_CODI"])$rs->fields["SGD_PNUFE_CODI"]=0;
 				if ($anex_estado<4)
 				{
-				 echo "<a class=vinculos href=javascript:radicarArchivo('$coddocu','$linkarchivo','$cod_radi',".$rs->fields["SGD_PNUFE_CODI"].",'','',$numextdoc)><img src='img/icono_regenerar.png' title='Volver a Generar Radicado' width=52></a>"; 
+				 echo "<a class=vinculos href=javascript:radicarArchivo('$coddocu','$linkarchivo','$cod_radi',".$rs->fields["SGD_PNUFE_CODI"].",'','',$numextdoc)><img src='img/icono_regenerar.png' title='Volver a Generar Radicado' width=52></a>";
 		     $radicado = "true";
 		}	}	}
 		else if ( $rs->fields["SGD_PNUFE_CODI"]  && ($usua_perm_numera_res==1) && $ruta_raiz != ".." && !$rs->fields["SGD_DOC_SECUENCIA"] && strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0) // SI ES PAQUETE DE DOCUMENTOS Y EL USUARIO TIENE PERMISOS
@@ -519,14 +308,14 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 			 * @since 10 noviembre 2009
 			*/
 
-			 echo "<a class=\"vinculos\" href=\"#\" onclick=\"numerarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].");\"> Numerar </a>"; 
+			 echo "<a class=\"vinculos\" href=\"#\" onclick=\"numerarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].");\"> Numerar </a>";
 			}
 	  		if($rs->fields["RADI_NUME_SALIDA"]) {$radicado="true";}
 		?>
 		</small></td>
-		
+
 	<?
-	}else { 
+	}else {
 	?>
 		<td >
 		<?php
@@ -535,27 +324,27 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 			   $v = $rs->fields["SGD_PNUFE_CODI"];
 			   echo "<a class=\"vinculoTipifAnex\" href=\"#\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> <img src='img/icono_borrar.png' title='Borrar Archivo' width=33> </a>";
 		}
-		if ( $perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == '' ) 
+		if ( $perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == '' )
 		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo no ha sido tipificado
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
 			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='Clasificar Documento' width=45> </a> ";
-		}elseif ( $perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual != '' ) 
+		}elseif ( $perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual != '' )
 		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo YA ha sido tipificado antes
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
 			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='MOdificar Clasificacion Documento' width=45> </a> ";
 		}
-		
+
 
 	?>
 	</small></td>
-		
+
 	<?php
-	
+
 	}
 	?>
-		
+
 </tr>
 <?php
 	$rs->MoveNext();
@@ -572,11 +361,9 @@ if($mostrar_lista==1)
 ?>
 
 </table>
-<?
-if($verradPermisos == "Full")
-{
-?>
-<br>
+
+<?if($verradPermisos == "Full"){?>
+<div id="idcombinacion"></div>
 <table  width="100%" align="center" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr align="center">
      <td ><small>
@@ -592,9 +379,218 @@ Anexar Archivo</a>
     </script>
   </tr>
 </table>
-   <?
-   }
-
-   ?>
+<? }?>
 <br>
+
+<script>
+    var swradics  = 0;
+    var radicando = 0;
+
+    function verDetalles(anexo,tpradic,aplinteg,num){
+        optAsigna = "";
+        if (swradics==0){
+            optAsigna="&verunico=1";
+        }
+        contadorVentanas=contadorVentanas+1;
+        nombreventana="ventanaDetalles"+contadorVentanas;
+        url="detalle_archivos.php?usua=<?=$krd?>&radi=<?=$verrad?>&anexo="+anexo;
+        url="<?=$ruta_raiz?>/nuevo_archivo.php?codigo="+anexo+"&<?=session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?><?=$datos_envio?>&ruta_raiz=<?=$ruta_raiz?>"+"&tpradic="+tpradic+"&aplinteg="+aplinteg+optAsigna;
+        window.open(url,nombreventana,'top=0,height=780,width=870,scrollbars=yes,resizable=yes');
+        return;
+    }
+
+    function borrarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
+        if (confirm('Estas seguro de borrar este archivo anexo ?')){
+            contadorVentanas=contadorVentanas+1;
+            nombreventana="ventanaBorrar"+contadorVentanas;
+            //url="borrar_archivos.php?usua=<?=$krd?>&contra=<?=$drde?>&radi=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch;
+
+            url="lista_anexos_seleccionar_transaccion.php?borrar=1&usua=<?=$krd?>&numrad=<?=$verrad?>&&contra=<?=$drde?>&radi=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&numfe="+procesoNumeracionFechado+"&dependencia=<?=$dependencia?>&codusuario=<?=$codusuario?>";
+            window.open(url,nombreventana,'height=100,width=180');
+        }
+        return;
+    }
+
+    function radicarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado,tpradic,aplinteg,numextdoc){
+        if (radicando>0){
+            alert ("Ya se esta procesando una radicacion, para re-intentarlo hagla click sobre la pestana de documentos");
+            return;
+        }
+
+        if (confirm('Se asignar\xe1 un n\xfamero de radicado a \xe9ste documento. Est\xe1 seguro  ?')){
+            url="?radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id())?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado+"&tpradic="+tpradic+"&aplinteg="+aplinteg+"&numextdoc="+numextdoc;
+
+            $.post( "<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php" + url, function( data ) {
+                $( "#idcombinacion" ).html( data );
+                //radicando++;
+            });
+        };
+
+        return;
+    }
+
+
+    function numerarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
+        if (confirm('Se asignar\xe1 un n\xfamero a \xe9ste documento. Est\xe1 seguro ?'))
+        {
+            contadorVentanas=contadorVentanas+1;
+            nombreventana="mainFrame";
+            url="<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php?numerar=1"+"&vp=n&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado;
+            window.open(url,nombreventana,'height=450,width=600');
+        }
+        return;
+    }
+
+
+    function asignarRadicado(anexo,linkarch,radicar_a,numextdoc){
+
+        if (radicando>0){
+            alert ("Ya se esta procesando una radicacion, para re-intentarlo hagla click sobre la pesta�a de documentos");
+            return;
+        }
+
+        radicando++;
+
+        if (confirm('Esta seguro de asignarle el numero de Radicado a este archivo ?'))
+        {
+            contadorVentanas=contadorVentanas+1;
+            nombreventana="mainFrame";
+            url="<?=$ruta_raiz?>/genarchivo.php?generar_numero=no&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>"+"&numextdoc="+numextdoc;
+            window.open(url,nombreventana,'height=450,width=600');
+        }
+        return;
+    }
+    function ver_tipodocuATRD(anexo,codserie,tsub)
+    {
+        <?php
+              $isqlDepR = "SELECT RADI_DEPE_ACTU,RADI_USUA_ACTU from radicado
+                          WHERE RADI_NUME_RADI = '$numrad'";
+              $rsDepR = $db->conn->Execute($isqlDepR);
+              $coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
+              $codusua = $rsDepR->fields['RADI_USUA_ACTU'];
+              $ind_ProcAnex="S";
+        ?>
+        window.open("./radicacion/tipificar_documento.php?<?=session_name()."=".session_id()?>&krd=<?=$krd?>&nurad="+anexo+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie+"&texp=<?=$texp?>","Tipificacion_Documento_Anexos","height=500,width=750,scrollbars=yes");
+    }
+
+    function noPermiso(){
+        alert ("No tiene permiso para acceder");
+    }
+
+    function ver_tipodocuAnex(cod_radi,codserie,tsub)
+    {
+
+        window.open("./radicacion/tipificar_anexo.php?krd=<?=$krd?>&nurad="+cod_radi+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie,"Tipificacion_Documento_Anexos","height=300,width=750,scrollbars=yes");
+    }
+
+
+    function vistaPreliminar(anexo,linkarch,linkarchtmp){
+        contadorVentanas=contadorVentanas+1;
+        nombreventana="mainFrame";
+        url="<?=$ruta_raiz?>/genarchivo.php?vp=s&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&linkarchivotmp="+linkarchtmp+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>";
+        window.open(url,nombreventana,'height=450,width=600');
+        return;
+    }
+
+    function nuevoArchivo(asigna){
+        contadorVentanas=contadorVentanas+1;
+        optAsigna="";
+        if (asigna==1){
+            optAsigna="&verunico=1";
+        }
+//alert (asigna);
+
+        nombreventana="ventanaNuevo"+contadorVentanas;
+        url="<?=$ruta_raiz?>/nuevo_archivo.php?codigo=&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?>"+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&tdoc=<?=$tdoc?>"+optAsigna;
+        window.open(url,nombreventana,'height=730,width=840,scrollbars=yes,resizable=yes');
+        return;
+    }
+
+
+    function nuevoEditWeb(asigna){
+        contadorVentanas=contadorVentanas+1;
+        optAsigna="";
+        if (asigna==1){
+            optAsigna="&verunico=1";
+        }
+//alert (asigna);
+
+        nombreventana="ventanaNuevo"+contadorVentanas;
+        url="<?=$ruta_raiz?>/edicionWeb/editorWeb.php?codigo=&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?>"+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&tdoc=<?=$tdoc?>"+optAsigna;
+        window.open(url,nombreventana,'height=800,width=700,scrollbars=yes,resizable=yes');
+        return;
+    }
+
+    function Plantillas(plantillaper1){
+        if(plantillaper1==0)
+        {
+            plantillaper1="";
+        }
+        contadorVentanas=contadorVentanas+1;
+        nombreventana="ventanaNuevo"+contadorVentanas;
+        urlp="plantilla.php?<?="krd=$krd&".session_name()."=".trim(session_id()); ?>&verrad=<?=$verrad ?>&numrad=<?=$numrad ?>&plantillaper1="+plantillaper1;
+        window.open(urlp,nombreventana,'top=0,left=0,height=800,width=850');
+        return;
+    }
+
+    function Plantillas_pb(plantillaper1){
+        if(plantillaper1==0)
+        {
+            plantillaper1="";
+        }
+        contadorVentanas=contadorVentanas+1;
+        nombreventana="ventanaNuevo"+contadorVentanas;
+        urlp="crea_plantillas/plantilla.php?<?="krd=$krd&".session_name()."=".trim(session_id()); ?>&verrad=<?=$verrad ?>&numrad=<?=$numrad ?>&plantillaper1="+plantillaper1;
+        window.open(urlp,nombreventana,'top=0,left=0,height=800,width=850');
+        return;
+    }
+
+    function regresar(){
+        //window.history.go(0);
+        window.location.reload();
+        window.close();
+
+    }
+
+   function respuestaTx2(){
+        var valor = sw = 0;
+        var params      = 'width='+screen.width;
+            params      += ', height='+screen.height;
+            params      += ', top=0, left=0'
+            params      += ', scrollbars=yes'
+            params      += ', fullscreen=yes';
+
+      <?if(!$verrad){?>
+            for(i=1;i<document.form1.elements.length;i++){
+                if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll"){
+                    sw++;
+                    valor = document.form1.elements[i].name;
+                    valor = valor.replace("checkValue[", "");
+                    valor = valor.replace("]", "");
+                }
+            }
+
+            if (sw != 1){
+                alert("Debe seleccionar UN(1) radicado");
+                return;
+            }
+
+
+            var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
+                              "<?=session_id()?>&radicadopadre=" +
+                                + valor + "&krd=<?=$krd?>";
+           window.open(url, "Respuesta Rapida", params);
+
+      <?}else{?>
+            window.open("respuestaRapida/index2.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
+                        '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
+                        "&asunto=" + '<?php print_r($rad_asun_res)?>' +
+                        "&krd=<?=$krd?>", "Respuesta Rapida", params);
+      <?}?>
+    }
+
+
+    <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
+</script>
+
 </body>

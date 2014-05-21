@@ -754,7 +754,7 @@ if($ext=="ODT" || $ext=="odt"){
 
     $accion = false;
     $odt    = new OpenDocText();
-    $odt->debug = true;
+    //$odt->debug = true;
 
     //Se carga el archivo odt Original
     $archivoACargar = str_replace('../','',$linkarchivo);
@@ -792,6 +792,7 @@ if($ext=="ODT" || $ext=="odt"){
         $odt->setVariable( $cadaVariable, $cadaValor );
         $archivoDefinitivo = $odt->salvarCambios( null, $linkarchivo_grabar, '1' );
     }
+
 
     $db->conn->CommitTrans();
     echo "<script> function abrirArchivo(url){nombreventana='Documento'; window.open(url, nombreventana,  'status, width=900,height=500,screenX=100,screenY=75,left=50,top=75');return; }</script>
