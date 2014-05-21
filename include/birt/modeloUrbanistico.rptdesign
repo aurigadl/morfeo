@@ -274,15 +274,7 @@
                     <text-property name="heading">tipo_linderos</text-property>
                 </structure>
             </list-property>
-            <list-property name="filter">
-                <structure>
-                    <property name="operator">match</property>
-                    <expression name="expr" type="javascript">row["chip"]</expression>
-                    <simple-property-list name="value1">
-                        <value>params["chip"].value</value>
-                    </simple-property-list>
-                </structure>
-            </list-property>
+            <list-property name="filter"/>
             <list-property name="parameters"/>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
