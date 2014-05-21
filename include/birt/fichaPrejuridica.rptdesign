@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
     <property name="createdBy">Eclipse BIRT Designer Version 4.2.2.v201301221637 Build &lt;4.2.2.v20130206-1509></property>
-    <list-property name="propertyBindings">
-        <structure>
-            <property name="name">queryText</property>
-            <property name="id">66</property>
-        </structure>
-        <structure>
-            <property name="name">queryTimeOut</property>
-            <property name="id">66</property>
-        </structure>
-        <structure>
-            <property name="name">rowFetchSize</property>
-            <property name="id">66</property>
-        </structure>
-    </list-property>
     <property name="units">in</property>
     <property name="iconFile">/templates/blank_report.gif</property>
     <property name="bidiLayoutOrientation">ltr</property>
@@ -25,7 +11,7 @@
             <property name="dataType">string</property>
             <property name="distinct">true</property>
             <simple-property-list name="defaultValue">
-                <value type="constant">AAA0000PJEA</value>
+                <value type="constant">AAA0008FEEP</value>
             </simple-property-list>
             <list-property name="selectionList"/>
             <property name="paramType">simple</property>
@@ -54,11 +40,9 @@
                 </ex-property>
             </list-property>
             <property name="odaDriverClass">org.postgresql.Driver</property>
-            <!--  
             <property name="odaURL">jdbc:postgresql://localhost:5433/caliopegd</property>
             <property name="odaUser">postgres</property>
             <encrypted-property name="odaPassword" encryptionID="base64">cG9zdGdyZXM=</encrypted-property>
-             -->
             <property name="odaJndiName">java:comp/env/jdbc/siim2</property>
         </oda-data-source>
     </data-sources>
@@ -155,12 +139,6 @@
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">linderos</text-property>
                     <text-property name="heading">linderos</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">incorporacion_topograficaboolean</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="displayName">incorporacion_topograficaboolean</text-property>
-                    <text-property name="heading">incorporacion_topograficaboolean</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">incoroporacion_topografica_desc</property>
@@ -361,107 +339,177 @@
                     </structure>
                     <structure>
                         <property name="position">15</property>
-                        <property name="name">linderos</property>
-                        <property name="dataType">string</property>
+                        <property name="name">area_construida</property>
+                        <property name="dataType">float</property>
                     </structure>
                     <structure>
                         <property name="position">16</property>
-                        <property name="name">incorporacion_topograficaboolean</property>
-                        <property name="dataType">string</property>
+                        <property name="name">valor_construcciones</property>
+                        <property name="dataType">float</property>
                     </structure>
                     <structure>
                         <property name="position">17</property>
-                        <property name="name">incoroporacion_topografica_desc</property>
+                        <property name="name">tipo_linderos</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">18</property>
-                        <property name="name">registro_topografico</property>
+                        <property name="name">linderos</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">19</property>
-                        <property name="name">tradicion</property>
+                        <property name="name">incorporacion_topografica</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
                         <property name="position">20</property>
+                        <property name="name">incoroporacion_topografica_desc</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">registro_topografico</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">tradicion</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
                         <property name="name">avaluo_catastral_terreno</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">21</property>
+                        <property name="position">24</property>
                         <property name="name">avaluo_catastral_construccion</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">22</property>
+                        <property name="position">25</property>
                         <property name="name">avaluo_comercial</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">23</property>
+                        <property name="position">26</property>
                         <property name="name">vigencia_informacion</property>
                         <property name="dataType">date</property>
                     </structure>
                     <structure>
-                        <property name="position">24</property>
+                        <property name="position">27</property>
                         <property name="name">componente_espacial_registral</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">25</property>
+                        <property name="position">28</property>
                         <property name="name">area_registral</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">26</property>
+                        <property name="position">29</property>
                         <property name="name">componente_espacial_catastral</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">27</property>
+                        <property name="position">30</property>
                         <property name="name">area_catastral</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">28</property>
+                        <property name="position">31</property>
                         <property name="name">altura_construccion</property>
                         <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">29</property>
+                        <property name="position">32</property>
                         <property name="name">componente_espacial_topografica</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">30</property>
+                        <property name="position">33</property>
                         <property name="name">area_topografica</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">31</property>
+                        <property name="position">34</property>
                         <property name="name">observaciones_componente_espacial</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">32</property>
+                        <property name="position">35</property>
                         <property name="name">elaboro</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
-                        <property name="position">33</property>
+                        <property name="position">36</property>
                         <property name="name">mapa_tradicion</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">34</property>
+                        <property name="position">37</property>
                         <property name="name">informacion_predial</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">35</property>
-                        <property name="name">tipo_linderos</property>
+                        <property name="position">38</property>
+                        <property name="name">tipo_propietario</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">39</property>
+                        <property name="name">lindero_norte</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">40</property>
+                        <property name="name">lindero_sur</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">41</property>
+                        <property name="name">lindero_oriente</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">42</property>
+                        <property name="name">lindero_occidente</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">43</property>
+                        <property name="name">lindero_fuente</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">44</property>
+                        <property name="name">tipo_persona</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">45</property>
+                        <property name="name">propietario_identificacion</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">46</property>
+                        <property name="name">sector_predio</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">47</property>
+                        <property name="name">propietario_dir_notificacion</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">48</property>
+                        <property name="name">propietario_telefono</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">49</property>
+                        <property name="name">tarjeta_profesional</property>
                         <property name="dataType">string</property>
                     </structure>
                 </list-property>
@@ -473,245 +521,294 @@
                     <property name="name">id</property>
                     <property name="nativeName">id</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
                     <property name="name">barmanpre</property>
                     <property name="nativeName">barmanpre</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">3</property>
                     <property name="name">chip</property>
                     <property name="nativeName">chip</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">4</property>
                     <property name="name">fuente_direccion</property>
                     <property name="nativeName">fuente_direccion</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">5</property>
                     <property name="name">sector</property>
                     <property name="nativeName">sector</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">6</property>
                     <property name="name">barrio</property>
                     <property name="nativeName">barrio</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">7</property>
                     <property name="name">estrato</property>
                     <property name="nativeName">estrato</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">8</property>
                     <property name="name">propietarios_actuales</property>
                     <property name="nativeName">propietarios_actuales</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">9</property>
                     <property name="name">nombre_predio</property>
                     <property name="nativeName">nombre_predio</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">10</property>
                     <property name="name">acto_traslativo</property>
                     <property name="nativeName">acto_traslativo</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">11</property>
                     <property name="name">matricula_inmobiliaria</property>
                     <property name="nativeName">matricula_inmobiliaria</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">12</property>
                     <property name="name">cedula_catastral</property>
                     <property name="nativeName">cedula_catastral</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">13</property>
                     <property name="name">titulo_adquisicion</property>
                     <property name="nativeName">titulo_adquisicion</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">14</property>
                     <property name="name">cabida_superficiaria</property>
                     <property name="nativeName">cabida_superficiaria</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">15</property>
-                    <property name="name">linderos</property>
-                    <property name="nativeName">linderos</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
+                    <property name="name">area_construida</property>
+                    <property name="nativeName">area_construida</property>
+                    <property name="dataType">float</property>
                 </structure>
                 <structure>
                     <property name="position">16</property>
-                    <property name="name">incorporacion_topograficaboolean</property>
-                    <property name="nativeName">incorporacion_topograficaboolean</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
+                    <property name="name">valor_construcciones</property>
+                    <property name="nativeName">valor_construcciones</property>
+                    <property name="dataType">float</property>
                 </structure>
                 <structure>
                     <property name="position">17</property>
-                    <property name="name">incoroporacion_topografica_desc</property>
-                    <property name="nativeName">incoroporacion_topografica_desc</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">18</property>
-                    <property name="name">registro_topografico</property>
-                    <property name="nativeName">registro_topografico</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">19</property>
-                    <property name="name">tradicion</property>
-                    <property name="nativeName">tradicion</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">20</property>
-                    <property name="name">avaluo_catastral_terreno</property>
-                    <property name="nativeName">avaluo_catastral_terreno</property>
-                    <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
-                </structure>
-                <structure>
-                    <property name="position">21</property>
-                    <property name="name">avaluo_catastral_construccion</property>
-                    <property name="nativeName">avaluo_catastral_construccion</property>
-                    <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
-                </structure>
-                <structure>
-                    <property name="position">22</property>
-                    <property name="name">avaluo_comercial</property>
-                    <property name="nativeName">avaluo_comercial</property>
-                    <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
-                </structure>
-                <structure>
-                    <property name="position">23</property>
-                    <property name="name">vigencia_informacion</property>
-                    <property name="nativeName">vigencia_informacion</property>
-                    <property name="dataType">date</property>
-                    <property name="nativeDataType">91</property>
-                </structure>
-                <structure>
-                    <property name="position">24</property>
-                    <property name="name">componente_espacial_registral</property>
-                    <property name="nativeName">componente_espacial_registral</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">25</property>
-                    <property name="name">area_registral</property>
-                    <property name="nativeName">area_registral</property>
-                    <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
-                </structure>
-                <structure>
-                    <property name="position">26</property>
-                    <property name="name">componente_espacial_catastral</property>
-                    <property name="nativeName">componente_espacial_catastral</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">27</property>
-                    <property name="name">area_catastral</property>
-                    <property name="nativeName">area_catastral</property>
-                    <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
-                </structure>
-                <structure>
-                    <property name="position">28</property>
-                    <property name="name">altura_construccion</property>
-                    <property name="nativeName">altura_construccion</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
-                </structure>
-                <structure>
-                    <property name="position">29</property>
-                    <property name="name">componente_espacial_topografica</property>
-                    <property name="nativeName">componente_espacial_topografica</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">30</property>
-                    <property name="name">area_topografica</property>
-                    <property name="nativeName">area_topografica</property>
-                    <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
-                </structure>
-                <structure>
-                    <property name="position">31</property>
-                    <property name="name">observaciones_componente_espacial</property>
-                    <property name="nativeName">observaciones_componente_espacial</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">32</property>
-                    <property name="name">elaboro</property>
-                    <property name="nativeName">elaboro</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">33</property>
-                    <property name="name">mapa_tradicion</property>
-                    <property name="nativeName">mapa_tradicion</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">34</property>
-                    <property name="name">informacion_predial</property>
-                    <property name="nativeName">informacion_predial</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">35</property>
                     <property name="name">tipo_linderos</property>
                     <property name="nativeName">tipo_linderos</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">linderos</property>
+                    <property name="nativeName">linderos</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">incorporacion_topografica</property>
+                    <property name="nativeName">incorporacion_topografica</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">incoroporacion_topografica_desc</property>
+                    <property name="nativeName">incoroporacion_topografica_desc</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">registro_topografico</property>
+                    <property name="nativeName">registro_topografico</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">tradicion</property>
+                    <property name="nativeName">tradicion</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">avaluo_catastral_terreno</property>
+                    <property name="nativeName">avaluo_catastral_terreno</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">24</property>
+                    <property name="name">avaluo_catastral_construccion</property>
+                    <property name="nativeName">avaluo_catastral_construccion</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">25</property>
+                    <property name="name">avaluo_comercial</property>
+                    <property name="nativeName">avaluo_comercial</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">26</property>
+                    <property name="name">vigencia_informacion</property>
+                    <property name="nativeName">vigencia_informacion</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">27</property>
+                    <property name="name">componente_espacial_registral</property>
+                    <property name="nativeName">componente_espacial_registral</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">28</property>
+                    <property name="name">area_registral</property>
+                    <property name="nativeName">area_registral</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">29</property>
+                    <property name="name">componente_espacial_catastral</property>
+                    <property name="nativeName">componente_espacial_catastral</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">30</property>
+                    <property name="name">area_catastral</property>
+                    <property name="nativeName">area_catastral</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">31</property>
+                    <property name="name">altura_construccion</property>
+                    <property name="nativeName">altura_construccion</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">32</property>
+                    <property name="name">componente_espacial_topografica</property>
+                    <property name="nativeName">componente_espacial_topografica</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">33</property>
+                    <property name="name">area_topografica</property>
+                    <property name="nativeName">area_topografica</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">34</property>
+                    <property name="name">observaciones_componente_espacial</property>
+                    <property name="nativeName">observaciones_componente_espacial</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">35</property>
+                    <property name="name">elaboro</property>
+                    <property name="nativeName">elaboro</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">36</property>
+                    <property name="name">mapa_tradicion</property>
+                    <property name="nativeName">mapa_tradicion</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">37</property>
+                    <property name="name">informacion_predial</property>
+                    <property name="nativeName">informacion_predial</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">38</property>
+                    <property name="name">tipo_propietario</property>
+                    <property name="nativeName">tipo_propietario</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">39</property>
+                    <property name="name">lindero_norte</property>
+                    <property name="nativeName">lindero_norte</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">40</property>
+                    <property name="name">lindero_sur</property>
+                    <property name="nativeName">lindero_sur</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">41</property>
+                    <property name="name">lindero_oriente</property>
+                    <property name="nativeName">lindero_oriente</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">42</property>
+                    <property name="name">lindero_occidente</property>
+                    <property name="nativeName">lindero_occidente</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">43</property>
+                    <property name="name">lindero_fuente</property>
+                    <property name="nativeName">lindero_fuente</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">44</property>
+                    <property name="name">tipo_persona</property>
+                    <property name="nativeName">tipo_persona</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">45</property>
+                    <property name="name">propietario_identificacion</property>
+                    <property name="nativeName">propietario_identificacion</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">46</property>
+                    <property name="name">sector_predio</property>
+                    <property name="nativeName">sector_predio</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">47</property>
+                    <property name="name">propietario_dir_notificacion</property>
+                    <property name="nativeName">propietario_dir_notificacion</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">48</property>
+                    <property name="name">propietario_telefono</property>
+                    <property name="nativeName">propietario_telefono</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">49</property>
+                    <property name="name">tarjeta_profesional</property>
+                    <property name="nativeName">tarjeta_profesional</property>
+                    <property name="dataType">string</property>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[select *
@@ -1671,7 +1768,7 @@ from modeloPrejuridico mp]]></xml-property>
                                 <property name="fontWeight">bold</property>
                                 <property name="textAlign">center</property>
                                 <property name="contentType">auto</property>
-                                <text-property name="content"><![CDATA[Pagina]]></text-property>
+                                <text-property name="content"><![CDATA[Página]]></text-property>
                             </text>
                             <data id="325"/>
                         </cell>
@@ -1689,7 +1786,7 @@ from modeloPrejuridico mp]]></xml-property>
     </page-setup>
     <body>
         <grid id="9">
-            <property name="height">9.125in</property>
+            <property name="height">10.71875in</property>
             <property name="width">8.114583333333334in</property>
             <column id="10">
                 <property name="width">2.0833333333333335in</property>
@@ -1701,10 +1798,10 @@ from modeloPrejuridico mp]]></xml-property>
                 <property name="width">1in</property>
             </column>
             <column id="13">
-                <property name="width">1.3229166666666667in</property>
+                <property name="width">1.46875in</property>
             </column>
             <column id="14">
-                <property name="width">1.3229166666666667in</property>
+                <property name="width">1.1770833333333333in</property>
             </column>
             <column id="15">
                 <property name="width">1.4895833333333333in</property>
@@ -1757,7 +1854,7 @@ PREDIO:]]></text-property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">center</property>
                         <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[INFROMACION BASICA]]></text-property>
+                        <text-property name="content"><![CDATA[INFORMACIÓN BÁSICA]]></text-property>
                     </text>
                 </cell>
             </row>
@@ -1945,7 +2042,7 @@ PREDIO:]]></text-property>
                         <property name="backgroundColor">#BFBFBF</property>
                         <property name="fontWeight">bold</property>
                         <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[COMPONENTE JURIDICO:]]></text-property>
+                        <text-property name="content"><![CDATA[DATOS BÁSICOS DEL PROPIETARIO:]]></text-property>
                     </text>
                 </cell>
                 <cell id="48">
@@ -1964,6 +2061,8 @@ PREDIO:]]></text-property>
                     <property name="borderTopWidth">thin</property>
                 </cell>
                 <cell id="49">
+                    <property name="colSpan">2</property>
+                    <property name="rowSpan">1</property>
                     <property name="fontSize">14pt</property>
                     <property name="borderBottomColor">#000000</property>
                     <property name="borderBottomStyle">solid</property>
@@ -1978,8 +2077,9 @@ PREDIO:]]></text-property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
                 </cell>
-                <cell id="50">
-                    <property name="fontSize">14pt</property>
+            </row>
+            <row id="345">
+                <cell id="346">
                     <property name="borderBottomColor">#000000</property>
                     <property name="borderBottomStyle">solid</property>
                     <property name="borderBottomWidth">thin</property>
@@ -1992,6 +2092,178 @@ PREDIO:]]></text-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
+                    <label id="329">
+                        <property name="backgroundAttachment">scroll</property>
+                        <property name="backgroundColor">#E5E5E5</property>
+                        <property name="backgroundPositionX">0%</property>
+                        <property name="backgroundPositionY">0%</property>
+                        <property name="backgroundRepeat">repeat</property>
+                        <property name="fontFamily">sans-serif</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="fontWeight">normal</property>
+                        <property name="fontStyle">normal</property>
+                        <property name="fontVariant">normal</property>
+                        <property name="color">black</property>
+                        <property name="textLineThrough">none</property>
+                        <property name="textOverline">none</property>
+                        <property name="textUnderline">none</property>
+                        <property name="borderBottomColor">black</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">black</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightColor">black</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopColor">black</property>
+                        <property name="borderTopStyle">none</property>
+                        <property name="borderTopWidth">medium</property>
+                        <property name="marginTop">0pt</property>
+                        <property name="marginLeft">0pt</property>
+                        <property name="marginBottom">0pt</property>
+                        <property name="marginRight">0pt</property>
+                        <property name="paddingTop">1pt</property>
+                        <property name="paddingLeft">1pt</property>
+                        <property name="paddingBottom">1pt</property>
+                        <property name="paddingRight">1pt</property>
+                        <property name="letterSpacing">normal</property>
+                        <property name="lineHeight">normal</property>
+                        <property name="orphans">2</property>
+                        <property name="textTransform">none</property>
+                        <property name="whiteSpace">normal</property>
+                        <property name="widows">2</property>
+                        <property name="wordSpacing">normal</property>
+                        <property name="display">block</property>
+                        <property name="pageBreakAfter">auto</property>
+                        <property name="pageBreakBefore">auto</property>
+                        <property name="pageBreakInside">auto</property>
+                        <property name="showIfBlank">false</property>
+                        <property name="canShrink">false</property>
+                        <property name="overflow">hidden</property>
+                        <text-property name="text">Tipo de propietario</text-property>
+                    </label>
+                </cell>
+                <cell id="347">
+                    <property name="colSpan">2</property>
+                    <property name="rowSpan">1</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <data id="330">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">tipo_propietario</property>
+                                <text-property name="displayName">tipo_propietario</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["tipo_propietario"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">tipo_propietario</property>
+                    </data>
+                </cell>
+                <cell id="349">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <label id="366">
+                        <property name="backgroundAttachment">scroll</property>
+                        <property name="backgroundColor">#E5E5E5</property>
+                        <property name="backgroundPositionX">0%</property>
+                        <property name="backgroundPositionY">0%</property>
+                        <property name="backgroundRepeat">repeat</property>
+                        <property name="fontFamily">sans-serif</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="fontWeight">normal</property>
+                        <property name="fontStyle">normal</property>
+                        <property name="fontVariant">normal</property>
+                        <property name="color">black</property>
+                        <property name="textLineThrough">none</property>
+                        <property name="textOverline">none</property>
+                        <property name="textUnderline">none</property>
+                        <property name="borderBottomColor">black</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">black</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightColor">black</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopColor">black</property>
+                        <property name="borderTopStyle">none</property>
+                        <property name="borderTopWidth">medium</property>
+                        <property name="marginTop">0pt</property>
+                        <property name="marginLeft">0pt</property>
+                        <property name="marginBottom">0pt</property>
+                        <property name="marginRight">0pt</property>
+                        <property name="paddingTop">1pt</property>
+                        <property name="paddingLeft">1pt</property>
+                        <property name="paddingBottom">1pt</property>
+                        <property name="paddingRight">1pt</property>
+                        <property name="letterSpacing">normal</property>
+                        <property name="lineHeight">normal</property>
+                        <property name="orphans">2</property>
+                        <property name="textTransform">none</property>
+                        <property name="whiteSpace">normal</property>
+                        <property name="widows">2</property>
+                        <property name="wordSpacing">normal</property>
+                        <property name="display">block</property>
+                        <property name="pageBreakAfter">auto</property>
+                        <property name="pageBreakBefore">auto</property>
+                        <property name="pageBreakInside">auto</property>
+                        <property name="showIfBlank">false</property>
+                        <property name="canShrink">false</property>
+                        <property name="overflow">hidden</property>
+                        <text-property name="text">Tipo de persona</text-property>
+                    </label>
+                </cell>
+                <cell id="350">
+                    <property name="colSpan">2</property>
+                    <property name="rowSpan">1</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <data id="367">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">tipo_persona</property>
+                                <text-property name="displayName">tipo_persona</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["tipo_persona"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">tipo_persona</property>
+                    </data>
                 </cell>
             </row>
             <row id="51">
@@ -2060,7 +2332,7 @@ PREDIO:]]></text-property>
                     <text id="93">
                         <property name="backgroundColor">#E5E5E5</property>
                         <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[Documento de identificacion]]></text-property>
+                        <text-property name="content"><![CDATA[Documento de identificación]]></text-property>
                     </text>
                 </cell>
                 <cell id="86">
@@ -2078,6 +2350,250 @@ PREDIO:]]></text-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
+                    <data id="385">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">propietario_identificacion</property>
+                                <text-property name="displayName">propietario_identificacion</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["propietario_identificacion"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">propietario_identificacion</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="368">
+                <cell id="369">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <label id="382">
+                        <property name="backgroundAttachment">scroll</property>
+                        <property name="backgroundColor">#E5E5E5</property>
+                        <property name="backgroundPositionX">0%</property>
+                        <property name="backgroundPositionY">0%</property>
+                        <property name="backgroundRepeat">repeat</property>
+                        <property name="fontFamily">sans-serif</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="fontWeight">normal</property>
+                        <property name="fontStyle">normal</property>
+                        <property name="fontVariant">normal</property>
+                        <property name="color">black</property>
+                        <property name="textLineThrough">none</property>
+                        <property name="textOverline">none</property>
+                        <property name="textUnderline">none</property>
+                        <property name="borderBottomColor">black</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">black</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightColor">black</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopColor">black</property>
+                        <property name="borderTopStyle">none</property>
+                        <property name="borderTopWidth">medium</property>
+                        <property name="marginTop">0pt</property>
+                        <property name="marginLeft">0pt</property>
+                        <property name="marginBottom">0pt</property>
+                        <property name="marginRight">0pt</property>
+                        <property name="paddingTop">1pt</property>
+                        <property name="paddingLeft">1pt</property>
+                        <property name="paddingBottom">1pt</property>
+                        <property name="paddingRight">1pt</property>
+                        <property name="letterSpacing">normal</property>
+                        <property name="lineHeight">normal</property>
+                        <property name="orphans">2</property>
+                        <property name="textTransform">none</property>
+                        <property name="whiteSpace">normal</property>
+                        <property name="widows">2</property>
+                        <property name="wordSpacing">normal</property>
+                        <property name="display">block</property>
+                        <property name="pageBreakAfter">auto</property>
+                        <property name="pageBreakBefore">auto</property>
+                        <property name="pageBreakInside">auto</property>
+                        <property name="showIfBlank">false</property>
+                        <property name="canShrink">false</property>
+                        <property name="overflow">hidden</property>
+                        <text-property name="text">Predio del Sector</text-property>
+                    </label>
+                </cell>
+                <cell id="370">
+                    <property name="colSpan">2</property>
+                    <property name="rowSpan">1</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <data id="383">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">sector_predio</property>
+                                <text-property name="displayName">sector_predio</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["sector_predio"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">sector_predio</property>
+                    </data>
+                </cell>
+                <cell id="372">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                </cell>
+                <cell id="373">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                </cell>
+                <cell id="374">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                </cell>
+            </row>
+            <row id="375">
+                <cell id="376">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <label id="384">
+                        <property name="backgroundAttachment">scroll</property>
+                        <property name="backgroundColor">#E5E5E5</property>
+                        <property name="backgroundPositionX">0%</property>
+                        <property name="backgroundPositionY">0%</property>
+                        <property name="backgroundRepeat">repeat</property>
+                        <property name="fontFamily">sans-serif</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="fontWeight">normal</property>
+                        <property name="fontStyle">normal</property>
+                        <property name="fontVariant">normal</property>
+                        <property name="color">black</property>
+                        <property name="textLineThrough">none</property>
+                        <property name="textOverline">none</property>
+                        <property name="textUnderline">none</property>
+                        <property name="borderBottomColor">black</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">black</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightColor">black</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopColor">black</property>
+                        <property name="borderTopStyle">none</property>
+                        <property name="borderTopWidth">medium</property>
+                        <property name="marginTop">0pt</property>
+                        <property name="marginLeft">0pt</property>
+                        <property name="marginBottom">0pt</property>
+                        <property name="marginRight">0pt</property>
+                        <property name="paddingTop">1pt</property>
+                        <property name="paddingLeft">1pt</property>
+                        <property name="paddingBottom">1pt</property>
+                        <property name="paddingRight">1pt</property>
+                        <property name="letterSpacing">normal</property>
+                        <property name="lineHeight">normal</property>
+                        <property name="orphans">2</property>
+                        <property name="textTransform">none</property>
+                        <property name="whiteSpace">normal</property>
+                        <property name="widows">2</property>
+                        <property name="wordSpacing">normal</property>
+                        <property name="display">block</property>
+                        <property name="pageBreakAfter">auto</property>
+                        <property name="pageBreakBefore">auto</property>
+                        <property name="pageBreakInside">auto</property>
+                        <property name="showIfBlank">false</property>
+                        <property name="canShrink">false</property>
+                        <property name="overflow">hidden</property>
+                        <text-property name="text">Dirección de Notificación</text-property>
+                    </label>
+                </cell>
+                <cell id="377">
+                    <property name="colSpan">5</property>
+                    <property name="rowSpan">1</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <data id="386">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">propietario_dir_notificacion</property>
+                                <text-property name="displayName">propietario_dir_notificacion</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["propietario_dir_notificacion"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">propietario_dir_notificacion</property>
+                    </data>
                 </cell>
             </row>
             <row id="77">
@@ -2115,6 +2631,18 @@ PREDIO:]]></text-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
+                    <data id="387">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">propietario_telefono</property>
+                                <text-property name="displayName">propietario_telefono</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["propietario_telefono"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">propietario_telefono</property>
+                    </data>
                 </cell>
             </row>
             <row id="70">
@@ -2199,6 +2727,18 @@ PREDIO:]]></text-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
+                    <data id="388">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">acto_traslativo</property>
+                                <text-property name="displayName">acto_traslativo</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["acto_traslativo"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">acto_traslativo</property>
+                    </data>
                 </cell>
             </row>
             <row id="109">
@@ -2218,7 +2758,7 @@ PREDIO:]]></text-property>
                     <text id="118">
                         <property name="backgroundColor">#E5E5E5</property>
                         <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[Matricula Inmobiliaria]]></text-property>
+                        <text-property name="content"><![CDATA[Matrícula Inmobiliaria]]></text-property>
                     </text>
                 </cell>
                 <cell id="111">
@@ -2314,7 +2854,7 @@ PREDIO:]]></text-property>
                     <text id="120">
                         <property name="backgroundColor">#E5E5E5</property>
                         <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[Titulo de adquisición]]></text-property>
+                        <text-property name="content"><![CDATA[Título de adquisición]]></text-property>
                     </text>
                 </cell>
                 <cell id="104">
@@ -2382,7 +2922,7 @@ PREDIO:]]></text-property>
                     <property name="borderTopWidth">thin</property>
                     <text id="160">
                         <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[M2
+                        <text-property name="content"><![CDATA[m2
 FUENTE:]]></text-property>
                     </text>
                 </cell>
@@ -2419,7 +2959,7 @@ FUENTE:]]></text-property>
                 <property name="height">0.23958333333333334in</property>
                 <cell id="183">
                     <property name="colSpan">1</property>
-                    <property name="rowSpan">5</property>
+                    <property name="rowSpan">4</property>
                     <property name="borderBottomColor">#000000</property>
                     <property name="borderBottomStyle">solid</property>
                     <property name="borderBottomWidth">thin</property>
@@ -2472,17 +3012,17 @@ FUENTE:]]></text-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
-                    <data id="273">
+                    <data id="401">
                         <property name="dataSet">modeloPredial</property>
                         <list-property name="boundDataColumns">
                             <structure>
-                                <property name="name">linderos</property>
-                                <text-property name="displayName">linderos</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["linderos"]</expression>
+                                <property name="name">lindero_norte</property>
+                                <text-property name="displayName">lindero_norte</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["lindero_norte"]</expression>
                                 <property name="dataType">string</property>
                             </structure>
                         </list-property>
-                        <property name="resultSetColumn">linderos</property>
+                        <property name="resultSetColumn">lindero_norte</property>
                     </data>
                 </cell>
             </row>
@@ -2522,6 +3062,18 @@ FUENTE:]]></text-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
+                    <data id="402">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">lindero_sur</property>
+                                <text-property name="displayName">lindero_sur</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["lindero_sur"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">lindero_sur</property>
+                    </data>
                 </cell>
             </row>
             <row id="161">
@@ -2560,6 +3112,18 @@ FUENTE:]]></text-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
+                    <data id="403">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">lindero_oriente</property>
+                                <text-property name="displayName">lindero_oriente</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["lindero_oriente"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">lindero_oriente</property>
+                    </data>
                 </cell>
             </row>
             <row id="189">
@@ -2598,44 +3162,18 @@ FUENTE:]]></text-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
-                </cell>
-            </row>
-            <row id="168">
-                <property name="height">0.2604166666666667in</property>
-                <cell id="170">
-                    <property name="borderBottomColor">#000000</property>
-                    <property name="borderBottomStyle">solid</property>
-                    <property name="borderBottomWidth">thin</property>
-                    <property name="borderLeftColor">#000000</property>
-                    <property name="borderLeftStyle">solid</property>
-                    <property name="borderLeftWidth">thin</property>
-                    <property name="borderRightColor">#000000</property>
-                    <property name="borderRightStyle">solid</property>
-                    <property name="borderRightWidth">thin</property>
-                    <property name="borderTopColor">#000000</property>
-                    <property name="borderTopStyle">solid</property>
-                    <property name="borderTopWidth">thin</property>
-                    <text id="201">
-                        <property name="fontWeight">bold</property>
-                        <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[Fuente]]></text-property>
-                    </text>
-                </cell>
-                <cell id="171">
-                    <property name="colSpan">4</property>
-                    <property name="rowSpan">1</property>
-                    <property name="borderBottomColor">#000000</property>
-                    <property name="borderBottomStyle">solid</property>
-                    <property name="borderBottomWidth">thin</property>
-                    <property name="borderLeftColor">#000000</property>
-                    <property name="borderLeftStyle">solid</property>
-                    <property name="borderLeftWidth">thin</property>
-                    <property name="borderRightColor">#000000</property>
-                    <property name="borderRightStyle">solid</property>
-                    <property name="borderRightWidth">thin</property>
-                    <property name="borderTopColor">#000000</property>
-                    <property name="borderTopStyle">solid</property>
-                    <property name="borderTopWidth">thin</property>
+                    <data id="404">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">lindero_occidente</property>
+                                <text-property name="displayName">lindero_occidente</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["lindero_occidente"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">lindero_occidente</property>
+                    </data>
                 </cell>
             </row>
             <row id="202">
@@ -2687,6 +3225,218 @@ FUENTE:]]></text-property>
                     </data>
                 </cell>
             </row>
+            <row id="389">
+                <cell id="390">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <label id="396">
+                        <property name="backgroundAttachment">scroll</property>
+                        <property name="backgroundColor">#E5E5E5</property>
+                        <property name="backgroundPositionX">0%</property>
+                        <property name="backgroundPositionY">0%</property>
+                        <property name="backgroundRepeat">repeat</property>
+                        <property name="fontFamily">sans-serif</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="fontWeight">normal</property>
+                        <property name="fontStyle">normal</property>
+                        <property name="fontVariant">normal</property>
+                        <property name="color">black</property>
+                        <property name="textLineThrough">none</property>
+                        <property name="textOverline">none</property>
+                        <property name="textUnderline">none</property>
+                        <property name="borderBottomColor">black</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">black</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightColor">black</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopColor">black</property>
+                        <property name="borderTopStyle">none</property>
+                        <property name="borderTopWidth">medium</property>
+                        <property name="marginTop">0pt</property>
+                        <property name="marginLeft">0pt</property>
+                        <property name="marginBottom">0pt</property>
+                        <property name="marginRight">0pt</property>
+                        <property name="paddingTop">1pt</property>
+                        <property name="paddingLeft">1pt</property>
+                        <property name="paddingBottom">1pt</property>
+                        <property name="paddingRight">1pt</property>
+                        <property name="letterSpacing">normal</property>
+                        <property name="lineHeight">normal</property>
+                        <property name="orphans">2</property>
+                        <property name="textTransform">none</property>
+                        <property name="whiteSpace">normal</property>
+                        <property name="widows">2</property>
+                        <property name="wordSpacing">normal</property>
+                        <property name="display">block</property>
+                        <property name="pageBreakAfter">auto</property>
+                        <property name="pageBreakBefore">auto</property>
+                        <property name="pageBreakInside">auto</property>
+                        <property name="showIfBlank">false</property>
+                        <property name="canShrink">false</property>
+                        <property name="overflow">hidden</property>
+                        <text-property name="text">Incorporación Topográfica</text-property>
+                    </label>
+                </cell>
+                <cell id="391">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <data id="398">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">incorporacion_topografica</property>
+                                <text-property name="displayName">incorporacion_topografica</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["incorporacion_topografica"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">incorporacion_topografica</property>
+                    </data>
+                </cell>
+                <cell id="392">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                </cell>
+                <cell id="393">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <label id="397">
+                        <property name="backgroundAttachment">scroll</property>
+                        <property name="backgroundColor">#E5E5E5</property>
+                        <property name="backgroundPositionX">0%</property>
+                        <property name="backgroundPositionY">0%</property>
+                        <property name="backgroundRepeat">repeat</property>
+                        <property name="fontFamily">sans-serif</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="fontWeight">normal</property>
+                        <property name="fontStyle">normal</property>
+                        <property name="fontVariant">normal</property>
+                        <property name="color">black</property>
+                        <property name="textLineThrough">none</property>
+                        <property name="textOverline">none</property>
+                        <property name="textUnderline">none</property>
+                        <property name="borderBottomColor">black</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">black</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightColor">black</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopColor">black</property>
+                        <property name="borderTopStyle">none</property>
+                        <property name="borderTopWidth">medium</property>
+                        <property name="marginTop">0pt</property>
+                        <property name="marginLeft">0pt</property>
+                        <property name="marginBottom">0pt</property>
+                        <property name="marginRight">0pt</property>
+                        <property name="paddingTop">1pt</property>
+                        <property name="paddingLeft">1pt</property>
+                        <property name="paddingBottom">1pt</property>
+                        <property name="paddingRight">1pt</property>
+                        <property name="letterSpacing">normal</property>
+                        <property name="lineHeight">normal</property>
+                        <property name="orphans">2</property>
+                        <property name="textTransform">none</property>
+                        <property name="whiteSpace">normal</property>
+                        <property name="widows">2</property>
+                        <property name="wordSpacing">normal</property>
+                        <property name="display">block</property>
+                        <property name="pageBreakAfter">auto</property>
+                        <property name="pageBreakBefore">auto</property>
+                        <property name="pageBreakInside">auto</property>
+                        <property name="showIfBlank">false</property>
+                        <property name="canShrink">false</property>
+                        <property name="overflow">hidden</property>
+                        <text-property name="text">Registro Topográfico</text-property>
+                    </label>
+                </cell>
+                <cell id="394">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <data id="399">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">registro_topografico</property>
+                                <text-property name="displayName">registro_topografico</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["registro_topografico"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">registro_topografico</property>
+                    </data>
+                </cell>
+                <cell id="395">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                </cell>
+            </row>
             <row id="95">
                 <cell id="96">
                     <property name="borderBottomColor">#000000</property>
@@ -2722,18 +3472,6 @@ FUENTE:]]></text-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
-                    <data id="275">
-                        <property name="dataSet">modeloPredial</property>
-                        <list-property name="boundDataColumns">
-                            <structure>
-                                <property name="name">tradicion</property>
-                                <text-property name="displayName">tradicion</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["tradicion"]</expression>
-                                <property name="dataType">string</property>
-                            </structure>
-                        </list-property>
-                        <property name="resultSetColumn">tradicion</property>
-                    </data>
                 </cell>
             </row>
             <row id="121">
@@ -2983,7 +3721,7 @@ FUENTE:]]></text-property>
                     <text id="263">
                         <property name="backgroundColor">#E5E5E5</property>
                         <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[Área topografica]]></text-property>
+                        <text-property name="content"><![CDATA[Área topográfica]]></text-property>
                     </text>
                 </cell>
                 <cell id="223">
@@ -3181,6 +3919,8 @@ FUENTE:]]></text-property>
                     </text>
                 </cell>
                 <cell id="244">
+                    <property name="colSpan">2</property>
+                    <property name="rowSpan">1</property>
                     <property name="borderBottomColor">#000000</property>
                     <property name="borderBottomStyle">solid</property>
                     <property name="borderBottomWidth">thin</property>
@@ -3193,20 +3933,18 @@ FUENTE:]]></text-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
-                </cell>
-                <cell id="245">
-                    <property name="borderBottomColor">#000000</property>
-                    <property name="borderBottomStyle">solid</property>
-                    <property name="borderBottomWidth">thin</property>
-                    <property name="borderLeftColor">#000000</property>
-                    <property name="borderLeftStyle">solid</property>
-                    <property name="borderLeftWidth">thin</property>
-                    <property name="borderRightColor">#000000</property>
-                    <property name="borderRightStyle">solid</property>
-                    <property name="borderRightWidth">thin</property>
-                    <property name="borderTopColor">#000000</property>
-                    <property name="borderTopStyle">solid</property>
-                    <property name="borderTopWidth">thin</property>
+                    <data id="400">
+                        <property name="dataSet">modeloPredial</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">tarjeta_profesional</property>
+                                <text-property name="displayName">tarjeta_profesional</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["tarjeta_profesional"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">tarjeta_profesional</property>
+                    </data>
                 </cell>
                 <cell id="246">
                     <property name="borderBottomColor">#000000</property>
