@@ -1743,7 +1743,7 @@ from modeloPredial mp]]></xml-property>
                     <property name="operator">match</property>
                     <expression name="expr" type="javascript">row["expediente_id"]</expression>
                     <simple-property-list name="value1">
-                        <value>row["expediente_id"]</value>
+                        <value>params["id_expediente"].value</value>
                     </simple-property-list>
                 </structure>
             </list-property>
