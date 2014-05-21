@@ -3342,7 +3342,7 @@ from public.modelourbanistico]]></xml-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
-                    <data id="351">
+                    <data id="506">
                         <property name="fontWeight">bold</property>
                         <property name="dataSet">modeloUrbanistico</property>
                         <list-property name="boundDataColumns">
