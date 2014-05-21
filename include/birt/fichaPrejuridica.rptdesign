@@ -39,11 +39,11 @@
                     <name>disabledContentBidiFormatStr</name>
                 </ex-property>
             </list-property>
-            <property name="odaDriverClass">org.postgresql.Driver</property>
-            <property name="odaURL">jdbc:postgresql://localhost:5433/caliopegd</property>
-            <property name="odaUser">postgres</property>
-            <encrypted-property name="odaPassword" encryptionID="base64">cG9zdGdyZXM=</encrypted-property>
-            <property name="odaJndiName">java:comp/env/jdbc/siim2</property>
+
+                        <property name="odaDriverClass">org.postgresql.Driver</property>
+                                    <property name="odaURL">jdbc:postgresql://localhost:5432/caliopegd</property>
+                                                <property name="odaUser">postgres</property>
+                                                            <encrypted-property name="odaPassword" encryptionID="base64">aWsyMDEz</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>
