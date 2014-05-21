@@ -55,12 +55,12 @@
             </list-property>
             <property name="odaDriverClass">org.postgresql.Driver</property>
              
-            <property name="odaURL">jdbc:postgresql://localhost/caliopegd</property>
-            <property name="odaUser">postgres</property>
-            <encrypted-property name="odaPassword" encryptionID="base64">MTIzNDU=</encrypted-property>
-            
-           <!-- <property name="odaJndiName">java:comp/env/jdbc/siim2</property>
-        </oda-data-source> -->
+                       <property name="odaDriverClass">org.postgresql.Driver</property>
+                                   <property name="odaURL">jdbc:postgresql://localhost:5432/caliopegd</property>
+                                               <property name="odaUser">postgres</property>
+                                                           <encrypted-property name="odaPassword" encryptionID="base64">aWsyMDEz</encrypted-property>
+           <!-- <property name="odaJndiName">java:comp/env/jdbc/siim2</property>-->
+        </oda-data-source> 
     </data-sources>
     <data-sets>
         <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="modeloPredial" id="66">
