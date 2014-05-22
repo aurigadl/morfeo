@@ -60,7 +60,7 @@ ini_set("display_errors",1);
 	<?
 	}
 			
-		$url = "http://200.118.122.176:5380/py/pyforms/seleccion_predios/get_predios_list?expediente=$numExpediente";
+		$url = $servidorPyForms."seleccion_predios/get_predios_list?expediente=$numExpediente";
 		$predios2 = file_get_contents($url);
 		$predios = str_replace('"',"'",$predios2);
 		$arrPredios = json_decode($predios2);
