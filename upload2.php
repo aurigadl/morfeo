@@ -97,16 +97,7 @@ $lnr         = 11+$ln;
      }
 
      if ($nuevo=="si"){
-        // $radi = radicado padre
-        // $radicado_rem = Codigo del tipo de remitente = sgd_dir_tipo
-        // $codigo = ID UNICO DE LA TABLA
-        // $tamano = tamano del archivo
-        // $auxsololect = solo lectura?
-        // $usua = usuario creador
-        // $descr = Descripcion, el asunto
-        // $auxnumero = Es codigo del consecutivo del anexo al radicado
-        // Esta borrado?
-        // $anex_salida = marca con 1 si es un radicado de salida
+
         include "$ruta_raiz/include/query/queryUpload2.php";
         if ($expIncluidoAnexo) {
             $expAnexo = 	$expIncluidoAnexo;
@@ -177,7 +168,7 @@ $lnr         = 11+$ln;
                 where 
                     anex_codigo= '$codigo'";
          }
-
+				 echo "<hr>".$isql;
 
          $bien=$db->query($isql);
 

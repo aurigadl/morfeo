@@ -153,13 +153,6 @@ $variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$dato
   function regresar(){
     f_close();
   }
-  function william(){
-    if(document.getElementById('radicado_salida').checked){
-      document.getElementById('tipo').disabled = false;
-    } else {
-      document.getElementById('tipo').disabled = true;
-    }
-  }
 
   function escogio_archivo(){
       var largo;
@@ -295,11 +288,11 @@ if(!$radicado_rem){
 	<div class="col-lg-12">
 	<section id="widget-grid" class="">
 
-<table width="100%" class="table table-bordered">
+<table class="table table-bordered">
 <tr>
   <td>
 <input type="hidden" name="anex_origen" value="<?=$tipo?>">
-<input type="hidden" name="tipo" value="<?=$tipo?>">
+<input type="hidden" name="tipo" value="<?=$tipo?>"  id="tipo_clase">
 <input type="hidden" name="numrad" value="<?=$numrad?>">
 <input type="hidden" name="tipoLista" value="<?=$tipoLista?>">
 <input type="hidden" name="tipoDocumentoSeleccionado" value="<?php echo $tipoDocumentoSeleccionado ?>">
@@ -307,40 +300,6 @@ if(!$radicado_rem){
 <tr>
   <td  align="center"  colspan="2">DESCRIPCI&Oacute;N DEL DOCUMENTO</td>
   </tr>
-    <tr>
-      <td align="left" colspan="3" >
-      <label class="label">Tipo Archivo</label><br>
-      <label class="select">
-      <select name="tipo" class="input-sm" id="tipo_clase" >
-<?php
-$db->conn->SetFetchMode(ADODB_FETCH_NUM);
-$rs=$db->conn->Execute($anexos_isql);
-while ( !$rs->EOF)
-{
-  if (($extension == 'odt' && $rs->fields[0]==14) ||
-    ($extension == 'doc' && $rs->fields[0]==1) ||
-    ($extension == 'xml' && $rs->fields[0]==16))
-  {
-    $datoss=" selected ";
-  }
-  else
-  {
-    $datoss = "";
-  }
-?>
-    <option value="<?=$rs->fields[0]?>" '<?=$datoss?>'>
-    <?=$rs->fields[1]?>
-    </option>
-<?php
-  $rs->MoveNext();
-}
-var_dump($medioRadicar);
-?>
-      </select>
-      <i></i>
-      </label>
-      </td>
-    </tr>
   <tr>
     <td >
       <input type="checkbox" class="select"  name="sololect" <?php  if($sololect){echo " checked ";}  ?> id="sololect">
@@ -471,16 +430,16 @@ if (strlen(trim($swDischekRad)) > 0){
   </tr>
 
   <tr>
-    <td width='130px' class="titulos2">Asunto del Radicado:</td>
+    <td  >Asunto </td>
     <td  valign="top" >
-      <textarea name="descr" cols="60" rows="1" class="tex_area" id="descr"><?=$descr?></textarea>
+      <textarea name="descr" cols="60" rows="1" class="text" id="descr"><?=$descr?></textarea>
     </td>
   </tr>
   <tr>
-        <td class="titulos2">Guardar en Expediente:</td>
+        <td >Expediente:</td>
       <td  valign="top"  >
       <table border="0"  class="borde_tab" align="center">
-      <tr class="titulos2">
+      <tr >
 <?php
 
 $q_exp  = "SELECT  SGD_EXP_NUMERO as valor, SGD_EXP_NUMERO as etiqueta, SGD_EXP_FECH as fecha";
@@ -505,10 +464,9 @@ if( $rs_exp->RecordCount() == 0 ){
 }else{
 ?>
       <td align="center">
-        <span   align="center">
+
       <label class="select">
-			  <?php print $rs_exp->GetMenu( 'expIncluidoAnexo', $expIncluidoAnexo, false, false, 0, "class='input-sm'", false ); ?>
-        </span>
+			  <?php print $rs_exp->GetMenu( 'expIncluidoAnexo', $expIncluidoAnexo, false, false, 0, "class='select'", false ); ?>
         </label>
       </td>
 <?php
@@ -810,7 +768,7 @@ if( $rs_exp->RecordCount() == 0 ){
 <?php
 }
 ?>
-    <tr><td height='3px' colspan="2"></td></tr>
+    <tr><td colspan="2"></td></tr>
     <tr align="center">
           <td  align="center" >
             <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo return_bytes(ini_get('upload_max_filesize')); ?>">Adjuntar Archivo
@@ -839,7 +797,7 @@ if( $rs_exp->RecordCount() == 0 ){
       </td>
     </tr>
     <?php if($codigo){?>
-    <tr><td class="titulos2" align="center" colspan="2"><?=$codigo?></td></tr>
+    <tr><td  align="center" colspan="2"><?=$codigo?></td></tr>
     <?php } ?>
 	 </table>
 	 <input type=hidden name=i_copias value='<?=$i_copias?>' id="i_copias" >
