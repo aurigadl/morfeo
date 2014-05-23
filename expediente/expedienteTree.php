@@ -108,12 +108,13 @@ ini_set("display_errors",1);
 		$rsMU = $db->conn->Execute($iSql);
 		if(!$rsMU->EOF){
 		 $nombreReporte = "modeloUrbanistico";
-		 $vars = "&id_expediente=&". $rsMU->fields["ID_EXPEDIENTE"];
+		 $nuId = $rsMU->fields["ID_EXPEDIENTE"];
+		 $vars = "&id_expediente=". $nuId."&";
 			?>
 			<li  style="display:none">
 				<span  class="alert-success">
 				
-				<a  onClick="reportePredios(&quot;<?=$numExpediente?>&quot;,&quot;<?=$listPredios?>&quot;,&quot;<?=$vars?>&quot;,&quot;<?=$nombreReporte?>&quot;);">Modelo Urbanistico </a></span>
+				<a  onClick="reportePredios(&quot;<?=$numExpediente?>&quot;,&quot;x&quot;,&quot;<?=$vars?>&quot;,&quot;<?=$nombreReporte?>&quot;);">Modelo Urbanistico </a></span>
 				<ul>
 			</ul>
 		</li>
