@@ -14,6 +14,18 @@
             <property name="name">rowFetchSize</property>
             <property name="id">66</property>
         </structure>
+        <structure>
+            <property name="name">queryText</property>
+            <property name="id">329</property>
+        </structure>
+        <structure>
+            <property name="name">queryTimeOut</property>
+            <property name="id">329</property>
+        </structure>
+        <structure>
+            <property name="name">rowFetchSize</property>
+            <property name="id">329</property>
+        </structure>
     </list-property>
     <property name="units">in</property>
     <property name="iconFile">/templates/blank_report.gif</property>
@@ -25,7 +37,7 @@
             <property name="dataType">string</property>
             <property name="distinct">true</property>
             <simple-property-list name="defaultValue">
-                <value type="constant">10</value>
+                <value type="constant">93</value>
             </simple-property-list>
             <list-property name="selectionList"/>
             <property name="paramType">simple</property>
@@ -54,9 +66,9 @@
                 </ex-property>
             </list-property>
             <property name="odaDriverClass">org.postgresql.Driver</property>
-            <property name="odaURL">jdbc:postgresql://localhost:5432/caliopegd</property>
+            <property name="odaURL">jdbc:postgresql://siim2.infometrika.net:5432/siim2</property>
             <property name="odaUser">postgres</property>
-            <encrypted-property name="odaPassword" encryptionID="base64">aWsyMDEz</encrypted-property>
+            <encrypted-property name="odaPassword" encryptionID="base64">aW5mb21ldHJpa2EyMDEz</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -1496,248 +1508,7 @@ from modeloPredial mp]]></xml-property>
         </oda-data-set>
         <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="modeloUrbanistico" id="329">
             <property name="nullsOrdering">nulls lowest</property>
-            <list-property name="columnHints">
-                <structure>
-                    <property name="columnName">id</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">id</text-property>
-                    <text-property name="heading">id</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">expediente_id</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">expediente_id</text-property>
-                    <text-property name="heading">expediente_id</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">imagen_localizacion</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="displayName">imagen_localizacion</text-property>
-                    <text-property name="heading">imagen_localizacion</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">imagen_division_predial</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="displayName">imagen_division_predial</text-property>
-                    <text-property name="heading">imagen_division_predial</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">imagen_modelacion</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="displayName">imagen_modelacion</text-property>
-                    <text-property name="heading">imagen_modelacion</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_bruta_predial</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_bruta_predial</text-property>
-                    <text-property name="heading">area_bruta_predial</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">afectaciones</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">afectaciones</text-property>
-                    <text-property name="heading">afectaciones</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">total_cesiones</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">total_cesiones</text-property>
-                    <text-property name="heading">total_cesiones</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">cesiones_parque_propuesto</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">cesiones_parque_propuesto</text-property>
-                    <text-property name="heading">cesiones_parque_propuesto</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">cesiones_equipamiento_propuesto</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">cesiones_equipamiento_propuesto</text-property>
-                    <text-property name="heading">cesiones_equipamiento_propuesto</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">cesiones_vias_locales_propuestas</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">cesiones_vias_locales_propuestas</text-property>
-                    <text-property name="heading">cesiones_vias_locales_propuestas</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">cesiones_otras</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">cesiones_otras</text-property>
-                    <text-property name="heading">cesiones_otras</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_util_uso_pal_residencia_vip</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_util_uso_pal_residencia_vip</text-property>
-                    <text-property name="heading">area_util_uso_pal_residencia_vip</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_util_uso_pal_residencia_vis</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_util_uso_pal_residencia_vis</text-property>
-                    <text-property name="heading">area_util_uso_pal_residencia_vis</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_util_uso_pal_residencia_otro_estrato</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_util_uso_pal_residencia_otro_estrato</text-property>
-                    <text-property name="heading">area_util_uso_pal_residencia_otro_estrato</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_util_uso_pal_comercio</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_util_uso_pal_comercio</text-property>
-                    <text-property name="heading">area_util_uso_pal_comercio</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_util_uso_pal_servicios</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_util_uso_pal_servicios</text-property>
-                    <text-property name="heading">area_util_uso_pal_servicios</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_util_uso_pal_comercio_y_servicios</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_util_uso_pal_comercio_y_servicios</text-property>
-                    <text-property name="heading">area_util_uso_pal_comercio_y_servicios</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_util_uso_pal_multiple</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_util_uso_pal_multiple</text-property>
-                    <text-property name="heading">area_util_uso_pal_multiple</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_util_uso_pal_dotacion_privado</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_util_uso_pal_dotacion_privado</text-property>
-                    <text-property name="heading">area_util_uso_pal_dotacion_privado</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_util_uso_pal_otros</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_util_uso_pal_otros</text-property>
-                    <text-property name="heading">area_util_uso_pal_otros</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_total_construida_propuesta</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_total_construida_propuesta</text-property>
-                    <text-property name="heading">area_total_construida_propuesta</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_total_construida_vivienda_vip</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_total_construida_vivienda_vip</text-property>
-                    <text-property name="heading">area_total_construida_vivienda_vip</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_total_construida_vivienda_vis</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_total_construida_vivienda_vis</text-property>
-                    <text-property name="heading">area_total_construida_vivienda_vis</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_total_construida_vivienda_otro_estrato</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_total_construida_vivienda_otro_estrato</text-property>
-                    <text-property name="heading">area_total_construida_vivienda_otro_estrato</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_total_construida_comercio_primer_piso</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_total_construida_comercio_primer_piso</text-property>
-                    <text-property name="heading">area_total_construida_comercio_primer_piso</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_total_construida_oficinas_comercio</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_total_construida_oficinas_comercio</text-property>
-                    <text-property name="heading">area_total_construida_oficinas_comercio</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_total_construida_dotacion_privado</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_total_construida_dotacion_privado</text-property>
-                    <text-property name="heading">area_total_construida_dotacion_privado</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_total_construida_comercio_servicios</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_total_construida_comercio_servicios</text-property>
-                    <text-property name="heading">area_total_construida_comercio_servicios</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_total_construida_otros_usos</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_total_construida_otros_usos</text-property>
-                    <text-property name="heading">area_total_construida_otros_usos</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_equipamiento_comunal_privado</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_equipamiento_comunal_privado</text-property>
-                    <text-property name="heading">area_equipamiento_comunal_privado</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">viviendas_propuestas</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">viviendas_propuestas</text-property>
-                    <text-property name="heading">viviendas_propuestas</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">viviendas_vip</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">viviendas_vip</text-property>
-                    <text-property name="heading">viviendas_vip</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">viviendas_vis</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">viviendas_vis</text-property>
-                    <text-property name="heading">viviendas_vis</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">viviendas_no_vis</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">viviendas_no_vis</text-property>
-                    <text-property name="heading">viviendas_no_vis</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">area_estacionamientos</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">area_estacionamientos</text-property>
-                    <text-property name="heading">area_estacionamientos</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">estacionamientos</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">estacionamientos</text-property>
-                    <text-property name="heading">estacionamientos</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">observaciones</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="displayName">observaciones</text-property>
-                    <text-property name="heading">observaciones</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">elaboro</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">elaboro</text-property>
-                    <text-property name="heading">elaboro</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">reviso</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">reviso</text-property>
-                    <text-property name="heading">reviso</text-property>
-                </structure>
-            </list-property>
+            <list-property name="columnHints"/>
             <list-property name="filter">
                 <structure>
                     <property name="operator">match</property>
@@ -1747,6 +1518,7 @@ from modeloPredial mp]]></xml-property>
                     </simple-property-list>
                 </structure>
             </list-property>
+            <list-property name="parameters"/>
             <structure name="cachedMetaData">
                 <list-property name="resultSet">
                     <structure>
@@ -1949,6 +1721,16 @@ from modeloPredial mp]]></xml-property>
                         <property name="name">reviso</property>
                         <property name="dataType">integer</property>
                     </structure>
+                    <structure>
+                        <property name="position">41</property>
+                        <property name="name">nombreelaboro</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">42</property>
+                        <property name="name">noexpediente</property>
+                        <property name="dataType">string</property>
+                    </structure>
                 </list-property>
             </structure>
             <property name="dataSource">Data Source</property>
@@ -1958,284 +1740,257 @@ from modeloPredial mp]]></xml-property>
                     <property name="name">id</property>
                     <property name="nativeName">id</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
                     <property name="name">expediente_id</property>
                     <property name="nativeName">expediente_id</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">3</property>
                     <property name="name">imagen_localizacion</property>
                     <property name="nativeName">imagen_localizacion</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">4</property>
                     <property name="name">imagen_division_predial</property>
                     <property name="nativeName">imagen_division_predial</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">5</property>
                     <property name="name">imagen_modelacion</property>
                     <property name="nativeName">imagen_modelacion</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">6</property>
                     <property name="name">area_bruta_predial</property>
                     <property name="nativeName">area_bruta_predial</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">7</property>
                     <property name="name">afectaciones</property>
                     <property name="nativeName">afectaciones</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">8</property>
                     <property name="name">total_cesiones</property>
                     <property name="nativeName">total_cesiones</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">9</property>
                     <property name="name">cesiones_parque_propuesto</property>
                     <property name="nativeName">cesiones_parque_propuesto</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">10</property>
                     <property name="name">cesiones_equipamiento_propuesto</property>
                     <property name="nativeName">cesiones_equipamiento_propuesto</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">11</property>
                     <property name="name">cesiones_vias_locales_propuestas</property>
                     <property name="nativeName">cesiones_vias_locales_propuestas</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">12</property>
                     <property name="name">cesiones_otras</property>
                     <property name="nativeName">cesiones_otras</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">13</property>
                     <property name="name">area_util_uso_pal_residencia_vip</property>
                     <property name="nativeName">area_util_uso_pal_residencia_vip</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">14</property>
                     <property name="name">area_util_uso_pal_residencia_vis</property>
                     <property name="nativeName">area_util_uso_pal_residencia_vis</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">15</property>
                     <property name="name">area_util_uso_pal_residencia_otro_estrato</property>
                     <property name="nativeName">area_util_uso_pal_residencia_otro_estrato</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">16</property>
                     <property name="name">area_util_uso_pal_comercio</property>
                     <property name="nativeName">area_util_uso_pal_comercio</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">17</property>
                     <property name="name">area_util_uso_pal_servicios</property>
                     <property name="nativeName">area_util_uso_pal_servicios</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">18</property>
                     <property name="name">area_util_uso_pal_comercio_y_servicios</property>
                     <property name="nativeName">area_util_uso_pal_comercio_y_servicios</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">19</property>
                     <property name="name">area_util_uso_pal_multiple</property>
                     <property name="nativeName">area_util_uso_pal_multiple</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">20</property>
                     <property name="name">area_util_uso_pal_dotacion_privado</property>
                     <property name="nativeName">area_util_uso_pal_dotacion_privado</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">21</property>
                     <property name="name">area_util_uso_pal_otros</property>
                     <property name="nativeName">area_util_uso_pal_otros</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">22</property>
                     <property name="name">area_total_construida_propuesta</property>
                     <property name="nativeName">area_total_construida_propuesta</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">23</property>
                     <property name="name">area_total_construida_vivienda_vip</property>
                     <property name="nativeName">area_total_construida_vivienda_vip</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">24</property>
                     <property name="name">area_total_construida_vivienda_vis</property>
                     <property name="nativeName">area_total_construida_vivienda_vis</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">25</property>
                     <property name="name">area_total_construida_vivienda_otro_estrato</property>
                     <property name="nativeName">area_total_construida_vivienda_otro_estrato</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">26</property>
                     <property name="name">area_total_construida_comercio_primer_piso</property>
                     <property name="nativeName">area_total_construida_comercio_primer_piso</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">27</property>
                     <property name="name">area_total_construida_oficinas_comercio</property>
                     <property name="nativeName">area_total_construida_oficinas_comercio</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">28</property>
                     <property name="name">area_total_construida_dotacion_privado</property>
                     <property name="nativeName">area_total_construida_dotacion_privado</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">29</property>
                     <property name="name">area_total_construida_comercio_servicios</property>
                     <property name="nativeName">area_total_construida_comercio_servicios</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">30</property>
                     <property name="name">area_total_construida_otros_usos</property>
                     <property name="nativeName">area_total_construida_otros_usos</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">31</property>
                     <property name="name">area_equipamiento_comunal_privado</property>
                     <property name="nativeName">area_equipamiento_comunal_privado</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">32</property>
                     <property name="name">viviendas_propuestas</property>
                     <property name="nativeName">viviendas_propuestas</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">33</property>
                     <property name="name">viviendas_vip</property>
                     <property name="nativeName">viviendas_vip</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">34</property>
                     <property name="name">viviendas_vis</property>
                     <property name="nativeName">viviendas_vis</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">35</property>
                     <property name="name">viviendas_no_vis</property>
                     <property name="nativeName">viviendas_no_vis</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">36</property>
                     <property name="name">area_estacionamientos</property>
                     <property name="nativeName">area_estacionamientos</property>
                     <property name="dataType">float</property>
-                    <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
                     <property name="position">37</property>
                     <property name="name">estacionamientos</property>
                     <property name="nativeName">estacionamientos</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">38</property>
                     <property name="name">observaciones</property>
                     <property name="nativeName">observaciones</property>
                     <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
                     <property name="position">39</property>
                     <property name="name">elaboro</property>
                     <property name="nativeName">elaboro</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
                 </structure>
                 <structure>
                     <property name="position">40</property>
                     <property name="name">reviso</property>
                     <property name="nativeName">reviso</property>
                     <property name="dataType">integer</property>
-                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">41</property>
+                    <property name="name">nombreelaboro</property>
+                    <property name="nativeName">nombreelaboro</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">42</property>
+                    <property name="name">noexpediente</property>
+                    <property name="nativeName">noexpediente</property>
+                    <property name="dataType">string</property>
                 </structure>
             </list-property>
-            <xml-property name="queryText"><![CDATA[select *
-from public.modelourbanistico]]></xml-property>
+            <xml-property name="queryText"><![CDATA[select mu.*, (select u.usua_nomb from usuario u where u.id=mu.elaboro) nombreElaboro,
+(select e.sgd_exp_numero from sgd_exp_expediente e where mu.expediente_id=e.id) noExpediente
+from public.modelourbanistico mu]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
@@ -3273,12 +3028,12 @@ from public.modelourbanistico]]></xml-property>
     <body>
         <grid id="9">
             <property name="height">2.0625in</property>
-            <property name="width">8.114583333333334in</property>
+            <property name="width">8.083333333333334in</property>
             <column id="10">
-                <property name="width">2.96875in</property>
+                <property name="width">4.552083333333333in</property>
             </column>
             <column id="11">
-                <property name="width">0.010416666666666666in</property>
+                <property name="width">3.53125in</property>
             </column>
             <row id="16">
                 <property name="height">0.3125in</property>
@@ -3297,14 +3052,23 @@ from public.modelourbanistico]]></xml-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
-                    <text id="58">
+                    <data id="514">
                         <property name="backgroundColor">#BFBFBF</property>
                         <property name="fontSize">12pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">center</property>
-                        <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[FICHA URBANÍSTICA]]></text-property>
-                    </text>
+                        <property name="dataSet">modeloUrbanistico</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">noexpediente</property>
+                                <text-property name="displayName">noexpediente</text-property>
+                                <expression name="expression" type="javascript">BirtStr.concat("Ficha Urbanistica (",dataSetRow["noexpediente"],")")</expression>
+                                <property name="dataType">string</property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">noexpediente</property>
+                    </data>
                 </cell>
             </row>
             <row id="347">
@@ -3391,7 +3155,7 @@ from public.modelourbanistico]]></xml-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
-                    <data id="352">
+                    <data id="508">
                         <property name="dataSet">modeloUrbanistico</property>
                         <list-property name="boundDataColumns">
                             <structure>
@@ -3421,11 +3185,6 @@ from public.modelourbanistico]]></xml-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
-                    <text id="359">
-                        <property name="fontWeight">bold</property>
-                        <property name="contentType">auto</property>
-                        <text-property name="content"><![CDATA[Total Cesiones del Proyecto]]></text-property>
-                    </text>
                 </cell>
                 <cell id="358">
                     <property name="borderBottomColor">#000000</property>
@@ -4499,8 +4258,9 @@ from public.modelourbanistico]]></xml-property>
                             <structure>
                                 <property name="name">area_total_construida_otros_usos</property>
                                 <text-property name="displayName">area_total_construida_otros_usos</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["area_total_construida_otros_usos"]</expression>
-                                <property name="dataType">float</property>
+                                <expression name="expression" type="javascript">Formatter.format(dataSetRow["area_total_construida_otros_usos"], "###.###.###")</expression>
+                                <property name="dataType">string</property>
+                                <property name="allowExport">true</property>
                             </structure>
                         </list-property>
                         <property name="resultSetColumn">area_total_construida_otros_usos</property>
@@ -4914,17 +4674,17 @@ from public.modelourbanistico]]></xml-property>
                     <property name="borderTopColor">#000000</property>
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
-                    <data id="284">
-                        <property name="dataSet">modeloPredial</property>
+                    <data id="509">
+                        <property name="dataSet">modeloUrbanistico</property>
                         <list-property name="boundDataColumns">
                             <structure>
-                                <property name="name">elaboro</property>
-                                <text-property name="displayName">elaboro</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["elaboro"]</expression>
-                                <property name="dataType">integer</property>
+                                <property name="name">nombreelaboro</property>
+                                <text-property name="displayName">nombreelaboro</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["nombreelaboro"]</expression>
+                                <property name="dataType">string</property>
                             </structure>
                         </list-property>
-                        <property name="resultSetColumn">elaboro</property>
+                        <property name="resultSetColumn">nombreelaboro</property>
                     </data>
                 </cell>
             </row>
