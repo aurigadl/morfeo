@@ -168,7 +168,6 @@ $lnr         = 11+$ln;
                 where 
                     anex_codigo= '$codigo'";
          }
-				 echo "<hr>".$isql;
 
          $bien=$db->query($isql);
 
