@@ -588,7 +588,7 @@ if ($radicar_documento) {
             if ($ent != 1) {
                 if ($numerar != 1) {
                     $numerar = $numerar;
-                    saveMessage('success',"Actualizado $rad_salida");
+                    saveMessage('success'," actualizado $rad_salida ");
                 }
             }
         } else {
@@ -894,10 +894,10 @@ $linkFuente = str_replace("d.", ".", $linkarchivo_grabar);
 $linkF = $ABSOL_PATH . "bodega" . $linkFuente;
 $tamFuente = filesize($linkF);
 
-saveMessage('success',"Tama&ntilde;o Fila :" . ($tam) / 1000 . " kbytes  / --> $tamFuente");
+saveMessage('success', " ".($tam) / 1000 . " kb");
 
 if ($tam >= 100) {
-    saveMessage('success',"Comprobando Archivo Final Ok.");
+    saveMessage('success'," archivo Final Ok.");
 } else {
     $isql = "update RADICADO
 				   set RADI_PATH='$linkFuente'

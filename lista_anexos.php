@@ -62,7 +62,7 @@ $isql = "select anex_codigo AS DOCU
      error_reporting(7);
 
 ?>
-<table WIDTH="100%" align="center" class="table table-striped table-hover" >
+<table WIDTH="100%" align="center" id="tableDocument" class="table table-striped table-hover" >
     <thead>
         <tr>
             <th width='1%'></th>
@@ -102,7 +102,7 @@ while(!$rs->EOF)
 	$linkarchivotmp=$directoriobase.substr(trim($coddocu),0,4)."/".intval(substr(trim($coddocu),4,$ln))."/docs/tmp".trim($rs->fields["NOMBRE"]);
 	if(!trim($rs->fields["NOMBRE"])) $linkarchivo = "";
 ?>
-<tr>
+<tr id="<?=$coddocu?>">
 <?php
 if($rs->fields["RADI_NUME_SALIDA"]!=0)
 {	$cod_radi =$rs->fields["RADI_NUME_SALIDA"];	}
@@ -189,7 +189,7 @@ if(trim($linkarchivo))
 if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]=="odt" or $rs->fields["EXT"]=="xml") AND $rs->fields["ANEX_ESTADO"]<=3)
 	{
 	if($valImg == "SI"){
-		 echo"<a class=\"vinculos\" style='cursor:pointer;cursor:hand;' onclick=\"vistaPreliminar('$coddocu','$linkarchivo','$linkarchivotmp');\">";
+		 echo"<a class=\"vinculos\" style='cursor:pointer;cursor:hand;' on                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     click=\"vistaPreliminar('$coddocu','$linkarchivo','$linkarchivotmp');\">";
 		}else{
 		 echo "<a class='vinculos' style='cursor:pointer;cursor:hand;' href='javascript:noPermiso()' >";
 		}
@@ -254,7 +254,7 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 			if($origen!=1  and $linkarchivo)
 			{
 			  $v = $rs->fields["SGD_PNUFE_CODI"];
-			  echo "<a class=\"vinculos\" href=\"#\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> <img src='img/icono_borrar.png' title='Borrar Archivo'> </a>"; 	}
+			  echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> <img src='img/icono_borrar.png' title='Borrar Archivo'> </a>"; 	}
 		}
 		?>
 	</small></td>
@@ -264,7 +264,7 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 	{	if (!$rs->fields["RADI_NUME_SALIDA"])
 		{	if(substr($verrad,-1)==2 && $puedeRadicarAnexo==1 )
 			{	$rs->fields["SGD_PNUFE_CODI"]=0;
-			echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
+			echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
 					$radicado = "false";
 					$anexo = $cod_radi;
 			}
@@ -275,13 +275,13 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 				else
 				{	if((substr($verrad,-1)!=2) and $num_archivos==1 and !$rs->fields["SGD_PNUFE_CODI"] and $swRadDesdeAnex==false )
 					{
-			     echo "<a class=\"vinculos\" href=\"#\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> <img src='img/icono_radicar.png' title='Asignar Radicado (-$tpradic)'> </a>";
+			     echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> <img src='img/icono_radicar.png' title='Asignar Radicado (-$tpradic)'> </a>";
            $radicado = "false";
 			    $anexo = $cod_radi;
 					}
 else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0 && !$anex->seHaRadicadoUnPaquete($rs->fields["SGD_DOC_PADRE"]))
 	{
-         echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
+         echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
 
 				$radicado = "false";
 				$anexo = $cod_radi;
@@ -289,7 +289,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 		else if ($puedeRadicarAnexo==1)
 		{
 				$rs->fields["SGD_PNUFE_CODI"]=0;
-		echo "<a class=\"vinculos\" href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'></a>";
+		echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'></a>";
 				$radicado = "false";
 				$anexo = $cod_radi;
 }		}		}
@@ -297,7 +297,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 			{	if (!$rs->fields["SGD_PNUFE_CODI"])$rs->fields["SGD_PNUFE_CODI"]=0;
 				if ($anex_estado<4)
 				{
-				 echo "<a class=vinculos href=\"#\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','$cod_radi',".$rs->fields["SGD_PNUFE_CODI"].",'','',$numextdoc);\"> <img src='img/icono_regenerar.png' title='Volver a Generar Radicado'></a>";
+				 echo "<a class=vinculos href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','$cod_radi',".$rs->fields["SGD_PNUFE_CODI"].",'','',$numextdoc);\"> <img src='img/icono_regenerar.png' title='Volver a Generar Radicado'></a>";
 		     $radicado = "true";
 		}	}	}
 		else if ( $rs->fields["SGD_PNUFE_CODI"]  && ($usua_perm_numera_res==1) && $ruta_raiz != ".." && !$rs->fields["SGD_DOC_SECUENCIA"] && strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0) // SI ES PAQUETE DE DOCUMENTOS Y EL USUARIO TIENE PERMISOS
@@ -308,7 +308,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 			 * @since 10 noviembre 2009
 			*/
 
-			 echo "<a class=\"vinculos\" href=\"#\" onclick=\"numerarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].");\"> Numerar </a>";
+			 echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"numerarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].");\"> Numerar </a>";
 			}
 	  		if($rs->fields["RADI_NUME_SALIDA"]) {$radicado="true";}
 		?>
@@ -322,7 +322,7 @@ else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_P
 		if ( $origen!=1  and $linkarchivo and $perm_borrar_anexo == 1 && $anexTipo == 4 )
 		{
 			   $v = $rs->fields["SGD_PNUFE_CODI"];
-			   echo "<a class=\"vinculoTipifAnex\" href=\"#\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> <img src='img/icono_borrar.png' title='Borrar Archivo'> </a>";
+			   echo "<a class=\"vinculoTipifAnex\" href=\"JavaScript:void(0);\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> <img src='img/icono_borrar.png' title='Borrar Archivo'> </a>";
 		}
 		if ( $perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == '' )
 		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo no ha sido tipificado
@@ -363,9 +363,6 @@ if($mostrar_lista==1)
 </table>
 
 <?if($verradPermisos == "Full"){?>
-
-<div id="messagealertid"></div>
-
 <table  width="100%" align="center" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr align="center">
      <td ><small>
@@ -415,9 +412,13 @@ Anexar Archivo</a>
         }
 
         function radicarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado,tpradic,aplinteg,numextdoc){
-            var newDiv = $( "<div></div>" ).addClass("alert alert-block")
+            var divalert = $('');
+            var tralert  = $('tr');
+            var newalert  = $( "<div>" ).addClass("alert alert-block")
                         .html("<a class='close' data-dismiss='alert' href='#'>×</a>" +
                         "<h4 class='alert-heading'><i class='fa fa-check-square-o'></i></h4>");
+            tdalert.appendTo(tralert);
+            tralert.appendTo(divalert);
 
             if (confirm('Se asignar\xe1 un n\xfamero de radicado a \xe9ste documento. Est\xe1 seguro  ?')){
                 url = "?radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id())?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado+"&tpradic="+tpradic+"&aplinteg="+aplinteg+"&numextdoc="+numextdoc;
@@ -439,7 +440,7 @@ Anexar Archivo</a>
                         newalert.find('h4').html(title1);
                         newalert.addClass('alert-success');
                         newalert.find('h4').after(content);
-                        $('#messagealertid').append(newalert);
+                        $('#' + anexo).after(newalert);
                     }
 
                     if((data.error !== undefined) && (data.error.length>0)){
@@ -452,7 +453,7 @@ Anexar Archivo</a>
                         newalert = newDiv.clone().find('h4').html(title2);
                         newalert.addClass('alert-danger');
                         newalert.find('h4').after(content);
-                        $('#messagealertid').append(newalert);
+                        $('#' + anexo).after(newalert);
                     }
                 });
             };
