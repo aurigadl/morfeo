@@ -86,7 +86,7 @@ ini_set("display_errors",1);
 					      $avaluoComercial = $rsPredio->fields["AVALUO_COMERCIAL"];
 					    
 					    }
-					  $linkFichaPredial ="reportePredios('$numeroExpediente','".$valor->chip."','','fichaPredial');";
+					  $linkFichaPredial ="reportePredios('$numeroExpediente','".$valor->chip."','','fichaPrejuridica');";
 					?>
 				<li style="display:none">
 				  <a href="verradicado.php?verrad=<?=$verrad?>&<?=session_name()?>=<?=session_id()?>&nomcarpeta=<?=nomcarpeta?>&prediosExp=<?=$predios?>#tabs-gis">Gis</a>
