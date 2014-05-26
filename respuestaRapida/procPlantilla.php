@@ -1,7 +1,5 @@
 <?php
 session_start();
-//error_reporting(E_ALL);
-//ini_set('display_errors', '1');
 
 $ruta_raiz = "../";
 if (!$_SESSION['dependencia'])
@@ -11,7 +9,6 @@ include_once ($ruta_raiz."include/db/ConnectionHandler.php");
 
 $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 
 $usuario     = $_SESSION["usua_nomb"];
 $dependencia = $_SESSION["depecodi"];

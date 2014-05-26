@@ -1,98 +1,80 @@
 <?php
     session_start();
-    //error_reporting(E_ALL);
-		//ini_set('display_errors', '1');
-    if($_SESSION["krd"]){
+
+    define('ARCHIVO_PDF', 7);
+    define('NO_DEFINIDO', 0);
+    define('ADODB_ASSOC_CASE', 0);
+    define('NO_SELECCIONO', 0);
+    define('SMARTY_DIR', $ruta_libs . 'libs/');
+
+    foreach ($_POST as $key => $valor)   ${$key} = $valor;
+    
+    if($_SESSION["krd"])
         $krd = $_SESSION["krd"];
-    }
 
     $ruta_raiz = "..";
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
+    
+    $encabe = session_name()."=".session_id()."&krd=$krd";
+    $enviar_error = $encabe . 
+                    '&radicado=' . $radPadre . 
+                    '&radicadopadre' . $radPadre . 
+                    '&asunto=' . $asunto .
+                    '&error_radicacion=1';
+    
+    $selecciono_rad = $tipo_radicado != NO_SELECCIONO;
+    
+    // Si no Selecciono tipo de radicado enviarlo a formulario inicial
+    if ($selecciono_rad) {
+      $tipo_radicado = $_POST['tipo_radicado'];
+    } else {
+      $redireccionar = 'Location: index.php?' . $enviar_error;
+      header($redireccionar);
+      exit();
+    }
 
-/***********************************************
-// INICIO DE VARIABLES Y CONSTANTES
-***********************************************/
     // envio de respuesta via email
     // Obtiene los datos de la respuesta rapida.
     $ruta_libs = $ruta_raiz."/respuestaRapida/";
-    define('ADODB_ASSOC_CASE', 0);
-    define('SMARTY_DIR', $ruta_libs . 'libs/');
     $fecharad = date("Y-m-d h:i");
+    
     //formato para fecha en documentos
     function fechaFormateada($FechaStamp){
         $ano = date('Y', $FechaStamp); //<-- Ano
         $mes = date('m', $FechaStamp); //<-- número de mes (01-31)
         $dia = date('d', $FechaStamp); //<-- Día del mes (1-31)
         $dialetra = date('w', $FechaStamp); //Día de la semana(0-7)
+          
+        $arreglo_dias = array();
+        $arreglo_dias[] = 'domingo';
+        $arreglo_dias[] = 'lunes';
+        $arreglo_dias[] = 'martes';
+        $arreglo_dias[] = 'miercoles';
+        $arreglo_dias[] = 'jueves';
+        $arreglo_dias[] = 'viernes';
+        $arreglo_dias[] = 'sabado';
+        
+        $dialetra = $arreglo_dias[$dialetra];
 
-        switch ($dialetra) {
-            case 0 :
-                $dialetra = "domingo";
-                break;
-            case 1 :
-                $dialetra = "lunes";
-                break;
-            case 2 :
-                $dialetra = "martes";
-                break;
-            case 3 :
-                $dialetra = "miércoles";
-                break;
-            case 4 :
-                $dialetra = "jueves";
-                break;
-            case 5 :
-                $dialetra = "viernes";
-                break;
-            case 6 :
-                $dialetra = "Sábado";
-                break;
-        }
+        $arreglo_meses['01'] = 'enero';
+        $arreglo_meses['02'] = 'febrero';
+        $arreglo_meses['03'] = 'marzo';
+        $arreglo_meses['04'] = 'abril';
+        $arreglo_meses['05'] = 'mayo';
+        $arreglo_meses['06'] = 'junio';
+        $arreglo_meses['07'] = 'julio';
+        $arreglo_meses['08'] = 'agosto';
+        $arreglo_meses['09'] = 'septiembre';
+        $arreglo_meses['10'] = 'octubre';
+        $arreglo_meses['11'] = 'noviembre';
+        $arreglo_meses['12'] = 'diciembre';
 
-        switch ($mes) {
-            case '01' :
-                $mesletra = "enero";
-                break;
-            case '02' :
-                $mesletra = "febrero";
-                break;
-            case '03' :
-                $mesletra = "marzo";
-                break;
-            case '04' :
-                $mesletra = "abril";
-                break;
-            case '05' :
-                $mesletra = "mayo";
-                break;
-            case '06' :
-                $mesletra = "junio";
-                break;
-            case '07' :
-                $mesletra = "julio";
-                break;
-            case '08' :
-                $mesletra = "agosto";
-                break;
-            case '09' :
-                $mesletra = "septiembre";
-                break;
-           case '10' :
-                $mesletra = "octubre";
-                break;
-            case '11' :
-                $mesletra = "noviembre";
-                break;
-            case '12' :
-                $mesletra = "diciembre";
-                break;
-        }
+        $mesletra = $arreglo_meses[$mes];
 
         return htmlentities("$dialetra, $dia de $mesletra de $ano");
     }
 
-    $encabe = session_name()."=".session_id()."&krd=$krd";
 
     $pos = strpos('salidaRespuesta',$_SERVER['HTTP_REFERER']);
 
@@ -113,7 +95,8 @@
     require_once($ruta_raiz."/conf/configPHPMailer.php");
     require_once($ruta_raiz."/tcpdf/tcpdf.php");
 
-    $db      = new ConnectionHandler("$ruta_raiz");
+    $db      = new ConnectionHandler($ruta_raiz);
+    
     $hist    = new Historico($db);
     $Tx      = new Tx($db);
     $anex    = new Anexo($db);
@@ -122,7 +105,6 @@
 
     $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
     $anexTip->anex_tipo_codigo(7);
-    //$db->conn->debug = true;
     $sqlFechaHoy      = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
     $numRadicadoPadre = $_POST["radPadre"];
 
@@ -144,13 +126,13 @@
 
     //DATOS A VALIDAR EN RADICADO //
     $servidorSmtp   = "172.16.1.92:25";
-    $tdoc           = 0;  // tipo documental no definido
-    $ent            = '1';
+    $tdoc           = NO_DEFINIDO; 
+    $tipo_radicado  = (isset($_POST['tipo_radicado']))? $_POST['tipo_radicado'] : null;
     $pais           = 170; //OK, codigo pais
     $cont           = 1; //id del continente
     $radicado_rem   = 7;
     $auxnumero      = str_pad($auxnumero, 5, "0", STR_PAD_LEFT);
-    $tipo           = 7;  #pdf
+    $tipo           = ARCHIVO_PDF;
     $tamano         = 1000;
     $auxsololect    = 'N';
     $radicado_rem   = 1;
@@ -227,7 +209,7 @@
 ***********************************************/
     //Para crear el numero de radicado se realiza el siguiente procedimiento
     $isql_consec = "SELECT
-                        DEPE_RAD_TP$ent as secuencia
+                        DEPE_RAD_TP$tipo_radicado as secuencia
                     FROM
                         DEPENDENCIA
                     WHERE
@@ -262,7 +244,7 @@
     $rad->usuaDoc       = $radUsuaDoc;
     $codTx              = 62;
 
-    $nurad = $rad->newRadicado($ent, $tpDepeRad);
+    $nurad = $rad->newRadicado($tipo_radicado, $tpDepeRad);
 
     if ($nurad=="-1"){
       header("Location: salidaRespuesta.php?$encabe&error=1");
@@ -550,7 +532,7 @@
       // Page number
       include "../config.php";
 
-            $txt = "<div align='center'> $entidad_dir Contacto: <?=$entidad_tel?>";
+            $txt = "<div align='center'> $entidad_dir Contacto: $entidad_tel";
             $this->writeHTMLCell($w=0, $h=3, $x='32', $y='', $txt, $border=0, $ln=1, $fill=0, $reseth=true);
     }
   }

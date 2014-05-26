@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -207,9 +207,29 @@
                         </table>
                     </td>
                 </tr>
-
+                
+                <!--{if $MOSTRAR_ERROR}-->
                 <tr align="center">
-                  <td width="100%" height="25" class="titulos5" align="center" colspan="4">
+                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
+                    <strong>
+                      DEBE SELECCIONAR UN TIPO DE RADICADO
+                    </strong>
+                  </td>
+                </tr>
+                <!--{/if}-->
+                <tr align="center">
+                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
+                    <select name="tipo_radicado">
+                      <option value="0">Radicar Como:</option>
+                      <!--{foreach from=$TIPOS_RADICADOS key=TIPO item=VALOR}-->
+                      <option value="<!--{$TIPO}-->"><!--{$VALOR}--></option>
+                      <!--{/foreach}-->
+                    </select>
+                  </td>
+                </tr>
+                
+                <tr align="center">
+                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
                     <input type="submit" name="Button" value="ENVIAR" class="botones">
                   </td>
                 </tr>

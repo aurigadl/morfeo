@@ -1,6 +1,6 @@
-<?php /* Smarty version 2.6.20, created on 2014-04-25 07:16:09
+<?php /* Smarty version 2.6.20, created on 2014-05-26 15:17:23
          compiled from index.tpl */ ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -226,9 +226,33 @@
                         </table>
                     </td>
                 </tr>
-
+                
+                <?php if ($this->_tpl_vars['MOSTRAR_ERROR']): ?>
                 <tr align="center">
-                  <td width="100%" height="25" class="titulos5" align="center" colspan="4">
+                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
+                    <strong>
+                      DEBE SELECCIONAR UN TIPO DE RADICADO
+                    </strong>
+                  </td>
+                </tr>
+                <?php endif; ?>
+                <tr align="center">
+                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
+                    <select name="tipo_radicado">
+                      <option value="0">Radicar Como:</option>
+                      <?php $_from = $this->_tpl_vars['TIPOS_RADICADOS']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
+    foreach ($_from as $this->_tpl_vars['TIPO'] => $this->_tpl_vars['VALOR']):
+?>
+                      <option value="<?php echo $this->_tpl_vars['TIPO']; ?>
+"><?php echo $this->_tpl_vars['VALOR']; ?>
+</option>
+                      <?php endforeach; endif; unset($_from); ?>
+                    </select>
+                  </td>
+                </tr>
+                
+                <tr align="center">
+                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
                     <input type="submit" name="Button" value="ENVIAR" class="botones">
                   </td>
                 </tr>

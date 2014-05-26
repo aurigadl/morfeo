@@ -1,14 +1,13 @@
 <?php
     session_start();
-    //error_reporting(E_ALL);
-		//ini_set('display_errors', '1');
+    
     set_time_limit(0);
-    if($_SESSION["krd"]){
+    
+    if($_SESSION["krd"])
         $krd = $_SESSION["krd"];
-    } 
-    if (!isset($_SESSION['dependencia'])){
+    
+    if (!isset($_SESSION['dependencia']))
         include "../rec_session.php";
-    }
 
     $dependencia = $_SESSION["dependencia"] * 1 ;
     
@@ -16,11 +15,12 @@
 	  include $ruta_raiz."/htmlheader.inc.php";
     require_once($ruta_raiz."/include/db/ConnectionHandler.php");
 
-    $db      = new ConnectionHandler("$ruta_raiz");
+    $db      = new ConnectionHandler($ruta_raiz);
     $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);                 
     
     define('SMARTY_DIR', $ruta_libs.'libs/');
-	require (SMARTY_DIR.'Smarty.class.php');
+    define('SMARTY_DIR', './libs/');
+	  require (SMARTY_DIR . 'Smarty.class.php');
 
 	$smarty = new Smarty;
 	$smarty->template_dir = './templates';
@@ -35,43 +35,22 @@
     $nurad    = $_GET['nurad'];
     $sali     = array();
 
-    function errores($errores){
-        switch ($errores){
-            case 1:
-                $error= " No se genero el radicado.";
-                break;
-            case 2:
-                $error= " Error no se creo la carpeta para los adjuntos /bodega/adjuntos/.";
-                break;
-            case 3:
-                $error= " Un archivo no se envio (Extension invalida)";
-                break;
-            case 4:
-                $error= " El formato mime del documento no existe";
-                break;
-            case 5:
-                $error= " El tamano del archivo adjunto supero el limite permitido";
-                break;
-            case 6:
-                $error= " No se pudo registrar uno de los adjuntos";
-                break;
-            case 7:
-                $error= " No se pudo grabar uno de los anexos";
-                break;
-            case 8:
-                $error= " Error enviando correo electronico. <br />
-                          Realize el envio del correo de manera manual.";
-                break;
-            case 9:
-                $error= " Error adjuntando el archivo de la respuesta. <br />
-                          Realize el envio de manera manual.";
-                break;
-            case 10:
-                $error= " Error adjuntado el archivo del radicado padre. <br />
-                          Realize el envio del correo de manera manual.";
-                break;
-        }
-        return $error;
+    function errores($errores) {
+      $arreglo_errores = array();
+      $arreglo_errores[1] = ' No se genero el radicado.';
+      $arreglo_errores[] = ' Error no se creo la carpeta para los adjuntos /bodega/adjuntos/.';
+      $arreglo_errores[] = ' Un archivo no se envio (Extension invalida)';
+      $arreglo_errores[] = ' El formato mime del documento no existe';
+      $arreglo_errores[] = ' El tamano del archivo adjunto supero el limite permitido';
+      $arreglo_errores[] = ' No se pudo registrar uno de los adjuntos';
+      $arreglo_errores[] = ' No se pudo grabar uno de los anexos';
+      $arreglo_errores[] = ' Error enviando correo electronico. <br />
+                             Realize el envio del correo de manera manual.';
+      $arreglo_errores[] = ' Error adjuntando el archivo de la respuesta. <br />
+                             Realize el envio de manera manual.';
+      $arreglo_errores[] = ' Error adjuntado el archivo del radicado padre. <br />
+                             Realize el envio del correo de manera manual.';
+      return $arreglo_errores[$errores];
     }
 
     if(!empty($nurad)){

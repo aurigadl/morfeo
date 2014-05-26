@@ -1,19 +1,28 @@
 <?php
 session_start();
-//ini_set('display_errors', '1');
+
+define('RAD_ENTRADA', '2');
+define('SMARTY_DIR', $ruta_libs.'libs/');
+define('ADODB_ASSOC_CASE', 1);
 
 $ruta_raiz = "..";
+
 if (!$_SESSION['dependencia'])
-    header ("Location: ".$ruta_raiz."/cerrar_session.php");
+  header ("Location: ".$ruta_raiz."/cerrar_session.php");
 
 $ruta_libs = "../respuestaRapida/";
 
-define('SMARTY_DIR', $ruta_libs.'libs/');
+// Variable que almacena los tipos de radicados que se encuentran en DB
+$tipos_radicados = array();
+
+
 require (SMARTY_DIR.'Smarty.class.php');
 require_once 'libs/htmlpurifier/HTMLPurifier.auto.php';
 
+$mostrar_error = $_GET['error_radicacion'];
+
 //formato para fecha en documentos
-function fechaFormateada($FechaStamp){
+function fechaFormateada($FechaStamp) {
   $ano      = date('Y', $FechaStamp); //<-- Ano
   $mes      = date('m', $FechaStamp); //<-- número de mes (01-31)
   $dia      = date('d', $FechaStamp); //<-- Día del mes (1-31)
@@ -62,6 +71,7 @@ $smarty->template_dir = './templates';
 $smarty->compile_dir = './templates_c';
 $smarty->config_dir = './configs/';
 $smarty->cache_dir = './cache/';
+$smarty->debugging = true;
 
 $smarty->left_delimiter = '<!--{';
 $smarty->right_delimiter = '}-->';
@@ -88,10 +98,8 @@ function byteSize($bytes) {
   return $size;
 }
 
-if (isset($_SESSION["krd"]))
-  $krd = $_SESSION["krd"];
-else
-  $krd = "";
+$krd = (isset($_SESSION["krd"]))? $_SESSION["krd"] : '';
+
 if (isset($_GET["radicadopadre"])){
   $radicado = $_GET["radicadopadre"];
   //Necesario para procesar plantillas
@@ -102,11 +110,21 @@ if (isset($_GET["radicadopadre"])){
 
 include_once ($ruta_raiz."/include/db/ConnectionHandler.php");
 
-$db = new ConnectionHandler("$ruta_raiz");
+$db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
-define('ADODB_ASSOC_CASE', 1);
-$verrad         = "";
+
+$sql_tipo_rad = "SELECT sgd_trad_codigo,
+                        sgd_trad_descr
+                      FROM SGD_TRAD_TIPORAD
+                      where sgd_trad_codigo <>" . RAD_ENTRADA;
+$rs_tipo_rad  = $db->conn->Execute($sql_tipo_rad);
+
+while (!$rs_tipo_rad->EOF) {
+  $tipos_radicados[$rs_tipo_rad->fields["SGD_TRAD_CODIGO"]] = $rs_tipo_rad->fields["SGD_TRAD_DESCR"];
+  $rs_tipo_rad->MoveNext();
+}
+
+$verrad         = '';
 $krd            = $_SESSION["krd"];
 $dependencia    = $_SESSION["dependencia"];
 $usua_doc       = $_SESSION["usua_doc"];
@@ -126,6 +144,7 @@ $isql   = "SELECT USUA_EMAIL,
             WHERE USUA_LOGIN ='$krd' ";
 
 $rs   = $db->conn->Execute($isql);
+
 if (!$rs){
   echo "ERROR, datos invalidos";
   exit(0);
@@ -316,6 +335,8 @@ while(!$plant->EOF){
 };
 
 $smarty->assign("sid"              , SID); //Envio de session por get
+$smarty->assign("TIPOS_RADICADOS"  , $tipos_radicados);
+$smarty->assign("MOSTRAR_ERROR"    , $mostrar_error);
 $smarty->assign("usuacodi"         , $usuacodi);
 $smarty->assign("extn"             , $extn);
 $smarty->assign("depecodi"         , $depecodi);

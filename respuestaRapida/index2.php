@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 
     $ruta_raiz = "..";
@@ -18,9 +18,9 @@ session_start();
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
-
 define('ADODB_ASSOC_CASE', 2);
-$verrad         = "";
+
+$verrad         = '';
 $krd            = $_SESSION["krd"];
 $dependencia    = $_SESSION["dependencia"];
 $usua_doc       = $_SESSION["usua_doc"];
@@ -34,17 +34,14 @@ $descCarpetasPer= $_SESSION["descCarpetasPer"];
 include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 
 if (!$db) $db = new ConnectionHandler($ruta_raiz);
+
 //$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-
 
 $isql = "select * from radicado where radi_nume_radi=$radicadopadre";
 $rs = $db->conn->query($isql);
 
 $pathImagen = $rs->fields["radi_path"];
-
-
-
 ?>
 <FRAMESET cols="99%,*"  border=4 scrolling="yes" >
 
