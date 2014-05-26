@@ -456,7 +456,7 @@ Anexar Archivo</a>
                             answer = (answer.length>0)? answer + data_answer: data_answer ;
                         }
                         content  = $("<div></div>").html(answer);
-                        newalert = newalert.clone();
+                        newalert = tagalert.clone();
                         newalert.find('h4').html(title2);
                         newalert.find('h4').after(content);
                         newalert.addClass('alert-danger');
