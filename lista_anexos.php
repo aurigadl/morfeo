@@ -413,6 +413,7 @@ Anexar Archivo</a>
 
         function radicarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado,tpradic,aplinteg,numextdoc){
             var title1   = "Transaccion exitosa";
+            var radinum;
             var title2   = "Errores en la transaccion";
             var tagalert = $( "<div>" ).addClass("alert alert-block")
                            .html("<a class='close' data-dismiss='alert' href='#'>×</a>" +
@@ -426,20 +427,30 @@ Anexar Archivo</a>
                         var answer = content = '';
                         for(var i=0;i < data.success.length; i++){
                             var data_answer = " "+data.success[i]+" ";
-                            answer = (answer.length>0)? answer + data_answer : data_answer ;
+                            answer  = (answer.length>0)? answer + data_answer : data_answer ;
+                            radinum = data_answer.match(/[\d]{14}/);
+                            if((radinum !== undefined)  && (Array.isArray(radinum)) && (radinum.length > 0)){
+                                radinum = radinum[0];
+                            }
                         }
                         content  = $("<div></div>").html(answer);
                         newalert = tagalert.clone();
                         newalert.find('h4').html(title1);
                         newalert.addClass('alert-success');
+                        newalert.removeClass('alert-danger');
                         newalert.find('h4').after(content);
                         var tdalert = $('<td colspan="14">').append(newalert);
-                        var tralert = $('<tr>').appendTo(tdalert);
+                        var tralert = $('<tr>').append(tdalert);
                         $('#' + anexo).after(tralert);
+
+                        if(radinum){
+                            $($('#' + anexo).find('td')[2]).children().children().text(radinum);
+                        }
                     }
 
                     if((data.error !== undefined) && (data.error.length>0)){
-                        var answer = content = '';
+                        var answer  = '';
+                        var content = '';
                         for(var i=0;i < data.error.length; i++){
                             var data_answer = " "+data.error[i]+" ";
                             answer = (answer.length>0)? answer + data_answer: data_answer ;
@@ -447,9 +458,11 @@ Anexar Archivo</a>
                         content  = $("<div></div>").html(answer);
                         newalert = newalert.clone();
                         newalert.find('h4').html(title2);
+                        newalert.find('h4').after(content);
                         newalert.addClass('alert-danger');
+                        newalert.removeClass('alert-success');
                         var tdalert = $('<td colspan="14">').append(newalert);
-                        var tralert = $('<tr>').appendTo(tdalert);
+                        var tralert = $('<tr>').append(tdalert);
                         $('#' + anexo).after(tralert);
                     }
                 });
