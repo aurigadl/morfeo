@@ -43,7 +43,6 @@ $lnr         = 11+$ln;
 
     if (!$db)	$db = new ConnectionHandler($ruta_raiz);
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
-    //$db->conn->debug = true;
     $anex       = & new Anexo($db);
     $anexTip    = & new Anex_tipo($db);
 

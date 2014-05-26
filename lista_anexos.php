@@ -412,22 +412,15 @@ Anexar Archivo</a>
         }
 
         function radicarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado,tpradic,aplinteg,numextdoc){
-            var divalert = $('');
-            var tralert  = $('tr');
-            var newalert  = $( "<div>" ).addClass("alert alert-block")
-                        .html("<a class='close' data-dismiss='alert' href='#'>×</a>" +
-                        "<h4 class='alert-heading'><i class='fa fa-check-square-o'></i></h4>");
-            tdalert.appendTo(tralert);
-            tralert.appendTo(divalert);
+            var title1   = "Transaccion exitosa";
+            var title2   = "Errores en la transaccion";
+            var tagalert = $( "<div>" ).addClass("alert alert-block")
+                           .html("<a class='close' data-dismiss='alert' href='#'>×</a>" +
+                           "<h4 class='alert-heading'><i class='fa fa-check-square-o'></i></h4>");
 
             if (confirm('Se asignar\xe1 un n\xfamero de radicado a \xe9ste documento. Est\xe1 seguro  ?')){
                 url = "?radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id())?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado+"&tpradic="+tpradic+"&aplinteg="+aplinteg+"&numextdoc="+numextdoc;
                 $.post( "<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php" + url, function( data ) {
-
-                    var newalert, content;
-
-                    var title1   = "Transaccion exitosa";
-                    var title2   = "Errores en la transaccion";
 
                     if((data.success !== undefined) && (data.success.length>0)){
                         var answer = content = '';
@@ -436,11 +429,13 @@ Anexar Archivo</a>
                             answer = (answer.length>0)? answer + data_answer : data_answer ;
                         }
                         content  = $("<div></div>").html(answer);
-                        newalert = newDiv.clone();
+                        newalert = tagalert.clone();
                         newalert.find('h4').html(title1);
                         newalert.addClass('alert-success');
                         newalert.find('h4').after(content);
-                        $('#' + anexo).after(newalert);
+                        var tdalert = $('<td colspan="14">').append(newalert);
+                        var tralert = $('<tr>').appendTo(tdalert);
+                        $('#' + anexo).after(tralert);
                     }
 
                     if((data.error !== undefined) && (data.error.length>0)){
@@ -450,10 +445,12 @@ Anexar Archivo</a>
                             answer = (answer.length>0)? answer + data_answer: data_answer ;
                         }
                         content  = $("<div></div>").html(answer);
-                        newalert = newDiv.clone().find('h4').html(title2);
+                        newalert = newalert.clone();
+                        newalert.find('h4').html(title2);
                         newalert.addClass('alert-danger');
-                        newalert.find('h4').after(content);
-                        $('#' + anexo).after(newalert);
+                        var tdalert = $('<td colspan="14">').append(newalert);
+                        var tralert = $('<tr>').appendTo(tdalert);
+                        $('#' + anexo).after(tralert);
                     }
                 });
             };
