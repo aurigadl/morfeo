@@ -2045,10 +2045,10 @@ table {
   padding: 4px 5px;
 }
 
-.table-bordered {
+.table-bordered, .borde_tab {
   border: 1px solid #dddddd;
   border-collapse: separate;
-  *border-collapse: collapse;
+  border-collapse: collapse;
   border-left: 0;
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
@@ -3357,7 +3357,7 @@ input[type="button"].btn-block {
   color: rgba(255, 255, 255, 0.75);
 }
 
-.btn-primary {
+.btn-primary, .botones {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #006dcc;

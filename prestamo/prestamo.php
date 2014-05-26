@@ -1,13 +1,33 @@
 <?
-session_start();
-// Modificado Junio 2009
 /**
-  * Original en la SSPD en el año 2003
-  * 
-  * Se añadio compatibilidad con variables globales en Off
-  * @autor Jairo Losada 2009-05
-  * @licencia GNU/GPL
-  */
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+session_start();
+
+$ruta_raiz = ".";
+if (!$_SESSION['dependencia'])
+header ("Location: $ruta_raiz/cerrar_session.php");
+
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
@@ -53,34 +73,29 @@ $ruta_raiz = "..";
 
    if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
    
-/*********************************************************************************
- *       Filename: prestamo.php
- *       Modificado: 
- *          1/3/2006  IIAC  Basado en pedido.php. Facilita la b�squeda de los
- *                          registros de pr�stamo.
- *********************************************************************************/
-
-
-
 //===============================
 // prestamo begin
 //===============================
-// Inicializa, oculta o presenta los par�metros de b�squeda dependiendo de la opci�n del men� de pr�stamos seleccionada
+// Inicializa, oculta o presenta los parametros de busqueda dependiendo de la opcion del menu de prestamos seleccionada
 
    // prestamo CustomIncludes begin
    include ("common.php");   
    // Save Page and File Name available into variables
    $sFileName = "prestamo.php";
    // Variables de control
-   $opcionMenu=strip($_POST["opcionMenu"]); //opci�n seleccionada del men�    
+   $opcionMenu=strip($_POST["opcionMenu"]); //opci0n seleccionada del menu    
    $pageAnt=strip($_POST["sFileName"]);   
    $ver=$_POST["s_sql"];      //consulta
    // HTML Page layout  
 ?>
    <html>
       <head>
-         <title>Prestamos ORFEO</title>
-         <link rel="stylesheet" href="<?=$ruta_raiz?>/estilos/orfeo.css" type="text/css">
+  <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "../htmlheader.inc.php"; ?>
          <!--Necesario para hacer visible el calendario -->		 
          <script src="<?=$ruta_raiz?>/js/popcalendar.js"></script>
          <div id="spiffycalendar" class="text"></div>		 		 
@@ -166,7 +181,7 @@ $ruta_raiz = "..";
       include_once "inicializarForm.inc";	  
       // Form display
 ?>    
-      <form method="post" action="prestamo.php" name="busqueda">
+      <form method="post" action="prestamo.php" name="busqueda" class="smart-form">
          <!-- de sesi�n !-->	  
          <input type="hidden" value=" " name="radicado"> 
          <input type="hidden" value="" name="s_sql"> 		 
@@ -196,21 +211,21 @@ $ruta_raiz = "..";
             setRutaRaiz ('<?=$ruta_raiz?>');				
          </script>
 
-         <table border=0 cellpadding=0 cellspacing=2 class='borde_tab'>	  
+         <table  class='table table-bordered'>	  
             <tr>
-	<td class="titulos4" colspan="2"><a name="Search"><?=$sFormTitle[$opcionMenu]; ?> </a></td>
+	<td  colspan="2"><a name="Search"><?=$sFormTitle[$opcionMenu]; ?> </a></td>
             </tr>
             <tr id="b0" style="display:<?= $tipoBusqueda[$opcionMenu][0]; ?>">
-               <td class="titulos3"><p align="left">Radicado</p></td>	 
-               <td class="listado5"><input type="text" name="s_RADI_NUME_RADI" maxlength="15" value="<?= $flds_RADI_NUME_RADI; ?>" size="25" class="tex_area"></td>			   
+               <td ><p align="left">Radicado</p></td>	 
+               <td ><label class="input"><input type="text" name="s_RADI_NUME_RADI" maxlength="15" value="<?= $flds_RADI_NUME_RADI; ?>" size="25"></label></td>			   
             </tr>	  
             <tr id="b1" style="display:<?= $tipoBusqueda[$opcionMenu][1]; ?>">
-               <td class="titulos3"><p align="left">Login de Usuario</p></td>	 		 
-               <td class="listado5"><input type="text" name="s_USUA_LOGIN" maxlength="15" value="<?= $flds_USUA_LOGIN; ?>" size="25" class="tex_area"></td>
+               <td ><p align="left">Login de Usuario</p></td>	 		 
+               <td ><label class="input"><input type="text" name="s_USUA_LOGIN" maxlength="15" value="<?= $flds_USUA_LOGIN; ?>" size="25"></label></td>
             </tr>			
             <tr id="b2" style="display:<?= $tipoBusqueda[$opcionMenu][2]; ?>">
-               <td class="titulos3"><p align="left">Dependencia</p></td>	 
-               <td class="listado5"><select name="s_DEPE_NOMB" class="select" onChange=" document.busqueda.s_sql.value='no'; document.busqueda.submit(); ">
+               <td ><p align="left">Dependencia</p></td>	 
+               <td ><label class="select"><select name="s_DEPE_NOMB" class="select" onChange=" document.busqueda.s_sql.value='no'; document.busqueda.submit(); ">
                <option value="">- TODAS LAS DEPENDENCIAS -</option>			
 <?                               
 	$lookup_s = db_fill_array("select DEPE_CODI,DEPE_NOMB from DEPENDENCIA order by 2");
@@ -223,10 +238,10 @@ $ruta_raiz = "..";
             }
          } ?>
 								    </select></td>
-            </tr>
+            </label></tr>
             <tr id="b3" style="display:<?= $tipoBusqueda[$opcionMenu][3]; ?>">
-               <td class="titulos3"><p align="left">Usuario</p></td>	 
-               <td class="listado5"><select name="s_USUA_NOMB" class=select>
+               <td ><p align="left">Usuario</p></td>	 
+               <td ><label class="select"><select name="s_USUA_NOMB" class=select>
                   <option value="">- TODOS LOS USUARIOS -</option>			
 <?                  $validUsuaActiv="";
 			// Modificado Infom�trika 14-Julio-2009
@@ -244,11 +259,11 @@ $ruta_raiz = "..";
                             echo "<option $option value=\"$key\">".strtoupper($value)."</option>";
                            }
                      } ?>
-								    </select></td>
+								    </select></label></td>
             </tr>
             <tr id="b4" style="display:<?= $tipoBusqueda[$opcionMenu][4]; ?>">
-               <td class="titulos3"><p align="left">Requerimiento</p></td>	 
-               <td class="listado5"><select name="s_PRES_REQUERIMIENTO" class=select>
+               <td ><p align="left">Requerimiento</p></td>	 
+               <td ><label class=select><select name="s_PRES_REQUERIMIENTO" class=select>
                                        <option value="">- TODOS LOS TIPOS -</option>			
 <?                               $lookup_s = db_fill_array("select PARAM_CODI,PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_REQUERIMIENTO' order by PARAM_VALOR desc");
                                  if(is_array($lookup_s))  {
@@ -261,11 +276,11 @@ $ruta_raiz = "..";
                                        echo $option;
                                     }
                                  }    ?>							 
-								    </select></td>
+								    </select></label></td>
             </tr>
             <tr id="b5" style="display:<?= $tipoBusqueda[$opcionMenu][5]; ?>">
-               <td class="titulos3"><p align="left">Estado</p></td>	 
-               <td class="listado5"><select name="s_PRES_ESTADO" class=select>
+               <td ><p align="left">Estado</p></td>	 
+               <td ><label class=select><select name="s_PRES_ESTADO" class=select>
                                        <option value="">- TODOS LOS ESTADOS -</option>			
 <?                               $lookup_s = db_fill_array("select PARAM_CODI,PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' order by PARAM_VALOR");
                                  if(is_array($lookup_s))  {
@@ -279,19 +294,19 @@ $ruta_raiz = "..";
                                  if($flds_PRES_ESTADO == -1) { $option="SELECTED"; }
 								 else                        { $option=""; } 
 								 echo "<option $option value=\"-1\">VENCIDO</option>"; ?>								                                        											 							 
-								    </select></td>
+								    </select></label></td>
             </tr>					
             <tr id="b6" style="display:<?= $tipoBusqueda[$opcionMenu][6]; ?>">
-               <td class="titulos3"><p align="left">Fecha inicial<br>&nbsp;&nbsp;(aaaa-mm-dd)</p></td>	 
-               <td class="listado5"><script language="javascript">
+               <td ><p align="left">Fecha inicial<br>&nbsp;&nbsp;(aaaa-mm-dd)</p></td>	 
+               <td ><script language="javascript">
 			         var dateAvailable1 = new ctlSpiffyCalendarBox("dateAvailable1", "busqueda","fechaInicial","btnDate1","<?=$fechaInicial?>",scBTNMODE_CUSTOMBLUE);
 			         dateAvailable1.writeControl();
 			         dateAvailable1.dateFormat="yyyy-MM-dd";
 		          </script></td>
             </tr>
             <tr id="b7" style="display:<?= $tipoBusqueda[$opcionMenu][7]; ?>">
-               <td class="titulos3"><p align="left">Fecha final<br>&nbsp;&nbsp;(aaaa-mm-dd)</p></td>	 
-               <td class="listado5"><script language="javascript">
+               <td ><p align="left">Fecha final<br>&nbsp;&nbsp;(aaaa-mm-dd)</p></td>	 
+               <td ><script language="javascript">
 			         var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "busqueda","fechaFinal","btnDate2","<?=$fechaFinal?>",scBTNMODE_CUSTOMBLUE);
 			         dateAvailable2.writeControl();
 			         dateAvailable2.dateFormat="yyyy-MM-dd";
@@ -299,8 +314,8 @@ $ruta_raiz = "..";
 			   </td>
             </tr>
             <tr id="b8" style="display:<?= $tipoBusqueda[$opcionMenu][8]; ?>">
-               <td class="titulos3"><p align="left">Hora l&iacute;mite<br>&nbsp;&nbsp;(hh:mm m)</p></td>	 
-               <td class="listado5"><select name="s_hora_limite" class=select>
+               <td ><p align="left">Hora l&iacute;mite<br>&nbsp;&nbsp;(hh:mm m)</p></td>	 
+               <td ><select name="s_hora_limite" class=select>
 <?                               for ($i=1; $i<=12; $i++) { 
                                     if ($i<=9) {  $h="0".$i; }
                          		    else       {  $h="".$i;  } 
@@ -330,13 +345,15 @@ $ruta_raiz = "..";
 								    </select>								 								 								   								 
             </tr>		 		 
             <tr>
-               <td class="titulos3" colspan="2">
+               <td  colspan="2">
 <?                               if ($opcionMenu==0 || $opcionMenu==4) {?>			
-			      <input type="reset" class='botones' value="Limpiar" onClick="javascript: limpiar();">
-			      <input type="submit" class='botones' value="Generar">
+						<footer>
+			      <input type="reset" class='btn btn-default' value="Limpiar" onClick="javascript: limpiar();">
+			      <input type="submit" class="btn btn-primary" value="Generar">
+			      </footer>
 <?                               }
-                                 else {?>			
-			      <input type="submit" class='botones' value="Buscar">
+                                 else {?>		
+						<footer><input type="submit" class="btn btn-primary" value="Buscar"></footer>
 <?                               }?>			
                </td>	 	 	  
             </tr>
@@ -436,9 +453,9 @@ $ruta_raiz = "..";
    	     <input type="hidden" name="FormPedidos_Sorting" value="<?=$iSort?>">
 	     <input type="hidden" name="FormPedidos_Sorted" value="<?=$iSorted?>">
          <input type="hidden" name="s_Direction" value="<?=$sDirection?>">
-         <table border=0 cellpadding=0 cellspacing=2 class='borde_tab' width="100%">
+         <table class='table table-bordered' width="100%">
          <tr>
-            <td class="titulos4" colspan="<?=$numCol?>"><a name="Search"><?= $tituloRespuesta[$opcionMenu]?></a></td>
+            <td  colspan="<?=$numCol?>"><a name="Search"><?= $tituloRespuesta[$opcionMenu]?></a></td>
          </tr>		   	  	  		 		 		 	  
 <?PHP    // Titulos de las columnas  
          include_once "inicializarTabla.inc";
@@ -594,7 +611,7 @@ $ruta_raiz = "..";
          </tr>
 <?       // Botones para procesar
          if ($tipoRespuesta[$opcionMenu][$numRtaMax]=="") {?>						
-         <tr class="titulos4" align="center">		 
+         <tr  align="center">		 
             <td class="listado1" colspan="<?=($numCol+1);?>" align="center"><center>
 			<input type="button" class='botones' value="<?=$tituloSubmitRta[$opcionMenu]?>" onClick="javascript:enviar();">
 			<input type="button" class='botones' value="Cancelar" title="Regresa al men&uacute; de pr&eacute;stamo y control de documentos" onClick="javascript:regresar();"></center>

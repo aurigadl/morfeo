@@ -19,7 +19,7 @@
          $j=0;
          if($sFileName=="formEnvio.php") { $j=1; } 
 ?>
-         <tr class="titulos5" align="center">
+         <tr  align="center">
             <td id="r0"  style="display:<?=$tipoRespuesta[$opcionMenu][0]; ?>"><a class="vinculos" <?=$href[$j][1]?>> <?=$flecha[1]?> Radicado</a></td>	 
             <td id="r1"  style="display:<?=$tipoRespuesta[$opcionMenu][1]; ?>"><a class="vinculos">Expediente</a></td>	 
             <td id="r2"  style="display:<?=$tipoRespuesta[$opcionMenu][2]; ?>"><a class="vinculos" <?=$href[$j][3]?>> <?=$flecha[3]?> Usuario</a></td>	 

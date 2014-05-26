@@ -266,7 +266,7 @@ body.nooverflow {
     float: left;
     margin-top: 4px;
 }
-.widget-body-toolbar .btn {
+.widget-body-toolbar .btn  {
     vertical-align: middle;
 }
 .widget-body-toolbar .btn-xs {
