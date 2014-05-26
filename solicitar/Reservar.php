@@ -1,18 +1,35 @@
 <?php
-session_start();
-// Modificado Junio 2009
 /**
-  * Original en la SSPD en el año 2003
-  * 
-  * Se añadio compatibilidad con variables globales en Off
-  * @autor Jairo Losada 2009-05
-  * @licencia GNU/GPL
-  */
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
 
-//Modificado Infometrika 14-Julio-2009
-//La compatibilidad con Variables globales en OFF se maneja en el script solicitar/common.php con la funcion get_param().
-//foreach ($_GET as $key => $valor)   ${$key} = $valor;
-//foreach ($_POST as $key => $valor)   ${$key} = $valor;
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+session_start();
+
+$ruta_raiz = ".";
+if (!$_SESSION['dependencia'])
+header ("Location: $ruta_raiz/cerrar_session.php");
+
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
 define('ADODB_ASSOC_CASE', 1);
 $krd = $_SESSION["krd"]; 
@@ -58,8 +75,10 @@ $tip3img =$_SESSION["tip3img"];   $verrad = "";
 ?>
    <html>
       <head>
-         <title>Prestamos ORFEO</title>
-         <link rel="stylesheet" href="../estilos/orfeo.css" type="text/css">
+				<title>..:: Sistema de informaci&oacute;n <?=$entidad_largo?> ::..</title>
+				<meta charset="utf-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				 <?php include_once "../htmlheader.inc.php"; ?>
       </head>
       <body class="PageBODY">
          <table align="center">
@@ -99,29 +118,29 @@ $depe_nomb = $_SESSION["depe_nomb"];
    //if (!$nomRad) $nomRad=$_POST["radicado"];  
    if(strlen($nomRad)>17) { $nomRad=str_replace(",","<br>",$nomRad); }        
    $sPRESTAMOErr="no presentar";  //para que solo se haga visible esta funcion ?>
-         <table border=0 cellspace=2 cellpad=2 WIDTH=50%  class="t_bordeGris" id=tb_general align="left">
+         <table  class="table table-bordered" id=tb_general align="left">
             <tr>
-         	  <td colspan="2" class="titulos4">ACCION REQUERIDA COMPLETADA</td>
+         	  <th colspan="2" >ACCION REQUERIDA COMPLETADA</th>
             </tr>
             <tr>
-         	  <td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">ACCION REQUERIDA:</td>
-          	  <td  width="65%" height="25" class="listado2_no_identa"><?=$nombTx?></td>
+         	  <td align="right"  >ACCION REQUERIDA:</td>
+          	  <td  width="65%"  class="listado2_no_identa"><?=$nombTx?></td>
             </tr>
             <tr>
-         	  <td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">RADICADOS INVOLUCRADOS:</td>
-         	  <td  width="65%" height="25" class="listado2_no_identa"><?=$nomRad?></td>
+         	  <td align="right"  >RADICADOS INVOLUCRADOS:</td>
+         	  <td  width="65%"  class="listado2_no_identa"><?=$nomRad?></td>
             </tr>
             <tr>
-         	  <td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">FECHA:</td>
-           	  <td  width="65%" height="25" class="listado2_no_identa"><?=$fecha?></td>
+         	  <td align="right"  >FECHA:</td>
+           	  <td  width="65%"  class="listado2_no_identa"><?=$fecha?></td>
             </tr>	  
             <tr>
-         	  <td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">USUARIO ORIGEN:</td>
-           	  <td  width="65%" height="25" class="listado2_no_identa"><?=$usua_nomb?></td>
+         	  <td align="right"  >USUARIO ORIGEN:</td>
+           	  <td  width="65%"  class="listado2_no_identa"><?=$usua_nomb?></td>
             </tr>
             <tr>
-         	  <td align="right" bgcolor="#CCCCCC" height="25" class="titulos2">DEPENDENCIA ORIGEN:</td>
-          	  <td  width="65%" height="25" class="listado2_no_identa"><?=$depe_nomb?></td>
+         	  <td align="right"  >DEPENDENCIA ORIGEN:</td>
+          	  <td  width="65%"  class="listado2_no_identa"><?=$depe_nomb?></td>
             </tr>	
          </table>
 <?
@@ -150,7 +169,7 @@ function PRESTAMO_action($sAction) {
    // Regresa al menu del radicado  
    if ($sAction=="cancelar") {
       echo ".."; // dejar esto para que el navegador deje hacer el submit
-      echo "<form name=Atras action='../verradicado.php?&verrad=$fldradicado' method=post> </form>";
+      echo "<form name=Atras action='../verradicado.php?&verrad=$fldradicado' method=post class='smart-form'> </form>";
       echo "<script>document.Atras.submit();</script>";
    
    
@@ -324,24 +343,24 @@ function ESTADO_PRESTAMO_show() {
                	        document.Prestados.submit();
                      }
                   </script>					    
-                  <form method="POST" action="<?=$sFileName ?>" name="Prestados">
+                  <form method="POST" action="<?=$sFileName ?>" name="Prestados" class='smart-form'>
                      <input type="hidden"  value='<?=$krd?>' name="krd">
                      <input type="hidden" value="cancelar" name="FormAction">
                      <input type="hidden" value="" name="s_PRES_ID">					 					 		 
                      <input type="hidden" value="<?=$fldradicado?>" name="radicado">  
-                     <table border=0 cellpadding=0 cellspacing=2 class='borde_tab'>
+                     <table class='table table-bordered'>
                         <tr>
-                           <td class="titulos2" colspan="8">Estado de Reservas <font class="menu_princ"><?=$fldradicado?></font></td>
+                           <td  colspan="8">Estado de Reservas <font class="menu_princ"><?=$fldradicado?></font></td>
                         </tr>
-                        <tr class="titulos3" align="center" valign="middle">
-                           <td><a href=''><font class="titulos3">Radicado</font></a></td>		 
-                           <td><a href=''><font class="titulos3">Login</font></a></td>		 
-                           <td><a href=''><font class="titulos3">Dependencia</font></a></td>		 
-                           <td><a href=''><font class="titulos3">Fecha<br>Solicitud</font></a></td>		 
-                           <td><a href=''><font class="titulos3">Fecha<br>Vencimiento</font></a></td>		 
-                           <td><a href=''><font class="titulos3">Requerimiento</font></a></td>		 						
-                           <td><a href=''><font class="titulos3">Estado</font></a></td>		 
-                           <td><a href=''><font class="titulos3">Accion</font></a></td>		 
+                        <tr  align="center" valign="middle">
+                           <th><a href=''><font >Radicado</font></a></th>		 
+                           <th><a href=''><font >Login</font></a></th>		 
+                           <th><a href=''><font >Dependencia</font></a></th>		 
+                           <th><a href=''><font >Fecha<br>Solicitud</font></a></th>		 
+                           <th><a href=''><font >Fecha<br>Vencimiento</font></a></th>		 
+                           <th><a href=''><font >Requerimiento</font></a></th>		 						
+                           <th><a href=''><font >Estado</font></a></th>		 
+                           <th><a href=''><font >Accion</font></a></th>		 
                         </tr>    
 <?    
          $iCounter = 0;
@@ -382,7 +401,10 @@ function ESTADO_PRESTAMO_show() {
                         </tr>  			
 <?       } ?>
                         <tr  align="center">
-                           <td class="titulos3" colspan="8" align="center"><input type="submit" class='botones' value="Regresar"></td>
+                           
+                           <td  colspan="8" align="center"><footer><input type="submit" class='btn btn-default' value="Regresar">
+                           </footer>
+                           </td>
                         </tr>	  
                      </table>					 
 					 <br>
@@ -486,7 +508,7 @@ function PRESTAMO_show() {
                	     document.Prestamo.submit();
                   }
                </script>
-               <form method="POST" action="<?=$sFileName ?>" name="Prestamo">
+               <form method="POST" action="<?=$sFileName ?>" name="Prestamo" class=smart-form>
                   <input type="hidden" value="insert" name="FormAction">
                   <input type="hidden" value="<?=$dependencia?>" name="dependencia">			                    				  				  
 		  <input type="hidden" name="radicado" value="<?= tohtml($fldradicado) ?>">
@@ -511,13 +533,13 @@ function PRESTAMO_show() {
 <?       
          }	 
 	     else { ?>  
-                  <table class="borde_tab" align="center">
+                  <table class='table table-bordered' align="center">
                      <tr>
-                        <td class="titulos2" colspan="2"><center><?=$sFormTitle?></center></td>
+                        <th  colspan="2"><center><?=$sFormTitle?></center></th>
                      </tr>
                	     <tr>
             		    <td class='titulos2' width="100">Radicado</td>
-            		    <td class='listado2' width="150"><?=$fldradicado?></td>
+            		    <td class='listado2' width="350"><?=$fldradicado?></td>
             	     </tr>
               	     <tr>
 		                <td class='titulos2'>Login</td>
@@ -537,7 +559,7 @@ function PRESTAMO_show() {
                      </tr>
                      <tr>
 	                    <td class='titulos2'>Requiere</td>	
-                        <td class="listado5">
+                        <td class="listado5"><label class=select>
                         <select name="s_PRES_REQUERIMIENTO" class=select>
 <?                               $lookup_s = db_fill_array($sqlReq);
                                  if(is_array($lookup_s))  {
@@ -546,12 +568,11 @@ function PRESTAMO_show() {
                                     { 
                                     	echo "<option value=\"$key\">".ucfirst(strtolower($value))."</option>"; }
                                  	}		    ?>							 
-						                     </select></td>
+						                     </select></label></td>
                      </tr>
 	                 <tr>
-	                    <td class='titulos2'></td>	
-                        <td class="listado5"><input type="submit" class="botones" value="Solicitar">&nbsp;&nbsp;
-	            	                         <input type="submit" class="botones" value="Regresar" onClick="javascript: regresar();"></td>
+                        <td colspan=2><footer><input type="submit" class="btn btn-primary" value="Solicitar" align=left>&nbsp;&nbsp;
+	            	                         <input type="submit" class='btn btn-default' value="Regresar" onClick="javascript: regresar();"></footer></td>
 	                 </tr>
                   </table>	  
                </form> <?

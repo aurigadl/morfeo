@@ -1,17 +1,38 @@
 <?
+/**
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 session_start();
+
+$ruta_raiz = ".";
+if (!$_SESSION['dependencia'])
+header ("Location: $ruta_raiz/cerrar_session.php");
+
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
 ?>
 <HTML>
 <?
-
-/**
-  * Modificacion para aceptar Variables GLobales
-  * @autor Jairo Losada 2009/08 
-  * @fecha 2009/05
-  */
- foreach ($_GET as $key => $valor)  ${$key} = $valor;
- foreach ($_POST as $key => $valor) ${$key} = $valor;
-
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $usua_doc = $_SESSION["usua_doc"];
@@ -190,8 +211,12 @@ $mensaje_error = false;
 ?>
    <head>
       <title>Enviar Datos</title>	  
-      <link rel="stylesheet" href="<?=$ruta_raiz?>/estilos/orfeo.css" type="text/css">	  
-      <!--Necesario para hacer visible el calendario -->		 
+			<title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
+			<!-- Bootstrap core CSS -->
+			<?php include_once "../htmlheader.inc.php"; ?>	 
       <script src="<?=$ruta_raiz?>/js/popcalendar.js"></script>
       <div id="spiffycalendar" class="text"></div>		 		 
       <link rel="stylesheet" type="text/css" href="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.css">		 
@@ -200,11 +225,11 @@ $mensaje_error = false;
    <script language="javascript">       
 	  setRutaRaiz ('<?=$ruta_raiz?>'); // Para el calendario
    </script>
-   <body bgcolor="#FFFFFF" topmargin="0">
-    <table border=0 width=100% cellpadding="0" cellspacing="0">
+   <body class="smart-form">
+    <table class="table table-bordered">
 	   <tr>
 	      <td width=100%><br>
- 	         <form action='<?=$ruta_raiz?>/solicitar/Reservar.php?<?=$encabezado?>' method=post name="rta" >
+ 	         <form action='<?=$ruta_raiz?>/solicitar/Reservar.php?<?=$encabezado?>' method=post name="rta" class="smart-form" >
                 <!-- par�metros para procesar !-->	  		 		 
                 <input type="hidden"  value='<?=$krd?>' name="krd">					 					 					 		 
                 <input type="hidden" value=" " name="radicado">  	 
@@ -222,24 +247,28 @@ $mensaje_error = false;
                  <!-- Genera la consulta !-->	  		 		 
                 <input type="hidden" name="s_PRES_ID" value="<?=$setFiltroSelect?>">				                 	  								
 
-		        <table width="100%" border="0" cellpadding="0" cellspacing="5" class="borde_tab">
+		        <table width="100%" class="table table-bordered">
  	            <tr>
-		           <TD width=30% class="titulos4">USUARIO:<br><br><?=$usua_nomb?><br></TD>
-	   	           <TD width='30%' class="titulos4">DEPENDENCIA:<br><br><?=$depe_nomb?><br></TD>
-		           <TD width="35%" class="titulos4"><?=$titCaj?><BR></td>
-		           <td width='5' class="grisCCCCCC"><input type=button value=REALIZAR onclick="okTx();" name=enviardoc align=bottom class=botones id=REALIZAR></td>
+		           <TD width=30% >USUARIO:<?=$usua_nomb?><br></TD>
+	   	           <TD width='30%' >DEPENDENCIA:<?=$depe_nomb?><br></TD>
+		           <TD width="35%" ><?=$titCaj?></td>
+		           <td width='5' ><input type=button value=REALIZAR onclick="okTx();" name=enviardoc align=bottom  id=REALIZAR class="btn btn-primary"></td>
 	            </tr>
        	        <tr align="center">
 	               <td colspan="4" class="celdaGris" align=center><br><center>
-		             <table width="100%"  border=0 align="center" bgcolor="White">
+		             <table class="table table-bordered">
 		                 <tr bgcolor="White">
-					        <td width="100"><center><img src="<?=$ruta_raiz?>/iconos/tuxTx.gif" alt="Tux Transaccion" title="Tux Transaccion"></center></td>
-					   	    <td align="left"><textarea name=observa cols=70 rows=3 class=ecajasfecha><?=$observa?></textarea></TD>
+					        <td width="300"></td>
+					   	    <td align="left">
+					   	    <label class="textarea">
+										<i class="icon-append fa fa-comment"></i>
+										<textarea placeholder="Comentario . . . " name="observa" rows="3"><?=$observa?></textarea>
+										</label>
 					     </tr>  			             
 <? if ($opcionMenu==1) {  // Prestamo?>
                          <tr bgcolor="White">
- 	                        <td width="100" align="right" class="titulosError2">Estado:</td>
-						    <td align="left"><select class="select" name="s_PRES_ESTADO" onChange="javascript: ver(); ">
+ 	                        <td width="100" align="right" ><small>Estado:</small></td>
+						    <td align="left"><label class=select><select class="select" name="s_PRES_ESTADO" onChange="javascript: ver(); ">
 <?    $query="select PARAM_CODI, PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' and PARAM_CODI in (2,5)"; 
       $rs = $db->conn->query($query);
       while($rs && !$rs->EOF) {
@@ -272,7 +301,7 @@ $mensaje_error = false;
 <? }
    if ($verClave==1) {  ?>					  
                          <tr bgcolor="White">
-             	  	        <td width="100" align="right" class="titulosError2">Contrase&ntilde;a<br><?=$usua_codi?>:</td>
+             	  	        <td width="100" align="right"><small>Contrase&ntilde;a<br><?=$usua_codi?></small></td>
          			        <td align="left"><input type="password" name="s_CONTRASENA" value="<?=$flds_CONTRASENA?>"></td>
          	             </tr>
 <? } ?>
@@ -280,10 +309,10 @@ $mensaje_error = false;
 	           </tr>
        	        <tr align="center">
 	               <td colspan="4" class="celdaGris" align=center><br><center>
-		             <table width="100%"  border=0 align="center" bgcolor="White">
+		             <table width="100%"  align="center" bgcolor="White">
 		                 <TR bgcolor="White">
 					        <TD width="100%" align="center">					 
-                               <table align="center" border=0 cellpadding=0 cellspacing=2 class='borde_tab' width="100%">	   
+                               <table align="center" class="table table-bordered" width="100%">	   
 <?PHP      
    include "inicializarTabla.inc";     
    // Execute SQL statement	

@@ -146,7 +146,6 @@ $_SESSION['numExpedienteSelected'] = null;
 ?>
 <html>
 
-<head>
   <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
