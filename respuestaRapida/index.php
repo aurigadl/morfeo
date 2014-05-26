@@ -1,6 +1,5 @@
 <?php
 session_start();
-//error_reporting(E_ALL);
 //ini_set('display_errors', '1');
 
 $ruta_raiz = "..";
@@ -19,69 +18,32 @@ function fechaFormateada($FechaStamp){
   $mes      = date('m', $FechaStamp); //<-- número de mes (01-31)
   $dia      = date('d', $FechaStamp); //<-- Día del mes (1-31)
   $dialetra = date('w', $FechaStamp); //Día de la semana(0-7)
+  
+  $arreglo_dias = array();
+  $arreglo_dias[] = 'domingo';
+  $arreglo_dias[] = 'lunes';
+  $arreglo_dias[] = 'martes';
+  $arreglo_dias[] = 'miercoles';
+  $arreglo_dias[] = 'jueves';
+  $arreglo_dias[] = 'viernes';
+  $arreglo_dias[] = 'sabado';
+  
+  $dialetra = $arreglo_dias[$dialetra];
 
-  switch ($dialetra) {
-  case 0 :
-    $dialetra = "domingo";
-    break;
-  case 1 :
-    $dialetra = "lunes";
-    break;
-  case 2 :
-    $dialetra = "martes";
-    break;
-  case 3 :
-    $dialetra = "miércoles";
-    break;
-  case 4 :
-    $dialetra = "jueves";
-    break;
-  case 5 :
-    $dialetra = "viernes";
-    break;
-  case 6 :
-    $dialetra = "Sábado";
-    break;
-  }
+  $arreglo_meses['01'] = 'enero';
+  $arreglo_meses['02'] = 'febrero';
+  $arreglo_meses['03'] = 'marzo';
+  $arreglo_meses['04'] = 'abril';
+  $arreglo_meses['05'] = 'mayo';
+  $arreglo_meses['06'] = 'junio';
+  $arreglo_meses['07'] = 'julio';
+  $arreglo_meses['08'] = 'agosto';
+  $arreglo_meses['09'] = 'septiembre';
+  $arreglo_meses['10'] = 'octubre';
+  $arreglo_meses['11'] = 'noviembre';
+  $arreglo_meses['12'] = 'diciembre';
 
-  switch ($mes) {
-  case '01' :
-    $mesletra = "enero";
-    break;
-  case '02' :
-    $mesletra = "febrero";
-    break;
-  case '03' :
-    $mesletra = "marzo";
-    break;
-  case '04' :
-    $mesletra = "abril";
-    break;
-  case '05' :
-    $mesletra = "mayo";
-    break;
-  case '06' :
-    $mesletra = "junio";
-    break;
-  case '07' :
-    $mesletra = "julio";
-    break;
-  case '08' :
-    $mesletra = "agosto";
-    break;
-  case '09' :
-    $mesletra = "septiembre";
-    break;
-  case '10' :
-    $mesletra = "octubre";
-    break;
-  case '11' :
-    $mesletra = "noviembre";
-    break;
-  case '12' :
-    $mesletra = "diciembre";
-    break;
-  }
+  $mesletra = $arreglo_meses[$mes];
 
   return htmlentities("$dialetra, $dia de $mesletra de $ano");
 }
@@ -103,7 +65,6 @@ $smarty->cache_dir = './cache/';
 
 $smarty->left_delimiter = '<!--{';
 $smarty->right_delimiter = '}-->';
-
 
 function byteSize($bytes) {
   $size = $bytes / 1024;
@@ -153,20 +114,16 @@ $codusuario     = $_SESSION["codusuario"];
 $encabezado   = session_name()."=".session_id();
 $encabezado .= "&krd= $krd";
 
-$isql   = "
-  SELECT
-  USUA_EMAIL,
-  USUA_EMAIL_1,
-  USUA_EMAIL_2,
-  DEPE_CODI,
-  USUA_CODI,
-  USUA_NOMB,
-  USUA_LOGIN,
-  USUA_DOC
-  FROM
-  USUARIO
-  WHERE
-  USUA_LOGIN ='$krd' ";
+$isql   = "SELECT USUA_EMAIL,
+                USUA_EMAIL_1,
+                USUA_EMAIL_2,
+                DEPE_CODI,
+                USUA_CODI,
+                USUA_NOMB,
+                USUA_LOGIN,
+                USUA_DOC
+            FROM USUARIO
+            WHERE USUA_LOGIN ='$krd' ";
 
 $rs   = $db->conn->Execute($isql);
 if (!$rs){
@@ -181,6 +138,7 @@ while (!$rs->EOF) {
   $emails[] = trim(strtolower($rs->fields["USUA_EMAIL"]));
   $temEmail = trim(strtolower($rs->fields["USUA_EMAIL_1"]));
   $temEmai  = trim(strtolower($rs->fields["USUA_EMAIL_2"]));
+  
   //buscamos el correo que inicie con web para colocarlo como primero
   if(substr($temEmail, 0, 3)== 'web'){
     array_unshift($emails, $temEmail);
@@ -209,7 +167,7 @@ $name  = "";
 $email = "";
 
 $isql  = "SELECT D.* FROM SGD_DIR_DRECCIONES D
-  WHERE D.RADI_NUME_RADI = $radicado";
+            WHERE D.RADI_NUME_RADI = $radicado";
 $rs = $db->conn->Execute($isql);
 
 $name       = $rs->fields["SGD_DIR_NOMREMDES"];
@@ -321,7 +279,7 @@ $permPlnatill[]   = array("nombre" => "Personales"  , "codigo" => 1);
                       PLAN_TIPO
                     FROM
                       SGD_PLAN_PLANTILLAS";
-//$db->conn->debug = true;
+
 $plant = $db->conn->Execute($sql21);
 
 while(!$plant->EOF){
