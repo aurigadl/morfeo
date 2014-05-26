@@ -473,23 +473,23 @@ class OpenDocText {
                 </td></tr></table>" ) : $error = '' ;
             echo $error;
             $existeDir = is_dir($this->cacheDir . $nombreDir[0]);
-            if ($existeDir){
+            if ($existeDir && !empty($nombreDir[0])){
             	$resrm = shell_exec( "rm -rf " . $this->cacheDir . $nombreDir[0] );
-		if (!resrm){
-                   ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr><td class=titulosError>No borro el directorio: " . $this->cacheDir . $nombreDir[0]. " Problemas</td></tr></table>" ) : $error = '' ;
-                echo $error;
+                if (!resrm){
+                           ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr><td class=titulosError>No borro el directorio: " . $this->cacheDir . $nombreDir[0]. " Problemas</td></tr></table>" ) : $error = '' ;
+                        echo $error;
 
-                   $this->_errorCode = 10;
-                   $this->_error = "No ha sido posible borrar el directorio:" .	$this->cacheDir . $nombreDir[0] . ".\n" ;
-                   $this->_debug();
-		} else {
-              	   ($this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
-                      <td class=info>directorio temporal borrado:" . $this->cacheDir . $nombreDir[0]. "
-                      </td></tr></table>" ) : $error = '' ;
-                   echo $error;
-		}
+                           $this->_errorCode = 10;
+                           $this->_error = "No ha sido posible borrar el directorio:" .	$this->cacheDir . $nombreDir[0] . ".\n" ;
+                           $this->_debug();
+                } else {
+                           ($this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
+                              <td class=info>directorio temporal borrado:" . $this->cacheDir . $nombreDir[0]. "
+                              </td></tr></table>" ) : $error = '' ;
+                           echo $error;
+                }
 
-	    } else {
+	        } else {
               ( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr>
                 <td class=info>directorio temporal no existe:" . $this->cacheDir . $nombreDir[0]. "
                 </td></tr></table>" ) : $error = '' ;
