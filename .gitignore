@@ -7,7 +7,7 @@ respuestaRapida/templates_c/*
 .idea
 .svn
 <F2>*~
-iHEAD
+HEAD
 config
 description
 hooks/applypatch-msg.sample
