@@ -17,10 +17,10 @@
 // Esta es la ubicacion de nuestra carpeta orfeo 
 // ejm: linux    /var/www/miorfeo
 //      windows  c:\apache2.0\hpdocs\miorfeo
-define ('ABS_PATH', 'ruta_absoluta_caliope');
+$ABSOL_PATH              = '';
 
 // Ruta del directio de Smarty
-define ('SMARTY_DIR', ABS_PATH . 'include/Smarty/libs/');
+define ('SMARTY_DIR', $ABSOL_PATH . 'include/Smarty/libs/');
 define ('SMARTY_LIBRARY', SMARTY_DIR . 'Smarty.class.php');
 
 //Nombre de la base de datos de ORFEO
@@ -59,11 +59,6 @@ $entidad_dir = "Calle ## No. ## - ## CIUDAD";
 $entidad_depsal = 999;	//Guarda el codigo de la dependencia de salida por defecto al radicar dcto de salida
 // 0 = Carpeta salida del radicador	>0 = Redirecciona a la dependencia especificada
 
-// Ruta para las operaciones con archivos.
-// Esta es la ubicacion de nuestra carpeta orfeo 
-// ejm: linux    /var/www/miorfeo
-//      windows  c:\apache2.0\hpdocs\miorfeo
-$ABSOL_PATH              = "/var/www/3.8.2des/";
 
 /**
 *	Se crea la variable $ADODB_PATH.
