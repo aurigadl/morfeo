@@ -77,6 +77,7 @@ if($generar == "ok") {
 	if($genTodosDetalle==1) $queryE = $queryETodosDetalle;
 	
 	$rsE = $db->conn->query($queryE);
+	
 	if ($tipoEstadistica==2) include ("./tablaProcHtml42.php");
     else include ("./tablaProcHtml.php");
     

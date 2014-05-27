@@ -80,6 +80,7 @@
 </tr> 
 	<?
 	$iRow = 1;
+	
 	while(!$rsE->EOF)
 	{
 	/**  INICIO CICLO RECORRIDO DE LOS REGISTROS
@@ -89,6 +90,12 @@
 		$usuaDocProc = $rsE->fields["HID_USUA_DOC"];
 	  $numListado = fmod($iRow,2);
 	  $expNumeroActual = $rsE->fields["EXPEDIENTE"];
+    $params = "";
+	  if($rsE->fields["PARAM1"]) $params = $rsE->fields["PARAM1"];
+	  // if($rsE->fields["PARAM2"]) $params .= "-".$rsE->fields["PARAM2"];
+	  // if($rsE->fields["PARAM3"]) $params .= "-".$rsE->fields["PARAM3"];
+	  // if($rsE->fields["PARAM4"]) $params .= "-".$rsE->fields["PARAM4"];
+	  // if($rsE->fields["PARAM5"]) $params .= "-".$rsE->fields["PARAM5"];
 	  if($numListado==0)
 	  {
 	  	$numListado = 2;
@@ -116,6 +123,10 @@
 			{
 				echo "<a href=$ruta_raiz/bodega/$pathImg>";
 			}
+	}
+	if($fld->name=="expediente") 
+	{
+				echo "<small>$expNumeroActual <br>($params)</small>";
 	}
 	if($fld->name=="TOTAL_PROCESOS") 
 		{
@@ -233,10 +244,10 @@
 			for ($k=1;$k<=$colsProc;$k++) {
 				$descTitulo = $estados[$k] ." Expedientes en Estado ".$etapaFlujoNombres[($k-1)];
 			?>
-			<td align="center">
+			<td align="center"><small>
 			<?=($noRad[$k] == "") ? "" : $noRad[$k];?>
 			<?=($fRad[$k] == "") ? "" : $fRad[$k];?>
-			</a>
+			</a></small>
 			</td>
 			<?
 			}
