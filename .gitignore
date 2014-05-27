@@ -20,4 +20,5 @@ hooks/pre-rebase.sample
 hooks/prepare-commit-msg.sample
 hooks/update.sample
 info/
-
+Licencia_AGPL.txt
+README.txt
