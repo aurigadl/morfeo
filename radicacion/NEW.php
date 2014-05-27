@@ -541,8 +541,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         tRow.append($('<td>').html(trTable.APELLIDO.replace(/\w\S*/g, uppFirs)));
         tRow.append($('<td>').html(trTable.TELEF));
         tRow.append($('<td>').html(trTable.DIRECCION.toLowerCase()));
-        tRow.append($('<td>').html(trTable.EMAIL.toLowerCase()));
-        tRow.append($('<td>').html(trTable.MUNIDEP.replace(/\w\S*/g, uppFirs)));
+        tRow.append($('<td>').html((trTable.EMAIL)? trTable.EMAIL.toLowerCase() : ""));
+        tRow.append($('<td>').html(trTable.MUNI.replace(/\w\S*/g, uppFirs)));
+        tRow.append($('<td>').html(trTable.DEP));
         tRow.append($('<td>').html(trTable.PAIS.replace(/\w\S*/g, uppFirs)));
 
         $('table').append(tRow);
@@ -564,7 +565,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           var nombre = data[i].NOMBRE.replace(/\w\S*/g, uppFirs);
           var apell  = data[i].APELLIDO.replace(/\w\S*/g, uppFirs);
           var telef  = data[i].TELEF;
-          var email  = data[i].EMAIL.toLowerCase();
+          var email  = (data[i].EMAIL)? data[i].EMAIL.toLowerCase() : '';
           var cedula = data[i].CEDULA;
 
           var div    = $('<div/>')
@@ -641,29 +642,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
    function borrarAlert(){
      $('#alertmessage').empty();
    }
-
-
-
-  //Selector cascading
-  $('#example1').cascadingDropdown({
-    selectBoxes: [
-      {
-        selector: '.step1',
-        selected: '4.3'
-
-      },
-      {
-        selector: '.step2',
-        requires: ['.step1']
-      },
-      {
-        selector: '.step3',
-        requires: ['.step1', '.step2'],
-        onChange: function(event, value, requiredValues) {
-        }
-      }
-    ]
-  });
 
    //Radicar documento nuevo
    $('#radicarNuevo, #modificaRad').on("click", function(){

@@ -151,7 +151,7 @@ class Usuario {
     $record['SGD_DIR_MAIL']      = $mail_us;
     $record['SGD_DIR_TIPO']      = 1;
     $record['SGD_DIR_CODIGO']    = $nextval; // Identificador unico
-    $record['SGD_DIR_NOMBRE']    = $otro_us;
+    //$record['SGD_DIR_NOMBRE']    = '';
 
     $record['SGD_DIR_NOMREMDES'] = $grbNombresUs;
     $record['SGD_DIR_DOC']       = $cc_documento_us;
@@ -335,8 +335,6 @@ class Usuario {
     }
 
     return !empty($this->result) ? true : false;
-    break;
-
   }
 
 
@@ -459,7 +457,7 @@ class Usuario {
                   ,s.sgd_oem_nit       AS cedula
                   ,p.NOMBRE_PAIS       AS pais
                   ,d.DPTO_NOMB         AS dep
-                  ,m.MUNI_NOMB         AS munid
+                  ,m.MUNI_NOMB         AS muni
                   ,CONCAT(s.sgd_oem_sigla, ' / ' ,s.SGD_OEM_REP_LEGAL) AS apellido
                 FROM
                   SGD_OEM_OEMPRESAS s
@@ -477,10 +475,9 @@ class Usuario {
                   and d.id_cont   = s.id_cont
                   ORDER  BY sgd_oem_oempresa
                 LIMIT 24
-            ";
+              ";
 
         $rs = $this->db->query($isql);
-
         while(!$rs->EOF){
           $this->result[] = $rs->fields;
           $rs->MoveNext();
@@ -522,10 +519,11 @@ class Usuario {
               ,dp.depe_nomb   AS direccion
               ,s.usua_email   AS email
               ,s.usua_doc     AS cedula
-              ,p.NOMBRE_PAIS  AS pais
               ,s.usua_login   AS apellido
-              ,CONCAT(s.usu_telefono1,' / ', s.usua_ext) AS telef
-              ,CONCAT(d.DPTO_NOMB,' / ', m.MUNI_NOMB) AS munidep
+              ,CONCAT(s.usu_telefono1,' ', s.usua_ext) AS telef
+              ,p.NOMBRE_PAIS  AS pais
+              ,d.DPTO_NOMB    AS dep
+              ,m.MUNI_NOMB    AS muni
             FROM
               USUARIO s
               ,DEPARTAMENTO d
