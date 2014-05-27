@@ -8,31 +8,52 @@
  * La pagina login.php posee un iframe al final que conecta con Correlibre.org
  * y envia informacion para poseer estadisticas de sitios en los cuales es instalado
  * si ud desea informacion Adicional puede enviar un correo a yoapoyo@orfeogpl.org
- * No se envian contraseñas de sus servicios.
+ * No se envian contrasenas de sus servicios.
  * 
  **
 **/
+
+// Ruta para las operaciones con archivos.
+// Esta es la ubicacion de nuestra carpeta orfeo 
+// ejm: linux    /var/www/miorfeo
+//      windows  c:\apache2.0\hpdocs\miorfeo
+define ('ABS_PATH', 'ruta_absoluta_caliope');
+
+// Ruta del directio de Smarty
+define ('SMARTY_DIR', ABS_PATH . 'include/Smarty/libs/');
+define ('SMARTY_LIBRARY', SMARTY_DIR . 'Smarty.class.php');
+
 //Nombre de la base de datos de ORFEO
-$servicio = "orfeo";
+$servicio = "caliope";
+
 //Usuario de conexion con permisos de modificacion y creacion de objetos en la Base de datos.
 $usuario = "postgres";
-//Contraseña del usuario anterior
-$contrasena= "123";
+
+//Contrasena del usuario anterior
+$contrasena= "";
+
 //Nombre o IP del servidor de BD. Opcional puerto, p.e. 120.0.0.1:1521
 $servidor = "localhost:5432";
 $db = $servicio;
+
 //Tipo de Base de datos. Los valores validos son: postgres, oci8, mssql.
 $driver = "postgres";
- //Variable que indica el ambiente de trabajo, sus valores pueden ser  desarrollo,prueba,orfeo
-$ambiente = "orfeo";
+
+//Variable que indica el ambiente de trabajo, sus valores pueden ser  desarrollo,prueba,orfeo
+$ambiente = "caliope";
+
 //Servidor que procesa los documentos
 $servProcDocs = "127.0.0.1:8000";
+
 //Acronimo de la empresa
 $entidad= "CORRELIBRE";
+
 //Nombre de la EmpresaCD
-$entidad_largo= 'FUNDACION PARA EL DESARROLLO DEL CONOCIMIENTO LIBRE';	//Variable usada generalmente para los t�tulos en informes.
+$entidad_largo= 'FUNDACION PARA EL DESARROLLO DEL CONOCIMIENTO LIBRE';	//Variable usada generalmente para los titulos en informes.
+
 //Telefono o PBX de la empresa.
 $entidad_tel = 000000 ;
+
 //Direccion de la Empresa.
 $entidad_dir = "Calle ## No. ## - ## CIUDAD";
 $entidad_depsal = 999;	//Guarda el codigo de la dependencia de salida por defecto al radicar dcto de salida
@@ -92,7 +113,7 @@ $pais                    = "Colombia";
 // Correo Contacto o Administrador del Sistema
 $administrador           = "sunombre@dominio.com";
 // Directorio de estilos a Usar... Si no se establece una Ruta el sistema usara el que posee por Defecto en el directorio estilos.  orfeo.css para usarlo cree una carpeta con su personalizacion y luego copie el archivo orfeo.css y cambie sus colores.
-$ESTILOS_PATH            = "orfeo38";
+$ESTILOS_PATH            = "orfeo";
 
 // Variable que se usa para enviar correos al radicar o reasignar
 // Para configurar el correo electronico enviado se usa phpmailer que esta en include/ y se deben configurar
@@ -100,16 +121,21 @@ $ESTILOS_PATH            = "orfeo38";
 // /conf/configPHPMailer.php Archivo con la configuracion de servidor y cuenta de correo.
 // MailInformado.html, MailRadicado.hrml y MailReasignado.html (Archivos con el cuerpo de los correos)
 $enviarMailMovimientos   = "1";
+
 // Datos que se usan en el formulario web disponible a los usuarios
 $depeRadicaFormularioWeb = 700;  // Es radicado en la Dependencia 900
 $usuaRecibeWeb           = 1;  // Usuario que Recibe los Documentos Web
 $secRadicaFormularioWeb  = 700;
+
 // Esta variable si esta en 1 no discrimina seris por dependencia, todas las deps veran la msma
 $seriesVistaTodos        = 1;
+
 // Variable de acceso a ORfeo Local
 $httpOrfeoLocal          = "http://orfeo.correlibre.gov.co/orfeo-3.8.2d/";
+
 // Variable de acceso a ORfeo Remoto
 $httpOrfeoRemoto         = " Por el momento OrfeoGPL no tiene Acceso Por Web Externa.";
+
 // Variable de la Web Oficial de la Entidad.
 $httpWebOficial          = "http://www.correlibre.org";
 
@@ -120,7 +146,7 @@ $digitosDependencia      = 4;
 ini_set('include_path', '.:'.$PEAR_PATH);
 
 // Variable para Activar Tramite conjunto, esta variable cumple la misma funcion de informados pero con mas responsabilidad
-$varTramiteConjunto     =0;
+$varTramiteConjunto     = 0;
 
 
 //Variable que define en que dirección se encuentra la ayuda.
@@ -132,4 +158,6 @@ $servidorGis = "http://siim2.infometrika.net:8080/mtvSIG/";
 //Nombre o IP del servidor en el cual funciona el reporteador en birt
 $servidorBirt = "http://siim2.infometrika.net:8080/birt/frameset?__report=";
 
+//Variable que define en que direccion se encuentra la ayuda.
+$url_ayuda ="http://manual-siim2.infometrika.net"
 ?>
