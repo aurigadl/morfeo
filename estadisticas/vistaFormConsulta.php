@@ -184,7 +184,7 @@ $objUsuario = new Usuario($db);
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped smart-form">
                     <tr>
-                      <td colspan="2" class="titulos4">POR RADICADOS  -  <A href='vistaFormProc.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>' style="color: #FFFFCC">POR PROCESOS </A> </td>
+                      <td colspan="2" class="titulos4">POR RADICADOS  -  <A href='vistaFormProc.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>'>POR PROCESOS </A> </td>
                     </tr>
                     <tr>
                       <td colspan="2" class="titulos3"><span class="cal-TextBox"><?=$helpE[$tipoEstadistica]?></span></td>
