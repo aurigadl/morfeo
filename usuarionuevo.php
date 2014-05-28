@@ -21,7 +21,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+include './config.php';
 session_start();
+ob_start();
 
     $ruta_raiz = ".";
     if (!$_SESSION['dependencia'])
@@ -79,7 +82,8 @@ $db = new ConnectionHandler($ruta_raiz);
                     if($rs==-1){
                         echo "<P><P><center>No se ha podido cambiar la contrase&ntilde;a, Verifique los datos e intente de nuevo</center>";
                     }else{
-                        header ("Location: $ruta_raiz/cerrar_session.php");
+                        header ("Location: $httpOrfeoLocal");
+                        exit();
                     }
                 }else{
                   if($contradrd==$contraver){
