@@ -65,76 +65,45 @@ else
         <div class="row">
           <!-- NEW WIDGET START -->
           <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false">
+				<table class="table table-bordered smart-form">
+					<tr >
+						<td class=titulos2 width='35%'>
+							Listado De 
+								<?= $getNombreCarpeta ?>
+						</td>
+						<?php
+									if (!isset($swBusqDep))
+											$swBusqDep = false;
 
-              <header>
-                <h2>
-                  Estadisticas Detalles <br>
-                  <small><?=$tituloCrear ?></small>
-                </h2>
-              </header>
-              <!-- widget div-->
-              <div>
-                <!-- widget content -->
-                <div class="widget-body no-padding">
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                      <tr >
-                        <td class=titulos2 width='35%'>
-                          Listado De:
-                        </td>
-                        <td class=titulos2 >
-                          Usuario
-                        </td>
-                        <td class=titulos2 >
-                          Dependencia
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="info">
-                            <?= $getNombreCarpeta ?>
-                        </td>
-                        <td class="info">
-                            <?= $_SESSION['usua_nomb']?>
-                        </td>
-                        <?php
-                              if (!isset($swBusqDep))
-                                  $swBusqDep = false;
+									if (!$swBusqDep) {
+						?>
 
-                              if (!$swBusqDep) {
-                        ?>
-
-                      <td class="info">
-                        <?= $_SESSION['depe_nomb']?>
-                          </td>
-                      <? } else { ?>
-                        <form name=formboton class="smart-form" action="<?=$accion ?>">
-                        <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
-                        <input type=hidden name=estado_sal value='<?=$estado_sal?>'>
-                        <input type=hidden name=estado_sal_max value='<?=$estado_sal_max?>'>
-                        <td>
-                          <label class="input">
-                          <?php
-                          include_once "$ruta_raiz/include/query/envios/queryPaencabeza.php";
-                          $sqlConcat = $db->conn->Concat($conversion, "'-'", depe_nomb);
-                          $sql       = "select $sqlConcat ,depe_codi from dependencia where depe_estado = 1
-                                                  order by depe_codi";
-                          $rsDep     = $db->conn->Execute($sql);
-                          if (!$depeBuscada)
-                              $depeBuscada = $dependencia;
-                          print $rsDep->GetMenu2("dep_sel", "$dep_sel", false, false, 0, " onChange='submit();' class='select'");
-                          ?>
-                          </label>
-                        </td>
-                        </form>
-                      <? } ?>
-                      </tr>
-                    </table>
-                </div>
-              </div>
-            </div>
-          </div>
+					<td class="info">
+						<?= $_SESSION['depe_nomb']?>
+							</td>
+					<? } else { ?>
+						<form name=formboton class="smart-form" action="<?=$accion ?>">
+						<input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
+						<input type=hidden name=estado_sal value='<?=$estado_sal?>'>
+						<input type=hidden name=estado_sal_max value='<?=$estado_sal_max?>'>
+						<td>Dependencia 
+							<label class="select">
+							<?php
+							include_once "$ruta_raiz/include/query/envios/queryPaencabeza.php";
+							$sqlConcat = $db->conn->Concat($conversion, "'-'", depe_nomb);
+							$sql       = "select $sqlConcat ,depe_codi from dependencia where depe_estado = 1
+																			order by depe_codi";
+							$rsDep     = $db->conn->Execute($sql);
+							if (!$depeBuscada)
+									$depeBuscada = $dependencia;
+							print $rsDep->GetMenu2("dep_sel", "$dep_sel", false, false, 0, " onChange='submit();' class='select'");
+							?>
+							</label>
+						</td>
+						</form>
+					<? } ?>
+					</tr>
+					</table>
         </article>
       </div>
     </section>
