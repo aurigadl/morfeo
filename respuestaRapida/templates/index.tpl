@@ -217,10 +217,16 @@
                   </td>
                 </tr>
                 <!--{/if}-->
+                
+                <tr align="center">
+                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
+                      Radicar como:
+                  </td>
+                </tr>
+                
                 <tr align="center">
                   <td width="100%" height="25" class="titulos5" align="center" colspan="2">
                     <select name="tipo_radicado">
-                      <option value="0">Radicar Como:</option>
                       <!--{foreach from=$TIPOS_RADICADOS key=TIPO item=VALOR}-->
                       <option value="<!--{$TIPO}-->"><!--{$VALOR}--></option>
                       <!--{/foreach}-->
