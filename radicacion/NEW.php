@@ -21,7 +21,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-  ini_set("display_errors",1);
 
   session_start();
 
@@ -73,9 +72,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		  $med             = $rs->fields["MREC_CODI"];
 		  $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
 		  $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
-      $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
+          $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
 		  $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
-      $guia            = $rs->fields["RADI_NUME_GUIA"];
+          $guia            = $rs->fields["RADI_NUME_GUIA"];
     }
 
     $date1         = date_create($radi_fecha);
@@ -83,7 +82,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     list($adate1, $mdate1, $ddate1) = explode( '-', substr($fecha_gen_doc,0,10));
     $fecha_gen_doc = "$adate1-$mdate1-$ddate1";
 
-	  $ent = substr($nurad,-1);
+	$ent = substr($nurad,-1);
 
     //Filtro por el tipo de usuario
     $result = $usuario->usuarioPorRadicado($nurad);
@@ -431,7 +430,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         }
       });
 
-      $('.fa-check').click( function(){
+
+    /**
+     * Generacion de eventos para los usuarios seleecionados
+     * permitiendo cambiar la informacion antes de ser enviada al
+     * servidor. Guardando de esta manera los datos del usuario con
+     * las modificiaciones necesarias
+    */
+    $('.fa-check').click( function(){
         $('label[name^="inp_"]').addClass('hide');
         $('div[name^="div_"]').removeClass('hide');
         var iddiv = $(this).parent().attr('name').substring(4);
@@ -439,18 +445,62 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         var div_nuevo = $('div[name=div_' + iddiv + ']').clone();
         $('div[name=div_' + iddiv + ']').text(tex_nuevo);
         $('div[name=div_' + iddiv + ']').append(div_nuevo.children());
-      });
+    });
 
-      $('div[name^="div_"]').each(function(){
+    $('div[name^="div_"]').each(function(){
         $(this).click(function(){
-          var texto = $(this).attr('name').substring(4);
-          $('label[name="inp_' + texto + '"]').removeClass('hide');
-          $('label[name="inp_' + texto + '"]').focus();
-          $(this).addClass('hide');
+            var texto = $(this).attr('name').substring(4);
+            $('label[name="inp_' + texto + '"]').removeClass('hide');
+            $('label[name="inp_' + texto + '"]').focus();
+            $(this).addClass('hide');
         });
-      });
+    });
 
-      //Deja en blanco los campos de busqueda al seleccionar
+
+    $('input[name^="muni"], input[name^="dep"], input[name^="pais"]').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url      : "./ajax_buscarDivipola.php",
+                dataType : "json",
+                type     : 'POST',
+                maxRows  : 12,
+                data: {
+                    'action': $(this.element).attr('name').split("_")[3],
+                    'search': request.term,
+                    'muni'  : $('input[name^="muni"]').val(),
+                    'dep'   : $('input[name^="dep"]').val(),
+                    'pais'  : $('input[name^="pais"]').val()
+                },
+                success: function (data) {
+                    response($.map( data, function( item ) {
+                        return {
+                            label: item.NOMBRE,
+                            id   : item.CODIGO
+                        }
+                    }));
+                }
+
+            });
+        },
+        minLength: 2,
+        select   : function(event, ui) {
+            var namehiddent = $(this).attr('name') + "_codigo";
+            $("input[name=" + namehiddent + "]").val(ui.item.id)
+        }
+    });
+
+
+    $('#changeArtist').click(function (e) {
+        e.preventDefault();
+        $("#artist").attr("disabled", false);
+    });
+
+
+
+
+
+
+        //Deja en blanco los campos de busqueda al seleccionar
       //un nuevo usuario.
       $("#tipo_usuario").on('change',function(){
         $('#documento_us, #nombre_us, #telefono_us, #mail_us').val("").parent().removeClass('state-success state-error');

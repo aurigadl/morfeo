@@ -66,7 +66,6 @@ $str = <<<EOF
       <script type="text/javascript" src="$ruta_raiz/js/app.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/fuelux/wizard/wizard.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/bootstrap.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/jquery.cascadingdropdown.js"></script>
 
     <script src="$ruta_raiz/js/jsplumb/lib/jquery.ui.touch-punch.min.js"></script>
 		<!-- /DEP -->

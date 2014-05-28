@@ -180,8 +180,8 @@ class Usuario {
    * Retorna un html que se integra con el codigo javascript escrito
    * en el modulo en que se implemente. Inicialmente esta funcion
    * esta hecha para radicacion incluida en New.php.
-    *@return html from $this->result
-    *
+   * @return html from $this->result
+   *
   */
 
   public function resRadicadoHtml(){
@@ -189,16 +189,24 @@ class Usuario {
     foreach ($this->result as $result){
       $tipo = $result["TIPO"];
       switch ( $tipo ) {
-        case 0:
-          $codigo = $result["SGD_DOC_FUN"];
+        case $tipo < 2:
+          $codigo = $result["SGD_CIU_CODIGO"];
           break;
         case 2:
           $codigo = $result["SGD_OEM_CODIGO"];
           break;
         case 6:
-          $codigo = $result["SGD_OEM_CODIGO"];
+          $codigo = $result["SGD_DOC_FUN"];
           break;
       }
+
+    /**
+     * Identificador para realizar transaccion y eventos desde
+     * la pagina de radicacion, el identificador se compone por:
+     * @tipo tipo de usuario (usuario, funcionario, empresa)
+     * @codigo numero asignado en la respectiva tabla id
+     * @coddirdirec codigo grabado en la tabla sgd_dir_direcciones
+     */
 
       $idtx = $result["TIPO"].'_'.$codigo.'_'.$result["CODDIRDIREC"];
 
@@ -246,20 +254,19 @@ class Usuario {
                    </div>
                   <label name="inp_'.$idtx.'_email" class="input hide">
                     <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="direc'.$idtx.'_email" value="'.$result["EMAIL"].'">
+                    <input type="text" name="email'.$idtx.'_email" value="'.$result["EMAIL"].'">
                   </label>
                 </td>';
-
 
       $html .= '<td>
                   <div name="div_'.$idtx.'_muni">'
                     .$result["MUNI"].'
                     <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
                   </div>
-                  <label name="inp_'.$idtx.'_muni" class="select hide">
+                  <label name="inp_'.$idtx.'_muni" class="input hide">
                     <i class="icon-append fa fa-check"></i>
-                    <select class="step1" name="screen">
-                    <option value="">Screen size</option><option value="4">4.0"</option><option value="4.3">4.3"</option><option value="4.7">4.7"</option><option value="5">5.0"</option></select>
+                    <input type="text" name="muni'.$idtx.'_muni" value="'.$result["MUNI"].'">
+                    <input type="hidden" name="muni'.$idtx.'_muni_codigo" value="'.$result["MUNI_CODIGO"].'">
                   </label>
                 </td>';
 
@@ -268,10 +275,10 @@ class Usuario {
                     .$result["DEP"].'
                     <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
                   </div>
-                  <label name="inp_'.$idtx.'_dep" class="select hide">
+                  <label name="inp_'.$idtx.'_dep" class="input hide">
                     <i class="icon-append fa fa-check"></i>
-                    <select class="step1" name="screen">
-                    <option value="">Screen size</option><option value="4">4.0"</option><option value="4.3">4.3"</option><option value="4.7">4.7"</option><option value="5">5.0"</option></select>
+                    <input type="text" name="dep'.$idtx.'_dep" value="'.$result["DEP"].'">
+                    <input type="hidden" name="dep'.$idtx.'_dep_codigo" value="'.$result["DEP_CODIGO"].'">
                   </label>
                 </td>';
 
@@ -280,10 +287,10 @@ class Usuario {
                     .$result["PAIS"].'
                     <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
                   </div>
-                  <label name="inp_'.$idtx.'_pais" class="select hide">
+                  <label name="inp_'.$idtx.'_pais" class="input hide">
                     <i class="icon-append fa fa-check"></i>
-                    <select class="step1" name="screen">
-                    <option value="">Screen size</option><option value="4">4.0"</option><option value="4.3">4.3"</option><option value="4.7">4.7"</option><option value="5">5.0"</option></select>
+                    <input type="text" name="pais'.$idtx.'_pais" value="'.$result["PAIS"].'">
+                    <input type="hidden" name="pais'.$idtx.'_pais_codigo" value="'.$result["PAIS_CODIGO"].'">
                   </label>
                 </td>';
 
@@ -306,8 +313,11 @@ class Usuario {
               , s.SGD_TRD_CODIGO    as tipo
               , s.SGD_DIR_DOC       as cedula
               , p.NOMBRE_PAIS       as pais
+              , p.ID_PAIS           as pais_codigo
               , d.DPTO_NOMB         as dep
+              , d.DPTO_CODI         as dep_codigo
               , m.MUNI_NOMB         as muni
+              , m.MUNI_CODI         as muni_codigo
               , s.SGD_DOC_FUN
               , s.SGD_OEM_CODIGO
               , s.SGD_CIU_CODIGO
@@ -390,8 +400,11 @@ class Usuario {
                   ,s.SGD_CIU_EMAIL     as email
                   ,s.SGD_CIU_CEDULA    as cedula
                   ,p.NOMBRE_PAIS       as pais
+                  ,p.ID_PAIS           as pais_codigo
                   ,d.DPTO_NOMB         as dep
+                  ,d.DPTO_CODI         as dep_codigo
                   ,m.MUNI_NOMB         as muni
+                  ,m.MUNI_CODI         as muni_codigo
                   ,CONCAT(s.SGD_CIU_APELL1,' ', s.SGD_CIU_APELL2) as apellido
                 FROM
                   SGD_CIU_CIUDADANO s
@@ -455,9 +468,12 @@ class Usuario {
                   ,s.sgd_oem_telefono  AS telef
                   ,s.sgd_oem_email     AS email
                   ,s.sgd_oem_nit       AS cedula
-                  ,p.NOMBRE_PAIS       AS pais
-                  ,d.DPTO_NOMB         AS dep
-                  ,m.MUNI_NOMB         AS muni
+                  ,p.NOMBRE_PAIS       as pais
+                  ,p.ID_PAIS           as pais_codigo
+                  ,d.DPTO_NOMB         as dep
+                  ,d.DPTO_CODI         as dep_codigo
+                  ,m.MUNI_NOMB         as muni
+                  ,m.MUNI_CODI         as muni_codigo
                   ,CONCAT(s.sgd_oem_sigla, ' / ' ,s.SGD_OEM_REP_LEGAL) AS apellido
                 FROM
                   SGD_OEM_OEMPRESAS s
@@ -521,9 +537,12 @@ class Usuario {
               ,s.usua_doc     AS cedula
               ,s.usua_login   AS apellido
               ,CONCAT(s.usu_telefono1,' ', s.usua_ext) AS telef
-              ,p.NOMBRE_PAIS  AS pais
-              ,d.DPTO_NOMB    AS dep
-              ,m.MUNI_NOMB    AS muni
+              ,p.NOMBRE_PAIS  as pais
+              ,p.ID_PAIS      as pais_codigo
+              ,d.DPTO_NOMB    as dep
+              ,d.DPTO_CODI    as dep_codigo
+              ,m.MUNI_NOMB    as muni
+              ,m.MUNI_CODI    as muni_codigo
             FROM
               USUARIO s
               ,DEPARTAMENTO d
@@ -553,6 +572,4 @@ class Usuario {
         break;
     }
   }
-
 }
-?>
