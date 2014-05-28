@@ -29,7 +29,6 @@
 	* Estadiscas por procesos
 	* @autor JAIRO H LOSADA - SSPD
 	* @version ORFEO 3.5
-	* 
 	*/
 $coltp3Esp = '"'.$tip3Nombre[3][2].'"';	
 if(!$orno) $orno=2;
@@ -91,10 +90,6 @@ switch($db->driver)
 				,(select min(radi_nume_radi) from sgd_exp_expediente exp where exp.sgd_exp_numero=sExp.sgd_exp_numero) Primer_Radicado
 				,(select count(1) from sgd_exp_expediente exp where exp.sgd_exp_numero=sExp.sgd_exp_numero) Nro_de_Radicados
 				,sExp.sgd_sexp_parexp1 param1
-				,sExp.sgd_sexp_parexp2 param2
-				,sExp.sgd_sexp_parexp3 param3
-				,sExp.sgd_sexp_parexp4 param4
-				,sExp.sgd_sexp_parexp5 param5
 			FROM SGD_SEXP_SECEXPEDIENTES sExp
 			, USUARIO b 
 			, SGD_FEXP_FLUJOEXPEDIENTES fExp

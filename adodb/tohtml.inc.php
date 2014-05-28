@@ -312,9 +312,9 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 	    	break;
 		case ($fname =='IMG_' or $fname=='IDT_');
 			/** Colocar en color rojo los radicados que tienen anexos impresos
-						* Fecha de modificaci�n: 10-Agosto-2006
-						* Modificador: Supersolidaria
-							*/
+				* Fecha de modificaci�n: 10-Agosto-2006
+				* Modificador: Supersolidaria
+					*/
 			include_once ("$rutaRaiz/include/tx/Radicacion.php");
 			$radicacion = new Radicacion( $db );
 			if( $rsTmp->fields["IDT_Numero Radicado"] != "" )
@@ -537,31 +537,31 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 // pass in 2 dimensional array
 function arr2html(&$arr,$ztabhtml='',$zheaderarray='')
 {
-	if (!$ztabhtml) $ztabhtml = 'BORDER=1';
+	if (!$ztabhtml) $ztabhtml = '';
 	$s = "<TABLE $ztabhtml class='table table-bordered' width=98%>";//';print_r($arr);
 	if ($zheaderarray)
 	{
-		$s .= '<TR class=tparr>';
+		$s .= '<TR >';
 		for ($i=0; $i<sizeof($zheaderarray); $i++)
 		{
-			$s .= "	<TH>{$zheaderarray[$i]}</TH>\n";
+			$s .= "	<TH><small>{$zheaderarray[$i]}</small></TH>\n";
 		}
 		$s .= "\n</TR>";
 	}
 	for ($i=0; $i<sizeof($arr); $i++)
 	{
-		$s .= '<TR class=tparr>';
+		$s .= '<TR >';
 		$a = &$arr[$i];
 		if (is_array($a))
 			for ($j=0; $j<sizeof($a); $j++)
 			{
 				$val = $a[$j];
 				if (empty($val)) $val = '&nbsp;';
-				$s .= "	<TD>$val </TD>\n";
+				$s .= "	<TD><small>$val </small></TD>\n";
 			}
 		else if ($a)
 		{
-			$s .=  '	<TD>'.$a."</TD>\n";
+			$s .=  '	<TD><small>'.$a."</small></TD>\n";
 		} else $s .= "	<TD>&nbsp;</TD>\n";
 		$s .= "\n</TR>\n";
 	}

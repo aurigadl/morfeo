@@ -91,9 +91,9 @@
                 </ex-property>
             </list-property>
             <property name="odaDriverClass">org.postgresql.Driver</property>
-            <property name="odaURL">jdbc:postgresql://192.168.0.153:5432/caliopegd</property>
+            <property name="odaURL">jdbc:postgresql://siim2.infometrika.net:5432/siim2</property>
             <property name="odaUser">postgres</property>
-            <encrypted-property name="odaPassword" encryptionID="base64">aWsyMDEz</encrypted-property>
+            <encrypted-property name="odaPassword" encryptionID="base64">aW5mb21ldHJpa2EyMDEz</encrypted-property>
         </oda-data-source>
     </data-sources>
     <data-sets>

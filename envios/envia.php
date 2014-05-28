@@ -1,4 +1,27 @@
 <?php
+/**
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 session_start();
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -14,8 +37,6 @@ define('ADODB_ASSOC_CASE', 1);
   * @licencia GNU/GPL V 3
   */
 
-# Variables de la session de Orfeo
-
 $krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $usua_doc    = $_SESSION["usua_doc"];
@@ -24,17 +45,18 @@ $tip3Nombre  = $_SESSION["tip3Nombre"];
 $tip3desc    = $_SESSION["tip3desc"];
 $tip3img     = $_SESSION["tip3img"];
 
- /*if(!$estado_sal)   {$estado_sal=3;}
- if(!$estado_sal_max) $estado_sal_max=3;*/
-
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 ?>
 <html>
 <head>
-<title>Untitled Document</title>
-<link href="../estilos/orfeo.css" rel="stylesheet" type="text/css">
+  <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+
 <?php
 $radicados = is_array($checkValue)? array_keys($checkValue) : explode(",", $radicados);
 
@@ -75,7 +97,7 @@ ENVIO DE DOCUMENTOS
 </td></tr>
 </table>
 </center>
-<form name='forma' action='envia.php?<?=session_name()."=".session_id()."&fecha_h=$fechah&dep_sel=$dep_sel&whereFiltro=$whereFiltro&no_planilla=$no_planilla&codigo_envio=$codigo_envio&verrad_sal=$verrad_sal"?>' method="GET">
+<form class="smart-form" name='forma' action='envia.php?<?=session_name()."=".session_id()."&fecha_h=$fechah&dep_sel=$dep_sel&whereFiltro=$whereFiltro&no_planilla=$no_planilla&codigo_envio=$codigo_envio&verrad_sal=$verrad_sal"?>' method="GET">
 <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
 <input type='hidden' name='radicados' value='<?= $radicados ?>'>
 <input type='hidden' name='estado_sal' value='<?= $estado_sal ?>'>
@@ -85,42 +107,39 @@ ENVIO DE DOCUMENTOS
 include_once("$ruta_raiz/include/query/envios/queryEnvia.php");
 if(!isset($reg_envio)){
 ?>
-<table border=0 width=100% class=borde_tab>
+<table width=100% class='table table-bordered'>
 	<!--DWLayoutTable-->
-	<tr class='titulos2' >
+	<tr  >
 		<td >Empresa De envio</td>
 		<td >Peso(Gr)</td>
 		<td >U.Medida</td>
 		<td colspan="2" >Valor Total C/U</td>
 
 	</tr>
-	<tr class=timparr>
+	<tr >
 	<td height="26" align="center"><font size=2><B>
+	  <label class=select>
     <?php
 		$rsEnv = $db->conn->query($sql);
 		print $rsEnv->GetMenu2("empresa_envio",$empresa_envio,"0:&lt;&lt; Seleccione  &gt;&gt;", false, 0," id='empresa_envio' class='select' onChange='calcular_precio();'");
    ?>
 		</B></font>
+		</label>
    </td>
-   <td> <input type='text' name='envio_peso' id='envio_peso' value='<?=$envio_peso?>' size="6" onChange="calcular_precio();" class="tex_area"></td>
-		<TD><input type="text" name="valor_gr" id="valor_gr"  value='<?=$valor_gr?>' size="30" disabled class="tex_area"> </td>
-		<td align="center"> <input type="text" name="valor_unit" id="valor_unit"  readonly   value="<?=$valor_unit?>" class="tex_area"> </td>
-		<td> <input type="button" name="Calcular_button" id="Calcular_button" Value="Calcular" onClick="calcular_precio();" class="tex_area"> </td>
+   <td><label class="input"><input type='text' name='envio_peso' id='envio_peso' value='<?=$envio_peso?>' size="6" onChange="calcular_precio();" ></label></td>
+		<TD><label class="input"><input type="text" name="valor_gr" id="valor_gr"  value='<?=$valor_gr?>' size="30" disabled ></label> </td>
+		<td align="center"><label class="input"><input type="text" name="valor_unit" id="valor_unit"  readonly   value="<?=$valor_unit?>" ></label> </td>
+		<td><a type="button" name="Calcular_button" id="Calcular_button"  href="javascript:calcular_precio();" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-ok"></i></a> </td>
     </tr>
   </table>
   <?
 }
   ?>
-<table border=0 width=100% class=borde_tab>
+<table width=100% class='table table-bordered'>
 	<!--DWLayoutTable-->
-	<tr class='titulos2' >
+	<tr  >
 		<td valign="top" >Radicado</td>
 		<td valign="top" >Radicado Padre</td>
-		<td valign="top" >Destinatario</td>
-		<td valign="top" >Direccion</td>
-		<td valign="top" >Municipio</td>
-		<td valign="top" >Depto</td>
-		<td valign="top" >Pa&iacute;s</td>
 	</tr>
 <?php
 $isql = "SELECT a.SGD_DIR_TIPO, ".	$RADI_NUME_SALIDA." as RADI_NUME_SALIDA, ".$radi_nume_deri." AS RADI_NUME_DERI, b.RA_ASUN
@@ -242,18 +261,11 @@ if ($rsEnviar && !$rsEnviar->EOF  )
 		{
 ?>
 	<tr>
-	<td colspan="7">
-	<table class="borde_tab" width="100%" border="3">
-	<tr>
-		<td height="21" valign="top">
-			<font size=2><center>
-			<input name="reg_envio" type="submit" value="GENERAR REGISTRO DE ENVIO DE DOCUMENTO" id="GENERAR REGISTRO DE ENVIO DE DOCUMENTO" onClick="return generar_envio();" class="botones_largo">
+	<td colspan="4">
+			<footer>
+			<input name="reg_envio" type="submit" value="GENERAR REGISTRO DE ENVIO DE DOCUMENTO" id="GENERAR REGISTRO DE ENVIO DE DOCUMENTO" onClick="return generar_envio();" class="btn btn-success">
 			<input name="masiva" value="<?=$masiva?>" type="hidden">
-			</center>
-      </font>
-		</td>
-	</tr>
-	</table>
+      </footer>
 	</td>
 	</tr>
 <?php
