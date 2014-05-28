@@ -100,8 +100,6 @@ if(!$fecha_fin) $fecha_fin = $fecha_busq;
 <?
   include_once("$ruta_raiz/htmlheader.inc.php");
 ?>
-<link rel="stylesheet" type="text/css" href="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.css">
-<script type="text/javascript" src="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.js"></script>
 <script type="text/javascript" language="javascript">
 <!--
 
@@ -113,9 +111,6 @@ if(!$fecha_fin) $fecha_fin = $fecha_busq;
 		
 	}
 		  
-	   var dateAvailable = new ctlSpiffyCalendarBox("dateAvailable", "formulario", "fecha_ini","btnDate1","<?=$fecha_ini?>",scBTNMODE_CUSTOMBLUE);
-	   var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "formulario", "fecha_fin","btnDate2","<?=$fecha_fin?>",scBTNMODE_CUSTOMBLUE);
-
 --></script>
 </head>
 <?
@@ -123,19 +118,18 @@ if(!$fecha_fin) $fecha_fin = $fecha_busq;
 ?>
 <br />
 <body topmargin="0"  style="overflow-x:scroll">
-<div id="spiffycalendar" class="text"></div>
 <form name="formulario"  method=post action='vistaFormProc.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>' class='smart-form'>
 
 <table width="100%"  class="table table-bordered">
   <tr>
-    <td colspan="2" class="titulos4"><A href='vistaFormConsulta.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>' >Estadisticas </A> - <center>PROCESOS </center> </td>
+    <th colspan="2" ><A href='vistaFormConsulta.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>' >Estadisticas </A> - PROCESOS </th>
   </tr>
   <tr>
-    <td colspan="2" class="titulos3"><span class="cal-TextBox"><?=$helpE[$tipoEstadistica]?></span></td>
+    <td colspan="2" ><span class="cal-TextBox"><?=$helpE[$tipoEstadistica]?></span></td>
   </tr>
   <tr>
-    <td width="30%" class="titulos2">Tipo de Consulta / Estadistica</td>
-    <td class="listado2" align="left">
+    <td width="30%" ><small>Tipo de Consulta / Estadistica</small></td>
+    <td  align="left">
     <label class=select>  
 	   <select name="tipoEstadistica"  class="select" onChange="formulario.submit();">
 		<?	
@@ -148,8 +142,8 @@ if(!$fecha_fin) $fecha_fin = $fecha_busq;
 	</td>
 	</tr>
 	<tr>
-    <td width="30%" class="titulos2">Dependencia</td>
-    <td class="listado2">
+    <td width="30%" ><small>Dependencia</small></td>
+    <td >
   <label class=select>  
 	<select name="dependencia_busq"  class="select"  onChange="formulario.submit();">
 	<?
@@ -203,12 +197,11 @@ if($tipoEstadistica >=1 && $tipoEstadistica<=17 )
 {
 ?>
 <tr id="cUsuario">
-	<td width="30%" class="titulos2">Usuario
-		<br />
+	<td width="30%" ><small>Usuario<br>
 	<?	$datoss = isset($usActivos) && ($usActivos) ?" checked ":"";	?>
-	<input name="usActivos" type="checkbox" class="select" <?=$datoss?> onChange="formulario.submit();">
-	Incluir Usuarios Inactivos  </td>
-	<td class="listado2">
+	<input name="usActivos" type="checkbox" <?=$datoss?> onChange="formulario.submit();">Usuarios Inactivos
+	</small></td>
+	<td >
 	<label class=select>  
 	<select name="codus"  class="select"  onChange="formulario.submit();">
 	<? 	if ($usua_perm_estadistica > 0){	?>
@@ -239,13 +232,13 @@ if($tipoEstadistica >=1 && $tipoEstadistica<=17 )
 		?>
 		</select>
 		</label>
-	&nbsp;</td>
+</td>
   </tr>
   <tr id="cPFecha">
-	<td width="30%" class="titulos2">A&ntilde;o de Creado el Expediente
+	<td width="30%" ><small>A&ntilde;o de Creado el Expediente</small>
 		<BR>
 	</td>
-	<td class="listado2">
+	<td >
 	<label class=select>
 	<select name=codAno  class="select"  onChange="formulario.submit();">
 		<option value='0'> -- MOSTRAR CONSOLIDADOS LOS A&Ntilde;OS --</option>
@@ -257,16 +250,15 @@ if($tipoEstadistica >=1 && $tipoEstadistica<=17 )
 		<?	} ?>
 		</select>
 		</label>
-	&nbsp;</td>
+	</td>
   </tr>
   <?
   }
   ?>
   <tr id="cPFecha">
-	<td width="30%" class="titulos2">Tipo Proceso
-		<BR>
+	<td width="30%" ><small>Tipo Proceso</small>
 	</td>
-	<td class="listado2">
+	<td >
 	<label class=select>
 	<?php
   		// Muestra todos los procesos
@@ -280,10 +272,10 @@ if($tipoEstadistica >=1 && $tipoEstadistica<=17 )
 		$codAno = isset($_POST['codAno'])&&($_POST['codAno']!= '0') ? $_POST['codAno']: ""	;
   	?>
   	</label>
-	&nbsp;</td>
+	</td>
   </tr>
   <tr>
-    <td colspan="2" class="titulos2">
+    <td colspan="2" >
 	<center>
 	<input name="Submit" type="submit"  class="btn btn-primary btn-sm"  value="Limpiar"> 
 	<input type="submit"  class="btn btn-primary btn-sm"  value="Generar" name="generarOrfeo">

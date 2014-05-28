@@ -1,14 +1,7 @@
-<?
- 
-?>
-<html>
-<title>..:: IMAGEN ESTADISTICAS ::.. </title>
-		<link rel="stylesheet" href="../estilos/orfeo.css" />
-<body>
 <CENTER>
    <table  class="table table-bordered">
 	<tr >
-		<td class="titulos3" width="1">	
+		<td  width="1">	
 		<smal># <?=$estadoProc?></smal>
 		</td>
 		<?
@@ -26,11 +19,10 @@
 		/** El siguietne "if" Omite las columnas que venga con encabezado HID
 				*/	
 				
-		if(substr($fld->name,0,3)!="HID") 
-		{
+		if(substr($fld->name,0,3)!="HID" && substr($fld->name,0,3)!="hid"){
 		?>
 		
-		<td class="titulos3">	
+		<th >	
 		<? 
 		$linkPaginaActual = $PHP_SELF;
 		?>
@@ -39,7 +31,7 @@
 				echo "<smal>".$fld->name . "</smal>";
 			?>
 		</a>
-		</td>
+		</th>
 		<?
 		}
 		}
@@ -68,13 +60,13 @@
 			$etapaFlujoTerminos = $rs2->fields["SGD_FEXP_TERMINOS"];
 			$etapaFlujoNombres[$colsProc]=$etapaFlujo;
 				?>
-						<TD class="titulos3" align="center"><small><?=$etapaFlujo?></small></TD>
+						<TD  align="center"><small><?=$etapaFlujo?></small></TD>
 				<?
 			$colsProc++;
 			$rs2->MoveNext();
 		}
 	}
-	?><td class="titulos3">	</td>	<? 
+	?><td >	</td>	<? 
 	}
 	?>
 </tr> 
@@ -91,7 +83,7 @@
 	  $numListado = fmod($iRow,2);
 	  $expNumeroActual = $rsE->fields["EXPEDIENTE"];
     $params = "";
-	  if($rsE->fields["PARAM1"]) $params = $rsE->fields["PARAM1"];
+	  if($rsE->fields["HID_TEMA"]) $params = $rsE->fields["HID_TEMA"];
 	  // if($rsE->fields["PARAM2"]) $params .= "-".$rsE->fields["PARAM2"];
 	  // if($rsE->fields["PARAM3"]) $params .= "-".$rsE->fields["PARAM3"];
 	  // if($rsE->fields["PARAM4"]) $params .= "-".$rsE->fields["PARAM4"];
@@ -126,7 +118,8 @@
 	}
 	if($fld->name=="expediente") 
 	{
-				echo "<small>$expNumeroActual <br>($params)</small>";
+		 echo "<small>$expNumeroActual";
+		 		if(trim($params))  echo " <br>($params)</small>";
 	}
 	if($fld->name=="TOTAL_PROCESOS") 
 		{
@@ -273,7 +266,7 @@ $rs2 = $db->query($isqlEstados);
 			$etapaFlujoTerminos = $rs2->fields["SGD_FEXP_TERMINOS"];
 			$etapaFlujoNombres[$colsProc]=$etapaFlujo;
 				?>
-						<TD class="titulos3" align="center"><small><?=$etapaFlujo?></small></TD>
+						<TD  align="center"><small><?=$etapaFlujo?></small></TD>
 				<?
 			$colsProc++;
 			$rs2->MoveNext();
@@ -308,7 +301,7 @@ $noRegs = count($data1y);
 ?>
 </tr>
 <tr>
-<td class="titulos3" align="center" colspan="13">
+<td  align="center" colspan="13">
 (<font color="Red">M</font>) Flujo Manual , (<font color="Red">A</font>) Flujo Automatico
 </td>
 </tr>
@@ -342,8 +335,3 @@ include "genBarras1.php";
       <?
 }
 ?>
-
-</center>
-</CENTER>
-</body>
-</html>

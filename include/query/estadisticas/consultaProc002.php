@@ -68,13 +68,12 @@ switch($db->driver)
 	$andUsua = ($codus != 0) ? "AND u.USUA_DOC = sExp.USUA_DOC_RESPONSABLE AND u.USUA_CODI = $codus" : '';
 	$tablaUs = ($codus != 0) ? ", USUARIO u" : '';
 	
-	$queryE = "SELECT sExp.SGD_EXP_NUMERO EXPEDIENTE 
+	$queryE = "SELECT sExp.SGD_EXP_NUMERO EXPEDIENTE,sExp.sgd_sexp_parexp1 HID_TEMA
 				FROM SGD_SEXP_SECEXPEDIENTES sExp $tablaUs
 				$whereDependencia
 				$whereProceso
 				$andUsua
 				$whereAnoExp";
-	
 	/** CONSULTA PARA VER DETALLES 
 	 */
 	$orderE = "	ORDER BY $orno $ascdesc";
@@ -89,7 +88,7 @@ switch($db->driver)
 				,fExp.sgd_fexp_descrip Estado_Expediente
 				,(select min(radi_nume_radi) from sgd_exp_expediente exp where exp.sgd_exp_numero=sExp.sgd_exp_numero) Primer_Radicado
 				,(select count(1) from sgd_exp_expediente exp where exp.sgd_exp_numero=sExp.sgd_exp_numero) Nro_de_Radicados
-				,sExp.sgd_sexp_parexp1 param1
+				
 			FROM SGD_SEXP_SECEXPEDIENTES sExp
 			, USUARIO b 
 			, SGD_FEXP_FLUJOEXPEDIENTES fExp

@@ -75,7 +75,6 @@ if($generar == "ok") {
 	//$db->conn->debug=true;
 	if($genDetalle==1) $queryE = $queryEDetalle;
 	if($genTodosDetalle==1) $queryE = $queryETodosDetalle;
-	
 	$rsE = $db->conn->query($queryE);
 	
 	if ($tipoEstadistica==2) include ("./tablaProcHtml42.php");
