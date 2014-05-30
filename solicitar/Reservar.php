@@ -68,7 +68,7 @@ $tip3img =$_SESSION["tip3img"];   $verrad = "";
    PRESTAMO_action($sAction); //insert, cancel, update   
 
 
-
+$_GLOBAL["numExpediente"] = $_GET["numExpediente"];
 //===============================
 // Display page
 //-------------------------------
@@ -162,7 +162,7 @@ function PRESTAMO_action($sAction) {
    // Se mantiene la funcion get_param().
    //$fldradicado=$_GET["radicado"];
    $fldradicado=get_param("radicado");
-   
+   $fldexpediente=$GLOBALS["numExpediente"];
    $krd = $_SESSION["krd"];
    $dependencia = $_SESSION["dependencia"];
     //if(!$fldradicado) $fldradicado=$_POST["radicado"];
@@ -194,6 +194,7 @@ function PRESTAMO_action($sAction) {
       $sSQL = "insert into PRESTAMO(
                   PRES_ID,
                   RADI_NUME_RADI,
+                  SGD_EXP_NUMERO,
 		   	      USUA_LOGIN_ACTU,
 			      DEPE_CODI,
                   PRES_FECH_PEDI,
@@ -203,6 +204,7 @@ function PRESTAMO_action($sAction) {
                values (". 
                   tosql($sec,"Number")."," . 
                   tosql($fldradicado,"Text")."," . 
+                  tosql($fldexpediente,"Text")."," . 
                   tosql($krd,"Text")."," . 
 		  tosql($dependencia,"Number")."," .
 		  $fldPRES_FECH_PEDI."," . 
@@ -292,6 +294,7 @@ function ESTADO_PRESTAMO_show() {
    // Se mantiene la funcion get_param(). 
    //$fldradicado=$_GET["radicado"];
    $fldradicado=get_param("radicado");
+   $fldexpediente=$GLOBALS["numExpediente"];
    $krd = $_SESSION["krd"];
    $dependencia = $_SESSION["dependencia"];
    // Modificado Infometrika 14-Julio-2009
@@ -311,6 +314,7 @@ function ESTADO_PRESTAMO_show() {
 	  $sSQL="select 
                 r.PRES_ID as PRESTAMO_ID,
                 $radi_nume_radi as RADICADO,
+                r.SGD_EXP_NUMERO,
                 r.USUA_LOGIN_ACTU as LOGIN,
                 D.DEPE_NOMB as DEPENDENCIA,".
                 $sqlPRES_FECH_PEDI." as F_SOLICITUD,".
@@ -354,6 +358,7 @@ function ESTADO_PRESTAMO_show() {
                         </tr>
                         <tr  align="center" valign="middle">
                            <th><a href=''><font >Radicado</font></a></th>		 
+                           <th><a href=''><font >Expediente</font></a></th>		 
                            <th><a href=''><font >Login</font></a></th>		 
                            <th><a href=''><font >Dependencia</font></a></th>		 
                            <th><a href=''><font >Fecha<br>Solicitud</font></a></th>		 
@@ -370,6 +375,7 @@ function ESTADO_PRESTAMO_show() {
              // Create field variables based on database fields		  
              $fldPRES_ID=       $rs->fields["PRESTAMO_ID"];
              $fldRADICADO=      $rs->fields["RADICADO"];
+             $fldEXPEDIENTE=    $rs->fields["SGD_EXP_NUMERO"];
              $fldLOGIN=         $rs->fields["LOGIN"];
              $fldDEPENDENCIA=   $rs->fields["DEPENDENCIA"];
              $fldPRES_FECH_PEDI=$rs->fields["F_SOLICITUD"];
@@ -391,6 +397,7 @@ function ESTADO_PRESTAMO_show() {
              // HTML prestamo show begin	  ?>	
                         <tr <? echo $tipoListado; ?> align="center">
                            <td class="leidos"><?= tohtml($fldRADICADO); ?></td>	 
+                           <td class="leidos"><?= tohtml($fldEXPEDIENTE); ?></td>	 
                            <td class="leidos"><?= tohtml($fldLOGIN); ?></td>	 
                            <td class="leidos"><?= tohtml($fldDEPENDENCIA); ?></td>	 
                            <td class="leidos"><?= tohtml($fldPRES_FECH_PEDI); ?></td>	 
@@ -430,6 +437,7 @@ function PRESTAMO_show() {
    // Se mantiene la funcion get_param().
    //$fldradicado=$_GET["radicado"];
    $fldradicado=get_param("radicado");
+   $fldexpediente=$GLOBALS["numExpediente"];
    $krd = $_SESSION["krd"];
    $dependencia = $_SESSION["dependencia"];
 
@@ -489,8 +497,14 @@ function PRESTAMO_show() {
       for ($j=0; $j<$iCounter; $j++){ $reqPrestados=$reqPrestados+$i[$j]; }
       $sqlReq="";
       if ($iCounter==0) {
-         if (strlen(trim($fldANEXO))==0){ $sqlReq=" =1 "; }
-	     else                           { $sqlReq=" in (1,2,3) "; }
+         if (strlen(trim($fldANEXO))==0){ 
+           $sqlReq=" =1 "; 
+           if($GLOBALS["numExpediente"]) $sqlReq=" in (1,4) "; 
+           }
+	     else                           { 
+	          $sqlReq=" in (1,2,3) "; 
+	         if($GLOBALS["numExpediente"]) $sqlReq=" in (1,2,3,4) "; 
+	     }
       }
 	
       else if ($iCounter==1 && $reqPrestados<3 && $reqPrestados>0){
@@ -498,8 +512,8 @@ function PRESTAMO_show() {
       }
 //$sqlReq = "aaaa";
       if (strlen($sqlReq)!=0) {
-         $sqlReq="select PARAM_CODI,PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_REQUERIMIENTO' and PARAM_CODI".$sqlReq." order by PARAM_VALOR desc";   
-	     // Show form field 			   
+         $sqlReq="select PARAM_CODI,PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_REQUERIMIENTO' and PARAM_CODI".$sqlReq." order by PARAM_VALOR ";   
+	     // Show form field 			 
 ?>
                <script>
                   /*Adecua el formulario para que la pagina regrese a la anterior*/
@@ -511,6 +525,7 @@ function PRESTAMO_show() {
                <form method="POST" action="<?=$sFileName ?>" name="Prestamo" class=smart-form>
                   <input type="hidden" value="insert" name="FormAction">
                   <input type="hidden" value="<?=$dependencia?>" name="dependencia">			                    				  				  
+                  <input type="hidden" value="<?=$GLOBALS["numExpediente"]?>" name="numExpediente">	
 		  <input type="hidden" name="radicado" value="<?= tohtml($fldradicado) ?>">
 <?    // Usuario que no puede solicitar
          if ($sPRESTAMOErr!="") { 
@@ -570,6 +585,12 @@ function PRESTAMO_show() {
                                  	}		    ?>							 
 						                     </select></label></td>
                      </tr>
+                     <tr>
+	                    <td class='titulos2'>Expediente</td>	
+                        <td class="listado5">
+                          <?=$GLOBALS["numExpediente"];?>
+												</td>
+                     </tr>                     
 	                 <tr>
                         <td colspan=2><footer><input type="submit" class="btn btn-primary" value="Solicitar" align=left>&nbsp;&nbsp;
 	            	                         <input type="submit" class='btn btn-default' value="Regresar" onClick="javascript: regresar();"></footer></td>

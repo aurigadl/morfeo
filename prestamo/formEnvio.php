@@ -35,6 +35,8 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 <?
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
+$usua_nomb    = $_SESSION["usua_nomb"];
+$depe_nomb    = $_SESSION["depe_nomb"];
 $usua_doc = $_SESSION["usua_doc"];
 $codusuario = $_SESSION["codusuario"];
 
@@ -42,6 +44,7 @@ $ruta_raiz = "..";
 $mensaje_error = false;
    
    $verrad="";
+   define('ADODB_ASSOC_CASE', 1);
    include_once "$ruta_raiz/include/db/ConnectionHandler.php";
    $db = new ConnectionHandler($ruta_raiz);	 
 
@@ -78,8 +81,10 @@ $mensaje_error = false;
    }
    // Inicializa la identificaci�n del usuario solicitante   
    $usua_codi=strip($_POST["usua_codi"]);   
+   //$db->conn->debug = true;
    $query="select USUA_LOGIN_ACTU from PRESTAMO where PRES_ID in ($setFiltroSelect)";  //primer usuario de los registros    		
    $rs = $db->conn->query($query);		 
+   
    if($rs && !$rs->EOF){ $usua_codi_n=$rs->fields("USUA_LOGIN_ACTU"); } //primer usuario de los registros    		
    $cant=0;   //cantidad de registros solicitados por el mismo usuario
    if($pageAnt==$sFileName && $ordenar==0) {
@@ -173,15 +178,14 @@ $mensaje_error = false;
             $rs = $db->conn->query($query);		 
             if($rs && !$rs->EOF) { $enviar=1; }
 	        else { 
-			   echo "<script> alert('La contrase�a del usuario solicitante es incorrecta'); </script>"; 
+			   echo "<script> alert('La contraseña del usuario solicitante es incorrecta'); </script>"; 
                $enviar=0;
 			}			
 		 } 
 	  }    
    }
    if ($enviar==1) {  // Llama la p�gina que hace el procesamiento
-      echo " .. ";
-      echo "<form action='".$ruta_raiz."/solicitar/Reservar.php?<?=$encabezado?>' method='post' name='go'> </form><br>";
+      echo "<form action='".$ruta_raiz."/solicitar/Reservar.php?<?=$encabezado?>' method='post' name='go'> </form>";
       echo "<script>document.go.submit();</script>";   	  
    }
    
@@ -206,113 +210,108 @@ $mensaje_error = false;
    $sOrder=" order by ".$iSort.$sDirection.",PRESTAMO_ID";   
    $sSQLtot=$sSQL.$sOrder;
    // Inicializa los campos de la tabla que van a ser vistos
-   include "inicializarRTA.inc";		    					  					  
+   
+   include "inicializarRTA.inc";		
    // HTML column prestamo headers		 		 		 
 ?>
-   <head>
-      <title>Enviar Datos</title>	  
-			<title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
-			<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
-			<!-- Bootstrap core CSS -->
-			<?php include_once "../htmlheader.inc.php"; ?>	 
-      <script src="<?=$ruta_raiz?>/js/popcalendar.js"></script>
-      <div id="spiffycalendar" class="text"></div>		 		 
-      <link rel="stylesheet" type="text/css" href="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.css">		 
-   </head>
-   <script language="JavaScript" src="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.js"></script>
-   <script language="javascript">       
-	  setRutaRaiz ('<?=$ruta_raiz?>'); // Para el calendario
-   </script>
-   <body class="smart-form">
-    <table class="table table-bordered">
-	   <tr>
-	      <td width=100%><br>
- 	         <form action='<?=$ruta_raiz?>/solicitar/Reservar.php?<?=$encabezado?>' method=post name="rta" class="smart-form" >
-                <!-- par�metros para procesar !-->	  		 		 
-                <input type="hidden"  value='<?=$krd?>' name="krd">					 					 					 		 
-                <input type="hidden" value=" " name="radicado">  	 
-                <input type="hidden" value="<?=$cantRegistros?>" name="prestado">  	 								
-                <!-- par�metros de control sobre esta p�gina !-->	  		 		 				
-                <input type="hidden" value="<?=$sFileName?>" name="sFileName">  				 								
-   	            <input type="hidden" name="opcionMenu" value="<?= $opcionMenu ?>">	  						
-                <!-- usuario que solicita el pr�stamo o devoluci�n !-->	  		 		 				
-   	            <input type="hidden" name="usua_codi" value="<?=$usua_codi?>">				
-                <!-- orden de presentaci�n del resultado en el formulario de envio !-->	  		 		 
-       	        <input type="hidden" name="FormPedidos_Sorting" value="<?=$iSort?>">
-	            <input type="hidden" name="FormPedidos_Sorted" value="<?=$iSorted?>">
-                <input type="hidden" name="s_Direction" value="<?=$sDirection?>">				         
-       	        <input type="hidden" name="ordenar" value="0"> <!-- no ordena !-->
-                 <!-- Genera la consulta !-->	  		 		 
-                <input type="hidden" name="s_PRES_ID" value="<?=$setFiltroSelect?>">				                 	  								
-
-		        <table width="100%" class="table table-bordered">
- 	            <tr>
-		           <TD width=30% >USUARIO:<?=$usua_nomb?><br></TD>
-	   	           <TD width='30%' >DEPENDENCIA:<?=$depe_nomb?><br></TD>
-		           <TD width="35%" ><?=$titCaj?></td>
-		           <td width='5' ><input type=button value=REALIZAR onclick="okTx();" name=enviardoc align=bottom  id=REALIZAR class="btn btn-primary"></td>
-	            </tr>
-       	        <tr align="center">
-	               <td colspan="4" class="celdaGris" align=center><br><center>
-		             <table class="table table-bordered">
-		                 <tr bgcolor="White">
-					        <td width="300"></td>
-					   	    <td align="left">
-					   	    <label class="textarea">
-										<i class="icon-append fa fa-comment"></i>
-										<textarea placeholder="Comentario . . . " name="observa" rows="3"><?=$observa?></textarea>
-										</label>
-					     </tr>  			             
+<head>
+	<title>Enviar Datos</title>	  
+	<title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
+	<!-- Bootstrap core CSS -->
+	<?php include_once "../htmlheader.inc.php"; ?>	 
+	<script src="<?=$ruta_raiz?>/js/popcalendar.js"></script>
+	<div id="spiffycalendar" class="text"></div>		 		 
+	<link rel="stylesheet" type="text/css" href="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.css">		 
+</head>
+<script language="JavaScript" src="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.js"></script>
+<script language="javascript">       
+setRutaRaiz ('<?=$ruta_raiz?>'); // Para el calendario
+</script>
+<body class="smart-form">
+<table class="table table-bordered">
+	<tr>
+		<td width=100%>
+			<form action='<?=$ruta_raiz?>/solicitar/Reservar.php?<?=$encabezado?>' method=post name="rta" class="smart-form" >
+			<input type="hidden"  value='<?=$krd?>' name="krd">					 					 					 		 
+			<input type="hidden" value=" " name="radicado">  	 
+			<input type="hidden" value="<?=$cantRegistros?>" name="prestado">  	 								
+			<input type="hidden" value="<?=$sFileName?>" name="sFileName">  				 								
+			<input type="hidden" name="opcionMenu" value="<?= $opcionMenu ?>">	  						
+			<input type="hidden" name="usua_codi" value="<?=$usua_codi?>">				
+			<input type="hidden" name="FormPedidos_Sorting" value="<?=$iSort?>">
+			<input type="hidden" name="FormPedidos_Sorted" value="<?=$iSorted?>">
+			<input type="hidden" name="s_Direction" value="<?=$sDirection?>">				         
+			<input type="hidden" name="ordenar" value="0"> <!-- no ordena !-->
+			<input type="hidden" name="s_PRES_ID" value="<?=$setFiltroSelect?>">				                 	  								
+		<table width="100%" class="table table-bordered">
+		<tr>
+			<TD width=30% ><SMALL>USUARIO:<?=$usua_nomb?><br></SMALL></TD>
+				<TD width='30%' ><SMALL>DEPENDENCIA:<?=$depe_nomb?><br></SMALL></TD>
+			<TD width="35%" ><SMALL><?=$titCaj?></SMALL></td>
+			<td width='5' ><input type=button value=REALIZAR onclick="okTx();" name=enviardoc align=bottom  id=REALIZAR class="btn btn-primary"></td>
+		</tr>
+			<tr align="center">
+				<td colspan="4"  align=center><center>
+				<table class="table table-bordered">
+						<tr bgcolor="White">
+				<td width="300"></td>
+				<td align="left">
+				<label class="textarea">
+					<i class="icon-append fa fa-comment"></i>
+					<textarea placeholder="Comentario . . . " name="observa" rows="1"><?=$observa?></textarea>
+					</label>
+				</tr>  			             
 <? if ($opcionMenu==1) {  // Prestamo?>
-                         <tr bgcolor="White">
- 	                        <td width="100" align="right" ><small>Estado:</small></td>
-						    <td align="left"><label class=select><select class="select" name="s_PRES_ESTADO" onChange="javascript: ver(); ">
+	<tr bgcolor="White">
+	<td width="100" align="right" ><small>Estado:</small></td>
+		<td align="left"><label class=select><select class="select" name="s_PRES_ESTADO" onChange="javascript: ver(); ">
 <?    $query="select PARAM_CODI, PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' and PARAM_CODI in (2,5)"; 
-      $rs = $db->conn->query($query);
-      while($rs && !$rs->EOF) {
-         $idEstado =$rs->fields("PARAM_CODI");
-         $txtEstado=$rs->fields("PARAM_VALOR");	
-	     $x="";	  	  		 
-		 if ($flds_PRES_ESTADO==$idEstado) { $x=" selected "; } 
-         echo " <option ".$x." value=".$idEstado.">".strtoupper($txtEstado)."</option> ";	   
-         $rs->MoveNext();
-      } ?>
-						                  </select></td>
-					     </tr>						  									  					  
-                         <tr bgcolor="White" id="fecha">
-             	  	        <td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Fecha de Vencimiento:</td>	 
-         			        <td align="left"><script language="javascript">
-			                var dateAvailable1 = new ctlSpiffyCalendarBox("dateAvailable1", "rta","fechaVencimiento","btnDate1","<?=$fechaVencimiento?>",scBTNMODE_CUSTOMBLUE);
-			                dateAvailable1.writeControl();
-			                dateAvailable1.dateFormat="yyyy-MM-dd";
-		                    </script></td>
-                         </tr>
-                      <script>
-					     // Oculta o hace visible el campo de la fecha de vencimiento dependiendo del estado seleccionado por el usuario
-					     function ver() {
-						    var verFecha=document.rta.s_PRES_ESTADO.options[document.rta.s_PRES_ESTADO.selectedIndex].value;
-						    if(verFecha==2){ fecha.style.display = ''; }
-							else {           fecha.style.display = 'none'; }
-						 }
-						 ver();
-                      </script>					  					  
+	$rs = $db->conn->query($query);
+	while($rs && !$rs->EOF) {
+			$idEstado =$rs->fields("PARAM_CODI");
+			$txtEstado=$rs->fields("PARAM_VALOR");	
+		$x="";	  	  		 
+	if ($flds_PRES_ESTADO==$idEstado) { $x=" selected "; } 
+			echo " <option ".$x." value=".$idEstado.">".strtoupper($txtEstado)."</option> ";	   
+			$rs->MoveNext();
+	} ?>
+	</select></td>
+	</tr>						  									  					  
+		<tr bgcolor="White" id="fecha">
+			<td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Fecha de Vencimiento:</td>	 
+	<td align="left"><script language="javascript">
+	var dateAvailable1 = new ctlSpiffyCalendarBox("dateAvailable1", "rta","fechaVencimiento","btnDate1","<?=$fechaVencimiento?>",scBTNMODE_CUSTOMBLUE);
+	dateAvailable1.writeControl();
+	dateAvailable1.dateFormat="yyyy-MM-dd";
+		</script></td>
+			</tr>
+	<script>
+		// Oculta o hace visible el campo de la fecha de vencimiento dependiendo del estado seleccionado por el usuario
+		function ver() {
+		var verFecha=document.rta.s_PRES_ESTADO.options[document.rta.s_PRES_ESTADO.selectedIndex].value;
+		if(verFecha==2){ fecha.style.display = ''; }
+	else {           fecha.style.display = 'none'; }
+	}
+			ver();
+	</script>					  					  
 <? }
    if ($verClave==1) {  ?>					  
-                         <tr bgcolor="White">
-             	  	        <td width="100" align="right"><small>Contrase&ntilde;a<br><?=$usua_codi?></small></td>
-         			        <td align="left"><input type="password" name="s_CONTRASENA" value="<?=$flds_CONTRASENA?>"></td>
-         	             </tr>
+			<tr bgcolor="White">
+			<td width="100" align="right"><small>Contrase&ntilde;a<br><?=$usua_codi?></small></td>
+			<td align="left"><input type="password" name="s_CONTRASENA" value="<?=$flds_CONTRASENA?>"></td>
+		</tr>
 <? } ?>
- 				      </table></center></td>
-	           </tr>
-       	        <tr align="center">
-	               <td colspan="4" class="celdaGris" align=center><br><center>
-		             <table width="100%"  align="center" bgcolor="White">
-		                 <TR bgcolor="White">
-					        <TD width="100%" align="center">					 
-                               <table align="center" class="table table-bordered" width="100%">	   
+	</table></center></td>
+	</tr>
+		<tr align="center">
+			<td colspan="4" class="celdaGris" align=center><center>
+			<table width="100%"  align="center" bgcolor="White">
+					<TR bgcolor="White">
+			<TD width="100%" align="center">					 
+	<table align="center" class="table table-bordered" width="100%">	   
 <?PHP      
    include "inicializarTabla.inc";     
    // Execute SQL statement	
@@ -324,13 +323,12 @@ $mensaje_error = false;
    include_once "getRtaSQLAntIn.inc"; //Une en un solo campo los expedientes
    while($rs && !$rs->EOF) {
       // Inicializa las variables con los resultados
-	  include "getRtaSQL.inc";			
-	  if ($antfldPRESTAMO_ID!=$fldPRESTAMO_ID) { //Une en un solo campo los expedientes					 								 									
-		 if ($y!=0) { include "cuerpoTabla.inc"; } // Fila de la tabla con los resultados
-		 include "getRtaSQLAnt.inc";			   
+	  include "getRtaSQL.inc";		
+	  if ($antfldPRESTAMO_ID!=$fldPRESTAMO_ID) {
+		 if ($y!=0) {  include "cuerpoTabla.inc"; } // Fila de la tabla con los resultados
+		 include "getRtaSQLAnt.inc";	
 		 $y++;
-	  }
-	  else {		 
+	  }else {		 
 		 if ($antfldEXP!=""){ 
 			$antfldEXP.="<br>"; 
    	        $antfldARCH.="<br>"; 
@@ -350,18 +348,15 @@ $mensaje_error = false;
    } 
    $iCounter=$y-1;  //cantidad de registros
  ?>
-                                  <tr class="titulos5" align="center">		 
-                                     <td class="leidos" colspan="<?=($numCol+1);?>"><center><br>P&aacute;gina 1/1<br>Total de Registros: <?=$iCounter?><br>&nbsp;</center></td>
-                                  </tr>
-                               </table>
-						   </TD>
-					     </tr>
-				      </table></center></td>
-	            </tr>			 
-            </TABLE><br>
-		     </form></td>
-	   </tr>
-    </table>
+	</table>
+		</TD>
+		</tr>
+	</table></center></td>
+	</tr>			 
+</TABLE><br>
+		</form></td>
+	</tr>
+	</table>
  <script>
     // Envia el formulario para que sea ordenado segun el criterio indicado
     function ordenar(i) {

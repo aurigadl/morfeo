@@ -178,11 +178,11 @@ function ver_temas(){
 
 	?>
 	</small></td>
-	<td class="titulos5">
+	<td >
       <a class="vinculos" href='./solicitar/Reservas.php?radicado=<?="$verrad"?>'><small>Solicitados</small></a>
     </td>
-    <td class="titulos5">
-      <a class="vinculos" href='./solicitar/Reservar.php?radicado=<?="$verrad&sAction=insert"?>'><small>Solicitar Fisico</small></a>
+    <td >
+      <a class="vinculos" href='./solicitar/Reservar.php?radicado=<?="$verrad&sAction=insert"?>&numExpediente=<?=$numExpediente?>'><small>Solicitar Fisico</small></a>
     </td>
   </tr>
 </table>

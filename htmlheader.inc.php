@@ -31,9 +31,6 @@ $str = <<<EOF
 
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="SIIM2">
-      <meta name="keywords" content="siim, metrovivienda, gestion, misional">
-
       <link rel="shortcut icon" href="$ruta_raiz/img/favicon.png">
       <!-- Bootstrap core CSS -->
       <link href="$ruta_raiz/estilos/bootstrap.min.css" rel="stylesheet">

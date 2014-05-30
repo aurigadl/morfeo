@@ -48,7 +48,7 @@ $sSelect2=" U.USUA_NOMB as NOMBRE,
 
 $sSelect_non_exp = $sSelect1."'' as EXPEDIENTE,".$sSelect2.",'' as ESTADO_EXP ";// Select radicados sin expediente
 $sSelect_exp =	$sSelect1.
-				"E.SGD_EXP_NUMERO as EXPEDIENTE,".
+				"P.SGD_EXP_NUMERO as EXPEDIENTE,".
 				$sSelect2.
 				",''".$db->conn->concat_operator."E.SGD_EXP_ESTADO as ESTADO_EXP"; // Select radicados con expediente
 
