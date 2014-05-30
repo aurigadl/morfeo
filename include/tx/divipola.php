@@ -1,9 +1,31 @@
 <?php
 /**
- * Created by infometrika.
- * User: aurigadl
- * Date: 28/05/14
- * Time: 08:52 AM
+ * @author Jairo Losada   <jlosada@gmail.com>
+ * @author Cesar Gonzalez <aurigadl@gmail.com>
+ * @license  GNU AFFERO GENERAL PUBLIC LICENSE
+ * @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+
+
+/**
  *
  * Esta clase nos permite consultar los distintos elementos de
  * la división política, generar los combos para que se generen
@@ -24,6 +46,8 @@ class divipola {
      * municipios dependiendo del dependencia, pais y continente
      * que se pasen como arugmento
      * @buscar array parametros para realizar el filtro del municipio
+     * @return json array con verdadero si la consulta es exitosa de
+     * lo contrario false
      */
     public function buscarMunicipio($buscar){
         $dep  = strtoupper($buscar['dep']);
@@ -69,6 +93,8 @@ class divipola {
      * departamentos dependiendo del pais
      * que se pasen como arugmento
      * @buscar array parametros para realizar el filtro del municipio
+     * @return json array con verdadero si la consulta es exitosa de
+     * lo contrario false
      */
     public function buscarDepartamento($buscar){
         $pais   = strtoupper($buscar['pais']);
@@ -108,6 +134,8 @@ class divipola {
      * paises sin depender del continente
      * que se pasen como arugmento
      * @buscar array parametros para realizar el filtro del municipio
+     * @return json array con verdadero si la consulta es exitosa de
+     * lo contrario false
      */
     public function buscarPais($buscar){
         $pais = strtoupper($buscar['pais']);

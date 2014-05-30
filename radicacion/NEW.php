@@ -256,9 +256,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                       <label class"label"> Buscar usuario radicador </label>
                       <section id="formsearch" class="form-inline smart-form">
-
+                        <section class="col col-1">
+                            <a id="idnuevo" href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i> Nuevo </a>
+                        </section>
 
                         <section  class="col col-2">
+
                           <label class="select">
                             <select id="tipo_usuario" class="form-control input-sm">
                               <option value='0'>Usuario     </option>
@@ -295,10 +298,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <INPUT type=text id='mail_us' value="" placeholder="Correo Electronico">
                           </label>
                         </section>
-
-                        <button type="button" name="Button" value="Crear" class="btn btn-success btn-sm pull-right">
-                          Crear un usuario
-                        </button>
 
                       </section>
 
@@ -419,6 +418,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     $(document).ready(function() {
 
       var ALLDATA;
+      var INCREMENTAL1 = 0;
       // DO NOT REMOVE : GLOBAL FUNCTIONS!
       pageSetUp();
 
@@ -432,12 +432,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
     /**
-     * Generacion de eventos para los usuarios seleecionados
+     * Generacion de eventos para los usuarios seleccionados
      * permitiendo cambiar la informacion antes de ser enviada al
      * servidor. Guardando de esta manera los datos del usuario con
      * las modificiaciones necesarias
     */
-    $('.fa-check').click( function(){
+    $("body").on("click", '.fa-check',function(){
         $('label[name^="inp_"]').addClass('hide');
         $('div[name^="div_"]').removeClass('hide');
         var iddiv = $(this).parent().attr('name').substring(4);
@@ -447,76 +447,123 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         $('div[name=div_' + iddiv + ']').append(div_nuevo.children());
     });
 
-    $('div[name^="div_"]').each(function(){
-        $(this).click(function(){
-            var texto = $(this).attr('name').substring(4);
-            $('label[name="inp_' + texto + '"]').removeClass('hide');
-            $('label[name="inp_' + texto + '"]').focus();
-            $(this).addClass('hide');
-        });
+    $("body").on("click", 'div[name^="div_"]',function(){
+        var texto = $(this).attr('name').substring(4);
+        $('label[name="inp_' + texto + '"]').removeClass('hide');
+        $('label[name="inp_' + texto + '"]').focus();
+        $(this).addClass('hide');
     });
 
 
-    $('input[name^="muni"], input[name^="dep"], input[name^="pais"]').autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url      : "./ajax_buscarDivipola.php",
-                dataType : "json",
-                type     : 'POST',
-                maxRows  : 12,
-                data: {
-                    'action': $(this.element).attr('name').split("_")[3],
-                    'search': request.term,
-                    'muni'  : $('input[name^="muni"]').val(),
-                    'dep'   : $('input[name^="dep"]').val(),
-                    'pais'  : $('input[name^="pais"]').val()
-                },
-                success: function (data) {
-                    response($.map( data, function( item ) {
-                        return {
-                            label: item.NOMBRE,
-                            id   : item.CODIGO
-                        }
-                    }));
+    /**
+     * Permite crear un nuevo usurio mostrando los campos vacios y
+     * dejando que el usuario registre los datos de la persona que necesita.
+     * las modificiaciones necesarias
+     * Se envia en el codigo dos xx para identificar que es un usuario nuevo.
+     * Cuando se carga el usuario de un radicado ya existente en cambio de las dos xx
+     * se muestra el codigo con el cual se guardo.
+    */
+
+    $("#idnuevo").on("click",function(){
+        var iddata = [{ "CODIGO": 'XX' + INCREMENTAL1,
+                        "NOMBRE":"",
+                        "TELEF":"",
+                        "EMAIL":"",
+                        "CEDULA":"",
+                        "PAIS":"COLOMBIA",
+                        "PAIS_CODIGO":"170",
+                        "DEP":"D.C.",
+                        "DEP_CODIGO":"11",
+                        "MUNI":"BOGOTA",
+                        "MUNI_CODIGO":"1",
+                        "TIPO":$('#tipo_usuario').val(),
+                        "APELLIDO":""}];
+
+        $.post( "./ajax_buscarUsuario.php", {addUser : JSON.stringify(iddata)}).done(
+            function( data ) {
+                $('table').append(data[0]);
+                $('#tableSection').removeClass('hide');
+            }
+        );
+
+        INCREMENTAL1++;
+    });
+
+
+    $("body").on("keyup", 'input[name^="muni"], input[name^="dep"], input[name^="pais"]', function(){
+        if($(this).attr('autocomplete') === undefined){
+            addAutocomple(this);
+        };
+    });
+
+
+    function addAutocomple(element){
+        var accion = $(element).attr('name').split("_")[4];
+        var group  = $(element).attr('name').split("_")[3];
+        $(element).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url      : "./ajax_buscarDivipola.php",
+                    dataType : "json",
+                    type     : 'POST',
+                    maxRows  : 12,
+                    data: {
+                        'action': accion,
+                        'search': request.term,
+                        'muni'  : $('input[name$="'+ group +'_muni"]').val(),
+                        'dep'   : $('input[name$="'+ group +'_dep"]').val(),
+                        'pais'  : $('input[name$="'+ group +'_pais"]').val()
+                    },
+                    success: function (data) {
+                        response($.map( data, function( item ) {
+                            return {
+                                label: item.NOMBRE,
+                                id   : item.CODIGO
+                            }
+                        }));
+                    }
+
+                });
+            },
+            minLength: 2,
+            select   : function(event, ui) {
+                var setempty    = $(this).attr('name').split("_")[4]
+                var namehiddent = $(this).attr('name') + "_codigo";
+                $("input[name=" + namehiddent + "]").val(ui.item.id);
+
+                switch(setempty) {
+                    case 'dep':
+                        $('input[name^="muni"]').val();
+                        break;
+
+                    case 'pais':
+                        $('input[name^="dep"]').val();
+                        $('input[name^="muni"]').val();
+                        break;
+
                 }
-
-            });
-        },
-        minLength: 2,
-        select   : function(event, ui) {
-            var namehiddent = $(this).attr('name') + "_codigo";
-            $("input[name=" + namehiddent + "]").val(ui.item.id)
-        }
-    });
+            }
+        });
+    }
 
 
-    $('#changeArtist').click(function (e) {
-        e.preventDefault();
-        $("#artist").attr("disabled", false);
-    });
-
-
-
-
-
-
-        //Deja en blanco los campos de busqueda al seleccionar
-      //un nuevo usuario.
-      $("#tipo_usuario").on('change',function(){
+    //Deja en blanco los campos de busqueda al seleccionar
+    //un nuevo usuario.
+    $("#tipo_usuario").on('change',function(){
         $('#documento_us, #nombre_us, #telefono_us, #mail_us').val("").parent().removeClass('state-success state-error');
         $('#resBusqueda').empty();
         $('#showAnswer').addClass('hide');
-      });
+    });
 
-      //Eliminar usuarios y borrar el campo de seleccionados
-      //si no existe ningun usuario
-      $("input[name*='usuario']").parent().on("click", function(){
+    //Eliminar usuarios y borrar el campo de seleccionados
+    //si no existe ningun usuario
+    $("body").on("click", ".search-table-icon", function(){
         var codUser = $(this).parent().remove();
         var tds     = $('table').children('tbody').children('tr').length;
         if(tds === 0){
-          $('#tableSection').addClass('hide');
+            $('#tableSection').addClass('hide');
         };
-      });
+    });
 
       function uppFirs(txt){
         return  txt.charAt(0).
@@ -559,47 +606,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       };
 
 
-
-      function passDataToTable(iddata){
-
-        var trTable   = ALLDATA[iddata];
-        var tRow      = $('<tr>');
-        var cotUser   = $('#tipo_usuario').val() +"_"+ trTable.CODIGO;
-
-        tCell = $('<td class="search-table-icon">').html(
-                                  "<a href='javascript:void(0);' rel='tooltip'"
-                                + "data-placement='right' data-original-title='Eliminar Usuario'"
-                                + "class='text-danger'><i class='fa fa-minus'></i>"
-                                + "</a>"
-                                + "<input class='hide' name='usuario[]' value='" + cotUser +"'>")
-                .on("click", function(){
-                  var codUser = $(this).parent().remove();
-                  var tds     = $('table').children('tbody').children('tr').length;
-
-                  $('div[name="cod_'+ iddata +'"]').removeClass('hide');
-                  $('#showAnswer').removeClass('hide');
-
-                  if(tds === 0){
-                    $('#tableSection').addClass('hide');
-                  };
-                });
-
-        tRow.append(tCell);
-
-        tRow.append($('<td>').html(trTable.CEDULA));
-        tRow.append($('<td>').html(trTable.NOMBRE.replace(/\w\S*/g, uppFirs)));
-        tRow.append($('<td>').html(trTable.APELLIDO.replace(/\w\S*/g, uppFirs)));
-        tRow.append($('<td>').html(trTable.TELEF));
-        tRow.append($('<td>').html(trTable.DIRECCION.toLowerCase()));
-        tRow.append($('<td>').html((trTable.EMAIL)? trTable.EMAIL.toLowerCase() : ""));
-        tRow.append($('<td>').html(trTable.MUNI.replace(/\w\S*/g, uppFirs)));
-        tRow.append($('<td>').html(trTable.DEP));
-        tRow.append($('<td>').html(trTable.PAIS.replace(/\w\S*/g, uppFirs)));
-
-        $('table').append(tRow);
-        $('#tableSection').removeClass('hide');
-
-      }
+    /**
+     * Funcion para retornar los usuarios seleccionados y mostrarlos
+     * en la tabla seleccionado con las opciones de modificaciones individuales
+     * @iddata array de los datos ya seleccionados
+     * @returns inserta html procesado a la tabla de usuarios seleccionados
+    */
+    function passDataToTable(iddata){
+        var trTable = [ALLDATA[iddata]];
+        $.post( "./ajax_buscarUsuario.php", {addUser : JSON.stringify(trTable)}).done(
+            function( data ) {
+                $('table').append(data[0]);
+                $('#tableSection').removeClass('hide');
+            }
+        );
+    }
 
       //Modifica respuesta del servidor para presentarla
       //con formato.
