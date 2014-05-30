@@ -213,7 +213,7 @@ if($seriesVistaTodos!=1){
 
 <html>
 <head>
-<title>Tipificar Documento</title>
+<title>..:: Clasificar Documento ::..</title>
 <?php
 include $ruta_raiz."/htmlheader.inc.php";
 ?>
@@ -234,15 +234,15 @@ function regresar(){
 <input type='hidden' name='ind_ProcAnex'        value='<?=$ind_ProcAnex?>'> 
 
 
-    <table border=0 width=70% align="center" class="table table-bordered" cellspacing="0">
+    <table width=70% align="center" class="table table-bordered">
 	  <tr align="center" >
-	    <td height="15" >CUADRO DE CLASIFICACION DOCUMENTAL - Radicado No <?=$nurad?></td>
+	    <th height="15" ><small>CUADRO DE CLASIFICACION DOCUMENTAL - Radicado No <?=$nurad?></small></th>
       </tr>
 	 </table> 
- 	<table width="70%" border="0" cellspacing="1" cellpadding="0" align="center" class="table table-bordered">
+ 	<table width="70%" class="table table-bordered">
       <tr >
-	  <td  >SERIE</td>
-	  <td  >
+	  <td  ><small>SERIE</small></td>
+	  <td  ><label class=select>
         <?php
   
     if(!$tdoc) $tdoc = 0;
@@ -277,11 +277,11 @@ function regresar(){
 	include "$ruta_raiz/include/tx/ComentarioTx.php";
 	print $rsD->GetMenu2("codserie", $codserie, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
  ?>   
-      </td>
+      </label></td>
      </tr>
    <tr>
-     <td  >SUBSERIE</td>
-	 <td  >
+     <td  ><small>SUBSERIE</small></td>
+	 <td ><label class=select>
 	<?php
 	$nomb_varc = "su.sgd_sbrd_codigo";
 	$nomb_varde = "su.sgd_sbrd_descrip";
@@ -305,11 +305,11 @@ function regresar(){
 	print $rsSub->GetMenu2("tsub", $tsub, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
 
 ?> 
-     </td>
+     </select></label></td>
      </tr>
    <tr>
-     <td  >TIPO DE DOCUMENTO</td>
- 	 <td  >
+     <td><small>TIPO DE DOCUMENTO</small></td>
+ 	 <td><label class=select>
 <?php
 	$nomb_varc = "t.sgd_tpr_codigo";
 	$nomb_varde = "t.sgd_tpr_descrip";
@@ -332,22 +332,18 @@ function regresar(){
 	$ruta_raiz = "..";
 	include "$ruta_raiz/include/tx/ComentarioTx.php";
 	print $rsTip->GetMenu2("tdoc", $tdoc, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
-	?>
+	?></label>
     </td>
     </tr>
-   </table>
-<br>
-	<table border=0 width=70% align="center" class="table table-bordered">
 	  <tr align="center">
-		<td width="33%" height="25"  align="center">
-         <center><input name="insertar_registro" type=submit class="botones_funcion" value=" Insertar "></center></TD>
-		 <td width="33%"  height="25">
-	 <center><input name="actualizar" type="button" class="botones_funcion" id="envia23" onClick="procModificar();"value=" Modificar "></center></TD>
-        <td width="33%"  height="25">
-		 <center><input name="Cerrar" type="button" class="botones_funcion" id="envia22" onClick="opener.regresar();window.close();"value="Cerrar"></center></TD>
+		<td align="center" colspan=3><footer>
+        <input name="insertar_registro" type=submit class="btn btn-success btn-xs" value=" Insertar ">
+		    <input name="actualizar" type="button" class="btn btn-primary btn-xs" id="envia23" onClick="procModificar();"value=" Modificar ">
+		    <input name="Cerrar" type="button" class="btn btn-default btn-xs" id="envia22" onClick="opener.regresar();window.close();"value="Cerrar"></footer>
+		   </TD>
 	   </tr>
 	</table>
-	<table width="70%" border="0" cellspacing="1" cellpadding="0" align="center" class="table table-bordered">
+	<table width="70%" class="table table-bordered">
 	  <tr align="center">
 	    <td>
 		<?php

@@ -33,20 +33,18 @@ $isqlC = 'select
 			    and mf.radi_nume_radi = '. $nurad;
      error_reporting(7);
 ?>
-    <br>
+	<TABLE class="table table-bordered"><tr><td>
+   <small>CLASIFICACION DEL RADICADO No. <?=$nurad ?></small></td></tr></table>
 	<br>
-	<TABLE class="borde_tab"><tr><td>
-   CLASIFICACION DEL RADICADO No. <?=$nurad ?></td></tr></table>
-	<br>
-	<table class=borde_tab width="100%" cellpadding="0" cellspacing="5">
-  	<tr class="titulo5" align="center">
-    	<td width="10%"  class="titulos5">CODIGO</td>
-		<td width="20%"  class="titulos5">SERIE</td>
-		<td width="20%"  class="titulos5">SUBSERIE</td>
- 		<td width="20%"  class="titulos5">TIPO DE 
-				DOCUMENTO</td>
-    	<td width="20%"  class="titulos5">DEPENDENCIA</td>
-   	   	<td width="20%"  class="titulos5">ACCION</td>
+	<table class="table table-bordered" width="100%" cellpadding="0" cellspacing="5">
+  	<tr  align="center">
+    	<th width="10%"><small>CODIGO</small></th>
+		<th width="20%"><small>SERIE</small></th>
+		<th width="20%"><small>SUBSERIE</small></th>
+ 		<th width="20%"><small>TIPO DE 
+				DOCUMENTO</small></td>
+    	<th width="20%"><small>DEPENDENCIA</small></th>
+   	   	<th width="20%"><small>ACCION</small></th>
   		</tr>
   	<?php
 	 	$rsC=$db->query($isqlC);
@@ -61,11 +59,11 @@ $isqlC = 'select
 				$codiTRDModi =$codiTRDEli;
 				
 		?> 
-				<td class="listado5"> <font size=-3><?=$coddocu?></font> </td>
-				<td class="listado5"> <font size=-3><?=$dserie?></font> </td>
-				<td class="listado5"> <font size=-3><?=$dsubser?></font> </td>
-				<td class="listado5"> <font size=-3><?=$dtipodo?></font> </td>
-				<td class="listado5"> <font size=-3><?=$ddepend?></font> </td>
+				<td class="listado5"> <small><?=$coddocu?></small> </td>
+				<td class="listado5"> <small><?=$dserie?></small> </td>
+				<td class="listado5"> <small><?=$dsubser?></small> </td>
+				<td class="listado5"> <small><?=$dtipodo?></small> </td>
+				<td class="listado5"> <small><?=$ddepend?></small> </td>
 	 			<td  <? if (!$rsC->fields["CODIGO"]) echo " class='celdaGris ' "; else echo " class='e_tablas ' "; ?>  > <font size=2>
 		<?php 
 	      		echo "<a href=javascript:borrarArchivo('$codiTRDEli','si')><span class='botones_largo'>Borrar</a> ";
@@ -75,7 +73,6 @@ $isqlC = 'select
 		  		} */
 		  ?> 
 		 
-	</font>
 	</td>
 	</tr>
 	<?
