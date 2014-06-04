@@ -21,7 +21,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+ini_set ('error_reporting', E_ALL);
   session_start();
 
   $ruta_raiz = "..";
@@ -333,7 +333,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </section>
 
         <div class="col-lg-12"> </div>
-
+        <br />
         <div class="well">
           <section class="smart-form">
             <div class="row">
@@ -490,7 +490,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     });
 
 
-    $("body").on("keyup", 'input[name^="muni"], input[name^="dep"], input[name^="pais"]', function(){
+    $("body").on("keyup", 'input[name$="muni"], input[name$="dep"], input[name$="pais"]', function(){
         if($(this).attr('autocomplete') === undefined){
             addAutocomple(this);
         };
@@ -533,12 +533,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 switch(setempty) {
                     case 'dep':
-                        $('input[name^="muni"]').val();
+                        $('input[name$="'+ group +'_muni"]').attr('value', '');
                         break;
 
                     case 'pais':
-                        $('input[name^="dep"]').val();
-                        $('input[name^="muni"]').val();
+                        $('input[name$="'+ group +'_muni"]').attr('value', '');
+                        $('input[name$="'+ group +'_dep"]').attr('value', '');
                         break;
 
                 }

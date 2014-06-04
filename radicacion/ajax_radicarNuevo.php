@@ -41,9 +41,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   include("$ruta_raiz/include/tx/usuario.php");
   include("$ruta_raiz/class_control/Municipio.php");
 
-  $hist    = new Historico($db);
-  $usuario = new Usuario($db);
-  $Tx      = new Tx($db);
+  $hist      = new Historico($db);
+  $classusua = new Usuario($db);
+  $Tx        = new Tx($db);
 
   $dependencia   = $_SESSION["dependencia"];
   $codusuario    = $_SESSION["codusuario"];
@@ -144,14 +144,70 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             " ",
                             2);
 
-  /**************************************************/
-  /*********** GRABAR DIRECCIONES *******************/
-  /**************************************************/
+    /**********************************************************************
+     *********** GRABAR DIRECCIONES ***************************************
+     **********************************************************************
+     * Existen tres tipos distintos de datos de direccion
+     *
+     * Descripcion
+     * (0_0_XX_XX2)
+     * primer campo : consecutivo de los usuarios asignados a un radicado
+     *                si es nuevo puede ser 0, o si es el primer registro
+     *                de los usuarios asignados al radicado.
+     *
+     * segundo campo: tipo de usuario {usuario: 0, empresa :2, funcionario: 6}
+     *
+     * tercer campo: codigo con el cual esta grabado en la tabla SGD_DIR_DRECCIONES
+     *
+     * Cuarto campo; el codigo de identificacion del usuario de la tabla origen.
+     *               esta tabla puede ser la de SGD_OEM_CODIGO, SGD_CIU_CODIGO
+     *               o USUARIOS
+     *
+     *
+     * 1) Un usuario nuevo (0_0_XX_XX2)(0_0_XX_XX3)....
+     *    El usuario nuevo se puede identificar cuando en los datos
+     *    de usuario se muestra el siguiente string (0_0_XX_XX2) el
+     *    cual denota que no existe un codigo de almacenamiento unido a un
+     *    radicado que son las dos primeras equis, las siguietnes son el
+     *    codigo que le corresponde al usuario almacenado en la base de datos
+     *    ya sea un usuario, funcionario o entidad y esta representado por
+     *    las ultimas equis. Como se pueden crear mas de un usuario nuevo se
+     *    genera un cosecutivo que es el ultimo digito
+     *    ejemplo: (0_0_XX_XX2) las dos xx significan que no esta asociado
+     *              a ningun radicado, las ultimas muestran que es un
+     *              usuario nuevo y el 2 que es el segundo registro generado
 
-  foreach ($usuarios as $codUsuario) {
-    list($sgdTrd, $codigo) = split('_', $codUsuario);
-    $usuario->guardarUsuarioRadicado($nurad, $codigo, $sgdTrd, $modificar);
-  }
+     * 2) Un usuario existente en el sistema, NO asociado a un radicado (0_0_XX_12)
+     *    (0_0_XX_16)...
+     *
+     *
+     * 3) Un usuario existen (0_0_123_17) (0_0_327_123)
+     *    Al momento de genear un radicado podemos traer usuario del sistema y a su ves
+     *    cambiar la informacion que hace parte de este.
+     */
 
-  echo json_encode($data);
-?>
+    //Datos de usuarios
+    foreach ($usuarios as $clave => $valor) {
+        list($consecutivo, $sgdTrd, $id_sgd_dir_dre , $id_table) = explode('_', $valor);
+        $usuarios[$clave] = array(
+            "cedula"         => $_POST["$valor.cedula"],
+            "nombre"         => $_POST[$valor."_".nombre],
+            "apellido"       => $_POST[$valor."_".apellido],
+            "telef"          => $_POST[$valor."_".telefono],
+            "direccion"      => $_POST[$valor."_".direccion],
+            "email"          => $_POST[$valor."_".email],
+            "muni"           => $_POST[$valor."_".muni],
+            "muni_tmp"       => $_POST[$valor."_".muni_codigo],
+            "dep"            => $_POST[$valor."_".dep],
+            "dpto_tmp"       => $_POST[$valor."_".dep_codigo],
+            "pais"           => $_POST[$valor."_".pais],
+            "idpais"         => $_POST[$valor."_".pais_codigo],
+            "consecutivo"    => $consecutivo,
+            "sgdTrd"         => $sgdTrd,
+            "id_sgd_dir_dre" => $id_sgd_dir_dre,
+            "id_table"       => $id_table
+        );
+        $classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad);
+    }
+
+echo json_encode($data);

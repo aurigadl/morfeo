@@ -1,4 +1,26 @@
 <?php
+/**
+ * @author Jairo Losada   <jlosada@gmail.com>
+ * @author Cesar Gonzalez <aurigadl@gmail.com>
+ * @license  GNU AFFERO GENERAL PUBLIC LICENSE
+ * @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 class Usuario {
     /*** Attributes:
@@ -13,129 +35,114 @@ class Usuario {
     }
 
     /**
-     *@param  array $borrar usuarios del radicado
+     * borrar usuario
+     *@param  array con el id_usuario y el tipo de usuario
      *@return bool
      */
-    public function borrarUsuarios(){
+    function borrarUsuarios($datos){
 
     }
 
-
     /**
-     *@param  int $nurad Numero del radicado
-     *@param  int $codigo del usuario
-     *@param  int $sgdTrd tipo de usuario Funcionario, Usuairo, Entidad
-     *@param  string  $modifica si puede existir el o no el Usuario con este radicado
-     *@param  int $idCodigo codigo de identificacion en la tabla sgd_dir_direcciones
+     * crear usuario
+     *@param  array son necesarios el id_usuario, el tipo de usuario y datos
      *@return bool
      */
-    public function guardarUsuarioRadicado($nurad, $codigo, $sgdTrd, $modificar, $idCodigo){
-
-        $filter = array('RADI_NUME_RADI','SGD_TRD_CODIGO');
-
-        switch ( $sgdTrd ) {
+    function crearUsuario($datos){
+        switch ( $datos['sgdTrd'] ){
             // Usuario ....................................................................
             case 0:
+                $record = array();
 
-                $sgd_ciu_codigo = $codigo;
-                $filter[] = 'SGD_CIU_CODIGO';
+                $record['MUNI_CODI']         = $muni_tmp;
+                $record['DPTO_CODI']         = $dpto_tmp;
+                $record['ID_PAIS']           = $idpais;
+                $record['ID_CONT']           = $idcont;
 
-                $isql = "SELECT
-                   s.MUNI_CODI
-                  ,s.DPTO_CODI
-                  ,s.ID_CONT
-                  ,s.ID_PAIS
-                  ,s.SGD_CIU_NOMBRE    as nombre
-                  ,s.SGD_CIU_DIRECCION as direccion
-                  ,s.SGD_CIU_TELEFONO  as telef
-                  ,s.SGD_CIU_EMAIL     as email
-                  ,s.SGD_CIU_CEDULA    as cedula
-                  ,CONCAT(s.SGD_CIU_APELL1,' ', s.SGD_CIU_APELL2) as apellido
-                FROM
-                  SGD_CIU_CIUDADANO s
-                WHERE
-                  s.SGD_CIU_CODIGO = $codigo
-              ";
+                $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
+                    $record,
+                    $filter,
+                    $autoquote = true);
+
+                if($insertSQL){
+                    $this->result[] = $codigo;
+                    return true;
+                }
+
+                INSERT INTO sgd_ciu_ciudadano(
+                tdid_codi, sgd_ciu_codigo, sgd_ciu_nombre, sgd_ciu_direccion,
+                sgd_ciu_apell1, sgd_ciu_apell2, sgd_ciu_telefono, sgd_ciu_email,
+                muni_codi, dpto_codi, sgd_ciu_cedula, id_cont, id_pais)
+        VALUES (?, ?, ?, ?,
+        ?, ?, ?, ?,
+        ?, ?, ?, ?, ?);
                 break;
 
             // Empresas ....................................................................
             case 2:
+                INSERT INTO sgd_oem_oempresas(
+                sgd_oem_codigo, tdid_codi, sgd_oem_oempresa, sgd_oem_rep_legal,
+                sgd_oem_nit, sgd_oem_sigla, muni_codi, dpto_codi, sgd_oem_direccion,
+                sgd_oem_telefono, id_cont, id_pais, sgd_oem_email)
+    VALUES (?, ?, ?, ?,
+            ?, ?, ?, ?, ?,
+            ?, ?, ?, ?);
 
-                $sgd_oem_codigo = $codigo;
-                $filter[] = 'SGD_OEM_CODIGO';
 
-                $isql = "SELECT
-                  s.MUNI_CODI
-                  ,s.DPTO_CODI
-                  ,s.ID_CONT
-                  ,s.ID_PAIS
-                  ,s.sgd_oem_oempresa  AS nombre
-                  ,s.sgd_oem_direccion AS direccion
-                  ,s.sgd_oem_telefono  AS telef
-                  ,s.sgd_oem_email     AS email
-                  ,s.sgd_oem_nit       AS cedula
-                  ,CONCAT(s.sgd_oem_sigla, ' ' ,s.SGD_OEM_REP_LEGAL) AS apellido
-                FROM
-                  SGD_OEM_OEMPRESAS s
-                WHERE
-                  s.SGD_OEM_CODIGO = $codigo
-              ";
                 break;
 
             // Funcionario .................................................................
             case 6:
 
-                $sgd_fun_codigo = $codigo;
-                $filter[] = 'SGD_DOC_FUN';
-
-                $isql = "SELECT
-                  s.ID_PAIS
-                  s.ID_CONT
-                  m.MUNI_CODI
-                  d.DPTO_CODI
-                  ,s.usua_nomb    AS nombre
-                  ,dp.depe_nomb   AS direccion
-                  ,s.usua_email   AS email
-                  ,s.usua_doc     AS cedula
-                  ,p.NOMBRE_PAIS  AS pais
-                  ,s.usua_login   AS apellido
-                  ,CONCAT(s.usu_telefono1,' / ', s.usua_ext) AS telef
-                FROM
-                  USUARIO s
-                  ,DEPARTAMENTO d
-                  ,MUNICIPIO m
-                  ,SGD_DEF_PAISES p
-                  ,DEPENDENCIA dp
-                WHERE
-                  s.id             = $codigo
-                  and d.dpto_codi  = dp.dpto_codi
-                  and m.muni_codi  = dp.muni_codi
-                  and m.dpto_codi  = d.dpto_codi
-                  and dp.depe_codi = s.depe_codi
-                  and p.id_pais    = s.id_pais
-                  and p.id_cont    = s.id_cont";
                 break;
+        }
+    }
 
+    /**
+     * actualizar usuario
+     *@param  array son necesarios el id_usuario, el tipo de usuario y datos
+     *@return bool
+     */
+    function actulizarUsuario($datos){
+
+    }
+
+    /**
+     * consecutivo _ sgdTrd _ id_sgd_dir_dre _ id_table
+     * 1) Un usuario nuevo (0_0_XX_XX)....
+     * 2) Un usuario existente en el sistema, NO asociado a un radicado (0_0_XX_12)
+     * 3) Un usuario existen (0_0_123_17) (0_0_327_123)
+     *
+     * @param  array parametros del usuario a crear
+     * @return bool
+     *
+     */
+    public function guardarUsuarioRadicado($user, $nurad){
+
+        $filter       = array('RADI_NUME_RADI','SGD_TRD_CODIGO');
+        $idUser       = intval($user['id_table']); //Id del usuario
+        $idInRadicado = intval($user['id_sgd_dir_dre']);//Id usuario registrado en radicado
+
+        //Modificar un usuario
+        if(!empty($idUser)){
+            $this->actulizarUsuario($user);
+        //Crear un usuario
+        }else{
+            $this->crearUsuario($user);
         }
 
-        $rs = $this->db->query($isql);
-
-        $idcont          = $rs->fields['ID_CONT'];
-        $idpais          = $rs->fields['ID_PAIS'];
-        $dpto_tmp        = $rs->fields['DPTO_CODI'];
-        $muni_tmp        = $rs->fields['MUNI_CODI'];
-        $grbNombresUs    = $rs->fields['NOMBRE']." ".$rs->fields['APELLIDO'];
-        $direccion_us    = $rs->fields['DIRECCION'];
-        $mail_us         = $rs->fields['EMAIL'];
-        $cc_documento_us = $rs->fields['CEDULA'];
-        $telefono_us     = $rs->fields['TELEF'];
-
-        if(!empty($modificar)){
+        //agregar usuario al radicado
+        if(empty($idUser) and !empty($idInRadicado)){
             $nextval = $this->db->nextId("sec_dir_direcciones");
             if ($nextval==-1){
                 $this->result[] = array( "error"  => 'No se encontr&oacute; la secuencia para grabar el usuario seleccionado');
                 return false;
             }
+        }
+
+        //Modificar usuario ya registrado
+        if(!empty($idUser) and !empty($idInRadicado)){
+            $nextval = $user['id_sgd_dir_dre'];
         }
 
         $record = array();
@@ -230,7 +237,7 @@ class Usuario {
              * si esta vacio se grabara como nuevo.
             */
 
-            if(is_int($result['CODIGO'])){
+            if(!is_int($result['CODIGO']) && empty($codigo)){
                 $codigo = 'XX';
                 $hidediv = "hide";
                 $hideinp = "";
@@ -262,35 +269,35 @@ class Usuario {
                    </div>
                   <label name="inp_'.$idtx.'_ced" class="input '.$hideinp.'">
                     <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="cedula'.$idtx.'_ced" value="'.$result["CEDULA"].'">
+                    <input type="text" name="'.$idtx.'_cedula" value="'.$result["CEDULA"].'">
                   </label>
                 </td>';
             }else{
                 $html .= '<td>'.$result["CEDULA"].'</td>';
             }
 
-            if(empty($result["NOMBRE"])){
-                $html .= '<td>
-                  <div name="div_'.$idtx.'_nomb" class="'.$hidediv.'">'.$result["NOMBRE"].'
-                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-                   </div>
-                  <label name="inp_'.$idtx.'_nomb" class="input '.$hideinp.'">
-                    <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="nombre'.$idtx.'_nomb" value="'.$result["NOMBRE"].'">
-                  </label>
-                </td>';
-                $html .= '<td>
-                  <div name="div_'.$idtx.'_apell" class="hide">
-                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-                   </div>
-                  <label name="inp_'.$idtx.'_apell" class="input '.$hideinp.'">
-                    <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="apllido'.$idtx.'_apell" value="">
-                  </label>
-                </td>';
-            }else{
-                $html .= '<td colspan="2">'.$result["NOMBRE"].'</td>';
-            }
+
+            $html .= '<td>
+              <div name="div_'.$idtx.'_nomb" class="'.$hidediv.'">'.$result["NOMBRE"].'
+                <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
+               </div>
+              <label name="inp_'.$idtx.'_nomb" class="input '.$hideinp.'">
+                <i class="icon-append fa fa-check"></i>
+                <input type="text" name="'.$idtx.'_nombre" value="'.$result["NOMBRE"].'">
+              </label>
+            </td>';
+
+
+            $html .= '<td>
+              <div name="div_'.$idtx.'_apell" class="hide">'.$result["APELLIDO"].'
+                <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
+               </div>
+              <label name="inp_'.$idtx.'_apell" class="input '.$hideinp.'">
+                <i class="icon-append fa fa-check"></i>
+                <input type="text" name="'.$idtx.'_apellido" value="'.$result["APELLIDO"].'">
+              </label>
+            </td>';
+
 
             $html .= '<td>
                   <div name="div_'.$idtx.'_tel" class="'.$hidediv.'">'
@@ -299,9 +306,10 @@ class Usuario {
                    </div>
                   <label name="inp_'.$idtx.'_tel" class="input '.$hideinp.'">
                     <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="telef'.$idtx.'_tel" value="'.$result["TELEF"].'">
+                    <input type="text" name="'.$idtx.'_telefono" value="'.$result["TELEF"].'">
                   </label>
                 </td>';
+
 
             $html .= '<td>
                   <div name="div_'.$idtx.'_dire" class="'.$hidediv.'">'.$result["DIRECCION"].'
@@ -309,9 +317,10 @@ class Usuario {
                   </div>
                   <label name="inp_'.$idtx.'_dire" class="input '.$hideinp.'">
                     <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="direc'.$idtx.'_dire" value="'.$result["DIRECCION"].'">
+                    <input type="text" name="'.$idtx.'_direccion" value="'.$result["DIRECCION"].'">
                   </label>
                 </td>';
+
 
             $html .= '<td>
                   <div name="div_'.$idtx.'_email" class="'.$hidediv.'">'
@@ -320,9 +329,10 @@ class Usuario {
                    </div>
                   <label name="inp_'.$idtx.'_email" class="input '.$hideinp.'">
                     <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="email'.$idtx.'_email" value="'.$result["EMAIL"].'">
+                    <input type="text" name="'.$idtx.'_email" value="'.$result["EMAIL"].'">
                   </label>
                 </td>';
+
 
             $html .= '<td>
                   <div name="div_'.$idtx.'_muni" class="'.$hidediv.'">'
@@ -331,10 +341,11 @@ class Usuario {
                   </div>
                   <label name="inp_'.$idtx.'_muni" class="input '.$hideinp.'">
                     <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="muni'.$idtx.'_muni" value="'.$result["MUNI"].'">
-                    <input type="hidden" name="muni'.$idtx.'_muni_codigo" value="'.$result["MUNI_CODIGO"].'">
+                    <input type="text" name="'.$idtx.'_muni" value="'.$result["MUNI"].'">
+                    <input type="hidden" name="'.$idtx.'_muni_codigo" value="'.$result["MUNI_CODIGO"].'">
                   </label>
                 </td>';
+
 
             $html .= '<td>
                   <div name="div_'.$idtx.'_dep" class="'.$hidediv.'">'
@@ -343,10 +354,11 @@ class Usuario {
                   </div>
                   <label name="inp_'.$idtx.'_dep" class="input '.$hideinp.'">
                     <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="dep'.$idtx.'_dep" value="'.$result["DEP"].'">
-                    <input type="hidden" name="dep'.$idtx.'_dep_codigo" value="'.$result["DEP_CODIGO"].'">
+                    <input type="text" name="'.$idtx.'_dep" value="'.$result["DEP"].'">
+                    <input type="hidden" name="'.$idtx.'_dep_codigo" value="'.$result["DEP_CODIGO"].'">
                   </label>
                 </td>';
+
 
             $html .= '<td>
                   <div name="div_'.$idtx.'_pais" class="'.$hidediv.'">'
@@ -355,15 +367,14 @@ class Usuario {
                   </div>
                   <label name="inp_'.$idtx.'_pais" class="input '.$hideinp.'">
                     <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="pais'.$idtx.'_pais" value="'.$result["PAIS"].'">
-                    <input type="hidden" name="pais'.$idtx.'_pais_codigo" value="'.$result["PAIS_CODIGO"].'">
+                    <input type="text" name="'.$idtx.'_pais" value="'.$result["PAIS"].'">
+                    <input type="hidden" name="'.$idtx.'_pais_codigo" value="'.$result["PAIS_CODIGO"].'">
                   </label>
                 </td>';
 
             return '<tr>'.$html.'</tr>';
         }
     }
-
 
 
 
