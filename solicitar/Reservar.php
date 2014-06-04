@@ -43,6 +43,7 @@ $tip3img =$_SESSION["tip3img"];   $verrad = "";
   include_once "$ruta_raiz/include/db/ConnectionHandler.php";
   $db = new ConnectionHandler($ruta_raiz);	 
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+  //$db->conn->debug = true;
 
 
 
@@ -118,31 +119,39 @@ $depe_nomb = $_SESSION["depe_nomb"];
    //if (!$nomRad) $nomRad=$_POST["radicado"];  
    if(strlen($nomRad)>17) { $nomRad=str_replace(",","<br>",$nomRad); }        
    $sPRESTAMOErr="no presentar";  //para que solo se haga visible esta funcion ?>
-         <table  class="table table-bordered" id=tb_general align="left">
-            <tr>
-         	  <th colspan="2" >ACCION REQUERIDA COMPLETADA</th>
-            </tr>
-            <tr>
-         	  <td align="right"  >ACCION REQUERIDA:</td>
-          	  <td  width="65%"  class="listado2_no_identa"><?=$nombTx?></td>
-            </tr>
-            <tr>
-         	  <td align="right"  >RADICADOS INVOLUCRADOS:</td>
-         	  <td  width="65%"  class="listado2_no_identa"><?=$nomRad?></td>
-            </tr>
-            <tr>
-         	  <td align="right"  >FECHA:</td>
-           	  <td  width="65%"  class="listado2_no_identa"><?=$fecha?></td>
-            </tr>	  
-            <tr>
-         	  <td align="right"  >USUARIO ORIGEN:</td>
-           	  <td  width="65%"  class="listado2_no_identa"><?=$usua_nomb?></td>
-            </tr>
-            <tr>
-         	  <td align="right"  >DEPENDENCIA ORIGEN:</td>
-          	  <td  width="65%"  class="listado2_no_identa"><?=$depe_nomb?></td>
-            </tr>	
-         </table>
+		<table  class="table table-bordered" id=tb_general align="left">
+				<tr>
+				<th colspan="2" ><div class="alert alert-success fade in">
+					<button class="close" data-dismiss="alert"> × </button>
+					<i class="fa-fw fa fa-check"></i>
+					<strong>Accion Realizada</strong>
+					</div></th>
+				</tr>
+				<tr>
+				<td align="right"  >ACCION REQUERIDA:</td>
+					<td  width="65%"  class="listado2_no_identa"><?=$nombTx?></td>
+				</tr>
+				<tr>
+				<td align="right"  >RADICADOS INVOLUCRADOS:</td>
+				<td  width="65%"  class="listado2_no_identa"><?=$nomRad?></td>
+				</tr>
+				<tr>
+				<td align="right"  >FECHA:</td>
+					<td  width="65%"  class="listado2_no_identa"><?=$fecha?></td>
+				</tr>	  
+				<tr>
+				<td align="right"  >FECHA VENCIMIENTO:</td>
+					<td  width="65%"  class="listado2_no_identa"><?=$_GET["fechaVencimiento"]?></td>
+				</tr>	              
+				<tr>
+				<td align="right"  >USUARIO ORIGEN:</td>
+					<td  width="65%"  class="listado2_no_identa"><?=$usua_nomb?></td>
+				</tr>
+				<tr>
+				<td align="right"  >DEPENDENCIA ORIGEN:</td>
+					<td  width="65%"  class="listado2_no_identa"><?=$depe_nomb?></td>
+				</tr>	
+		</table>
 <?
 }
 //-------------------------------

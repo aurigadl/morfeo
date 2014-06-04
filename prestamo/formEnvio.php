@@ -222,16 +222,9 @@ $mensaje_error = false;
 	<link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
 	<!-- Bootstrap core CSS -->
 	<?php include_once "../htmlheader.inc.php"; ?>	 
-	<script src="<?=$ruta_raiz?>/js/popcalendar.js"></script>
-	<div id="spiffycalendar" class="text"></div>		 		 
-	<link rel="stylesheet" type="text/css" href="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.css">		 
 </head>
-<script language="JavaScript" src="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.js"></script>
-<script language="javascript">       
-setRutaRaiz ('<?=$ruta_raiz?>'); // Para el calendario
-</script>
 <body class="smart-form">
-<table class="table table-bordered">
+<table class="table table-bordered smart-form">
 	<tr>
 		<td width=100%>
 			<form action='<?=$ruta_raiz?>/solicitar/Reservar.php?<?=$encabezado?>' method=post name="rta" class="smart-form" >
@@ -268,7 +261,7 @@ setRutaRaiz ('<?=$ruta_raiz?>'); // Para el calendario
 	<tr bgcolor="White">
 	<td width="100" align="right" ><small>Estado:</small></td>
 		<td align="left"><label class=select><select class="select" name="s_PRES_ESTADO" onChange="javascript: ver(); ">
-<?    $query="select PARAM_CODI, PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' and PARAM_CODI in (2,5)"; 
+<?    $query="select PARAM_CODI, PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' and PARAM_CODI in (2,5) ORDER BY PARAM_CODI"; 
 	$rs = $db->conn->query($query);
 	while($rs && !$rs->EOF) {
 			$idEstado =$rs->fields("PARAM_CODI");
@@ -281,12 +274,15 @@ setRutaRaiz ('<?=$ruta_raiz?>'); // Para el calendario
 	</select></td>
 	</tr>						  									  					  
 		<tr bgcolor="White" id="fecha">
-			<td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Fecha de Vencimiento:</td>	 
-	<td align="left"><script language="javascript">
-	var dateAvailable1 = new ctlSpiffyCalendarBox("dateAvailable1", "rta","fechaVencimiento","btnDate1","<?=$fechaVencimiento?>",scBTNMODE_CUSTOMBLUE);
-	dateAvailable1.writeControl();
-	dateAvailable1.dateFormat="yyyy-MM-dd";
-		</script></td>
+			<td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Fecha de Vencimiento(aaaa-mm-dd)</td>	 
+	<td align="left">
+		<section class="col col-3">
+			<label class="input">
+			<i class="icon-append fa fa-calendar"></i>
+			<input id="startdate" type="text" placeholder="Seleccione la Fecha" name="fechaVencimiento">
+			</label>
+		</section>
+		 </td>
 			</tr>
 	<script>
 		// Oculta o hace visible el campo de la fecha de vencimiento dependiendo del estado seleccionado por el usuario
@@ -358,14 +354,23 @@ setRutaRaiz ('<?=$ruta_raiz?>'); // Para el calendario
 	</tr>
 	</table>
  <script>
-    // Envia el formulario para que sea ordenado segun el criterio indicado
-    function ordenar(i) {
-       document.rta.action="formEnvio.php";
-       document.rta.FormPedidos_Sorting.value=i;
-       document.rta.FormPedidos_Sorted.value=<?=$iSort?>;
-	   document.rta.ordenar.value=1;	  	  
-	   document.rta.submit();
-    } 
+		// START AND FINISH DATE
+		$('#startdate').datepicker({
+			dateFormat : 'dd.mm.yy',
+			prevText : '<i class="fa fa-chevron-left"></i>',
+			nextText : '<i class="fa fa-chevron-right"></i>',
+			onSelect : function(selectedDate) {
+				$('#startdate').datepicker('option', 'minDate', selectedDate);
+			}
+		});
+// Envia el formulario para que sea ordenado segun el criterio indicado
+	function ordenar(i) {
+		document.rta.action="formEnvio.php";
+		document.rta.FormPedidos_Sorting.value=i;
+		document.rta.FormPedidos_Sorted.value=<?=$iSort?>;
+		document.rta.ordenar.value=1;	  	  
+		document.rta.submit();
+	} 
     // Marca todas las casillas si la del titulo es marcada
 	function seleccionarRta() {
 	   valor=document.rta.rta_.checked;
@@ -380,8 +385,7 @@ setRutaRaiz ('<?=$ruta_raiz?>'); // Para el calendario
        if(t.setSelectionRange){
           t.setSelectionRange(start,end);
           t.focus();
-       } 
-	   else { alert('Su browser no soporta las funciones Javascript de esta p�gina.'); }
+     }else{ alert('Su browser no soporta las funciones Javascript de esta pagina.'); }
     } 	
     // Verifica el m�ximo n�mero de caracteres permitido 
     function valMaxChars(maxchars) {
@@ -420,8 +424,7 @@ setRutaRaiz ('<?=$ruta_raiz?>'); // Para el calendario
         document.rta.action='<?=$sFileName?>?';		
 		    document.rta.submit(); 
 		 }
-	   }
-	   else{ 
+	   }else{ 
 	      alert("Atencion: El numero de Caracteres minimo en la Observacion es de 6. (Digito :"+numCaracteres+")"); 
 		  return 0;
 	   }	 	     
@@ -429,6 +432,6 @@ setRutaRaiz ('<?=$ruta_raiz?>'); // Para el calendario
 	// Marca todas las cajas de seleccion arrancando la p�gina
     document.rta.rta_.checked=true;
  	seleccionarRta();
-</script>
-   </body>
+  </script>
+ </body>
 </html>
