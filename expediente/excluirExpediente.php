@@ -98,7 +98,7 @@ if( isset( $_POST['expSeleccionados'] ) && $_POST['expSeleccionados'] != "" )
         }
         ?>
         <script language="JavaScript">
-          opener.cargarPagina('expediente/lista_expedientes.php','tabs-d');
+          opener.cargarPagina('expediente/lista_expedientes.php','tabs-a');
           window.close();
         </script>
         <?php
@@ -240,7 +240,7 @@ function confirmaExcluir() {
                       </center>
                       </td>
                     <td width="50%" height="30" colspan="2" class="listado2"><center>
-                      <input class="botones" type="button" name="Cancelar" id="Cancelar" value="CANCELAR" onClick="opener.cargarPagina('expediente/lista_expedientes.php','tabs-d'); window.close();"></center>  </td>
+                      <input class="botones" type="button" name="Cancelar" id="Cancelar" value="CANCELAR" onClick="opener.cargarPagina('expediente/lista_expedientes.php','tabs-a'); window.close();"></center>  </td>
                     </tr>
                 </table>
              </div>

@@ -26,7 +26,7 @@ ini_set("display_errors",1);
 				$SExps .= "</table>";
 				}
 			$numRadicado = $value["NUM_RADICADO"];
-			$fechaRad = "<a href='verradicado.php?verrad=$numRadicado&".session_name()."=".session_id()."&nomcarpeta=".$nomcarpeta."#tabs-d'>".$value["FECHA_RADICADO"] . "</a>";
+			$fechaRad = "<a href='verradicado.php?verrad=$numRadicado&".session_name()."=".session_id()."&nomcarpeta=".$nomcarpeta."#tabs-a'>".$value["FECHA_RADICADO"] . "</a>";
 			echo "<TABLE  WIDTH='1050'><TR><TD WIDTH=30><i class='icon-leaf'></i> </TD>
 			<TD width=140 align=left>";
 			if($valueAnexos["PATH_RADICADO"]) echo "<a href='$ruta_raiz/".$value["PATH_RADICADO"]."' target='".date("ymdhis")."'>";

@@ -318,7 +318,7 @@ $( document ).ready(function(){
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
         window.location.href = ui.newTab.find('a.ui-tabs-anchor').attr('href');
         if($(ui.newTab).attr('aria-controls')=='tabs-b') cargarPagina('./ver_historico.php','tabs-b');
-        if($(ui.newTab).attr('aria-controls')=='tabs-d') cargarPagina('./expediente/lista_expedientes.php','tabs-a');
+        if($(ui.newTab).attr('aria-controls')=='tabs-a') cargarPagina('./expediente/lista_expedientes.php','tabs-a');
         console.log(window.location.href);
     } );
 	
