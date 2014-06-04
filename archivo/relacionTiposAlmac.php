@@ -2,7 +2,8 @@
 session_start();
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
-import_request_variables("gp", "");
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
 if (!$ruta_raiz) $ruta_raiz = "..";
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
@@ -14,11 +15,15 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$depen
 ?>
 <html>
 <head>
-<title>RELACI&Oacute;N ENTRE TIPOS DE ALMACENAMIENTO</title>
-<link rel="stylesheet" href="../estilos/orfeo.css">
-</head>
-<body bgcolor="#FFFFFF">
-<form name="relacionTiposAlmac" action="<?=$encabezadol?>" method="POST" >
+
+  <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "../htmlheader.inc.php"; ?>
+  </HEAD>
+<body >
+<form name="relacionTiposAlmac" action="<?=$encabezadol?>" method="POST" CLASS="smart-form">
 <?
 if($grabar){
 if($cant1=="" and $ver==1)echo "Falta la cantidad para el item 1 "; 
@@ -104,14 +109,14 @@ if($t==0)echo "No se pudo ingresar el registro";
 else echo "Los registros fueron ingresados";
 }
 ?>
-<table border="0" width="90%" cellpadding="0" class="borde_tab">
+<table class="table table-bordered">
 <tr>
-  <td height="35" colspan="4" class="titulos2">
+  <td height="35" colspan="4" >
   <center>RELACI&Oacute;N ENTRE TIPOS DE ALMACENAMIENTO</center>
   </td>
 </tr>
 <tr>
-<td class="titulos5" colspan="5" >
+<td colspan="5" >
 <?
 $sq="select sgd_eit_nombre from sgd_eit_items where sgd_eit_cod_padre='$codp'";
 $rt=$db->conn->Execute($sq);
@@ -127,66 +132,66 @@ $rsi=$db->conn->Execute($sqli);
 print $rsi->GetMenu2('codig',$codig,true,false,"","class=select");
 ?>
 </tr><tr>
-<td class="titulos2" align="center">&nbsp;</td>
-<td class="titulos2" align="center">Hijo</td>
-<td class="titulos2" align="center">Sigla</td>
-<td class="titulos2" align="center">Cantidad</td>
+<td  align="center">&nbsp;</td>
+<td  align="center">Hijo</td>
+<td  align="center">Sigla</td>
+<td  align="center">Cantidad</td>
 </tr>
 <?
 if ($ver=='1')$st="checked";
 ?>
 <tr>
-<td class="titulos5" align="center"><input name="ver" type="checkbox" class="select" value="1" <?=$st?>></td>
-<td class="titulos5" align="center"><input type="text" name="nomb1" value=<?=$nomb1?>></td>
-<td class="titulos5" align="center"><input type="text" name="sig1" value=<?=$sig1?>></td>
-<td class="titulos5" align="center"><input type="text" name="cant1" value=<?=$cant1?>></td>
+<td align="center"><input name="ver" type="checkbox" class="select" value="1" <?=$st?>></td>
+<td align="center"><input type="text" name="nomb1" value=<?=$nomb1?>></td>
+<td align="center"><input type="text" name="sig1" value=<?=$sig1?>></td>
+<td align="center"><input type="text" name="cant1" value=<?=$cant1?>></td>
 </tr>
 <?
 if ($ver2=='2')$st2="checked";
 ?>
 <tr>
-<td class="titulos5" align="center"><input name="ver2" type="checkbox" class="select" value="2" <?=$st2?>></td>
-<td class="titulos5" align="center"><input type="text" name="nomb2" value=<?=$nomb2?>></td>
-<td class="titulos5" align="center"><input type="text" name="sig2" value=<?=$sig2?>></td>
-<td class="titulos5" align="center"><input type="text" name="cant2" value=<?=$cant2?>></td>
+<td align="center"><input name="ver2" type="checkbox" class="select" value="2" <?=$st2?>></td>
+<td align="center"><input type="text" name="nomb2" value=<?=$nomb2?>></td>
+<td align="center"><input type="text" name="sig2" value=<?=$sig2?>></td>
+<td align="center"><input type="text" name="cant2" value=<?=$cant2?>></td>
 </tr>
 <?
 if ($ver3=='3')$st3="checked";
 ?>
 <tr>
-<td class="titulos5" align="center"><input name="ver3" type="checkbox" class="select" value="3" <?=$st3?>></td>
-<td class="titulos5" align="center"><input type="text" name="nomb3" value=<?=$nomb3?>></td>
-<td class="titulos5" align="center"><input type="text" name="sig3" value=<?=$sig3?>></td>
-<td class="titulos5" align="center"><input type="text" name="cant3" value=<?=$cant3?>></td>
+<td align="center"><input name="ver3" type="checkbox" class="select" value="3" <?=$st3?>></td>
+<td align="center"><input type="text" name="nomb3" value=<?=$nomb3?>></td>
+<td align="center"><input type="text" name="sig3" value=<?=$sig3?>></td>
+<td align="center"><input type="text" name="cant3" value=<?=$cant3?>></td>
 </tr>
 <?
 if ($ver4=='4')$st4="checked";
 ?>
 <tr>
-<td class="titulos5" align="center"><input name="ver4" type="checkbox" class="select" value="4" <?=$st4?>></td>
-<td class="titulos5" align="center"><input type="text" name="nomb4" value=<?=$nomb4?>></td>
-<td class="titulos5" align="center"><input type="text" name="sig4" value=<?=$sig4?>></td>
-<td class="titulos5" align="center"><input type="text" name="cant4" value=<?=$cant4?>></td>
+<td align="center"><input name="ver4" type="checkbox" class="select" value="4" <?=$st4?>></td>
+<td align="center"><input type="text" name="nomb4" value=<?=$nomb4?>></td>
+<td align="center"><input type="text" name="sig4" value=<?=$sig4?>></td>
+<td align="center"><input type="text" name="cant4" value=<?=$cant4?>></td>
 </tr>
 <?
 if ($ver5=='5')$st5="checked";
 ?>
 <tr>
-<td class="titulos5" align="center"><input name="ver5" type="checkbox" class="select" value="5" <?=$st5?>></td>
-<td class="titulos5" align="center"><input type="text" name="nomb5" value=<?=$nomb5?>></td>
-<td class="titulos5" align="center"><input type="text" name="sig5" value=<?=$sig5?>></td>
-<td class="titulos5" align="center"><input type="text" name="cant5" value=<?=$cant5?>></td>
+<td align="center"><input name="ver5" type="checkbox" class="select" value="5" <?=$st5?>></td>
+<td align="center"><input type="text" name="nomb5" value=<?=$nomb5?>></td>
+<td align="center"><input type="text" name="sig5" value=<?=$sig5?>></td>
+<td align="center"><input type="text" name="cant5" value=<?=$cant5?>></td>
 </tr>
 <?
 if ($ver6=='6')$st6="checked";
 ?>
 <tr>
-<td class="titulos5" align="center"><input name="ver6" type="checkbox" class="select" value="6" <?=$st6?>></td>
-<td class="titulos5" align="center"><input type="text" name="nomb6" value=<?=$nomb6?>></td>
-<td class="titulos5" align="center"><input type="text" name="sig6" value=<?=$sig6?>></td>
-<td class="titulos5" align="center"><input type="text" name="cant6" value=<?=$cant6?>></td>
+<td align="center"><input name="ver6" type="checkbox" class="select" value="6" <?=$st6?>></td>
+<td align="center"><input type="text" name="nomb6" value=<?=$nomb6?>></td>
+<td align="center"><input type="text" name="sig6" value=<?=$sig6?>></td>
+<td align="center"><input type="text" name="cant6" value=<?=$cant6?>></td>
 </tr>
-<tr><td class="titulos2" align="center" colspan="4"> <input type="submit" name="grabar" class="botones" value="GRABAR" >
+<tr><td  align="center" colspan="4"> <input type="submit" name="grabar" class="botones" value="GRABAR" >
     <input type="button" name="cerrar" class="botones" value="SALIR" onClick="window.close();opener.regresar();"></td></tr>
 </table>
 

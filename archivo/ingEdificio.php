@@ -2,14 +2,20 @@
 session_start();
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
-import_request_variables("gp", "");
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
+if (!$ruta_raiz) $ruta_raiz = "..";
 ?>
 <html>
 <head>
-<title>INGRESO DE EDIFICIOSSS</title>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+
+  <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "../htmlheader.inc.php"; ?>
 <?
-if (!$ruta_raiz) $ruta_raiz = "..";
+
 //include "$ruta_raiz/rec_session.php";
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 include_once "$ruta_raiz/include/tx/Historico.php";
@@ -106,49 +112,47 @@ function mostrarCampos()
     }
     else
     {
-        var i;
-        var j = parseInt( document.getElementById( 'numero' ).value );
-        document.open();
+		var i;
+		var j = parseInt( document.getElementById( 'numero' ).value );
+		document.open();
 		document.write( "<html>" +
-                        "<head>" +
-                        "<title>INGRESAR EDIFICIOS ::.</title>" +
-                        "<link rel='stylesheet' href='../estilos/orfeo.css'>" +
-                        "</head>"
-                      );
-        document.write( '<body bgcolor="#FFFFFF">' +
-                        '<form name="frmCampos" Action="<?=$encabezado1?>" method="POST">'+
-                        "<input type='hidden' name='hidDepartamento' value='<?=$codep_us?>'>"+
-                        "<input type='hidden' name='hidMunicipio' value='<?=$muni_us?>'>"+
-                        "<input type='hidden' name='hidNombreEdificio' value='"+nombreEdificio+"'>"+
-                        "<input type='hidden' name='hidSiglaEdificio' value='"+siglaEdificio+"'>"+
-                        "<table border='0' width='60%' cellpadding='0' align='center' class='borde_tab'>"+
-                        "<tr>" +
-                        "<td height='35' colspan='2' class='titulos2'>" +
-                        "<center>INGRESAR EDIFICIOS</center>" +
-                        "</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<td height='30' class='titulos2'>" +
-                        "<div align='center'>" +
-                        "NOMBRE" +
-                        "</div>" +
-                        "</td>" +
-                        "<td height='30' class='titulos2'>" +
-                        "<div align='center'>" +
-                        "SIGLA" +
-                        "</div>" +
-                        "</td>" +
-                        "</tr>"
-                      );
+										"<head>" +
+										"<title>.:: INGRESAR EDIFICIO ::.</title>" );
+		document.write('<link href="../estilos/bootstrap.min.css" rel="stylesheet">');
+		document.write( '</head><body class="smart-form">' +
+										'<form name="frmCampos" Action="<?=$encabezado1?>" method="POST" CLASS="smart-form">'+
+										"<input type='hidden' name='hidDepartamento' value='<?=$codep_us?>'>"+
+										"<input type='hidden' name='hidMunicipio' value='<?=$muni_us?>'>"+
+										"<input type='hidden' name='hidNombreEdificio' value='"+nombreEdificio+"'>"+
+										"<input type='hidden' name='hidSiglaEdificio' value='"+siglaEdificio+"'>"+
+										"<table class='table table-bordered'>"+
+										"<tr>" +
+										"<th height='35' colspan='2' class='titulos2'>" +
+										"<center>INGRESAR EDIFICIO</center>" +
+										"</th>" +
+										"</tr>" +
+										"<tr>" +
+										"<td height='30' class='titulos2'>" +
+										"<div align='center'>" +
+										"NOMBRE" +
+										"</div>" +
+										"</td>" +
+										"<td height='30' class='titulos2'>" +
+										"<div align='center'>" +
+										"SIGLA" +
+										"</div>" +
+										"</td>" +
+										"</tr>"
+									);
         for ( i = 0; i < j; i++ )
         {
         document.write( "<tr>" +
-                        "<td class='titulos5'>" +
+                        "<td >" +
                         "<div align='center'>" +
                         "<input type='text' name='nombre_" + i + "' size='40' maxlength='40'>" +
                         "</div>" +
                         "</td>" +
-                        "<td class='titulos5'>" +
+                        "<td >" +
                         "<div align='center'>" +
                         "<input type='text' name='sigla_" + i + "' size='4' maxlength='4'>" +
                         "</div>" +
@@ -157,10 +161,10 @@ function mostrarCampos()
                       );
         }
         document.write( "<tr>" +
-                        "<td align='center' colspan='3' class='titulos5'>" +
-                        "<input type='submit' class='botones' value='Grabar' name='btnGrabar'>" +
-                        "<input type='button' class='botones' value='Cancelar' name='Cancelar' onClick='javascript:history.back()'>" +
-                        "</td>" +
+                        "<td align='center' colspan='3' >" +
+                        "<footer><input type='submit' class='btn btn-success' value='Grabar' name='btnGrabar'>" +
+                        "<input type='button' class='btn btn-default' value='Cancelar' name='Cancelar' onClick='javascript:history.back()'>" +
+                        "</footer></td>" +
                         "</tr>" +
                         "</table>" +
                         "</form>" +
@@ -172,18 +176,19 @@ function mostrarCampos()
 }
 </script>
 </head>
-<body bgcolor="#FFFFFF">
-<form name="inEdificio" action="<?=$encabezadol?>" method="post" >
-<table border="0" width="90%" cellpadding="0"  class="borde_tab">
+<body>
+<form name="inEdificio" action="<?=$encabezadol?>" method="post" class="smart-form" >
+<table class="table table-bordered" width=200>
 <tr>
-  <td height="35" colspan="2" class="titulos2">
+  <th  colspan="2" class="titulos2">
   <center>INGRESO DE EDIFICIOS</center>
-  </td>
+  </th>
 </tr>
 <tr>
- <td height="30" class="titulos5">
+ <td width="50">
     <div align="left">
       Departamento
+      <label class=select>
       <select name="codep_us" id="codep_us" onChange="document.inEdificio.submit();" class="select">
         <option value="" selected>
           <font color="">-----</font>
@@ -217,12 +222,14 @@ function mostrarCampos()
         }
 ?>
       </select>
+      </label>
     </div>
   </td>
   
-  <td class="titulos5">
+  <td width="170">
     <div align="left">
-      <b>Municipio</b>
+      Municipio
+      <label class=select>
       <select name="muni_us" id="muni_us" onChange="document.inEdificio.submit();" class="select">
         <?php
         if( $codep_us )
@@ -262,36 +269,46 @@ function mostrarCampos()
         $municodi="";$muninomb="";$depto="";
         ?>
       </select>
-
+		 </label>
     </div>
   </td>
 </tr>
 <tr>
-  <td height="23" class="titulos5">
+  <td height="23">
     <div align="left">
       Nombre
+      <label class="input">
       <input type="text" name="nombre" id="nombre" value="<?php print $_POST['nombre']; ?>" size="40" maxlength="40" align="right">
+      </label>
     </div>
   </td>
-  <td class="titulos5">
+  <td>
     <div align="left">
       Sigla
+      <label class="input">
       <input type="text" name="sigla" id="sigla" value="<?php print $_POST['sigla']; ?>" size="4" maxlength="4" align="right">
+      </label>
     </div>
   </td>
 </tr>
 <tr>
-  <td height="26" class="titulos5">
+  <td height="26">
     <div align="left">
       Ingrese N&uacute;mero de Tipos de Almacenamiento
-      <input type="text" name="numero" id="numero" value="<?php print $_POST['numero']; ?>" size="2" maxlength="2" align="right">
+      
     </div>
   </td>
-  <td class="titulos5">
-    <input type="button" name="btnMostrarCampos" class="botones_2" value="&gt;&gt;" onClick="mostrarCampos();">
+  
+  <td>
+  <label class="input">
+  <input type="text" name="numero" id="numero" value="<?php print $_POST['numero']; ?>" size="2" maxlength="2" align="right">  
+  </label>
   </td>
 </tr>
-<tr><td><input name='SALIR' type="button" class="botones" id="envia22" onClick="opener.regresar();window.close();" value="SALIR" align="middle" ></td></tr>
+<tr><td colspan=2>
+<footer><input name='SALIR' type="button" class="btn btn-default" id="envia22" onClick="opener.regresar();window.close();" value="SALIR" align="middle" >
+<input type="button" name="btnMostrarCampos" class="btn btn-success" value="Definir &gt;&gt;" onClick="mostrarCampos();"></footer>
+</td></tr>
 </table>
 </form>
 </body>

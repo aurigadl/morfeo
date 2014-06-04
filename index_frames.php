@@ -395,9 +395,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             $rs=$db->conn->Execute($isql);
                             $num_exp = $rs->fields["CONTADOR"];
                         ?>
-                       <!-- <li><a href='./expediente/cuerpo_exp.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Archivo (<?=$num_exp?>)</a></li>-->
+                        <li><a href='./expediente/cuerpo_exp.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Archivo (<?=$num_exp?>)</a></li>
                       <?php }
-
+                        if($_SESSION["usua_admin_archivo"]>=2) {
+                        ?>
+                        <li><a href='archivo/archivo.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Administracion Archivo</a></li>
+                      <?php }
                       if ($_SESSION["usua_perm_prestamo"]==1) { ?>
                       <li class="dropdown-submenu">
                         <a href="#" onclick="return false;">Prestamo</a>

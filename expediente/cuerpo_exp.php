@@ -73,9 +73,13 @@ if(!$fechai) $fechai=fnc_date_calcm(date('Y-m-d'),'1');
 
 <html>
 
-<head>
-  <meta http-equiv="Cache-Control" content="cache">
-  <meta http-equiv="Pragma" content="public">
+<html>
+
+  <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "../htmlheader.inc.php"; ?>
 <?
 
   if(!$estado_sal)   {$estado_sal=2;}
@@ -131,6 +135,7 @@ function confirmaExcluir( radicado, expediente ){
   }
 }
 </script>
+</head>
 <body>
 <div id="spiffycalendar" class="text"></div>
 <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
@@ -245,9 +250,9 @@ if($tipo_archivo==2){$img7=" <img src='../iconos/flechanoleidos.gif' border=0 al
 	include "../envios/paEncabeza.php";
 ?>
 
-<table  WIDTH='100%' class='borde_tab' valign='top' cellspacing="0">
+<table  class="table table-bordered" >
 <tr class="tablas">
-<form name='form1' action='cuerpo_exp.php?<?=session_name()."=".session_id()."&krd=$krd&fechah=$fechah&$encabezado&$orno" ?>' method="post">
+<form name='form1' class="smart-form" action='cuerpo_exp.php?<?=session_name()."=".session_id()."&krd=$krd&fechah=$fechah&$encabezado&$orno" ?>' method="post">
 
 <? //if($tipo_archivo==0 or $tipo_archivo==2){
 ?>
@@ -304,7 +309,7 @@ if($tipo_archivo==1){
 </TABLE>
 <table><tr><td></td></tr></table>
 <table><tr><td></td></tr></table>
-  <table width='100%' class='borde_tab'>
+  <table class="table table-bordered">
   <tr>
   <td  align='left' height="40" class=titulos5 >Listar Por:
     <a href='cuerpo_exp.php?<?=$encabezado.$orno?>&tipo_archivo=0' alt='Ordenar Por Leidos'><span class='leidos'>
@@ -337,7 +342,7 @@ if($tipo_archivo==1){
   </tr>
   <tr>
 	<td class="grisCCCCCC">
-		<table cellspacing="3"  WIDTH=100% class='borde_tab' align='center' >
+		<table class="table table-bordered" >
 		<tr  class="titulos5">
 	<td  align="center">
   <a href='cuerpo_exp.php?<?=$encabezado2 ?>1&ordcambio=1' class='textoOpcion' alt='Seleccione una busqueda'>                    </a><a href='cuerpo_exp.php?<?=$encabezado ?>2&ordcambio=1' class='textoOpcion' alt='Seleccione una busqueda'>

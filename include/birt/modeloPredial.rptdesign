@@ -427,420 +427,9 @@ from radicado]]></xml-property>
                     <text-property name="heading">informacion_predial</text-property>
                 </structure>
             </list-property>
-            <structure name="cachedMetaData">
-                <list-property name="resultSet">
-                    <structure>
-                        <property name="position">1</property>
-                        <property name="name">id</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">2</property>
-                        <property name="name">barmanpre</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">3</property>
-                        <property name="name">chip</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">4</property>
-                        <property name="name">fuente_direccion</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">5</property>
-                        <property name="name">sector</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">6</property>
-                        <property name="name">barrio</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">7</property>
-                        <property name="name">estrato</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">8</property>
-                        <property name="name">propietarios_actuales</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">9</property>
-                        <property name="name">nombre_predio</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">10</property>
-                        <property name="name">acto_traslativo</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">11</property>
-                        <property name="name">matricula_inmobiliaria</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">12</property>
-                        <property name="name">cedula_catastral</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">13</property>
-                        <property name="name">titulo_adquisicion</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">14</property>
-                        <property name="name">cabida_superficiaria</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">15</property>
-                        <property name="name">area_construida</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">16</property>
-                        <property name="name">valor_construcciones</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">17</property>
-                        <property name="name">tipo_linderos</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">18</property>
-                        <property name="name">linderos</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">19</property>
-                        <property name="name">incoroporacion_topografica_desc</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">20</property>
-                        <property name="name">registro_topografico</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">21</property>
-                        <property name="name">tradicion</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">22</property>
-                        <property name="name">avaluo_catastral_terreno</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">23</property>
-                        <property name="name">avaluo_catastral_construccion</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">24</property>
-                        <property name="name">avaluo_comercial</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">25</property>
-                        <property name="name">vigencia_informacion</property>
-                        <property name="dataType">date</property>
-                    </structure>
-                    <structure>
-                        <property name="position">26</property>
-                        <property name="name">componente_espacial_registral</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">27</property>
-                        <property name="name">area_registral</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">28</property>
-                        <property name="name">componente_espacial_catastral</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">29</property>
-                        <property name="name">area_catastral</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">30</property>
-                        <property name="name">altura_construccion</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">31</property>
-                        <property name="name">componente_espacial_topografica</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">32</property>
-                        <property name="name">area_topografica</property>
-                        <property name="dataType">float</property>
-                    </structure>
-                    <structure>
-                        <property name="position">33</property>
-                        <property name="name">observaciones_componente_espacial</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">34</property>
-                        <property name="name">elaboro</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                    <structure>
-                        <property name="position">35</property>
-                        <property name="name">mapa_tradicion</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">36</property>
-                        <property name="name">informacion_predial</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">37</property>
-                        <property name="name">incorporacion_topografica</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                </list-property>
-            </structure>
+            <structure name="cachedMetaData"/>
             <property name="dataSource">Data Source</property>
-            <list-property name="resultSet">
-                <structure>
-                    <property name="position">1</property>
-                    <property name="name">id</property>
-                    <property name="nativeName">id</property>
-                    <property name="dataType">integer</property>
-                </structure>
-                <structure>
-                    <property name="position">2</property>
-                    <property name="name">barmanpre</property>
-                    <property name="nativeName">barmanpre</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">3</property>
-                    <property name="name">chip</property>
-                    <property name="nativeName">chip</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">4</property>
-                    <property name="name">fuente_direccion</property>
-                    <property name="nativeName">fuente_direccion</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">5</property>
-                    <property name="name">sector</property>
-                    <property name="nativeName">sector</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">6</property>
-                    <property name="name">barrio</property>
-                    <property name="nativeName">barrio</property>
-                    <property name="dataType">integer</property>
-                </structure>
-                <structure>
-                    <property name="position">7</property>
-                    <property name="name">estrato</property>
-                    <property name="nativeName">estrato</property>
-                    <property name="dataType">integer</property>
-                </structure>
-                <structure>
-                    <property name="position">8</property>
-                    <property name="name">propietarios_actuales</property>
-                    <property name="nativeName">propietarios_actuales</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">9</property>
-                    <property name="name">nombre_predio</property>
-                    <property name="nativeName">nombre_predio</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">10</property>
-                    <property name="name">acto_traslativo</property>
-                    <property name="nativeName">acto_traslativo</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">11</property>
-                    <property name="name">matricula_inmobiliaria</property>
-                    <property name="nativeName">matricula_inmobiliaria</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">12</property>
-                    <property name="name">cedula_catastral</property>
-                    <property name="nativeName">cedula_catastral</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">13</property>
-                    <property name="name">titulo_adquisicion</property>
-                    <property name="nativeName">titulo_adquisicion</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">14</property>
-                    <property name="name">cabida_superficiaria</property>
-                    <property name="nativeName">cabida_superficiaria</property>
-                    <property name="dataType">float</property>
-                </structure>
-                <structure>
-                    <property name="position">15</property>
-                    <property name="name">area_construida</property>
-                    <property name="nativeName">area_construida</property>
-                    <property name="dataType">float</property>
-                </structure>
-                <structure>
-                    <property name="position">16</property>
-                    <property name="name">valor_construcciones</property>
-                    <property name="nativeName">valor_construcciones</property>
-                    <property name="dataType">float</property>
-                </structure>
-                <structure>
-                    <property name="position">17</property>
-                    <property name="name">tipo_linderos</property>
-                    <property name="nativeName">tipo_linderos</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">18</property>
-                    <property name="name">linderos</property>
-                    <property name="nativeName">linderos</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">19</property>
-                    <property name="name">incoroporacion_topografica_desc</property>
-                    <property name="nativeName">incoroporacion_topografica_desc</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">20</property>
-                    <property name="name">registro_topografico</property>
-                    <property name="nativeName">registro_topografico</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">21</property>
-                    <property name="name">tradicion</property>
-                    <property name="nativeName">tradicion</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">22</property>
-                    <property name="name">avaluo_catastral_terreno</property>
-                    <property name="nativeName">avaluo_catastral_terreno</property>
-                    <property name="dataType">float</property>
-                </structure>
-                <structure>
-                    <property name="position">23</property>
-                    <property name="name">avaluo_catastral_construccion</property>
-                    <property name="nativeName">avaluo_catastral_construccion</property>
-                    <property name="dataType">float</property>
-                </structure>
-                <structure>
-                    <property name="position">24</property>
-                    <property name="name">avaluo_comercial</property>
-                    <property name="nativeName">avaluo_comercial</property>
-                    <property name="dataType">float</property>
-                </structure>
-                <structure>
-                    <property name="position">25</property>
-                    <property name="name">vigencia_informacion</property>
-                    <property name="nativeName">vigencia_informacion</property>
-                    <property name="dataType">date</property>
-                </structure>
-                <structure>
-                    <property name="position">26</property>
-                    <property name="name">componente_espacial_registral</property>
-                    <property name="nativeName">componente_espacial_registral</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">27</property>
-                    <property name="name">area_registral</property>
-                    <property name="nativeName">area_registral</property>
-                    <property name="dataType">float</property>
-                </structure>
-                <structure>
-                    <property name="position">28</property>
-                    <property name="name">componente_espacial_catastral</property>
-                    <property name="nativeName">componente_espacial_catastral</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">29</property>
-                    <property name="name">area_catastral</property>
-                    <property name="nativeName">area_catastral</property>
-                    <property name="dataType">float</property>
-                </structure>
-                <structure>
-                    <property name="position">30</property>
-                    <property name="name">altura_construccion</property>
-                    <property name="nativeName">altura_construccion</property>
-                    <property name="dataType">integer</property>
-                </structure>
-                <structure>
-                    <property name="position">31</property>
-                    <property name="name">componente_espacial_topografica</property>
-                    <property name="nativeName">componente_espacial_topografica</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">32</property>
-                    <property name="name">area_topografica</property>
-                    <property name="nativeName">area_topografica</property>
-                    <property name="dataType">float</property>
-                </structure>
-                <structure>
-                    <property name="position">33</property>
-                    <property name="name">observaciones_componente_espacial</property>
-                    <property name="nativeName">observaciones_componente_espacial</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">34</property>
-                    <property name="name">elaboro</property>
-                    <property name="nativeName">elaboro</property>
-                    <property name="dataType">integer</property>
-                </structure>
-                <structure>
-                    <property name="position">35</property>
-                    <property name="name">mapa_tradicion</property>
-                    <property name="nativeName">mapa_tradicion</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">36</property>
-                    <property name="name">informacion_predial</property>
-                    <property name="nativeName">informacion_predial</property>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="position">37</property>
-                    <property name="name">incorporacion_topografica</property>
-                    <property name="nativeName">incorporacion_topografica</property>
-                    <property name="dataType">string</property>
-                </structure>
-            </list-property>
+            <list-property name="resultSet"/>
             <xml-property name="queryText"><![CDATA[select *
 from public.modelopredial]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -3975,7 +3564,45 @@ Predio</text-property>
                 </row>
             </footer>
         </table>
-        <image id="401"/>
+        <table id="408">
+            <property name="dataSet">modeloPredial</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">fuente_direccion</property>
+                    <text-property name="displayName">fuente_direccion</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["fuente_direccion"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nombre_predio</property>
+                    <text-property name="displayName">nombre_predio</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["nombre_predio"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">sector</property>
+                    <text-property name="displayName">sector</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["sector"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="423"/>
+            <header>
+                <row id="409">
+                    <cell id="412"/>
+                </row>
+            </header>
+            <detail>
+                <row id="413">
+                    <cell id="416"/>
+                </row>
+            </detail>
+            <footer>
+                <row id="417">
+                    <cell id="420"/>
+                </row>
+            </footer>
+        </table>
     </body>
     <list-property name="images">
         <structure>

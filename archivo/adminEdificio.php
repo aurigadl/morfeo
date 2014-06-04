@@ -3,13 +3,14 @@ session_start();
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 error_reporting(0);
-import_request_variables("gp", "");
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
 if (!$ruta_raiz) $ruta_raiz = "..";
 define('ADODB_ASSOC_CASE',1);
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler( "$ruta_raiz" );
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->debug = true;
+$db->conn->debug = true;
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia";
 ?>
 <script>
@@ -31,13 +32,16 @@ window.open("ediEdificio.php?<?=session_name()."=".session_id()?>&cod="+cod+"","
 </script>
 <html>
 <head>
-<title>ADMINISTRACI&Oacute;N DE EDIFICIOS</title>
-<link rel="stylesheet" href="../estilos/orfeo.css">
-<link href="../estilos/orfeo.css" rel="stylesheet" type="text/css">
+
+  <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "../htmlheader.inc.php"; ?>
 </head>
-<body bgcolor="#FFFFFF">
-<form name="adminEdificio" action="<?=$encabezadol?>" method="post" >
-<table border="0" width="50%" align="center" cellpadding="0"  class="borde_tab">
+<body >
+<form name="adminEdificio" action="<?=$encabezadol?>" method="post" class="smart-form" >
+<table class="table table-bordered">
 <tr>
   <td colspan="3" class="titulos2">
   <center>ADMINISTRACI&Oacute;N DE EDIFICIOS</center>
@@ -55,7 +59,7 @@ window.open("ediEdificio.php?<?=session_name()."=".session_id()?>&cod="+cod+"","
   <td class="titulos2">EDIFICIO</td>
   <td class="titulos2">EDITAR</td>
   <td class="titulos2">BORRAR</td>
-  </tr>
+</tr>
 <?
 $sqlp="select sgd_eit_nombre,sgd_eit_codigo from sgd_eit_items where sgd_eit_cod_padre ='0'";
 define('ADODB_ASSOC_CASE',1);

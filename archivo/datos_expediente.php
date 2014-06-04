@@ -5,11 +5,23 @@ if (!$ruta_raiz) $ruta_raiz = "..";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
 
 /**
-* Pagina excluirExpediente.php que muestra el contenido de las Carpetas
-* Modificado por Correlibre.org en el año 2012
-* Se añadio compatibilidad con variables globales en Off
-* @autor Jairo Losada 2012-05
-* @licencia GNU/GPL V 3
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -31,10 +43,12 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 if($_GET["nurad"]) $nurad = $_GET["nurad"];
 ?>
 <HTML>
-<HEAD>
-<META http-equiv="Cache-Control" content="cache">
-<META http-equiv="Pragma" content="public">
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<head>
+
+<title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
   
 <?php
 $fechah=date("dmy") . "_". time("h_m_s");
@@ -62,6 +76,8 @@ $imagen="flechadesc.gif";
           "&numRad=<?=$nurad?>&krd=<?=$krd?>&coddepe=<?=$coddepe?>&codusua=<?=$codusua?>","Etiquetas","height=300,width=450");
   }
   </script>
+  <!-- Bootstrap core CSS -->
+<?php include_once "../htmlheader.inc.php"; ?>
 </HEAD>
 
 <body bgcolor="#FFFFFF" topmargin="0" >
@@ -110,14 +126,19 @@ $imagen="flechadesc.gif";
       if(!$lashdflasdf){
 	      $carpeta=200;
 	$nomcarpeta = "UBICACI&Oacute;N EXPEDIENTE";
-	include "../envios/paEncabeza.php";
+//	include "../envios/paEncabeza.php";
 ?>
-  <form name='form1' method="POST" action='datos_expediente.php?<?=session_name()."=".session_id()."&krd=$krd&fechah=$fechah&nurad=$nurad&num_expediente=$num_expediente&exp_fechaFin=$exp_fechaFin&exp_fechaIni=$exp_fechaIni&exp_archivo=$exp_archivo&exp_unicon=$exp_unicon&item3=$item3&item4=$item4&item5=$item5&car=$car&exp_carpeta2=$exp_carpeta2 "?>' >
-  <TABLE width="100%" align="center" cellspacing="1" cellpadding="0" class="borde_tab">
+  <form name='form1' class="smart-form" method="POST" action='datos_expediente.php?<?=session_name()."=".session_id()."&krd=$krd&fechah=$fechah&nurad=$nurad&num_expediente=$num_expediente&exp_fechaFin=$exp_fechaFin&exp_fechaIni=$exp_fechaIni&exp_archivo=$exp_archivo&exp_unicon=$exp_unicon&item3=$item3&item4=$item4&item5=$item5&car=$car&exp_carpeta2=$exp_carpeta2 "?>' >
+  <header role="heading">
+<span class="widget-icon">
+<h3> Radicado No <b><?=$nurad?></b> Perteneciente al expediente No <b><?=$num_expediente?></b> </h3>
+<span class="jarviswidget-loader">
+</header>
+  <TABLE class="table table-bordered" width=100%>
     <tr>
-	  <TD class='titulos2' height="58">
-	  <table BORDER=0  cellpad=1 cellspacing='2' WIDTH=100% class='t_bordeGris' valign='top' align='center' cellpadding="1" >
-	    <tr><td class='titulos2'>Radicado No <b><?=$nurad?></b> Perteneciente al expediente No <b><?=$num_expediente?></b></td>
+	  <TD class='titulos2'>
+	  <table  class='table table-bordered' valign='top' align='center' cellpadding="1" >
+	    <tr>
     <?php
 	  $ruta_raiz = "..";
 	  require "$ruta_raiz/class_control/class_control.php";
@@ -237,17 +258,23 @@ $imagen="flechadesc.gif";
               WHERE SGD_EXP_NUMERO='$num_expediente'";
      $resultadoGen = $db->conn->query($iSql);
      if($resultadoGen) {
-      echo ".. Ubicacion Grabada corectamente ..";
+      echo '<div class="alert alert-success fade in">
+<button class="close" data-dismiss="alert"> × </button>
+<i class="fa-fw fa fa-check"></i>Ubicacion Grabada corectamente</div>';
      }else{
-      echo ".. No grabo ubicacion ..";
+          echo '<div class="alert alert-danger fade in"><button class="close" data-dismiss="alert"> × </button>
+<i class="fa-fw fa fa-times"></i>No se grabo la Ubicacion</div>';
      }
      
   }
 
   if ($res == false){
-    echo '.. No actualizo Radicados en Carpetas ..';
+    echo '<div class="alert alert-danger fade in"><button class="close" data-dismiss="alert"> × </button>
+<i class="fa-fw fa fa-times"></i>No actualizo Radicados en Carpetas</div>';
   }else{
-  echo " .. Datos de radicados Grabados Correctamente ..";
+  echo '<div class="alert alert-success fade in">
+<button class="close" data-dismiss="alert"> × </button>
+<i class="fa-fw fa fa-check"></i>Datos de radicados Grabados Correctamente ..</div>';
   $objHistorico->insertarHistorico($arrayRad,$dep_sel ,$codusuario, $dep_sel,$codusuario, $observa, 57);
 //
   }
@@ -540,22 +567,22 @@ $imagen="flechadesc.gif";
 	    <?
 	    if($UN == 1 ) $datoss = "checked"; else $datoss= "";
 	    ?>
-	    <input name="UN" type="radio" class="select" value="1" <?=$datoss?>>
+	    <input name="UN" type="radio"  value="1" <?=$datoss?>>
 	    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AZ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    <?
 	    if($UN == 2) $datoss = "checked"; else $datoss= "";
 	    ?>
-	    <input name="UN" type="radio" class="select" value="2" <?=$datoss?>>
+	    <input name="UN" type="radio"  value="2" <?=$datoss?>>
 				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LB &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    <?
 	    if($UN == 3 ) $datoss = "checked"; else $datoss= "";
 	    ?>
-	    <input name="UN" type="radio" class="select" value="3" <?=$datoss?>>
+	    <input name="UN" type="radio" value="3" <?=$datoss?>>
 	    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AR &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    <?
 	    if($UN == 4 ) $datoss = "checked"; else $datoss= "";
 	    ?>
-	    <input name="UN" type="radio" class="select" value="4" <?=$datoss?>></td></tr>
+	    <input name="UN" type="radio" value="4" <?=$datoss?>></td></tr>
 	    </tr>
 	    <?
 	    $querycar="select max(sgd_exp_carpeta) MAXI from sgd_exp_expediente where sgd_exp_numero like '$num_expediente'";

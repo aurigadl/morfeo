@@ -2,15 +2,14 @@
 session_start();
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
-import_request_variables("gp", "");
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
 if (!$ruta_raiz) $ruta_raiz = "..";
-//include "$ruta_raiz/rec_session.php";
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 include_once "$ruta_raiz/include/tx/Historico.php";
 $db = new ConnectionHandler( "$ruta_raiz" );
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 //$db->debug = false;
-import_request_variables("gp", "");
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&codig=$codig&cod=$cod";
 ?>
 <script>
@@ -34,15 +33,18 @@ function Borrar(cod)
 window.open("bortipo.php?<?=session_name()."=".session_id()?>&cod="+cod+"&tipo=2","Borrar Tipos","height=150,width=150,scrollbars=yes");
 }
 </script><head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>EDICION DE EDIFICIOS</title>
-<link href="../estilos/orfeo.css" rel="stylesheet" type="text/css">
-</head>
+
+  <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "../htmlheader.inc.php"; ?>
+  </HEAD>
 
 <form name="ediEdificio" action="<?=$encabezadol?>" method="post" >
-<table border="0" width="90%" cellpadding="0"  class="borde_tab">
+<table width="90%"  class="table table-bordered">
 <tr>
-  <td colspan="6" class="titulos2">
+  <td colspan="6">
   <center>EDICION DE EDIFICIOS</center>
   </td>
 </tr>
@@ -50,11 +52,12 @@ window.open("bortipo.php?<?=session_name()."=".session_id()?>&cod="+cod+"&tipo=2
 $codp=$cod;
 ?>
 <tr>
-<td class="titulos5" colspan="6" align="center"><input type="button" class="botones"  align="middle" name="nuevo" value="NUEVO" onClick="NuevoV(<?=$codp?>);">
-<input type="button" class="botones_largo"  align="middle" name="nuevo" value="NUEVO INGRESO GRUPO" onClick="NuevoT(<?=$codp?>);">
-<input type="button" name="cerrar" class="botones" value="SALIR" onClick="window.close();"></td></tr>
+<td  colspan="6" align="center">
+<footer><input type="button" class="btn btn-success"  align="middle" name="nuevo" value="NUEVO" onClick="NuevoV(<?=$codp?>);">
+<input type="button" class="btn btn-primary"  align="middle" name="nuevo" value="NUEVO INGRESO GRUPO" onClick="NuevoT(<?=$codp?>);">
+<input type="button" name="cerrar" class="btn btn-default" value="SALIR" onClick="window.close();"></footer></td></tr>
 <tr>
-<td class="titulos5" colspan="6" >
+<td  colspan="6" ><label class=select>
 <?
 if(!$cod or $cod=='undefined') $cod=0;
 $sq="select sgd_eit_nombre from sgd_eit_items where sgd_eit_cod_padre='$cod'";
@@ -78,25 +81,26 @@ $nom[$c]=$rs->fields['SGD_EIT_NOMBRE'];
 $codi[$c]=$rs->fields['SGD_EIT_CODIGO'];
 ?>
 <tr>
-<td class="titulos5"><?=$cod?></td>
-<td class="titulos5"><?=$nomp[$cp]?></td>
-<td class="titulos5"><?=$codi[$c]?></td>
-<td class="titulos5"><?=$nom[$c]?></td>
-<td class="titulos5"><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>)" <?=$sel?> align="absmiddle"></td>
-<td class="titulos5"><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
+<td ><?=$cod?></td>
+<td ><?=$nomp[$cp]?></td>
+<td ><?=$codi[$c]?></td>
+<td ><?=$nom[$c]?></td>
+<td ><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>)" <?=$sel?> align="absmiddle"></td>
+<td ><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
 <?
 $c++;
 $rs->MoveNext();
 }*/
 ?>
+</label>
 </tr>
 <tr>
-<td class="titulos2"><b>Codigo del Padre</b></td>
-<td class="titulos2"><B>Nombre del Padre</B></td>
-<td class="titulos2"><b>Codigo del Hijo</b></td>
-<td class="titulos2"><B>Nombre del Hijo</B></td>
-<td class="titulos2"><B>Editar</B></td>
-<td class="titulos2"><B>Borrar</B></td></tr>
+<td><b><small>Codigo del Padre</small></b></td>
+<td><B><small>Nombre del Padre</small></B></td>
+<td><b><small>Codigo del Hijo</small></b></td>
+<td><B><small>Nombre del Hijo</small></B></td>
+<td><B><small>Editar</small></B></td>
+<td><B><small>Borrar</small></B></td></tr>
 
 <?
 
@@ -121,12 +125,12 @@ for($i=0;$i<$tm;$i++){
         $nom[$c]=$rs->fields['SGD_EIT_NOMBRE'];
         $codi[$c]=$rs->fields['SGD_EIT_CODIGO'];
         ?>
-        <tr><td class="titulos5"><?=$codigo?></td>
-        <td class="titulos5"><?=$nomp[$cp]?></td>
-        <td class="titulos5"><?=$codi[$c]?></td>
-        <td class="titulos5"><?=$nom[$c]?></td>
-        <td class="titulos5"><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>,<?=$codig?>)" <?=$sel?> align="absmiddle"></td>
-        <td class="titulos5"><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
+        <tr><td ><small><?=$codigo?></small></td>
+        <td ><small><?=$nomp[$cp]?></small></td>
+        <td ><small><?=$codi[$c]?></small></td>
+        <td ><small><?=$nom[$c]?></small></td>
+        <td ><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>,<?=$codig?>)" <?=$sel?> align="absmiddle"></td>
+        <td ><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
         <?
         $c++;
         $rs->MoveNext();
@@ -146,12 +150,12 @@ while(!$rs->EOF){
 $nom[$c]=$rs->fields['SGD_EIT_NOMBRE'];
 $codi[$c]=$rs->fields['SGD_EIT_CODIGO'];
 ?>
-<tr><td class="titulos5"><?=$codigo?></td>
-<td class="titulos5"><?=$nomp[$cp]?></td>
-<td class="titulos5"><?=$codi[$c]?></td>
-<td class="titulos5"><?=$nom[$c]?></td>
-<td class="titulos5"><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>,<?=$codig?>)" <?=$sel?> align="absmiddle"></td>
-<td class="titulos5"><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
+<tr><td ><?=$codigo?></td>
+<td ><?=$nomp[$cp]?></td>
+<td ><?=$codi[$c]?></td>
+<td ><?=$nom[$c]?></td>
+<td ><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>,<?=$codig?>)" <?=$sel?> align="absmiddle"></td>
+<td ><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
 <?
 $c++;
 $rs->MoveNext();
@@ -172,12 +176,12 @@ if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
     $codi[$c]=$rs->fields['SGD_EIT_CODIGO'];
     ?>
     <tr>
-    <td class="titulos5"><?=$codigo?></td>
-    <td class="titulos5"><?=$nomp[$cp]?></td>
-    <td class="titulos5"><?=$codi[$c]?></td>
-    <td class="titulos5"><?=$nom[$c]?></td>
-    <td class="titulos5"><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>,<?=$codig?>)" <?=$sel?> align="absmiddle"></td>
-    <td class="titulos5"><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
+    <td ><?=$codigo?></td>
+    <td ><?=$nomp[$cp]?></td>
+    <td ><?=$codi[$c]?></td>
+    <td ><?=$nom[$c]?></td>
+    <td ><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>,<?=$codig?>)" <?=$sel?> align="absmiddle"></td>
+    <td ><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
     <?
     $c++;
     $rs->MoveNext();
@@ -197,12 +201,12 @@ for($i=$tm2;$i<$tm;$i++){
     $nom[$c]=$rs->fields['SGD_EIT_NOMBRE'];
     $codi[$c]=$rs->fields['SGD_EIT_CODIGO'];
     ?>
-    <tr><td class="titulos5"><?=$codigo?></td>
-    <td class="titulos5"><?=$nomp[$cp]?></td>
-    <td class="titulos5"><?=$codi[$c]?></td>
-    <td class="titulos5"><?=$nom[$c]?></td>
-    <td class="titulos5"><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>,<?=$codig?>)" <?=$sel?> align="absmiddle"></td>
-    <td class="titulos5"><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
+    <tr><td ><?=$codigo?></td>
+    <td ><?=$nomp[$cp]?></td>
+    <td ><?=$codi[$c]?></td>
+    <td ><?=$nom[$c]?></td>
+    <td ><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>,<?=$codig?>)" <?=$sel?> align="absmiddle"></td>
+    <td ><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
     <? 
     $c++;
     $rs->MoveNext();
@@ -230,12 +234,12 @@ if(!$rsi->EOF)$nomp[$cp]=$rsi->fields['SGD_EIT_NOMBRE'];
     $nom[$c]=$rs->fields['SGD_EIT_NOMBRE'];
     $codi[$c]=$rs->fields['SGD_EIT_CODIGO'];
     ?>
-    <tr><td class="titulos5">pppp <?=$codigo?></td>
-    <td class="titulos5"><?=$nomp[$cp]?></td>
-    <td class="titulos5"><?=$codi[$c]?></td>
-    <td class="titulos5"><?=$nom[$c]?></td>
-    <td class="titulos5"><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>,<?=$codig?>)" <?=$sel?> align="absmiddle"></td>
-    <td class="titulos5"><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
+    <tr><td >pppp <?=$codigo?></td>
+    <td ><?=$nomp[$cp]?></td>
+    <td ><?=$codi[$c]?></td>
+    <td ><?=$nom[$c]?></td>
+    <td ><input type="radio" name="edit" value="1" onClick="Editar(<?=$codi[$c]?>,<?=$codp?>,<?=$codig?>)" <?=$sel?> align="absmiddle"></td>
+    <td ><input type="radio" name="borr" value="1" onClick="Borrar(<?=$codi[$c]?>)" <?=$sel2?> align="absmiddle"></td></tr>
     <?
     $c++;
     $rs->MoveNext();
