@@ -261,28 +261,27 @@ echo "</div>";
 		<div id="tabs">
 			<ul>
 				<li>
-					<div><a href="#tabs-a">Informaci&oacute;n del Radicado</a></div>
+					<a href="#tabs-a">Expediente</a>
 				</li>
-
 				<li>
 					<a href="#tabs-b">Traza</a>
+				</li>				
+				<li>
+					<div><a href="#tabs-d">Informaci&oacute;n del Radicado</a></div>
 				</li>
-
 				<li>
 					<a href="#tabs-c">Documentos Anexos</a>
-				</li>
-
-				<li>
-					<a href="#tabs-d">Expediente</a>
 				</li>
 				<li>
 					<a href="#tabs-gis">Gis</a>
 				</li>
-
 			</ul>
 			<ul>
-
 			<div id="tabs-a">
+			  <center><img src="img/ajax-loader.gif" align=center></center>
+				<?php //  include "./expediente/lista_expedientes.php"; ?>
+			</div>
+			<div id="tabs-d">
 					<?php include "lista_general.php"; ?>
 			</div>
 			<div id="tabs-b">
@@ -296,10 +295,7 @@ echo "</div>";
 					<?php include "./lista_anexos.php"; ?>
 				</p>
 			</div>
-			<div id="tabs-d">
-			  <center><img src="img/ajax-loader.gif" align=center></center>
-				<?php  // include "./expediente/lista_expedientes.php"; ?>
-			</div>
+
 				<div id="tabs-gis" width="100%">
 				<?php include "./gis/verGis.php"; ?>
 			</div>
@@ -322,16 +318,17 @@ $( document ).ready(function(){
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
         window.location.href = ui.newTab.find('a.ui-tabs-anchor').attr('href');
         if($(ui.newTab).attr('aria-controls')=='tabs-b') cargarPagina('./ver_historico.php','tabs-b');
-        if($(ui.newTab).attr('aria-controls')=='tabs-d') cargarPagina('./expediente/lista_expedientes.php','tabs-d');
+        if($(ui.newTab).attr('aria-controls')=='tabs-d') cargarPagina('./expediente/lista_expedientes.php','tabs-a');
         console.log(window.location.href);
     } );
-
-	// Dynamic tabs
+	
 	var tabTitle = $("#tab_title"), tabContent = $("#tab_content"), tabTemplate = "<li style='position:relative;'> <span class='air air-top-left delete-tab' style='top:7px; left:7px;'><button class='btn btn-xs font-xs btn-default hover-transparent'><i class='fa fa-times'></i></button></span></span><a href='#{href}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{label}</a></li>", tabCounter = 2;
-
+  
   $('#chkr, #depsel, #carpper, #Enviar').hide();
 
-});
+  cargarPagina('./expediente/lista_expedientes.php','tabs-a');
+  });
+
 </script>
 
 
