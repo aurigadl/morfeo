@@ -104,26 +104,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }
 
 	// Esta consulta selecciona las carpetas como Devueltos,  Entrada ,salida
-  $isql = "SELECT CARP_CODI,CARP_DESC FROM CARPETA ORDER BY CARP_CODI";
+	$link1      = $enlace."$fechah&nomcarpeta=General&carpeta=9999&tipo_carpt=0\"";
+	$link1show .= "<li><a $link1 target=\"mainFrame\" >General (Todos)</a></li>";
+  $isql = "SELECT c.CARP_CODI,MIN(c.CARP_DESC ) CARP_DESC, COUNT(*) NRADS
+            FROM CARPETA c left outer join radicado r
+             on (r.carp_codi=c.carp_codi and r.carp_per=0)
+            where radi_usua_actu=$codusuario
+              and radi_depe_actu=$dependencia
+            group by c.CARP_CODI
+						ORDER BY c.CARP_CODI";
 	$rs   = $db->query($isql);
 
   while(!$rs->EOF){
     $numdata    = trim($rs->fields["CARP_CODI"]);
-    $sqlCarpDep = "SELECT
-                    SGD_CARP_DESCR
-                  FROM
-                    SGD_CARP_DESCRIPCION
-                  WHERE
-                    SGD_CARP_DEPECODI    = $dependencia
-                    AND SGD_CARP_TIPORAD = $numdata";
-
     $rsCarpDesc         = $db->query($sqlCarpDep);
-    $descripcionCarpeta = $rsCarpDesc->fields["SGD_CARP_DESCR"];
     $desccarpt          = $rs->fields["CARP_DESC"];
+    $nRads          = $rs->fields["NRADS"];
 
     $data       = (empty($descripcionCarpeta))? trim($desccarpt) : $descripcionCarpeta;
-    $link1      = $enlace."$fechah&nomcarpeta=$data&carpeta=$numdata&tipo_carpt=0&adodb_next_page=1\"";
-    $link1show .= "<li><a $link1 target=\"mainFrame\" >$desccarpt</a></li>";
+    $link1      = $enlace."$fechah&nomcarpeta=$data&carpeta=$numdata&tipo_carpt=0\"";
+    $link1show .= "<li><a $link1 target=\"mainFrame\" >$desccarpt ($nRads)</a></li>";
 
     $rs->MoveNext();
   }

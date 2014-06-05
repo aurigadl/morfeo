@@ -66,8 +66,8 @@ $_SESSION['numExpedienteSelected'] = null;
       }
   }
 
-  if(!$carpeta) $carpeta=0;
-  if(!$nomcarpeta) $nomcarpeta = "Entrada";
+  if(!$carpeta) $carpeta=9999;
+  if(!$nomcarpeta) $nomcarpeta = "General (Todos los Documentos)";
 
   if(!$tipo_carp) $tipo_carp=0;
 
@@ -81,8 +81,10 @@ $_SESSION['numExpedienteSelected'] = null;
       $whereCarpeta = " ";
   }else{
       $chkValue="";
-      $whereCarpeta = " and b.carp_codi=$carpeta ";
-      $whereCarpeta   = $whereCarpeta ." and b.carp_per=$tipo_carp ";
+      if($carpeta!=9999){
+         $whereCarpeta = " and b.carp_codi=$carpeta ";
+         $whereCarpeta   = $whereCarpeta ." and b.carp_per=$tipo_carp ";
+      }
   }
 
 
