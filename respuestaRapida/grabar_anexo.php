@@ -65,7 +65,6 @@
   if (!$db)
     $db = new ConnectionHandler($ruta_raiz);
   
-  $db->conn->debug = true;
   $sqlFechaHoy = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
   
   $anex =& new Anexo($db);
