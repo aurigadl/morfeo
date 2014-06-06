@@ -1,5 +1,7 @@
 <?php 
 session_start();
+ini_set("display_errors",1);
+define('ADODB_ASSOC_CASE', 1);
 if (!$ruta_raiz) $ruta_raiz=".";
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -9,9 +11,8 @@ include_once("$ruta_raiz/config.php");
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 require_once("$ruta_raiz/class_control/TipoDocumento.php");
 
-
+if(!$verrad) $verrad = $verradicado;
 if(!$verradicado) $verradicado = $verrad;
-define('ADODB_ASSOC_CASE', 1);
 
 $db = new ConnectionHandler("$ruta_raiz");
 //$db->conn->debug = true;

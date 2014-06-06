@@ -1,6 +1,6 @@
 <?php
 session_start();
-//ini_set("display_errors",1);
+ini_set("display_errors",1);
 
     $ruta_raiz = ".";
     if (!$_SESSION['dependencia'])
@@ -42,6 +42,7 @@ $lnr         = 11+$ln;
     include_once("$ruta_raiz/class_control/anex_tipo.php");
 
     if (!$db)	$db = new ConnectionHandler($ruta_raiz);
+    //$db->conn->debug = true;
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
     $anex       = & new Anexo($db);
     $anexTip    = & new Anex_tipo($db);

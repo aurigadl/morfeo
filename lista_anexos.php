@@ -1,29 +1,23 @@
 <?php
-ini_set("display_errors",1);
-$ruta_raiz = ".";
-$ln          = $_SESSION["digitosDependencia"];
 if (!$ruta_raiz) $ruta_raiz= ".";
+include "$ruta_raiz/conn.php";
 include_once("$ruta_raiz/class_control/anexo.php");
-include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 require_once("$ruta_raiz/class_control/TipoDocumento.php");
-include_once "$ruta_raiz/class_control/firmaRadicado.php";
 include "$ruta_raiz/config.php";
-require_once("$ruta_raiz/class_control/ControlAplIntegrada.php");
-require_once("$ruta_raiz/class_control/AplExternaError.php");
+include_once("$ruta_raiz/include/db/ConnectionHandler.php");
+$ln          = $_SESSION["digitosDependencia"];
+$db = new ConnectionHandler("$ruta_raiz");
+define('ADODB_ASSOC_CASE', 1);
 
-$db            = new ConnectionHandler(".");
 $objTipoDocto  = new TipoDocumento($db);
 $objTipoDocto->TipoDocumento_codigo($tdoc);
-$objFirma      = new  FirmaRadicado($db);
-$objCtrlAplInt = new ControlAplIntegrada($db);
-$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $num_archivos=0;
 $anex = & new Anexo($db);
 $sqlFechaDocto = $db->conn->SQLDate("Y-m-D H:i:s A","sgd_fech_doc");
 $sqlFechaAnexo = $db->conn->SQLDate("Y-m-D H:i:s A","anex_fech_anex");
 //$sqlFechaAnexo = "to_char(anex_fech_anex, 'YYYY/DD/MM HH:MI:SS')";
 $sqlSubstDesc =  $db->conn->substr."(anex_desc, 0, 50)";
-include_once("include/query/busqueda/busquedaPiloto1.php");
+//include_once("include/query/busqueda/busquedaPiloto1.php");
 // Modificado SGD 06-Septiembre-2007
 $isql = "select anex_codigo AS DOCU
             ,anex_tipo_ext AS EXT
@@ -35,7 +29,7 @@ $isql = "select anex_codigo AS DOCU
 			,ANEX_CREADOR
 			,ANEX_ORIGEN
 			,ANEX_SALIDA
-			,$radi_nume_salida as RADI_NUME_SALIDA
+			,$radi_nume_salida RADI_NUME_SALIDA
 			,ANEX_ESTADO
 			,SGD_PNUFE_CODI
 			,SGD_DOC_SECUENCIA
@@ -48,12 +42,12 @@ $isql = "select anex_codigo AS DOCU
 			,a.ANEX_TIPO
 			,CASE WHEN a.ANEX_FECH_ANEX IS NULL THEN (SELECT a2.ANEX_FECH_ANEX FROM ANEXOS A2 WHERE A2.RADI_NUME_SALIDA=A.RADI_NUME_SALIDA AND A2.ANEX_FECH_ANEX IS NOT NULL)
             ELSE a.ANEX_FECH_ANEX
-       END as AANEX_FECH_ANEX
+       END AANEX_FECH_ANEX
 			,a.ANEX_FECH_ANEX
 			,a.ANEX_RADI_NUME
-			,$sqlFechaDocto as FECDOC
-			,$sqlFechaAnexo as FEANEX
-			,a.ANEX_TIPO as NUMEXTDOC
+			,$sqlFechaDocto FECDOC
+			,$sqlFechaAnexo FEANEX
+			,a.ANEX_TIPO NUMEXTDOC
 			,(SELECT d.sgd_dir_nomremdes from sgd_dir_drecciones d where (d.sgd_anex_codigo=a.anex_codigo  or d.radi_nume_radi=a.radi_nume_salida) AND (a.sgd_dir_tipo=d.sgd_dir_tipo ) limit 1) destino
 		from anexos a, anexos_tipo at ,usuario u
       where anex_radi_nume=$verrad and anex_tipo=anex_tipo_codi
@@ -79,6 +73,7 @@ $isql = "select anex_codigo AS DOCU
 include_once "$ruta_raiz/tx/verLinkArchivo.php";
 $verLinkArchivo = new verLinkArchivo($db);
 $rowan = array();
+//$db->conn->debug = true;
 $rs=$db->query($isql);
 
 if (!$ruta_raiz_archivo) $ruta_raiz_archivo = $ruta_raiz;
@@ -94,7 +89,6 @@ while(!$rs->EOF)
 	$coddocu=$rs->fields["DOCU"];
 	$origen=$rs->fields["ANEX_ORIGEN"];
 	if ($rs->fields["ANEX_SALIDA"]==1 )	$num_archivos++;
-	$puedeRadicarAnexo = $objCtrlAplInt->contiInstancia($coddocu,$MODULO_RADICACION_DOCS_ANEXOS,2);
 	$linkarchivo=$directoriobase.substr(trim($coddocu),0,4)."/".intval(substr(trim($coddocu),4,$ln))."/docs/".trim($rs->fields["NOMBRE"]);
 	$linkarchivo_vista="$ruta_raiz/bodega/".substr(trim($coddocu),0,4)."/".intval(substr(trim($coddocu),4,$ln))."/docs/".trim($rs->fields["NOMBRE"])."?time=".time();
 	$linkarchivotmp=$directoriobase.substr(trim($coddocu),0,4)."/".intval(substr(trim($coddocu),4,$ln))."/docs/tmp".trim($rs->fields["NOMBRE"]);
@@ -107,15 +101,6 @@ $cod_radi = ($rs->fields["RADI_NUME_SALIDA"]!=0)? $rs->fields["RADI_NUME_SALIDA"
 
 $anex_estado = $rs->fields["ANEX_ESTADO"];
 if($anex_estado<=1) {$img_estado = "<span class='glyphicon glyphicon-open' title='Se cargo un Archivo. . .'></span> "; }
-if($anex_estado==2)
-{	$estadoFirma = $objFirma->firmaCompleta($cod_radi);
-	if ($estadoFirma == "NO_SOLICITADA")
-		$img_estado = "<span class='glyphicon glyphicon-saved' title='El archivo ha sido Radicado . . .'></span>";
-	else if ($estadoFirma == "COMPLETA")
-		{	$img_estado = "<span class='glyphicon glyphicon-saved' title='El archivo ha sido Firmado . . .'></span>";
-		}else if ($estadoFirma == "INCOMPLETA")
-			{	$img_estado = "<span class='glyphicon glyphicon-saved' title='El archivo ha sido Firmado Mal . . .'></span>";	}
-}
 if($anex_estado==3) {$img_estado = "<span class='glyphicon glyphicon-saved' title='Se Archivo Radicao y listo para enviar . . .'></span>"; }
 if($anex_estado==4) {$img_estado = "<span class='glyphicon glyphicon-send' title='Archivo Enviado. . .'></span>"; }
 ?>
@@ -167,10 +152,9 @@ if(trim($linkarchivo))
 	$radiNumero = $rs_TRA->fields["RADI_NUME_RADI"];
 
   $msg_TRD = ($radiNumero !='')? 'S' : '';
-  echo "<center>\n";
+  echo "\n";
 	echo $msg_TRD;
 ?>
-</center>
 </small></td>
 
 	<td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif">
@@ -361,7 +345,9 @@ if($mostrar_lista==1)
 
 </table>
 
-<?if($verradPermisos == "Full"){?>
+<?php
+if($verradPermisos == "Full"){
+?>
 <table  width="100%" align="center" class="table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
   <tr align="center">
      <td ><small>
@@ -372,269 +358,255 @@ if($mostrar_lista==1)
      <a class="vinculos" href='javascript:nuevoArchivo(<? if ( $num_archivos==0 && $swRadDesdeAnex==false)  echo "1"; else echo "0";  ?>)' class="timpar">
 Anexar Archivo</a>
       </small></td>
-    <script>
-    	 swradics=<?=$num_archivos?>;
-    </script>
   </tr>
 </table>
 <? }?>
-<br>
 
-    <script>
+<script language="javascript">
 
-        var swradics  = 0;
-        var radicando = 0;
+	var swradics  = 0;
+	var radicando = 0;
 
-        function editar_anexo (anexo) {
-          var valor = 0;
-          var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
-                            "<?=session_id()?>&radicadopadre=" +
-                              + <?=$verrad?> + "&krd=<?=$krd?>&editar=true&anexo=" +anexo;
-          var params      = 'width='+screen.width;
-              params      += ', height='+screen.height;
-              params      += ', top=0, left=0'
-              params      += ', scrollbars=yes'
-              params      += ', fullscreen=yes';
-          window.open(url, "Respuesta Rapida", params);
-        }
+	function editar_anexo (anexo) {
+		var valor = 0;
+		var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
+											"<?=session_id()?>&radicadopadre=" +
+												+ <?=$verrad?> + "&krd=<?=$krd?>&editar=true&anexo=" +anexo;
+		var params      = 'width='+screen.width;
+				params      += ', height='+screen.height;
+				params      += ', top=0, left=0'
+				params      += ', scrollbars=yes'
+				params      += ', fullscreen=yes';
+		window.open(url, "Respuesta Rapida", params);
+	}
 
-        function verDetalles(anexo, tpradic, aplinteg, num){
-            optAsigna = "";
-            if (swradics==0){
-                optAsigna="&verunico=1";
-            }
-            contadorVentanas=contadorVentanas+1;
-            nombreventana="ventanaDetalles"+contadorVentanas;
-            url="detalle_archivos.php?usua=<?=$krd?>&radi=<?=$verrad?>&anexo="+anexo;
-            url="<?=$ruta_raiz?>/nuevo_archivo.php?codigo="+anexo+"&<?=session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?><?=$datos_envio?>&ruta_raiz=<?=$ruta_raiz?>"+"&tpradic="+tpradic+"&aplinteg="+aplinteg+optAsigna;
-            window.open(url,nombreventana,'top=0,height=780,width=870,scrollbars=yes,resizable=yes');
-            return;
-        }
+	function verDetalles(anexo, tpradic, aplinteg, num){
+			optAsigna = "";
+			if (swradics==0){
+					optAsigna="&verunico=1";
+			}
+			contadorVentanas=contadorVentanas+1;
+			nombreventana="ventanaDetalles"+contadorVentanas;
+			url="detalle_archivos.php?usua=<?=$krd?>&radi=<?=$verrad?>&anexo="+anexo;
+			url="<?=$ruta_raiz?>/nuevo_archivo.php?codigo="+anexo+"&<?=session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?><?=$datos_envio?>&ruta_raiz=<?=$ruta_raiz?>"+"&tpradic="+tpradic+"&aplinteg="+aplinteg+optAsigna;
+			window.open(url,nombreventana,'top=0,height=780,width=870,scrollbars=yes,resizable=yes');
+			return;
+	}
 
-        function borrarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
-            if (confirm('Estas seguro de borrar este archivo anexo ?')){
-                contadorVentanas=contadorVentanas+1;
-                nombreventana="ventanaBorrar"+contadorVentanas;
-                //url="borrar_archivos.php?usua=<?=$krd?>&contra=<?=$drde?>&radi=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch;
+	function borrarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
+			if (confirm('Estas seguro de borrar este archivo anexo ?')){
+					contadorVentanas=contadorVentanas+1;
+					nombreventana="ventanaBorrar"+contadorVentanas;
+					//url="borrar_archivos.php?usua=<?=$krd?>&contra=<?=$drde?>&radi=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch;
 
-                url="lista_anexos_seleccionar_transaccion.php?borrar=1&usua=<?=$krd?>&numrad=<?=$verrad?>&&contra=<?=$drde?>&radi=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&numfe="+procesoNumeracionFechado+"&dependencia=<?=$dependencia?>&codusuario=<?=$codusuario?>";
-                window.open(url,nombreventana,'height=100,width=180');
-            }
-            return;
-        }
+					url="lista_anexos_seleccionar_transaccion.php?borrar=1&usua=<?=$krd?>&numrad=<?=$verrad?>&&contra=<?=$drde?>&radi=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&numfe="+procesoNumeracionFechado+"&dependencia=<?=$dependencia?>&codusuario=<?=$codusuario?>";
+					window.open(url,nombreventana,'height=100,width=180');
+			}
+			return;
+	}
 
-        function radicarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado,tpradic,aplinteg,numextdoc){
-            var title1   = "Transaccion exitosa";
-            var radinum;
-            var title2   = "Errores en la transaccion";
-            var tagalert = $( "<div>" ).addClass("alert alert-block")
-                           .html("<a class='close' data-dismiss='alert' href='#'>×</a>" +
-                           "<h4 class='alert-heading'><i class='fa fa-check-square-o'></i></h4>");
+	function radicarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado,tpradic,aplinteg,numextdoc){
+			var title1   = "Transaccion exitosa";
+			var radinum;
+			var title2   = "Errores en la transaccion";
+			var tagalert = $( "<div>" ).addClass("alert alert-block")
+											.html("<a class='close' data-dismiss='alert' href='#'>×</a>" +
+											"<h4 class='alert-heading'><i class='fa fa-check-square-o'></i></h4>");
 
-            if (confirm('Se asignar\xe1 un n\xfamero de radicado a \xe9ste documento. Est\xe1 seguro  ?')){
-                url = "?radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id())?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado+"&tpradic="+tpradic+"&aplinteg="+aplinteg+"&numextdoc="+numextdoc;
-                $.post( "<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php" + url, function( data ) {
+			if (confirm('Se asignar\xe1 un n\xfamero de radicado a \xe9ste documento. Est\xe1 seguro  ?')){
+					url = "?radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id())?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado+"&tpradic="+tpradic+"&aplinteg="+aplinteg+"&numextdoc="+numextdoc;
+					$.post( "<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php" + url, function( data ) {
 
-                    if((data.success !== undefined) && (data.success.length>0)){
-                        var answer = content = '';
-                        for(var i=0;i < data.success.length; i++){
-                            var data_answer = " "+data.success[i]+" ";
-                            answer  = (answer.length>0)? answer + data_answer : data_answer ;
-                            radinum = data_answer.match(/[\d]{14}/);
-                            if((radinum !== undefined)  && (Array.isArray(radinum)) && (radinum.length > 0)){
-                                radinum = radinum[0];
-                            }
-                        }
-                        content  = $("<div></div>").html(answer);
-                        newalert = tagalert.clone();
-                        newalert.find('h4').html(title1);
-                        newalert.addClass('alert-success');
-                        newalert.removeClass('alert-danger');
-                        newalert.find('h4').after(content);
-                        var tdalert = $('<td colspan="14">').append(newalert);
-                        var tralert = $('<tr>').append(tdalert);
-                        $('#' + anexo).after(tralert);
+							if((data.success !== undefined) && (data.success.length>0)){
+									var answer = content = '';
+									for(var i=0;i < data.success.length; i++){
+											var data_answer = " "+data.success[i]+" ";
+											answer  = (answer.length>0)? answer + data_answer : data_answer ;
+											radinum = data_answer.match(/[\d]{14}/);
+											if((radinum !== undefined)  && (Array.isArray(radinum)) && (radinum.length > 0)){
+													radinum = radinum[0];
+											}
+									}
+									content  = $("<div></div>").html(answer);
+									newalert = tagalert.clone();
+									newalert.find('h4').html(title1);
+									newalert.addClass('alert-success');
+									newalert.removeClass('alert-danger');
+									newalert.find('h4').after(content);
+									var tdalert = $('<td colspan="14">').append(newalert);
+									var tralert = $('<tr>').append(tdalert);
+									$('#' + anexo).after(tralert);
 
-                        if(radinum){
-                            $($('#' + anexo).find('td')[2]).children().children().text(radinum);
-                        }
-                    }
+									if(radinum){
+											$($('#' + anexo).find('td')[2]).children().children().text(radinum);
+									}
+							}
 
-                    if((data.error !== undefined) && (data.error.length>0)){
-                        var answer  = '';
-                        var content = '';
-                        for(var i=0;i < data.error.length; i++){
-                            var data_answer = " "+data.error[i]+" ";
-                            answer = (answer.length>0)? answer + data_answer: data_answer ;
-                        }
-                        content  = $("<div></div>").html(answer);
-                        newalert = tagalert.clone();
-                        newalert.find('h4').html(title2);
-                        newalert.find('h4').after(content);
-                        newalert.addClass('alert-danger');
-                        newalert.removeClass('alert-success');
-                        var tdalert = $('<td colspan="14">').append(newalert);
-                        var tralert = $('<tr>').append(tdalert);
-                        $('#' + anexo).after(tralert);
-                    }
-                });
-            };
-        }
-
-
-        function numerarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
-            if (confirm('Se asignar\xe1 un n\xfamero a \xe9ste documento. Est\xe1 seguro ?'))
-            {
-                contadorVentanas=contadorVentanas+1;
-                nombreventana="mainFrame";
-                url="<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php?numerar=1"+"&vp=n&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado;
-                window.open(url,nombreventana,'height=450,width=600');
-            }
-            return;
-        }
-
-        function ver_tipodocuATRD(anexo,codserie,tsub){
-            <?php
-                  $isqlDepR = "SELECT RADI_DEPE_ACTU,RADI_USUA_ACTU from radicado
-                              WHERE RADI_NUME_RADI = '$numrad'";
-                  $rsDepR = $db->conn->Execute($isqlDepR);
-                  $coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
-                  $codusua = $rsDepR->fields['RADI_USUA_ACTU'];
-                  $ind_ProcAnex="S";
-            ?>
-            window.open("./radicacion/tipificar_documento.php?<?=session_name()."=".session_id()?>&krd=<?=$krd?>&nurad="+anexo+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie+"&texp=<?=$texp?>","Tipificacion_Documento_Anexos","height=500,width=750,scrollbars=yes");
-        }
-
-        function noPermiso(){
-            alert ("No tiene permiso para acceder");
-        }
-
-        function ver_tipodocuAnex(cod_radi,codserie,tsub)
-        {
-
-            window.open("./radicacion/tipificar_anexo.php?krd=<?=$krd?>&nurad="+cod_radi+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie,"Tipificacion_Documento_Anexos","height=300,width=750,scrollbars=yes");
-        }
+							if((data.error !== undefined) && (data.error.length>0)){
+									var answer  = '';
+									var content = '';
+									for(var i=0;i < data.error.length; i++){
+											var data_answer = " "+data.error[i]+" ";
+											answer = (answer.length>0)? answer + data_answer: data_answer ;
+									}
+									content  = $("<div></div>").html(answer);
+									newalert = tagalert.clone();
+									newalert.find('h4').html(title2);
+									newalert.find('h4').after(content);
+									newalert.addClass('alert-danger');
+									newalert.removeClass('alert-success');
+									var tdalert = $('<td colspan="14">').append(newalert);
+									var tralert = $('<tr>').append(tdalert);
+									$('#' + anexo).after(tralert);
+							}
+					});
+			};
+	}
 
 
-        function vistaPreliminar(anexo,linkarch,linkarchtmp){
-            contadorVentanas=contadorVentanas+1;
-            nombreventana="mainFrame";
-            url="<?=$ruta_raiz?>/genarchivo.php?vp=s&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&linkarchivotmp="+linkarchtmp+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>";
-            window.open(url,nombreventana,'height=450,width=600');
-            return;
-        }
+	function numerarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
+			if (confirm('Se asignar\xe1 un n\xfamero a \xe9ste documento. Est\xe1 seguro ?'))
+			{
+					contadorVentanas=contadorVentanas+1;
+					nombreventana="mainFrame";
+					url="<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php?numerar=1"+"&vp=n&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado;
+					window.open(url,nombreventana,'height=450,width=600');
+			}
+			return;
+	}
 
-        function nuevoArchivo(asigna){
-            contadorVentanas=contadorVentanas+1;
-            optAsigna="";
-            if (asigna==1){
-                optAsigna="&verunico=1";
-            }
+	function ver_tipodocuATRD(anexo,codserie,tsub){
+			<?php
+						$isqlDepR = "SELECT RADI_DEPE_ACTU,RADI_USUA_ACTU from radicado
+												WHERE RADI_NUME_RADI = '$numrad'";
+						$rsDepR = $db->conn->Execute($isqlDepR);
+						$coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
+						$codusua = $rsDepR->fields['RADI_USUA_ACTU'];
+						$ind_ProcAnex="S";
+			?>
+			window.open("./radicacion/tipificar_documento.php?<?=session_name()."=".session_id()?>&krd=<?=$krd?>&nurad="+anexo+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie+"&texp=<?=$texp?>","Tipificacion_Documento_Anexos","height=500,width=750,scrollbars=yes");
+	}
 
-            nombreventana="ventanaNuevo"+contadorVentanas;
-            url="<?=$ruta_raiz?>/nuevo_archivo.php?codigo=&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?>"+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&tdoc=<?=$tdoc?>"+optAsigna;
-            window.open(url,nombreventana,'height=730,width=840,scrollbars=yes,resizable=yes');
-            return;
-        }
+	function noPermiso(){
+			alert ("No tiene permiso para acceder");
+	}
 
+	function ver_tipodocuAnex(cod_radi,codserie,tsub)
+	{
 
-        function nuevoEditWeb(asigna){
-            contadorVentanas=contadorVentanas+1;
-            optAsigna="";
-            if (asigna==1){
-                optAsigna="&verunico=1";
-            }
-
-            nombreventana="ventanaNuevo"+contadorVentanas;
-            url="<?=$ruta_raiz?>/edicionWeb/editorWeb.php?codigo=&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?>"+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&tdoc=<?=$tdoc?>"+optAsigna;
-            window.open(url,nombreventana,'height=800,width=700,scrollbars=yes,resizable=yes');
-            return;
-        }
-
-        function Plantillas(plantillaper1){
-            if(plantillaper1==0){
-                plantillaper1="";
-            }
-            contadorVentanas=contadorVentanas+1;
-            nombreventana="ventanaNuevo"+contadorVentanas;
-            urlp="plantilla.php?<?="krd=$krd&".session_name()."=".trim(session_id()); ?>&verrad=<?=$verrad ?>&numrad=<?=$numrad ?>&plantillaper1="+plantillaper1;
-            window.open(urlp,nombreventana,'top=0,left=0,height=800,width=850');
-            return;
-        }
-
-        function Plantillas_pb(plantillaper1){
-            if(plantillaper1==0){
-                plantillaper1="";
-            }
-            contadorVentanas=contadorVentanas+1;
-            nombreventana="ventanaNuevo"+contadorVentanas;
-            urlp="crea_plantillas/plantilla.php?<?="krd=$krd&".session_name()."=".trim(session_id()); ?>&verrad=<?=$verrad ?>&numrad=<?=$numrad ?>&plantillaper1="+plantillaper1;
-            window.open(urlp,nombreventana,'top=0,left=0,height=800,width=850');
-            return;
-        }
-
-        function regresar(){
-            //window.history.go(0);
-            window.location.reload();
-            window.close();
-        }
-
-       function respuestaTx2(){
-            var valor = sw = 0;
-            var params      = 'width='+screen.width;
-                params      += ', height='+screen.height;
-                params      += ', top=0, left=0'
-                params      += ', scrollbars=yes'
-                params      += ', fullscreen=yes';
-
-          <?if(!$verrad){?>
-                for(i=1;i<document.form1.elements.length;i++){
-                    if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll"){
-                        sw++;
-                        valor = document.form1.elements[i].name;
-                        valor = valor.replace("checkValue[", "");
-                        valor = valor.replace("]", "");
-                    }
-                }
-
-                if (sw != 1) {
-                    alert("Debe seleccionar UN(1) radicado");
-                    return;
-                }
+			window.open("./radicacion/tipificar_anexo.php?krd=<?=$krd?>&nurad="+cod_radi+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie,"Tipificacion_Documento_Anexos","height=300,width=750,scrollbars=yes");
+	}
 
 
-                var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
-                                  "<?=session_id()?>&radicadopadre=" +
-                                    + valor + "&krd=<?=$krd?>&editar=false";
-               window.open(url, "Respuesta Rapida", params);
+	function vistaPreliminar(anexo,linkarch,linkarchtmp){
+			contadorVentanas=contadorVentanas+1;
+			nombreventana="mainFrame";
+			url="<?=$ruta_raiz?>/genarchivo.php?vp=s&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&linkarchivotmp="+linkarchtmp+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>";
+			window.open(url,nombreventana,'height=450,width=600');
+			return;
+	}
 
-          <?}else{?>
-                window.open("respuestaRapida/index2.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
-                            '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
-                            "&asunto=" + '<?php print_r($rad_asun_res)?>' +
-                            "&krd=<?=$krd?>&editar=false", "Respuesta Rapida", params);
-          <?}?>
-        }
+	function nuevoArchivo(asigna){
+			contadorVentanas=contadorVentanas+1;
+			optAsigna="";
+			if (asigna==1){
+					optAsigna="&verunico=1";
+			}
 
-        function funlinkArchivo(numrad,rutaRaiz){
-            nombreventana="linkVistArch";
-            url=rutaRaiz + "/linkArchivo.php?"+"&PHPSESSID=140522122803o127001ADMON&numrad="+numrad;
-            ventana = window.open(url,nombreventana,'scrollbars=1,height=50,width=250');
-            //setTimeout(nombreventana.close, 70);
-            return;
-        }
+			nombreventana="ventanaNuevo"+contadorVentanas;
+			url="<?=$ruta_raiz?>/nuevo_archivo.php?codigo=&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?>"+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&tdoc=<?=$tdoc?>"+optAsigna;
+			window.open(url,nombreventana,'height=730,width=840,scrollbars=yes,resizable=yes');
+			return;
+	}
 
-        function noPermiso(){
-            alert ("No tiene permiso para acceder");
-        }
 
-        function abrirArchivo(url){
-            nombreventana='Documento';
-            window.open(url, nombreventana,  'status, width=900,height=500,screenX=100,screenY=75,left=50,top=75');
-            return;
-        }
+	function nuevoEditWeb(asigna){
+			contadorVentanas=contadorVentanas+1;
+			optAsigna="";
+			if (asigna==1){
+					optAsigna="&verunico=1";
+			}
 
-        <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
+			nombreventana="ventanaNuevo"+contadorVentanas;
+			url="<?=$ruta_raiz?>/edicionWeb/editorWeb.php?codigo=&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&usua=<?=$krd?>&numrad=<?=$verrad ?>&contra=<?=$drde?>&radi=<?=$verrad?>&tipo=<?=$tipo?>&ent=<?=$ent?>"+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&tdoc=<?=$tdoc?>"+optAsigna;
+			window.open(url,nombreventana,'height=800,width=700,scrollbars=yes,resizable=yes');
+			return;
+	}
 
-</script>
-</body>
+	function Plantillas(plantillaper1){
+			if(plantillaper1==0){
+					plantillaper1="";
+			}
+			contadorVentanas=contadorVentanas+1;
+			nombreventana="ventanaNuevo"+contadorVentanas;
+			urlp="plantilla.php?<?="krd=$krd&".session_name()."=".trim(session_id()); ?>&verrad=<?=$verrad ?>&numrad=<?=$numrad ?>&plantillaper1="+plantillaper1;
+			window.open(urlp,nombreventana,'top=0,left=0,height=800,width=850');
+			return;
+	}
+
+	function Plantillas_pb(plantillaper1){
+			if(plantillaper1==0){
+					plantillaper1="";
+			}
+			contadorVentanas=contadorVentanas+1;
+			nombreventana="ventanaNuevo"+contadorVentanas;
+			urlp="crea_plantillas/plantilla.php?<?="krd=$krd&".session_name()."=".trim(session_id()); ?>&verrad=<?=$verrad ?>&numrad=<?=$numrad ?>&plantillaper1="+plantillaper1;
+			window.open(urlp,nombreventana,'top=0,left=0,height=800,width=850');
+			return;
+	}
+
+	function respuestaTx2(){
+			var valor = sw = 0;
+			var params      = 'width='+screen.width;
+					params      += ', height='+screen.height;
+					params      += ', top=0, left=0'
+					params      += ', scrollbars=yes'
+					params      += ', fullscreen=yes';
+
+		<?if(!$verrad){?>
+					for(i=1;i<document.form1.elements.length;i++){
+							if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll"){
+									sw++;
+									valor = document.form1.elements[i].name;
+									valor = valor.replace("checkValue[", "");
+									valor = valor.replace("]", "");
+							}
+					}
+
+					if (sw != 1) {
+							alert("Debe seleccionar UN(1) radicado");
+							return;
+					}
+
+
+					var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
+														"<?=session_id()?>&radicadopadre=" +
+															+ valor + "&krd=<?=$krd?>&editar=false";
+					window.open(url, "Respuesta Rapida", params);
+
+		<?}else{?>
+		window.open("respuestaRapida/index2.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
+								'<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
+								"&asunto=" + '<?php print_r($rad_asun_res)?>' +
+									"&krd=<?=$krd?>&editar=false", "Respuesta Rapida", params);
+		<?}?>
+	}
+
+	function funlinkArchivo(numrad,rutaRaiz){
+			nombreventana="linkVistArch";
+			url=rutaRaiz + "/linkArchivo.php?"+"&PHPSESSID=140522122803o127001ADMON&numrad="+numrad;
+			ventana = window.open(url,nombreventana,'scrollbars=1,height=50,width=250');
+			//setTimeout(nombreventana.close, 70);
+			return;
+	}
+
+	function noPermiso(){
+			alert ("No tiene permiso para acceder");
+	}
+
+	function abrirArchivo(url){
+			nombreventana='Documento';
+			window.open(url, nombreventana,  'status, width=900,height=500,screenX=100,screenY=75,left=50,top=75');
+			return;
+	}
+ <?php // include_once "$ruta_raiz/js/funtionImage.php"; ?>

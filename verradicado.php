@@ -292,7 +292,8 @@ echo "</div>";
 
 			<div id="tabs-c">
 				<p>
-					<?php include "./lista_anexos.php"; ?>
+				  <center><img src="img/ajax-loader.gif" align=center width=70></center>
+					<?php //  include "./lista_anexos.php"; ?>
 				</p>
 			</div>
 
@@ -305,7 +306,7 @@ echo "</div>";
 
   <script>
 function cargarPagina(pagina,nombreDiv){
-$.post( pagina,{verradicado:"<?=$verradicado?>"}, function( data ) {
+$.post( pagina,{verradicado:"<?=$verradicado?>",verradPermisos:"<?=$verradPermisos?>",permRespuesta:"<?=$permRespuesta?>"}, function( data ) {
   $('#'+ nombreDiv).html(data);
 });
 }
@@ -318,6 +319,7 @@ $( document ).ready(function(){
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
         window.location.href = ui.newTab.find('a.ui-tabs-anchor').attr('href');
         if($(ui.newTab).attr('aria-controls')=='tabs-b') cargarPagina('./ver_historico.php','tabs-b');
+        if($(ui.newTab).attr('aria-controls')=='tabs-c') cargarPagina('./lista_anexos.php','tabs-c');
         if($(ui.newTab).attr('aria-controls')=='tabs-a') cargarPagina('./expediente/lista_expedientes.php','tabs-a');
         console.log(window.location.href);
     } );

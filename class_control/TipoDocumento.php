@@ -1,7 +1,5 @@
 <?php 
 
-require_once("$ruta_raiz/include/db/ConnectionHandler.php");
-
 /**
  * TipoDocumento es la clase encargada de gestionar las operaciones y los datos basicos referentes a un tipo de documento a anexar a un radicado
  * @author      Sixto Angel Pinzon
@@ -60,7 +58,9 @@ class TipoDocumento {
 */
 	function TipoDocumento($db) {
 		$this->cursor = $db;
-	
+		$this->db = $db;
+		
+	  //var_dump($this->cursor);
 	}
 
 
@@ -117,8 +117,7 @@ function TipoDocumento_codigo($codigo)
 	{
 		//almacena el query
 		$q= "select *  from sgd_tpr_tpdcumento where sgd_tpr_codigo=$codigo";
-		//echo $q;
-			$rs=$this->cursor->query($q);
+		$rs=$this->cursor->conn->query($q);
 		if  (!$rs->EOF)
 		{
 			$this->sgd_tpr_codigo=$rs->fields['SGD_TPR_CODIGO'];

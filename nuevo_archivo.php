@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+ini_set('display_errors',1);
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -178,10 +178,7 @@ $variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$dato
       ?>
       document.getElementById('tipo_clase').value = valor;
 
-      if(document.getElementById('radicado_salida').checked==true && valor!=14 && valor!=16){
-          alert("Atenci\363n. Si el archivo no es el correcto, no podr\341" +
-              "realizar combinaci\363n de correspondencia. \n\n otros archivos no facilitan su acceso");
-      }
+
   }
 
   function validarGenerico(){
@@ -228,8 +225,9 @@ $variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$dato
 
 </script>
 </head>
-<body >
-<form enctype="multipart/form-data" method="POST" name="formulario" id="formulario" action='upload2.php?<?=$variables?>' class="smart_form">
+<body class="smart-form">
+<div>
+<form enctype="multipart/form-data" method="POST" name="formulario" id="formulario" action='upload2.php?<?=$variables?>' >
 <?php
 $i_copias = 0;
 if ($codigo){
@@ -297,22 +295,19 @@ if(!$radicado_rem){
 <input type="hidden" name="tipoLista" value="<?=$tipoLista?>">
 <input type="hidden" name="tipoDocumentoSeleccionado" value="<?php echo $tipoDocumentoSeleccionado ?>">
 <table width="100%" class="table table-bordered">
-<tr>
-  <td  align="center"  colspan="2">DESCRIPCI&Oacute;N DEL DOCUMENTO</td>
-  </tr>
   <tr>
     <td >
       <input type="checkbox" class="select"  name="sololect" <?php  if($sololect){echo " checked ";}  ?> id="sololect">
-      Solo lectura
+      <small>Solo lectura</small>
     </td>
-    <td >
+    <td ><small>
       <input type="radio" name="medioRadicar" <?php if($medioRadicar == 0){echo " checked ";}  ?> value="0">
       Envio correo fisico
       <input type="radio" name="medioRadicar" <?php if($medioRadicar == 1){echo " checked ";}  ?> value="1">
       Envio correo electronico
       <input type="radio" name="medioRadicar" <?php if($medioRadicar == 2){echo " checked ";}  ?> value="2">
       Fisico y electronico
-    </td>
+    </small></td>
   </tr>
   <tr>
     <td colspan="3" >
@@ -359,13 +354,13 @@ if($us_1 or $us_2 or $us_3)
   if (!$radicado_salida and $ent==1)  $radicado_salida=1;
   if($radicado_salida==1 or $datoss)
   { echo " checked "; }
-?> onClick="doc_radicado();" id="radicado_salida">  Este documento ser&aacute; radicado
+?> onClick="doc_radicado();" id="radicado_salida"><small>  Este documento ser&aacute; radicado</small>
 <?php
 }else{
 ?>
-  Este documento no puede ser radicado ya que faltan datos.<br>
+  <small>Este documento no puede ser radicado ya que faltan datos.<br>
   (Para envio son obligatorios Nombre, Direccion, Departamento,
-  Municipio)
+  Municipio)</small>
     <input type="checkbox" class="select" name="radicado_salida" value="radsalida"
 		<?php
 			if (!$radicado_salida and $ent==1)  $radicado_salida=1;
@@ -384,8 +379,7 @@ if ($ent!=1 ){
 }
 
 $comboRad       = "
-      <label class=label>Tipo Archivo</label>
-      <label class=select>
+      <label class='select'>
 			<select name = 'tpradic' class = 'select' $deshab  $eventoIntegra >";
 $comboRadSelecc = "<option selected value = 'null'>- Tipos de Radicacion -</option>";
 $sel            = "";
@@ -411,7 +405,7 @@ foreach ($tpNumRad as $key => $valueTp){
 $comboRad = $comboRad.$comboRadSelecc.$comboRadOps."</select></label>";
 
 ?>
-    Radicaci&oacute;n  <?=$comboRad?> <BR>
+   <small> Radicaci&oacute;n  <?=$comboRad?> </small><BR>
 <?php
 
 if ($ent==1){
@@ -430,13 +424,13 @@ if (strlen(trim($swDischekRad)) > 0){
   </tr>
 
   <tr>
-    <td  >Asunto </td>
+    <td  ><small>Asunto </small></td>
     <td  valign="top" >
       <textarea name="descr" cols="60" rows="1" class="text" id="descr"><?=$descr?></textarea>
     </td>
   </tr>
   <tr>
-        <td >Expediente:</td>
+        <td ><small>Expediente:</small></td>
       <td  valign="top"  >
       <table border="0"  class="borde_tab" align="center">
       <tr >
@@ -451,10 +445,9 @@ $q_exp .= " ORDER BY fecha desc";
 $rs_exp = $db->conn->Execute( $q_exp );
 
 if( $rs_exp->RecordCount() == 0 ){
-  $mostrarAlerta  = "<td align=\"center\" class=\"titulos2\">";
-  $mostrarAlerta .= "<span class=\"leidos2\" class=\"titulos2\" align=\"center\">
-            <b>EL RADICADO PADRE NO ESTA INCLUIDO  EN UN EXPEDIENTE.</b>
-            </span>
+  $mostrarAlerta  = "<td align=\"center\" >";
+  $mostrarAlerta .= "<b><small>EL RADICADO PADRE NO ESTA INCLUIDO  EN UN EXPEDIENTE.</small></b>
+            
           </td>";
   $sqlt = "select RADI_USUA_ACTU,RADI_DEPE_ACTU from RADICADO where RADI_NUME_RADI = '$numrad'";
   $rsE  = $db->conn->Execute($sqlt);
@@ -478,13 +471,13 @@ if( $rs_exp->RecordCount() == 0 ){
 
   <tr>
     <td  align="center"  colspan="2">
-      Destinatario
+      <small>Destinatario</small>
     </td>
   </tr>
 
   <!-- Destinatario valor de seleccion -1- -->
   <tr valign="top">
-    <td  valign="top" colspan="2"  >
+    <td  valign="top" colspan="2"  ><small>
     <input type="radio"   name="radicado_rem" value=1  id="rusuario" <?=$datoss1?> '
     <?php
       if($radicado_rem==1){echo " checked ";}
@@ -493,54 +486,16 @@ if( $rs_exp->RecordCount() == 0 ){
     <?=$otro_us11." - ".substr($nombret_us11,0,35)?>
     <?=$direccion_us11?>
     <?="$dpto_nombre_us11/$muni_nombre_us11" ?>
-    </td>
+    </small></td>
   </tr>
-
-
-  <!-- Destinatario valor de seleccion -3- -->
-  <!-- Seccion comentada, se usa en casa de requerir
-       un remitente constenmente para toda la entidad
-  <tr>
-    <td  valign="top" colspan='2' >
-      <input type="radio" name="radicado_rem" id="rempre" value=3 <?=$datoss3?> '<?php  if($radicado_rem==3){echo " checked ";}  ?> '>
-      <?=$tip3Nombre[3][$ent]?>
-      <?=substr($nombret_us3,0,35)?>
-      <?=$direccion_us3?>
-      <?="$dpto_nombre_us3/$muni_nombre_us3"?>
-      <?php
-        if($direccion_us3){
-          if ($espEnRUPS == null && $swIntegraAps!="0"){
-             echo "<font color=red> La ESP no se encuentra en RUPS, <br>por lo tanto no puede ser ingresada a Sancionados</font>";
-          }else{
-             echo "<font color=blue>ESP en RUPS, se puede ingresar a Sancionados</font>"  ;
-          }
-        }
-      ?>
-        Notificacion a:
-        ( <span class="titulosError">
-        <input type="text" name="direccionAlterna" value="<?=$direccionAlterna?>" size="18" readonly="readonly"></span> )
-        <?php
-        if(!empty($codigo)){
-          $anexo = $codigo;
-        ?>
-          <input name="modificarDireccion" value="Modificar Datos" class="botones"
-          onclick="window.open('./mostrarDireccion.php?<?=session_name()?>=<?=session_id()?>&anexo=<?=$anexo?>&dptoCodi=<?=$codep_us1?>','Tipificacion_Documento','height=200,width=450,scrollbars=no')" type="button">
-        <?php
-        }
-        ?>
-    </td>
-    </tr>
-    -->
-
-  <!-- Destinatario valor de seleccion -2- -->
     <tr valign="top">
-      <td valign="top" colspan='2' >
+      <td valign="top" colspan='2' ><small>
         <input type="radio" name="radicado_rem" id="rpredi" value=2 <?=$datoss2?> '<?php  if($radicado_rem==2){echo " checked ";}  ?> '>
         <?=$tip3Nombre[2][$ent]?>
         <?=$otro_us2." - ".substr($nombret_us2,0,35)?>
         <?=$direccion_us2?>
         <?="$dpto_nombre_us2/$muni_nombre_us2" ?>
-      </td>
+      </small></td>
     </tr>
 
 <?php if($codigo){ ?>
@@ -674,15 +629,15 @@ if( $rs_exp->RecordCount() == 0 ){
                     '<?php  if($radicado_rem==$sgd_dir_tipo){echo " checked ";}?>'>
                 </td>
                 <td width='100%' align="center"  >
-                  <font size=1>
+                  <small>
                       <?=$nombre_otros?>
                       <?=$rs2->fields["DIRECCION"];?>
-                  </font>
+                  </small>
                 </td>
                 <td align="center"  colspan="1">
-                  <font size=1>
+                  <small>
                       <a href='nuevo_archivo.php?<?=$variables?>&borrar=<?=$sgd_dir_tipo?>&tpradic=<?=$tpradic?>&numrad=<?=$numrad?>&aplinteg=<?=$aplinteg?>'>Borrar</a>
-                  </font>
+                  </small>
 
                 </td>
               </tr>
@@ -713,12 +668,12 @@ if( $rs_exp->RecordCount() == 0 ){
 
       <table width="100%" class="table table-bordered">
       <tr align="center" >
-        <td width="203" CLASS=titulos2 >Documento</td>
-        <td CLASS=titulos2  >Nombre</td>
-        <td CLASS=titulos2 >Dirigido a</td>
-        <td CLASS=titulos2 width="103" colspan='2'>Direccion</td>
-        <td CLASS=titulos2 width="68">Email</td>
-        <td CLASS=titulos2 width="68" colspan="2">Otros</td>
+        <td width="203"  ><small>Documento</small></td>
+        <td   ><small>Nombre</small></td>
+        <td  ><small>Dirigido a</small></td>
+        <td  width="103" colspan='2'><small>Direccion</small></td>
+        <td  width="68"><small>Email</small></td>
+        <td  width="68" colspan="2"><small>Otros</small></td>
       </tr>
       <tr class='<?=$grilla ?>'>
         <TD align="center" >
@@ -754,11 +709,11 @@ if( $rs_exp->RecordCount() == 0 ){
           <center>
 
       <font size="1" class="etextomenu">
-      7Otro Destinatario <?  $busq_salida="true"; ?>
+      <small>Otro Destinatario <?  $busq_salida="true"; ?></small>
       </font>
         <input type="button" name="Button" value="BUSCAR" class="botones" onClick="Start('<?=$ruta_raiz?>/radicacion/buscar_usuario.php?ent=<?=$ent?>&busq_salida=<?=$busq_salida?>&nombreTp3=<?=$nombreTp3?>&krd=<?=$krd?>',1024,500);">
-      <input type="button" name="cc" value="Grabar Destinatario" class="botones_mediano"  onClick="continuar_grabar()" >
-      <br/><?=$grabar?>
+      <input type="button" name="cc" value="Grabar Destinatario" class="botones_mediano"  onClick="continuar_grabar()" ><small>
+      <br/><?=$grabar?></small>
         </center>
         </td>
       </tr>
@@ -770,30 +725,21 @@ if( $rs_exp->RecordCount() == 0 ){
 ?>
     <tr><td colspan="2"></td></tr>
     <tr align="center">
-          <td  align="center" >
-            <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo return_bytes(ini_get('upload_max_filesize')); ?>">Adjuntar Archivo
-          </td>
-
-          <td align="center" >
-          <section>
-						<label class="label">Subir Archivo</label>
-						<label class="input input-file state-error" for="file">
-						 <div class="button">
-						   <input name="userfile1" type="file" onChange="escogio_archivo();" id="userfile" value="valor">
-						 </div>
-						</label>
-						<div class="note note-error">Archivo debe ser menor a  <?php echo number_format((return_bytes(ini_get('upload_max_filesize')))/1000000,2); ?>Mb.</div>
-				 </section>
-
+          <td align="center" colspan="2" >
+          <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo return_bytes(ini_get('upload_max_filesize')); ?>">
+						   <input name="userfile1" type="file" onChange="escogio_archivo();" id="userfile" value="valor" class="btn btn-primary">
+						<small>Archivo debe ser menor a  <?php echo number_format((return_bytes(ini_get('upload_max_filesize')))/1000000,2); ?>Mb.</small>
           </td>
     </tr>
 
     <tr>
         <TD colspan="2" align="center">
-        <input name="button" type="button" class="botones_largo" onClick="actualizar()" value="ACTUALIZAR <?=$codigo?>">
+        <footer>
+        <input name="button" type="button" class="btn btn-success" onClick="actualizar()" value="ACTUALIZAR <?=$codigo?>">
     <?php
-        echo "<input type='button' class ='botones' value='Cerrar' onclick='f_close()'>";
+        echo "<input type='button' class ='btn btn-default' value='Cerrar' onclick='opener.cargarPagina(\"./lista_anexos.php\",\"tabs-c\"); window.close();'>";
     ?>
+      <footer>
       </td>
     </tr>
     <?php if($codigo){?>
@@ -807,5 +753,6 @@ if( $rs_exp->RecordCount() == 0 ){
 	</DIV>
 	</DIV>
 </form>
+</div>
 </body>
 </html>
