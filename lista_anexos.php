@@ -59,8 +59,6 @@ $isql = "select anex_codigo AS DOCU
       where anex_radi_nume=$verrad and anex_tipo=anex_tipo_codi
 		   and anex_creador=usua_login and anex_borrado='N'
 	   order by AANEX_FECH_ANEX,sgd_dir_tipo,a.anex_radi_nume,a.radi_nume_salida";
-     error_reporting(7);
-
 ?>
 <table WIDTH="100%" align="center" id="tableDocument" class="table table-striped table-hover" >
     <thead>
@@ -85,7 +83,7 @@ $rs=$db->query($isql);
 
 if (!$ruta_raiz_archivo) $ruta_raiz_archivo = $ruta_raiz;
 $directoriobase="$ruta_raiz_archivo/bodega/";
-//Flag que indica si el radicado padre fue generado desde esta Ã¡rea de anexos
+//Flag que indica si el radicado padre fue generado desde esta area de anexos
 $swRadDesdeAnex=$anex->radGeneradoDesdeAnexo($verrad);
 if($rs){
 while(!$rs->EOF)
@@ -104,10 +102,8 @@ while(!$rs->EOF)
 ?>
 <tr id="<?=$coddocu?>">
 <?php
-if($rs->fields["RADI_NUME_SALIDA"]!=0)
-{	$cod_radi =$rs->fields["RADI_NUME_SALIDA"];	}
-else
-{	$cod_radi =$coddocu;	}
+
+$cod_radi = ($rs->fields["RADI_NUME_SALIDA"]!=0)? $rs->fields["RADI_NUME_SALIDA"] : $coddocu;
 
 $anex_estado = $rs->fields["ANEX_ESTADO"];
 if($anex_estado<=1) {$img_estado = "<span class='glyphicon glyphicon-open' title='Se cargo un Archivo. . .'></span> "; }
@@ -169,39 +165,36 @@ if(trim($linkarchivo))
 				";
 	$rs_TRA = $db->conn->Execute($isql_TRDA);
 	$radiNumero = $rs_TRA->fields["RADI_NUME_RADI"];
-	if ($radiNumero !='') {
-			$msg_TRD = "S";
-		}
-		else
-			{
-		$msg_TRD = "";
-		}
-				?>
-		<center>
-		<?
-		echo $msg_TRD;
-				?>
+
+  $msg_TRD = ($radiNumero !='')? 'S' : '';
+  echo "<center>\n";
+	echo $msg_TRD;
+?>
 </center>
 </small></td>
 
 	<td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif">
-	<?php
-if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]=="odt" or $rs->fields["EXT"]=="xml") AND $rs->fields["ANEX_ESTADO"]<=3)
-	{
-	if($valImg == "SI"){
-		 echo"<a class=\"vinculos\" style='cursor:pointer;cursor:hand;' on                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     click=\"vistaPreliminar('$coddocu','$linkarchivo','$linkarchivotmp');\">";
+<?php
+  $es_impreso = $rs->fields["ANEX_ESTADO"] <= 3;
+  $es_extension = ($rs->fields["EXT"]=="rtf" or
+                    $rs->fields["EXT"]=="doc" or
+                    $rs->fields["EXT"]=="odt" or
+                    $rs->fields["EXT"]=="xml") and $es_impreso;
+  
+  if($es_extension) {
+    if($valImg == "SI"){
+		  echo"<a class=\"vinculos\" style='cursor:pointer;cursor:hand;' onclick=\"vistaPreliminar('$coddocu','$linkarchivo','$linkarchivotmp');\">";
 		}else{
-		 echo "<a class='vinculos' style='cursor:pointer;cursor:hand;' href='javascript:noPermiso()' >";
+		  echo "<a class='vinculos' style='cursor:pointer;cursor:hand;' href='javascript:noPermiso()' >";
 		}
-	?>
-    <span class="glyphicon glyphicon-search"></span>
-	<font face="Arial, Helvetica, sans-serif" class="etextomenu">
-	<?
-	echo "</a>";
-	$radicado = "false";
-	$anexo = $cod_radi;
+
+    echo "<span class='glyphicon glyphicon-search'></span>\n";
+    echo "<font face='Arial, Helvetica, sans-serif' class='etextomenu'>\n";
+    echo "</a>\n";
+    $radicado = "false";
+    $anexo = $cod_radi;
 	}
-		?>
+?>
 	</font>
 </TD>
  <td><font size=1> <?=substr($rs->fields["DESTINO"],0,18)?> </font></small></td>
@@ -211,35 +204,41 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
  <td><font size=1> <?=$rs->fields["FEANEX"]?> </font></small></td>
  <td ><font size=1>
 	<?php
-	if($origen!=1 and $linkarchivo  and $verradPermisos == "Full" ){
-        if ($anex_estado<4)
-	    echo "<a class=vinculos href=javascript:verDetalles('$coddocu','$tpradic','$aplinteg')><img src='img/icono_modificar.png' title='Modificar Archivo'></a> ";
+  $es_txt = $rs->fields["EXT"] == "txt";
+	
+  if($origen!=1 and $linkarchivo  and $verradPermisos == "Full" ) {
+    $no_esta_enviado = $anex_estado < 4;
+    if ($no_esta_enviado) {
+      if ($es_txt) {
+	      echo "<a class='vinculos' href=javascript:editar_anexo('$coddocu')><img src='img/icono_modificar.png' title='Modificar Archivo'></a> ";
+      } else {
+	      echo "<a class='vinculos' href=javascript:verDetalles('$coddocu','$tpradic','$aplinteg')><img src='img/icono_modificar.png' title='Modificar Archivo'></a> ";
+      }
+    }
 	}
-	?>
-		</font>
-	</small></td>
-	<?
-		//Estas variables se utilizan para verificar si se debe mostrar la opci�n de tipificaci�n de anexo .TIF
+
+  echo "</font>\n";
+  echo "</small></td>\n";
+		
+    //Estas variables se utilizan para verificar si se debe mostrar la opcion de tipificacion de anexo .TIF
 		$anexTipo = $rs->fields["ANEX_TIPO"];
-    	$anexTPRActual = $rs->fields["SGD_TPR_CODIGO"];
-   	if ($verradPermisos == "Full")
-	{
+    $anexTPRActual = $rs->fields["SGD_TPR_CODIGO"];
+   	if ($verradPermisos == "Full") {
     ?>
-		<td >
+		<td>
     	<?php
     	$radiNumeAnexo = $rs->fields["RADI_NUME_SALIDA"];
-		if($radiNumeAnexo>0 and trim($linkarchivo))
-		{
+		if($radiNumeAnexo>0 and trim($linkarchivo)) {
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
 			echo "<a class=vinculos href=javascript:ver_tipodocuATRD($radiNumeAnexo,$codserie,$tsub);><img src='img/icono_clasificar.png' title='Clasificar Documento'></a> ";
 		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == '')
-		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo no ha sido tipificado
+		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, ademas el anexo no ha sido tipificado
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
 			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='Clasificar Documento'> </a> ";
 		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual != '')
-		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, adem�s el anexo YA ha sido tipificado antes
+		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, ademas el anexo YA ha sido tipificado antes
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
 			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='Volver a Clasificar Documento'> </a> ";
@@ -248,11 +247,13 @@ if(($rs->fields["EXT"]=="rtf" or $rs->fields["EXT"]=="doc" or $rs->fields["EXT"]
  	</small></td>
 	<td >
 	<?php
-if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fields["ANEX_CREADOR"])==trim($krd) OR $codusuario==1)
-		)
-		{
-			if($origen!=1  and $linkarchivo)
-			{
+  $es_administrador = $codusuario == 1;
+  $usuario_creador = $rs->fields["RADI_NUME_SALIDA"] == 0 and
+                      $ruta_raiz != ".." and
+                      (trim($rs->fields["ANEX_CREADOR"])==trim($krd) or $es_administrador);
+  
+  if ($usuario_creador) {
+		if($origen!=1  and $linkarchivo) {
 			  $v = $rs->fields["SGD_PNUFE_CODI"];
 			  echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> <img src='img/icono_borrar.png' title='Borrar Archivo'> </a>"; 	}
 		}
@@ -269,11 +270,9 @@ if ($rs->fields["RADI_NUME_SALIDA"]==0 and $ruta_raiz != ".." and (trim($rs->fie
 					$anexo = $cod_radi;
 			}
 			else
-				if ($puedeRadicarAnexo!=1)
-				{
-				}
-				else
-				{	if((substr($verrad,-1)!=2) and $num_archivos==1 and !$rs->fields["SGD_PNUFE_CODI"] and $swRadDesdeAnex==false )
+				if ($puedeRadicarAnexo!=1) {
+				} else {
+          if((substr($verrad,-1)!=2) and $num_archivos==1 and !$rs->fields["SGD_PNUFE_CODI"] and $swRadDesdeAnex==false )
 					{
 			     echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> <img src='img/icono_radicar.png' title='Asignar Radicado (-$tpradic)'> </a>";
            $radicado = "false";
@@ -386,7 +385,20 @@ Anexar Archivo</a>
         var swradics  = 0;
         var radicando = 0;
 
-        function verDetalles(anexo,tpradic,aplinteg,num){
+        function editar_anexo (anexo) {
+          var valor = 0;
+          var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
+                            "<?=session_id()?>&radicadopadre=" +
+                              + <?=$verrad?> + "&krd=<?=$krd?>&editar=true&anexo=" +anexo;
+          var params      = 'width='+screen.width;
+              params      += ', height='+screen.height;
+              params      += ', top=0, left=0'
+              params      += ', scrollbars=yes'
+              params      += ', fullscreen=yes';
+          window.open(url, "Respuesta Rapida", params);
+        }
+
+        function verDetalles(anexo, tpradic, aplinteg, num){
             optAsigna = "";
             if (swradics==0){
                 optAsigna="&verunico=1";
@@ -585,7 +597,7 @@ Anexar Archivo</a>
                     }
                 }
 
-                if (sw != 1){
+                if (sw != 1) {
                     alert("Debe seleccionar UN(1) radicado");
                     return;
                 }
@@ -593,14 +605,14 @@ Anexar Archivo</a>
 
                 var url         = "respuestaRapida/index2.php?<?=session_name()?>=" +
                                   "<?=session_id()?>&radicadopadre=" +
-                                    + valor + "&krd=<?=$krd?>";
+                                    + valor + "&krd=<?=$krd?>&editar=false";
                window.open(url, "Respuesta Rapida", params);
 
           <?}else{?>
                 window.open("respuestaRapida/index2.php?<?=session_name()?>=<?=session_id()?>&radicado=" +
                             '<?php print_r($verrad) ?>' + "&radicadopadre=" + '<?php print_r($verrad) ?>' +
                             "&asunto=" + '<?php print_r($rad_asun_res)?>' +
-                            "&krd=<?=$krd?>", "Respuesta Rapida", params);
+                            "&krd=<?=$krd?>&editar=false", "Respuesta Rapida", params);
           <?}?>
         }
 
