@@ -28,7 +28,7 @@
   $dependencia = $_SESSION['dependencia'];
   $ln          = $_SESSION['digitosDependencia'];
   $lnr         = 11 + $ln;
-
+  
   if (isset($radPadre)) {
     $directorio_ano  = substr($radPadre, YEAR_INICIO, YEAR_LENGTH);
     $depe_radi_padre = substr($radPadre, RADI_INICIO, RADI_LENGTH);
@@ -73,96 +73,102 @@
   if (!$tpradic)
     $tpradic = 'null';
   
-  $codigo = '';
-  $cc = false;
+  $codigo = (empty($anexo))? null : $anexo;
   
-  if (empty($cc) && $cc == false) {
-    $nuevo = ($codigo)? 'no' : 'si';
+  $nuevo = ($codigo)? 'no' : 'si';
+  // Si es nuevo busque el ultimo anexo para asignar el codigo de radicacion
+  if ($nuevo == "si") {
+    $auxnumero = $anex->obtenerMaximoNumeroAnexo($radPadre);
     
-    // Si es nuevo busque el ultimo anexo para asignar el codigo de radicacion
-    if ($nuevo == "si") {
-      $auxnumero = $anex->obtenerMaximoNumeroAnexo($radPadre);
-      
-      // Busca el ultimo radicado
-      do {
-        $auxnumero += 1;
-        $codigo = trim($numrad) . trim(str_pad($auxnumero, 5, "0", STR_PAD_LEFT));
-      } while ($anex->existeAnexo($codigo));
-    } else {
-      $bien      = true;
-      $auxnumero = substr($codigo, -4);
-      $codigo    = trim($numrad) . trim(str_pad($auxnumero, 5, "0", STR_PAD_LEFT));
-    }
-    
-    $anex_salida = ($radicado_salida) ? 1 : 0;
-    
-    $bien = 'si';
-    
-    if ($bien and $tipo) {
-      $anexTip->anex_tipo_codigo($tipo);
-      $ext               = $anexTip->get_anex_tipo_ext();
-      $ext               = strtolower($ext);
-      $auxnumero         = str_pad($auxnumero, 5, "0", STR_PAD_LEFT);
-      $archivo           = trim($numrad . "_" . $auxnumero . "." . $ext);
-      $archivoconversion = trim("1") . trim(trim($numrad) . "_" . trim($auxnumero) . "." . trim($ext));
-    }
-    
-    $numero_anexo = $radPadre . $codigo;
-    
-    if (!$radicado_rem) $radicado_rem = 7;
-    
-    $directorio     = '../bodega/' . $directorio_ano . '/' . $depe_radi_padre . '/docs/';
-    $archivo_final  = $numero_anexo . '.txt';
-    $archivo_grabar = $directorio . $archivo_final;
-    $file_content   = fopen($archivo_grabar, 'w');
-    $write_result   = fwrite($file_content, $respuesta);
-    $closing_result = fclose($file_content);
-    $tamano         = filesize($archivo_grabar);
-    $tamano         = return_bytes($tamano);
-    $descr          = 'Pdf Respuesta';
-    
-    $anex_salida = 1;
-    $tabla_anexos = 'anexos';
-    $anexo_record['sgd_rem_destino']  = $radicado_rem;
-    $anexo_record['anex_radi_nume']   = $radPadre;
-    $anexo_record['anex_codigo']      = $numero_anexo;
-    $anexo_record['anex_tipo']        = TIPO_TXT;
-    $anexo_record['anex_tamano']      = $tamano;
-    $anexo_record['anex_solo_lect']   = "'$auxsololect'";
-    $anexo_record['anex_creador']     = "'$krd'";
-    $anexo_record['anex_desc']        = "'$descr'";
-    $anexo_record['anex_numero']      = $auxnumero;
-    $anexo_record['anex_nomb_archivo']= "'$archivo_final'";
-    $anexo_record['anex_borrado']     = "'N'";
-    $anexo_record['anex_salida']      = $anex_salida;
-    $anexo_record['sgd_dir_tipo']     = $radicado_rem;
-    $anexo_record['anex_depe_creador']= $dependencia;
-    $anexo_record['sgd_tpr_codigo']   = 0;
-    $anexo_record['anex_fech_anex']   = $sqlFechaHoy;
-    $anexo_record['sgd_apli_codi']    = APP_NO_INTEGRADA;
-    $anexo_record['sgd_trad_codigo']  = $tpradic;
-    $anexo_record['sgd_exp_numero']   = "'$expAnexo'";
-    $filtro = "anex_radi_nume = '$numero_anexo'";
-    
-    $numero_campos = count($anexo_record);
-    $i = 0;
-    
-    $sql_insert = 'INSERT into ' . $tabla_anexos . ' (';
-    $sql_update = 'UPDATE '  . $tabla_anexos . ' set';
-    $sql_values = 'VALUES (';
-    
-    foreach ($anexo_record as $campo => $valor) {
-      $i++;
+    // Busca el ultimo radicado
+    do {
+      $auxnumero += 1;
+      $codigo = trim($numrad) . trim(str_pad($auxnumero, 5, "0", STR_PAD_LEFT));
+    } while ($anex->existeAnexo($codigo));
+  } else {
+    $bien      = true;
+    $auxnumero = substr($codigo, -4);
+    $codigo    = trim($numrad) . trim(str_pad($auxnumero, 5, "0", STR_PAD_LEFT));
+  }
+  
+  $anex_salida = ($radicado_salida) ? 1 : 0;
+  
+  $bien = 'si';
+  
+  if ($bien and $tipo) {
+    $anexTip->anex_tipo_codigo($tipo);
+    $ext               = $anexTip->get_anex_tipo_ext();
+    $ext               = strtolower($ext);
+    $auxnumero         = str_pad($auxnumero, 5, "0", STR_PAD_LEFT);
+    $archivo           = trim($numrad . "_" . $auxnumero . "." . $ext);
+    $archivoconversion = trim("1") . trim(trim($numrad) . "_" . trim($auxnumero) . "." . trim($ext));
+  }
+  
+  $numero_anexo = $radPadre . $codigo;
+  
+  if (!$radicado_rem) $radicado_rem = 7;
+  
+  $directorio     = '../bodega/' . $directorio_ano . '/' . $depe_radi_padre . '/docs/';
+  $archivo_final  = $numero_anexo . '.txt';
+  $archivo_grabar = $directorio . $archivo_final;
+  $file_content   = fopen($archivo_grabar, 'w');
+  $write_result   = fwrite($file_content, $respuesta);
+  $closing_result = fclose($file_content);
+  $tamano         = filesize($archivo_grabar);
+  $tamano         = return_bytes($tamano);
+  $descr          = 'Pdf Respuesta';
+  
+  $anex_salida = 1;
+  $tabla_anexos = 'anexos';
+  $anexo_record['sgd_rem_destino']  = $radicado_rem;
+  $anexo_record['anex_radi_nume']   = $radPadre;
+  $anexo_record['anex_codigo']      = $numero_anexo;
+  $anexo_record['anex_tipo']        = TIPO_TXT;
+  $anexo_record['anex_tamano']      = $tamano;
+  $anexo_record['anex_solo_lect']   = "'$auxsololect'";
+  $anexo_record['anex_creador']     = "'$krd'";
+  $anexo_record['anex_desc']        = "'$descr'";
+  $anexo_record['anex_numero']      = $auxnumero;
+  $anexo_record['anex_nomb_archivo']= "'$archivo_final'";
+  $anexo_record['anex_borrado']     = "'N'";
+  $anexo_record['anex_salida']      = $anex_salida;
+  $anexo_record['sgd_dir_tipo']     = $radicado_rem;
+  $anexo_record['anex_depe_creador']= $dependencia;
+  $anexo_record['sgd_tpr_codigo']   = 0;
+  $anexo_record['anex_fech_anex']   = $sqlFechaHoy;
+  $anexo_record['sgd_apli_codi']    = APP_NO_INTEGRADA;
+  $anexo_record['sgd_trad_codigo']  = $tpradic;
+  $anexo_record['sgd_exp_numero']   = "'$expAnexo'";
+  $filtro = "anex_radi_nume = '$numero_anexo'";
+  
+  $numero_campos = count($anexo_record);
+  $i = 0;
+  
+  $sql_insert = 'INSERT into ' . $tabla_anexos . ' (';
+  $sql_update = 'UPDATE '  . $tabla_anexos . ' set ';
+  $sql_values = 'VALUES (';
+  
+  foreach ($anexo_record as $campo => $valor) {
+    $i++;
 
-      $sql_insert .= ($i != $numero_campos) ? $campo . ', ' : $campo . ') ';
-      $sql_update .= ($i != $numero_campos) ? $campo . '=' . $valor . ', ' : $campo . '=' . $valor . ' ';
-      $sql_values .= ($i != $numero_campos) ? $valor . ', ' : $valor . ')';
-    }
-    
-    $sql_insert .= $sql_values;
-    $sql_update .= 'WHERE ' . $filtro;
-    
-    // Si es nuevo insertar de otra forma actualizar.
-    $result = ($nuevo == 'si')? $db->conn->Execute($sql_insert) : $db->conn->Execute($sql_update);
+    $sql_insert .= ($i != $numero_campos) ? $campo . ', ' : $campo . ') ';
+    $sql_update .= ($i != $numero_campos) ? $campo . '=' . $valor . ', ' : $campo . '=' . $valor . ' ';
+    $sql_values .= ($i != $numero_campos) ? $valor . ', ' : $valor . ')';
+  }
+  
+  $sql_insert .= $sql_values;
+  $sql_update .= 'WHERE ' . $filtro;
+  
+  // Si es nuevo insertar de otra forma actualizar.
+  $result = ($nuevo == 'si')? $db->conn->Execute($sql_insert) : $db->conn->Execute($sql_update);
+  
+  $enviar_editar = "index.php?PHPSESSID=" . session_id() .
+                    "&radicadopadre=" . $radicadopadre .
+                    "&krd=" . $krd .
+                    "&editar=" . $editar .
+                    "&anexo=" . $anexo;
+  
+  if ($result && $nuevo == 'no') {
+    echo 'Actualizo';
   }
 ?>
