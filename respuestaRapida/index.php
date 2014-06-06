@@ -7,14 +7,18 @@ define('ADODB_ASSOC_CASE', 1);
 
 $ruta_raiz = "..";
 
+$editar = (isset($_GET['editar']))? $_GET['editar'] : null;
+$anexo = (isset($_GET['anexo']))? $_GET['anexo'] : null;
+$editar = ($editar == 'true')? true : false;
+
 if (!$_SESSION['dependencia'])
   header ("Location: ".$ruta_raiz."/cerrar_session.php");
 
 $ruta_libs = "../respuestaRapida/";
+$anex_codigo = (isset($_GET['anexo']))? $_GET['anexo'] : null;
 
 // Variable que almacena los tipos de radicados que se encuentran en DB
 $tipos_radicados = array();
-
 
 require (SMARTY_DIR.'Smarty.class.php');
 require_once 'libs/htmlpurifier/HTMLPurifier.auto.php';
@@ -37,7 +41,7 @@ function fechaFormateada($FechaStamp) {
   $arreglo_dias[] = 'viernes';
   $arreglo_dias[] = 'sabado';
   
-  $dialetra = $arreglo_dias[$dialetra];
+  $dialetra = (isset($arreglo_dias[$dialetra]))? $arreglo_dias[$dialetra] : null;
 
   $arreglo_meses['01'] = 'enero';
   $arreglo_meses['02'] = 'febrero';
@@ -52,7 +56,7 @@ function fechaFormateada($FechaStamp) {
   $arreglo_meses['11'] = 'noviembre';
   $arreglo_meses['12'] = 'diciembre';
 
-  $mesletra = $arreglo_meses[$mes];
+  $mesletra = (isset($arreglo_meses[$mes]))? $arreglo_meses[$mes] : null;
 
   return htmlentities("$dialetra, $dia de $mesletra de $ano");
 }
@@ -199,14 +203,33 @@ $depcNomb = strtoupper($depcNomb);
 $fecha1   = time();
 $fecha    = ucfirst(fechaFormateada($fecha1));
 
-$asunto = "<p><strong>Bogota, $fecha</strong>".
-  "<br/><br/><br/>".
-  "Se&ntilde;or(a)<br/>".
-  "<strong>".
-  "$name</strong><br/>"
-  .$email."<br/><br/><br/></p>";
+if ($editar) {
+  $buscar_anexo = "SELECT anex_nomb_archivo
+                      FROM anexos
+                      WHERE anex_codigo = '$anex_codigo'";
+  $anexo_result = $db->conn->Execute($buscar_anexo);
+  $ano = substr($radicado, 0, 4);
+  $dependencia = substr($radicado, 4, 3);
+  
+  if (!$anexo_result->EOF) {
+    $nombre_archivo = $anexo_result->fields['ANEX_NOMB_ARCHIVO'];
+    $ruta_completa = '../bodega/' . $ano . '/' . $dependencia . '/docs/' . $nombre_archivo;
+    $asunto = file_get_contents($ruta_completa, true);
 
-$asunto = "<strong>Bogota, $fecha</strong><br /><br /><br />Se&ntilde;or(a)<br /><strong>$name</strong><br />$email<br /><br />";
+    // Si error al leer el contenido del archivo finalice el programa
+    if (!$asunto) {
+      var_dump('Error al leer el anexos o radicado, por favor verificar con el administrador del sistema si existe en sistema');
+      exit(0);
+    }
+  } else {
+    var_dump('Error el radicado no tiene un archivo asociado');
+    exit(0);
+  }
+
+} else {
+  $asunto = "<strong>Bogot&aacute;, $fecha</strong><br /><br /><br />Se&ntilde;or(a)<br /><strong>$name</strong><br />$email<br /><br />";
+}
+
 
 $sqlD = " SELECT
   a.MUNI_NOMB,
@@ -346,7 +369,7 @@ $smarty->assign("rutaPadre"        , $rutaPadre);
 $smarty->assign("usuanomb"         , $usuanomb);
 $smarty->assign("usualog"          , $usualog);
 $smarty->assign("destinatario"     , $destinatario);
-$smarty->assign("asunto"           , $asunto);
+$smarty->assign("asunto"           , $asunto);  // variable respuesta por POST
 $smarty->assign("emails"           , $emails);
 $smarty->assign("carpetas"         , $carpetas);
 $smarty->assign("perm_carps"       , $permPlnatill);
