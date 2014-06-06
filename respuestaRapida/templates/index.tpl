@@ -155,9 +155,7 @@
         <!--{/foreach}-->
 
         <div id="load" style="display:none;">Enviando.....</div>
-        <form id="form1" name="form1" method="post" enctype="multipart/form-data"
-                action='../respuestaRapida/procRespuesta.php?<!--{$sid}-->' onsubmit="return valFo(this)">
-
+        <form id="form1" name="form1" method="post" enctype="multipart/form-data" action='../respuestaRapida/accion_radicar_anexar.php?<!--{$sid}-->' onsubmit="return valFo(this)">
             <input type=hidden name="usuanomb"   value='<!--{$usuanomb}-->'>
             <input type=hidden name="usualog"    value='<!--{$usualog}-->'>
             <input type=hidden name="radPadre"   value='<!--{$radPadre}-->'>
@@ -169,35 +167,13 @@
             <input type=hidden name="rutaPadre"  value='<!--{$rutaPadre}-->'>
 
             <table border="0" width="100%" align="center" cellspacing="0" cellpadding="0">
-
                 <tr align="center" class="titulos2">
                     <td height="15" colspan="4" class="titulos4">RESPUESTA RAPIDA</td>
                 </tr>
-
-                <!-- <tr>
-                    <td class="titulos5" height="20" colspan="2" >
-                        <span>Para enviar a multiples correos Separe con ";"&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                        Para escribir una nueva linea utilice las teclas [shift] + [Enter]&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                        Para escribir un nuevo parrafo utilice la tecla [Enter]</span>
-                    </td>
-                </tr> -->
-
                 <tr>
                     <td colspan=2>
                         <table border="0" width="100%" align="center" cellspacing="0" cellpadding="0">
-     <!--                       <tr>
-                               <td  class="listado1">Envio:</td>
-                               <td  colspan="5"  class="listado1" >
-                                <input type="radio" value="1" checked="" name="medioRadicar"></input>
-                                  Envio correo electronico
-                                <input type="radio" value="0" name="medioRadicar"></input>
-                                  Envio correo fisico
-                                <input type="radio" value="2" name="medioRadicar"></input>
-                                  Envio Fisico y electronico
-                               </td>
-                            </tr> -->
                             <tr>
-                               
                                <td class="titulos">Adjuntar <input type="hidden" value="2" name="medioRadicar"></td>
                                <td colspan=2>
                                   <input class="select_resp" name="archs[]" type="file" id="T7" accept="<!--{$extn}-->"/>
@@ -236,10 +212,12 @@
                 
                 <tr align="center">
                   <td width="100%" height="25" class="titulos5" align="center" colspan="2">
-                    <input type="submit" name="Button" value="ENVIAR" class="botones">
+                    <input type="submit" name="Button" value="Radicar" class="botones">
+                    &nbsp;
+                    <input type="submit" name="Button" value="Grabar como Anexo" class="botones">
                   </td>
                 </tr>
-
+                
                 <tr>
                     <td>
                         <textarea id="texrich" name="respuesta" value=''><!--{$asunto}--></textarea>
