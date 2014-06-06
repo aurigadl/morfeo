@@ -120,7 +120,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     $rsCarpDesc         = $db->query($sqlCarpDep);
     $desccarpt          = $rs->fields["CARP_DESC"];
     $nRads          = $rs->fields["NRADS"];
-
+    if($numdata==0) $numdata = 9998;
     $data       = (empty($descripcionCarpeta))? trim($desccarpt) : $descripcionCarpeta;
     $link1      = $enlace."$fechah&nomcarpeta=$data&carpeta=$numdata&tipo_carpt=0\"";
     $link1show .= "<li><a $link1 target=\"mainFrame\" >$desccarpt ($nRads)</a></li>";

@@ -274,6 +274,56 @@ function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUs
 	else return $deleteSQL;
 }
 
+function changeFolder( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$tomarNivel,$observa)
+  {
+ 		$whereNivel = "";
+		$sql = "SELECT
+					b.USUA_DOC
+					,b.USUA_LOGIN
+					,b.CODI_NIVEL
+					,b.DEPE_CODI
+					,b.USUA_CODI
+					,b.USUA_NOMB
+				FROM
+					 USUARIO b
+				WHERE
+					b.USUA_LOGIN = '$usuaLogin'";
+		# Busca el usuairo Origen para luego traer sus datos.
+		//$this->db->conn->debug = true;
+		$this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+		$rs = $this->db->query($sql); # Ejecuta la busqueda
+		
+		$usNivel = $rs->fields["CODI_NIVEL"];
+		$depOrigen = $rs->fields["DEPE_CODI"];
+		$codUsOrigen = $rs->fields["USUA_CODI"];
+		$nombOringen = $rs->fields["USUA_NOMB"];
+		$codTx = "10";
+		$radicadosIn = $radicados;
+		$sql = "update radicado
+					set
+					  CARP_CODI=$carpetaDestino
+					  ,CARP_PER=$carpetaTipo
+					  ,radi_fech_agend=null
+					  ,radi_agend=null
+					  $whereNivel
+				 where RADI_NUME_RADI in($radicadosIn)";
+
+		//$this->conn->Execute($isql);
+		$rs = $this->db->query($sql); # Ejecuta la busqueda
+		$retorna = 1;
+		if(!$rs)
+		{
+			$retorna = -1;
+		}
+		if($retorna!=-1)
+		{
+			//$radicados2 = str_split($radicados, ",",10);
+			//echo $radicados2;
+			//$this->insertarHistorico($radicados2,$depOrigen,$codUsOrigen,$depOrigen,$codUsOrigen, $observa,$codTx);
+		}
+		return $retorna;
+  }
+
 
   function cambioCarpeta( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$tomarNivel,$observa)
   {
@@ -316,14 +366,13 @@ function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUs
 		//$this->conn->Execute($isql);
 		$rs = $this->db->query($sql); # Ejecuta la busqueda
 		$retorna = 1;
-		if(!$rs)
-		{
+		if(!$rs){
 			echo "<center><font color=red>Error en el Movimiento ... A ocurrido un error y no se ha podido realizar la Transaccion</font> <!-- $sql -->";
 			$retorna = -1;
 		}
 		if($retorna!=-1)
 		{
-
+      
 			$this->insertarHistorico($radicados,$depOrigen,$codUsOrigen,$depOrigen,$codUsOrigen, $observa,$codTx);
 		}
 		return $retorna;

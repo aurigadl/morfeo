@@ -67,6 +67,7 @@ $_SESSION['numExpedienteSelected'] = null;
   }
 
   if(!$carpeta) $carpeta=9999;
+  if($carpeta==9998) $carpeta=0;
   if(!$nomcarpeta) $nomcarpeta = "General (Todos los Documentos)";
 
   if(!$tipo_carp) $tipo_carp=0;
@@ -156,6 +157,8 @@ $_SESSION['numExpedienteSelected'] = null;
 </head>
 
 <body>
+ <div id=message>
+ </div>
   <form name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/  >
   <div id="content" style="opacity: 1;">
 

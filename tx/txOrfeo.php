@@ -6,6 +6,7 @@ $permRespuesta = $_SESSION["usua_perm_respuesta"];
 //Eliminamos aquellos elementos que no son convenientes en el Get
 $pattern 		= '/[^\w:()áéíóúÁÉÍÓÚ=#°,.ñÑ]+/';
 $rad_asun_res 	= preg_replace($pattern, ' ', $rad_asun_res);
+if(!$mostrar_opc_envio) $mostrar_opc_envio=0;
 ?>
 
 <script language="javascript">
@@ -338,9 +339,25 @@ $( document ).ready(function(){
       envioTx();
     }
   }
+  function changeFolder(){
+   var rads;
+   var i;
+   codCarpeta= $('#carpper').val();
+   rads="";
+   $('input[name^="checkValue"]').each(function(index){
+      if($(this).prop('checked') && $(this) != undefined) {
+      rads += $(this).attr('id')+","; 
+      }
+   });
+   pagina = "tx/ajaxMoveFolder.php";
+   $.post( pagina,{"codCarpeta":+codCarpeta,"rads":rads}, function( data ) {
+			$('#message').html(data);
+		});
+  }
 
   $('#AccionCaliope').on('change', changedepesel1);
   $('input[name^="checkValue"]').on('change', clickTx);
+  $('#carpper').on('change', changeFolder);
 
 });
 </script>
@@ -377,7 +394,8 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 }
 /* Final de opcion de enviar para carpetas que no son 11 y 0(VoBo)
 /* si esta en la Carpeta de Visto Bueno no muesta las opciones de reenviar */
-if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_SESSION['dependencia'] == $radi_depe_actu)) {
+
+if ((($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_SESSION['dependencia'] == $radi_depe_actu))){
 	$row1 = array();
 	// Combo en el que se muestran las dependencias, en el caso  de que el usuario escoja reasignar.
 	$dependencianomb=substr($dependencianomb,0,35);
@@ -389,7 +407,9 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 	}
 	$sql      = "select $subDependencia, depe_codi from DEPENDENCIA $whereReasignar ORDER BY DEPE_NOMB";
 	$rs       = $db->query($sql);
+	echo "<label class='select'>";
 	$depencia = $rs->GetMenu2('depsel',0,"0:-- Escoja una Dependencia --",false,0," id='depsel' class='select' ");
+	echo "</label>";
 	// genera las dependencias para informar
 	$row1 = array();
 
@@ -413,7 +433,9 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 			and depe_codi = $dependencia
 			order by orden, carp_codi";
 	$rs = $db->conn->Execute($sql);
-	$rs->GetMenu2('carpSel',1,false,false,0," id='carpper' class='select' ");
+	$sCarpeta  =  "<div><label class='select'>";
+	$sCarpeta .=$rs->GetMenu2('carpSel',1,false,false,0," id='carpper' class='select' ");
+	$sCarpeta .= "</label></div>";
 
 	// Fin de Muestra de Carpetas personales
 	?>
@@ -423,7 +445,6 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 	<input type="hidden" name="codTx" value=9>
 
 <? }
-
 if($verradPermisos=="Full"){ ?>
     <div>
         <label class="select" >
@@ -441,4 +462,6 @@ if($verradPermisos=="Full"){ ?>
         <label class="select" > <?=$depencia?> </label>
     </div>
 
-<?php } ?>
+<?php } 
+echo $sCarpeta;
+?>
