@@ -55,7 +55,7 @@
         $arreglo_dias[] = 'viernes';
         $arreglo_dias[] = 'sabado';
         
-        $dialetra = $arreglo_dias[$dialetra];
+        $dialetra = (isset($arreglo_dias[$dialetra]))? $arreglo_dias[$dialetra] : null;
 
         $arreglo_meses['01'] = 'enero';
         $arreglo_meses['02'] = 'febrero';
@@ -70,7 +70,7 @@
         $arreglo_meses['11'] = 'noviembre';
         $arreglo_meses['12'] = 'diciembre';
 
-        $mesletra = $arreglo_meses[$mes];
+        $mesletra = (isset($arreglo_meses[$mes]))? $arreglo_meses[$mes] : null;
 
         return htmlentities("$dialetra, $dia de $mesletra de $ano");
     }
@@ -160,8 +160,8 @@
     $usuario        = $_SESSION["usua_nomb"];
     $setAutor       = 'Sistema de Gestion Documental Orfeo';
     $SetTitle       = 'Respuesta a solicitud';
-    $SetSubject     = 'Departamento Naciona de planeación';
-    $SetKeywords    = 'dnp, respuesta, salida, generar';
+    $SetSubject     = 'Metrovivienda';
+    $SetKeywords    = 'metrovivienda, respuesta, salida, generar';
 
     //DATOS EMPRESA
     $sigla          = 'null';
@@ -171,9 +171,6 @@
     $radano = substr($numRadicadoPadre,0,4);
     $ruta   = $adate.$coddepe.$usua_actu."_".rand(10000, 99999)."_".time().".pdf";
 
-/***********************************************
-// DATOS DEL RADICADO PADRE
-***********************************************/
     $desti = "
             SELECT
                 s.sgd_dir_nomremdes,
