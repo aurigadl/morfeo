@@ -165,6 +165,7 @@
             <input type=hidden name="codigoCiu"  value='<!--{$codigoCiu}-->'>
             <input type=hidden name="codigoCiu"  value='<!--{$codigoCiu}-->'>
             <input type=hidden name="rutaPadre"  value='<!--{$rutaPadre}-->'>
+            <input type=hidden name="anexo"  value='<!--{$anexo}-->'>
 
             <table border="0" width="100%" align="center" cellspacing="0" cellpadding="0">
                 <tr align="center" class="titulos2">

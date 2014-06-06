@@ -373,6 +373,7 @@ $smarty->assign("asunto"           , $asunto);  // variable respuesta por POST
 $smarty->assign("emails"           , $emails);
 $smarty->assign("carpetas"         , $carpetas);
 $smarty->assign("perm_carps"       , $permPlnatill);
+$smarty->assign("anexo"       , $anex_codigo);
 $smarty->display('index.tpl');
 
 // Replace a textarea element with an id (or name) of "textarea_id".

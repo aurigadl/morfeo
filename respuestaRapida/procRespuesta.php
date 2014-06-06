@@ -6,11 +6,12 @@
     define('ADODB_ASSOC_CASE', 0);
     define('NO_SELECCIONO', 0);
     define('SMARTY_DIR', $ruta_libs . 'libs/');
+    define('DIGITOS_DEPENDENCIA', 3);
 
     foreach ($_POST as $key => $valor)   ${$key} = $valor;
     
     if($_SESSION["krd"])
-        $krd = $_SESSION["krd"];
+      $krd = $_SESSION["krd"];
 
     $ruta_raiz = "..";
     if (!$_SESSION['dependencia'])
@@ -196,7 +197,7 @@
     $dir_telefono   = $rssPatth->fields["sgd_dir_telefono"];
     $dir_direccion  = $rssPatth->fields["sgd_dir_direccion"];
     $pathPadre      = $rssPatth->fields["radi_path"];
-    $depCreadora    = substr($numRadicadoPadre,4,$digitosDependencia) * 1;
+    $depCreadora    = substr($numRadicadoPadre, 4, DIGITOS_DEPENDENCIA) * 1;
 
     $ruta2  = "/bodega/$radano/$depCreadora/docs/".$ruta;
     $ruta3  = "/$radano/$depCreadora/docs/".$ruta;
