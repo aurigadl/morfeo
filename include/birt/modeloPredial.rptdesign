@@ -3886,6 +3886,7 @@ Predio</text-property>
                     </cell>
                     <cell id="442">
                         <label id="446">
+                            <property name="textAlign">left</property>
                             <text-property name="text">Observaciones</text-property>
                         </label>
                     </cell>
