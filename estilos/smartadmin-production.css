@@ -29,6 +29,7 @@ ul,ol{
 
 
 
+
 article.sortable-grid {
     min-height: 30px;
 }
@@ -8838,6 +8839,11 @@ tr.fc-last td {
     text-align: left;
     width: 28px;
 }
+
+.search-table-icon {
+    width: 28px;
+}
+
 .inbox-data-from {
     width: 200px;
 }
@@ -8996,6 +9002,15 @@ tr.highlight td, tr.unread.highlight td {
     text-transform: uppercase;
     vertical-align: middle;
 }
+
+.showdot176{
+    overflow      : hidden;
+    text-overflow : ellipsis;
+    width         : 176px;
+    white-space   : nowrap;
+}
+
+
 .inbox-info-bar {
     border-bottom: 1px solid #BFBFBF;
     padding: 10px 0;
@@ -9024,18 +9039,16 @@ tr.highlight td, tr.unread.highlight td {
     vertical-align: top;
 }
 .inbox-download-list li > *:first-child {
-    margin-bottom: 0;
+    margin-bottom: 5px;
     overflow: hidden;
-    width: 150px;
+    width: 196px;
 }
 .inbox-download-list li > *:first-child:hover {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border-color: #C0C0C0;
+    background: none repeat scroll 0 0 #F4FCE7;
+    border-color: #666666;
 }
 .inbox-download-list li > *:first-child > *:first-child {
-    color: #D6D6D6;
     display: block;
-    text-align: center;
 }
 .inbox-download-list li > *:first-child > *:first-child > .fa {
     font-size: 150px;
@@ -11762,6 +11775,14 @@ img.away {
     border-radius: 0;
     border-right: 0 none;
 }
+
+.btn-block {
+  display: inline-block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .btn-circle {
     border-radius: 50%;
     font-size: 12px;

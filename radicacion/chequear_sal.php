@@ -61,7 +61,7 @@
 	INCLUDE "../config.php";
 	putenv("ORACLE_SID=$servicio");
 	putenv("ORACLE_HOME=$dirora");
-  $handle = ora_logon("$usuario@$servicio", "$contrasena");
+  $handle = ora_logon("$classusua@$servicio", "$contrasena");
   $cursor = ora_open($handle);
 	ora_commiton($handle); 
  if($tip_rem==1){
@@ -250,7 +250,7 @@ if($primera!=1 and $Submit=="BUSCAR" and ($pnom or $cuentai or $noradicado or $r
 	 } else 
 	 {
       // Si el usuario no es el administrador cuando selecciona la carpeta enviar
-			// Se le añade esta instruccion a la varible del sql que solo muestra los doc's 
+			// Se le aï¿½ade esta instruccion a la varible del sql que solo muestra los doc's 
 			// Enviados por el usuario de lo contrario solo toma la dependencia  	   
 	    $carpetaenviar = "  ";
 	 }

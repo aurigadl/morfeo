@@ -1,10 +1,6 @@
 <?php
 class Radicacion
 {
-  /** gplgregations: */
-
-  /** Compositions: */
-
    /*** Attributes: ***/
 	 /**
    * Clase que maneja los Historicos de los documentos
@@ -14,9 +10,6 @@ class Radicacion
    * @access public
    */
 
-	/**
-	  *  VARIABLES DE DATOS PARA LOS RADICADOS
-		*/
 	var $db;
 	var $tipRad;
 	var $radiTipoDeri;
@@ -42,10 +35,10 @@ class Radicacion
 	var $radiFechRadi;
 	var $sgd_apli_codi;
 	var $tdocCodi;
-    
-    var	$nofolios;
-    var	$noanexos;
-    var	$guia;
+
+  var	$nofolios;
+  var	$noanexos;
+  var	$guia;
 
 	var $estaCodi;
 	var $radigplth;
@@ -53,12 +46,12 @@ class Radicacion
 	var $tsopt;
 	var $urgnt;
 	var $dptcn;
-	
+
 	/*
 	 * Código de verificación para consultar radicado vía consultaWeb
 	 * @author Sebastian Ortiz GPLV3+ Ministerio de la Protección Social 2012
 	 */
-	
+
 	var $codigoverificacion;
 
 	/**
@@ -87,7 +80,7 @@ class Radicacion
         $this->dependencia= $_SESSION['dependencia'];
         $this->usuaDoc    = $_SESSION['usua_doc'];
         $this->usuaDoc    =$_SESSION['nivelus'];
-        $this->noDigitosDep = $_SESSION['digitosDependencia']; 
+        $this->noDigitosDep = $_SESSION['digitosDependencia'];
         $this->usuaLogin  = $krd;
         $this->usuaCodi   = $_SESSION['codusuario'];
         isset($_GET['nivelus']) ? $this->codiNivel = $_GET['nivelus'] : $this->codiNivel = $_SESSION['nivelus'];
@@ -101,32 +94,32 @@ function newRadicado($tpRad, $tpDepeRad)
 	* Busca el Nivel de Base de datos.
 	* */
 		$whereNivel = "";
-    
+
         $sql = "SELECT CODI_NIVEL FROM USUARIO WHERE USUA_CODI = ".$this->radiUsuaActu." AND DEPE_CODI=".$this->radiDepeActu;
 		# Busca el usuairo Origen para luego traer sus datos.
 		//return "2011 $sql";
-        
+
 		$rs = $this->db->conn->Execute($sql); # Ejecuta la busqueda
 		$usNivel = $rs->fields["CODI_NIVEL"];
 		# Busca el usuairo Origen para luego traer sus datos.
 
 		$SecName = "SECR_TP$tpRad"."_".$tpDepeRad;
-    
+
 		$secNew=$this->db->conn->nextId($SecName);
-		
+
 		if($secNew==0){
 			$this->db->conn->RollbackTrans();
 			$secNew=$this->db->conn->nextId($SecName);
 			if($secNew==0) die("<hr><b><font color=red><center>Error no genero un Numero de Secuencia<br>SQL: $secNew</center></font></b><hr>");
 		}
 		$newRadicado = date("Y") . str_pad($this->dependencia,$this->noDigitosDep,"0",STR_PAD_LEFT) . str_pad($secNew,$this->noDigitosRad,"0", STR_PAD_LEFT) . $tpRad;
-		
+
 		if(!$this->radiTipoDeri){
 		    $recordR["radi_tipo_deri"]= "0";
 		}else{
 			$recordR["radi_tipo_deri"]= $this->radiTipoDeri;
 		}
-		
+
 		if(!$this->carpCodi) $this->carpCodi = 0;
 		if(!$this->carpPer)  $this->carpPer = 0;
 		if(!$this->radiNumeDeri) $this->radiNumeDeri = 0;
@@ -151,20 +144,19 @@ function newRadicado($tpRad, $tpDepeRad)
                     $recordR["radi_fech_ofic"]=	$this->db->conn->DBDate($this->radiFechOfic);
             }
         }
-   
+
 		$recordR["RADI_NUME_DERI"]  = $this->radiNumeDeri;
 		$recordR["RADI_USUA_RADI"]  = $this->usuaCodi;
 		$recordR["RADI_PAIS"]       = "'".$this->radigplis."'";
 		$this->raAsun = str_replace("'"," ",$this->raAsun);
 		$recordR["RA_ASUN"]         = "'".$this->raAsun."'";
- 		$this->descAnex = str_replace("'"," ",$this->descAnex);		
+ 		$this->descAnex = str_replace("'"," ",$this->descAnex);
 		$recordR["radi_desc_anex"]  = "'".$this->descAnex."'";
 		$recordR["RADI_DEPE_RADI"]  = $this->radiDepeRadi;
 		$recordR["RADI_USUA_ACTU"]  = $this->radiUsuaActu;
 		$recordR["carp_codi"]       = $this->carpCodi;
 		$recordR["CARP_PER"]        = $this->carpPer;
 		$recordR["RADI_NUME_RADI"]  = $newRadicado;
-		$recordR["TRTE_CODI"]       = $this->trteCodi;
 		$recordR["RADI_FECH_RADI"]  = $this->db->conn->OffsetDate(0,$this->db->conn->sysTimeStamp);
 		$recordR["RADI_DEPE_ACTU"]  = $this->radiDepeActu;
 		$recordR["TDOC_CODI"]       = $this->tdocCodi;
@@ -177,7 +169,6 @@ function newRadicado($tpRad, $tpDepeRad)
 			      $recordR["RADI_NUME_ANEXO"] = $this->noanexos;
 		  }
 
-		$recordR["TDID_CODI"]       = $this->tdidCodi;
 		$recordR["depe_codi"]       = $this->dependencia;
 		$recordR["sgd_trad_codigo"] = $tpRad;
 
@@ -189,12 +180,12 @@ function newRadicado($tpRad, $tpDepeRad)
 		 * Codigo de verificación
 		 */
 		$recordR["SGD_RAD_CODIGOVERIFICACION"] = "'" . substr(sha1(microtime()), 0 , 5) . "'";
-		
+
 		$whereNivel = "";
 
 		$insertSQL = $this->db->insert("RADICADO", $recordR, "false");
-		
-		//return "2011 $SecName  --> $secNew --> $newRadicado ->" ;				
+
+		//return "2011 $SecName  --> $secNew --> $newRadicado ->" ;
 		// $insertSQL = $this->db->conn->Replace("RADICADO", $recordR, "RADI_NUME_RADI", false);
 
 		if(!$insertSQL)
@@ -208,22 +199,27 @@ function newRadicado($tpRad, $tpDepeRad)
 
   function updateRadicado($radicado, $radgplthUpdate = null)
   {
-		$recordR["radi_cuentai"]    = $this->radiCuentai;
-		$recordR["eesp_codi"]       = $this->eespCodi;
+		$recordR["radi_cuentai"]    = "'$this->radiCuentai'";
+		$recordR["eesp_codi"]       = empty($this->eespCodi)? 0 : $this->eespCodi ;
 		$recordR["mrec_codi"]       = $this->mrecCodi;
 		$recordR["radi_fech_ofic"]  = $this->db->conn->DBDate($this->radiFechOfic);
 		$recordR["radi_pais"]       = "'".$this->radigplis."'";
 		$recordR["ra_asun"]         = "'".$this->raAsun."'";
 		$recordR["radi_desc_anex"]  = "'".$this->descAnex."'";
-		$recordR["trte_codi"]       = $this->trteCodi;
-		$recordR["tdid_codi"]       = $this->tdidCodi;
 		$recordR["radi_nume_radi"]  = $radicado;
 		$recordR["SGD_APLI_CODI"]   = $this->sgd_apli_codi;
-		$recordR["RADI_NUME_FOLIO"] = $this->nofolios;
-		$recordR["TDOC_CODI"] 		= $this->tdocCodi;		
-		$recordR["RADI_NUME_ANEXO"] = $this->noanexos;
+
+    if(!empty($this->nofolios)){
+		  $recordR["RADI_NUME_FOLIO"] = $this->nofolios;
+    }
+
+		$recordR["TDOC_CODI"] 		  = $this->tdocCodi;
+
+    if(!empty($this->noanexos)){
+      $recordR["RADI_NUME_ANEXO"] = $this->noanexos;
+    }
 		$recordR["RADI_NUME_GUIA"]  = "'$this->guia'";
-		
+
 		// Linea para realizar radicacion Web de archivos pdf
 		if(!empty($radgplthUpdate) && $radPathUpdate != ""){
 			$archivogplth = explode(".", $radPathUpdate);
@@ -255,7 +251,7 @@ function newRadicado($tpRad, $tpDepeRad)
                    AND R.RADI_NUME_RADI = ".$radicado;
     // print $sqlImp;
 	$rsImp = $this->db->conn->query( $sqlImp );
-    
+
 	if ( $rsImp->EOF )
         {
 	   $arrAnexos[0] = 0;
@@ -292,12 +288,12 @@ function newRadicado($tpRad, $tpDepeRad)
         $query .= ' WHERE RAD.RADI_NUME_RADI = '.$radicado;
         // print $query;
         $rs = $this->db->conn->query( $query );
-        
+
         $arrDatosRad['fechaRadicacion'] = $rs->fields['RADI_FECH_RADI'];
         $arrDatosRad['ruta'] = $rs->fields['RADI_PATH'];
         $arrDatosRad['tipoDocumento'] = $rs->fields['SGD_TPR_DESCRIP'];
         $arrDatosRad['asunto'] = $rs->fields['RA_ASUN'];
-            
+
         return $arrDatosRad;
     }
 
@@ -308,7 +304,7 @@ function newRadicado($tpRad, $tpDepeRad)
      * @autor 12/2009 Fundacion Correlibre
      *        07/2009 adaptacion DNP por Jairo Losada
      * @version Orfeo 3.8.0
-     * @param $tipoAccion numeric Indica 0--> es un parametro 
+     * @param $tipoAccion numeric Indica 0--> es un parametro
      * de Radicado Nuevo o 1-> Que es una modificacion a la Existente.
      **/
 
@@ -338,7 +334,7 @@ function newRadicado($tpRad, $tpDepeRad)
       if($this->dirTipo and $tipoAccion==0) $record['SGD_DIR_TIPO']   = $this->dirTipo;
       if($this->dirCodigo) $record['SGD_DIR_CODIGO'] = $this->dirCodigo;
       if($this->dirNombre) $record['SGD_DIR_NOMBRE'] = $this->dirNombre;
-	  
+
       $ADODB_COUNTRECS = true;
       //$insertSQL = $this->db->insert("SGD_DIR_DRECCIONES", $record, "true");
 	  if($tipoAccion==0){
@@ -348,13 +344,13 @@ function newRadicado($tpRad, $tpDepeRad)
                                                 $autoquote = true);
 												$insertSQL = "ddddddddd ddccccwww ";
 	  }else{
-	  	$recordWhere['RADI_NUME_RADI'] = $radiNumeRadi;	
-		$recordWhere['SGD_DIR_TIPO']   = $dirTipo;	
+	  	$recordWhere['RADI_NUME_RADI'] = $radiNumeRadi;
+		$recordWhere['SGD_DIR_TIPO']   = $dirTipo;
 		$insertSQL = $this->db->update("SGD_DIR_DRECCIONES",
                                                 $record,
                                                 $recordWhere);
 	  }
-	  
+
       if(!$insertSQL) {
 			  $this->errorNewRadicado .= "<hr><b><font color=red>Error no se inserto sobre sgd_dir_drecciones<br>SQL:". $this->db->querySql .">> $insertSQL </font></b><hr>";
 			  $insertSQL =-1;
@@ -362,10 +358,10 @@ function newRadicado($tpRad, $tpDepeRad)
 			  $this->errorNewRadicado .= "<hr><b><font color=green>0: Ok </font></b><hr>";
 			  $insertSQL =1;
 		  }
-		  
+
       return $insertSQL;
-    } 
-	
+    }
+
 
 } // Fin de Class Radicacion
 ?>

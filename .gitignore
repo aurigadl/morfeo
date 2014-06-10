@@ -6,7 +6,8 @@ img/login_background.jpeg
 respuestaRapida/templates_c/*
 .idea
 .svn
-<F2>*~
+*~
+.idea/
 HEAD
 config
 description
