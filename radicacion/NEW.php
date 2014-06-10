@@ -336,78 +336,59 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <br />
         <div class="well">
           <section class="smart-form">
-            <div class="row">
-              <section class="col col-6">
+              <section>
                 <label class="label">
                   Asunto
                 </label>
                 <label class="textarea">
                   <textarea id="asu" name="asu" cols="70"  rows="4" ><?=$asu?></textarea>
                 </label>
-              </section>
-
-              <section class="col col-6">
-                  <label class="label">
-                    Medio Recepci&oacute;n
-                  </label>
-                  <label class="select">
-                    <?=$medioRec?>
-                  </label>
-                  <label class="label">
-                    Dignatario
-                  </label>
-                  <label class="input">
-                    <input type="text" value="" name="otro_us">
-                  </label>
-              </section>
-            </div>
-
-            <div class="row">
-
-              <section class="col col-2">
-                  <label class="label">
-                    No. Folios
-                  </label>
-                  <label class="input">
-                    <input name="nofolios" id="nofolios" type="text" size="10"  value="">
-                  </label>
-              </section>
-              <section class="col col-2">
-                  <label class="label">
-                    No. Anexos
-                  </label>
-                  <label class="input">
-                    <input name="noanexos" id="noanexos" type="text" size="10" value="">
-                  </label>
-              </section>
-              <section class="col col-2">
-                  <label class="label">
-                    Descripci&oacute; Anexos
-                  </label>
-                  <label class="input">
-                  <input name="ane" id="ane" type="text" size="70"  value="<?=$ane?>">
-                  </label>
-              </section>
-
-              <section class="col col-3">
-                  <label class="label">
-                    Dependencia
-                  </label>
-                  <label class="select">
-                    <?=$depselect?>
-                  </label>
-              </section>
-
-              <section class="col col-3">
                 <label class="label">
-                  Tipo Documental
+                    Medio Recepci&oacute;n
                 </label>
                 <label class="select">
-                  <?=$tipoDoc?>
+                    <?=$medioRec?>
                 </label>
-              </section>
-            </div>
+                <!--<label class="label">
+                    Dignatario
+                </label>
+                  <label class="input">
+                  <input type="text" value="" name="otro_us">
+                </label>-->
+                  <label class="label">
+                      No. Folios
+                  </label>
+                  <label class="input">
+                      <input name="nofolios" id="nofolios" type="text" size="10"  value="">
+                  </label>
 
+                  <label class="label">
+                      No. Anexos
+                  </label>
+                  <label class="input">
+                      <input name="noanexos" id="noanexos" type="text" size="10" value="">
+                  </label>
+                  <label class="label">
+                      Descripci&oacute; Anexos
+                  </label>
+                  <label class="input">
+                      <input name="ane" id="ane" type="text" size="70"  value="<?=$ane?>">
+                  </label>
+
+                  <label class="label">
+                      Dependencia
+                  </label>
+                  <label class="select">
+                      <?=$depselect?>
+                  </label>
+
+                  <label class="label">
+                      Tipo Documental
+                  </label>
+                  <label class="select">
+                      <?=$tipoDoc?>
+                  </label>
+              </section>
           </section>
         </div>
       </div>
