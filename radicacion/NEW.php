@@ -714,46 +714,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
        ).appendTo('#alertmessage');
    };
 
-    echo "<INPUT TYPE=HIDDEN NAME=codusuarioActu value=$codusuarioActu>";
-    echo "<INPUT TYPE=HIDDEN NAME=radicadopadre value=$radicadopadre>";
-    echo "<INPUT TYPE=HIDDEN NAME=radicadopadreseg value=2>";
-    echo "<INPUT TYPE=HIDDEN NAME='codieesp' value='$codieesp'>";
-    echo "<INPUT TYPE=HIDDEN NAME='consec' value='$consec'>";
-    echo "<INPUT TYPE=HIDDEN NAME='seri_tipo' value='$seri_tipo'>";
-    echo "<INPUT TYPE=HIDDEN NAME='radi_usua_actu' value='$radi_usua_actu'>";
-    $nombre = $nombre_us1 . " ".$prim_apel_us1. " ".$sseg_apel_us2;
-
-    if(!$Submit3 and !$Submit4){?>
-
-    <footer>
-      <center>
-        <input type='button' onClick='radicar_doc()' name='Submit33' value='Radicar' class="btn btn-primary">
-        <input type='hidden'  name='Submit3' value='Radicar' class='ebuttons2'>
-      </center>
-    </footer>
-
-    <?php }else{
-       $varEnvio = session_name()."=".session_id()."&faxPath&leido=no&krd=$krd&faxPath=$faxPath&verrad=$nurad&nurad=$nurad&ent=$ent&remite=$nombre&dependenciaDestino=$dependencia";
-    ?>
-        <div class="col col-4">
-          <div class="well">
-            <fieldset>
-              <ul class="demo-btns">
-                <li>
-                  <input type='button' onClick='modificar_doc()' name='Submit44' value='Modificar datos' class="btn btn-success btn-sm">
-                </li>
-                <li>
-                  <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('stickerWeb/index.php?<?=$varEnvio?>&alineacion=Center','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');">Sticker</a>
-                </li>
-                <li>
-                  <a class="btn btn-info  btn-sm" href="javascript:void(0);" onClick="window.open ('../uploadFiles/uploadFileRadicado.php?busqRadicados=<?=$nurad?>&Buscar=Buscar&<?=$varEnvio?>&alineacion=Center','busqRadicados=<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');">Asociar Imagen</a>
-                </li>
-              </ul>
-              <input type='hidden'  name='Submit4' value='MODIFICAR DATOS' class='ebuttons2'>
-              <input type='hidden' name='nurad' value='<?=$nurad?>'></center>
-            </fieldset>
-          </div>
-        </div>
+   function borrarAlert(){
+     $('#alertmessage').empty();
+   }
 
    //Radicar documento nuevo
    $('#radicarNuevo, #modificaRad').on("click", function(){
