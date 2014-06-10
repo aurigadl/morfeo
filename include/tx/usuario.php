@@ -34,77 +34,94 @@ class Usuario {
         $this->db=$db;
     }
 
-    /**
-     * borrar usuario
-     *@param  array con el id_usuario y el tipo de usuario
-     *@return bool
-     */
-    function borrarUsuarios($datos){
-
-    }
 
     /**
-     * crear usuario
-     *@param  array son necesarios el id_usuario, el tipo de usuario y datos
-     *@return bool
+     * crear y editar usuario
+     * @param  array son necesarios el id_usuario, el tipo de usuario y datos
+     * @return bool
      */
-    function crearUsuario($datos){
+    function usuarioCreaEdita($datos){
+        // Usuario ....................................................................
+        $idUser = intval($datos['id_table']); //Id del usuario
+
         switch ( $datos['sgdTrd'] ){
-            // Usuario ....................................................................
             case 0:
+                if(empty($idUser)){
+                    $nextval=$this->db->nextId("sec_ciu_ciudadano");
+
+                    if ($nextval==-1){
+                        $this->result[] = array( "error"  => 'No se encontr&oacute; la secuencia sec_ciu_ciudadano');
+                        return false;
+                    }
+                } else {
+                    $nextval = $idUser;
+                }
+
                 $record = array();
+                $record['sgd_ciu_codigo']     = $nextval;
+                $record['sgd_ciu_nombre']     = $datos['nombre'];
+                $record['sgd_ciu_apell1']     = $datos['apellido'];
+                $record['sgd_ciu_direccion']  = $datos['direccion'];
+                $record['sgd_ciu_telefono']   = $datos['telef'];
+                $record['sgd_ciu_email']      = $datos['email'];
+                $record['sgd_ciu_cedula']     = $datos['cedula'];
+                $record['tdid_codi']          = $datos['tdid_codi'];
+                $record['muni_codi']          = $datos['muni_tmp'];
+                $record['dpto_codi']          = $datos['dpto_tmp'];
+                $record['id_cont']            = $datos['cont_tmp'];
+                $record['id_pais']            = $datos['pais_tmp'];
 
-                $record['MUNI_CODI']         = $muni_tmp;
-                $record['DPTO_CODI']         = $dpto_tmp;
-                $record['ID_PAIS']           = $idpais;
-                $record['ID_CONT']           = $idcont;
+                $insertSQL = $this->db->conn->Replace("sgd_ciu_ciudadano",$record,'sgd_ciu_codigo',$autoquote = true);
 
-                $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
-                    $record,
-                    $filter,
-                    $autoquote = true);
 
+                //Regresa 0 si falla, 1 si efectuo el update y 2 si no se
+                //encontro el registro y el insert fue con exito
                 if($insertSQL){
-                    $this->result[] = $codigo;
+                    $this->result[] = $nextval;
                     return true;
                 }
 
-                INSERT INTO sgd_ciu_ciudadano(
-                tdid_codi, sgd_ciu_codigo, sgd_ciu_nombre, sgd_ciu_direccion,
-                sgd_ciu_apell1, sgd_ciu_apell2, sgd_ciu_telefono, sgd_ciu_email,
-                muni_codi, dpto_codi, sgd_ciu_cedula, id_cont, id_pais)
-        VALUES (?, ?, ?, ?,
-        ?, ?, ?, ?,
-        ?, ?, ?, ?, ?);
                 break;
 
             // Empresas ....................................................................
             case 2:
-                INSERT INTO sgd_oem_oempresas(
-                sgd_oem_codigo, tdid_codi, sgd_oem_oempresa, sgd_oem_rep_legal,
-                sgd_oem_nit, sgd_oem_sigla, muni_codi, dpto_codi, sgd_oem_direccion,
-                sgd_oem_telefono, id_cont, id_pais, sgd_oem_email)
-    VALUES (?, ?, ?, ?,
-            ?, ?, ?, ?, ?,
-            ?, ?, ?, ?);
+                if(empty($idUser)){
+                    $nextval=$this->db->nextId("sgd_oem_oempresas");
 
+                    if ($nextval==-1){
+                        $this->result[] = array( "error"  => 'No se encontr&oacute; la secuencia sgd_oem_oempresas');
+                        return false;
+                    }
 
-                break;
+                } else {
+                    $nextval = $idUser;
+                }
 
-            // Funcionario .................................................................
-            case 6:
+                $record = array();
+                $record['sgd_oem_codigo']     = $nextval;
+                $record['tdid_codi']          = $datos['tdid_codi'];
+                $record['sgd_oem_oempresa']   = $datos['nombre'];
+                $record['sgd_oem_rep_legal']  = $datos['apellido'];
+                $record['sgd_oem_nit']        = $datos['cedula'];
+
+                $record['sgd_oem_direccion']  = $datos['direccion'];
+                $record['sgd_oem_telefono']   = $datos['telef'];
+                $record['sgd_oem_email']      = $datos['email'];
+
+                $record['muni_codi']          = $datos['muni_tmp'];
+                $record['dpto_codi']          = $datos['dpto_tmp'];
+                $record['id_cont']            = $datos['cont_tmp'];
+                $record['id_pais']            = $datos['pais_tmp'];
+
+                $insertSQL = $this->db->conn->Replace("sgd_oem_oempresas",$record,'sgd_ciu_codigo',$autoquote = true);
+
+                if($insertSQL){
+                    $this->result = $codigo;
+                    return true;
+                }
 
                 break;
         }
-    }
-
-    /**
-     * actualizar usuario
-     *@param  array son necesarios el id_usuario, el tipo de usuario y datos
-     *@return bool
-     */
-    function actulizarUsuario($datos){
-
     }
 
     /**
@@ -119,66 +136,78 @@ class Usuario {
      */
     public function guardarUsuarioRadicado($user, $nurad){
 
-        $filter       = array('RADI_NUME_RADI','SGD_TRD_CODIGO');
+
         $idUser       = intval($user['id_table']); //Id del usuario
         $idInRadicado = intval($user['id_sgd_dir_dre']);//Id usuario registrado en radicado
 
-        //Modificar un usuario
-        if(!empty($idUser)){
-            $this->actulizarUsuario($user);
-        //Crear un usuario
-        }else{
-            $this->crearUsuario($user);
-        }
+        //Modificar o Crea un usuario
+        if($this->usuarioCreaEdita($user)){
+            $coduser = $this->result[0];
+        };
 
         //agregar usuario al radicado
-        if(empty($idUser) and !empty($idInRadicado)){
-            $nextval = $this->db->nextId("sec_dir_direcciones");
+        if(empty($idInRadicado)){
+            $nextval = $this->db->nextId("sgd_dir_direcciones");
             if ($nextval==-1){
                 $this->result[] = array( "error"  => 'No se encontr&oacute; la secuencia para grabar el usuario seleccionado');
                 return false;
             }
-        }
-
         //Modificar usuario ya registrado
-        if(!empty($idUser) and !empty($idInRadicado)){
-            $nextval = $user['id_sgd_dir_dre'];
+        }else{
+            $nextval = $idInRadicado;
         }
 
         $record = array();
 
-        $record['MUNI_CODI']         = $muni_tmp;
-        $record['DPTO_CODI']         = $dpto_tmp;
-        $record['ID_PAIS']           = $idpais;
-        $record['ID_CONT']           = $idcont;
-        $record['SGD_TRD_CODIGO']    = $sgdTrd; // Tipo de documento
+        $record['MUNI_CODI']         = $user['muni_tmp'];
+        $record['DPTO_CODI']         = $user['dpto_tmp'];
+        $record['ID_PAIS']           = $user['pais_tmp'];
+        $record['ID_CONT']           = $user['cont_tmp'];
+        $record['SGD_TRD_CODIGO']    = $user['sgdTrd']; // Tipo de documento
 
-        $record['SGD_DIR_DIRECCION'] = $direccion_us;
-        $record['SGD_DIR_TELEFONO']  = trim($telefono_us);
-        $record['SGD_DIR_MAIL']      = $mail_us;
-        $record['SGD_DIR_TIPO']      = 1;
+        $record['SGD_DIR_DIRECCION'] = $user['direccion'];
+        $record['SGD_DIR_TELEFONO']  = $user['telef'];
+        $record['SGD_DIR_MAIL']      = $user['email'];
+        $record['SGD_DIR_TIPO']      = $user['tipo_consec'];
         $record['SGD_DIR_CODIGO']    = $nextval; // Identificador unico
-        //$record['SGD_DIR_NOMBRE']  = '';
 
-        $record['SGD_DIR_NOMREMDES'] = $grbNombresUs;
-        $record['SGD_DIR_DOC']       = $cc_documento_us;
-        $record['SGD_DOC_FUN']       = empty($sgd_fun_codigo)? 0 : $sgd_fun_codigo;
-        $record['SGD_OEM_CODIGO']    = empty($sgd_oem_codigo)? 0 : $sgd_oem_codigo;
-        $record['SGD_CIU_CODIGO']    = empty($sgd_ciu_codigo)? "" : $sgd_ciu_codigo;
+        $record['SGD_DIR_NOMREMDES'] = $user['nombre'];
+        $record['SGD_DIR_DOC']       = $user['cedula'];
+
         $record['RADI_NUME_RADI']    = $nurad; // No de radicado
         $record['SGD_SEC_CODIGO']    = 0;
 
+        switch ( $datos['sgdTrd'] ){
+            // Usuario ....................................................................
+            case 0:
+                $record['SGD_CIU_CODIGO']    = $coduser;
+                break;
+
+            // Empresas ....................................................................
+            case 2:
+                $record['SGD_OEM_CODIGO']    = $coduser;
+                break;
+
+            // Funcionario .................................................................
+            case 6:
+                $record['SGD_DOC_FUN']       = $coduser;
+                break;
+        }
+
         $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
             $record,
-            $filter,
+            'SGD_DIR_CODIGO',
             $autoquote = true);
 
         if($insertSQL){
             $this->result[] = $codigo;
             return true;
+        }else{
+            $this->result[] = array( "error"  => 'No se puedo agregar usuario al radicado');
+            return false;
         }
-
     }
+
 
 
     /**
@@ -213,10 +242,28 @@ class Usuario {
 
     public function resRadicadoHtml(){
 
+        $select = "  SELECT
+                       tdid_codi, tdid_desc
+                     FROM tipo_doc_identificacion";
+
+        $rs = $this->db->query($select);
+
+        while(!$rs->EOF){
+            $codi = $rs->fields[0];
+            $desc = $rs->fields[1];
+            if($result["TDID_CODI"] === $codi && !empty($result["TDID_CODI"])){
+                $options .= "<option value=' $codi ' selected >$desc</option>";
+            }else{
+                $options .= "<option value=' $codi '>$desc</option>";
+            }
+            $rs->MoveNext();
+        }
+
         foreach ($this->result as $k => $result){
-            $tipo = $result["TIPO"];
+            $tipo = intval($result["TIPO"]);
             switch ( $tipo ) {
-                case $tipo < 2:
+                case 0:
+                case 2:
                     $codigo = $result["SGD_CIU_CODIGO"];
                     break;
                 case 2:
@@ -227,6 +274,9 @@ class Usuario {
                     break;
             }
 
+            if(empty($codigo)){
+                $codigo = 'XX';
+            }
 
             /**
              * Identificador para realizar transaccion y eventos desde
@@ -237,38 +287,31 @@ class Usuario {
              * si esta vacio se grabara como nuevo.
             */
 
-            if(!is_int($result['CODIGO']) && empty($codigo)){
-                $codigo = 'XX';
-                $hidediv = "hide";
-                $hideinp = "";
-            }else{
-                $hidediv = "";
-                $hideinp = "hide";
-            }
-
             //Si es un registro nuevo mostramos los campos para editar
-
             $idtx = $k.'_'.$result["TIPO"].'_'.$codigo.'_'.$result["CODIGO"];
 
             $html = '<td class="search-table-icon">
-                <a href="javascript:void(0);"
-                  rel="tooltip"
-                  data-placement="right"
-                  data-original-title="Eliminar Usuario"
-                  class="text-danger">
-                  <i class="fa fa-minus"></i>
-                </a>
-                <input type="hidden" class="hide" name="usuario[]" value="'.$idtx.'">
-              </td>';
+                        <div class="row-fluid">
+                            <span class="inline widget-icon txt-color-red"
+                              rel="tooltip"
+                              data-placement="right"
+                              data-original-title="Eliminar Usuario">
+                              <i class="fa fa-minus"></i></span>
+                        </div>
+                        <input type="hidden" class="hide" name="usuario[]" value="'.$idtx.'">
+                      </td>';
+
+            $html .= '  <td>
+                          <label name="inp_'.$idtx.'_tdid_codi" class="select">
+                            <select name="'.$idtx.'_tdid_codi">
+                                '.$options.'
+                            </select>
+                          </label>
+                        </td>';
 
             if(empty($result["CEDULA"])){
                 $html .= '<td>
-                  <div name="div_'.$idtx.'_ced" class="'.$hidediv.'">'
-                    .$result["CEDULA"].'
-                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-                   </div>
-                  <label name="inp_'.$idtx.'_ced" class="input '.$hideinp.'">
-                    <i class="icon-append fa fa-check"></i>
+                  <label name="inp_'.$idtx.'_ced" class="input">
                     <input type="text" name="'.$idtx.'_cedula" value="'.$result["CEDULA"].'">
                   </label>
                 </td>';
@@ -276,101 +319,57 @@ class Usuario {
                 $html .= '<td>'.$result["CEDULA"].'</td>';
             }
 
-
-            $html .= '<td>
-              <div name="div_'.$idtx.'_nomb" class="'.$hidediv.'">'.$result["NOMBRE"].'
-                <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-               </div>
-              <label name="inp_'.$idtx.'_nomb" class="input '.$hideinp.'">
-                <i class="icon-append fa fa-check"></i>
-                <input type="text" name="'.$idtx.'_nombre" value="'.$result["NOMBRE"].'">
-              </label>
-            </td>';
+            $html .= '  <td>
+                          <label name="inp_'.$idtx.'_nomb" class="input">
+                            <input type="text" name="'.$idtx.'_nombre" value="'.$result["NOMBRE"].'">
+                          </label>
+                        </td>';
 
 
-            $html .= '<td>
-              <div name="div_'.$idtx.'_apell" class="hide">'.$result["APELLIDO"].'
-                <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-               </div>
-              <label name="inp_'.$idtx.'_apell" class="input '.$hideinp.'">
-                <i class="icon-append fa fa-check"></i>
-                <input type="text" name="'.$idtx.'_apellido" value="'.$result["APELLIDO"].'">
-              </label>
-            </td>';
+            $html .= '  <td>
+                          <label name="inp_'.$idtx.'_apell" class="input">
+                            <input type="text" name="'.$idtx.'_apellido" value="'.$result["APELLIDO"].'">
+                          </label>
+                        </td>';
 
+            $html .= '  <td>
+                          <label name="inp_'.$idtx.'_tel" class="input">
+                            <input type="text" name="'.$idtx.'_telefono" value="'.$result["TELEF"].'">
+                          </label>
+                        </td>';
 
-            $html .= '<td>
-                  <div name="div_'.$idtx.'_tel" class="'.$hidediv.'">'
-                .$result["TELEF"].'
-                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-                   </div>
-                  <label name="inp_'.$idtx.'_tel" class="input '.$hideinp.'">
-                    <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="'.$idtx.'_telefono" value="'.$result["TELEF"].'">
-                  </label>
-                </td>';
+            $html .= '  <td>
+                          <label name="inp_'.$idtx.'_dire" class="input">
+                            <input type="text" name="'.$idtx.'_direccion" value="'.$result["DIRECCION"].'">
+                          </label>
+                        </td>';
 
+            $html .= '  <td>
+                          <label name="inp_'.$idtx.'_email" class="input">
+                            <input type="text" name="'.$idtx.'_email" value="'.$result["EMAIL"].'">
+                          </label>
+                        </td>';
 
-            $html .= '<td>
-                  <div name="div_'.$idtx.'_dire" class="'.$hidediv.'">'.$result["DIRECCION"].'
-                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-                  </div>
-                  <label name="inp_'.$idtx.'_dire" class="input '.$hideinp.'">
-                    <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="'.$idtx.'_direccion" value="'.$result["DIRECCION"].'">
-                  </label>
-                </td>';
+            $html .= '  <td>
+                          <label name="inp_'.$idtx.'_muni" class="input">
+                            <input type="text" name="'.$idtx.'_muni" value="'.$result["MUNI"].'">
+                            <input type="hidden" name="'.$idtx.'_muni_codigo" value="'.$result["MUNI_CODIGO"].'">
+                          </label>
+                        </td>';
 
+            $html .= '  <td>
+                          <label name="inp_'.$idtx.'_dep" class="input">
+                            <input type="text" name="'.$idtx.'_dep" value="'.$result["DEP"].'">
+                            <input type="hidden" name="'.$idtx.'_dep_codigo" value="'.$result["DEP_CODIGO"].'">
+                          </label>
+                        </td>';
 
-            $html .= '<td>
-                  <div name="div_'.$idtx.'_email" class="'.$hidediv.'">'
-                .$result["EMAIL"].'
-                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-                   </div>
-                  <label name="inp_'.$idtx.'_email" class="input '.$hideinp.'">
-                    <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="'.$idtx.'_email" value="'.$result["EMAIL"].'">
-                  </label>
-                </td>';
-
-
-            $html .= '<td>
-                  <div name="div_'.$idtx.'_muni" class="'.$hidediv.'">'
-                .$result["MUNI"].'
-                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-                  </div>
-                  <label name="inp_'.$idtx.'_muni" class="input '.$hideinp.'">
-                    <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="'.$idtx.'_muni" value="'.$result["MUNI"].'">
-                    <input type="hidden" name="'.$idtx.'_muni_codigo" value="'.$result["MUNI_CODIGO"].'">
-                  </label>
-                </td>';
-
-
-            $html .= '<td>
-                  <div name="div_'.$idtx.'_dep" class="'.$hidediv.'">'
-                .$result["DEP"].'
-                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-                  </div>
-                  <label name="inp_'.$idtx.'_dep" class="input '.$hideinp.'">
-                    <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="'.$idtx.'_dep" value="'.$result["DEP"].'">
-                    <input type="hidden" name="'.$idtx.'_dep_codigo" value="'.$result["DEP_CODIGO"].'">
-                  </label>
-                </td>';
-
-
-            $html .= '<td>
-                  <div name="div_'.$idtx.'_pais" class="'.$hidediv.'">'
-                .$result["PAIS"].'
-                    <a href="javascript:void(0);" class="pull-right"><i class="fa fa-pencil"></i></a>
-                  </div>
-                  <label name="inp_'.$idtx.'_pais" class="input '.$hideinp.'">
-                    <i class="icon-append fa fa-check"></i>
-                    <input type="text" name="'.$idtx.'_pais" value="'.$result["PAIS"].'">
-                    <input type="hidden" name="'.$idtx.'_pais_codigo" value="'.$result["PAIS_CODIGO"].'">
-                  </label>
-                </td>';
+            $html .= '  <td>
+                          <label name="inp_'.$idtx.'_pais" class="input">
+                            <input type="text" name="'.$idtx.'_pais" value="'.$result["PAIS"].'">
+                            <input type="hidden" name="'.$idtx.'_pais_codigo" value="'.$result["PAIS_CODIGO"].'">
+                          </label>
+                        </td>';
 
             return '<tr>'.$html.'</tr>';
         }
@@ -438,7 +437,7 @@ class Usuario {
 
         switch ( $tipo ) {
 
-            // Usuario ....................................................................
+            // Usuario ........................................................
             case 0:
 
                 if(!empty($name)){
@@ -483,6 +482,7 @@ class Usuario {
                   ,m.MUNI_NOMB         as muni
                   ,m.MUNI_CODI         as muni_codigo
                   ,0                   as tipo
+                  ,s.TDID_CODI         as tdid_codi
                   ,CONCAT(s.SGD_CIU_APELL1,' ', s.SGD_CIU_APELL2) as apellido
                 FROM
                   SGD_CIU_CIUDADANO s
@@ -553,6 +553,7 @@ class Usuario {
                   ,m.MUNI_NOMB         as muni
                   ,m.MUNI_CODI         as muni_codigo
                   ,2                   as tipo
+                  ,s.TDID_CODI         as tdid_codi
                   ,CONCAT(s.sgd_oem_sigla, ' / ' ,s.SGD_OEM_REP_LEGAL) AS apellido
                 FROM
                   SGD_OEM_OEMPRESAS s
@@ -623,6 +624,7 @@ class Usuario {
                   ,m.MUNI_NOMB    as muni
                   ,m.MUNI_CODI    as muni_codigo
                   ,6              as tipo
+                  ,0              as tdid_codi
                 FROM
                   USUARIO s
                   ,DEPARTAMENTO d

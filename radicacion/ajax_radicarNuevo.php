@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   header('Content-Type: application/json');
   include_once("$ruta_raiz/include/db/ConnectionHandler.php");
   $db     = new ConnectionHandler("$ruta_raiz");
-  $db->conn->debug = true;
+  //$db->conn->debug = true;
 
 	$ADODB_COUNTRECS = true;
 	$ADODB_FORCE_TYPE = ADODB_FORCE_NULL;
@@ -188,9 +188,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     //Datos de usuarios
     foreach ($usuarios as $clave => $valor) {
+
         list($consecutivo, $sgdTrd, $id_sgd_dir_dre , $id_table) = explode('_', $valor);
+
         $usuarios[$clave] = array(
-            "cedula"         => $_POST["$valor.cedula"],
+            "cedula"         => $_POST[$valor."_".cedula],
             "nombre"         => $_POST[$valor."_".nombre],
             "apellido"       => $_POST[$valor."_".apellido],
             "telef"          => $_POST[$valor."_".telefono],
@@ -201,13 +203,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "dep"            => $_POST[$valor."_".dep],
             "dpto_tmp"       => $_POST[$valor."_".dep_codigo],
             "pais"           => $_POST[$valor."_".pais],
-            "idpais"         => $_POST[$valor."_".pais_codigo],
+            "pais_tmp"       => $_POST[$valor."_".pais_codigo],
+            "cont_tmp"       => 1,
+            "tdid_codi"      => $_POST[$valor."_".tdid_codi],
             "consecutivo"    => $consecutivo,
             "sgdTrd"         => $sgdTrd,
             "id_sgd_dir_dre" => $id_sgd_dir_dre,
-            "id_table"       => $id_table
+            "id_table"       => $id_table,
+            "tipo_consec"    => $clave + 1
         );
-        $classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad);
-    }
 
-echo json_encode($data);
+        $classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad);
+
+    }
+    echo json_encode($data);

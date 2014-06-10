@@ -21,7 +21,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-ini_set ('error_reporting', E_ALL);
+//ini_set ('error_reporting', E_ALL);
   session_start();
 
   $ruta_raiz = "..";
@@ -261,11 +261,10 @@ ini_set ('error_reporting', E_ALL);
                         </section>
 
                         <section  class="col col-2">
-
                           <label class="select">
                             <select id="tipo_usuario" class="form-control input-sm">
-                              <option value='0'>Usuario     </option>
-                              <option value='2'>Empresas    </option>
+                              <option value='0'>Usuario </option>
+                              <option value='2'>Entidad </option>
                               <option value='6'>Funcionarios</option>
                             </select>
                           </label>
@@ -311,7 +310,8 @@ ini_set ('error_reporting', E_ALL);
                       <table class="table table-bordered">
                         <thead>
                           <tr>
-                            <th></th>
+                            <th style="width: 35px;"></th>
+                            <th>Tipo Documento</th>
                             <th>Documento</th>
                             <th>Nombres</th>
                             <th>Apellidos</th>
@@ -447,11 +447,15 @@ ini_set ('error_reporting', E_ALL);
         $('div[name=div_' + iddiv + ']').append(div_nuevo.children());
     });
 
-    $("body").on("click", 'div[name^="div_"]',function(){
-        var texto = $(this).attr('name').substring(4);
-        $('label[name="inp_' + texto + '"]').removeClass('hide');
-        $('label[name="inp_' + texto + '"]').focus();
-        $(this).addClass('hide');
+
+    $("body").on("click", '.fa-pencil',function(){
+        var texto = $(this).parent().attr('name');
+        $.each($('[name^="inp_' + texto + '"]'), function( index, value ) {
+            $(value).removeClass('hide');
+        });
+        $.each($('[name^="div_' + texto + '"]'), function( index, value ) {
+            $(value).addClass('hide');
+        });
     });
 
 
@@ -816,8 +820,6 @@ ini_set ('error_reporting', E_ALL);
 
               }
             };
-          }).done(function(data){
-            alert( "second success"  + data );
           }).fail(function() {
             mostrarAlert({type : 'danger', message : 'Error de conexion al servidor'})
           })

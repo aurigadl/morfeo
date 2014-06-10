@@ -31,6 +31,7 @@ header('Content-Type: application/json');
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 include_once("$ruta_raiz/include/tx/usuario.php");
 $db     = new ConnectionHandler("$ruta_raiz");
+//$db->conn->debug = true;
 
 if($_POST['search']){
     $usuario= new Usuario($db);
