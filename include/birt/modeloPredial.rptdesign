@@ -3787,39 +3787,45 @@ modeloprejuridico mp on  predios.chip=mp.chip
                     <expression name="expression" type="javascript">dataSetRow["observaciones_componente_espacial"]</expression>
                     <property name="dataType">string</property>
                 </structure>
+                <structure>
+                    <property name="name">area_catastral</property>
+                    <text-property name="displayName">area_catastral</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["area_catastral"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
             </list-property>
             <column id="387">
-                <property name="width">1.0520833333333333in</property>
+                <property name="width">1.5104166666666667in</property>
             </column>
             <column id="388">
-                <property name="width">1.1458333333333333in</property>
+                <property name="width">1.2291666666666667in</property>
             </column>
             <column id="439">
-                <property name="width">1.28125in</property>
+                <property name="width">1.625in</property>
             </column>
             <column id="390">
-                <property name="width">0.9583333333333334in</property>
+                <property name="width">1.3854166666666667in</property>
             </column>
             <column id="391">
-                <property name="width">1.3645833333333333in</property>
+                <property name="width">1.6666666666666667in</property>
             </column>
             <column id="392">
-                <property name="width">1.5in</property>
+                <property name="width">0.3958333333333333in</property>
             </column>
             <column id="393">
-                <property name="width">1.4583333333333333in</property>
+                <property name="width">1.1875in</property>
             </column>
             <column id="394">
-                <property name="width">1.0833333333333333in</property>
+                <property name="width">1.0625in</property>
             </column>
             <column id="395">
-                <property name="width">1.4791666666666667in</property>
+                <property name="width">1.34375in</property>
             </column>
             <column id="396">
-                <property name="width">1.0520833333333333in</property>
+                <property name="width">1.28125in</property>
             </column>
             <column id="445">
-                <property name="width">3.2395833333333335in</property>
+                <property name="width">2.9270833333333335in</property>
             </column>
             <header>
                 <row id="334">
@@ -3830,7 +3836,7 @@ modeloprejuridico mp on  predios.chip=mp.chip
                     </cell>
                     <cell id="337">
                         <label id="338">
-                            <text-property name="text">Shape Leng</text-property>
+                            <text-property name="text">Area Catastral</text-property>
                         </label>
                     </cell>
                     <cell id="436">
@@ -3851,14 +3857,13 @@ Inmobiliaria</text-property>
                     </cell>
                     <cell id="345">
                         <label id="346">
-                            <text-property name="text">Cabida
-superficiaria</text-property>
+                            <text-property name="text">cs</text-property>
                         </label>
                     </cell>
                     <cell id="347">
                         <label id="348">
                             <text-property name="text">Avaluo
-catastral terreno</text-property>
+catastral</text-property>
                         </label>
                     </cell>
                     <cell id="349">
@@ -3894,8 +3899,8 @@ Predio</text-property>
                         </data>
                     </cell>
                     <cell id="358">
-                        <data id="427">
-                            <property name="resultSetColumn">shape_leng</property>
+                        <data id="448">
+                            <property name="resultSetColumn">area_catastral</property>
                         </data>
                     </cell>
                     <cell id="437">
