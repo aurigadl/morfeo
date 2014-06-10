@@ -54,7 +54,7 @@
         </table>
         <!--{if $noerror ge 1 or $salida eq 'ok'}-->
         <iframe src="../radicacion/tipificar_documento.php?<!--{$sid}-->&nurad=<!--{$nurad}-->&dependencia=<!--{$dependencia}-->&krd=<!--{$krd}-->&tsub=0&codserie=0" 
-        width='100%' height='340px' style='border: 0px'></iframe>
+        width='100%' height='540px' style='border: 0px'></iframe>
         <!--{/if}-->
         <center><h1><input type="button" value="Salir" class="botones" onclick="parent.window.close();"></h1></center>
     </body>
