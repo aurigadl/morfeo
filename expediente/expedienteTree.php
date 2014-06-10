@@ -5,10 +5,10 @@ ini_set("display_errors",1);
 <article class="col-sm-12 col-md-12" align=left>
 <!--widget content -->
 <div class="widget-body">
-<div class="tree smart-form fa-folder-close">
+<div class="tree smart-form fa-folder-open">
 	<ul>
 	<li>
-		<span class="alert-success"><i class="fa fa-folder-close"></i> <?=$numExpediente?></span>
+		<span class="alert-success"><i class="fa fa-folder-open"></i> <?=$numExpediente?></span>
 		<ul>
 		<?
 		foreach($datosExp as $key2 => $value){

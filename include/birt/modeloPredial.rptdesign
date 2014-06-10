@@ -3793,6 +3793,18 @@ modeloprejuridico mp on  predios.chip=mp.chip
                     <expression name="expression" type="javascript">dataSetRow["area_catastral"]</expression>
                     <property name="dataType">float</property>
                 </structure>
+                <structure>
+                    <property name="name">titulo_adquisicion</property>
+                    <text-property name="displayName">titulo_adquisicion</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["titulo_adquisicion"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">acto_traslativo</property>
+                    <text-property name="displayName">acto_traslativo</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["acto_traslativo"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
             </list-property>
             <column id="387">
                 <property name="width">1.5104166666666667in</property>
@@ -3810,10 +3822,13 @@ modeloprejuridico mp on  predios.chip=mp.chip
                 <property name="width">1.6666666666666667in</property>
             </column>
             <column id="392">
-                <property name="width">0.3958333333333333in</property>
+                <property name="width">0.90625in</property>
+            </column>
+            <column id="453">
+                <property name="width">0.90625in</property>
             </column>
             <column id="393">
-                <property name="width">1.1875in</property>
+                <property name="width">0.6770833333333334in</property>
             </column>
             <column id="394">
                 <property name="width">1.0625in</property>
@@ -3830,6 +3845,7 @@ modeloprejuridico mp on  predios.chip=mp.chip
             <header>
                 <row id="334">
                     <cell id="335">
+                        <property name="fontSize">9pt</property>
                         <label id="336">
                             <text-property name="text">Lote Codigo</text-property>
                         </label>
@@ -3857,7 +3873,12 @@ Inmobiliaria</text-property>
                     </cell>
                     <cell id="345">
                         <label id="346">
-                            <text-property name="text">cs</text-property>
+                            <text-property name="text">Titulo Adquisicion</text-property>
+                        </label>
+                    </cell>
+                    <cell id="450">
+                        <label id="454">
+                            <text-property name="text">Acto Traslativo</text-property>
                         </label>
                     </cell>
                     <cell id="347">
@@ -3920,8 +3941,13 @@ Predio</text-property>
                         </data>
                     </cell>
                     <cell id="366">
-                        <data id="430">
-                            <property name="resultSetColumn">cabida_superficiaria</property>
+                        <data id="449">
+                            <property name="resultSetColumn">titulo_adquisicion</property>
+                        </data>
+                    </cell>
+                    <cell id="451">
+                        <data id="455">
+                            <property name="resultSetColumn">acto_traslativo</property>
                         </data>
                     </cell>
                     <cell id="368">
@@ -3959,6 +3985,7 @@ Predio</text-property>
                     <cell id="380"/>
                     <cell id="381"/>
                     <cell id="382"/>
+                    <cell id="452"/>
                     <cell id="383"/>
                     <cell id="384"/>
                     <cell id="385"/>
