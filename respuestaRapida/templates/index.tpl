@@ -13,6 +13,15 @@
         <script src='../js/jquery.blockUI.js'         type="text/javascript" language="javascript"></script>
         <script src='../js/jquery.treeview.js'        type="text/javascript" language="javascript"></script>
         <script src='../js/libs/jquery-ui-1.10.4.js'              type="text/javascript" language="javascript"></script>
+      <link href="../estilos/bootstrap.min.css" rel="stylesheet">
+      <!-- font-awesome CSS -->
+      <link href="../estilos/font-awesome.css" rel="stylesheet">
+      <!-- Bootstrap core CSS -->
+      <link href="../estilos/font-awesome.min.css" rel="stylesheet">
+      <link href="../estilos/smartadmin-production.css" rel="stylesheet">
+      <link href="../estilos/smartadmin-skins.css" rel="stylesheet">
+      <link href="../estilos/demo.css" rel="stylesheet">
+      <link href="../estilos/siim_temp.css" rel="stylesheet">        
 
         <script language="javascript">
 
@@ -142,7 +151,7 @@
             }
 
         </style>
-
+      <title>..:: Generacion de Documentos en Linea ::..</title>
     </head>
     <body>
 
@@ -155,7 +164,7 @@
         <!--{/foreach}-->
 
         <div id="load" style="display:none;">Enviando.....</div>
-        <form id="form1" name="form1" method="post" enctype="multipart/form-data" action='../respuestaRapida/accion_radicar_anexar.php?<!--{$sid}-->' onsubmit="return valFo(this)">
+        <form id="form1" name="form1" class="smart-form" method="post" enctype="multipart/form-data" action='../respuestaRapida/accion_radicar_anexar.php?<!--{$sid}-->' onsubmit="return valFo(this)">
             <input type=hidden name="usuanomb"   value='<!--{$usuanomb}-->'>
             <input type=hidden name="usualog"    value='<!--{$usualog}-->'>
             <input type=hidden name="radPadre"   value='<!--{$radPadre}-->'>
@@ -167,66 +176,43 @@
             <input type=hidden name="rutaPadre"  value='<!--{$rutaPadre}-->'>
             <input type=hidden name="anexo"  value='<!--{$anexo}-->'>
 
-            <table border="0" width="100%" align="center" cellspacing="0" cellpadding="0">
-                <tr align="center" class="titulos2">
-                    <td height="15" colspan="4" class="titulos4">RESPUESTA RAPIDA</td>
-                </tr>
+            <table border="0" width="100%" align="center" class="table table-bordered">
                 <tr>
-                    <td colspan=2>
-                        <table border="0" width="100%" align="center" cellspacing="0" cellpadding="0">
-                            <tr>
-                               <td class="titulos">Adjuntar <input type="hidden" value="2" name="medioRadicar"></td>
-                               <td colspan=2>
-                                  <input class="select_resp" name="archs[]" type="file" id="T7" accept="<!--{$extn}-->"/>
-                                  <div id="T7-list" class="select_resp" ></div>
-                               </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                
-                <!--{if $MOSTRAR_ERROR}-->
-                <tr align="center">
-                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
-                    <strong>
-                      DEBE SELECCIONAR UN TIPO DE RADICADO
-                    </strong>
-                  </td>
-                </tr>
-                <!--{/if}-->
-                
-                <tr align="center">
-                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
-                      Radicar como:
-                  </td>
-                </tr>
-                
-                <tr align="center">
-                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
-                    <select name="tipo_radicado">
+                                    <td colspan="1"  align="center" >
+                     <small> Radicar como</small>
+                      <label class="select">
+                      <select name="tipo_radicado" class="select">
                       <!--{foreach from=$TIPOS_RADICADOS key=TIPO item=VALOR}-->
                       <option value="<!--{$TIPO}-->"><!--{$VALOR}--></option>
                       <!--{/foreach}-->
                     </select>
+                    </label>
                   </td>
-                </tr>
                 
-                <tr align="center">
-                  <td width="100%" height="25" class="titulos5" align="center" colspan="2">
-                    <input type="submit" name="Button" value="Radicar" class="botones">
+                <!--{if $MOSTRAR_ERROR}-->
+                  <td width="100%"  align="center" colspan="2">
+                    <strong>
+                      DEBE SELECCIONAR UN TIPO DE RADICADO
+                    </strong>
+                  </td>
+                <!--{/if}-->
+                
+  
+                  <td   colspan="4" ><footer>
+                    <input type="submit" name="Button" value="Radicar" class="btn btn-primary">
                     &nbsp;
-                    <input type="submit" name="Button" value="Grabar como Anexo" class="botones">
+                    <input type="submit" name="Button" value="Grabar como Anexo" class="btn btn-success"></footer>
                   </td>
                 </tr>
                 
                 <tr>
-                    <td>
+                    <td colspan=5>
                         <textarea id="texrich" name="respuesta" value=''><!--{$asunto}--></textarea>
                     </td>
          </form>
                     <td  style="width: 230px; vertical-align: top;">
                         <ul id="browser" class="filetree" style="font-size: 10px;">
-                            <div class="titulos4" style="line-height: 30px;"> Administración de plantillas </div>
+                            <div  style="line-height: 30px;"> Administración de plantillas </div>
                             <br/><br/>
                             De click en la plantilla que desea cargar:
 
@@ -251,7 +237,7 @@
                               <input type="submit" name="delPlant" value="Borrar" class="botones_largo">
                             </form>
                         </ul>
-                        <div class="titulos4" style="line-height: 30px;">
+                        <div  style="line-height: 30px;">
                         Guardar plantilla
                         </div>
                         <form id="form2" name="form2" method="post" enctype="multipart/form-data"

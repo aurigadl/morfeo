@@ -1,5 +1,6 @@
 <?php
   session_start();
+  ini_set("display_errors",1);
   define ('YEAR_INICIO', 0);
   define ('YEAR_LENGTH', 4);
   define ('RADI_LENGTH', 3);
@@ -7,10 +8,9 @@
   define ('TIPO_TXT',    8);
   define ('APP_NO_INTEGRADA',    0);
   
-  $ruta_raiz = '../';
+  $ruta_raiz = '..';
+  echo "Entro akaaaa....";
   
-  if (!$_SESSION['dependencia'])
-    header("Location: $ruta_raiz/cerrar_session.php");
   
   foreach ($_GET as $key => $valor)
     ${$key} = $valor;
@@ -64,7 +64,7 @@
   
   if (!$db)
     $db = new ConnectionHandler($ruta_raiz);
-  
+  //$db->conn->debug = true;
   $sqlFechaHoy = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
   
   $anex =& new Anexo($db);
@@ -169,6 +169,8 @@
                     "&anexo=" . $anexo;
   
   if ($result && $nuevo == 'no') {
-    echo 'Actualizo';
+    echo 'Actualizo <br><script>javascript:window.parent.opener.cargarPagina("./lista_anexos.php","tabs-c"); window.parent.close(); </script>';
+  }else{
+    echo 'Archivo Guardado .... <br><script>javascript:window.parent.opener.cargarPagina("./lista_anexos.php","tabs-c"); window.parent.close(); </script>';
   }
 ?>

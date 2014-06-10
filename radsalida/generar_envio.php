@@ -190,9 +190,7 @@ $codigo_envio=$tipo_envio;
 	if($codigo_envio)
 	{
 	   echo "<br><span class=etexto>&Uacute;ltima planilla generada : <b> $planilla_ant </b>  Fec:$fecha_planilla_ant";
-	}
-	else
-	{
+	}	else	{
 
 	}
 	// Fin conteo planilla generada

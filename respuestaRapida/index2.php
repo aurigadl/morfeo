@@ -43,8 +43,16 @@ $rs = $db->conn->query($isql);
 
 $pathImagen = $rs->fields["radi_path"];
 ?>
+
 <frameset cols="99%,*"  border=4 scrolling="yes" >
   <frame name="central" src="../respuestaRapida/index.php?PHPSESSID=<?=session_id()?>&radicadopadre=<?=$radicadopadre?>&krd=<?=krd?>&editar=<?=$editar?>&anexo=<?=$anexo?>" />
   <!-- <frame name="alto" src='<?=$ruta_raiz ."/linkArchivo.php?&PHPSESSID=".session_id()."&numrad=$radicadopadre"?>' />  -->
   <frame name="alto" src='<?=$ruta_raiz ."/bodega/".$pathImagen?>' /> 
 </frameset>
+
+<script>
+ function cerrar(){
+  opener.cargarPagina("./lista_anexos.php","tabs-c");
+  window.close();
+ }
+</script>

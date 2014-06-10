@@ -1,6 +1,6 @@
 <?php
+  ini_set("display_errors",1);
   session_start();
-  
   define ('RADICAR' , 0);
   define ('ANEXAR'  , 1);
 
@@ -20,4 +20,5 @@
   } elseif ($accion == ANEXAR) {
     include ('./grabar_anexo.php');
   }
+  
 ?>

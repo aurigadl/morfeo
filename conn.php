@@ -1,5 +1,4 @@
 <?php 
-session_start();
 ini_set("display_errors",1);
 define('ADODB_ASSOC_CASE', 1);
 if (!$ruta_raiz) $ruta_raiz=".";
@@ -15,6 +14,7 @@ if(!$verrad) $verrad = $verradicado;
 if(!$verradicado) $verradicado = $verrad;
 
 $db = new ConnectionHandler("$ruta_raiz");
+//var_dump($db);
 //$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $objTipoDocto = new TipoDocumento($db);

@@ -396,9 +396,9 @@ $_SESSION['numExpedienteSelected'] = null;
 			"sDom" : "<'dt-top-row'Tlf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
 			"oTableTools" : {
 				"aButtons" : ["copy", "print", {
-					"sExtends" : "collection",
-					"sButtonText" : 'Save <span class="caret" />',
-					"aButtons" : ["csv", "xls", "pdf"]
+				"sExtends" : "collection",
+				"sButtonText" : 'Save <span class="caret" />',
+				"aButtons" : ["csv", "xls", "pdf"]
 				}],
 				"sSwfPath" : "js/plugin/datatables/media/swf/copy_csv_xls_pdf.swf"
 			},
