@@ -40,6 +40,42 @@
             <property name="name">rowFetchSize</property>
             <property name="id">10</property>
         </structure>
+        <structure>
+            <property name="name">odaDriverClass</property>
+            <property name="id">7</property>
+        </structure>
+        <structure>
+            <property name="name">odaURL</property>
+            <property name="id">7</property>
+        </structure>
+        <structure>
+            <property name="name">odaUser</property>
+            <property name="id">7</property>
+        </structure>
+        <structure>
+            <property name="name">odaAutoCommit</property>
+            <property name="id">7</property>
+        </structure>
+        <structure>
+            <property name="name">odaIsolationMode</property>
+            <property name="id">7</property>
+        </structure>
+        <structure>
+            <property name="name">odaPassword</property>
+            <property name="id">7</property>
+        </structure>
+        <structure>
+            <property name="name">odaJndiName</property>
+            <property name="id">7</property>
+        </structure>
+        <structure>
+            <property name="name">OdaConnProfileName</property>
+            <property name="id">7</property>
+        </structure>
+        <structure>
+            <property name="name">OdaConnProfileStorePath</property>
+            <property name="id">7</property>
+        </structure>
     </list-property>
     <property name="units">in</property>
     <property name="iconFile">/templates/blank_report.gif</property>
@@ -92,6 +128,28 @@
             </list-property>
             <property name="odaDriverClass">org.postgresql.Driver</property>
             <property name="odaURL">jdbc:postgresql://siim2.infometrika.net:5432/siim2</property>
+            <property name="odaUser">postgres</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">aW5mb21ldHJpa2EyMDEz</encrypted-property>
+        </oda-data-source>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source1" id="435">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://siim2.infometrika.net:5432/agr</property>
             <property name="odaUser">postgres</property>
             <encrypted-property name="odaPassword" encryptionID="base64">aW5mb21ldHJpa2EyMDEz</encrypted-property>
         </oda-data-source>
@@ -3646,7 +3704,7 @@ modeloprejuridico mp on  predios.chip=mp.chip
             <property name="resultSetColumn">nombreProyecto</property>
         </data>
         <table id="333">
-            <property name="width">13.395833333333334in</property>
+            <property name="width">15.614583333333334in</property>
             <property name="dataSet">predios</property>
             <list-property name="boundDataColumns">
                 <structure>
@@ -3717,52 +3775,89 @@ modeloprejuridico mp on  predios.chip=mp.chip
                     <property name="dataType">string</property>
                     <property name="allowExport">true</property>
                 </structure>
+                <structure>
+                    <property name="name">fuente_direccion</property>
+                    <text-property name="displayName">fuente_direccion</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["fuente_direccion"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">observaciones_componente_espacial</property>
+                    <text-property name="displayName">observaciones_componente_espacial</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["observaciones_componente_espacial"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">area_catastral</property>
+                    <text-property name="displayName">area_catastral</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["area_catastral"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">titulo_adquisicion</property>
+                    <text-property name="displayName">titulo_adquisicion</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["titulo_adquisicion"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">acto_traslativo</property>
+                    <text-property name="displayName">acto_traslativo</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["acto_traslativo"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
             </list-property>
             <column id="387">
-                <property name="width">1.0520833333333333in</property>
+                <property name="width">1.5104166666666667in</property>
             </column>
             <column id="388">
-                <property name="width">1.1458333333333333in</property>
+                <property name="width">1.2291666666666667in</property>
             </column>
-            <column id="389">
-                <property name="width">1.2083333333333333in</property>
+            <column id="439">
+                <property name="width">1.625in</property>
             </column>
             <column id="390">
-                <property name="width">1.28125in</property>
+                <property name="width">1.3854166666666667in</property>
             </column>
             <column id="391">
-                <property name="width">1.5208333333333333in</property>
+                <property name="width">1.6666666666666667in</property>
             </column>
             <column id="392">
-                <property name="width">1.5520833333333333in</property>
+                <property name="width">0.90625in</property>
+            </column>
+            <column id="453">
+                <property name="width">0.90625in</property>
             </column>
             <column id="393">
-                <property name="width">1.25in</property>
+                <property name="width">0.6770833333333334in</property>
             </column>
             <column id="394">
-                <property name="width">1.3229166666666667in</property>
+                <property name="width">1.0625in</property>
             </column>
             <column id="395">
-                <property name="width">1.9270833333333333in</property>
+                <property name="width">1.34375in</property>
             </column>
             <column id="396">
-                <property name="width">1.1354166666666667in</property>
+                <property name="width">1.28125in</property>
+            </column>
+            <column id="445">
+                <property name="width">2.9270833333333335in</property>
             </column>
             <header>
                 <row id="334">
                     <cell id="335">
+                        <property name="fontSize">9pt</property>
                         <label id="336">
                             <text-property name="text">Lote Codigo</text-property>
                         </label>
                     </cell>
                     <cell id="337">
                         <label id="338">
-                            <text-property name="text">Shape Leng</text-property>
+                            <text-property name="text">Area Catastral</text-property>
                         </label>
                     </cell>
-                    <cell id="339">
-                        <label id="340">
-                            <text-property name="text">Shape Area</text-property>
+                    <cell id="436">
+                        <label id="440">
+                            <text-property name="text">direccion</text-property>
                         </label>
                     </cell>
                     <cell id="341">
@@ -3778,14 +3873,18 @@ Inmobiliaria</text-property>
                     </cell>
                     <cell id="345">
                         <label id="346">
-                            <text-property name="text">Cabida
-superficiaria</text-property>
+                            <text-property name="text">Titulo Adquisicion</text-property>
+                        </label>
+                    </cell>
+                    <cell id="450">
+                        <label id="454">
+                            <text-property name="text">Acto Traslativo</text-property>
                         </label>
                     </cell>
                     <cell id="347">
                         <label id="348">
                             <text-property name="text">Avaluo
-catastral terreno</text-property>
+catastral</text-property>
                         </label>
                     </cell>
                     <cell id="349">
@@ -3806,6 +3905,12 @@ predial</text-property>
 Predio</text-property>
                         </label>
                     </cell>
+                    <cell id="442">
+                        <label id="446">
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Observaciones</text-property>
+                        </label>
+                    </cell>
                 </row>
             </header>
             <detail>
@@ -3816,13 +3921,13 @@ Predio</text-property>
                         </data>
                     </cell>
                     <cell id="358">
-                        <data id="427">
-                            <property name="resultSetColumn">shape_leng</property>
+                        <data id="448">
+                            <property name="resultSetColumn">area_catastral</property>
                         </data>
                     </cell>
-                    <cell id="360">
-                        <data id="426">
-                            <property name="resultSetColumn">shape_area</property>
+                    <cell id="437">
+                        <data id="441">
+                            <property name="resultSetColumn">fuente_direccion</property>
                         </data>
                     </cell>
                     <cell id="362">
@@ -3836,8 +3941,13 @@ Predio</text-property>
                         </data>
                     </cell>
                     <cell id="366">
-                        <data id="430">
-                            <property name="resultSetColumn">cabida_superficiaria</property>
+                        <data id="449">
+                            <property name="resultSetColumn">titulo_adquisicion</property>
+                        </data>
+                    </cell>
+                    <cell id="451">
+                        <data id="455">
+                            <property name="resultSetColumn">acto_traslativo</property>
                         </data>
                     </cell>
                     <cell id="368">
@@ -3860,24 +3970,30 @@ Predio</text-property>
                             <property name="resultSetColumn">nombre_predio</property>
                         </data>
                     </cell>
+                    <cell id="443">
+                        <data id="447">
+                            <property name="resultSetColumn">observaciones_componente_espacial</property>
+                        </data>
+                    </cell>
                 </row>
             </detail>
             <footer>
                 <row id="376">
                     <cell id="377"/>
                     <cell id="378"/>
-                    <cell id="379"/>
+                    <cell id="438"/>
                     <cell id="380"/>
                     <cell id="381"/>
                     <cell id="382"/>
+                    <cell id="452"/>
                     <cell id="383"/>
                     <cell id="384"/>
                     <cell id="385"/>
                     <cell id="386"/>
+                    <cell id="444"/>
                 </row>
             </footer>
         </table>
-
     </body>
     <list-property name="images">
         <structure>

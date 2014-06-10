@@ -42,14 +42,14 @@
       $arreglo_errores[] = ' Un archivo no se envio (Extension invalida)';
       $arreglo_errores[] = ' El formato mime del documento no existe';
       $arreglo_errores[] = ' El tamano del archivo adjunto supero el limite permitido';
-      $arreglo_errores[] = ' No se pudo registrar uno de los adjuntos';
-      $arreglo_errores[] = ' No se pudo grabar uno de los anexos';
-      $arreglo_errores[] = ' Error enviando correo electronico. <br />
-                             Realize el envio del correo de manera manual.';
-      $arreglo_errores[] = ' Error adjuntando el archivo de la respuesta. <br />
-                             Realize el envio de manera manual.';
-      $arreglo_errores[] = ' Error adjuntado el archivo del radicado padre. <br />
-                             Realize el envio del correo de manera manual.';
+      //$arreglo_errores[] = ' No se pudo registrar uno de los adjuntos';
+      //$arreglo_errores[] = ' No se pudo grabar uno de los anexos';
+      //$arreglo_errores[] = ' Error enviando correo electronico. <br />
+      //                       Realize el envio del correo de manera manual.';
+      //$arreglo_errores[] = ' Error adjuntando el archivo de la respuesta. <br />
+      //                       Realize el envio de manera manual.';
+      //$arreglo_errores[] = ' Error adjuntado el archivo del radicado padre. <br />
+      //                       Realize el envio del correo de manera manual.';
       return $arreglo_errores[$errores];
     }
 
@@ -79,7 +79,7 @@
     sort($datoserror);
     $noerrores = $datoserror[0];
     for($i=0;$i<count($datoserror);$i++)
-       $error1 .= errores($datoserror[$i]).'<br/>'; 
+       $error1 .= errores($datoserror[$i]).''; 
 
     if(empty($errores)){
         $salida = 'ok'; 
