@@ -83,11 +83,13 @@ $swRadDesdeAnex=$anex->radGeneradoDesdeAnexo($verrad);
 if($rs){
 while(!$rs->EOF)
 {
-	$aplinteg = $rs->fields["SGD_APLI_CODI"];
-	$numextdoc = $rs->fields["NUMEXTDOC"];
-	$tpradic  = $rs->fields["SGD_TRAD_CODIGO"];
-	$coddocu=$rs->fields["DOCU"];
-	$origen=$rs->fields["ANEX_ORIGEN"];
+	$aplinteg     = $rs->fields["SGD_APLI_CODI"];
+	$numextdoc    = $rs->fields["NUMEXTDOC"];
+	$tpradic      = $rs->fields["SGD_TRAD_CODIGO"];
+	$coddocu      = $rs->fields["DOCU"];
+	$origen       = $rs->fields["ANEX_ORIGEN"];
+  $para_radicar = $rs->fields["ANEX_SALIDA"];
+  
 	if ($rs->fields["ANEX_SALIDA"]==1 )	$num_archivos++;
 	$linkarchivo=$directoriobase.substr(trim($coddocu),0,4)."/".intval(substr(trim($coddocu),4,$ln))."/docs/".trim($rs->fields["NOMBRE"]);
 	$linkarchivo_vista="$ruta_raiz/bodega/".substr(trim($coddocu),0,4)."/".intval(substr(trim($coddocu),4,$ln))."/docs/".trim($rs->fields["NOMBRE"])."?time=".time();
@@ -188,12 +190,12 @@ if(trim($linkarchivo))
  <td><font size=1> <?=$rs->fields["FEANEX"]?> </font></small></td>
  <td ><font size=1>
 	<?php
-  $es_txt = $rs->fields["EXT"] == "txt";
+  $es_pdf = $rs->fields["EXT"] == "pdf";
 	
   if($origen!=1 and $linkarchivo  and $verradPermisos == "Full" ) {
     $no_esta_enviado = $anex_estado < 4;
     if ($no_esta_enviado) {
-      if ($es_txt) {
+      if ($es_pdf && $para_radicar) {
 	      echo "<a class='vinculos' href=javascript:editar_anexo('$coddocu')><img src='img/icono_modificar.png' title='Modificar Archivo'></a> ";
       } else {
 	      echo "<a class='vinculos' href=javascript:verDetalles('$coddocu','$tpradic','$aplinteg')><img src='img/icono_modificar.png' title='Modificar Archivo'></a> ";
