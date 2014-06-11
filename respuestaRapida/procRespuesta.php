@@ -198,7 +198,7 @@
     $pathPadre      = $rssPatth->fields["radi_path"];
 
     $digitosDependencia = ($digitoDependencia >= 4)? 3 : $digitosDependencia;
-    $depCreadora    = substr($numRadicadoPadre, 4, $digitosDependencia) * 1;
+    $depCreadora    = substr($numRadicadoPadre, 4, $digitosDependencia);
 
     $ruta2  = "/bodega/$radano/$depCreadora/docs/".$ruta;
     $ruta3  = "/$radano/$depCreadora/docs/".$ruta;
