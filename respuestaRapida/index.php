@@ -213,6 +213,8 @@ if ($editar) {
   
   if (!$anexo_result->EOF) {
     $nombre_archivo = $anexo_result->fields['ANEX_NOMB_ARCHIVO'];
+    $nombre_archivo = rtrim($nombre_archivo, '.pdf');
+    $nombre_archivo .= '.txt';
     $ruta_completa = '../bodega/' . $ano . '/' . $dependencia . '/docs/' . $nombre_archivo;
     $asunto = file_get_contents($ruta_completa, true);
 
