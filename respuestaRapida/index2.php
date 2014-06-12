@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-    $ruta_raiz = "..";
-    if (!$_SESSION['dependencia'])
-        header ("Location: $ruta_raiz/cerrar_session.php");
+$ruta_raiz = "..";
+if (!$_SESSION['dependencia'])
+  header ("Location: $ruta_raiz/cerrar_session.php");
 
 // Modificado 2010 aurigadl@gmail.com
 

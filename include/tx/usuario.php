@@ -116,10 +116,16 @@ class Usuario {
                 $insertSQL = $this->db->conn->Replace("sgd_oem_oempresas",$record,'sgd_ciu_codigo',$autoquote = true);
 
                 if($insertSQL){
-                    $this->result = $codigo;
+                    $this->result[] = $codigo;
                     return true;
                 }
 
+                break;
+
+            // Funcionario .................................................................
+            case 6:
+                $this->result[] = $idUser;
+                return true;
                 break;
         }
     }
@@ -177,7 +183,7 @@ class Usuario {
         $record['RADI_NUME_RADI']    = $nurad; // No de radicado
         $record['SGD_SEC_CODIGO']    = 0;
 
-        switch ( $datos['sgdTrd'] ){
+        switch ( $user['sgdTrd'] ){
             // Usuario ....................................................................
             case 0:
                 $record['SGD_CIU_CODIGO']    = $coduser;

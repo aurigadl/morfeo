@@ -50,11 +50,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $ADODB_COUNTRECS = true;
   $fecha_gen_doc   = date("Y-m-d");
   $coddepe         = $dependencia;
+  //valor necesario para crear enlaces de los distintos elementos
+  //como el sticker
+  $idsession       = session_id(); //valor necesario para crear enlaces
 
   //CARGAR INFORMACION SI SE ENVIA NUMERO DE RADICADO PARA MODIFICAR
   if($nurad){
 	  $nurad = trim($nurad);
-    $query = "SELECT
+      $query = "SELECT
                 a.*
               FROM
                 RADICADO A
@@ -228,7 +231,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <?=$senddata?>
           </a>
 
-          <label>
+          <label id="sticker">
             <a href="javascript:void(0);" onClick="window.open ('./stickerWeb/index.php?<?=$varEnvio?>&alineacion=Center','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');" class="btn btn-link">Sticker</a>
           </label>
 
@@ -263,9 +266,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <section  class="col col-2">
                           <label class="select">
                             <select id="tipo_usuario" class="form-control input-sm">
-                              <option value='0'>Usuario </option>
+                              <option value='0'>Ciudadano </option>
                               <option value='2'>Entidad </option>
-                              <option value='6'>Funcionarios</option>
+                              <option value='6'>Usuario SIIM2</option>
                             </select>
                           </label>
                         </section>
@@ -336,82 +339,67 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <br />
         <div class="well">
           <section class="smart-form">
-            <div class="row">
-              <section class="col col-6">
+              <section>
                 <label class="label">
                   Asunto
                 </label>
                 <label class="textarea">
                   <textarea id="asu" name="asu" cols="70"  rows="4" ><?=$asu?></textarea>
                 </label>
-              </section>
-
-              <section class="col col-6">
-                  <label class="label">
-                    Medio Recepci&oacute;n
-                  </label>
-                  <label class="select">
-                    <?=$medioRec?>
-                  </label>
-                  <label class="label">
-                    Dignatario
-                  </label>
-                  <label class="input">
-                    <input type="text" value="" name="otro_us">
-                  </label>
-              </section>
-            </div>
-
-            <div class="row">
-
-              <section class="col col-2">
-                  <label class="label">
-                    No. Folios
-                  </label>
-                  <label class="input">
-                    <input name="nofolios" id="nofolios" type="text" size="10"  value="">
-                  </label>
-              </section>
-              <section class="col col-2">
-                  <label class="label">
-                    No. Anexos
-                  </label>
-                  <label class="input">
-                    <input name="noanexos" id="noanexos" type="text" size="10" value="">
-                  </label>
-              </section>
-              <section class="col col-2">
-                  <label class="label">
-                    Descripci&oacute; Anexos
-                  </label>
-                  <label class="input">
-                  <input name="ane" id="ane" type="text" size="70"  value="<?=$ane?>">
-                  </label>
-              </section>
-
-              <section class="col col-3">
-                  <label class="label">
-                    Dependencia
-                  </label>
-                  <label class="select">
-                    <?=$depselect?>
-                  </label>
-              </section>
-
-              <section class="col col-3">
                 <label class="label">
-                  Tipo Documental
+                    Medio Recepci&oacute;n
                 </label>
                 <label class="select">
-                  <?=$tipoDoc?>
+                    <?=$medioRec?>
                 </label>
-              </section>
-            </div>
+                <!--<label class="label">
+                    Dignatario
+                </label>
+                  <label class="input">
+                  <input type="text" value="" name="otro_us">
+                </label>-->
+                  <label class="label">
+                      No. Folios
+                  </label>
+                  <label class="input">
+                      <input name="nofolios" id="nofolios" type="text" size="10"  value="">
+                  </label>
 
+                  <label class="label">
+                      No. Anexos
+                  </label>
+                  <label class="input">
+                      <input name="noanexos" id="noanexos" type="text" size="10" value="">
+                  </label>
+                  <label class="label">
+                      Descripci&oacute; Anexos
+                  </label>
+                  <label class="input">
+                      <input name="ane" id="ane" type="text" size="70"  value="<?=$ane?>">
+                  </label>
+
+                  <label class="label">
+                      Dependencia
+                  </label>
+                  <label class="select">
+                      <?=$depselect?>
+                  </label>
+
+                  <label class="label">
+                      Tipo Documental
+                  </label>
+                  <label class="select">
+                      <?=$tipoDoc?>
+                  </label>
+              </section>
           </section>
         </div>
       </div>
   </form>
+
+  <a id="stikerContent" href="javascript:void(0);"
+     onclick="window.open ('./stickerWeb/index.php?<?=$idsession?>&nurad=xxxxxx&ent=<?=$ent?>','stickerxxxxxx','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');"
+  class="btn btn-link hide">Sticker</a>
 
   <script type="text/javascript">
 
@@ -429,7 +417,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           $('#date').datepicker('option', 'maxDate', selectedDate);
         }
       });
-
 
     /**
      * Generacion de eventos para los usuarios seleccionados
@@ -721,8 +708,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
    //Radicar documento nuevo
    $('#radicarNuevo, #modificaRad').on("click", function(){
         $('#alertmessage').empty();
-        var acction = $(this).attr("id");
-        var pass    = true;
+        var acction   = $(this).attr("id");
+        var pass      = true;
+        var idsession = '<?=$idsession?>';
         /* Realizar validaciones antes de enviar el radicado*/
 
         //Folios y Anexos
@@ -766,7 +754,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         //Asunto
         var asu = $('#asu').val();
-        var min = 30;
+        //Tamanao del asunto Constante
+        var min = 15;
         if(asu.length < min){
           mostrarAlert({type : 'danger', message : 'Asunto no es mayor de ' + min + ' Caracteres. '});
           pass = false;
@@ -776,6 +765,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           mostrarAlert({type : 'danger', message : 'Asunto con caracteres no permitidos'});
           pass = false;
         };
+
         //GUIA
         if($('#guia').val().length > 20){
           mostrarAlert({type : 'danger', message : 'Guia con mas de 20 caracteres'});
@@ -797,7 +787,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         if(pass){
           //Dejar alertas en blanco
           borrarAlert();
-          var datos = $("form").serialize();
+          var datos    = $("form").serialize();
+          var radicado = '';
 
           if(acction === "modificaRad"){
             datos = datos + "&modificar=true";
@@ -808,22 +799,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               if(data[k].error !== undefined){
                 mostrarAlert({type : 'danger', message : data[k].error});
               }else{
-
                 if(acction !== "modificaRad"){
+                  radicado = data[k].answer;
                   $('#modificaRad').append(data[k].answer);
                   $('#modificaRad').append("<input type=\"hidden\" name=\"nurad\" value=\"" + data[k].answer + "\" />");
+
                   $('#idrad').append(data[k].answer);
+                }else{
+                    mostrarAlert({type : 'success', message : data[k].answer});
                 }
 
                 $('#showRadicar').remove();
                 $('#showModificar').removeClass('hide');
-
               }
             };
+            if(acction !== "modificaRad"){
+              var contentstiker = $('#stikerContent').removeClass('hide')[0].outerHTML.replace(/xxxxxx/g, radicado );
+              $('#sticker').html(contentstiker);
+            }
           }).fail(function() {
             mostrarAlert({type : 'danger', message : 'Error de conexion al servidor'})
           })
-        };
+        }
+       ;
 
     });
 

@@ -1,16 +1,13 @@
 <?php
   session_start();
-  ini_set("display_errors",1);
   define ('YEAR_INICIO', 0);
   define ('YEAR_LENGTH', 4);
   define ('RADI_LENGTH', 3);
   define ('RADI_INICIO', 4);
-  define ('TIPO_TXT',    8);
+  define ('TIPO_PDF',    7);
   define ('APP_NO_INTEGRADA',    0);
   
   $ruta_raiz = '..';
-  echo "Entro akaaaa....";
-  
   
   foreach ($_GET as $key => $valor)
     ${$key} = $valor;
@@ -109,21 +106,24 @@
   if (!$radicado_rem) $radicado_rem = 7;
   
   $directorio     = '../bodega/' . $directorio_ano . '/' . $depe_radi_padre . '/docs/';
-  $archivo_final  = $numero_anexo . '.txt';
+  $archivo_txt    = $numero_anexo . '.txt';
+  $archivo_final  = $numero_anexo . '.pdf';
   $archivo_grabar = $directorio . $archivo_final;
-  $file_content   = fopen($archivo_grabar, 'w');
+  $archivo_grabar_txt = $directorio . $archivo_txt;
+  $file_content   = fopen($archivo_grabar_txt, 'w');
   $write_result   = fwrite($file_content, $respuesta);
   $closing_result = fclose($file_content);
-  $tamano         = filesize($archivo_grabar);
+  $tamano         = filesize($archivo_grabar_txt);
   $tamano         = return_bytes($tamano);
   $descr          = 'Pdf Respuesta';
+  $anex_salida    = 1;
   
-  $anex_salida = 1;
   $tabla_anexos = 'anexos';
+  
   $anexo_record['sgd_rem_destino']  = $radicado_rem;
   $anexo_record['anex_radi_nume']   = $radPadre;
   $anexo_record['anex_codigo']      = $numero_anexo;
-  $anexo_record['anex_tipo']        = TIPO_TXT;
+  $anexo_record['anex_tipo']        = TIPO_PDF;
   $anexo_record['anex_tamano']      = $tamano;
   $anexo_record['anex_solo_lect']   = "'$auxsololect'";
   $anexo_record['anex_creador']     = "'$krd'";
@@ -168,9 +168,18 @@
                     "&editar=" . $editar .
                     "&anexo=" . $anexo;
   
-  if ($result && $nuevo == 'no') {
-    echo 'Actualizo <br><script>javascript:window.parent.opener.cargarPagina("./lista_anexos.php","tabs-c"); window.parent.close(); </script>';
-  }else{
-    echo 'Archivo Guardado .... <br><script>javascript:window.parent.opener.cargarPagina("./lista_anexos.php","tabs-c"); window.parent.close(); </script>';
+  // Si hay resultado en base de datos.
+  $recargar_anexos = './lista_anexos.php';
+  
+  if ($result) {
+    include './crear_pdf.php';
+    echo '<br>
+            <script>
+              javascript:window.parent.opener.cargarPagina("' . $recargar_anexos . '","tabs-c");
+              window.parent.close();
+            </script>';
   }
+  /*else{
+    echo 'Archivo Guardado .... <br><script>javascript:window.parent.opener.cargarPagina("./lista_anexos.php","tabs-c"); window.parent.close(); </script>';
+  }*/
 ?>

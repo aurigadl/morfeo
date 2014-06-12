@@ -21,6 +21,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
   session_start();
   $ruta_raiz = "..";
 
@@ -31,10 +32,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   header('Content-Type: application/json');
   include_once("$ruta_raiz/include/db/ConnectionHandler.php");
   $db     = new ConnectionHandler("$ruta_raiz");
-  //$db->conn->debug = true;
 
-	$ADODB_COUNTRECS = true;
-	$ADODB_FORCE_TYPE = ADODB_FORCE_NULL;
+  //$db->conn->debug  = true;
+  $ADODB_COUNTRECS  = true;
+  $ADODB_FORCE_TYPE = ADODB_FORCE_NULL;
 
   include("$ruta_raiz/include/tx/Tx.php");
   include("$ruta_raiz/include/tx/Radicacion.php");
@@ -69,12 +70,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $modificar     = $_POST['modificar'];
   $nurad         = $_POST['nurad'];
 
-
   $carp_codi     = "0";
   $carp_per      = "0";
 
-  if(!$radi_usua_actu){
-    $radi_usua_actu = 1;
+  $radi_usua_actu = 1;
+
+  //Si el radicado que se esta realizando es un memorando
+  //este debe quedar guardado en la bandeja del usuario que
+  //realiza el radicado por esta razon guardamos el radicado
+  //con el codigo del usuario que realiza la accion.
+  if($ent == 3){
+      $radi_usua_actu = $codusuario;
   }
 
   /**************************************************/
@@ -90,7 +96,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                        ."-".substr($fecha_gen_doc,5 ,2)
                        ."-".substr($fecha_gen_doc,8 ,2);
 
-
   if(!$radicadopadre){
     $radicadopadre = null;
   }
@@ -100,7 +105,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }
 
   $rad->radiNumeDeri = trim($radicadopadre);
-  $rad->descAnex     = $ane;
+  $rad->descAnex     = substr($ane, 0, 99);
   $rad->radiDepeActu = "'$coddepe'";
   $rad->radiDepeRadi = "'$coddepe'";
   $rad->radiUsuaActu = $radi_usua_actu;
@@ -216,4 +221,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         $classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad);
 
     }
+
+    if($modificar){
+        $data[] = array( "answer"  => 'Modificación realizada');
+    }
+
     echo json_encode($data);

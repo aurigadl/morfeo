@@ -20,5 +20,4 @@
   } elseif ($accion == ANEXAR) {
     include ('./grabar_anexo.php');
   }
-  
 ?>
