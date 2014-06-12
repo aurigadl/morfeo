@@ -1,4 +1,6 @@
 <?php
+  define ('ENVIO_EMAIL', '1');
+  
   require_once($ruta_raiz."/config.php");
   require_once($ruta_raiz."/include/db/ConnectionHandler.php");
   include_once($ruta_raiz."/class_control/AplIntegrada.php");
@@ -18,7 +20,8 @@
   $anex    = new Anexo($db);
   $anexTip = new Anex_tipo($db);
   $mail    = new PHPMailer(true);
-  
+
+  $db->conn->debug = true;
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
   $anexTip->anex_tipo_codigo(7);
   $sqlFechaHoy      = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
@@ -29,9 +32,9 @@
   $numramdon      = rand (0,100000);
   $contador       = 0;
   $regFile        = array();
-  $conCopiaA      = "";
-  $enviadoA       = "";
-  $cCopOcu        = "";
+  $conCopiaA      = '';
+  $enviadoA       = '';
+  $cCopOcu        = '';
 
   $ddate          = date("d");
   $mdate          = date("m");
@@ -60,13 +63,13 @@
   $codigoCiu      = $_SESSION["usua_doc"];
   $ln             = $_SESSION["digitosDependencia"];
 
-  $usMailSelect   = $_POST['usMailSelect']; //correo del emisor de la respuesta
-  $destinat       = $_POST["destinatario"]; //correos de los destinanexnexnexnexnexnexnextarios
-  $correocopia    = $_POST["concopia"]; //destinatarios con copia
+  $usMailSelect   = $_POST['usMailSelect'];   //correo del emisor de la respuesta
+  $destinat       = $_POST["destinatario"];   //correos de los destinanexnexnexnexnexnexnextarios
+  $correocopia    = $_POST["concopia"];       //destinatarios con copia
   $conCopOcul     = $_POST["concopiaOculta"]; //con copia oculta
-  $anexHtml       = $_POST["anexHtml"]; //con copia oculta
-  $docAnex        = $_POST["docAnex"]; //con copia oculta
-  $medioRadicar   = $_POST["medioRadicar"]; //con copia oculta
+  $anexHtml       = $_POST["anexHtml"];       //con copia oculta
+  $docAnex        = $_POST["docAnex"];        //con copia oculta
+  $medioRadicar   = ENVIO_EMAIL;   //con copia oculta
 
   $asu            = $_POST["respuesta"];
 
@@ -85,7 +88,7 @@
 
   //ENLACE DEL ANEXO
   $radano = substr($numRadicadoPadre,0,4);
-  $ruta   = $adate.$coddepe.$usua_actu."_".rand(10000, 99999)."_".time().".pdf";
+  //$ruta   = $adate.$coddepe.$usua_actu."_".rand(10000, 99999)."_".time().".pdf";
 
   $desti = "
           SELECT
@@ -113,20 +116,16 @@
   $dir_direccion  = $rssPatth->fields["sgd_dir_direccion"];
   $pathPadre      = $rssPatth->fields["radi_path"];
 
-  $digitosDependencia = ($digitoDependencia >= 4)? 3 : $digitosDependencia;
   $depCreadora    = substr($numRadicadoPadre, 4, $digitosDependencia);
-
-  $ruta2  = "/bodega/$radano/$depCreadora/docs/".$ruta;
+  
+  //$ruta2  = "/bodega/$radano/$depCreadora/docs/".$ruta;
   $ruta3  = "/$radano/$depCreadora/docs/".$ruta;
 
 // CREACION DEL RADICADO RESPUESTA
   //Para crear el numero de radicado se realiza el siguiente procedimiento
-  $isql_consec = "SELECT
-                      DEPE_RAD_TP$tipo_radicado as secuencia
-                  FROM
-                      DEPENDENCIA
-                  WHERE
-                      DEPE_CODI = $tpDepeRad";
+  $isql_consec = "SELECT DEPE_RAD_TP$tipo_radicado as secuencia
+                    FROM DEPENDENCIA
+                    WHERE DEPE_CODI = $tpDepeRad";
 
   $creaNoRad   = $db->conn->Execute($isql_consec);
   $tpDepeRad   = $creaNoRad->fields["secuencia"];
@@ -405,8 +404,20 @@ $isql = "INSERT INTO ANEXOS (SGD_REM_DESTINO,
 $bien = $db->conn->Execute($isql);
 
 // Si actualizo BD correctamente
-if (!$bien)
+if (!$bien) {
   $errores .= empty($errores)? "&error=7" : '-7';
+} else {
+  $ruta   = $codigo . '.pdf';
+  $actualizar_anexo = "UPDATE ANEXOS
+                          SET ANEX_NOMB_ARCHIVO = '$ruta'
+                          WHERE ANEX_CODIGO = '$codigo'";
+  $anexo_result = $db->conn->Execute($actualizar_anexo);
+  
+  if (!$anexo_result)
+    exit('Error actualizando el archivo');
+  
+  $ruta2  = "/bodega/$radano/$depCreadora/docs/" . $ruta;
+}
 
 // REMPLAZAR DATOS EN EL ASUNTO
 //REMPLAZO DE DATOS
@@ -433,7 +444,23 @@ class MYPDF extends TCPDF {
   //Page header
   public function Header() {
     // Logo
-    $this->Image('../img/banerPDF.JPG', 30, 10, 167, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+    $this->Image('../img/banerPDF.JPG',
+                  30,
+                  10,
+                  167,
+                  '',
+                  'JPG',
+                  '',
+                  'T',
+                  false,
+                  300,
+                  '',
+                  false,
+                  false,
+                  0,
+                  false,
+                  false,
+                  false);
   }
 
   // Page footer
@@ -444,7 +471,15 @@ class MYPDF extends TCPDF {
     include '../config.php';
 
     $txt = "<div align='center'> $entidad_dir Contacto: $entidad_tel";
-    $this->writeHTMLCell($w=0, $h=3, $x='32', $y='', $txt, $border=0, $ln=1, $fill=0, $reseth=true);
+    $this->writeHTMLCell($w = 0,
+                          $h = 3,
+                          $x = '32',
+                          $y = '',
+                          $txt,
+                          $border = 0,
+                          $ln = 1,
+                          $fill = 0,
+                          $reseth = true);
   }
 }
 
