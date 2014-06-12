@@ -54,6 +54,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   //como el sticker
   $idsession       = session_id(); //valor necesario para crear enlaces
 
+  //Mostrar el tipo de radicacion que se esta realizando
+  $selTipoRad = "select
+                  sgd_trad_codigo,
+                  sgd_trad_descr,
+                  sgd_trad_icono,
+                  sgd_trad_genradsal
+                from
+                  sgd_trad_tiporad
+                where sgd_trad_codigo = $ent";
+
+  $rs    = $db->conn->query($selTipoRad);
+
+  if(!$rs->EOF){
+    $nomEntidad = $rs->fields["SGD_TRAD_DESCR"];
+  }
+
+
+
+
   //CARGAR INFORMACION SI SE ENVIA NUMERO DE RADICADO PARA MODIFICAR
   if($nurad){
 	  $nurad = trim($nurad);
@@ -67,7 +86,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	  $rs    = $db->conn->query($query);
 
 	  if(!$rs->EOF){
-      $asu             = $rs->fields["RA_ASUN"];
+          $asu             = $rs->fields["RA_ASUN"];
 		  $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
 		  $ane             = $rs->fields["RADI_DESC_ANEX"];
 		  $cuentai         = $rs->fields["RADI_CUENTAI"];
@@ -80,7 +99,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           $guia            = $rs->fields["RADI_NUME_GUIA"];
     }
 
-    $date1         = date_create($radi_fecha);
+    $date1 = date_create($radi_fecha);
     list($adate, $mdate, $ddate)    = explode( '-', date_format($date1, 'Y-m-d') );
     list($adate1, $mdate1, $ddate1) = explode( '-', substr($fecha_gen_doc,0,10));
     $fecha_gen_doc = "$adate1-$mdate1-$ddate1";
@@ -170,11 +189,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="row">
       <div class="col-lg-3">
           <h1 class="page-title txt-color-blueDark">
-              Modulo de radicaci&oacute;n
+              Radicaci&oacute;n <?=$nomEntidad?>
               <?=$tRadicacionDesc?>
               (Dep <?=$dependencia?>)
               <p><small id="idrad"> <?=$nurad?> <?=$encabezado?></small></p>
-            </h1>
+          </h1>
       </div>
 
       <div class="col-lg-6 smart-form">
@@ -397,7 +416,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </div>
   </form>
 
-  <a id="stikerContent" href="javascript:void(0);"
+  <a id="skeleton" href="javascript:void(0);"
      onclick="window.open ('./stickerWeb/index.php?<?=$idsession?>&nurad=xxxxxx&ent=<?=$ent?>','stickerxxxxxx','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');"
   class="btn btn-link hide">Sticker</a>
 
@@ -814,7 +833,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               }
             };
             if(acction !== "modificaRad"){
-              var contentstiker = $('#stikerContent').removeClass('hide')[0].outerHTML.replace(/xxxxxx/g, radicado );
+              var contentstiker = $('#skeleton').clone().removeClass('hide')[0].outerHTML.replace(/xxxxxx/g, radicado);
               $('#sticker').html(contentstiker);
             }
           }).fail(function() {

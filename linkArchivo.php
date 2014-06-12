@@ -39,25 +39,27 @@ if (strlen( $numrad) <= $digitos_totales){
   		$file = $ruta_raiz. "/bodega/".$pathImagen;
   }	
 }else {
-//Se trata de un anexo	
+  //Se trata de un anexo	
   $resulValiA = $verLinkArchivo->valPermisoAnex($numrad);
   $verImg = $resulValiA['verImg'];
   $pathImagen = $resulValiA['pathImagen'];
-  $file="$ruta_raiz/bodega/".substr(trim($numrad),0,4)."/".intval(substr(trim($numrad),4,$ln))."/docs/".trim($pathImagen);
-	
+  $file = "$ruta_raiz/bodega/".substr(trim($numrad),0,4)."/".substr(trim($numrad),4,$ln)."/docs/".trim($pathImagen);
 }
 $fileArchi = $file;
 $tmpExt = explode('.',$pathImagen);
-$filedatatype = $pathImagen;
+$es_pdf = ($tmpExt[1] == 'pdf')? 'pdf' : null;
+$filedatatype = ($es_pdf)? $es_pdf : $pathImagen;
+
 // Si se tiene una extension 
 if(count($tmpExt)>1){
    $filedatatype =  $tmpExt[count($tmpExt)-1];
 }
+
 if($verImg=="SI"){
   if (file_exists($fileArchi)) {
     header('Content-Description: File Transfer');
-    switch($filedatatype)
-      {
+    
+    switch($filedatatype) {
          case 'odt':
 			   header('Content-Type: application/vnd.oasis.opendocument.text');
 			   break;
@@ -103,7 +105,7 @@ if($verImg=="SI"){
         readfile($file);
         exit;
     }else {
- 	   die ("<B><CENTER>  NO se encontro el Archivo  </a><br>");
+ 	   die ("<B><center>  NO se encontro el Archivo  </a><br>");
     }
   }elseif($verImg == "NO"){ 
   	die ("<B><CENTER>  NO tiene permiso para acceder al Archivo </a><br>");

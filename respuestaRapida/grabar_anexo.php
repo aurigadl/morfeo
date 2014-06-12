@@ -179,7 +179,4 @@
               window.parent.close();
             </script>';
   }
-  /*else{
-    echo 'Archivo Guardado .... <br><script>javascript:window.parent.opener.cargarPagina("./lista_anexos.php","tabs-c"); window.parent.close(); </script>';
-  }*/
 ?>

@@ -21,7 +21,6 @@
   $anexTip = new Anex_tipo($db);
   $mail    = new PHPMailer(true);
 
-  $db->conn->debug = true;
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
   $anexTip->anex_tipo_codigo(7);
   $sqlFechaHoy      = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);

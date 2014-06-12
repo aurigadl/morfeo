@@ -95,9 +95,9 @@
   // Add a page
   // This method has several options, check the source code documentation for more information.
   $pdf->AddPage();
-
+  
   // output the HTML content
-  $pdf->writeHTML($asu, true, false, true, false, '');
+  $pdf->writeHTML($respuesta, true, false, true, false, '');
 
   // Close and output PDF document
   // This method has several options, check the source code documentation for more information.

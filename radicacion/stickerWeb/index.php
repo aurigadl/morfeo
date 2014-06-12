@@ -1,6 +1,6 @@
 <?php
 session_start();
-//ini_set('display_errors',1);
+ini_set('display_errors',1);
 $ruta_raiz 		= "../..";
 include_once "$ruta_raiz/config.php";
 $verradicado        = $_GET["verrad"];
@@ -19,7 +19,7 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 if ($verradicado) $verrad = $verradicado;
 
 $numrad = $verrad;
-$db             = new ConnectionHandler($ruta_raiz);
+$db     = new ConnectionHandler($ruta_raiz);
 
 include $ruta_raiz.'/ver_datosrad.php';
 $copias = empty($copias)? 0: $copias;
@@ -71,7 +71,7 @@ $noRad = $_REQUEST['nurad'];
                 <p><span><b>Destino: <?/*=substr($dependenciaDestino,0,20)*/?><p><span><b> -->
                 <p><span><b> Radicado: <?=$nurad?> </b></span></p>
                 <p><span><b> Del: <?=substr($radi_fech_radi,0,16). " "?> </b></span></p>
-                <p><span><b> - Rem: <?=substr($remite,0,20); ?> </b></span></p>
+                <p><span><b> Rem: <?=substr($remite,0,20); ?> </b></span></p>
                 <!--<p><span  align="left"><b>
                     Folios: <?=$radi_nume_folio?> &nbsp;&nbsp; Anexos: <?=$radi_nume_anexo?> &nbsp;&nbsp; Copias: <?=$copias?>   </b>
                 </span></p>
