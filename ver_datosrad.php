@@ -23,13 +23,30 @@ if(!$verradicado and $verrad) $verradicado = $verrad;
 if(!$verradicado) die("<!-- No viene un numero de radicado a buscar -->");
 include "$ruta_raiz/include/query/queryver_datosrad.php";
 
+
+$isqlrem = "select
+              sgd_dir_nomremdes
+            from
+	          sgd_dir_drecciones
+            where
+	          radi_nume_radi = $verradicado
+	          and sgd_dir_tipo = 1";
+
+$rs = $db->conn->Execute($isqlrem);
+
+if (!$rs->EOF) {
+   $remite = $rs->fields["SGD_DIR_NOMREMDES"];
+}
+
 $isql = "select a.*, $numero, $radi_nume_radi as RADI_NUME_RADI,
 $radi_nume_deri as RADI_NUME_DERI,
 			a.SGD_SPUB_CODIGO AS NIVEL_SEGURIDAD
 		FROM radicado a
 		WHERE a.radi_nume_radi = $verradicado";
-//$db->conn->debug = true;
+
+
 $rs = $db->conn->Execute($isql);
+
 if ($rs->EOF)
 die ("<span class='titulosError'>No se ha podido obtener la informacion del radicado($isql)");
 
@@ -49,6 +66,7 @@ if($menu_ver != 5) {
 	$rs->fields["RADI_PRIM_APEL"] . " " .
 	$rs->fields["RADI_SEGU_APEL"];
 }
+
 $radi_nume_iden       = $rs->fields["RADI_NUME_IDEN"];
 $radi_fech_radi       = $rs->fields["RADI_FECH_RADI"];
 $mrec_codi            = $rs->fields["MREC_CODI"];
@@ -66,6 +84,7 @@ $radi_depe_radicacion = $rs->fields["DEPE_CODI"];
 $radi_depe_radi       = $rs->fields["RADI_DEPE_RADI"];
 $radi_usua_radi       = $rs->fields["RADI_USUA_RADI"];
 $sgd_rad_codigoverificacion = $rs->fields["SGD_RAD_CODIGOVERIFICACION"];
+
 if($rs->fields["CARP_PER"]==1) {
 	$personal="(personal)";
 } else {
@@ -79,7 +98,8 @@ $isql           = "select depe_nomb
                 FROM dependencia
                 WHERE depe_codi = $radi_depe_radi
 		 ";
-//echo $isql;
+
+
 $rsU = $db->conn->Execute($isql);
 $dependenciaOrigen = $rsU->fields["DEPE_NOMB"];
 
@@ -88,6 +108,7 @@ $isql = "select depe_nomb
                 FROM dependencia
                 WHERE depe_codi = $radi_depe_actu
 		 ";
+
 //echo $isql;
 $rsU = $db->conn->Execute($isql);
 $dependenciaDestino = $rsU->fields["DEPE_NOMB"];
@@ -343,16 +364,15 @@ if($no_tipo!="true") {
 	}
 	//--------------------------departamento / municipio
 
-	if(!$tpdoc)
-	{
+	if(!$tpdoc){
 		$tpdoc = $tpdoc_grb;
 		if (!$funciones) $funciones = $funciones_grb;
 		if (!$procesos) $procesos = $procesos_grb;
 		if (!$procedimientos) $procedimientos = $procedimientos_grb;
 	}
+
 	// FIN CODIGO EXTR. TIPO DOC GRABADO EN BD
 	// INICIO DE EXTRACCION DE CAUSALES
-	//
 	if(!$procesos) {$procesos=0;}
 	if(!$procedimientos) {$procedimientos=0;}
 	if(!$funciones) {$funciones=0;}
@@ -395,23 +415,18 @@ if($no_tipo!="true") {
 		$ddca_causal = $rs->fields["SGD_DDCA_CODIGO"];
 		$ddca_causal_nombre = $rs->fields["SGD_DDCA_DESCRIP"];
 		$ddca_causal_grb = $rs->fields["SGD_DDCA_CODIGO"];
-
 	}
 
-	if(!$sector)
-	{
+	if(!$sector){
 		$sector= $sector_grb;
 	}
-	if(!$causal)
-	{
+	if(!$causal){
 		$causal= $causal_grb;
 	}
-	if(!$deta_causal)
-	{
+	if(!$deta_causal){
 		$deta_causal= $deta_causal_grb;
 	}
-	if(!$ddca_causal)
-	{
+	if(!$ddca_causal){
 		$ddca_causal= $ddca_causal_grb;
 	}
 
