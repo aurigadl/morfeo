@@ -254,34 +254,34 @@
 
 // VALIDAR DATOS ADJUNTOS
   if(!empty($_FILES["archs"]["name"][0])){
-      // Arreglo para Validar la extension
-      $sql1     = " select
-                          anex_tipo_codi as codigo
-                          , anex_tipo_ext as ext
-                          , anex_tipo_mime as mime
-                      from
-                          anexos_tipo";
+  // Arreglo para Validar la extension
+  $sql1     = " select
+                      anex_tipo_codi as codigo
+                      , anex_tipo_ext as ext
+                      , anex_tipo_mime as mime
+                  from
+                      anexos_tipo";
 
-      $exte = $db->conn->Execute($sql1);
+  $exte = $db->conn->Execute($sql1);
 
-      while(!$exte->EOF) {
-          $codigo     = $exte->fields["codigo"];
-          $ext      = $exte->fields["ext"];
-          $mime1      = $exte->fields["mime"];
-          $mime2      = explode(",",$mime1);
+  while(!$exte->EOF) {
+    $codigo     = $exte->fields["codigo"];
+    $ext      = $exte->fields["ext"];
+    $mime1      = $exte->fields["mime"];
+    $mime2      = explode(",",$mime1);
 
-          //arreglo para validar la extension
-          $exts[".".$ext] = array ('codigo'   => $codigo,
-                                   'mime'   => $mime2);
-          $exte->MoveNext();
-      }
+    //arreglo para validar la extension
+    $exts[".".$ext] = array ('codigo'   => $codigo,
+                             'mime'   => $mime2);
+    $exte->MoveNext();
+  }
 
-      //Si no existe la carpeta se crea.
-      if(!is_dir($ruta_raiz."/".$adjuntos)){
-          $rs = mkdir($adjuntos, 0700);
-          if(empty($rs)){
-            $errores .= empty($errores)? "&error=2" : '-2';
-          }
+  //Si no existe la carpeta se crea.
+  if(!is_dir($ruta_raiz."/".$adjuntos)){
+    $rs = mkdir($adjuntos, 0700);
+    if(empty($rs)){
+      $errores .= empty($errores)? "&error=2" : '-2';
+    }
   }
 
   $i = 0;
@@ -300,10 +300,10 @@
       foreach ($exts[$ext]['mime'] as $value) {
         
         if(eregi($type,$value)) {
-            $bandera = true;
+          $bandera = true;
 
-            if($tamano < $tamanoMax) {
-                //grabar el registro en la base de datos
+          if($tamano < $tamanoMax) {
+              //grabar el registro en la base de datos
             if(strlen($str) > 90) {
                 $nombre = substr($nombre, '-90:');
             }
@@ -328,7 +328,7 @@
             }else {
               $errores .= empty($errores)? "&error=6" : '-6';
             }
-          }else{
+          } else {
             $errores .= empty($errores)? "&error=5" : '-5';
           }
         }
