@@ -119,9 +119,7 @@
   $ruta2  = "/bodega/$radano/$depCreadora/docs/".$ruta;
   $ruta3  = "/$radano/$depCreadora/docs/".$ruta;
 
-/***********************************************
 // CREACION DEL RADICADO RESPUESTA
-***********************************************/
   //Para crear el numero de radicado se realiza el siguiente procedimiento
   $isql_consec = "SELECT
                       DEPE_RAD_TP$tipo_radicado as secuencia
@@ -256,9 +254,7 @@
                             "Imagen asociada desde respuesta rapida",
                             42);
 
-/***********************************************
 // VALIDAR DATOS ADJUNTOS
-***********************************************/
   if(!empty($_FILES["archs"]["name"][0])){
       // Arreglo para Validar la extension
       $sql1     = " select
@@ -412,17 +408,13 @@ $bien = $db->conn->Execute($isql);
 if (!$bien)
   $errores .= empty($errores)? "&error=7" : '-7';
 
-/***********************************************
 // REMPLAZAR DATOS EN EL ASUNTO
-***********************************************/
 //REMPLAZO DE DATOS
 $asu = str_replace("F_RAD_S", $fecharad, $asu);
 $asu = str_replace("RAD_S", $nurad, $asu);
 $asu = str_replace("\xe2\x80\x8b", '', $asu);
 
-/***********************************************
 // CREACION DE PDF RESPUESTA AL RADICADO
-***********************************************/
 $cond = "SELECT
             DEP_SIGLA,
             DEPE_NOMB

@@ -15,7 +15,6 @@
   $db      = new ConnectionHandler($ruta_raiz);
   $hist    = new Historico($db);
   $Tx      = new Tx($db);
-  $db->conn->debug = true;
   
   $anexo   = $_POST['anexo'];
   
