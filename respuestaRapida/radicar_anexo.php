@@ -18,6 +18,12 @@
   
   $anexo   = $_POST['anexo'];
   
+  $archivo_txt    = $anexo . '.txt';
+  $archivo_grabar_txt = $directorio . $archivo_txt;
+  $file_content   = fopen($archivo_grabar_txt, 'w');
+  $write_result   = fwrite($file_content, $respuesta);
+  $closing_result = fclose($file_content);
+  
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
   $sqlFechaHoy      = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
   $numRadicadoPadre = $_POST["radPadre"];
@@ -80,7 +86,6 @@
 
   //ENLACE DEL ANEXO
   $radano = substr($numRadicadoPadre,0,4);
-  //$ruta   = $adate.$coddepe.$usua_actu."_".rand(10000, 99999)."_".time().".pdf";
   $ruta   = $anexo . '.pdf';
 
   $desti = "SELECT
@@ -127,25 +132,25 @@
   $tpDepeRad   = $creaNoRad->fields["secuencia"];
 
   $rad = new Radicacion($db);
-  $rad->radiTipoDeri  = 0; // ok ????
-  $rad->radiCuentai   = 'null';  // ok, Cuenta Interna, Oficio, Referencia
-  $rad->eespCodi      = $iden; //codigo emepresa de servicios publicos bodega
-  $rad->mrecCodi      = 3; // medio de correspondencia, 3 internet
+  $rad->radiTipoDeri  = 0;        // ok ????
+  $rad->radiCuentai   = 'null';   // ok, Cuenta Interna, Oficio, Referencia
+  $rad->eespCodi      = $iden;    //codigo emepresa de servicios publicos bodega
+  $rad->mrecCodi      = 3;        // medio de correspondencia, 3 internet
   $rad->radiFechOfic  = "$ddate/$mdate/$adate"; // igual fecha radicado;
   $rad->radiNumeDeri  = $numRadicadoPadre; //ok, radicado padre
-  $rad->radiPais      = $pais; //OK, codigo pais
-  $rad->descAnex      = '.'; //OK anexos
+  $rad->radiPais      = $pais;    //OK, codigo pais
+  $rad->descAnex      = '.';      //OK anexos
   $rad->raAsun        = "Respuesta al radicado " . $numRadicadoPadre; // ok asunto
-  $rad->radiDepeActu  = $coddepe; // ok dependencia actual responsable
+  $rad->radiDepeActu  = $coddepe;   // ok dependencia actual responsable
   $rad->radiUsuaActu  = $usua_actu; // ok usuario actual responsable
-  $rad->radiDepeRadi  = $coddepe; //ok dependencia que radica
+  $rad->radiDepeRadi  = $coddepe;   //ok dependencia que radica
   $rad->usuaCodi      = $usua_actu; // ok usuario actual responsable
-  $rad->dependencia   = $coddepe; //ok dependencia que radica
-  $rad->trteCodi      =  0; //ok, tipo de codigo de remitente
-  $rad->tdocCodi      = $tdoc; //ok, tipo documental
-  $rad->tdidCodi      = 0; //ok, ????
-  $rad->carpCodi      = 1; //ok, carpeta entradas
-  $rad->carPer        = 0; //ok, carpeta personal
+  $rad->dependencia   = $coddepe;   //ok dependencia que radica
+  $rad->trteCodi      =  0;         //ok, tipo de codigo de remitente
+  $rad->tdocCodi      = $tdoc;      //ok, tipo documental
+  $rad->tdidCodi      = 0;          //ok, ????
+  $rad->carpCodi      = 1;          //ok, carpeta entradas
+  $rad->carPer        = 0;          //ok, carpeta personal
   $rad->ra_asun       = "Respuesta al radicado " . $numRadicadoPadre;
   $rad->radiPath      = 'null';
   $rad->sgd_apli_codi = '0';

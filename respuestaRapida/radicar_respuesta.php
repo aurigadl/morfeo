@@ -21,6 +21,10 @@
   $anexTip = new Anex_tipo($db);
   $mail    = new PHPMailer(true);
 
+  
+  // Es necesario liberar la variable ya que este se utilizara mas adelante como clase
+  unset($anexo);
+
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
   $anexTip->anex_tipo_codigo(7);
   $sqlFechaHoy      = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
@@ -87,7 +91,6 @@
 
   //ENLACE DEL ANEXO
   $radano = substr($numRadicadoPadre,0,4);
-  //$ruta   = $adate.$coddepe.$usua_actu."_".rand(10000, 99999)."_".time().".pdf";
 
   $desti = "
           SELECT
@@ -117,7 +120,6 @@
 
   $depCreadora    = substr($numRadicadoPadre, 4, $digitosDependencia);
   
-  //$ruta2  = "/bodega/$radano/$depCreadora/docs/".$ruta;
   $ruta3  = "/$radano/$depCreadora/docs/".$ruta;
 
 // CREACION DEL RADICADO RESPUESTA
@@ -416,13 +418,20 @@ if (!$bien) {
     exit('Error actualizando el archivo');
   
   $ruta2  = "/bodega/$radano/$depCreadora/docs/" . $ruta;
+  
+  // Guardando el texto creado
+  $archivo_txt = $codigo . '.txt';
+  $archivo_grabar_txt = "../bodega/$radano/$depCreadora/docs/" . $archivo_txt;
+  $file_content   = fopen($archivo_grabar_txt, 'w');
+  $write_result   = fwrite($file_content, $respuesta);
+  $closing_result = fclose($file_content);
 }
 
 // REMPLAZAR DATOS EN EL ASUNTO
 //REMPLAZO DE DATOS
-$asu = str_replace("F_RAD_S", $fecharad, $asu);
-$asu = str_replace("RAD_S", $nurad, $asu);
-$asu = str_replace("\xe2\x80\x8b", '', $asu);
+$respuesta = str_replace('F_RAD_S', $fecharad, $respuesta);
+$respuesta = str_replace('RAD_S', $nurad, $respuesta);
+$respuesta = str_replace("\xe2\x80\x8b", '', $respuesta);
 
 // CREACION DE PDF RESPUESTA AL RADICADO
 $cond = "SELECT
@@ -524,7 +533,7 @@ $pdf->setFontSubsetting(true);
 $pdf->AddPage();
 
 // output the HTML content
-$pdf->writeHTML($asu, true, false, true, false, '');
+$pdf->writeHTML($respuesta, true, false, true, false, '');
 
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
