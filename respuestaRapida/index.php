@@ -363,6 +363,7 @@ $smarty->assign("sid"              , SID); //Envio de session por get
 $smarty->assign("TIPOS_RADICADOS"  , $tipos_radicados);
 $smarty->assign("MOSTRAR_ERROR"    , $mostrar_error);
 $smarty->assign("usuacodi"         , $usuacodi);
+$smarty->assign("editar"           , $editar);
 $smarty->assign("extn"             , $extn);
 $smarty->assign("depecodi"         , $depecodi);
 $smarty->assign("codigoCiu"        , $codigoCiu);
@@ -375,7 +376,7 @@ $smarty->assign("asunto"           , $asunto);  // variable respuesta por POST
 $smarty->assign("emails"           , $emails);
 $smarty->assign("carpetas"         , $carpetas);
 $smarty->assign("perm_carps"       , $permPlnatill);
-$smarty->assign("anexo"       , $anex_codigo);
+$smarty->assign("anexo"            , $anex_codigo);
 $smarty->display('index.tpl');
 
 // Replace a textarea element with an id (or name) of "textarea_id".

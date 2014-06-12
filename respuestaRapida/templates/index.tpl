@@ -165,16 +165,17 @@
 
         <div id="load" style="display:none;">Enviando.....</div>
         <form id="form1" name="form1" class="smart-form" method="post" enctype="multipart/form-data" action='../respuestaRapida/accion_radicar_anexar.php?<!--{$sid}-->' onsubmit="return valFo(this)">
-            <input type=hidden name="usuanomb"   value='<!--{$usuanomb}-->'>
-            <input type=hidden name="usualog"    value='<!--{$usualog}-->'>
-            <input type=hidden name="radPadre"   value='<!--{$radPadre}-->'>
-            <input type=hidden name="usuacodi"   value='<!--{$usuacodi}-->'>
-            <input type=hidden name="depecodi"   value='<!--{$depecodi}-->'>
-            <input type=hidden name="codigoCiu"  value='<!--{$codigoCiu}-->'>
-            <input type=hidden name="codigoCiu"  value='<!--{$codigoCiu}-->'>
-            <input type=hidden name="codigoCiu"  value='<!--{$codigoCiu}-->'>
-            <input type=hidden name="rutaPadre"  value='<!--{$rutaPadre}-->'>
-            <input type=hidden name="anexo"  value='<!--{$anexo}-->'>
+            <input type="hidden" name="usuanomb"   value='<!--{$usuanomb}-->'>
+            <input type="hidden" name="usualog"    value='<!--{$usualog}-->'>
+            <input type="hidden" name="editar"     value='<!--{$editar}-->'>
+            <input type="hidden" name="radPadre"   value='<!--{$radPadre}-->'>
+            <input type="hidden" name="usuacodi"   value='<!--{$usuacodi}-->'>
+            <input type="hidden" name="depecodi"   value='<!--{$depecodi}-->'>
+            <input type="hidden" name="codigoCiu"  value='<!--{$codigoCiu}-->'>
+            <input type="hidden" name="codigoCiu"  value='<!--{$codigoCiu}-->'>
+            <input type="hidden" name="codigoCiu"  value='<!--{$codigoCiu}-->'>
+            <input type="hidden" name="rutaPadre"  value='<!--{$rutaPadre}-->'>
+            <input type="hidden" name="anexo"  value="<!--{$anexo}-->">
 
             <table border="0" width="100%" align="center" class="table table-bordered">
                 <tr>
@@ -197,7 +198,6 @@
                   </td>
                 <!--{/if}-->
                 
-  
                   <td   colspan="4" ><footer>
                     <input type="submit" name="Button" value="Radicar" class="btn btn-primary">
                     &nbsp;
@@ -212,7 +212,7 @@
          </form>
                     <td  style="width: 230px; vertical-align: top;">
                         <ul id="browser" class="filetree" style="font-size: 10px;">
-                            <div  style="line-height: 30px;"> Administración de plantillas </div>
+                            <div  style="line-height: 30px;"> Administraci&oacute;n de plantillas </div>
                             <br/><br/>
                             De click en la plantilla que desea cargar:
 
