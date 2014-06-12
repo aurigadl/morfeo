@@ -274,7 +274,7 @@ $mensaje_error = false;
 	</select></td>
 	</tr>						  									  					  
 		<tr bgcolor="White" id="fecha">
-			<td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Fecha de Vencimiento(aaaa-mm-dd)</td>	 
+			<td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Fecha de Vencimiento(aaaa/mm/dd)</td>	 
 	<td align="left">
 		<section class="col col-3">
 			<label class="input">
@@ -356,7 +356,7 @@ $mensaje_error = false;
  <script>
 		// START AND FINISH DATE
 		$('#startdate').datepicker({
-			dateFormat : 'dd.mm.yy',
+			dateFormat : 'yy/mm/dd',
 			prevText : '<i class="fa fa-chevron-left"></i>',
 			nextText : '<i class="fa fa-chevron-right"></i>',
 			onSelect : function(selectedDate) {
