@@ -129,7 +129,7 @@
 				<section>
 				<label class="label"><?=$fieldLabel?></label>
 				<label class="<?=$fieldClass?>">
-				 <div class="input-group col-lg-12 ">
+				 <div class="input-group col-lg-12">
 				 
 					<i class="<?php if(trim($fieldHelp) && trim($fieldClass!="datefield") && trim($fieldTypeCode!=9)){ echo 'icon-append fa fa-question-circle'; } 
 					?>" ></i>
@@ -235,8 +235,8 @@
 					<?php
 					}elseif (trim($fieldHelp)) {
 					?>
-						<b class="tooltip tooltip-top-right">
-						<i class="fa fa-warning txt-color-teal"></i>
+						<b class="tooltip tooltip-top-right bg-color-orange">
+						<i class="fa fa-question-circle "></i>
 						<?=$fieldHelp ?>
 						</b>
 					<?php }
