@@ -54,6 +54,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   //como el sticker
   $idsession       = session_id(); //valor necesario para crear enlaces
 
+  //Nuevo con copia de datos
+  $rad1;
+  $radicadopadre;
+
+  //Como anexo a un radicado
+  $rad0;
+  $radicadopadre;
+
+  //Como Asociado
+  $rad2;
+  $radicadopadre;
+
   //Mostrar el tipo de radicacion que se esta realizando
   $selTipoRad = "select
                   sgd_trad_codigo,

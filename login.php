@@ -127,13 +127,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <script src="./js/jquery.min.js"></script>
       <script src="./js/bootstrap.js"></script>
 
-
       <script>
         /* Custom JavaScript */
         $(document).ready(function($) {
           $('input, textarea').placeholder();
         });
       </script>
+
     <script src="js/placeholder-shim.min.js"></script>
 </body>
 </html>

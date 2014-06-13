@@ -321,7 +321,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	echo "<label1>";
 	$varjh=1;
 	if (!$rsCheck and $tpBuscarSel=="ok"){
-
 	  echo "<center><img src='img_alerta_1.gif' alt='Esta alerta indica que no se encontraron los datos que buscar e Intente buscar con otro nombre, apellido o No. IDD'>";
 	  echo "<center><font size='3' face='arial' class='etextomenu'><b>No se encontraron datos con las caracteristicas solicitadas</b></font>";
 	}else {
@@ -346,8 +345,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	$ruta_raiz = "..";
 
 	include_once "$ruta_raiz/tx/verLinkArchivo.php";
-
-
 
 	$verLinkArchivo = new verLinkArchivo($db);
 

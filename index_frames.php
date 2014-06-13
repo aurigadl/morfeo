@@ -29,7 +29,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $ruta_raiz = ".";
   if (!$_SESSION['dependencia'] || $_GET['close']){
     header ("Location: $ruta_raiz/login.php");
+    echo "<script>parent.frames.location.reload()</script>";
   }
+
+
 
   include_once "$ruta_raiz/include/db/ConnectionHandler.php";
   include_once "$ruta_raiz/config.php";
@@ -72,11 +75,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   // Radicacion
   foreach ($tpNumRad as $key => $valueTp){
-			$valueDesc = $tpDescRad[$key];
-      $enlace9   = "href=\"radicacion/chequear.php?$phpsession&krd=$krd&fechah=$fechah&primera=1&ent=$valueTp&depende=$dependencia\"";
-    	if($tpPerRad[$valueTp]==1 or $tpPerRad[$valueTp]==3){
+
+	$valueDesc = $tpDescRad[$key];
+
+    $enlace9   = "href=\"radicacion/chequear.php?$phpsession&krd=$krd&fechah=$fechah&primera=1&ent=$valueTp&depende=$dependencia\"";
+
+    if($tpPerRad[$valueTp]==1 or $tpPerRad[$valueTp]==3){
         $linkrad .= "<li><a $enlace9 target='mainFrame'> $valueDesc </a></li>";
-		  }
+    }
+
   }
 
 	if ($_SESSION["usua_masiva"]==1) {

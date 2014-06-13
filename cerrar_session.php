@@ -6,17 +6,18 @@ session_start();
 
     $db     = new ConnectionHandler($ruta_raiz);
     $fecha  = "'FIN  ".date("Y:m:d H:mi:s")."'";
+
     $isql   = "UPDATE
                     usuario
                SET
                     USUA_SESION =".$fecha."
                WHERE
                     USUA_SESION like '%".session_id()."%'";
+
     if (!$db->conn->Execute($isql)) {
-        echo "<p><center>No pude actualizar<p><br>";
+        echo "<p>No pude actualizar<p><br>";
     }
 
     session_destroy();
     header('Location: ./index_frames.php?close=1');
     exit;
-?>

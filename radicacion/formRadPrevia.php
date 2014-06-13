@@ -104,11 +104,14 @@ function solonumeros(){
         </label>
       </section>
       <? } ?>
+
       <section class="col col-4">
         <label class="label">
           Rango de Fechas de Radicaci&oacute;n
         </label>
+
         <div class="row">
+
           <section class="col col-6">
             <label class="input"> <i class="icon-append fa fa-calendar"></i>
             <input type="text" name="fecha_ini" id="startdate" placeholder="Expected start date" value="<?=$fecha_ini?>">
@@ -120,10 +123,10 @@ function solonumeros(){
               <input type="text" name="fecha_fin" id="finishdate" placeholder="Expected finish date" value="<?=$fecha_fin?>">
             </label>
           </section>
+
         </div>
-
-
       </section>
+
     </div>
     <?php if(isset($mostrar_dep) && $mostrar_dep=="ddd"){ ?>
     <div class="row">
@@ -139,7 +142,7 @@ function solonumeros(){
    <?}?>
    </fieldset>
    <footer>
-     <input type="submit" name="Submit" onClick="solonumeros();" value="buscar" onSelect="solonumeros();" class="btn btn-primary">
-     </input>
+       <input type="submit" name="Submit" onClick="solonumeros();" value="buscar" onSelect="solonumeros();" class="btn btn-primary">
+       <a class="btn btn-success" href='./NEW.php?<?=session_name()."=".trim(session_id())?>&dependencia=<?=$dependencia?>&ent=<?=$ent?>'>Nuevo</a>
    </footer>
    <input type='hidden' name='pnom' value='<?=$pnomb ?>'>

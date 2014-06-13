@@ -1,6 +1,9 @@
 <?php
 session_start();
+
 ini_set('display_errors',1);
+error_reporting(E_ALL ^ E_NOTICE);
+
 $ruta_raiz 		= "../..";
 include_once "$ruta_raiz/config.php";
 $verradicado        = $_GET["verrad"];
@@ -23,6 +26,12 @@ $db     = new ConnectionHandler($ruta_raiz);
 
 include $ruta_raiz.'/ver_datosrad.php';
 $copias = empty($copias)? 0: $copias;
+
+if('NO DEFINIDO' != $tpdoc_nombreTRD ){
+    $process = "Proceso ". $tpdoc_nombreTRD;
+}
+
+
 ?>
 <html>
 <head>
@@ -72,6 +81,8 @@ $noRad = $_REQUEST['nurad'];
                 <p><span><b> Radicado: <?=$nurad?> </b></span></p>
                 <p><span><b> Del: <?=substr($radi_fech_radi,0,16). " "?> </b></span></p>
                 <p><span><b> Rem: <?=substr($remite,0,20); ?> </b></span></p>
+                <p><span><b> <?$process?> </b></span></p>
+
                 <!--<p><span  align="left"><b>
                     Folios: <?=$radi_nume_folio?> &nbsp;&nbsp; Anexos: <?=$radi_nume_anexo?> &nbsp;&nbsp; Copias: <?=$copias?>   </b>
                 </span></p>

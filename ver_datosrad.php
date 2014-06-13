@@ -10,6 +10,8 @@ if (!$db) $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $objTipoDocto = new TipoDocumento($db);
 
+//$db->conn->debug = true;
+
 $nombre_us1 = "";$nombre_us2 = "";$nombre_us3 = "";
 $prim_apel_us1 = ""; $prim_apel_us2 = ""; $prim_apel_us3 = "";
 $seg_apel_us1 = ""; $seg_apel_us2 = ""; $seg_apel_us3 = "";
@@ -136,7 +138,7 @@ $sgd_tdes_codigo = $rs->fields["SGD_TDEC_CODIGO"];
 $fechaNotific    = $rs->fields["RADI_FECH_NOTIF"];
 $sgd_apli_codi   = $rs->fields["SGD_APLI_CODI"];
 $tpdoc_rad       = $rs->fields["TDOC_CODI"];
-$sgd_apli_codi =  $rs->fields["SGD_APLI_CODI"];
+$sgd_apli_codi   =  $rs->fields["SGD_APLI_CODI"];
 
 if ($rs->fields["RADI_PATH"]){
 	/*
@@ -466,8 +468,7 @@ if($no_tipo!="true") {
 	$sqlNotif="select * from SGD_NTRD_NOTIFRAD where radi_nume_radi = $verradicado";
 	$rs=$db->query($sqlNotif);
 
-	if ($rs && !$rs->EOF )
-	{
+	if ($rs && !$rs->EOF ){
 		$tipoNotific=$rs->fields['SGD_NOT_CODI'];
 		$tNotNotifica = $rs->fields["SGD_NTRD_NOTIFICADOR"];
 		$tNotNotificado = $rs->fields["SGD_NTRD_NOTIFICADO"];
@@ -503,21 +504,35 @@ if($no_tipo!="true") {
 	$descFldExp      = $trdExp->descFldExp;
 	$codigoFldExp    = $trdExp->codigoFldExp;
 	$expUsuaDoc      = $trdExp->expUsuaDoc;
+
+
+    //Mostrar informacion del tipo documental del radicado
   if(!$tdoc){
-  $isql = "select sgd_tpr_codigo, sgd_tpr_descrip, fech_vcmto, sgd_tpr_termino, date(fech_vcmto)-date(now()) diasparavencimiento, date(fech_vcmto)-date(radi_fech_radi)  diasplazo, date(now())-date(radi_fech_radi)  diashoy
-		 from sgd_tpr_tpdcumento tpr, radicado r
-		where r.tdoc_codi=tpr.sgd_tpr_codigo and  r.radi_nume_radi=$verradicado   ";
-			$rs=$db->query($isql);
-			if (!$rs->EOF){
-				$tpdoc_grbTRD    = $rs->fields["SGD_TPR_CODIGO"];
-				$tdoc = $rs->fields["SGD_TPR_CODIGO"];
-				$tpdoc_nombreTRD = $rs->fields["SGD_TPR_DESCRIP"];
-				$termino_doc     = $rs->fields["SGD_TPR_TERMINO"];
-			  $fechaVencimiento = $rs->fields["FECH_VCMTO"];
-			  $diasParaVencimiento =  $rs->fields["DIASPARAVENCIMIENTO"];
-				$diasPlazo = $rs->fields["DIASPLAZO"];
-			  $diasHoy = $rs->fields["DIASHOY"];
-     }
+    $isql = "select
+              sgd_tpr_codigo,
+              sgd_tpr_descrip,
+              fech_vcmto,
+              sgd_tpr_termino,
+              date(fech_vcmto)-date(now()) diasparavencimiento,
+              date(fech_vcmto)-date(radi_fech_radi)  diasplazo,
+              date(now())-date(radi_fech_radi)  diashoy
+		 from sgd_tpr_tpdcumento tpr,
+		      radicado r
+		 where r.tdoc_codi=tpr.sgd_tpr_codigo and
+		        r.radi_nume_radi=$verradicado   ";
+
+	$rs=$db->query($isql);
+
+      if (!$rs->EOF) {
+          $tpdoc_grbTRD = $rs->fields["SGD_TPR_CODIGO"];
+          $tdoc = $rs->fields["SGD_TPR_CODIGO"];
+          $tpdoc_nombreTRD = $rs->fields["SGD_TPR_DESCRIP"];
+          $termino_doc = $rs->fields["SGD_TPR_TERMINO"];
+          $fechaVencimiento = $rs->fields["FECH_VCMTO"];
+          $diasParaVencimiento = $rs->fields["DIASPARAVENCIMIENTO"];
+          $diasPlazo = $rs->fields["DIASPLAZO"];
+          $diasHoy = $rs->fields["DIASHOY"];
+      }
   }
 }
 ?>
