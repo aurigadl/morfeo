@@ -56,7 +56,7 @@ class genForm{
    $codeForm = $this->codeForm;
    $sql = "SELECT f.FRMF_NAME, f.FRMF_NAME, f.FRMF_DESCRIPTION, f.FRMF_SQL, f.FRMF_NULL,f.FRMF_LABEL,f.FRMF_MASK
 							, f.FRMF_COLUMN, f.FRMF_ORDER, f.FRMF_COLSPAN
-							, f.FRMF_FIELD,f.FRMF_TABLESAVE,f.FRMF_TABLEPKSAVE,FRMF_TABLEPKSEARCH,FRMF_FIELDPKSEARCH, f.FRMF_PK,
+							, f.FRMF_FIELDPK, f.FRMF_FIELD,f.FRMF_TABLESAVE,f.FRMF_TABLEPKSAVE,FRMF_TABLEPKSEARCH,FRMF_FIELDPKSEARCH, f.FRMF_PK,
              ft.FRMT_NAME, ft.FRMT_CLASS, ft.FRMT_HTML, ft.FRMT_Js, ft.FRMT_TYPE, f.FRMf_HELP,ft.FRMT_CODE
 						FROM FRMF_FRMFIELDS f, FRMT_FIELDTYPE  ft
 						WHERE f.FRM_CODE=". $codeForm
@@ -87,6 +87,7 @@ class genForm{
 			$labelField =    $rs->fields["FRMF_LABEL"];
 			$maskField =     $rs->fields["FRMF_MASK"];
 			$saveField =     $rs->fields["FRMF_FIELD"];
+			$fieldPkSearch1 = $rs->fields["FRMF_FIELDPK"];
 			$fieldPkSearch = $rs->fields["FRMF_FIELDPKSEARCH"];
 			$tableSave =     $rs->fields["FRMF_TABLESAVE"];
 			$tablePkSave =   $rs->fields["FRMF_TABLEPKSAVE"];
@@ -110,6 +111,7 @@ class genForm{
 			$fields[$i]["FIELD_SAVE"] = $saveField;
 			$fields[$i]["FIELD_PKSAVE"] = $saveField;
 			$fields[$i]["TABLE_SAVE"] = $tableSave;
+			$fields[$i]["FIELD_PKSEARCH1"] = $fieldPkSearch1;
 			$fields[$i]["FIELD_PKSEARCH"] = $fieldPkSearch;
 			$fields[$i]["TABLE_PKSEARCH"] = $tablePkSearch;
 			$rs->MoveNext();

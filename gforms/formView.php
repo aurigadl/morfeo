@@ -74,6 +74,7 @@
 		<!-- Success states for elements -->
 		<form class="smart-form">
 			<header><?=$descForm?></header>
+			<input type=hidden id=paramAjax>
 			<fieldset>	
 			<table class="table table-bordered">
 			<?php
@@ -100,10 +101,17 @@
 				$tableSave =     $field["TABLE_SAVE"];
 				$tablePkSearch = $field["TABLE_PKSEARCH"];
 				$fieldPkSearch = $field["FIELD_PKSEARCH"];
+				$fieldPkSearch1 = $field["FIELD_PKSEARCH1"];
 				$fieldPkSave =   $field["FIELD_PKSAVE"];
 				if($orderOld!=$fieldOrder){ 
 				  if($orderOld){ echo "</tr>";   }
 				  echo "<tr>";   
+				}
+				
+				$arrPkSearch = preg_split("/[\s||]+/", $fieldPkSearch);
+				foreach($arrPkSearch as $value){
+				  list($val1,$val2,$val3) = preg_split("/[\s->]+/", $value);
+				  
 				}
 				$orderOld=$fieldOrder;
 				if(!trim($fieldLabel)) $fieldLabel=$fieldName;
@@ -196,7 +204,6 @@
 				$fieldsInsertValueId = "";
 				foreach($datosSelect as $key => $value){
 				  if($i>=2) {
-				   //if($i<=2)
 				    $fieldsViewObject .=",";
 				    $fieldsView .=",";  
 				    $fieldsInsertValueId .= "";
@@ -205,7 +212,6 @@
 					if(!$cod and trim($cod) =="") $cod=$val;
 					if(trim($sel)=="*") { $datoss = " selected"; }else{ $datoss = "";}
 					$fieldsView .= "$field";
-					//if($i<=3) 
 					$fieldsViewObject .= '{"columnName":"'.$field.'","width":"30","label":"'.$field.'"}';
 					$fieldsInsertValueId .= '$( "#'.$fieldId.'" ).val( ui.item.'.$field.' );';
 					$i++;
@@ -214,17 +220,24 @@
 				   
 					 $scriptJS .= '
 					 jQuery(document).ready(function(){
+					      
 								$( "#'.$fieldName.'" ).combogrid({
-								url: "server.php?tableSearch='.$tablePkSearch.'&fieldSearch='.$fieldPkSearch.'&fieldsView='.$fieldsView.'",
+								url: "server.php?tableSearch='.$tablePkSearch.'&fieldSearch='.$fieldPkSearch1.'&fieldsView='.$fieldsView.'",
 								debug:true,
 								//replaceNull: true,
 								colModel: ['.$fieldsViewObject.'],
 								select: function( event, ui ) {
+								  cargarParametros(),
 									'.$fieldsInsertValueId .'
 									return false;
 								}
 							});
 						});
+					 function cargarParametros(){
+					  val = $( "#'.$val2.'" ).val();
+					  param = "'.$val1.'="+val;
+					  $( "#paramAjax" ).val(param);
+					 }
 						';
 					}else{ ?>					
 					<?php 
@@ -275,9 +288,9 @@
   $($('[tablesave]')).each(function( index ) {
     fieldId = $($('[tablesave]')[index]).attr('id');
     arrF[index] = new Array(5);
-    arrF[index]['tableSave'] = $($('[tablesave]')[index]).attr('tablesave');
-    arrF[index]['fieldSave'] = $($('[fieldsave]')[index]).attr('fieldsave');
-    arrF[index]['fieldPk'] = $($('[fieldpk]')[index]).attr('fieldpk');
+    arrF[index]['tableSave'] =  $($('[tablesave]')[index]).attr('tablesave');
+    arrF[index]['fieldSave'] =  $($('[fieldsave]')[index]).attr('fieldsave');
+    arrF[index]['fieldPk'] =    $($('[fieldpk]')[index]).attr('fieldpk');
     arrF[index]['fieldValue'] = $($('[tablesave]')[index]).val();
     
     var item = {

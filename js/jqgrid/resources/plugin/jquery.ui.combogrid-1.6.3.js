@@ -268,6 +268,7 @@ $.widget( "cg.combogrid", {
 			this.element.addClass("input-bg");
 			}
 			this.options.source =  function( request, response ) {
+				cargarParametros();
 				$.ajax({
 					url: self.options.url,
 					dataType: self.options.datatype,
@@ -277,7 +278,8 @@ $.widget( "cg.combogrid", {
 						dat : request.dat,
 						sord : self.options.sord,
 						rows: self.options.rows,
-						searchTerm : request.term
+						searchTerm : request.term,
+					  paramSearch : $('#paramAjax').val()
 					},
 					success: function( data ) {
 						if(data.records==0) {

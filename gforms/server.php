@@ -13,6 +13,7 @@ $tableSearch = $_GET['tableSearch'];
 $fieldSearch = $_GET['fieldSearch'];
 $fieldsView = $_GET['fieldsView'];
 $searchTerm = $_GET['searchTerm'];
+//echo "<hr>". $_GET['jh'];
 if(!$sidx) $sidx =1;
 if ($searchTerm=="") {
 	$searchTerm="%";
@@ -31,8 +32,9 @@ if( $count >0 ) {
 }
 if ($page > $total_pages) $page=$total_pages;
 $start = $limit*$page - $limit; // do not put $limit*($page - 1)
-if($total_pages!=0) $SQL = "SELECT $fieldsView FROM  $tableSearch WHERE $fieldSearch like '$searchTerm' LIMIT 30 "; // ORDER BY $sidx $sord LIMIT $start , $limit";
-else $SQL = "SELECT $fieldsView FROM $tableSearch WHERE $fieldSearch like '$searchTerm' LIMIT 30"; //  ORDER BY $sidx $sord";
+if(trim($paramSearch)) $andWhere = "AND  $paramSearch ";
+if($total_pages!=0) $SQL = "SELECT $fieldsView FROM  $tableSearch WHERE $fieldSearch like '$searchTerm' $paramSearch LIMIT 40 "; // ORDER BY $sidx $sord LIMIT $start , $limit";
+else $SQL = "SELECT $fieldsView FROM $tableSearch WHERE $fieldSearch like '$searchTerm' LIMIT 40"; //  ORDER BY $sidx $sord";
 //$db->conn->debug = true;
 $result = $db->conn->query( $SQL ) or die("Couldn t execute query.");
 

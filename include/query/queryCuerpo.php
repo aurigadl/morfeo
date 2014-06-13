@@ -121,5 +121,5 @@ switch($db->driver)
 	  order by '.$order .' ' .$orderTipo;
 	break;
 	}
-	echo $isql;
+	//echo $isql;
 ?>
