@@ -65,6 +65,7 @@ switch($db->driver)
 		 BODEGA_EMPRESAS d
 	 where
 		b.radi_nume_radi is not null
+		and b.sgd_dir_tipo=1
 		and b.radi_depe_actu='.$dependencia.
 		$whereUsuario.$whereFiltro.
 		'and b.tdoc_codi=c.sgd_tpr_codigo (+)
@@ -110,10 +111,9 @@ switch($db->driver)
 	left outer join SGD_TPR_TPDCUMENTO c
 	on b.tdoc_codi=c.sgd_tpr_codigo
 	left outer join SGD_DIR_DRECCIONES d
-	on b.radi_nume_radi=d.radi_nume_radi
+	on (b.radi_nume_radi=d.radi_nume_radi and d.sgd_dir_tipo=1)
     where
 		b.radi_nume_radi is not null
-		and d.sgd_dir_tipo=1
 		and b.radi_depe_actu='.$dependencia.
 		$whereUsuario.$whereFiltro.'
 		'.$whereCarpeta.'
@@ -121,4 +121,5 @@ switch($db->driver)
 	  order by '.$order .' ' .$orderTipo;
 	break;
 	}
+	echo $isql;
 ?>

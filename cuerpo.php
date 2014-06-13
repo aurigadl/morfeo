@@ -146,7 +146,8 @@ $_SESSION['numExpedienteSelected'] = null;
 
 
 
-?>
+
+  ?>
 <html>
 
   <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
@@ -232,7 +233,9 @@ $_SESSION['numExpedienteSelected'] = null;
                   <tbody>
                   <?php
                     include "$ruta_raiz/include/query/queryCuerpo.php";
+                    //$db->conn->debug = true;
                       $rs     =$db->conn->Execute($isql);
+                      
                   while(!$rs->EOF){
 
                     $numeroRadicado        = $rs->fields["HID_RADI_NUME_RADI"];
