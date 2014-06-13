@@ -339,8 +339,16 @@ function regresar(){
 		<td align="center" colspan=3><footer>
         <input name="insertar_registro" type=submit class="btn btn-success btn-xs" value=" Insertar ">
 		    <input name="actualizar" type="button" class="btn btn-primary btn-xs" id="envia23" onClick="procModificar();"value=" Modificar ">
-		    <input name="Cerrar" type="button" class="btn btn-default btn-xs" id="envia22" onClick="opener.regresar(); window.close(); " value="Cerrar"></footer>
-		   </TD>
+<?php
+  $respuesta_rap = (isset($_GET['respuesta_rap']))? $_GET['respuesta_rap'] : null;
+  if ($respuesta_rap) {
+    echo '<input name="Cerrar" type="button" class="btn btn-default btn-xs" id="envia22" onClick="top.close(); " value="Cerrar">';
+  } else {
+    echo '<input name="Cerrar" type="button" class="btn btn-default btn-xs" id="envia22" onClick="opener.regresar(); window.close(); " value="Cerrar">';
+  }
+?>
+		    </footer>
+		   </td>
 	   </tr>
 	</table>
 	<table width="70%" class="table table-bordered">
@@ -414,3 +422,12 @@ return;
 </span>
 </body>
 </html>
+<?php
+  if ($cerrar) {
+    echo '<br>
+            <script>
+              javascript:window.parent.opener.cargarPagina("' . $recargar_anexos . '","tabs-c");
+              top.close();
+            </script>';
+  }
+?>

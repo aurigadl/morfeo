@@ -22,14 +22,14 @@
     define('SMARTY_DIR', './libs/');
 	  require (SMARTY_DIR . 'Smarty.class.php');
 
-	$smarty = new Smarty;
-	$smarty->template_dir = './templates';
-	$smarty->compile_dir = './templates_c';
-	$smarty->config_dir = './configs/';
-	$smarty->cache_dir = './cache/';
-	
-	$smarty->left_delimiter = '<!--{';
-	$smarty->right_delimiter = '}-->';
+    $smarty = new Smarty;
+    $smarty->template_dir = './templates';
+    $smarty->compile_dir = './templates_c';
+    $smarty->config_dir = './configs/';
+    $smarty->cache_dir = './cache/';
+    
+    $smarty->left_delimiter = '<!--{';
+    $smarty->right_delimiter = '}-->';
 
     $errores  = $_GET['error'];
     $nurad    = $_GET['nurad'];
@@ -86,6 +86,7 @@
     }
 
 	$smarty->assign("krd"	    , $krd);
+	$smarty->assign("respuesta_rap", 'true');
 	$smarty->assign("noerror"   , $noerrores);
 	$smarty->assign("error"	    , $error1);
 	$smarty->assign("nurad"	    , $nurad);
