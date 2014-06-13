@@ -31,8 +31,9 @@ if( $count >0 ) {
 	$total_pages = 0;
 }
 if ($page > $total_pages) $page=$total_pages;
+$paramSearch = str_replace('undefined','',$paramSearch);
 $start = $limit*$page - $limit; // do not put $limit*($page - 1)
-if(trim($paramSearch)) $andWhere = "AND  $paramSearch ";
+if(trim($paramSearch) and trim($paramSearch)!="="  ) $andWhere = "AND  $paramSearch ";
 if($total_pages!=0) $SQL = "SELECT $fieldsView FROM  $tableSearch WHERE $fieldSearch like '$searchTerm' $andWhere LIMIT 40 "; // ORDER BY $sidx $sord LIMIT $start , $limit";
 else $SQL = "SELECT $fieldsView FROM $tableSearch WHERE $fieldSearch like '$searchTerm' $andWhere LIMIT 40"; //  ORDER BY $sidx $sord";
 //$db->conn->debug = true;
