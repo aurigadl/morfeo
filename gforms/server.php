@@ -22,7 +22,7 @@ if ($searchTerm=="") {
 }
 if(!trim($fieldsView)) $fieldView = " * ";
 // connect to the database
-$result = $db->conn->query("SELECT COUNT(*) count FROM $table WHERE $fieldSearch like '$searchTerm'");
+$result = $db->conn->query("SELECT COUNT(*) count FROM $table WHERE $fieldSearch like '$searchTerm' $paramSearch");
 $count = $resutl->fields['COUNT'];
 
 if( $count >0 ) {
@@ -33,8 +33,8 @@ if( $count >0 ) {
 if ($page > $total_pages) $page=$total_pages;
 $start = $limit*$page - $limit; // do not put $limit*($page - 1)
 if(trim($paramSearch)) $andWhere = "AND  $paramSearch ";
-if($total_pages!=0) $SQL = "SELECT $fieldsView FROM  $tableSearch WHERE $fieldSearch like '$searchTerm' $paramSearch LIMIT 40 "; // ORDER BY $sidx $sord LIMIT $start , $limit";
-else $SQL = "SELECT $fieldsView FROM $tableSearch WHERE $fieldSearch like '$searchTerm' LIMIT 40"; //  ORDER BY $sidx $sord";
+if($total_pages!=0) $SQL = "SELECT $fieldsView FROM  $tableSearch WHERE $fieldSearch like '$searchTerm' $andWhere LIMIT 40 "; // ORDER BY $sidx $sord LIMIT $start , $limit";
+else $SQL = "SELECT $fieldsView FROM $tableSearch WHERE $fieldSearch like '$searchTerm' $andWhere LIMIT 40"; //  ORDER BY $sidx $sord";
 //$db->conn->debug = true;
 $result = $db->conn->query( $SQL ) or die("Couldn t execute query.");
 
