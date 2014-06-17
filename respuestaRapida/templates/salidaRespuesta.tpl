@@ -6,7 +6,6 @@
         <link href="../estilos/orfeo.css" type="text/css"  rel="stylesheet" />
         <!--{$estilosCaliope}-->
         <style type="text/css">
-
             HTML, BODY{
                 font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
                 margin: 0px; 
@@ -54,7 +53,11 @@
         </table>
         <!--{if $noerror ge 1 or $salida eq 'ok'}-->
         <iframe src="../radicacion/tipificar_documento.php?<!--{$sid}-->&nurad=<!--{$nurad}-->&dependencia=<!--{$dependencia}-->&krd=<!--{$krd}-->&tsub=0&codserie=0&respuesta_rap=<!--{$respuesta_rap}-->" 
-        width='100%' height='540px' style='border: 0px'></iframe>
+        width='100%' height='540px' style='border: 0px'>
+        </iframe>
         <!--{/if}-->
+        <center>
+          <input name="Cerrar" type="button" class="btn btn-default btn-xs" id="envia22" onClick="opener.window.close(); " value="Cerrar">
+        </center>
     </body>
 </html>

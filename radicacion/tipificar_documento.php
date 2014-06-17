@@ -341,12 +341,11 @@ function regresar(){
 		    <input name="actualizar" type="button" class="btn btn-primary btn-xs" id="envia23" onClick="procModificar();"value=" Modificar ">
 <?php
   $respuesta_rap = (isset($_GET['respuesta_rap']))? $_GET['respuesta_rap'] : null;
-  if ($respuesta_rap) {
-    echo '<input name="Cerrar" type="button" class="btn btn-default btn-xs" id="envia22" onClick="top.close(); " value="Cerrar">';
-  } else {
+  if (!$respuesta_rap) {
     echo '<input name="Cerrar" type="button" class="btn btn-default btn-xs" id="envia22" onClick="opener.regresar(); window.close(); " value="Cerrar">';
   }
 ?>
+        <input name="respuesta_rap" type="hidden" value="<?=$respuesta_rap?>">
 		    </footer>
 		   </td>
 	   </tr>
