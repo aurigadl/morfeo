@@ -61,6 +61,19 @@ else
     }
 }
 
+
+// Archivos para almacenar los adjuntos de los formularios creados
+// de manera dinamica con gforms
+if ( is_dir( $ruta_raiz.'/bodega/'.$anoCrear) ){
+    // Directorio formFiles
+    // Crea un directorio llamado formFiles
+    if ( mkdir ( $ruta_raiz.'/bodega/'.$anoCrear.'/formFiles', 0777 ) ){
+        print "Directorio ".$ruta_raiz.'/bodega/'.$anoCrear.'/formFiles'." creado.<br>";
+    }else{
+        print "No se pudo crear el directorio ".$ruta_raiz.'/bodega/'.$anoCrear.'/formFiles<br>';
+    }
+}
+
 // Directorio fax
 // Verifica si no existe el directorio fax
 if ( ! is_dir( $ruta_raiz.'/bodega/fax' ) )
@@ -118,6 +131,9 @@ if ( ! is_dir( $ruta_raiz.'/bodega/masiva' ) )
         print "No se pudo crear el directorio ".$ruta_raiz.'/bodega/masiva.<br>';
     }
 }
+
+
+
 
 // Directorio pdfs
 // Verifica si no existe un directorio pdfs
@@ -257,6 +273,8 @@ if ( ! is_dir( $ruta_raiz.'/bodega/tmp' ) )
         }
         }
 
+
+
 // Funci�n para crear los directorios asociados a cada dependencia
 function creaDirDepe( $ruta_raiz ,$anoCrear)
 {
@@ -295,6 +313,8 @@ function creaDirDepe( $ruta_raiz ,$anoCrear)
                 }
             }
         }
+
+
 	
         // Si no existe un directorio cuyo nombre corresponde al c�digo de la dependencia,
         // lo crea
