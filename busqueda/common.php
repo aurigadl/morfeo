@@ -6,7 +6,7 @@
  *       PHP 4.0 build 11/30/2001
  *********************************************************************************/
 
-error_reporting (E_ALL ^ E_NOTICE);
+//error_reporting (E_ALL ^ E_NOTICE);
 //===============================
 // Database Connection Definition - Defincion de la coneccion a la base de tdatos
 //-------------------------------

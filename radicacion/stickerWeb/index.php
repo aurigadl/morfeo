@@ -27,11 +27,7 @@ $db     = new ConnectionHandler($ruta_raiz);
 include $ruta_raiz.'/ver_datosrad.php';
 $copias = empty($copias)? 0: $copias;
 
-if('NO DEFINIDO' != $tpdoc_nombreTRD ){
-    $process = "Proceso ". $tpdoc_nombreTRD;
-}
-
-
+$process = "Proceso ". $tpdoc_nombreTRD;
 ?>
 <html>
 <head>
