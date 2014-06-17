@@ -51,6 +51,11 @@ $entidad= "CORRELIBRE";
 //Nombre de la EmpresaCD
 $entidad_largo= 'FUNDACION PARA EL DESARROLLO DEL CONOCIMIENTO LIBRE';	//Variable usada generalmente para los titulos en informes.
 
+
+// Imagenes para generar el PDF
+define('LOGO_METROVIVIENDA', $ABSOL_PATH . 'img/logo_alcaldia_metrovivienda.png');
+define('PIE_METROVIVIENDA', $ABSOL_PATH . 'img/footer_metrovivienda.png');
+
 //Telefono o PBX de la empresa.
 $entidad_tel = 000000 ;
 
