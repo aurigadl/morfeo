@@ -17,12 +17,30 @@
     //Page header
     public function Header() {
       // Logo
-      $this->Image(IMAGEN_PDF,
-                    30,
+      $this->Image(LOGO_METROVIVIENDA,
+                    100,
                     10,
+                    25,
+                    0,
+                    'png',
+                    '',
+                    'T',
+                    false,
+                    300,
+                    '',
+                    false,
+                    false,
+                    0,
+                    false,
+                    false,
+                    false);
+      
+      $this->Image(PIE_METROVIVIENDA,
+                    25,
+                    250,
                     167,
                     '',
-                    'JPG',
+                    'png',
                     '',
                     'T',
                     false,
@@ -41,17 +59,6 @@
       // Position at 15 mm from bottom
       $this->SetY(-20);
       // Page number
-
-      $txt = "<div align='center'> ". ENTIDAD_DIR . " Contacto: " . ENTIDAD_TEL;
-      $this->writeHTMLCell( $w = 0,
-                            $h = 3,
-                            $x = '32',
-                            $y = '',
-                            $txt,
-                            $border = 0,
-                            $ln = 1,
-                            $fill = 0,
-                            $reseth = true);
     }
   }
 
