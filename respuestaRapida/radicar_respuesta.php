@@ -1,5 +1,6 @@
 <?php
   define ('ENVIO_EMAIL', '1');
+  define ('COLOMBIA',     170);
   
   require_once($ruta_raiz."/config.php");
   require_once($ruta_raiz."/include/db/ConnectionHandler.php");
@@ -50,8 +51,8 @@
   $servidorSmtp   = "172.16.1.92:25";
   $tdoc           = NO_DEFINIDO; 
   $tipo_radicado  = (isset($_POST['tipo_radicado']))? $_POST['tipo_radicado'] : null;
-  $pais           = 170; //OK, codigo pais
-  $cont           = 1; //id del continente
+  $pais           = COLOMBIA; //OK, codigo pais
+  $cont           = 1;        //id del continente
   $radicado_rem   = 7;
   $auxnumero      = str_pad($auxnumero, 5, "0", STR_PAD_LEFT);
   $tipo           = ARCHIVO_PDF;
@@ -92,8 +93,7 @@
   //ENLACE DEL ANEXO
   $radano = substr($numRadicadoPadre,0,4);
 
-  $desti = "
-          SELECT
+  $desti = "SELECT
               s.sgd_dir_nomremdes,
               s.sgd_dir_direccion,
               s.sgd_dir_tipo,
@@ -163,6 +163,7 @@
     header("Location: salidaRespuesta.php?$encabe&error=1");
       die;
   }
+  
   //datos para guardar los anexos en la carpeta del nuevo radicado
   $primerno  = substr($nurad, 0, 4);
   $segundono = $_SESSION["dependencia"];
@@ -347,9 +348,7 @@
   }
 }
 
-/***********************************************
 // AGREGAR LOS ADJUNTOS AL RADICADO
-***********************************************/
 $auxnumero    = $anex->obtenerMaximoNumeroAnexo($nurad);
 
 do{
@@ -401,7 +400,6 @@ $isql = "INSERT INTO ANEXOS (SGD_REM_DESTINO,
                             $nurad,
                             $medioRadicar,
                             NULL)";
-
 $bien = $db->conn->Execute($isql);
 
 // Si actualizo BD correctamente

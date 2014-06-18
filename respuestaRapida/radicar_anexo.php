@@ -378,4 +378,10 @@
 
   $coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
   $codusua = $rsDepR->fields['RADI_USUA_ACTU'];
+
+  $archivo_txt = $anexo . '.txt';
+  $archivo_grabar_txt = "../bodega/$radano/$depCreadora/docs/" . $archivo_txt;
+  $file_content   = fopen($archivo_grabar_txt, 'w');
+  $write_result   = fwrite($file_content, $respuesta);
+  $closing_result = fclose($file_content);
 ?>
