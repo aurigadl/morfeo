@@ -803,8 +803,8 @@ if( $rs_exp->RecordCount() == 0 ){
 	 </td>
 	 </tr>
 	</table>
-	</DIV>
-	</DIV>
+	</div>
+	</div>
 </form>
 </body>
 </html>

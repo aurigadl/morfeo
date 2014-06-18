@@ -57,7 +57,7 @@
         </iframe>
         <!--{/if}-->
         <center>
-          <input name="Cerrar" type="button" class="btn btn-default btn-xs" id="envia22" onClick="opener.window.close(); " value="Cerrar">
+          <input name="Cerrar" type="button" class="btn btn-default btn-xs" id="envia22" onClick="window.parent.opener.cargarPagina('./lista_anexos.php', 'tabs-c'); window.parent.close();" value="Cerrar">
         </center>
     </body>
 </html>
