@@ -257,18 +257,27 @@
 
                     if($fieldTypeCode==10) {
                         $norandom = fileuploader.rand();
-                        echo("<div $addAttr id='$norandom'>Upload</div>");
+                        echo("<div $addAttr id='$norandom'>Subir archivo</div>");
                         $scriptJS .= "
-
                                         $('#$norandom').uploadFile({
                                             url:'./server.php?tx=2',
                                             fileName:'fileFormDinamic'
                                         });
-
                                     ";
-
-                        break;
                     }
+
+                    if($fieldTypeCode==11) {
+                        $norandom = fileuploader.rand();
+                        echo("<div $addAttr id='$norandom'>Subir archivo</div>");
+                        $scriptJS .= "
+                                        $('#$norandom').uploadFile({
+                                            url:'./server.php?tx=2',
+                                            fileName:'fileFormDinamic'
+                                        });
+                                    ";
+                    }
+
+
 					?>
 					</div>
 						<div>

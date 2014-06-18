@@ -266,7 +266,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <a href="javascript:void(0);" onClick="window.open ('./stickerWeb/index.php?<?=$varEnvio?>&alineacion=Center','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');" class="btn btn-link">Sticker</a>
           </label>
 
-          <label>
+          <label id="asociar">
             <a  href="javascript:void(0);" onClick="window.open ('../uploadFiles/uploadFileRadicado.php?busqRadicados=<?=$nurad?>&Buscar=Buscar&<?=$varEnvio?>&alineacion=Center','busqRadicados=<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');" class="btn btn-link">Asociar Imagen</a>
           </label>
 
@@ -338,27 +338,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <section id="showAnswer" class="col-lg-12 hide well">
                         <ul id="resBusqueda" class="inbox-download-list"> </ul>
                       </section>
-
                     </div>
+
                     <section id="tableSection" class="well col-lg-12 smart-form <?=$showtable?>">
-                      <table class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th style="width: 35px;"></th>
-                            <th>Tipo Documento</th>
-                            <th>Documento</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Telefono</th>
-                            <th>Direcci&oacute;n</th>
-                            <th>Correo Electronico</th>
-                            <th>Municipio</th>
-                            <th>Departamento</th>
-                            <th>Pais</th>
-                          </tr>
-                        </thead>
-                        <tbody id="tableshow"><?=$showUsers?></tbody>
-                    </table>
+                        <a id="buttonHide" class="btn pull-right btn-default btn-xs" href="javascript:void(0);">Columnas</a>
+                        <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th style="width: 35px;"></th>
+                                <th>Tipo Documento</th>
+                                <th>Documento</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Telefono</th>
+                                <th>Direcci&oacute;n</th>
+                                <th>Correo Electronico</th>
+                                <th class="toogletd">Municipio</th>
+                                <th class="toogletd">Departamento</th>
+                                <th class="toogletd">Pais</th>
+                              </tr>
+                            </thead>
+                            <tbody id="tableshow"><?=$showUsers?></tbody>
+                        </table>
                   </section>
               </div>
             </article>
@@ -383,12 +384,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <label class="select">
                     <?=$medioRec?>
                 </label>
-                <!--<label class="label">
+                <label class="label">
                     Dignatario
                 </label>
                   <label class="input">
                   <input type="text" value="" name="otro_us">
-                </label>-->
+                </label>
                   <label class="label">
                       No. Folios
                   </label>
@@ -403,7 +404,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <input name="noanexos" id="noanexos" type="text" size="10" value="">
                   </label>
                   <label class="label">
-                      Descripci&oacute; Anexos
+                      Descripci&oacute;n Anexos
                   </label>
                   <label class="input">
                       <input name="ane" id="ane" type="text" size="70"  value="<?=$ane?>">
@@ -432,6 +433,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
      onclick="window.open ('./stickerWeb/index.php?<?=$idsession?>&nurad=xxxxxx&ent=<?=$ent?>','stickerxxxxxx','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');"
   class="btn btn-link hide">Sticker</a>
 
+
+  <a id="skeleton9" href="javascript:void(0);"
+     onClick="window.open ('../uploadFiles/uploadFileRadicado.php?<?=$idsession?>&busqRadicados=xxxxxx&Buscar=Buscar&alineacion=Center','busqRadicados=xxxxxx','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');"
+  class="btn btn-link hide">Asociar Imagen</a>
+
+
   <script type="text/javascript">
 
     $(document).ready(function() {
@@ -447,6 +454,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         onSelect : function(selectedDate) {
           $('#date').datepicker('option', 'maxDate', selectedDate);
         }
+      });
+
+
+      //Mostar y ocultar comlumnas de la tabla
+      //se filtra por la clase
+      $('.toogletd').toggle();
+      $("#buttonHide").click(function(){
+          $('.toogletd').toggle();
       });
 
     /**
@@ -792,7 +807,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           pass = false;
         };
 
-        if(!/^[0-9A-Za-z áéíóúÁÉÍÓÚÑñ]+$/.test(asu) && asu.length > 0){
+        if(!/^[0-9A-Za-z áéíóúÁÉÍÓÚÑñ\&\#\.\*\>\@\<\_\,\;\:\°\-\%\(\)]+$/.test(asu) && asu.length > 0){
           mostrarAlert({type : 'danger', message : 'Asunto con caracteres no permitidos'});
           pass = false;
         };
@@ -845,8 +860,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               }
             };
             if(acction !== "modificaRad"){
-              var contentstiker = $('#skeleton').clone().removeClass('hide')[0].outerHTML.replace(/xxxxxx/g, radicado);
-              $('#sticker').html(contentstiker);
+                var contentstiker = $('#skeleton') .clone().removeClass('hide')[0].outerHTML.replace(/xxxxxx/g, radicado);
+                var contentasocia = $('#skeleton9').clone().removeClass('hide')[0].outerHTML.replace(/xxxxxx/g, radicado);
+                $('#sticker').html(contentstiker);
+                $('#asociar').html(contentasocia);
             }
           }).fail(function() {
             mostrarAlert({type : 'danger', message : 'Error de conexion al servidor'})

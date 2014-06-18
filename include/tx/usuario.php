@@ -356,21 +356,21 @@ class Usuario {
                           </label>
                         </td>';
 
-            $html .= '  <td>
+            $html .= '  <td class="toogletd">
                           <label name="inp_'.$idtx.'_muni" class="input">
                             <input type="text" name="'.$idtx.'_muni" value="'.$result["MUNI"].'">
                             <input type="hidden" name="'.$idtx.'_muni_codigo" value="'.$result["MUNI_CODIGO"].'">
                           </label>
                         </td>';
 
-            $html .= '  <td>
+            $html .= '  <td class="toogletd">
                           <label name="inp_'.$idtx.'_dep" class="input">
                             <input type="text" name="'.$idtx.'_dep" value="'.$result["DEP"].'">
                             <input type="hidden" name="'.$idtx.'_dep_codigo" value="'.$result["DEP_CODIGO"].'">
                           </label>
                         </td>';
 
-            $html .= '  <td>
+            $html .= '  <td class="toogletd">
                           <label name="inp_'.$idtx.'_pais" class="input">
                             <input type="text" name="'.$idtx.'_pais" value="'.$result["PAIS"].'">
                             <input type="hidden" name="'.$idtx.'_pais_codigo" value="'.$result["PAIS_CODIGO"].'">

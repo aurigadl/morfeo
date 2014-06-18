@@ -53,9 +53,9 @@ body {
 }
 
 span{
-    font-size: 9px;
+    font-size:   11px;
     line-height: 10px;
-    clear:both;
+    clear:       both;
 }
 h3,p{
     margin: 0px;

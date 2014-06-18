@@ -49,15 +49,15 @@
             deleteCallback: false,
             afterUploadAll: false,
             uploadButtonClass: "ajax-file-upload",
-            dragDropStr: "<span><b>Drag &amp; Drop Files</b></span>",
-            abortStr: "Abort",
-            cancelStr: "Cancel",
-            deletelStr: "Delete",
-            doneStr: "Done",
-            multiDragErrorStr: "Multiple File Drag &amp; Drop is not allowed.",
-            extErrorStr: "is not allowed. Allowed extensions: ",
-            sizeErrorStr: "is not allowed. Allowed Max size: ",
-            uploadErrorStr: "Upload is not allowed"
+            dragDropStr: "<span><b>Arrastra y suelta el archivo</b></span>",
+            abortStr: "Abortar",
+            cancelStr: "Cancelar",
+            deletelStr: "Borrar",
+            doneStr: "Cargado",
+            multiDragErrorStr: "Multiples archivos no permitidos.",
+            extErrorStr: "no es permitido. Extensiones permitidas: ",
+            sizeErrorStr: "no es permitido. Tamaño maximo permitido: ",
+            uploadErrorStr: "Cargar archivos no esta permitido"
         }, options);
 
         this.fileCounter = 1;
