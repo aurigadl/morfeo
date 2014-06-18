@@ -197,11 +197,18 @@
                     </strong>
                   </td>
                 <!--{/if}-->
-                
-                  <td   colspan="4" ><footer>
-                    <input type="submit" name="Button" value="Radicar" class="btn btn-primary">
-                    &nbsp;
-                    <input type="submit" name="Button" value="Grabar como Anexo" class="btn btn-success"></footer>
+                  <td colspan="4" >
+                    <!--{if $GUARDAR_RADICADO}-->
+                    <footer>
+                      <input type="submit" name="Button" value="Guardar Cambios" class="btn btn-primary">
+                    </footer>
+                    <!--{else}-->
+                    <footer>
+                      <input type="submit" name="Button" value="Radicar" class="btn btn-primary">
+                      &nbsp;
+                      <input type="submit" name="Button" value="Grabar como Anexo" class="btn btn-success">
+                    </footer>
+                    <!--{/if}-->
                   </td>
                 </tr>
                 

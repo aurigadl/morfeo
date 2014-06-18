@@ -4,6 +4,8 @@ session_start();
 define('RAD_ENTRADA', '2');
 define('SMARTY_DIR', $ruta_libs.'libs/');
 define('ADODB_ASSOC_CASE', 1);
+define('COLOMBIA', 170);
+define('AMERICA', 1);
 
 $ruta_raiz = "..";
 
@@ -75,7 +77,6 @@ $smarty->template_dir = './templates';
 $smarty->compile_dir = './templates_c';
 $smarty->config_dir = './configs/';
 $smarty->cache_dir = './cache/';
-$smarty->debugging = true;
 
 $smarty->left_delimiter = '<!--{';
 $smarty->right_delimiter = '}-->';
@@ -150,8 +151,7 @@ $isql   = "SELECT USUA_EMAIL,
 $rs   = $db->conn->Execute($isql);
 
 if (!$rs){
-  echo "ERROR, datos invalidos";
-  exit(0);
+  exit('ERROR, datos invalidos');
 }
 
 
@@ -189,7 +189,8 @@ $emails   =  array_filter($emails);
 $name  = "";
 $email = "";
 
-$isql  = "SELECT D.* FROM SGD_DIR_DRECCIONES D
+$isql  = "SELECT D.*
+            FROM SGD_DIR_DRECCIONES D
             WHERE D.RADI_NUME_RADI = $radicado";
 $rs = $db->conn->Execute($isql);
 
@@ -204,15 +205,21 @@ $fecha1   = time();
 $fecha    = ucfirst(fechaFormateada($fecha1));
 
 if ($editar) {
-  $buscar_anexo = "SELECT anex_nomb_archivo
+  $buscar_anexo = "SELECT radi_nume_salida,
+                      anex_nomb_archivo
                       FROM anexos
                       WHERE anex_codigo = '$anex_codigo'";
+  
   $anexo_result = $db->conn->Execute($buscar_anexo);
   $ano = substr($radicado, 0, 4);
   $dependencia = substr($radicado, 4, 3);
   
   if (!$anexo_result->EOF) {
     $nombre_archivo = $anexo_result->fields['ANEX_NOMB_ARCHIVO'];
+    $numero_radicado= $anexo_result->fields['RADI_NUME_SALIDA'];
+
+    $guardar_radicado = (isset($numero_radicado))? true : false;
+
     $nombre_archivo = rtrim($nombre_archivo, '.pdf');
     $nombre_archivo .= '.txt';
     $ruta_completa = '../bodega/' . $ano . '/' . $dependencia . '/docs/' . $nombre_archivo;
@@ -220,12 +227,10 @@ if ($editar) {
 
     // Si error al leer el contenido del archivo finalice el programa
     if (!$asunto) {
-      var_dump('Error al leer el anexos o radicado, por favor verificar con el administrador del sistema si existe en sistema');
-      exit(0);
+      exit('Error al leer el anexos o radicado, por favor verificar con el administrador del sistema si existe en sistema');
     }
   } else {
-    var_dump('Error el radicado no tiene un archivo asociado');
-    exit(0);
+    exit('Error el radicado no tiene un archivo asociado');
   }
 
 } else {
@@ -233,18 +238,16 @@ if ($editar) {
 }
 
 
-$sqlD = " SELECT
-  a.MUNI_NOMB,
-  b.DPTO_NOMB
-  FROM
-  MUNICIPIO a, DEPARTAMENTO b
-  WHERE (a.ID_PAIS = 170)
-  AND (a.ID_CONT = 1)
-  AND (a.DPTO_CODI = $depecodi2)
-  AND (a.MUNI_CODI = $municicodi)
-  AND (a.DPTO_CODI=b.DPTO_CODI)
-  AND (a.ID_PAIS=b.ID_PAIS)
-  AND (a.ID_CONT=b.ID_CONT)";
+$sqlD = " SELECT  a.MUNI_NOMB,
+                  b.DPTO_NOMB
+          FROM    MUNICIPIO a, DEPARTAMENTO b
+          WHERE (a.ID_PAIS = " . COLOMBIA .") AND
+                (a.ID_CONT = " . AMERICA . ") AND
+                (a.DPTO_CODI = $depecodi2) AND
+                (a.MUNI_CODI = $municicodi) AND
+                (a.DPTO_CODI=b.DPTO_CODI) AND
+                (a.ID_PAIS=b.ID_PAIS) AND
+                (a.ID_CONT=b.ID_CONT)";
 
 $descripMuniDep = $db->conn->Execute($sqlD);
 $depcNomb       = $descripMuniDep->fields["MUNI_NOMB"];
@@ -269,13 +272,9 @@ while(!$exte->EOF){
 $sqlSubstDesc =  $db->conn->substr."(anex_desc, 0, 50)";
 
 //adjuntar  la imagen html al radicado
-$desti = "
-  SELECT
-  RADI_PATH
-  FROM
-  RADICADO
-  WHERE
-  RADI_NUME_RADI = $radicado";
+$desti = "SELECT RADI_PATH
+          FROM RADICADO
+          WHERE RADI_NUME_RADI = $radicado";
 
 $rssPatth    = $db->conn->Execute($desti);
 $pathPadre   = $rssPatth->fields["RADI_PATH"];
@@ -348,12 +347,21 @@ while(!$plant->EOF){
 
   if($plan_tipo == 3){
     $showInput = ($perPlanilla >= $plan_tipo)? true : false;
-    $carpetas['Generales'][] = array("id"=> $plan_id, "nombre"=> $plan_nombre , "ruta"=> $plan_plantilla, "show"=> $showInput);
+    $carpetas['Generales'][] = array("id"=> $plan_id,
+                                      "nombre"=> $plan_nombre,
+                                      "ruta"=> $plan_plantilla,
+                                      "show"=> $showInput);
   }elseif ($plan_tipo == 2 and $plan_depend == $depecodi) {
     $showInput = ($perPlanilla >= $plan_tipo)? true : false;
-    $carpetas['Dependencia'][] = array("id"=> $plan_id, "nombre"=> $plan_nombre , "ruta"=> $plan_plantilla, "show"=> $showInput);
+    $carpetas['Dependencia'][] = array("id"=> $plan_id,
+                                        "nombre"=> $plan_nombre,
+                                        "ruta"=> $plan_plantilla,
+                                        "show"=> $showInput);
   }elseif ($plan_tipo == 1 and $plan_depend == $depecodi and$plan_usurio == $usuacodi) {
-    $carpetas['Personales'][] = array("id"=> $plan_id, "nombre"=> $plan_nombre , "ruta"=> $plan_plantilla, "show"=> true);
+    $carpetas['Personales'][] = array("id"=> $plan_id,
+                                        "nombre"=> $plan_nombre,
+                                        "ruta"=> $plan_plantilla,
+                                        "show"=> true);
   }
   $plant->MoveNext();
 
@@ -361,6 +369,7 @@ while(!$plant->EOF){
 
 $smarty->assign("sid"              , SID); //Envio de session por get
 $smarty->assign("TIPOS_RADICADOS"  , $tipos_radicados);
+$smarty->assign("GUARDAR_RADICADO" , $guardar_radicado);
 $smarty->assign("MOSTRAR_ERROR"    , $mostrar_error);
 $smarty->assign("usuacodi"         , $usuacodi);
 $smarty->assign("editar"           , $editar);
