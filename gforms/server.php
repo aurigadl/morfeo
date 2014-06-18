@@ -82,7 +82,8 @@
             break;
 
         case 2:
-            $year = date("Y");
+
+            $year       = date("Y");
             $output_dir = "../bodega/$year/formFiles";
 
             if(isset($_FILES["fileFormDinamic"])){
@@ -92,21 +93,23 @@
                 //If Any browser does not support serializing of multiple files using FormData()
                 if(!is_array($_FILES["fileFormDinamic"]["name"])) //single file
                 {
-                    $fileName = $_FILES["fileFormDinamic"]["name"];
+                    $namefile = rand(9999, 99999);
+                    $fileName = $namefile.'_'.$_FILES["fileFormDinamic"]["name"];
                     move_uploaded_file($_FILES["fileFormDinamic"]["tmp_name"],$output_dir.$fileName);
                     $ret[]= $fileName;
-                }
-                else  //Multiple files, file[]
+
+                } else  //Multiple files, file[]
                 {
                     $fileCount = count($_FILES["fileFormDinamic"]["name"]);
-                    for($i=0; $i < $fileCount; $i++)
-                    {
-                        $fileName = $_FILES["fileFormDinamic"]["name"][$i];
+                    for($i=0; $i < $fileCount; $i++){
+                        $namefile = rand(9999, 99999);
+                        $fileName = $namefile.'_'.$_FILES["fileFormDinamic"]["name"][$i];
                         move_uploaded_file($_FILES["fileFormDinamic"]["tmp_name"][$i],$output_dir.$fileName);
                         $ret[]= $fileName;
                     }
                 }
                 echo json_encode($ret);
+                die();
             }
             break;
 

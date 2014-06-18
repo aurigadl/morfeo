@@ -6,7 +6,6 @@
 <?php
   session_start();
   $ruta_raiz = "..";
-  ini_set("display_errors",1);
   include_once "../htmlheader.inc.php";
   
 ?>
@@ -30,8 +29,6 @@
 
   $nameForm = $form->nameForm;
   $descForm = $form->descriptionForm;
-  // include "frmUpdate.php";z1aSAW3swq33|1w<e	fX
-  // include "frmController";
   $scriptJs = "";
 ?>
 <div id="resultadoFrm">
@@ -257,24 +254,35 @@
 
                     if($fieldTypeCode==10) {
                         $norandom = fileuploader.rand();
-                        echo("<div $addAttr id='$norandom'>Subir archivo</div>");
+                        echo("<div $addAttr id='$norandom'>Subir archivo</div>
+                              <input  type='hidden' value='' id='inp_$norandom' $addAttr />");
                         $scriptJS .= "
-                                        $('#$norandom').uploadFile({
-                                            url:'./server.php?tx=2',
-                                            fileName:'fileFormDinamic'
-                                        });
-                                    ";
+                                    var uploaderId = '$norandom';
+                                    $('#$norandom').uploadFile({
+                                        url:'./server.php?tx=2',
+                                        fileName:'fileFormDinamic',
+                                        onSuccess:function(files,data,xhr){
+                                            $('#inp_$norandom').val(JSON.parse(data)[0]);
+                                        }
+                                    });
+                                ";
                     }
 
                     if($fieldTypeCode==11) {
                         $norandom = fileuploader.rand();
-                        echo("<div $addAttr id='$norandom'>Subir archivo</div>");
+                        echo("<div $addAttr id='$norandom'>Subir archivo</div>
+                              <input  type='hidden' value='' id='inp_$norandom' $addAttr />");
                         $scriptJS .= "
-                                        $('#$norandom').uploadFile({
-                                            url:'./server.php?tx=2',
-                                            fileName:'fileFormDinamic'
-                                        });
-                                    ";
+                                    var uploaderId = '$norandom';
+                                    $('#$norandom').uploadFile({
+                                        url:'./server.php?tx=2',
+                                        fileName:'fileFormDinamic',
+                                        multiple:true,
+                                        onSuccess:function(files,data,xhr){
+                                            $('#inp_$norandom').val(JSON.parse(data)[0]);
+                                        }
+                                    });
+                                ";
                     }
 
 
