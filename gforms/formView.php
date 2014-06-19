@@ -142,6 +142,7 @@
 					<?php if($fieldTypeCode==1 || $fieldTypeCode==2) {?><input <?=$addAttr?> type="<?=$feildType?>" placeholder="<?=$fieldDesc?>" name="<?=$fieldName?>"  id="<?=$fieldName?>"  <?=$tFieldMask?> > <?php } ?>
 					<?php if($fieldClass=="textarea") {?><textarea <?=$addAttr?> fieldSave="<?=$fieldSave?>" placeholder="<?=$fieldDesc?>" rows="3"  name="<?=$fieldName?>"  id="<?=$fieldName?>"  ></textarea><?php } ?>
 					<?php if($fieldTypeCode==4) {?><input <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldLabel?>" class="datepicker" type="text" data-dateformat="yyyy-mm-dd" placeholder="Select a date" name="<?=$fieldLabel?>"><?php } ?>
+                     <?php if($fieldTypeCode==5) {?><label <?=$addAttr?> type="<?=$feildType?>" placeholder="<?=$fieldDesc?>" name="<?=$fieldName?>"  id="<?=$fieldName?>"  <?=$tFieldMask?> > </label> <?php } ?>
 					<?php if($fieldTypeCode==7) {
 					  if($fieldSql){
 					   $datosSelect = explode ('||',$fieldSql);				   
@@ -254,6 +255,14 @@
 
                     if($fieldTypeCode==10) {
                         $norandom = fileuploader.rand();
+                        if($fieldSql){
+                            $datosSelect = explode ('||',$fieldSql);
+                        }
+					    foreach($datosSelect as $key => $value){
+                            list($val, $cod) = preg_split("/[\s->]+/", $value);
+                            $val
+                        }
+
                         echo("<div $addAttr id='$norandom'>Subir archivo</div>
                               <input  type='hidden' value='' id='inp_$norandom' $addAttr />");
                         $scriptJS .= "
