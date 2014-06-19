@@ -20,6 +20,7 @@
   if($_GET["codeForm"]) $codeForm = $_GET["codeForm"];
   /** Primer intento de tener un Generador de Formularios para Caliope
     */
+  define('ADODB_ASSOC_CASE', 1);  
   include "$ruta_raiz/conn.php";
   include "$ruta_raiz/gforms/genForm.class.php";
   //$db->conn->debug = true;
@@ -131,18 +132,17 @@
 			?>
 			
 			<td  <?=$addColspan?> >
-				<section>
+				<? if( $fieldTypeCode!=12) { ?><section> <? } ?>
 				<label class="label"><?=$fieldLabel?></label>
-				<label class="<?=$fieldClass?>">
-				 <div class="input-group col-lg-12">
+				<? if( $fieldTypeCode!=12) { ?><label class="<?=$fieldClass?>"> <? } ?>
+				 <? if( $fieldTypeCode!=12) { ?> <div class="input-group col-lg-12"> <? } ?>
 				 
-					<i class="<?php if(trim($fieldHelp) && trim($fieldClass!="datefield") && trim($fieldTypeCode!=9)){ echo 'icon-append fa fa-question-circle'; } 
+					<i class="<?php if(trim($fieldHelp) && trim($fieldTypeCode==3) && trim($fieldTypeCode!=9) && trim($fieldTypeCode!=12)){ echo 'icon-append fa fa-question-circle'; } 
 					?>" ></i>
 					
 					<?php if($fieldTypeCode==1 || $fieldTypeCode==2) {?><input <?=$addAttr?> type="<?=$feildType?>" placeholder="<?=$fieldDesc?>" name="<?=$fieldName?>"  id="<?=$fieldName?>"  <?=$tFieldMask?> > <?php } ?>
-					<?php if($fieldClass=="textarea") {?><textarea <?=$addAttr?> fieldSave="<?=$fieldSave?>" placeholder="<?=$fieldDesc?>" rows="3"  name="<?=$fieldName?>"  id="<?=$fieldName?>"  ></textarea><?php } ?>
+					<?php if($fieldTypeCode==3) {?><textarea <?=$addAttr?> fieldSave="<?=$fieldSave?>" placeholder="<?=$fieldDesc?>" rows="3"  name="<?=$fieldName?>"  id="<?=$fieldName?>"  ></textarea><?php } ?>
 					<?php if($fieldTypeCode==4) {?><input <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldLabel?>" class="datepicker" type="text" data-dateformat="yyyy-mm-dd" placeholder="Select a date" name="<?=$fieldLabel?>"><?php } ?>
-                     <?php if($fieldTypeCode==5) {?><label <?=$addAttr?> type="<?=$feildType?>" placeholder="<?=$fieldDesc?>" name="<?=$fieldName?>"  id="<?=$fieldName?>"  <?=$tFieldMask?> > </label> <?php } ?>
 					<?php if($fieldTypeCode==7) {
 					  if($fieldSql){
 					   $datosSelect = explode ('||',$fieldSql);				   
@@ -184,7 +184,7 @@
 					  }  ?>
 					</select> 
 					 <?php 
-					} ?>					
+					} ?>
 					
 					<?php if($fieldTypeCode==9) {
 					?>
@@ -239,12 +239,12 @@
 						';
 					}else{ ?>					
 					<?php 
-					if(trim($fieldClass=="datefield")){ ?>
+					if($fieldTypeCode==4){ ?>
 						<span class="input-group-addon">
 						<i class="fa fa-calendar"></i>
 						</span> 
 					<?php
-					}elseif (trim($fieldHelp)) {
+					}elseif (trim($fieldHelp) and $fieldTypeCode!=4) {
 					?>
 						<b class="tooltip tooltip-top-right bg-color-orange">
 						<i class="fa fa-question-circle "></i>
@@ -252,17 +252,11 @@
 						</b>
 					<?php }
 					}
+					$ADODB_FETCH_MODE = ADODB_FETCH_ASOC;
+          $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
 
                     if($fieldTypeCode==10) {
                         $norandom = fileuploader.rand();
-                        if($fieldSql){
-                            $datosSelect = explode ('||',$fieldSql);
-                        }
-					    foreach($datosSelect as $key => $value){
-                            list($val, $cod) = preg_split("/[\s->]+/", $value);
-                            $val
-                        }
-
                         echo("<div $addAttr id='$norandom'>Subir archivo</div>
                               <input  type='hidden' value='' id='inp_$norandom' $addAttr />");
                         $scriptJS .= "
@@ -293,21 +287,49 @@
                                     });
                                 ";
                     }
+                    
+          if($fieldTypeCode==12) {
+          ?>
+         <?php 
+        if($fieldSql){
+          $datosSelect = explode ('||',$fieldSql);           
+        }
+        $i=1;
+        $fieldsView = "";
+        $fieldsViewObject = "";
+        $fieldsInsertValueId = "";
+        foreach($datosSelect as $key => $value){
+          if($i>=2) {
+            $fieldsViewObject .=",";
+            $fieldsView .=",";  
+            $fieldsInsertValueId .= "";
+          }
+          list($field, $fieldId,$sel) = preg_split("/[\s->]+/", $value);
+          if(!$cod and trim($cod) =="") $cod=$val;
+          if(trim($sel)=="*") { $datoss = " selected"; }else{ $datoss = "";}
+          $fieldsView .= "$field";
+          $fieldsViewObject .= '{"columnName":"'.$field.'","width":"30","label":"'.$field.'"}';
+          $fieldsInsertValueId .= '$( "#'.$fieldId.'" ).val( ui.item.'.$field.' );';
+          $i++;
+        }
+           $nameGrid = $fieldName;
+           $fieldSql = $fieldSql;
+           $fieldSearch = $fieldPkSearch;
+           $tableSearch = $tablePkSearch;
+           if(trim($tableSearch)){
+            include "$ruta_raiz/gforms/grid.php";
+           }else{
+            echo "No hay tabla para realizar busqueda";
+           }
+       }         
 
 
 					?>
-					</div>
-						<div>
-
-				</label>
-
+				 <?  $fieldTypeCode!=12 ?>	</div> <? } ?>
 				<?php if($fieldNull==1) {?><div class="note note-success">Este campo es Requerido.</div> <?php } ?>
 				</section>								
 				</td>
-
-			<?php
-				}
-			?>				</table>	
+				</table>	
 			</fieldset>
 			<footer>
 			<button class="btn btn-primary" type="button" onCLick="saveForm();" id=grabar> Grabar </button>
