@@ -18,8 +18,8 @@
 <?php
   if($_POST["codeForm"]) $codeForm = $_POST["codeForm"];
   if($_GET["codeForm"]) $codeForm = $_GET["codeForm"];
-  /** Primer intento de tener un Generador de Formularios para Caliope
-    */
+
+
   define('ADODB_ASSOC_CASE', 1);  
   include "$ruta_raiz/conn.php";
   include "$ruta_raiz/gforms/genForm.class.php";
@@ -112,8 +112,8 @@
 				$arrPkSearch = preg_split("/[\s||]+/", $fieldPkSearch);
 				foreach($arrPkSearch as $value){
 				  list($val1,$val2,$val3) = preg_split("/[\s->]+/", $value);
-				  
 				}
+
 				$orderOld=$fieldOrder;
 				if(!trim($fieldLabel)) $fieldLabel=$fieldName;
 				if($i=1)
@@ -135,9 +135,7 @@
 				}
 			?>
 			
-			<td  <?=$addColspan?> <?=$addRowspan?> >
-				<? if( $fieldTypeCode!=12) { ?><section> <? } ?>
-				<label class="label"><?=$fieldLabel?></label>
+			<td  <?=$addColspan?> ?=$aeldLabel?></label>
 				<? if( $fieldTypeCode!=12) { ?><label class="<?=$fieldClass?>"> <? } ?>
 				 <div class="input-group col-lg-12">
 				 
@@ -147,6 +145,7 @@
 					<?php if($fieldTypeCode==1 || $fieldTypeCode==2) {?><input <?=$addAttr?> type="<?=$feildType?>" placeholder="<?=$fieldDesc?>" name="<?=$fieldName?>"  id="<?=$fieldName?>"  <?=$tFieldMask?> > <?php } ?>
 					<?php if($fieldTypeCode==3) {?><textarea <?=$addAttr?> fieldSave="<?=$fieldSave?>" placeholder="<?=$fieldDesc?>" rows="3"  name="<?=$fieldName?>"  id="<?=$fieldName?>"  ></textarea><?php } ?>
 					<?php if($fieldTypeCode==4) {?><input <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldName?>" class="datepicker" type="text" data-dateformat="yy-mm-dd" placeholder="Select a date" name="<?=$fieldName?>"><?php } ?>
+                    <?php if($fieldTypeCode==5) {?><label id="<?=$fieldLabel?>" class="label"><?=$fieldDesc?></label> <?php } ?>
 					<?php if($fieldTypeCode==7) {
 					  if($fieldParams){
 					   $datosSelect = explode ('||',$fieldParams);				   
@@ -257,19 +256,50 @@
 					<?php }
 					}
 					$ADODB_FETCH_MODE = ADODB_FETCH_ASOC;
-          $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
+                    $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
 
                     if($fieldTypeCode==10) {
+                        $year     = Date('Y');
+                        $pathfile = "../bodega/$year/formFiles/";
                         $norandom = fileuploader.rand();
                         echo("<div $addAttr id='$norandom'>Subir archivo</div>
                               <input  type='hidden' value='' id='inp_$norandom' $addAttr />");
+
+                        if($fieldParams){
+                            $datosSelect = explode ('||',$fieldParams);
+                            foreach($datosSelect as $key => $value){
+                                list($val, $cod) = preg_split("/[\s->]+/", $value);
+                                if($val == 'link'){
+                                    $urlattach = " var idurlattach ='".$cod."'; ";
+                                }
+
+                                if($val =='image'){
+                                    $imageattach = " var idimageattach ='".$cod."'; ";
+                                }
+
+                            }
+                        }
+
                         $scriptJS .= "
+                                    $urlattach
+                                    $imageattach
                                     var uploaderId = '$norandom';
                                     $('#$norandom').uploadFile({
                                         url:'./server.php?tx=2',
                                         fileName:'fileFormDinamic',
                                         onSuccess:function(files,data,xhr){
                                             $('#inp_$norandom').val(JSON.parse(data)[0]);
+
+                                            if(idurlattach !== undefined){
+                                                $('#' + idurlattach).html('<a href=\"$pathfile'+ JSON.parse(data)[0] +'\">Descarga ' + JSON.parse(data)[0] + '</a>')
+                                            }
+
+                                            if(idimageattach !== undefined){
+                                                enviar = /.(gif|jpg|png|jpeg)$/i.test(JSON.parse(data)[0]);
+                                                if(enviar){
+                                                    $('#' + idimageattach).html('<img src=\"$pathfile'+ JSON.parse(data)[0] +'\" width=\"100%\">');
+                                                }
+                                            }
                                         }
                                     });
                                 ";

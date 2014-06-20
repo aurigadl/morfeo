@@ -84,7 +84,7 @@
         case 2:
 
             $year       = date("Y");
-            $output_dir = "../bodega/$year/formFiles";
+            $output_dir = "../bodega/$year/formFiles/";
 
             if(isset($_FILES["fileFormDinamic"])){
                 $ret = array();
