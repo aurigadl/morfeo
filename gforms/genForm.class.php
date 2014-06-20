@@ -56,8 +56,8 @@ class genForm{
    $codeForm = $this->codeForm;
    $sql = "SELECT f.FRMF_NAME, f.FRMF_NAME, f.FRMF_DESCRIPTION, f.FRMF_SQL, f.FRMF_NULL,f.FRMF_LABEL,f.FRMF_MASK
 							, f.FRMF_COLUMN, f.FRMF_ORDER, f.FRMF_COLSPAN
-							, f.FRMF_FIELDPK, f.FRMF_FIELD,f.FRMF_TABLESAVE,f.FRMF_TABLEPKSAVE,FRMF_TABLEPKSEARCH,FRMF_FIELDPKSEARCH, f.FRMF_PK,
-             ft.FRMT_NAME, ft.FRMT_CLASS, ft.FRMT_HTML, ft.FRMT_Js, ft.FRMT_TYPE, f.FRMf_HELP,ft.FRMT_CODE
+							, f.FRMF_FIELDPK, f.FRMF_FIELD,f.FRMF_TABLESAVE,f.FRMF_TABLEPKSAVE,f.FRMF_TABLEPKSEARCH,f.FRMF_FIELDPKSEARCH, f.FRMF_PK,
+             ft.FRMT_NAME, ft.FRMT_CLASS, ft.FRMT_HTML, ft.FRMT_Js, ft.FRMT_TYPE, f.FRMf_HELP,ft.FRMT_CODE,f.FRMF_ROWSPAN, f.FRMF_DEFAULT,f.FRMF_PARAMS
 						FROM FRMF_FRMFIELDS f, FRMT_FIELDTYPE  ft
 						WHERE f.FRM_CODE=". $codeForm
 						. " AND f.frmt_code=ft.frmt_code
@@ -89,9 +89,12 @@ class genForm{
 			$saveField =     $rs->fields["FRMF_FIELD"];
 			$fieldPkSearch1 = $rs->fields["FRMF_FIELDPK"];
 			$fieldPkSearch = $rs->fields["FRMF_FIELDPKSEARCH"];
-			$tableSave =     $rs->fields["FRMF_TABLESAVE"];
+      $tablePkSearch = $rs->fields["FRMF_TABLEPKSEARCH"];
+      $tableSave =     $rs->fields["FRMF_TABLESAVE"];
 			$tablePkSave =   $rs->fields["FRMF_TABLEPKSAVE"];
-			$tablePkSearch = $rs->fields["FRMF_TABLEPKSEARCH"];
+			$rowspanField = $rs->fields["FRMF_ROWSPAN"];
+			$defaultField = $rs->fields["FRMF_DEFAULT"];
+			$paramsField = $rs->fields["FRMF_PARAMS"];
 			
 			$fields[$i]["FIELD_NAME"] = $nameField;
 			$fields[$i]["FIELD_LABEL"] = $labelField;
@@ -111,9 +114,12 @@ class genForm{
 			$fields[$i]["FIELD_SAVE"] = $saveField;
 			$fields[$i]["FIELD_PKSAVE"] = $saveField;
 			$fields[$i]["TABLE_SAVE"] = $tableSave;
+			$fields[$i]["TABLE_PKSEARCH"] = $tablePkSearch;
 			$fields[$i]["FIELD_PKSEARCH1"] = $fieldPkSearch1;
 			$fields[$i]["FIELD_PKSEARCH"] = $fieldPkSearch;
-			$fields[$i]["TABLE_PKSEARCH"] = $tablePkSearch;
+			$fields[$i]["FIELD_ROWSPAN"] = $rowspanField;
+			$fields[$i]["FIELD_DEFAULT"] = $defaultField;
+			$fields[$i]["FIELD_PARAMS"] = $paramsField;
 			$rs->MoveNext();
 			$i++;
    }

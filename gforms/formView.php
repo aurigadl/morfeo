@@ -101,6 +101,9 @@
 				$fieldPkSearch = $field["FIELD_PKSEARCH"];
 				$fieldPkSearch1 = $field["FIELD_PKSEARCH1"];
 				$fieldPkSave =   $field["FIELD_PKSAVE"];
+				$fieldDefault =       $field["FIELD_DEFAULT"];
+				$fieldRowspan =       $field["FIELD_ROWSPAN"];
+				$fieldParams =       $field["FIELD_PARAMS"];
 				if($orderOld!=$fieldOrder){ 
 				  if($orderOld){ echo "</tr>";   }
 				  echo "<tr>";   
@@ -115,6 +118,7 @@
 				if(!trim($fieldLabel)) $fieldLabel=$fieldName;
 				if($i=1)
 				IF($fieldColspan) $addColspan = " colspan=$fieldColspan "; else $addColspan ="";
+				IF($fieldRowspan) $addRowspan = " rowspan=$fieldRowspan "; else $addRowspan ="";
 				if($fieldMask) $tFieldMask = ' data-mask="'.$fieldMask.'" data-mask-placeholder= "-" ';
 				$addAttr = " fieldSave='$fieldSave'  tableSave='$tableSave' fieldPk='$fieldPk' ";
 				if(trim($fieldClass=="datefield")){
@@ -131,24 +135,24 @@
 				}
 			?>
 			
-			<td  <?=$addColspan?> >
+			<td  <?=$addColspan?> <?=$addRowspan?> >
 				<? if( $fieldTypeCode!=12) { ?><section> <? } ?>
 				<label class="label"><?=$fieldLabel?></label>
 				<? if( $fieldTypeCode!=12) { ?><label class="<?=$fieldClass?>"> <? } ?>
-				 <? if( $fieldTypeCode!=12) { ?> <div class="input-group col-lg-12"> <? } ?>
+				 <div class="input-group col-lg-12">
 				 
 					<i class="<?php if(trim($fieldHelp) && trim($fieldTypeCode==3) && trim($fieldTypeCode!=9) && trim($fieldTypeCode!=12)){ echo 'icon-append fa fa-question-circle'; } 
 					?>" ></i>
 					
 					<?php if($fieldTypeCode==1 || $fieldTypeCode==2) {?><input <?=$addAttr?> type="<?=$feildType?>" placeholder="<?=$fieldDesc?>" name="<?=$fieldName?>"  id="<?=$fieldName?>"  <?=$tFieldMask?> > <?php } ?>
 					<?php if($fieldTypeCode==3) {?><textarea <?=$addAttr?> fieldSave="<?=$fieldSave?>" placeholder="<?=$fieldDesc?>" rows="3"  name="<?=$fieldName?>"  id="<?=$fieldName?>"  ></textarea><?php } ?>
-					<?php if($fieldTypeCode==4) {?><input <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldLabel?>" class="datepicker" type="text" data-dateformat="yyyy-mm-dd" placeholder="Select a date" name="<?=$fieldLabel?>"><?php } ?>
+					<?php if($fieldTypeCode==4) {?><input <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldName?>" class="datepicker" type="text" data-dateformat="yy-mm-dd" placeholder="Select a date" name="<?=$fieldName?>"><?php } ?>
 					<?php if($fieldTypeCode==7) {
-					  if($fieldSql){
-					   $datosSelect = explode ('||',$fieldSql);				   
+					  if($fieldParams){
+					   $datosSelect = explode ('||',$fieldParams);				   
 					  }
 					?>
-					<select <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldLabel?>" name="<?=$fieldLabel?>">
+					<select <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldName?>" name="<?=$fieldName?>">
 					  <?php 
 					    foreach($datosSelect as $key => $value){
 					    list($val, $cod,$sel) = preg_split("/[\s->]+/", $value);
@@ -169,7 +173,7 @@
 					   $rsSel = $db->conn->query ($fieldSql);				   
 					  }
 					?>
-					<select <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldLabel?>" name="<?=$fieldLabel?>">
+					<select <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldName?>" name="<?=$fieldName?>">
 					  <?php 
 					    while(!$rsSel->EOF and $rsSel){
 								if(trim($sel)=="*") $datoss = " selected"; else $datoss = "";
@@ -193,8 +197,8 @@
 							<div id="switcher" style="float:right"></div>
 						</div>
 				 <?php 
-				if($fieldSql){
-					$datosSelect = explode ('||',$fieldSql);				   
+				if($fieldParams){
+					$datosSelect = explode ('||',$fieldParams);				   
 				}
 				$i=1;
 				$fieldsView = "";
@@ -291,13 +295,15 @@
           if($fieldTypeCode==12) {
           ?>
          <?php 
-        if($fieldSql){
-          $datosSelect = explode ('||',$fieldSql);           
+         $datosSelect = "";
+        if($fieldParams){
+          $datosSelect = explode ('||',$fieldParams);           
         }
         $i=1;
         $fieldsView = "";
         $fieldsViewObject = "";
         $fieldsInsertValueId = "";
+        if($datosSelect){
         foreach($datosSelect as $key => $value){
           if($i>=2) {
             $fieldsViewObject .=",";
@@ -311,6 +317,7 @@
           $fieldsViewObject .= '{"columnName":"'.$field.'","width":"30","label":"'.$field.'"}';
           $fieldsInsertValueId .= '$( "#'.$fieldId.'" ).val( ui.item.'.$field.' );';
           $i++;
+        }
         }
            $nameGrid = $fieldName;
            $fieldSql = $fieldSql;

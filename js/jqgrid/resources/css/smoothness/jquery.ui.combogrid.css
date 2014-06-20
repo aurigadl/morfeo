@@ -1,7 +1,7 @@
 .combogrid{
 	/*max-width: 800px;
 	min-width: 500px;*/
-	font-size: 0.8em !important;
+	font-size: 1.5em !important;
 }
 .input-bg{
 	background-image: url("../imagenes/magnifier.png");
@@ -103,7 +103,7 @@
 	float:left;
 	font-size: 0.8em;
 	overflow: hidden;
-	height: 15px;
+	height: 25px;
 }
 .cg-pg-button {
 	padding: 1px;

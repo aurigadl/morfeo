@@ -32,7 +32,7 @@
             if (!trim($fieldsView)) $fieldView = " * ";
 
             // connect to the database
-            $result = $db->conn->query("SELECT COUNT(*) count FROM $table WHERE $fieldSearch like '$searchTerm' $paramSearch");
+            $result = $db->conn->query("SELECT COUNT(*) count FROM $tableSearch WHERE $fieldSearch like '$searchTerm' $paramSearch");
             $count = $resutl->fields['COUNT'];
 
             if ($count > 0) {
@@ -61,7 +61,7 @@
                 // ORDER BY $sidx $sord";
                 $SQL = "SELECT $fieldsView FROM $tableSearch WHERE $fieldSearch like '$searchTerm' $andWhere LIMIT 40";
             }
-
+            //$db->conn->debug = true;
             $result = $db->conn->query($SQL) or die("Couldn t execute query.");
 
             $response->page = $page;

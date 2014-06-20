@@ -9,7 +9,7 @@ if(!$nameGrid ) $nameGrid = "grid1";
 if(!$descGrid ) $descGrid = "Tablas ...";
 if($fieldsView) $fieldsView = mb_strtoupper($fieldsView);
 if($tableSearch ){
- if(!trim($fieldsView)) $fieldsView = " * ";
+ if(!trim($fieldsParams)) $fieldsView = " * ";
   $fieldSql = "SELECT $fieldsView FROM $tableSearch ORDER BY 1";
 }
 //$db->conn->debug = true;
