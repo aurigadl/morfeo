@@ -88,8 +88,7 @@ class Radicacion
 
 
 
-function newRadicado($tpRad, $tpDepeRad)
-{
+    function newRadicado($tpRad, $tpDepeRad){
 	/** FUNCION QUE INSERTA UN RADICADO NUEVO
 	* Busca el Nivel de Base de datos.
 	* */
@@ -197,8 +196,7 @@ function newRadicado($tpRad, $tpDepeRad)
   }
 
 
-  function updateRadicado($radicado, $radgplthUpdate = null)
-  {
+  function updateRadicado($radicado, $radgplthUpdate = null){
 		$recordR["radi_cuentai"]    = "'$this->radiCuentai'";
 		$recordR["eesp_codi"]       = empty($this->eespCodi)? 0 : $this->eespCodi ;
 		$recordR["mrec_codi"]       = $this->mrecCodi;
@@ -232,6 +230,9 @@ function newRadicado($tpRad, $tpDepeRad)
 		$insertSQL = $this->db->conn->Replace("RADICADO", $recordR, "radi_nume_radi", false);
 		return $insertSQL;
   }
+
+
+
 
   /** FUNCION ANEXOS IMPRESOS RADICADO
     * Busca los anexos de un radicado que se encuentran impresos.

@@ -9006,7 +9006,7 @@ tr.highlight td, tr.unread.highlight td {
 .showdot176{
     overflow      : hidden;
     text-overflow : ellipsis;
-    width         : 176px;
+    width         : 300px;
     white-space   : nowrap;
 }
 

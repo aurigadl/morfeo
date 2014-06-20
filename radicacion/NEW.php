@@ -459,7 +459,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
       //Mostar y ocultar comlumnas de la tabla
       //se filtra por la clase
-      $('.toogletd').toggle();
       $("#buttonHide").click(function(){
           $('.toogletd').toggle();
       });
@@ -520,6 +519,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             function( data ) {
                 $('table').append(data[0]);
                 $('#tableSection').removeClass('hide');
+                $('.toogletd').hide()
             }
         );
 
@@ -564,7 +564,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             },
             minLength: 2,
             select   : function(event, ui) {
-                var setempty    = $(this).attr('name').split("_")[4]
+                var setempty    = $(this).attr('name').split("_")[4];
                 var namehiddent = $(this).attr('name') + "_codigo";
                 $("input[name=" + namehiddent + "]").val(ui.item.id);
 
@@ -638,7 +638,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           $('#resBusqueda').empty();
           $('#showAnswer').addClass('hide');
         }
-
         return pass;
       };
 
@@ -655,6 +654,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             function( data ) {
                 $('table').append(data[0]);
                 $('#tableSection').removeClass('hide');
+                $('.toogletd').hide();
             }
         );
     }
@@ -701,9 +701,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       count++;
                     }
                   });
-                  if(datali.length === count){
-                    $('#showAnswer').addClass('hide');
-                  }
+
+                  $('#showAnswer').addClass('hide');
+
                 })
                 .appendTo(li);
         });

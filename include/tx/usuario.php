@@ -588,7 +588,7 @@ class Usuario {
                 break;
 
             case 6:
-                // Funcionario .................................................................
+                // Funcionario ..............................................................................
                 if(!empty($name)){
                     $where = $this->db->conn->Concat(" UPPER(s.USUA_NOMB) LIKE '%". strtoupper($name) ."%'");
                 }
