@@ -18,24 +18,29 @@ $rs = $db->conn->query($fieldSql);
  
 $colsNames = ""; $colModels = ""; $dataFields="";
 while(!$rs->EOF){
+  
   $k=1;
   // var_dump($rs->fields);
   if($i!=1) $dataFields .=" ,{"; else $dataFields .=" {";
   foreach($rs->fields as $nameField => $valueField){
+  if($nameField >="99"){
    if($k!=1) $dataFields .=" ,";
    if($i==1) {   
    if($k!=1 && $i==1) {$colsNames .= " ,"; $colsModels .= " ,";}
     $colsNames .= "'". $nameField. "'"; 
     $colsModels .= "{name : '$nameField', index : '$nameField',  editable : true}";
    }
-   $dataFields .= "$nameField : '$valueField'  ";
+    $dataFields .= "$nameField : '$valueField'  ";
+
    $k++;
+  }
   }
   $dataFields .= "}";
   $rs->MoveNext();
   $i++;
   
 }
+
 ?>
 <!-- row -->
 
@@ -125,7 +130,7 @@ $scriptJS .= "
 				height : '900',
 				colNames : [$colsNames],
 				colModel : [$colsModels],
-				rowNum : 10,
+				rowNum : 100,
 				rowList : [10, 20, 30],
 				pager : '#pjqgrid',
 				sortname : 'ID',
@@ -139,8 +144,8 @@ $scriptJS .= "
 						be = '<button class=\'btn btn-xs btn-default\' data-original-title=\'Edit Row\' onclick=\'jQuery(\'#$nameGrid\').editRow(\' + cl + \');\'><i class=\'fa fa-pencil\'></i></button>';
 						se = '<button class=\'btn btn-xs btn-default\' data-original-title=\'Save Row\' onclick=\'jQuery(\'#$nameGrid\').saveRow(\' + cl + \');\'><i class=\'fa fa-save\'></i></button>';
 						ca = '<button class=\'btn btn-xs btn-default\' data-original-title=\'Cancel\' onclick=\'jQuery(\'#$nameGrid\').restoreRow(\' + cl + \');\'><i class=\'fa fa-times\'></i></button>';
-						//ce = '<button class=\'btn btn-xs btn-default\' onclick=\'jQuery(\'#$nameGrid\').restoreRow(\'+cl+\');\'><i class=\'fa fa-times\'></i></button>';
-						//jQuery('#$nameGrid').jqGrid('setRowData',ids[i],{act:be+se+ce});
+						ce = '<button class=\'btn btn-xs btn-default\' onclick=\'jQuery(\'#$nameGrid\').restoreRow(\'+cl+\');\'><i class=\'fa fa-times\'></i></button>';
+						jQuery('#$nameGrid').jqGrid('setRowData',ids[i],{act:be+se+ce});
 						jQuery('#$nameGrid').jqGrid('setRowData', ids[i], {
 							act : be + se + ca
 						});
@@ -148,13 +153,13 @@ $scriptJS .= "
 				},
 				editurl : 'dummy.html',
 				caption : '$descGrid',
-				multiselect : true,
+				multiselect : false,
 				autowidth : true,
 
 			});
 			jQuery('$nameGrid').jqGrid('navGrid', '#pjqgrid', {
-				edit : false,
-				add : false,
+				edit :true,
+				add : true,
 				del : true
 			});
 			jQuery('#$nameGrid').jqGrid('inlineNav', '#pjqgrid');
@@ -163,10 +168,12 @@ $scriptJS .= "
 				container : 'body'
 			});
 
-			jQuery('#m1').click(function() {
+			jQuery('#$nameGrid').click(function() {
 				var s;
-				s = jQuery('#$nameGrid').jqGrid('getGridParam', 'selarrrow');
-				alert(s);
+				s = jQuery('#$nameGrid').jqGrid('getGridParam', 'selrow');
+				
+				//alert('ddddd'+ s);
+				//alert(s);
 			});
 			jQuery('#m1s').click(function() {
 				jQuery('#$nameGrid').jqGrid('setSelection', '13');

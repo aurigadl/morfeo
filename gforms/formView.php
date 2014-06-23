@@ -323,6 +323,8 @@
                     }
                     
           if($fieldTypeCode==12) {
+            define('ADODB_ASSOC_CASE', 1);  
+            $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
           ?>
          <?php 
          $datosSelect = "";
