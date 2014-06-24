@@ -21,7 +21,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-//ini_set ('error_reporting', E_ALL);
   session_start();
 
   $ruta_raiz = "..";
@@ -170,7 +169,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $query    = "SELECT
                 MREC_DESC, MREC_CODI
-               FROM MEDIO_RECEPCION WHERE MREC_CODI <> 0 ";
+               FROM MEDIO_RECEPCION WHERE MREC_CODI <> 0 ORDER BY MREC_CODI";
 
   $rs       = $db->conn->query($query);
 
