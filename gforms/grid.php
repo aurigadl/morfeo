@@ -169,10 +169,11 @@ $scriptJS .= "
 			});
 
 			jQuery('#$nameGrid').click(function() {
-				var s;
+				var s, valRowSel;
 				s = jQuery('#$nameGrid').jqGrid('getGridParam', 'selrow');
-				
-				//alert('ddddd'+ s);
+				// s = jQuery('#$nameGrid').jqGrid('getCell', 'selrow');
+				valRowSel = jQuery('#Registros').jqGrid ('getCell', s, 'ID');
+				alert('Selecciono '+ valRowSel);
 				//alert(s);
 			});
 			jQuery('#m1s').click(function() {

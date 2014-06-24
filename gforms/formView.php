@@ -135,7 +135,8 @@
 				}
 			?>
 			
-			<td  <?=$addColspan?> ?=$aeldLabel?></label>
+			<td  <?=$addColspan?> >
+			  <label> <?=$fieldLabel?></label>
 				<? if( $fieldTypeCode!=12) { ?><label class="<?=$fieldClass?>"> <? } ?>
 				 <div class="input-group col-lg-12">
 				 
