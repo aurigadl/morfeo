@@ -145,7 +145,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
 
   }else{
-      echo $query    = "SELECT ".
+      $query    = "SELECT ".
           $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
               FROM
                 DEPENDENCIA d
