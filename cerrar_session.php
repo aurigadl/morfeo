@@ -19,5 +19,11 @@ session_start();
     }
 
     session_destroy();
-    echo "<script>top.location.reload();</script>";
+    echo "<script>
+        if(window.self !== window.top){
+            top.location.reload();
+        };
+    </script>";
+
+    header('Location: ./index.php');
     exit;

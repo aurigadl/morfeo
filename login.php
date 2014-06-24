@@ -130,7 +130,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <script>
         /* Custom JavaScript */
         $(document).ready(function($) {
-          $('input, textarea').placeholder();
+            $('input, textarea').placeholder();
+            if(window.self !== window.top){
+                top.location.reload();
+            };
         });
       </script>
 
