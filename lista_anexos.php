@@ -80,16 +80,17 @@ if (!$ruta_raiz_archivo) $ruta_raiz_archivo = $ruta_raiz;
 $directoriobase="$ruta_raiz_archivo/bodega/";
 //Flag que indica si el radicado padre fue generado desde esta area de anexos
 $swRadDesdeAnex=$anex->radGeneradoDesdeAnexo($verrad);
+
 if($rs){
-while(!$rs->EOF)
-{
+
+while(!$rs->EOF){
 	$aplinteg     = $rs->fields["SGD_APLI_CODI"];
 	$numextdoc    = $rs->fields["NUMEXTDOC"];
 	$tpradic      = $rs->fields["SGD_TRAD_CODIGO"];
 	$coddocu      = $rs->fields["DOCU"];
 	$origen       = $rs->fields["ANEX_ORIGEN"];
   $para_radicar = $rs->fields["ANEX_SALIDA"];
-  
+
 	if ($rs->fields["ANEX_SALIDA"]==1 )	$num_archivos++;
 	$linkarchivo=$directoriobase.substr(trim($coddocu),0,4)."/".intval(substr(trim($coddocu),4,$ln))."/docs/".trim($rs->fields["NOMBRE"]);
 	$linkarchivo_vista="$ruta_raiz/bodega/".substr(trim($coddocu),0,4)."/".intval(substr(trim($coddocu),4,$ln))."/docs/".trim($rs->fields["NOMBRE"])."?time=".time();
@@ -119,8 +120,9 @@ if(trim($linkarchivo))
 		}
  ?>
  </td><td width="1" valign="middle" align=right>
- <?
-   $total_digitos = 11 + $ln;
+<?
+     $total_digitos = 11 + $ln;
+
 	 if (strlen($cod_radi) <= $total_digitos){
 		//Se trata de un Radicado
 		$resulVali = $verLinkArchivo->valPermisoRadi($cod_radi);
@@ -130,16 +132,18 @@ if(trim($linkarchivo))
 		$resulValiA = $verLinkArchivo->valPermisoAnex($coddocu);
 		$valImg = $resulValiA['verImg'];
 	}
+
 	if(trim($linkarchivo)){
-		if($valImg == "SI"){
-	   echo "<b><a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$coddocu','$ruta_raiz');\"> $cod_radi </a>";
-	}else{
-		 echo "<a class='vinculos' href='javascript:noPermiso()' > $cod_radi </a>";
-		}
+        if($valImg == "SI"){
+             echo "<b><a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$coddocu','$ruta_raiz');\"> $cod_radi </a>";
+        }else{
+             echo "<a class='vinculos' href='javascript:noPermiso()' > $cod_radi </a>";
+        }
 	}else{
 		echo trim(strtolower($cod_radi));
 	}
-   ?>
+
+?>
 </small></td>
 <td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif" class="etextomenu"><small>
   <?
@@ -166,7 +170,7 @@ if(trim($linkarchivo))
                     $rs->fields["EXT"]=="doc" or
                     $rs->fields["EXT"]=="odt" or
                     $rs->fields["EXT"]=="xml") and $es_impreso;
-  
+
   if($es_extension) {
     if($valImg == "SI"){
 		  echo"<a class=\"vinculos\" style='cursor:pointer;cursor:hand;' onclick=\"vistaPreliminar('$coddocu','$linkarchivo','$linkarchivotmp');\">";
@@ -191,7 +195,7 @@ if(trim($linkarchivo))
  <td ><font size=1>
 	<?php
   $es_pdf = $rs->fields["EXT"] == "pdf";
-	
+
   if($origen!=1 and $linkarchivo  and $verradPermisos == "Full" ) {
     $no_esta_enviado = $anex_estado < 4;
     if ($no_esta_enviado) {
@@ -205,7 +209,7 @@ if(trim($linkarchivo))
 
   echo "</font>\n";
   echo "</small></td>\n";
-		
+
     //Estas variables se utilizan para verificar si se debe mostrar la opcion de tipificacion de anexo .TIF
 		$anexTipo = $rs->fields["ANEX_TIPO"];
     $anexTPRActual = $rs->fields["SGD_TPR_CODIGO"];
@@ -237,7 +241,7 @@ if(trim($linkarchivo))
   $usuario_creador = $rs->fields["RADI_NUME_SALIDA"] == 0 and
                       $ruta_raiz != ".." and
                       (trim($rs->fields["ANEX_CREADOR"])==trim($krd) or $es_administrador);
-  
+
   if ($usuario_creador) {
 		if($origen!=1  and $linkarchivo) {
 			  $v = $rs->fields["SGD_PNUFE_CODI"];
@@ -247,44 +251,40 @@ if(trim($linkarchivo))
 	</small></td>
 	<td >
 	<?php
-	if  ($tpPerRad[$tpradic]==2 or $tpPerRad[$tpradic]==3)
-	{	if (!$rs->fields["RADI_NUME_SALIDA"])
-		{	if(substr($verrad,-1)==2 && $puedeRadicarAnexo==1 )
-			{	$rs->fields["SGD_PNUFE_CODI"]=0;
-			echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
+
+    //*********************************************
+    // Muestra la opcion para radicar el documento
+    //*********************************************
+
+
+	if  ($tpradic==2 or $tpradic==3){
+        if (!$rs->fields["RADI_NUME_SALIDA"]){
+
+            if(substr($verrad,-1)==2){
+                $rs->fields["SGD_PNUFE_CODI"]=0;
+			    echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
 					$radicado = "false";
 					$anexo = $cod_radi;
 			}
-			else
-				if ($puedeRadicarAnexo!=1) {
-				} else {
-          if((substr($verrad,-1)!=2) and $num_archivos==1 and !$rs->fields["SGD_PNUFE_CODI"] and $swRadDesdeAnex==false )
-					{
-			     echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> <img src='img/icono_radicar.png' title='Asignar Radicado (-$tpradic)'> </a>";
-           $radicado = "false";
-			    $anexo = $cod_radi;
-					}
-else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0 && !$anex->seHaRadicadoUnPaquete($rs->fields["SGD_DOC_PADRE"]))
-	{
-         echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
 
-				$radicado = "false";
-				$anexo = $cod_radi;
-		}
-		else if ($puedeRadicarAnexo==1)
-		{
-				$rs->fields["SGD_PNUFE_CODI"]=0;
-		echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'></a>";
-				$radicado = "false";
-				$anexo = $cod_radi;
-}		}		}
-	else
-			{	if (!$rs->fields["SGD_PNUFE_CODI"])$rs->fields["SGD_PNUFE_CODI"]=0;
-				if ($anex_estado<4)
-				{
+
+                if((substr($verrad,-1)!=2) and $num_archivos==1 and !$rs->fields["SGD_PNUFE_CODI"] and $swRadDesdeAnex==false ){
+			        echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> <img src='img/icono_radicar.png' title='Asignar Radicado (-$tpradic)'> </a>";
+                    $radicado = "false";
+			        $anexo = $cod_radi;
+				} else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0 && !$anex->seHaRadicadoUnPaquete($rs->fields["SGD_DOC_PADRE"])){
+                    echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
+				    $radicado = "false";
+				    $anexo = $cod_radi;
+		        }
+        }else{
+            if (!$rs->fields["SGD_PNUFE_CODI"])$rs->fields["SGD_PNUFE_CODI"]=0;
+			if ($anex_estado<4){
 				 echo "<a class=vinculos href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','$cod_radi',".$rs->fields["SGD_PNUFE_CODI"].",'','',$numextdoc);\"> <img src='img/icono_regenerar.png' title='Volver a Generar Radicado'></a>";
-		     $radicado = "true";
-		}	}	}
+		        $radicado = "true";
+		    }
+        }
+    }
 		else if ( $rs->fields["SGD_PNUFE_CODI"]  && ($usua_perm_numera_res==1) && $ruta_raiz != ".." && !$rs->fields["SGD_DOC_SECUENCIA"] && strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0) // SI ES PAQUETE DE DOCUMENTOS Y EL USUARIO TIENE PERMISOS
 			{	/*
 			 * Incluir manejo de seguridad de imagenes
