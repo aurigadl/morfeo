@@ -19,5 +19,5 @@ session_start();
     }
 
     session_destroy();
-    header('Location: ./index_frames.php?close=1');
+    echo "<script>top.location.reload();</script>";
     exit;

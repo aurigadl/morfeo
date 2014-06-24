@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $ruta_raiz = ".";
   if (!$_SESSION['dependencia'] || $_GET['close']){
     header ("Location: $ruta_raiz/login.php");
-    echo "<script>parent.frames.location.reload()</script>";
+    echo "<script>parent.frames.location.reload();top.location.reload();</script>";
   }
 
 

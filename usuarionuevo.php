@@ -42,7 +42,7 @@ $db = new ConnectionHandler($ruta_raiz);
 ?>
 
 <html>
-<title>Adm - Contrase&ntilde;as - ORFEO </title>
+    <title>Adm - Contrase&ntilde;as - ORFEO </title>
 <HEAD>
   <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </HEAD>
@@ -82,7 +82,7 @@ $db = new ConnectionHandler($ruta_raiz);
                     if($rs==-1){
                         echo "<P><P><center>No se ha podido cambiar la contrase&ntilde;a, Verifique los datos e intente de nuevo</center>";
                     }else{
-                        header ("Location: $httpOrfeoLocal");
+                        header ("Location: $ruta_raiz/cerrar_session.php");
                         exit();
                     }
                 }else{
@@ -107,8 +107,8 @@ $db = new ConnectionHandler($ruta_raiz);
                       </td></tr>
                   </table>
                     <?
-                    }
-                    }
+                  }
+                }
                 ?>
               </div>
             </div>
