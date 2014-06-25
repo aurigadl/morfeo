@@ -1,5 +1,5 @@
 <?php
-ini_set("display_errors", 1);
+//ini_set("display_errors", 1);
 session_start();
 
 foreach ($_GET as $key => $valor) ${$key} = $valor;
@@ -417,6 +417,7 @@ if ($radicar_documento) {
                 $archUpdate = $linkarchivo_grabar;
             }
         }
+
 
         if ($ent == 1) $rad_salida = $nurad;
         // Update Anexos

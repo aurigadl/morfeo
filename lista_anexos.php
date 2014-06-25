@@ -453,7 +453,7 @@ Anexar Archivo</a>
 			};
 	}
 
-	function asignarRadicado(anexo,linkarch,radicar_a,procesoNumeracionFechado){
+	function asignarRadicado(anexo,linkarch,radicar_a, numextdoc){
       var title1   = "Transaccion exitosa";
       var radinum;
       var title2   = "Errores en la transaccion";
@@ -462,7 +462,7 @@ Anexar Archivo</a>
                       "<h4 class='alert-heading'><i class='fa fa-check-square-o'></i></h4>");
 
       if (confirm('Se asignar\xe1 un n\xfamero de radicado a \xe9ste documento. Est\xe1 seguro  ?')){
-          url = "?generar_numero=no&radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id())?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado;
+          url = "?numextdoc="+numextdoc+"&generar_numero=no&radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id())?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>";
           $.post( "<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php" + url, function( data ) {
 
               if((data.success !== undefined) && (data.success.length>0)){
