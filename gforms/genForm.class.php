@@ -55,7 +55,7 @@ class genForm{
  function getFormFields(){
    $codeForm = $this->codeForm;
    $sql = "SELECT f.FRMF_NAME, f.FRMF_NAME, f.FRMF_DESCRIPTION, f.FRMF_SQL, f.FRMF_NULL,f.FRMF_LABEL,f.FRMF_MASK
-							, f.FRMF_COLUMN, f.FRMF_ORDER, f.FRMF_COLSPAN
+							, f.FRMF_COLUMN, f.FRMF_ORDER, f.FRMF_COLSPAN, f.FRMF_VARSPARAM, f.FRMF_VARS
 							, f.FRMF_FIELDPK, f.FRMF_FIELD,f.FRMF_TABLESAVE,f.FRMF_TABLEPKSAVE,f.FRMF_TABLEPKSEARCH,f.FRMF_FIELDPKSEARCH, f.FRMF_PK,
              ft.FRMT_NAME, ft.FRMT_CLASS, ft.FRMT_HTML, ft.FRMT_Js, ft.FRMT_TYPE, f.FRMf_HELP,ft.FRMT_CODE,f.FRMF_ROWSPAN, f.FRMF_DEFAULT,f.FRMF_PARAMS
 						FROM FRMF_FRMFIELDS f, FRMT_FIELDTYPE  ft
@@ -95,6 +95,8 @@ class genForm{
 			$rowspanField = $rs->fields["FRMF_ROWSPAN"];
 			$defaultField = $rs->fields["FRMF_DEFAULT"];
 			$paramsField = $rs->fields["FRMF_PARAMS"];
+			$varsparamField = $rs->fields["FRMF_VARSPARAM"];
+			$varsField = $rs->fields["FRMF_VARS"];
 			$fields[$i]["FIELD_NAME"] = $nameField;
 			$fields[$i]["FIELD_LABEL"] = $labelField;
 			$fields[$i]["FIELD_PK"] = $pkField;
@@ -119,6 +121,8 @@ class genForm{
 			$fields[$i]["FIELD_ROWSPAN"] = $rowspanField;
 			$fields[$i]["FIELD_DEFAULT"] = $defaultField;
 			$fields[$i]["FIELD_PARAMS"] = $paramsField;
+			$fields[$i]["FIELD_VARSPARAM"] = $varsparamField;
+			$fields[$i]["FIELD_VARS"] = $varsField;
 			$rs->MoveNext();
 			$i++;
    }
@@ -150,7 +154,10 @@ class genForm{
 			   
 			}
 		$db->conn->debug = true;
+		echo "<!--";
 		$insert = $db->conn->Replace($table,$record,$recordPk, $autoquote = true);
+		echo "-->";
+		$db->conn->debug = false;
 		if($insert) echo '<div class="alert alert-block alert-success">
 					<a class="close" href="#" data-dismiss="alert">×</a>
 					<h4 class="alert-heading">

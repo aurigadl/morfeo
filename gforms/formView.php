@@ -36,7 +36,7 @@
 	
 </div>
 
-<article class="col-sm-12 col-md-12 col-lg-12">
+<article class="col-sm-6 col-md-6 col-lg-12">
 	
 	<!-- Widget ID (each widget will need unique ID)-->
 <div class="jarviswidget" id="wid-id-2" data-widget-colorbutton="false"	data-widget-editbutton="false">
@@ -104,11 +104,25 @@
 				$fieldDefault =       $field["FIELD_DEFAULT"];
 				$fieldRowspan =       $field["FIELD_ROWSPAN"];
 				$fieldParams =       $field["FIELD_PARAMS"];
+				$fieldVarsparam =       $field["FIELD_VARSPARAM"];
+				$fieldVars =       $field["FIELD_VARS"];
 				if($orderOld!=$fieldOrder){ 
 				  if($orderOld){ echo "</tr>";   }
 				  echo "<tr>";   
 				}
-				
+				$valueVar = ""; $addValue = "";
+				if($fieldVars==0 && trim($fieldVarsparam)){
+				  if($_SESSION[$fieldVarsparam]) $valueVar = $_SESSION[$fieldVarsparam];
+	        if($_GET[$fieldVarsparam]) $valueVar = $_GET[$fieldVarsparam];
+	        if($_POST[$fieldVarsparam]) $valueVar = $_POST[$fieldVarsparam];
+        }elseif($fieldVars==1 && trim($fieldVarsparam)){
+          if($_GET[$fieldVarsparam]) $valueVar = $_GET[$fieldVarsparam];
+        }elseif($fieldVars==2 && trim($fieldVarsparam)){
+          if($_POST[$fieldVarsparam]) $valueVar = $_POST[$fieldVarsparam];
+        }elseif($fieldVars==3 && trim($fieldVarsparam)){
+          if($_SESSION[$fieldVarsparam]) $valueVar = $_SESSION[$fieldVarsparam];
+        }
+        if($valueVar) $addValue = " value='$valueVar' ";
 				$arrPkSearch = preg_split("/[\s||]+/", $fieldPkSearch);
 				foreach($arrPkSearch as $value){
 				  list($val1,$val2,$val3) = preg_split("/[\s->]+/", $value);
@@ -143,10 +157,10 @@
 					<i class="<?php if(trim($fieldHelp) && trim($fieldTypeCode==3) && trim($fieldTypeCode!=9) && trim($fieldTypeCode!=12)){ echo 'icon-append fa fa-question-circle'; } 
 					?>" ></i>
 					
-					<?php if($fieldTypeCode==1 || $fieldTypeCode==2) {?><input <?=$addAttr?> type="<?=$feildType?>" placeholder="<?=$fieldDesc?>" name="<?=$fieldName?>"  id="<?=$fieldName?>"  <?=$tFieldMask?> > <?php } ?>
-					<?php if($fieldTypeCode==3) {?><textarea <?=$addAttr?> fieldSave="<?=$fieldSave?>" placeholder="<?=$fieldDesc?>" rows="3"  name="<?=$fieldName?>"  id="<?=$fieldName?>"  ></textarea><?php } ?>
+					<?php if($fieldTypeCode==1 || $fieldTypeCode==2) {?><input <?=$addAttr?> type="<?=$feildType?>" placeholder="<?=$fieldDesc?>" name="<?=$fieldName?>"  id="<?=$fieldName?>"   <?=$tFieldMask?> <?=$addValue?> > <?php } ?>
+					<?php if($fieldTypeCode==3) {?><textarea <?=$addAttr?> fieldSave="<?=$fieldSave?>" placeholder="<?=$fieldDesc?>" rows="3"  name="<?=$fieldName?>"  id="<?=$fieldName?>"  ><?=$valueVar?></textarea><?php } ?>
 					<?php if($fieldTypeCode==4) {?><input <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldName?>" class="datepicker" type="text" data-dateformat="yy-mm-dd" placeholder="Select a date" name="<?=$fieldName?>"><?php } ?>
-                    <?php if($fieldTypeCode==5) {?><label id="<?=$fieldLabel?>" class="label"><?=$fieldDesc?></label> <?php } ?>
+          <?php if($fieldTypeCode==5) {?><label id="<?=$fieldLabel?>" class="label"><?=$fieldDesc?></label> <?php } ?>
 					<?php if($fieldTypeCode==7) {
 					  if($fieldParams){
 					   $datosSelect = explode ('||',$fieldParams);				   
@@ -155,9 +169,11 @@
 					<select <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldName?>" name="<?=$fieldName?>">
 					  <?php 
 					    foreach($datosSelect as $key => $value){
+					    $datoss="";
 					    list($val, $cod,$sel) = preg_split("/[\s->]+/", $value);
 					    if(!$cod and trim($cod) =="") $cod=$val;
-					    if(trim($sel)=="*") $datoss = " selected"; else $datoss = ""
+					    if(trim($sel)=="*" && !$valueVar) $datoss = " selected "; else $datoss = "";
+					    if(trim($valueVar)==trim($cod)) $datoss = " selected ";  
 					  ?>
 					   <option value=<?=$cod?> <?=$datoss?> ><?=$val?></option>
 					  <?php }  ?>
@@ -176,7 +192,8 @@
 					<select <?=$addAttr?> fieldSave="<?=$fieldSave?>" id="<?=$fieldName?>" name="<?=$fieldName?>">
 					  <?php 
 					    while(!$rsSel->EOF and $rsSel){
-								if(trim($sel)=="*") $datoss = " selected"; else $datoss = "";
+								if(trim($sel)=="*" && !$valueVar) $datoss = " selected"; else $datoss = "";
+								if(trim($valueVar)) $datoss = " selected ";  
 								$val = $rsSel->fields[0];
 								$cod = $rsSel->fields[1];
 								if(!$cod and trim($cod) =="") $cod=$val;
@@ -193,7 +210,7 @@
 					<?php if($fieldTypeCode==9) {
 					?>
 								<div>
-							<div style="float:left"><input size="30" id="<?=$fieldName?>" <?=$addAttr?>  /></div><br/>&nbsp;<br/>
+							<div style="float:left"><input size="30" id="<?=$fieldName?>" <?=$addAttr?> <?=$addValue?>  /></div><br/>&nbsp;<br/>
 							<div id="switcher" style="float:right"></div>
 						</div>
 				 <?php 
