@@ -168,21 +168,22 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
 		<input name="cedulaYa" type="hidden" value='<?=$cedulaYa?>'>
 		<? if ($usModo == 1) { ?>
 		<section class="col col-6">
-      <label class="label">No. Cedula</label>
+      <label class="label">No. Cedula <strong>(*)</strong></label>
       <label class="input">
         <input type="text" name="cedula" pattern="[0-9]*" id="cedula" value="<?=$cedula?>" size=15 maxlenght="14" placeholder="Digite C&eacute;dula" required>
         <span class="help-block with-errors">Digite el n&uacute;mero de la c&eacute;dula</span>
       </label>
       </section>
       <section class="col col-6">
-        <label class="label">Usuario</label>
+        <label class="label">Usuario <strong>(*)</strong></label>
         <label class="input">
           <input type="text" name="usuLogin" pattern="[_A-z 0-9]*" id="usuLogin" value="<?=$usuLogin?>" size="20" maxlenght="15" placeholder="Usuario" required>
         </label>
       </section>
 		<? }else { ?>
 		  <section class="col col-6">
-        <label class="label">Nro Cedula
+        <label class="label">
+          Nro Cedula <strong>(*)</strong>
           <input  type="text" name="cedula" pattern="[0-9]*" id="cedula" value="<?=$cedula?>" size="15" maxlenght="14" placeholder="Digite C&eacute;dula" required>
         </label>
       </section>
@@ -196,7 +197,9 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
 	</div>
 	<div class="row">
 		<section class="col col-8">
-      <label class="label">Nombres y Apellidos</label>
+      <label class="label">
+        Nombres y Apellidos <strong>(*)</strong>
+      </label>
       <label class="input">
         <input type="text" name="nombre" pattern="[_A-z 0-9]*" id="nombre" value="<?=$nombre?>" size="50" maxlenght="45" placeholder="Nombres Apellidos"required>
       </label>
@@ -281,7 +284,9 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
 	</div>
 	<div class="row">
 		<section class="col col-4">
-      <label class="label">Correo Electr&oacute;nico (Principal)</label>
+      <label class="label">
+        Correo Electr&oacute;nico (Principal) <strong>(*)</strong>
+      </label>
       <label class="input">
         <input type="email" name="email" id="email" value="<?=$email?>" size="40" placeholder="usuario@metrovivienda.gov.co">
       </label>
@@ -299,6 +304,17 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
       </label>
     </section>
 	</div>
+  <div class="row">
+    <section class="col col-4">
+    </section>
+    <section class="col col-4">
+      <strong>
+        (*) Son campos obligatorios.
+      </strong>
+    </section>
+    <section class="col col-4">
+    </section>
+  </div>
 	<td width="60%" height="26" class="listado2"></td>
     <input type="hidden" name=entrada id=entrada value='<?=$entrada?>'>
     <input type="hidden" name=modificaciones id=modificaciones value='<?=$modificaciones?>'>

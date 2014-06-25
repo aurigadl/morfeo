@@ -21,7 +21,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-//ini_set ('error_reporting', E_ALL);
   session_start();
 
   $ruta_raiz = "..";
@@ -132,8 +131,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     $senddata .= "<input name='idCodigo' value='$nurad' type=hidden>";
   }
 
-  $query    = "SELECT ".
-                $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
+
+  if($ent == 2){
+      $query    = "SELECT ".
+          $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
               FROM
                 DEPENDENCIA d
                 INNER JOIN usuario u ON u.depe_codi = d.depe_codi
@@ -142,17 +143,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 and d.depe_estado = 1
               ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
 
+  }else{
+      $query    = "SELECT ".
+          $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
+              FROM
+                DEPENDENCIA d
+                INNER JOIN usuario u ON u.depe_codi = d.depe_codi
+                and u.usua_codi   = 1
+                and u.usua_esta   ='1'
+                and d.depe_estado = 1
+              WHERE
+                u.depe_codi   = $dependencia
+              ORDER BY
+                d.DEPE_CODI, d.DEPE_NOMB";
+  }
+
   $rs        = $db->conn->query($query);
+
   $depselect = $rs->GetMenu2("coddepe",
-                              $coddepe,
-                              "0:-- Seleccione una Dependencia --",
-                              false,
-                              false,
-                              "class='select'");
+    $coddepe,
+    "0:-- Seleccione una Dependencia --",
+    false,
+    false,
+    "class='select'");
 
   $query    = "SELECT
                 MREC_DESC, MREC_CODI
-               FROM MEDIO_RECEPCION WHERE MREC_CODI <> 0 ";
+               FROM MEDIO_RECEPCION WHERE MREC_CODI <> 0 ORDER BY MREC_CODI";
 
   $rs       = $db->conn->query($query);
 
@@ -341,7 +358,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
 
                     <section id="tableSection" class="well col-lg-12 smart-form <?=$showtable?>">
-                        <a id="buttonHide" class="btn pull-right btn-default btn-xs" href="javascript:void(0);">Columnas</a>
+                        <a id="buttonHide" class="btn pull-right btn-default btn-xs" href="javascript:void(0);">Informaci&oacute;n ...</a>
                         <table class="table table-bordered">
                             <thead>
                               <tr>
