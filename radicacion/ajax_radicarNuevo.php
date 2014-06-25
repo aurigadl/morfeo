@@ -70,7 +70,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $modificar     = $_POST['modificar'];
   $nurad         = $_POST['nurad'];
 
-  $carp_codi     = $ent;
+  if($ent == 2){
+      $carp_codi     = 0;
+  }else{
+      $carp_codi     = $ent;
+  }
+
   $carp_per      = "0";
 
   $radi_usua_actu = 1;
