@@ -95,7 +95,6 @@ class genForm{
 			$rowspanField = $rs->fields["FRMF_ROWSPAN"];
 			$defaultField = $rs->fields["FRMF_DEFAULT"];
 			$paramsField = $rs->fields["FRMF_PARAMS"];
-			
 			$fields[$i]["FIELD_NAME"] = $nameField;
 			$fields[$i]["FIELD_LABEL"] = $labelField;
 			$fields[$i]["FIELD_PK"] = $pkField;

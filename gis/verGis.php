@@ -1,5 +1,4 @@
 <? 
-
   $prediosGis = "";
   if($prediosExp) $prediosGis = "&prediosExp=$prediosExp";
   $url = $servidorGis . "?numeroExpediente=$numExpediente".$prediosGis;

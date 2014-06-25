@@ -9,7 +9,7 @@ if(!$nameGrid ) $nameGrid = "grid1";
 if(!$descGrid ) $descGrid = "Tablas ...";
 if($fieldsView) $fieldsView = mb_strtoupper($fieldsView);
 if($tableSearch ){
- if(!trim($fieldsParams)) $fieldsView = " * ";
+ if(!trim($fieldParams)) $fieldsView = " * ";
   $fieldSql = "SELECT $fieldsView FROM $tableSearch ORDER BY 1";
 }
 //$db->conn->debug = true;
@@ -30,6 +30,7 @@ while(!$rs->EOF){
     $colsNames .= "'". $nameField. "'"; 
     $colsModels .= "{name : '$nameField', index : '$nameField',  editable : true}";
    }
+    $valueField = str_replace("'","\'", preg_replace("/[\n\t\r]/","<br>", $valueField));
     $dataFields .= "$nameField : '$valueField'  ";
 
    $k++;

@@ -26,6 +26,7 @@ if(!$menu_ver) $menu_ver = $menu_ver_Old;
 if(!$menu_ver) $menu_ver=3;
 if($menu_ver_tmp)	$menu_ver=$menu_ver_tmp;
 if (!defined('ADODB_ASSOC_CASE')) define('ADODB_ASSOC_CASE', 1);
+include "./config.php";
 include_once "./include/db/ConnectionHandler.php";
 if($verradicado)	$verrad= $verradicado;
 if(!$ruta_raiz)	$ruta_raiz=".";
@@ -298,7 +299,7 @@ echo "</div>";
 			</div>
 
 				<div id="tabs-gis" width="100%">
-				<?php include "./gis/verGis.php"; ?>
+				<?php echo "$servidorGis"; include "./gis/verGis.php"; ?>
 			</div>
 			</ul>
 		</div>
