@@ -73,8 +73,7 @@ $isql = "select anex_codigo AS DOCU
 include_once "$ruta_raiz/tx/verLinkArchivo.php";
 $verLinkArchivo = new verLinkArchivo($db);
 $rowan = array();
-//$db->conn->debug = true;
-$rs=$db->query($isql);
+$rs = $db->conn->query($isql);
 
 if (!$ruta_raiz_archivo) $ruta_raiz_archivo = $ruta_raiz;
 $directoriobase="$ruta_raiz_archivo/bodega/";
@@ -256,8 +255,8 @@ if(trim($linkarchivo))
     // Muestra la opcion para radicar el documento
     //*********************************************
 
-
-	if  ($tpradic==2 or $tpradic==3){
+    $permitir_radicar = $tpradic != 2;
+	  if  ($permitir_radicar){
         if (!$rs->fields["RADI_NUME_SALIDA"]){
 
             if(substr($verrad,-1)==2){
