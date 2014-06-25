@@ -25,6 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 session_start();
 
+if($gridCss=="Ok"){
+ $cssGrid = '<link rel="stylesheet" type="text/css" media="screen" href="'.$ruta_raiz.'/estilos/smartadmin-production.min.css">';
+}
 $str = <<<EOF
 
       <title>..:: $entidad - Caliope ::..</title>
@@ -39,7 +42,7 @@ $str = <<<EOF
       <!-- Bootstrap core CSS -->
       <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/font-awesome.min.css">
       <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-production.css">
-      <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-production.min.css">
+      $cssGrid
       <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-skins.css">
       <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/demo.css">
       <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/siim_temp.css">

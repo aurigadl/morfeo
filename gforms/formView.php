@@ -6,6 +6,7 @@
 <?php
   session_start();
   $ruta_raiz = "..";
+  $gridCss = "Ok";
   include_once "../htmlheader.inc.php";
   
 ?>
