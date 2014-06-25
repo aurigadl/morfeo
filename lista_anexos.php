@@ -453,6 +453,63 @@ Anexar Archivo</a>
 			};
 	}
 
+	function asignarRadicado(anexo,linkarch,radicar_a,procesoNumeracionFechado){
+      var title1   = "Transaccion exitosa";
+      var radinum;
+      var title2   = "Errores en la transaccion";
+      var tagalert = $( "<div>" ).addClass("alert alert-block")
+                      .html("<a class='close' data-dismiss='alert' href='#'>×</a>" +
+                      "<h4 class='alert-heading'><i class='fa fa-check-square-o'></i></h4>");
+
+      if (confirm('Se asignar\xe1 un n\xfamero de radicado a \xe9ste documento. Est\xe1 seguro  ?')){
+          url = "?generar_numero=no&radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id())?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado;
+          $.post( "<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php" + url, function( data ) {
+
+              if((data.success !== undefined) && (data.success.length>0)){
+                  var answer = content = '';
+                  for(var i=0;i < data.success.length; i++){
+                      var data_answer = " "+data.success[i]+" ";
+                      answer  = (answer.length>0)? answer + data_answer : data_answer ;
+                      radinum = data_answer.match(/[\d]{14}/);
+                      if((radinum !== undefined)  && (Array.isArray(radinum)) && (radinum.length > 0)){
+                          radinum = radinum[0];
+                      }
+                  }
+                  content  = $("<div></div>").html(answer);
+                  newalert = tagalert.clone();
+                  newalert.find('h4').html(title1);
+                  newalert.addClass('alert-success');
+                  newalert.removeClass('alert-danger');
+                  newalert.find('h4').after(content);
+                  var tdalert = $('<td colspan="14">').append(newalert);
+                  var tralert = $('<tr>').append(tdalert);
+                  $('#' + anexo).after(tralert);
+
+                  if(radinum){
+                      $($('#' + anexo).find('td')[2]).children().children().text(radinum);
+                  }
+              }
+
+              if((data.error !== undefined) && (data.error.length>0)){
+                  var answer  = '';
+                  var content = '';
+                  for(var i=0;i < data.error.length; i++){
+                      var data_answer = " "+data.error[i]+" ";
+                      answer = (answer.length>0)? answer + data_answer: data_answer ;
+                  }
+                  content  = $("<div></div>").html(answer);
+                  newalert = tagalert.clone();
+                  newalert.find('h4').html(title2);
+                  newalert.find('h4').after(content);
+                  newalert.addClass('alert-danger');
+                  newalert.removeClass('alert-success');
+                  var tdalert = $('<td colspan="14">').append(newalert);
+                  var tralert = $('<tr>').append(tdalert);
+                  $('#' + anexo).after(tralert);
+              }
+          });
+      };
+  }
 
 	function numerarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
 			if (confirm('Se asignar\xe1 un n\xfamero a \xe9ste documento. Est\xe1 seguro ?'))
@@ -465,6 +522,25 @@ Anexar Archivo</a>
 			return;
 	}
 
+	function aasignarRadicado(anexo,linkarch,radicar_a,numextdoc){
+
+    if (radicando>0){
+      alert ("Ya se esta procesando una radicacion, para re-intentarlo hagla click sobre la pesta�a de documentos");
+      return;
+    }
+
+    radicando++;
+
+    if (confirm('Esta seguro de asignarle el numero de Radicado a este archivo ?'))
+    {
+      contadorVentanas=contadorVentanas+1;
+      nombreventana="mainFrame";
+      url="<?=$ruta_raiz?>/genarchivo.php?generar_numero=no&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>"+"&numextdoc="+numextdoc;
+      window.open(url,nombreventana,'height=450,width=600');
+    }
+  return;
+  }
+	
 	function ver_tipodocuATRD(anexo,codserie,tsub){
 			<?php
 						$isqlDepR = "SELECT RADI_DEPE_ACTU,RADI_USUA_ACTU from radicado
