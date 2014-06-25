@@ -407,9 +407,9 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                         <td width="13%" height="25"  align="left">
                         <?
                           $nombreInput ="parExp_".$rsParExp->fields['SGD_PAREXP_ORDEN'];
-                          //if(!trim($valorTxt)) $valorTxt = $nombreInput;
                           if($_GET[$nombreInput]) $valorTxt = $_GET[$nombreInput];
                           if($_POST[$nombreInput]) $valorTxt = $_POST[$nombreInput];
+                          $valorTxt = strtoupper(trim($valorTxt));
                         ?>
                           <input type="text" name="<?=$nombreInput?>" value="<?=$valorTxt?>" size="60" <?php print $readonly; ?>>
                         </td>

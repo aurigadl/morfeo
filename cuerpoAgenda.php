@@ -17,15 +17,11 @@ $tip3Nombre=$_SESSION["tip3Nombre"];
 $tip3desc = $_SESSION["tip3desc"];
 $tip3img =$_SESSION["tip3img"];
 
-if(isset($_GET["carpeta"]))
-    $nomcarpeta=$_GET["carpeta"];
-else
-    $nomcarpeta="";
-$tipo_carpt=$_GET["tipo_carpt"];
-if (isset($_GET["adodb_next_page"]))
-    $adodb_next_page = $_GET["adodb_next_page"];
-else
-    $adodb_next_page = "";
+$nomcarpeta = (isset($_GET["carpeta"]))? $_GET["carpeta"] : '';
+$tipo_carpt = $_GET["tipo_carpt"];
+
+$adodb_next_page = (isset($_GET["adodb_next_page"]))? $_GET["adodb_next_page"] : '';
+
 if(isset($_GET["orderNo"])) $orderNo=$_GET["orderNo"];
 if(isset($_GET["orderTipo"])) $orderTipo=$_GET["orderTipo"];
 if(isset($_GET["busqRadicados"])) $busqRadicados=$_GET["busqRadicados"];
@@ -37,7 +33,6 @@ if(isset($_GET["agendado"])) $agendado=$_GET["agendado"];
 
 $ruta_raiz = ".";
 
-error_reporting(7);
 $verrad = "";
 ?>
 <html>
@@ -65,15 +60,9 @@ include "./envios/paEncabeza.php";
 if ($swLog==1) 
 	echo ($mesajes);
 	  if(trim($orderTipo)=="") $orderTipo="DESC";
-  if($orden_cambio==1)
-	{
-	  if(trim($orderTipo)!="DESC")
-		{
-		   $orderTipo="DESC";
-		}else
-		{
-			$orderTipo="ASC";
-		}
+  
+  if($orden_cambio==1) {
+    $orderTipo = (trim($orderTipo)!="DESC")? 'DESC' : 'ASC';
 	}
 		
 	if(!$carpeta) $carpeta=0;
@@ -87,11 +76,7 @@ if ($swLog==1)
     {
          $item = trim ( $item );
 	if ( strlen ( $item ) != 0) {
-		if ($entidad != "DNP") {
- 	        	$busqRadicadosTmp .= " b.radi_nume_radi like '%$item%' or";
-		} else {
-			$busqRadicadosTmp .= " r.radi_nume_radi like '%$item%' or";
-		}
+    $busqRadicadosTmp .= ($entidad != "DNP")? " b.radi_nume_radi like '%$item%' or" : " r.radi_nume_radi like '%$item%' or";
 	}
     }
 	if(substr($busqRadicadosTmp,-2)=="or")
