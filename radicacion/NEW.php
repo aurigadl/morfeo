@@ -22,7 +22,8 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
   session_start();
-  define('MEMORANDO', '3');
+  define('MEMORANDO', 3);
+  define('SIIM2_RECEPCION', 10);
 
   $ruta_raiz = "..";
   if (!$_SESSION['dependencia'])
@@ -82,12 +83,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     $nomEntidad = $rs->fields["SGD_TRAD_DESCR"];
   }
 
+  $med = null;
+  
   if ($ent == MEMORANDO) {
     $usuario_selected = 'selected';
+    $med = SIIM2_RECEPCION;
   } else {
     $ciudadano_selected = 'selected';
   }
-
+  var_dump($med);
   //CARGAR INFORMACION SI SE ENVIA NUMERO DE RADICADO PARA MODIFICAR
   if($nurad){
 	  $nurad = trim($nurad);
@@ -178,10 +182,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                ORDER BY MREC_CODI";
 
   $rs       = $db->conn->query($query);
-
+  var_dump($med);
   $medioRec = $rs->GetMenu2("med",
                             $med,
-                            "",
+                            '',
                             false,
                             "",
                             "class='select'" );
