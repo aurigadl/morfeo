@@ -22,6 +22,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
   session_start();
+  define('MEMORANDO', '3');
 
   $ruta_raiz = "..";
   if (!$_SESSION['dependencia'])
@@ -74,15 +75,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 from
                   sgd_trad_tiporad
                 where sgd_trad_codigo = $ent";
-
+  
   $rs    = $db->conn->query($selTipoRad);
 
   if(!$rs->EOF){
     $nomEntidad = $rs->fields["SGD_TRAD_DESCR"];
   }
 
-
-
+  if ($ent == MEMORANDO) {
+    $usuario_selected = 'selected';
+  } else {
+    $ciudadano_selected = 'selected';
+  }
 
   //CARGAR INFORMACION SI SE ENVIA NUMERO DE RADICADO PARA MODIFICAR
   if($nurad){
@@ -169,7 +173,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $query    = "SELECT
                 MREC_DESC, MREC_CODI
-               FROM MEDIO_RECEPCION WHERE MREC_CODI <> 0 ORDER BY MREC_CODI";
+               FROM MEDIO_RECEPCION
+               WHERE MREC_CODI <> 0
+               ORDER BY MREC_CODI";
 
   $rs       = $db->conn->query($query);
 
@@ -315,9 +321,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <section  class="col col-2">
                           <label class="select">
                             <select id="tipo_usuario" class="form-control input-sm">
-                              <option value='0'>Ciudadano </option>
-                              <option value='2'>Entidad </option>
-                              <option value='6'>Usuario SIIM2</option>
+                              <option value='0' <?php echo $ciudadano_select?> >Ciudadano </option>
+                              <option value='2' <?php echo $entidad_selected?> >Entidad </option>
+                              <option value='6' <?php echo $usuario_selected?> >Usuario SIIM2</option>
                             </select>
                           </label>
                         </section>
@@ -397,7 +403,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <textarea id="asu" name="asu" cols="70"  rows="4" ><?=$asu?></textarea>
                 </label>
                 <label class="label">
-                    Medio Recepci&oacute;n
+                    Medio Recepci&oacute;n / Envio
                 </label>
                 <label class="select">
                     <?=$medioRec?>
