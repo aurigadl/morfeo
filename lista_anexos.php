@@ -164,11 +164,12 @@ if(trim($linkarchivo))
 
 	<td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif">
 <?php
-  $es_impreso = $rs->fields["ANEX_ESTADO"] <= 3;
+  $no_es_impreso = $rs->fields["ANEX_ESTADO"] <= 3;
   $es_extension = ($rs->fields["EXT"]=="rtf" or
                     $rs->fields["EXT"]=="doc" or
+                    $rs->fields["EXT"]=="docx" or
                     $rs->fields["EXT"]=="odt" or
-                    $rs->fields["EXT"]=="xml") and $es_impreso;
+                    $rs->fields["EXT"]=="xml") and $no_es_impreso;
 
   if($es_extension) {
     if($valImg == "SI"){
@@ -256,7 +257,8 @@ if(trim($linkarchivo))
     //*********************************************
 
     $permitir_radicar = $tpradic != 2;
-	  if  ($permitir_radicar){
+	  
+    if ($permitir_radicar and $es_extension){
         if (!$rs->fields["RADI_NUME_SALIDA"]){
 
             if(substr($verrad,-1)==2){
