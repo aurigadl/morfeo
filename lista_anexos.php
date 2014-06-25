@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 if (!$ruta_raiz) $ruta_raiz= ".";
 include "$ruta_raiz/conn.php";
 include_once("$ruta_raiz/class_control/anexo.php");
