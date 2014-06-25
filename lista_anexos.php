@@ -243,10 +243,11 @@ if(trim($linkarchivo))
                       (trim($rs->fields["ANEX_CREADOR"])==trim($krd) or $es_administrador);
 
   if ($usuario_creador) {
-		if($origen!=1  and $linkarchivo) {
-			  $v = $rs->fields["SGD_PNUFE_CODI"];
-			  echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','$v');\"> <img src='img/icono_borrar.png' title='Borrar Archivo'> </a>"; 	}
-		}
+  if($origen!=1  and $linkarchivo) {
+      $v = "0";
+      echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"borrarArchivo('$coddocu','$linkarchivo','$cod_radi','0');\"> <img src='img/icono_borrar.png' title='Borrar Archivo'> </a>";
+    }
+  }
 		?>
 	</small></td>
 	<td >
@@ -260,7 +261,7 @@ if(trim($linkarchivo))
     
   if ($permitir_radicar and $es_extension){
       if (!$rs->fields["RADI_NUME_SALIDA"]){
-        if(substr($verrad,-1)!=2 and $swRadDesdeAnex==false  and $num_archivos>=2){
+        if(substr($verrad,-1)!=2 and $swRadDesdeAnex!=1  and $num_archivos>=2){
         echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',0,'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
         $radicado = "false";
         $anexo = $cod_radi;
@@ -271,7 +272,7 @@ if(trim($linkarchivo))
       $radicado = "false";
       $anexo = $cod_radi;
     } else if (strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0 && !$anex->seHaRadicadoUnPaquete($rs->fields["SGD_DOC_PADRE"])){
-         //       echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',0,'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
+                echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',0,'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
         $radicado = "false";
         $anexo = $cod_radi;
         }
