@@ -166,13 +166,13 @@ if(trim($linkarchivo))
 
 	<td width="1%" valign="middle"><font face="Arial, Helvetica, sans-serif">
 <?php
+  
   $no_es_impreso = $rs->fields["ANEX_ESTADO"] <= 3;
   $es_extension = ($rs->fields["EXT"]=="rtf" or
                     $rs->fields["EXT"]=="doc" or
                     $rs->fields["EXT"]=="docx" or
                     $rs->fields["EXT"]=="odt" or
                     $rs->fields["EXT"]=="xml") and $no_es_impreso;
-
   if($es_extension) {
     if($valImg == "SI"){
 		  echo"<a class=\"vinculos\" style='cursor:pointer;cursor:hand;' onclick=\"vistaPreliminar('$coddocu','$linkarchivo','$linkarchivotmp');\">";
@@ -224,13 +224,11 @@ if(trim($linkarchivo))
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
 			echo "<a class=vinculos href=javascript:ver_tipodocuATRD($radiNumeAnexo,$codserie,$tsub);><img src='img/icono_clasificar.png' title='Clasificar Documento'></a> ";
-		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == '')
-		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, ademas el anexo no ha sido tipificado
+		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual == ''){ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, ademas el anexo no ha sido tipificado
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
 			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='Clasificar Documento'> </a> ";
-		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual != '')
-		{ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, ademas el anexo YA ha sido tipificado antes
+		}elseif ($perm_tipif_anexo == 1 && $anexTipo == 4 && $anexTPRActual != ''){ //Es un anexo de tipo tif (4) y el usuario tiene permiso para Tipificar, ademas el anexo YA ha sido tipificado antes
 			if(!$codserie) $codserie="0";
 			if(!$tsub) $tsub="0";
 			echo "<a class=vinculoTipifAnex href=javascript:ver_tipodocuAnex('$cod_radi','$anexo',$codserie,$tsub);> <img src='img/icono_clasificar.png' title='Volver a Clasificar Documento'> </a> ";
@@ -254,51 +252,37 @@ if(trim($linkarchivo))
 	<td >
 	<?php
 
-    //*********************************************
-    // Muestra la opcion para radicar el documento
-    //*********************************************
+  //*********************************************
+  // Muestra la opcion para radicar el documento
+  //*********************************************
 
-    $permitir_radicar = $tpradic != 2;
-	  
-    if ($permitir_radicar and $es_extension){
-        if (!$rs->fields["RADI_NUME_SALIDA"]){
-
-            if(substr($verrad,-1)==2){
-                $rs->fields["SGD_PNUFE_CODI"]=0;
-			    echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
-					$radicado = "false";
-					$anexo = $cod_radi;
-			}
-
-
-                if((substr($verrad,-1)!=2) and $num_archivos==1 and !$rs->fields["SGD_PNUFE_CODI"] and $swRadDesdeAnex==false ){
-			        echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> <img src='img/icono_radicar.png' title='Asignar Radicado (-$tpradic)'> </a>";
-                    $radicado = "false";
-			        $anexo = $cod_radi;
-				} else if ($rs->fields["SGD_PNUFE_CODI"]&& strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0 && !$anex->seHaRadicadoUnPaquete($rs->fields["SGD_DOC_PADRE"])){
-                    echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].",'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
-				    $radicado = "false";
-				    $anexo = $cod_radi;
-		        }
-        }else{
-            if (!$rs->fields["SGD_PNUFE_CODI"])$rs->fields["SGD_PNUFE_CODI"]=0;
-			if ($anex_estado<4){
-				 echo "<a class=vinculos href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','$cod_radi',".$rs->fields["SGD_PNUFE_CODI"].",'','',$numextdoc);\"> <img src='img/icono_regenerar.png' title='Volver a Generar Radicado'></a>";
-		        $radicado = "true";
-		    }
-        }
+  $permitir_radicar = $tpradic != 2;
+    
+  if ($permitir_radicar and $es_extension){
+      if (!$rs->fields["RADI_NUME_SALIDA"]){
+        if(substr($verrad,-1)!=2 and $swRadDesdeAnex==false  and $num_archivos>=2){
+        echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',0,'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
+        $radicado = "false";
+        $anexo = $cod_radi;
     }
-		else if ( $rs->fields["SGD_PNUFE_CODI"]  && ($usua_perm_numera_res==1) && $ruta_raiz != ".." && !$rs->fields["SGD_DOC_SECUENCIA"] && strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0) // SI ES PAQUETE DE DOCUMENTOS Y EL USUARIO TIENE PERMISOS
-			{	/*
-			 * Incluir manejo de seguridad de imagenes
-			 * para que el link no muestre la ruta completa
-			 * @author Liliana Gomez Velasquez
-			 * @since 10 noviembre 2009
-			*/
-
-			 echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"numerarArchivo('$coddocu','$linkarchivo','si',".$rs->fields["SGD_PNUFE_CODI"].");\"> Numerar </a>";
-			}
-	  		if($rs->fields["RADI_NUME_SALIDA"]) {$radicado="true";}
+    
+    if((substr($verrad,-1)!=2) and $num_archivos==1 and $swRadDesdeAnex==false ){
+      echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> <img src='img/icono_radicar.png' title='Asignar Radicado (-$tpradic)'> </a>";
+      $radicado = "false";
+      $anexo = $cod_radi;
+    } else if (strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0 && !$anex->seHaRadicadoUnPaquete($rs->fields["SGD_DOC_PADRE"])){
+         //       echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',0,'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
+        $radicado = "false";
+        $anexo = $cod_radi;
+        }
+    }else{
+      if ($anex_estado<4){
+      echo "<a class=vinculos href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','$cod_radi',0,'','',$numextdoc);\"> <img src='img/icono_regenerar.png' title='Volver a Generar Radicado'></a>";
+      $radicado = "true";
+    }
+    }
+  }
+	  if($rs->fields["RADI_NUME_SALIDA"]) {$radicado="true";}
 		?>
 		</small></td>
 
