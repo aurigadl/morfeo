@@ -200,9 +200,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             false,
                             "",
                             "class='ecajasfecha'");
-
-
 ?>
+
 <html>
   <head>
   <?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
