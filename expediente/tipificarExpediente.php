@@ -44,8 +44,10 @@ if (!$nurad) $nurad= $rad;
 if($nurad){
   $ent = substr($nurad,-1);
 }
+define('ADODB_ASSOC_CASE', 1);
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler("$ruta_raiz");
+$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 include_once "$ruta_raiz/include/tx/Historico.php";
 include_once ("$ruta_raiz/class_control/TipoDocumental.php");
 include_once "$ruta_raiz/include/tx/Expediente.php";
