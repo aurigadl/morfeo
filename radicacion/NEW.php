@@ -275,7 +275,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <div id="showModificar" class="col-lg-3 <?=$showtable?>">
 
           <a data-toggle="modal" id="modificaRad" name="Submit44" class="btn bg-color-greenDark txt-color-white btn-lg btn-block">
-            Modificar el radicado <?=$nurad?>
+            Modificar <?=$nurad?>
             <?=$senddata?>
           </a>
 
