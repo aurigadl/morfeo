@@ -261,7 +261,7 @@ if(trim($linkarchivo))
     
   if ($permitir_radicar and $es_extension){
       if (!$rs->fields["RADI_NUME_SALIDA"]){
-        if(substr($verrad,-1)!=2 and $swRadDesdeAnex!=1  and $num_archivos>=2){
+        if($num_archivos>=2){
         echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',0,'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
         $radicado = "false";
         $anexo = $cod_radi;
@@ -271,7 +271,7 @@ if(trim($linkarchivo))
       echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> <img src='img/icono_radicar.png' title='Asignar Radicado (-$tpradic)'> </a>";
       $radicado = "false";
       $anexo = $cod_radi;
-    } else if (strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0 && !$anex->seHaRadicadoUnPaquete($rs->fields["SGD_DOC_PADRE"])){
+    } else if (strcmp($cod_radi,$rs->fields["SGD_DOC_PADRE"])==0){
                 echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',0,'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
         $radicado = "false";
         $anexo = $cod_radi;
