@@ -60,7 +60,7 @@ if($nivelExp==0)  $datoss = " selected "; else $datoss = "";
 <?
 if($nivelExp==1)  $datoss = " selected "; else $datoss = "";
 ?>
-<option value=1 <?=$datoss?>>Privado solo jefe y Ususarios Actules de Radicados</option>
+<option value=1 <?=$datoss?>>Privado solo jefe y Ususarios Actuales de Radicados</option>
 <?
 if($nivelExp==2)  $datoss = " selected "; else $datoss = "";
 ?>
