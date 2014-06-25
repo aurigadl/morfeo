@@ -808,7 +808,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           pass = false;
         };
 
-
         //Usuarios
         if($('input[name^="usuario"]').length === 0){
           mostrarAlert({type : 'danger', message : 'Seleccione un usuario'});
@@ -856,6 +855,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           if(acction === "modificaRad"){
             datos = datos + "&modificar=true";
           }
+
+          $(this).bind('click', false);
 
           var jqxhr = $.post( "./ajax_radicarNuevo.php", datos ,function(data) {
             for(var k in data) {
