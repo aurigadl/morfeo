@@ -2,11 +2,13 @@
 session_start();
 ini_set("display_errors",1);
 
-    $ruta_raiz = ".";
-    if (!$_SESSION['dependencia'])
-        header ("Location: $ruta_raiz/cerrar_session.php");
+$ruta_raiz = ".";
+if (!$_SESSION['dependencia'])
+  header ("Location: $ruta_raiz/cerrar_session.php");
+
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
+
 $krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $usua_doc    = $_SESSION["usua_doc"];
@@ -51,32 +53,25 @@ $lnr         = 11+$ln;
         $aplinteg='null';
     if (!$tpradic)
         $tpradic='null';
-    if(!$cc){	
-        if($codigo)
-            $nuevo="no";
-        else
-            $nuevo="si";
-        if ($sololect)
-            $auxsololect="S";
-        else
-            $auxsololect="N";
+    if(!$cc){
+      
+      $nuevo = ($codigo)? 'no' : 'si';
+      
+      $auxsololect = ($sololect)? 'S' : 'N';
         //$db->conn->BeginTrans();
-        if($nuevo=="si"){
+        if($nuevo_archivo==true){
             $auxnumero=$anex->obtenerMaximoNumeroAnexo($numrad);
-            do
-            {	$auxnumero+=1;
-                $codigo=trim($numrad).trim(str_pad($auxnumero,5,"0",STR_PAD_LEFT));
+            do {
+              $auxnumero++;
+              $codigo = trim($numrad).trim(str_pad($auxnumero,5,"0",STR_PAD_LEFT));
             }while ($anex->existeAnexo($codigo));
+        } else {
+          $bien = true;
+          $auxnumero=substr($codigo,-4);
+          $codigo = trim($numrad).trim(str_pad($auxnumero,5,"0",STR_PAD_LEFT));
         }
-        else
-        {	$bien = true;
-            $auxnumero=substr($codigo,-4);
-            $codigo=trim($numrad).trim(str_pad($auxnumero,5,"0",STR_PAD_LEFT));
-        }
-        if($radicado_salida)
-        {	$anex_salida = 1;	}
-        else
-        {	$anex_salida = 0;	}
+
+        $anex_salida = ($radicado_salida)? 1 : 0;
 
         $bien = "si";
         if ($bien and $tipo){	
@@ -90,20 +85,15 @@ $lnr         = 11+$ln;
         }
     if(!$radicado_rem)
             $radicado_rem=7;
-    if($_FILES['userfile1']['size']){
-       $tamano = ($_FILES['userfile1']['size']/1000);
-     }else{
-        $tamano = 0;
-     }
-
-     if ($nuevo=="si"){
+    
+    $tamano = ($_FILES['userfile1']['size'])? ($_FILES['userfile1']['size']/1000) : 0;
+     
+     if ($nuevo_archivo == true) {
 
         include "$ruta_raiz/include/query/queryUpload2.php";
-        if ($expIncluidoAnexo) {
-            $expAnexo = 	$expIncluidoAnexo;
-        }else {
-            $expAnexo = null;
-        }
+
+        $expAnexo = ($expIncluidoAnexo)? $expIncluidoAnexo : null;
+        
         if(!$anex_salida && $tpradic) $anex_salida=1;
         
         $isql = "insert
@@ -147,16 +137,15 @@ $lnr         = 11+$ln;
                          ,$aplinteg    
                          ,$tpradic
                          ,'$expAnexo')";
-                $subir_archivo= "si ...";
+            $nuevo_archivo = false;
+            $subir_archivo = true;
          }else{
-            if($_FILES['userfile1']['size']){
-                $subir_archivo = "   anex_nomb_archivo  ='1$archivo'
-                                     ,anex_tamano       = $tamano
-                                     ,anex_tipo         = $tipo, "; 
-            }else{
-                $subir_archivo="";
-            }
-            $isql = "update 
+          $nuevo_archivo = false;
+          $subir_archivo = ($_FILES['userfile1']['size'])? "   anex_nomb_archivo  ='1$archivo'
+                                                                   ,anex_tamano       = $tamano
+                                                                   ,anex_tipo         = $tipo, " : 0;
+          
+          $isql = "update 
                 anexos set 
                       $subir_archivo 
                       anex_salida=$anex_salida
@@ -168,8 +157,11 @@ $lnr         = 11+$ln;
                 where 
                     anex_codigo= '$codigo'";
          }
-
-         $bien=$db->query($isql);
+         
+        $_POST['subir_archivo'] = $subir_archivo;
+        $_POST['nuevo_archivo'] = $nuevo_archivo;
+        $_POST['codigo']        = $codigo;
+         $bien = $db->conn->query($isql);
 
         //Si actualizo BD correctamente 
          if ($bien){
@@ -183,7 +175,7 @@ $lnr         = 11+$ln;
                  
                  //Si intento anexar archivo y Subio correctamente
                  if ($bien2){
-                    $resp1="OK";
+                    $resp1 = "OK";
                     //$db->conn->CommitTrans();
                  }else{ 
                      $resp1="ERROR";

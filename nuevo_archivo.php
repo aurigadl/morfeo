@@ -1,13 +1,16 @@
 <?php
 session_start();
 ini_set('display_errors',1);
+
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
-if($subir_archivo!="si ..."){
+$subir_archivo  = (isset($subir_archivo))? $subir_archivo : false;
+$nuevo_archivo  = (isset($nuevo_archivo))? $nuevo_archivo : false;
 
+if($subir_archivo != true){
     $krd         = $_SESSION["krd"];
     $dependencia = $_SESSION["dependencia"];
     $usua_doc    = $_SESSION["usua_doc"];
@@ -36,28 +39,31 @@ $dbAux = new ConnectionHandler($ruta_raiz);
 
 $conexion      = $db;
 $rowar         = array();
-$mensaje       = "";
+$mensaje       = null;
 $tipoDocumento = explode("-", $tipoLista);
 $tipoDocumentoSeleccionado = $tipoDocumento[1];
 
 $isql = "select USUA_LOGIN,USUA_PASW,CODI_NIVEL from usuario where (usua_login ='$krd') ";
 $rs   = $db->conn->Execute($isql);
+
 if ($rs->EOF){
     $mensaje="No tiene permisos para ver el documento";
 }else{
     $nivel=$rs->fields["CODI_NIVEL"];
     ($tipo==0) ? $psql = " where  anex_tipo_codi<50 " : $psql=" ";
-    $isql = "select ANEX_TIPO_CODI, ANEX_TIPO_DESC, ANEX_TIPO_EXT ".
-        "from anexos_tipo  $psql order by anex_tipo_desc desc";
+    $isql = "select ANEX_TIPO_CODI,
+                    ANEX_TIPO_DESC,
+                    ANEX_TIPO_EXT
+              from anexos_tipo
+                    $psql
+              order by anex_tipo_desc desc";
     $rs=$db->conn->Execute($isql);
 }
 
 if ($resp1=="OK"){
-    if ($subir_archivo){
-        $mensaje="<span class=info>Archivo anexado correctamente</span></br>";
-    }else{
-        $mensaje="Anexo Modificado Correctamente<br>No se anex&oacute; ning&uacute;n archivo</br>";
-    }
+
+    $mensaje = ($subir_archivo)? "<span class=info>Archivo anexado correctamente</span></br>" :
+                                "Anexo Modificado Correctamente<br>No se anex&oacute; ning&uacute;n archivo</br>";
 }else if ($resp1=="ERROR"){
     $mensaje="<span class=alarmas>Error al anexar archivos</span></br>";
 }
@@ -159,7 +165,7 @@ $variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$dato
       var valor;
       var extension;
       archivo_up = document.getElementById('userfile').value;
-      valor=0;
+      valor = 0;
       var mySplitResult = archivo_up.split(".");
 
       for(i = 0; i < (mySplitResult.length); i++){
@@ -177,8 +183,6 @@ $variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$dato
       $anexos_isql = $isql;
       ?>
       document.getElementById('tipo_clase').value = valor;
-
-
   }
 
   function validarGenerico(){
@@ -209,9 +213,6 @@ $variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$dato
       return true;
   }
 
-
-
-
   function actualizar(){
 
       if (!validarGenerico()) return;
@@ -228,6 +229,8 @@ $variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$dato
 <body class="smart-form">
 <div>
 <form enctype="multipart/form-data" method="POST" name="formulario" id="formulario" action='upload2.php?<?=$variables?>' >
+<input type="hidden" name="subir_archivo" value="<?=$subir_archivo?>"> 
+<input type="hidden" name="nuevo_archivo" value="<?=$nuevo_archivo?>"> 
 <?php
 $i_copias = 0;
 if ($codigo){
@@ -315,7 +318,9 @@ if(!$radicado_rem){
     <tr>
     <td width=50% >
 <?php
-$us_1 = ""; $us_2 = ""; $us_3 = "";
+$us_1 = "";
+$us_2 = "";
+$us_3 = "";
 $datoss = "";
 if ($nombret_us11 and $direccion_us11 and $dpto_nombre_us11 and $muni_nombre_us11)
 { $us_1 = "si"; $usuar=1;
@@ -436,7 +441,9 @@ if (strlen(trim($swDischekRad)) > 0){
       <tr >
 <?php
 
-$q_exp  = "SELECT  SGD_EXP_NUMERO as valor, SGD_EXP_NUMERO as etiqueta, SGD_EXP_FECH as fecha";
+$q_exp  = "SELECT SGD_EXP_NUMERO as valor,
+                  SGD_EXP_NUMERO as etiqueta,
+                  SGD_EXP_FECH as fecha";
 $q_exp .= " FROM SGD_EXP_EXPEDIENTE ";
 $q_exp .= " WHERE RADI_NUME_RADI = " . $numrad;
 $q_exp .= " AND SGD_EXP_ESTADO <> 2";
@@ -687,9 +694,9 @@ if( $rs_exp->RecordCount() == 0 ){
           <input type=text name=cc_documento_us1 value='<?=$cc_documento_us1 ?>' class=e_cajas size=8 >
         </TD>
         <TD width="329" align="center" >
-          <input type=text name=nombre_us1 value=''  size=3 class=tex_area>
-          <input type=text name=prim_apel_us1 value=''   size=3 class=tex_area>
-          <input type=text name=seg_apel_us1 value=''   size=3 class=tex_area>
+          <input type="text" name="nombre_us1" value='' size="3" class="tex_area">
+          <input type="text" name="prim_apel_us1" value='' size="3" class="tex_area">
+          <input type="text" name="seg_apel_us1" value='' size="3" class="tex_area">
         </TD>
         <TD width="140" align="center"  colspan='2'>
           <input type=text name=otro_us7 value='' class=tex_area   size=20 maxlength="45">
@@ -698,10 +705,10 @@ if( $rs_exp->RecordCount() == 0 ){
           <input type=text name=direccion_us1 value='' class=tex_area  size=6>
         </TD>
         <TD width="68" align="center">
-          <input type=text name=mail_us1 value='' class=tex_area size=11>
+          <input type=text name=mail_us1 value='' class="tex_area" size="11">
         </TD>
         <TD width="68" align="center" colspan="2">
-          <input type=text name=otro_us1 value='' class=tex_area size=11>
+          <input type=text name=otro_us1 value='' class=tex_area" size="11">
         </TD>
       </tr>
       <tr>
@@ -722,13 +729,19 @@ if( $rs_exp->RecordCount() == 0 ){
     </tr>
 <?php
 }
+  $maximo_tamano = number_format((return_bytes(ini_get('upload_max_filesize')))/1000000,2);
+  $tamano_archivo = return_bytes(ini_get('upload_max_filesize'));
+  
+  $mostrar_mensaje = (isset($codigo) && $codigo != '')? 'El numero del Anexo es: ' . $codigo :  null;
 ?>
     <tr><td colspan="2"></td></tr>
     <tr align="center">
           <td align="center" colspan="2" >
-          <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo return_bytes(ini_get('upload_max_filesize')); ?>">
+          <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $tamano_archivo; ?>">
 						   <input name="userfile1" type="file" onChange="escogio_archivo();" id="userfile" value="valor" class="btn btn-primary">
-						<small>Archivo debe ser menor a  <?php echo number_format((return_bytes(ini_get('upload_max_filesize')))/1000000,2); ?>Mb.</small>
+						<small>Archivo debe ser menor a <?php echo $maximo_tamano; ?>Mb.</small>
+						<p><small class="btn btn-success"><?=$mensaje?></small></p>
+						<p><small class="btn btn-success"><?=$mostrar_mensaje?></small></p>
           </td>
     </tr>
 
@@ -742,11 +755,8 @@ if( $rs_exp->RecordCount() == 0 ){
       <footer>
       </td>
     </tr>
-    <?php if($codigo){?>
-    <tr><td  align="center" colspan="2"><?=$codigo?></td></tr>
-    <?php } ?>
 	 </table>
-	 <input type=hidden name=i_copias value='<?=$i_copias?>' id="i_copias" >
+	 <input type="hidden" name="i_copias" value='<?=$i_copias?>' id="i_copias" >
 	 </td>
 	 </tr>
 	</table>
