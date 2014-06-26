@@ -279,7 +279,7 @@ if ($radicar_documento) {
         $archUpdateRad = substr_replace($archivoFinal, "", 0, strpos($archivoFinal, "bodega") + strlen("bodega"));
     }
     //****************************************************************************************************
-
+    //$db->conn->debug = true;
     $tipo_docto = $anex->get_sgd_tpr_codigo();
     if (!$tipo_docto) $tipo_docto = 0;
 
@@ -473,16 +473,8 @@ if ($radicar_documento) {
         //Trae la informacion de Sancionados y genera los campos de combinacion
         $camposSanc = array();
         $datosSanc = array();
-        $objSancionados = new Sancionados($db);
-        if ($objSancionados->sancionadosRad($anexo)) {
-            $objSancionados->obtenerCampos($camposSanc, $datosSanc);
-            $vieneDeSancionados = 1;
-        } else if ($objSancionados->sancionadosRad($numrad)) {
-            $objSancionados->obtenerCampos($camposSanc, $datosSanc);
-            $vieneDeSancionados = 2;
-        } else $vieneDeSancionados = 0;
 
-        if ($sgd_dir_tipo == 2 && $vieneDeSancionados == 0) {
+        if ($sgd_dir_tipo == 2 ) {
             $dir_tipo_us1 = $dir_tipo_us2;
             $tipo_emp_us1 = $tipo_emp_us2;
             $nombre_us1 = $nombre_us2;
@@ -499,7 +491,7 @@ if ($radicar_documento) {
             $tipo_us1 = $tipo_us2;
             $otro_us1 = $otro_us2;
         }
-        if ($sgd_dir_tipo == 3 && $vieneDeSancionados == 0) {
+        if ($sgd_dir_tipo == 3 ) {
             $dir_tipo_us1 = $dir_tipo_us3;
             $tipo_emp_us1 = $tipo_emp_us3;
             $nombre_us1 = $nombre_us3;
@@ -527,8 +519,7 @@ if ($radicar_documento) {
         $documento_us3 = "";
         $conexion = $db;
 
-        if ($numerar != 1)
-            include "$ruta_raiz/radicacion/grb_direcciones.php";
+        if ($numerar != 1) include "$ruta_raiz/radicacion/grb_direcciones.php";
 
         $actualizados = 4;
         $sgd_dir_tipo = 1;
@@ -889,12 +880,12 @@ if ($ext == "ODT" || $ext == "odt") {
  **/
 
 
-$link = $ABSOL_PATH . "bodega" . $linkarchivo_grabar;
+$link = $ABSOL_PATH . "/bodega" . $linkarchivo_grabar;
 $tam = filesize($link);
 $linkFuente = str_replace("d.", ".", $linkarchivo_grabar);
-$linkF = $ABSOL_PATH . "bodega" . $linkFuente;
+$linkF = $ABSOL_PATH . "/bodega" . $linkFuente;
 $tamFuente = filesize($linkF);
-
+//$db->conn->debug = true;
 saveMessage('success', " ".($tam) / 1000 . " kb");
 
 if ($tam >= 100) {

@@ -133,12 +133,11 @@ if(trim($linkarchivo))
 		$resulValiA = $verLinkArchivo->valPermisoAnex($coddocu);
 		$valImg = $resulValiA['verImg'];
 	}
-
 	if(trim($linkarchivo)){
-        if($valImg == "SI"){
+        if($valImg == "SI" or $verradPermisos == "Full" ){
              echo "<b><a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$coddocu','$ruta_raiz');\"> $cod_radi </a>";
         }else{
-             echo "<a class='vinculos' href='javascript:noPermiso()' > $cod_radi </a>";
+              echo "<a class='vinculos' href='javascript:noPermiso()' > $cod_radi </a>";
         }
 	}else{
 		echo trim(strtolower($cod_radi));
