@@ -266,7 +266,7 @@ echo "</div>";
 				</li>
 				<li>
 					<a href="#tabs-b">Traza</a>
-				</li>				
+				</li>
 				<li>
 					<div><a href="#tabs-d">Informaci&oacute;n del Radicado</a></div>
 				</li>
@@ -293,8 +293,13 @@ echo "</div>";
 
 			<div id="tabs-c">
 				<p>
-				  <center><img src="img/ajax-loader.gif" align=center width=70></center>
-					<?php //  include "./lista_anexos.php"; ?>
+					<?php
+            if($recargartab){
+                include "./lista_anexos.php";
+            }else{
+				      echo "<center><img src='img/ajax-loader.gif' align=center width=70></center>";
+            }
+          ?>
 				</p>
 			</div>
 
@@ -306,15 +311,15 @@ echo "</div>";
   </div>
 
   <script>
+</script>
+
+<script type="text/javascript">
+$( document ).ready(function(){
 function cargarPagina(pagina,nombreDiv){
 $.post( pagina,{verradicado:"<?=$verradicado?>",verradPermisos:"<?=$verradPermisos?>",permRespuesta:"<?=$permRespuesta?>"}, function( data ) {
   $('#'+ nombreDiv).html(data);
 });
 }
-</script>  
-  
-<script type="text/javascript">
-$( document ).ready(function(){
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	$('#tabs').tabs();
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
@@ -324,12 +329,11 @@ $( document ).ready(function(){
         if($(ui.newTab).attr('aria-controls')=='tabs-a') cargarPagina('./expediente/lista_expedientes.php','tabs-a');
         console.log(window.location.href);
     } );
-	
-	var tabTitle = $("#tab_title"), tabContent = $("#tab_content"), tabTemplate = "<li style='position:relative;'> <span class='air air-top-left delete-tab' style='top:7px; left:7px;'><button class='btn btn-xs font-xs btn-default hover-transparent'><i class='fa fa-times'></i></button></span></span><a href='#{href}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{label}</a></li>", tabCounter = 2;
-  
-  $('#chkr, #depsel, #carpper, #Enviar').hide();
 
-  cargarPagina('./expediente/lista_expedientes.php','tabs-a');
+	var tabTitle = $("#tab_title"), tabContent = $("#tab_content"), tabTemplate = "<li style='position:relative;'> <span class='air air-top-left delete-tab' style='top:7px; left:7px;'><button class='btn btn-xs font-xs btn-default hover-transparent'><i class='fa fa-times'></i></button></span></span><a href='#{href}'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #{label}</a></li>", tabCounter = 2;
+
+    $('#chkr, #depsel, #carpper, #Enviar').hide();
+    cargarPagina('./expediente/lista_expedientes.php','tabs-a');
   });
 
 </script>

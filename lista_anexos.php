@@ -3,6 +3,7 @@ session_start();
 
 if (!$ruta_raiz) $ruta_raiz= ".";
 include "$ruta_raiz/conn.php";
+
 include_once("$ruta_raiz/class_control/anexo.php");
 require_once("$ruta_raiz/class_control/TipoDocumento.php");
 include "$ruta_raiz/config.php";
