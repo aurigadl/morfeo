@@ -276,10 +276,10 @@ if(trim($linkarchivo))
         $anexo = $cod_radi;
         }
     }else{
-      if ($anex_estado<4){
-      echo "<a class=vinculos href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','$cod_radi',0,'','',$numextdoc);\"> <img src='img/icono_regenerar.png' title='Volver a Generar Radicado'></a>";
-      $radicado = "true";
-    }
+        if ($anex_estado<4){
+            echo "<a class=vinculos href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','$cod_radi',0,'','',$numextdoc);\"> <img src='img/icono_regenerar.png' title='Volver a Generar Radicado'></a>";
+            $radicado = "true";
+        }
     }
   }
 	  if($rs->fields["RADI_NUME_SALIDA"]) {$radicado="true";}

@@ -630,6 +630,11 @@ if (is_file($linkArchivoTxt)) {
     }
 }
 
+fputs($fp, "<USUARIO>=$nombret_us1_u\n");
+fputs($fp, "<SGD_CIU_DIRECCION>=$direccion_us1\n");
+fputs($fp, "<DPTO_NOMB>=$dpto_nombre_us1\n");
+fputs($fp, "<MUNI_NOMB>=$muni_nombre_us1\n");
+fputs($fp, "<NOMBRE_DE_LA_EMPRESA>=$nombret_us3_u\n");
 fputs($fp, "*RAD_LIQUIDACIONES_VOLUNTARIAS*=$documentosA\n");
 fputs($fp, "*DOC_FALTA*=$docsF\n");
 fputs($fp, "*RAD_E_PADRE*=$radicado_p\n");
@@ -639,14 +644,10 @@ fputs($fp, "*F_RAD_E*=$fecha_e\n");
 fputs($fp, "*SAN_FECHA_RADICADO*=$fecha_e\n");
 fputs($fp, "*RA_ASUN=$ra_asun\n");
 fputs($fp, "*NOM_R*=$nombret_us1_u\n");
-fputs($fp, "<USUARIO>=$nombret_us1_u\n");
 fputs($fp, "*DIR_R*=$direccion_us1\n");
 fputs($fp, "*DIR_E*=$direccion_us3\n");
-fputs($fp, "<SGD_CIU_DIRECCION>=$direccion_us1\n");
 fputs($fp, "*DEPTO_R*=$dpto_nombre_us1\n");
 fputs($fp, "*MPIO_R*=$muni_nombre_us1\n");
-fputs($fp, "<DPTO_NOMB>=$dpto_nombre_us1\n");
-fputs($fp, "<MUNI_NOMB>=$muni_nombre_us1\n");
 fputs($fp, "*TEL_R*=$telefono_us1\n");
 fputs($fp, "*MAIL_R*=$mail_us1\n");
 fputs($fp, "*DOC_R*=$cc_documentous1\n");
@@ -658,7 +659,6 @@ fputs($fp, "*TEL_P*=$telefono_us1\n");
 fputs($fp, "*MAIL_P*=$mail_us2\n");
 fputs($fp, "*DOC_P*=$cc_documento_us2\n");
 fputs($fp, "*NOM_E*=$nombret_us3_u\n");
-fputs($fp, "<NOMBRE_DE_LA_EMPRESA>=$nombret_us3_u\n");
 fputs($fp, "*DIR_E*=$direccion_us3\n");
 fputs($fp, "*MPIO_E*=$muni_nombre_us3\n");
 fputs($fp, "*DEPTO_E*=$dpto_nombre_us3\n");
@@ -692,17 +692,16 @@ fputs($fp, "*DIGNATARIO*=$otro_us1\n");
 fputs($fp, "*DEPE_CODI*=$dependencia\n");
 fputs($fp, "*DEPENDENCIA*=$dependencia\n");
 fputs($fp, "*DEPENDENCIA_NOMBRE*=$dependencia_nombre\n");
-
-fputs($fp, "NOM_R=$nombret_us1_u\n");
-fputs($fp, "F_RAD=$fecha_hoy_corto\n");
-fputs($fp, "RAD_S=$rad_salida\n");
-fputs($fp, "DEPTO_R=$dpto_nombre_us1\n");
-fputs($fp, "MPIO_R=$muni_nombre_us1\n");
-fputs($fp, "RAD_ASUNTO=$ra_asun\n");
-fputs($fp, "LOGINORFEO=$krd\n");
-fputs($fp, "DIR_R=$direccion_us1\n");
-fputs($fp, "DEPENDENCIAORFEO=$dependencia\n");
-fputs($fp, "DEPE_CODI=$dependencia\n");
+fputs($fp, "*NOM_R*=$nombret_us1_u\n");
+fputs($fp, "*F_RAD*=$fecha_hoy_corto\n");
+fputs($fp, "*RAD_S*=$rad_salida\n");
+fputs($fp, "*DEPTO_R*=$dpto_nombre_us1\n");
+fputs($fp, "*MPIO_R*=$muni_nombre_us1\n");
+fputs($fp, "*RAD_ASUNTO*=$ra_asun\n");
+fputs($fp, "*LOGINORFEO*=$krd\n");
+fputs($fp, "*DIR_R*=$direccion_us1\n");
+fputs($fp, "*DEPENDENCIAORFEO*=$dependencia\n");
+fputs($fp, "*DEPE_CODI*=$dependencia\n");
 
 for ($i_count = 0; $i_count < count($camposSanc); $i_count++) {
     fputs($fp, trim($camposSanc[$i_count]) . "=" . trim($datosSanc[$i_count]) . "\n");
@@ -722,10 +721,8 @@ if ($ext == "ODT" || $ext == "odt") {
     define ('WORKDIR', './bodega/tmp/workDir/');
     define ('CACHE', WORKDIR . 'cacheODT/');
     //Se abre archivo de insumo para lectura de los datos
-    $fp = fopen("$ruta_raiz/bodega/masiva/$archInsumo", 'r');
-    if ($fp) {
+    if (file_exists("$ruta_raiz/bodega/masiva/$archInsumo")) {
         $contenidoCSV = file("$ruta_raiz/bodega/masiva/$archInsumo");
-        fclose($fp);
     } else {
         saveMessage('error',"No hay acceso para crear el archivo $archInsumo");
         die(json_encode($answer));
