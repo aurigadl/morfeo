@@ -91,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   } else {
     $ciudadano_selected = 'selected';
   }
-  var_dump($med);
+
   //CARGAR INFORMACION SI SE ENVIA NUMERO DE RADICADO PARA MODIFICAR
   if($nurad){
 	  $nurad = trim($nurad);
@@ -182,7 +182,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                ORDER BY MREC_CODI";
 
   $rs       = $db->conn->query($query);
-  var_dump($med);
+
   $medioRec = $rs->GetMenu2("med",
                             $med,
                             '',
@@ -274,7 +274,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <div id="showRadicar" class="col-lg-3 <?=$hidetable?>">
 
-            <a data-toggle="modal" id="radicarNuevo" name='Submit3' value='Radicar' class="btn btn-primary btn-lg btn-block pull-right header-btn">
+            <a data-toggle="modal" name='Submit3' value='Radicar' class="btn btn-primary btn-lg btn-block pull-right header-btn radicarNuevo">
               <i class="fa fa-circle-arrow-up fa-lg"></i>
               Radicar documento
             </a>
@@ -290,7 +290,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
           <label id="sticker">
             <a href="javascript:void(0);" onClick="window.open ('./stickerWeb/index.php?<?=$varEnvio?>&alineacion=Center','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');" class="btn btn-link">Sticker</a>
-            <a href="../verradicado.php?<?=$idsession?>&verrad=<?=$nurad?>#tabs-a" class="btn btn-link">Ver radicado</a>
+            <a href="../verradicado.php?<?=$idsession?>&verrad=<?=$nurad?>#tabs-c" class="btn btn-link">Ver radicado</a>
           </label>
 
 
@@ -454,14 +454,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </section>
           </section>
         </div>
+
+        <div class="row">
+            <div class="col-lg-9"></div>
+            <div id="copyradicar"></div>
+        </div>
+
       </div>
   </form>
+
+
 
   <a id="skeleton" href="javascript:void(0);"
      onclick="window.open ('./stickerWeb/index.php?<?=$idsession?>&nurad=xxxxxx&ent=<?=$ent?>','stickerxxxxxx','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');"
   class="btn btn-link hide">Sticker</a>
 
-  <a id="skeleton8" href="../verradicado.php?<?=$idsession?>&verrad=xxxxxx#tabs-a" class="btn btn-link hide">Ver radicado</a>
+  <a id="skeleton8" href="../verradicado.php?<?=$idsession?>&verrad=xxxxxx#tabs-c" class="btn btn-link hide">Ver radicado</a>
 
   <a id="skeleton9" href="javascript:void(0);"
      onClick="window.open ('../uploadFiles/uploadFileRadicado.php?<?=$idsession?>&busqRadicados=xxxxxx&Buscar=Buscar&alineacion=Center','busqRadicados=xxxxxx','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');"
@@ -477,6 +485,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       // DO NOT REMOVE : GLOBAL FUNCTIONS!
       pageSetUp();
 
+      $('#copyradicar').html($('#showRadicar').clone());
+
       //Datepicker muestra fecha
       $('#fecha_gen_doc').datepicker({
         dateFormat : 'yy-mm-dd',
@@ -491,6 +501,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       $("#buttonHide").click(function(){
           $('.toogletd').toggle();
       });
+
 
     /**
      * Generacion de eventos para los usuarios seleccionados
@@ -781,7 +792,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
    }
 
    //Radicar documento nuevo
-   $('#radicarNuevo, #modificaRad').on("click", function(){
+   $('body').on("click", '.radicarNuevo, #modificaRad',function(){
         $('#alertmessage').empty();
         var acction   = $(this).attr("id");
         var pass      = true;
@@ -897,6 +908,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 $('#sticker').html(contentstiker + contentverrad);
                 $('#asociar').html(contentasocia);
             }
+
+            $('#copyradicar').html($('#showModificar').clone());
 
           }).fail(function() {
             mostrarAlert({type : 'danger', message : 'Error de conexion al servidor'})
