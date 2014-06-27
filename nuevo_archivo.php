@@ -1,6 +1,8 @@
 <?php
 session_start();
-ini_set('display_errors',1);
+
+/*error_reporting(E_ALL);
+ini_set('display_errors',1);*/
 
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
@@ -24,6 +26,8 @@ if($subir_archivo != true){
     include_once "$ruta_raiz/class_control/AplIntegrada.php";
     include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 }
+
+
 
 if(!$ent){
     $ent = substr(trim($numrad),strlen($numrad)-1,1);
@@ -495,15 +499,17 @@ if( $rs_exp->RecordCount() == 0 ){
     <?="$dpto_nombre_us11/$muni_nombre_us11" ?>
     </small></td>
   </tr>
-    <tr valign="top">
+
+
+<!--    <tr valign="top">
       <td valign="top" colspan='2' ><small>
-        <input type="radio" name="radicado_rem" id="rpredi" value=2 <?=$datoss2?> '<?php  if($radicado_rem==2){echo " checked ";}  ?> '>
-        <?=$tip3Nombre[2][$ent]?>
-        <?=$otro_us2." - ".substr($nombret_us2,0,35)?>
-        <?=$direccion_us2?>
-        <?="$dpto_nombre_us2/$muni_nombre_us2" ?>
+        <input type="radio" name="radicado_rem" id="rpredi" value=2 <?/*=$datoss2*/?> '<?php /* if($radicado_rem==2){echo " checked ";}  */?> '>
+        <?/*=$tip3Nombre[2][$ent]*/?>
+        <?/*=$otro_us2." - ".substr($nombret_us2,0,35)*/?>
+        <?/*=$direccion_us2*/?>
+        <?/*="$dpto_nombre_us2/$muni_nombre_us2" */?>
       </small></td>
-    </tr>
+    </tr>-->
 
 <?php if($codigo){ ?>
         <tr><td height='3px' colspan="2"></td></tr>
@@ -748,11 +754,11 @@ if( $rs_exp->RecordCount() == 0 ){
     <tr>
         <TD colspan="2" align="center">
         <footer>
-        <input name="button" type="button" class="btn btn-success" onClick="actualizar()" value="ACTUALIZAR <?=$codigo?>">
-    <?php
-        echo "<input type='button' class ='btn btn-default' value='Cerrar' onclick='opener.cargarPagina(\"./lista_anexos.php\",\"tabs-c\"); window.close();'>";
-    ?>
-      <footer>
+            <input name="button" type="button" class="btn btn-success" onClick="actualizar()" value="ACTUALIZAR <?=$codigo?>">
+            <?php
+                echo "<input type='button' id='cerraranexar' class='btn btn-default' value='Cerrar'>";
+            ?>
+        <footer>
       </td>
     </tr>
 	 </table>
@@ -765,4 +771,13 @@ if( $rs_exp->RecordCount() == 0 ){
 </form>
 </div>
 </body>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('body').on("click", '#cerraranexar',function(){
+          window.opener.$.fn.cargarPagina("./lista_anexos.php","tabs-c"); window.close();
+      });
+  });
+</script>
+
 </html>

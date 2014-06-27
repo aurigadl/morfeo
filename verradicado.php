@@ -1,6 +1,6 @@
 <?php
 session_start();
-ini_set("display_errors",1);
+//ini_set("display_errors",1);
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -130,7 +130,7 @@ function ver_temas(){
 	$fechah=date("dmy_h_m_s") . " ". time("h_m_s");
 	$check=1;
 	$numeroa=0;$numero=0;$numeros=0;$numerot=0;$numerop=0;$numeroh=0;
-  include "ver_datosrad.php";
+    include_once("ver_datosrad.php");
     $_SESSION['dir_doc_us1'] = $cc_documento_us1;
     $_SESSION['dir_doc_us2'] = $cc_documento_us2;
 
@@ -230,7 +230,7 @@ else
 		$rs = $db->update("radicado", $row, $row1);
 	}
 }
-include "ver_datosrad.php";
+include_once("ver_datosrad.php");
 include "ver_datosgeo.php";
 $tipo_documento .= "<input type=hidden name=menu_ver value='$menu_ver'>";
 $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&tipo_carp=$tipo_carp&carpeta=$carpeta&verrad=$verrad&datoVer=$datoVer&fechah=fechah&menu_ver_tmp=";
@@ -315,11 +315,18 @@ echo "</div>";
 
 <script type="text/javascript">
 $( document ).ready(function(){
-function cargarPagina(pagina,nombreDiv){
-$.post( pagina,{verradicado:"<?=$verradicado?>",verradPermisos:"<?=$verradPermisos?>",permRespuesta:"<?=$permRespuesta?>"}, function( data ) {
-  $('#'+ nombreDiv).html(data);
-});
-}
+
+    $.fn.cargarPagina = function (pagina,nombreDiv){
+        $.post( pagina,{verradicado:"<?=$verradicado?>",verradPermisos:"<?=$verradPermisos?>",permRespuesta:"<?=$permRespuesta?>"}, function( data ) {
+            $('#'+ nombreDiv).html(data);
+        })
+    };
+
+    function cargarPagina(pagina,nombreDiv){
+        $.post( pagina,{verradicado:"<?=$verradicado?>",verradPermisos:"<?=$verradPermisos?>",permRespuesta:"<?=$permRespuesta?>"}, function( data ) {
+          $('#'+ nombreDiv).html(data);
+        });
+    }
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	$('#tabs').tabs();
     $( "#tabs" ).on( "tabsactivate", function( event, ui ) {
