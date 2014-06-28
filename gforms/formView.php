@@ -381,7 +381,52 @@
            }
        }         
 
-
+        if($fieldTypeCode==15) {
+            define('ADODB_ASSOC_CASE', 1);  
+            $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
+          ?>
+         <?php 
+        $scriptJS .= " function cargarLink$fieldName (pagina,target,vars){
+                           "; 
+         $datosSelect = "";
+        if($fieldParams){
+          $datosSelect = explode ('||',$fieldParams);           
+        }
+        $i=1;
+        $fieldsView = "";
+        $fieldsViewObject = "";
+        $fieldsInsertValueId = "";
+        if($datosSelect){
+        foreach($datosSelect as $key => $value){
+          if($i>=3) {
+            $fieldsViewObject .=",";
+            $fieldsView .=",";  
+            $fieldsInsertValueId .= "";
+          }elseif($i==1){
+            $fieldLink = $value;  
+          }
+          if($i>=2) {
+           list($field, $fieldId,$sel) = preg_split("/[\s->]+/", $value);
+           if(!$cod and trim($cod) =="") $cod=$val;
+           $fieldsView .= "$field";
+           $variables = "";
+           if($i==1) $fieldsInsertValueId .="'";
+           $fieldsInsertValueId .= "'$field='+$('#$fieldId').val()+'&'+";
+          }
+          
+          $i++;
+        }
+        $fieldsInsertValueId = "vars=$fieldsInsertValueId'';";
+        }
+        $scriptJS .="$fieldsInsertValueId";
+         ?>
+         <div><a heref='#' onClick="cargarLink<?=$fieldName?>('<?=$fieldLink?>','');" > <?=$fieldDesc?></a> </div>
+         <?
+          // $scriptJS .= " alert(vars);";
+          $scriptJS .= "
+          window.open(pagina+vars,target,vars);  }";
+       }
+       
 					?>
 				 <?  $fieldTypeCode!=12 ?>	</div> <? } ?>
 				<?php if($fieldNull==1) {?><div class="note note-success">Este campo es Requerido.</div> <?php } ?>
@@ -434,6 +479,11 @@
   $.post( pagina,{verradicado:"<?=$verradicado?>",verradPermisos:"<?=$verradPermisos?>",permRespuesta:"<?=$permRespuesta?>"}, function( data ) {
   $('#'+ nombreDiv).html(data);
   });
+}
+
+function cargarLink(pagina,target,vars){
+ 
+ window.open(pagina,target,vars);
 }
  <?=$scriptJS?>
 
