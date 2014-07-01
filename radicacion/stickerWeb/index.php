@@ -53,8 +53,8 @@ body {
 }
 
 span{
-    font-size:   13px;
-    line-height: 10px;
+    font-size:   15px;
+    line-height: 15px;
     clear:       both;
 }
 h3,p{
