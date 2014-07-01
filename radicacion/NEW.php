@@ -39,8 +39,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $db              = new ConnectionHandler("$ruta_raiz");
   $usuario         = new Usuario($db);
 
-  $showtable       = "hide";
-  $hidetable       = "";
+  $showtable       = 'hide';
+  $hidetable       = '';
+  $modificar       = 'hide';
+
   $ddate           = date('d');
   $mdate           = date('m');
   $adate           = date('Y');
@@ -55,17 +57,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   //como el sticker
   $idsession       = session_id(); //valor necesario para crear enlaces
 
-  //Nuevo con copia de datos
-  $rad1;
-  $radicadopadre;
-
-  //Como anexo a un radicado
-  $rad0;
-  $radicadopadre;
-
-  //Como Asociado
-  $rad2;
-  $radicadopadre;
 
   //Mostrar el tipo de radicacion que se esta realizando
   $selTipoRad = "select
@@ -76,11 +67,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 from
                   sgd_trad_tiporad
                 where sgd_trad_codigo = $ent";
-  
-  $rs    = $db->conn->query($selTipoRad);
+
+  $rs = $db->conn->query($selTipoRad);
 
   if(!$rs->EOF){
-    $nomEntidad = $rs->fields["SGD_TRAD_DESCR"];
+      $nomEntidad = $rs->fields["SGD_TRAD_DESCR"];
   }
 
   $med = null;
@@ -92,9 +83,54 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     $ciudadano_selected = 'selected';
   }
 
+  if($rad0){
+    $javascriptCapDatos = 'datorad=0';
+  }else if($rad1){
+    $javascriptCapDatos = 'datorad=1';
+  }else if($rad2){
+    $javascriptCapDatos = 'datorad=2';
+  }
+
+  //CARGAR INFORMACION SI SE TRAE DE UN ANEXO O COPIA DE DATOS
+  if($radicadopadre){
+
+      $query = "SELECT
+                a.*
+              FROM
+                RADICADO A
+              WHERE
+                A.RADI_NUME_RADI = $radicadopadre";
+
+      $rs    = $db->conn->query($query);
+
+      if(!$rs->EOF){
+          $asu             = $rs->fields["RA_ASUN"];
+          $ane             = $rs->fields["RADI_DESC_ANEX"];
+          $cuentai         = $rs->fields["RADI_CUENTAI"];
+          $tdoc            = $rs->fields["TDOC_CODI"];
+          $med             = $rs->fields["MREC_CODI"];
+          $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
+          $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
+          $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
+          $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
+          $guia            = $rs->fields["RADI_NUME_GUIA"];
+      }
+
+      //Filtro por el tipo de usuario
+      $result = $usuario->usuarioPorRadicado($radicadopadre);
+
+      if($result){
+          $showUsers = $usuario->resRadicadoHtml();
+          $hidetable = '';
+          $modificar = 'hide';
+          $showtable = '';
+      }
+
+  }
+
   //CARGAR INFORMACION SI SE ENVIA NUMERO DE RADICADO PARA MODIFICAR
   if($nurad){
-	  $nurad = trim($nurad);
+
       $query = "SELECT
                 a.*
               FROM
@@ -116,29 +152,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
 		  $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
           $guia            = $rs->fields["RADI_NUME_GUIA"];
-    }
+      }
 
-    $date1 = date_create($radi_fecha);
-    list($adate, $mdate, $ddate)    = explode( '-', date_format($date1, 'Y-m-d') );
-    list($adate1, $mdate1, $ddate1) = explode( '-', substr($fecha_gen_doc,0,10));
-    $fecha_gen_doc = "$adate1-$mdate1-$ddate1";
+      $date1 = date_create($radi_fecha);
 
-	$ent = substr($nurad,-1);
+      list($adate, $mdate, $ddate)    = explode( '-', date_format($date1, 'Y-m-d') );
+      list($adate1, $mdate1, $ddate1) = explode( '-', substr($fecha_gen_doc,0,10));
+      $fecha_gen_doc = "$adate1-$mdate1-$ddate1";
 
-    //Filtro por el tipo de usuario
-    $result = $usuario->usuarioPorRadicado($nurad);
+	  $ent = substr($nurad,-1);
 
-    if($result){
-      $showUsers = $usuario->resRadicadoHtml();
-      $showtable = '';
-      $hidetable = 'hide';
-    }
+      //Filtro por el tipo de usuario
+      $result = $usuario->usuarioPorRadicado($nurad);
 
-    $varEnvio  = session_name()."=".session_id()."&nurad=$nurad&ent=$ent";
-    $senddata  = "<input name='nurad' value='$nurad' type=hidden>";
-    $senddata .= "<input name='idCodigo' value='$nurad' type=hidden>";
+      if($result){
+          $showUsers = $usuario->resRadicadoHtml();
+          $hidetable = 'hide';
+          $modificar = '';
+      }
+
+      $varEnvio  = session_name()."=".session_id()."&nurad=$nurad&ent=$ent";
+      $senddata  = "<input name='nurad' value='$nurad' type=hidden>";
+      $senddata .= "<input name='idCodigo' value='$nurad' type=hidden>";
   }
-
 
   if($ent == 2){
       $query    = "SELECT ".
@@ -150,7 +186,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 and u.usua_esta   ='1'
                 and d.depe_estado = 1
               ORDER BY d.DEPE_CODI, d.DEPE_NOMB";
-
   }else{
       $query    = "SELECT ".
           $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
@@ -273,16 +308,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </div>
 
         <div id="showRadicar" class="col-lg-3 <?=$hidetable?>">
-
             <a data-toggle="modal" name='Submit3' value='Radicar' class="btn btn-primary btn-lg btn-block pull-right header-btn radicarNuevo">
               <i class="fa fa-circle-arrow-up fa-lg"></i>
               Radicar documento
             </a>
-
         </div>
 
-        <div id="showModificar" class="col-lg-3 <?=$showtable?>">
-
+        <div id="showModificar" class="col-lg-3 <?=$modificar?>">
           <a data-toggle="modal" id="modificaRad" name="Submit44" class="btn bg-color-greenDark txt-color-white btn-lg btn-block">
             Modificar <?=$nurad?>
             <?=$senddata?>
@@ -293,12 +325,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <a href="../verradicado.php?&recargartab=true&<?=$idsession?>&verrad=<?=$nurad?>#tabs-c" class="btn btn-link">Ver radicado</a>
           </label>
 
-
           <label id="asociar">
             <a  href="javascript:void(0);" onClick="window.open ('../uploadFiles/uploadFileRadicado.php?busqRadicados=<?=$nurad?>&Buscar=Buscar&<?=$varEnvio?>&alineacion=Center','busqRadicados=<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');" class="btn btn-link">Asociar Imagen</a>
           </label>
-
         </div>
+
      </div>
 
      <div id="alertmessage"></div>
@@ -874,6 +905,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           borrarAlert();
           var datos    = $("form").serialize();
           var radicado = '';
+
+          <?php if(datos){
+            echo "datos = datos + '&$javascriptCapDatos;'";
+          } ?>
 
           if(acction === "modificaRad"){
             datos = datos + "&modificar=true";

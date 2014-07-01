@@ -240,8 +240,10 @@ if($flujo_grb)
 	$flujo_nombre = $rs->fields["SGD_FLD_DESC"];
 }
 if($no_tipo!="true") {
-// Clasificacion TRD
+
+    // Clasificacion TRD
 	$radi_nume_radi2 = str_replace("a.","r.",$radi_nume_radi);
+
 	$isql = "SELECT $radi_nume_radi2 AS RADI_NUME_RADI,
 			m.SGD_SRD_CODIGO,
 			s.SGD_SRD_CODIGO,
@@ -313,9 +315,7 @@ if($no_tipo!="true") {
 			$subserie_nombre = $rs->fields["SGD_SBRD_DESCRIP"];
 			$termino_doc     = $rs->fields["SGD_TPR_TERMINO"];
 		}
-
 	}
-
 
 	$val_tpdoc_grbTRD = "$serie_nombre / $subserie_nombre/$tpdoc_nombreTRD";
 

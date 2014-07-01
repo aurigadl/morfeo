@@ -32,8 +32,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     echo "<script>parent.frames.location.reload();top.location.reload();</script>";
   }
 
-
-
   include_once "$ruta_raiz/include/db/ConnectionHandler.php";
   include_once "$ruta_raiz/config.php";
 
