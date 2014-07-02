@@ -71,7 +71,6 @@ class Usuario {
                 $record['id_cont']            = $datos['cont_tmp'];
                 $record['id_pais']            = $datos['pais_tmp'];
 
-                $this->db->conn->debug = true;
                 $insertSQL = $this->db->conn->Replace("sgd_ciu_ciudadano",$record,'sgd_ciu_codigo',$autoquote = true);
 
                 //Regresa 0 si falla, 1 si efectuo el update y 2 si no se
@@ -128,6 +127,43 @@ class Usuario {
                 return true;
                 break;
         }
+    }
+
+
+    /**
+     * Borrar usuario de sgd_dir_codigo
+     * @param array parametros de usuarios a borrar
+     * @param numero de radicado
+     * @return bool
+     */
+    public function borrarUsuarioRadicado($user, $nurad){
+
+    }
+
+    /**
+     * Borrar usuario de sgd_dir_codigo
+     * @param array parametros de usuarios a borrar
+     * @param numero de radicado
+     * @return bool
+     */
+    public function usuariosDelRadicado($nurad){
+
+        $isql = "select
+                    sgd_dir_codigo
+                 from
+                    SGD_DIR_DRECCIONES
+                 where
+                    RADI_NUME_RADI = $nurad";
+
+        $rs = $this->db->query($isql);
+
+        while(!$rs->EOF){
+            $codi[] = $rs->fields['SGD_DIR_CODIGO'];
+            $rs->MoveNext();
+        }
+
+        $this->result = $codi;
+        return true;
     }
 
     /**
@@ -202,10 +238,10 @@ class Usuario {
         }
 
         //$this->db->conn->debug = true;
-            $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
-            $record,
-            'SGD_DIR_CODIGO',
-            $autoquote = true);
+        $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
+        $record,
+        'SGD_DIR_CODIGO',
+        $autoquote = true);
 
         if($insertSQL){
             $this->result[] = $codigo;

@@ -222,12 +222,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "tipo_consec"    => $clave + 1
         );
 
-        $codiUser[] = $classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad);
+        if($classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad)){
+            //Numeros de los usuario que se relacionan en el actual radicado
+            $codeUser = $classusua->result;
+        }
 
     }
 
-    var_dump($codiUser);
-    echo "Este es un color de puntos";
+    $classusua->usuariosDelRadicado($nurad);
+    //Numeros de los usuarios guardados antes de revisar los nuevos
+    $realCodeUser = $classusua->result;
+
+    //Verificamos cuantos de los usuarios anteriores y los nuevos
+    //continuan de lo contrario borramos la diferencia.
+    $arrUserToDelete = array_diff(array_filter($codeUser), $realCodeUser);
+
+
 
     if($modificar){
         $data[] = array( "answer"  => 'Modificación realizada');

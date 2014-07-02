@@ -432,7 +432,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <section class="smart-form">
               <section>
                 <label class="label">
-                  Asunto - caracteres permitidos(áéíóúÁÉÍÓÚÑñ&#.*>@<_,;:°-%())
+                  Asunto
                 </label>
                 <label class="textarea">
                   <textarea id="asu" name="asu" cols="70"  rows="4" ><?=$asu?></textarea>
@@ -916,7 +916,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             datos = datos + "&modificar=true";
           }
 
-          $(this).bind('click', false);
+          $( "#modificaRad" ).prop( "disabled", true );
 
           var jqxhr = $.post( "./ajax_radicarNuevo.php", datos ,function(data) {
             for(var k in data) {
@@ -951,8 +951,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           }).fail(function() {
             mostrarAlert({type : 'danger', message : 'Error de conexion al servidor'})
           })
-        }
-       ;
+
+          $( "#modificaRad" ).prop( "disabled", false );
+
+        };
   });
 
   </script>
