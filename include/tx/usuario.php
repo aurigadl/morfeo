@@ -71,8 +71,8 @@ class Usuario {
                 $record['id_cont']            = $datos['cont_tmp'];
                 $record['id_pais']            = $datos['pais_tmp'];
 
+                $this->db->conn->debug = true;
                 $insertSQL = $this->db->conn->Replace("sgd_ciu_ciudadano",$record,'sgd_ciu_codigo',$autoquote = true);
-
 
                 //Regresa 0 si falla, 1 si efectuo el update y 2 si no se
                 //encontro el registro y el insert fue con exito
@@ -177,11 +177,12 @@ class Usuario {
         $record['SGD_DIR_TIPO']      = $user['tipo_consec'];
         $record['SGD_DIR_CODIGO']    = $nextval; // Identificador unico
 
-        $record['SGD_DIR_NOMREMDES'] = $user['nombre'];
+        $record['SGD_DIR_NOMREMDES'] = $user['nombre'].' '.$user['apellido'];
         $record['SGD_DIR_DOC']       = $user['cedula'];
 
         $record['RADI_NUME_RADI']    = $nurad; // No de radicado
         $record['SGD_SEC_CODIGO']    = 0;
+
 
         switch ( $user['sgdTrd'] ){
             // Usuario ....................................................................
@@ -200,7 +201,8 @@ class Usuario {
                 break;
         }
 
-        $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
+        //$this->db->conn->debug = true;
+            $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
             $record,
             'SGD_DIR_CODIGO',
             $autoquote = true);
@@ -214,8 +216,6 @@ class Usuario {
         }
     }
 
-
-
     /**
      * Funcion para modificar agregar usuarios a la
      * tabla y permitir su ingreso en la radicacion
@@ -227,8 +227,6 @@ class Usuario {
         return $this->resRadicadoHtml();
     }
 
-
-
     /**
      * Modifica la variable de intercambio
      * @data array datos a procesar
@@ -237,7 +235,6 @@ class Usuario {
         $this->result = json_decode($data, true);
     }
 
-
     /**
      * Retorna un html que se integra con el codigo javascript escrito
      * en el modulo en que se implemente. Inicialmente esta funcion
@@ -245,9 +242,8 @@ class Usuario {
      * @return html from $this->result
      *
      */
-
     public function resRadicadoHtml(){
-
+        $htmltotal;
         $select = "  SELECT
                        tdid_codi, tdid_desc
                      FROM tipo_doc_identificacion";
@@ -377,14 +373,15 @@ class Usuario {
                           </label>
                         </td>';
 
-            return '<tr>'.$html.'</tr>';
+            $htmltotal .= '<tr>'.$html.'</tr>';
         }
+
+        return $htmltotal;
     }
 
 
 
     public function usuarioPorRadicado($nurad) {
-
         $isql = "
             select
                 s.SGD_DIR_CODIGO    as codigo

@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $fechaf          = $date.$mdate.$adate.$hora;
   $dependencia     = $_SESSION["dependencia"];
   $ADODB_COUNTRECS = true;
-  $fecha_gen_doc   = date("Y-m-d");
+  $fecha_gen_doc   = date("d-m-Y");
   $coddepe         = $dependencia;
   //valor necesario para crear enlaces de los distintos elementos
   //como el sticker
@@ -112,7 +112,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
           $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
           $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
-          $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
           $guia            = $rs->fields["RADI_NUME_GUIA"];
       }
 
@@ -158,7 +157,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
       list($adate, $mdate, $ddate)    = explode( '-', date_format($date1, 'Y-m-d') );
       list($adate1, $mdate1, $ddate1) = explode( '-', substr($fecha_gen_doc,0,10));
-      $fecha_gen_doc = "$adate1-$mdate1-$ddate1";
+      $fecha_gen_doc = "$ddate1-$mdate1-$adate1";
 
 	  $ent = substr($nurad,-1);
 
@@ -169,6 +168,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           $showUsers = $usuario->resRadicadoHtml();
           $hidetable = 'hide';
           $modificar = '';
+          $showtable = '';
       }
 
       $varEnvio  = session_name()."=".session_id()."&nurad=$nurad&ent=$ent";
@@ -432,7 +432,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <section class="smart-form">
               <section>
                 <label class="label">
-                  Asunto
+                  Asunto - caracteres permitidos(áéíóúÁÉÍÓÚÑñ&#.*>@<_,;:°-%())
                 </label>
                 <label class="textarea">
                   <textarea id="asu" name="asu" cols="70"  rows="4" ><?=$asu?></textarea>
@@ -520,7 +520,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
       //Datepicker muestra fecha
       $('#fecha_gen_doc').datepicker({
-        dateFormat : 'yy-mm-dd',
+        dateFormat : 'dd-mm-yy',
         onSelect : function(selectedDate) {
           $('#date').datepicker('option', 'maxDate', selectedDate);
         }
@@ -809,13 +809,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
      var type    = objAlert.type;
      var message = objAlert.message;
 
-
      var div    = $('<div/>')
        .addClass('alert alert-block alert-' + type)
        .html(
             '<a class="close" data-dismiss="alert" href="#">×</a>'
           + '<h4 class="alert-heading">' + message + '</h4>'
        ).appendTo('#alertmessage');
+
    };
 
    function borrarAlert(){
@@ -877,10 +877,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           pass = false;
         };
 
+        /*
         if(!/^[0-9A-Za-z áéíóúÁÉÍÓÚÑñ\&\#\.\*\>\@\<\_\,\;\:\°\-\%\(\)]+$/.test(asu) && asu.length > 0){
           mostrarAlert({type : 'danger', message : 'Asunto con caracteres no permitidos'});
           pass = false;
         };
+        */
 
         //GUIA
         if($('#guia').val().length > 20){

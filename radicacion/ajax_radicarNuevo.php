@@ -97,9 +97,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $rad->guia         = trim(substr($guia,0 ,20));
   $rad->eespCodi     = $documento_us3;
   $rad->mrecCodi     = $med;// "dd/mm/aaaa"
-  $rad->radiFechOfic = substr($fecha_gen_doc,0 ,4)
-                       ."-".substr($fecha_gen_doc,5 ,2)
-                       ."-".substr($fecha_gen_doc,8 ,2);
+  $rad->radiFechOfic =       substr($fecha_gen_doc,0 ,2)
+                       ."-". substr($fecha_gen_doc,3 ,2)
+                       ."-". substr($fecha_gen_doc,6 ,4);
 
   if(!$radicadopadre){
     $radicadopadre = null;
@@ -134,7 +134,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       $data[] = array( "error"   => 'No se actualizo el radicado');
     }
   }else{
-    $nurad     = $rad->newRadicado($ent, $tpDepeRad[$ent]);
+    $nurad = $rad->newRadicado($ent, $tpDepeRad[$ent]);
   }
 
   if ($nurad=="-1"){
@@ -142,7 +142,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }else{
     $data[] = array( "answer"  => $nurad);
   }
-
 
   $radicadosSel[0] = $nurad;
 
@@ -223,9 +222,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "tipo_consec"    => $clave + 1
         );
 
-        $classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad);
+        $codiUser[] = $classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad);
 
     }
+
+    var_dump($codiUser);
+    echo "Este es un color de puntos";
 
     if($modificar){
         $data[] = array( "answer"  => 'Modificación realizada');

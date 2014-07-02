@@ -211,24 +211,27 @@ class Radicacion
 		  $recordR["RADI_NUME_FOLIO"] = $this->nofolios;
     }
 
-		$recordR["TDOC_CODI"] 		  = $this->tdocCodi;
+	$recordR["TDOC_CODI"] = $this->tdocCodi;
 
     if(!empty($this->noanexos)){
       $recordR["RADI_NUME_ANEXO"] = $this->noanexos;
     }
-		$recordR["RADI_NUME_GUIA"]  = "'$this->guia'";
 
-		// Linea para realizar radicacion Web de archivos pdf
-		if(!empty($radgplthUpdate) && $radPathUpdate != ""){
-			$archivogplth = explode(".", $radPathUpdate);
-			// Sacando la extension del archivo
-			$extension = array_pop($archivogplth);
-			if($extension == "pdf"){
-				$recordR["radi_path"] = "'" . $radgplthUpdate . "'";
-			}
-		}
-		$insertSQL = $this->db->conn->Replace("RADICADO", $recordR, "radi_nume_radi", false);
-		return $insertSQL;
+    $recordR["RADI_NUME_GUIA"]  = "'$this->guia'";
+
+    // Linea para realizar radicacion Web de archivos pdf
+    if(!empty($radgplthUpdate) && $radPathUpdate != ""){
+        $archivogplth = explode(".", $radPathUpdate);
+        // Sacando la extension del archivo
+        $extension = array_pop($archivogplth);
+        if($extension == "pdf"){
+            $recordR["radi_path"] = "'" . $radgplthUpdate . "'";
+        }
+    }
+
+    $insertSQL = $this->db->conn->Replace("RADICADO", $recordR, "radi_nume_radi", false);
+    return $insertSQL;
+
   }
 
 
