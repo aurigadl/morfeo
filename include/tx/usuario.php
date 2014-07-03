@@ -137,7 +137,13 @@ class Usuario {
      * @return bool
      */
     public function borrarUsuarioRadicado($user, $nurad){
+        $isql = "DELETE FROM
+                    sgd_dir_drecciones
+                 WHERE
+                    radi_nume_radi = $nurad and
+                    sgd_dir_codigo = $user";
 
+        $rs   = $this->db->query($isql);
     }
 
     /**

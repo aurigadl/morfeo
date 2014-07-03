@@ -235,9 +235,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     //Verificamos cuantos de los usuarios anteriores y los nuevos
     //continuan de lo contrario borramos la diferencia.
-    $arrUserToDelete = array_diff(array_filter($codeUser), $realCodeUser);
+    $arrUserToDelete = array_diff($realCodeUser, array_filter($codeUser));
 
-
+    foreach ($arrUserToDelete as $valor) {
+        $classusua->borrarUsuarioRadicado($valor, $nurad);
+    }
 
     if($modificar){
         $data[] = array( "answer"  => 'Modificación realizada');
