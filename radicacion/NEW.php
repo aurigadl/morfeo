@@ -189,19 +189,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }else{
       $query    = "SELECT ".
           $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
-              FROM
-                DEPENDENCIA d
-                INNER JOIN usuario u ON u.depe_codi = d.depe_codi
-                and u.usua_codi   = 1
-                and u.usua_esta   ='1'
-                and d.depe_estado = 1
-              WHERE
-                u.depe_codi   = $dependencia
-              ORDER BY
-                d.DEPE_CODI, d.DEPE_NOMB";
+          FROM
+            DEPENDENCIA d
+            INNER JOIN usuario u ON u.depe_codi = d.depe_codi
+            and u.usua_codi   = 1
+            and u.usua_esta   ='1'
+            and d.depe_estado = 1
+          WHERE
+            u.depe_codi   = $dependencia
+          ORDER BY
+            d.DEPE_CODI, d.DEPE_NOMB";
   }
 
-  $rs        = $db->conn->query($query);
+  $rs = $db->conn->query($query);
 
   $depselect = $rs->GetMenu2("coddepe",
     $coddepe,
@@ -209,6 +209,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     false,
     false,
     "class='select'");
+
+    $queryData  = "SELECT ".
+                    $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
+                FROM
+                DEPENDENCIA d";
+
+    $rs = $db->conn->query($queryData);
+
+    $depselectInf = $rs->GetMenu2 ("coddepe",
+        $coddepe,
+        "0:-- Seleccione una Dependencia --",
+        false,
+        false,
+        "multiple='multiple' class='form-control custom-scroll' id='informar'");
 
   $query    = "SELECT
                 MREC_DESC, MREC_CODI
@@ -289,7 +303,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
           <section class="col col-3">
               <label class="label">
-                Guia
+                Gu&iacute;a
               </label>
               <label class="input">
                 <input type=text name='guia' id='guia' value='<?=$guia?>' size=35>
@@ -429,6 +443,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <div class="col-lg-12"> </div>
         <br />
         <div class="well">
+            <section class="smart-form">
+                <legend>Informar a:</legend>
+                <section>
+                  <label class="label">
+                      Dependencia
+                  </label>
+                  <label class="textarea">
+                      <?=$depselectInf?>
+                  </label>
+                </section>
+            </section>
+        </div>
+        <br />
+        <div class="well">
           <section class="smart-form">
               <section>
                 <label class="label">
@@ -438,7 +466,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <textarea id="asu" name="asu" cols="70"  rows="4" ><?=$asu?></textarea>
                 </label>
                 <label class="label">
-                    Medio Recepci&oacute;n / Envio
+                    Medio Recepci&oacute;n / Env&iacute;o
                 </label>
                 <label class="select">
                     <?=$medioRec?>
@@ -548,6 +576,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         var div_nuevo = $('div[name=div_' + iddiv + ']').clone();
         $('div[name=div_' + iddiv + ']').text(tex_nuevo);
         $('div[name=div_' + iddiv + ']').append(div_nuevo.children());
+    });
+
+    /**
+     * Generacion de eventos para los usuarios seleccionados
+     * permitiendo cambiar la informacion antes de ser enviada al
+     * servidor. Guardando de esta manera los datos del usuario con
+     * las modificiaciones necesarias
+     */
+    $("body").on("click", '#informar', function(){
+
+        var values = $(this).val();
+
+        $.post( "./ajax_buscarUsuario.php", {searchUserInDep : values }).done(
+            function( data ) {
+                //<option value=1>My option</option>
+                $('#informar').empty().append(data);
+            }
+        );
     });
 
 
@@ -886,7 +932,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         //GUIA
         if($('#guia').val().length > 20){
-          mostrarAlert({type : 'danger', message : 'Guia con mas de 20 caracteres'});
+          mostrarAlert({type : 'danger', message : 'Gu&iacute;a con mas de 20 caracteres'});
           pass = false;
         }
 

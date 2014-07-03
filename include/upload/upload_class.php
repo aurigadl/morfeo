@@ -174,7 +174,7 @@ class file_upload {
 	}
 	function get_uploaded_file_info($name) {
 		$str = "<br>Nombre de Archivo: ".$name."\n";
-		$str .= "<br>Tamaño de Archivo: ".filesize($name)." bytes\n";
+		$str .= "<br>Tama&ntilde;o de Archivo: ".filesize($name)." bytes\n";
 		if (function_exists("mime_content_type")) {
 			$str .= "<br>Mime type: ".mime_content_type($name)."\n";
 		}

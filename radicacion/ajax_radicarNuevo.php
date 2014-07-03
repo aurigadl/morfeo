@@ -131,7 +131,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   if($nurad){
     if(!$rad->updateRadicado($nurad)){
-      $data[] = array( "error"   => 'No se actualizo el radicado');
+      $data[] = array( "error"   => 'No se actualiz&oacute; el radicado');
     }
   }else{
     $nurad = $rad->newRadicado($ent, $tpDepeRad[$ent]);

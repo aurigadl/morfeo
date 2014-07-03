@@ -530,7 +530,7 @@ class Usuario {
                   ,s.TDID_CODI         as tdid_codi
                   ,CONCAT(s.SGD_CIU_APELL1,' ', s.SGD_CIU_APELL2) as apellido
                 FROM
-                  SGD_CIU_CIUDADANO s
+                   SGD_CIU_CIUDADANO s
                   ,DEPARTAMENTO d
                   ,MUNICIPIO m
                   ,SGD_DEF_PAISES p
