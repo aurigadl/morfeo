@@ -130,6 +130,34 @@ class Usuario {
     }
 
 
+
+    /**
+     * Buscar todos lo usuarios de las dependencias seleccionadas
+     * @param array dependencias seleccionadas
+     * @return bool
+     */
+    public function usuariospordependencias($dependencia){
+
+        $isql = " select
+                        u.usua_nomb,
+                        u.usua_codi
+                      from
+                        dependencia d,
+                        usuario u
+                      where
+                        d.depe_codi = u.depe_codi and
+                        d.depe_codi = $dependencia";
+
+        $rs   = $this->db->query($isql);
+
+        while(!$rs->EOF){
+            $this->result[] = $rs->fields;
+            $rs->MoveNext();
+        }
+
+        return true;
+    }
+
     /**
      * Borrar usuario de sgd_dir_codigo
      * @param array parametros de usuarios a borrar
@@ -544,8 +572,7 @@ class Usuario {
                   and d.id_pais   = s.id_pais
                   and d.id_cont   = s.id_cont
                 ORDER BY s.SGD_CIU_NOMBRE, s.SGD_CIU_APELL1, s.SGD_CIU_APELL2
-                LIMIT 24
-            ";
+                LIMIT 24";
 
                 $rs = $this->db->query($isql);
                 while(!$rs->EOF){

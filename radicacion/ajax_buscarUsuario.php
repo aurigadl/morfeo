@@ -49,6 +49,7 @@ if($_POST['search']){
     if($result){
         echo json_encode($usuario->result);
     }
+    die;
 }
 
 if($_POST['addUser']){
@@ -58,4 +59,24 @@ if($_POST['addUser']){
     if($result){
         echo json_encode(array($result));
     }
+    die;
+}
+
+if($_POST['searchUserInDep']){
+    $data    = $_POST['searchUserInDep'];
+    $usuario = new Usuario($db);
+
+    $result  = $usuario->usuariospordependencias($data);
+
+    if($result){
+        foreach ($usuario->result as $valor){
+            $nomb = $valor[0];
+            $codi = $valor[1];
+            $option .= "<option value='".$codi."'>".$nomb."</option>";
+        }
+        echo  json_encode(array($option));
+    };
+
+    die;
+
 }

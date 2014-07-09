@@ -222,7 +222,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         "0:-- Seleccione una Dependencia --",
         false,
         false,
-        "multiple='multiple' class='form-control custom-scroll' id='informar'");
+        "class='form-control custom-scroll' id='informar'");
 
   $query    = "SELECT
                 MREC_DESC, MREC_CODI
@@ -442,9 +442,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <div class="col-lg-12"> </div>
         <br />
-        <div class="well">
-            <section class="smart-form">
+
+        <div class="well <?=$modificar?>" id="inforshow">
+            <section class="smart-form col col-6">
                 <legend>Informar a:</legend>
+
                 <section>
                   <label class="label">
                       Dependencia
@@ -453,7 +455,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <?=$depselectInf?>
                   </label>
                 </section>
+
+                <section>
+                    <label class="label">
+                        Usuario
+                    </label>
+
+                    <label class="textarea">
+                        <label class="textarea">
+                            <select name="coddepe" multiple="multiple" class="form-control custom-scroll" id="informarUsuario">
+                                <option value="0">-- Seleccione un Usuario --</option>
+                            </select>
+                        </label>
+                    </label>
+                </section>
+
+                <section class="smart-form col col-6">
+
+                    <label class="label">
+                        Usuarios Seleccionados para notificar
+                    </label>
+
+                    <label class="textarea">
+                        <label class="textarea">
+                            <div class="inline-group" id="showusers"></div>
+                        </label>
+                    </label>
+
+                </section>
+
+                <section>
+                    <label>
+                        <!-- Button trigger modal -->
+                        <a data-toggle="modal" id="accioninfousua" class="btn btn-success btn-sm header-btn hidden-mobile"><i class="fa fa-circle-arrow-up fa-lg"> </i> Informar </a>
+                    </label>
+                </section>
+
             </section>
+
+
+
         </div>
         <br />
         <div class="well">
@@ -534,6 +575,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
      onClick="window.open ('../uploadFiles/uploadFileRadicado.php?<?=$idsession?>&busqRadicados=xxxxxx&Buscar=Buscar&alineacion=Center','busqRadicados=xxxxxx','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');"
   class="btn btn-link hide">Asociar Imagen</a>
 
+  <label class='radio userinfo'>
+      <input type="checkbox"  checked name='radio[]' value=''><i></i>
+  </label>
 
   <script type="text/javascript">
 
@@ -590,21 +634,59 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         $.post( "./ajax_buscarUsuario.php", {searchUserInDep : values }).done(
             function( data ) {
-                //<option value=1>My option</option>
-                $('#informar').empty().append(data);
+                $('#informarUsuario').html(data[0]);
             }
         );
     });
 
+
+    /**
+     * Generacion de eventos para los usuarios seleccionados
+     * Selecciona los usuarios y los muestra para informar con
+     * el radicado seleccionado.
+     */
+
+    $("body").on("change", '#informarUsuario', function(){
+        $('#informarUsuario :selected').each(function(i, selected){
+            var newUser = $('.userinfo').last().clone();
+            var text    = $(selected).text();
+            var value   = $(selected).val();
+
+            newUser.append(text);
+            newUser.find('input').val( $('#informar').val() + '_' + value);
+
+            $('#showusers').append(newUser);
+        });
+    });
+
+    $("body").on("click", '#accioninfousua', function(){
+        var text = [];
+        $('#showusers').find('input').each(function(index, value){
+            text.push($(value).val());
+        });
+
+        $.post("./ajax_informarUsuario.php", {addUser : text}).done(
+            function( data ) {
+
+            }
+        );
+    });
 
     $("body").on("click", '.fa-pencil',function(){
         var texto = $(this).parent().attr('name');
         $.each($('[name^="inp_' + texto + '"]'), function( index, value ) {
             $(value).removeClass('hide');
         });
+
         $.each($('[name^="div_' + texto + '"]'), function( index, value ) {
             $(value).addClass('hide');
         });
+    });
+
+    $("body").on("change", '.informarusuarios',function(){
+        var content = $(this).val();
+        $('#showusers').append("<label class='radio'><input type='radio' name='radio-inline' checked=''><i></i>" +
+                        content + "</label>" );
     });
 
 
@@ -999,6 +1081,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           })
 
           $( "#modificaRad" ).prop( "disabled", false );
+
+          $("inforshow").removeClass('hide');
 
         };
   });
