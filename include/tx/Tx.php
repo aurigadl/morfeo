@@ -164,10 +164,7 @@ function registrarNovedad($tipo, $docUsuarioDest, $numRad, $ruta_raiz=".."){
 	}
 }
 
-function informar( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino, $codUsOrigen,$observa,$idenviador = null, $ruta_raiz="", $infConjunto=0)
-{
-	$whereNivel = "";
-	//$this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+function informar( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino, $codUsOrigen,$observa,$idenviador = null, $ruta_raiz="", $infConjunto=0){
 
 	$sql = "SELECT
 				USUA_DOC
@@ -179,10 +176,9 @@ function informar( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino
 			WHERE
 				DEPE_CODI=$depOrigen
 				AND USUA_CODI=$codUsOrigen";
-	# Busca el usuairo Origen para luego traer sus datos.
-  //if(!$idenviador) $idenviador = $_SESSION["usua_doc"];  
-  $rs = $this->db->query($sql);
-	$docUsuarioOrigen = $rs->fields["USUA_DOC"];
+
+    $rs               = $this->db->query($sql);
+    $docUsuarioOrigen = $rs->fields["USUA_DOC"];
 
 	$sql = "SELECT
 				USUA_DOC
@@ -194,41 +190,33 @@ function informar( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino
 			WHERE
 				DEPE_CODI=$depDestino
 				AND USUA_CODI=$codUsDestino";
-	# Busca el usuairo Origen para luego traer sus datos.
-  //if(!$idenviador) $idenviador = $_SESSION["usua_doc"];  
-	$rs = $this->db->query($sql); # Ejecuta la busqueda
-	$usNivel = $rs->fields["CODI_NIVEL"];
+
+	$rs            = $this->db->query($sql); # Ejecuta la busqueda
+	$usNivel       = $rs->fields["CODI_NIVEL"];
 	$usLoginDestino = $rs->fields["USUA_LOGIN"];
 	$nombreUsuario = $rs->fields["USUA_NOMB"];
 	$docUsuarioDest = $rs->fields["USUA_DOC"];
 
-
-
-  //echo "usuaq es el doc $radicados ".$docUsuarioDest;
-  //var_dump($radicados);
 	$codTx = 8;
-  $tomarNivel = $this->tomarNivel; 
-	if($tomarNivel=="si")
-	{
+    $tomarNivel = $this->tomarNivel;
+	if($tomarNivel=="si"){
 		$whereNivel = ",CODI_NIVEL=$usNivel";
 	}
+
 	$observa = "A: $usLoginDestino - $observa";
 	$observacion = $observa;
-  if(!$idenviador) $idenviador = $docUsuarioOrigen;
+
+    if(!$idenviador) $idenviador = $docUsuarioOrigen;
 	$tmp_rad = array();
 	$informaSql = true;
-	while ((list(,$noRadicado)=each($radicados)) and $informaSql)
-	{	if (strstr($noRadicado,'-'))	$tmp = explode('-',$noRadicado);
+	while ((list(,$noRadicado)=each($radicados)) and $informaSql){
+        if (strstr($noRadicado,'-'))$tmp = explode('-',$noRadicado);
 		else $tmp = $noRadicado;
-		if (is_array($tmp))
-		{	$record["RADI_NUME_RADI"] = $tmp[1];}
-		else
-		{	$record["RADI_NUME_RADI"] = $noRadicado;}
+		if (is_array($tmp)){
+            $record["RADI_NUME_RADI"] = $tmp[1];
+        }else{	$record["RADI_NUME_RADI"] = $noRadicado;}
 		# Asignar el valor de los campos en el registro
 		# Observa que el nombre de los campos pueden ser mayusculas o minusculas
-		//insert into INFORMADOS(DEPE_CODI,INFO_FECH,USUA_CODI,RADI_NUME_RADI,INFO_DESC) values ($depsel, to_date ($formatfecha) ,$codus,$chk3,'$observa')
-		//$record["RADI_NUME_RADI"] = $noRadicado;
-   
 		$record["DEPE_CODI"] = $depDestino;
 		$record["USUA_CODI"] = $codUsDestino;
 		$record["INFO_CONJUNTO"]=$infConjunto;

@@ -482,6 +482,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </label>
                     </label>
 
+                    <label class="textarea">
+                        <label class="label">
+                            <div class="alert alert-block alert-success">
+                                <a class="close" data-dismiss="alert" href="#">×</a>
+                                <div class="inline-group" id="showresult"></div>
+                            </div>
+                        </label>
+                    </label>
+
                 </section>
 
                 <section>
@@ -665,9 +674,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             text.push($(value).val());
         });
 
-        $.post("./ajax_informarUsuario.php", {addUser : text}).done(
-            function( data ) {
+        var nurad = $('input[name="nurad"]').val();
 
+        $.post("./ajax_informarUsuario.php", {addUser : text, radicado: nurad}).done(
+            function( data ) {
+                $('#showresult').removeClass('hide').text(data['true']);
             }
         );
     });

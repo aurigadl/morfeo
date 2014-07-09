@@ -105,9 +105,9 @@ switch ($codTx){
 	case 8:
 		{
 		  echo "> $chkConjunto";
-		  if(is_array($_POST['usCodSelect']))
-			while (list(,$var)=each($_POST['usCodSelect']))
-			{	$depsel8 = split('-',$var);
+              if(is_array($_POST['usCodSelect']))
+                while (list(,$var)=each($_POST['usCodSelect']))
+                {	$depsel8 = split('-',$var);
 				$usCodSelect = $depsel8[1];
 				$depsel8 = $depsel8[0];
 				$nombTx = "Informar Documentos";
