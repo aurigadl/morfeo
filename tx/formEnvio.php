@@ -28,6 +28,7 @@ $linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=";
 /*  FILTRO DE DATOS
  */
 
+ if(!$codTx) $codTx = $AccionCaliope;
 if($checkValue)
 {	$num = count($checkValue);
 	reset($checkValue);
@@ -507,6 +508,7 @@ else
 	<TR>
 	<td class="titulos4">
 <?
+
 switch ($codTx)
 {	case 7:
 		{	print "Borrar Informados </td><td>";
@@ -547,10 +549,10 @@ switch ($codTx)
 				$usDefault = 1;
 			}
 
-			if(($codusuario==1 || $usuario_reasignacion == 1)&& $dependencia==$depsel && $EnviaraV=="VoBo" )
-			{	if ($objDep->Dependencia_codigo($dependencia))
-				{	$depPadre=$objDep->getDepe_codi_padre(); 
-				}
+			if(($codusuario==1 || $usuario_reasignacion == 1)&& $dependencia==$depsel && $EnviaraV=="VoBo" ){
+			if ($objDep->Dependencia_codigo($dependencia)){	
+			  $depPadre=$objDep->getDepe_codi_padre(); 
+		}	
 				print ("La dependencia  padre ...($depPadre)");
 
 				$whereDep =  " and u.depe_codi=$depPadre  and u.usua_codi=1 ";

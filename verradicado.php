@@ -198,7 +198,7 @@ if($verradPermisos=="Full" && !($carpeta==66 || $carpeta==8 ) )
 ?>
 <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
 <input type=hidden name=enviara value='9'>
-<input type=hidden name=codTx value='9'>
+<input type=hidden name=codTx value=''>
 <input id="chkr" type="checkbox" value="CHKANULAR" name="checkValue[<?=$verradicado?>]" checked  >
  <?
 echo "<input type='hidden' name='fechah' value='$fechah'>";

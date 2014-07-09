@@ -442,7 +442,7 @@ if ((($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $
 	<INPUT TYPE=hidden name=enviara value=9>
 	<INPUT TYPE=hidden name=EnviaraV id=EnviaraV value=''>
 	<input type="button" value='' name="Enviar" id="Enviar" valign='middle' class='botones_2' onClick="envioTx();">
-	<input type="hidden" name="codTx" value=9>
+	<input type="hidden" name="codTx" value=>
 
 <? }
 if($verradPermisos=="Full"){ ?>
@@ -453,7 +453,7 @@ if($verradPermisos=="Full"){ ?>
             <option value="9" >Enviar a...</option>
             <option value="14" >Enviar a Visto Bueno.</option>
             <option value="10">Mover a Carpeta...</option>
-            <option value="8">Informar...</option>
+            <option value="8">a Informar...</option>
             <option value="12	">Devolver...</option>
             <option value="13">Archivar...</option>
             <option value="14">Agendar...</option>
