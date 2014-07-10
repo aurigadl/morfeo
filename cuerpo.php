@@ -267,7 +267,7 @@ $_SESSION['numExpedienteSelected'] = null;
                         </div>
                       </td>
 
-                      <td class="inbox-data-from"> <div><small> <a onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=500,height=400');" href='#'> <?=$numeroRadicado?></a></small> </div></td>
+                      <td class="inbox-data-from"> <div><small> <a target="_blank" href='<?=$linkImagen?>'> <?=$numeroRadicado?></a></small> </div></td>
                       <td class="inbox-data-from"> <div><small><a href="<?=$linkVerRadicado?>" target="mainFrame"><?=$fechaRadicado?></a></small></div></td>
                       <td class="inbox-data-from"> <div><span><small><?=$asuntoRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$remitenteRadicado?></small> </div> </td>
