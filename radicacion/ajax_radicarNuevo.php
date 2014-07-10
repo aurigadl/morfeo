@@ -70,27 +70,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $modificar     = $_POST['modificar'];
   $nurad         = $_POST['nurad'];
 
-  //Si el radicado que se esta realizando es un memorando
-  //este debe quedar guardado en la bandeja del usuario que
-  //realiza el radicado por esta razon guardamos el radicado
-  //con el codigo del usuario que realiza la accion.
-  if($ent == 2){
-      $carp_codi         = 0;
-      $rad->radiUsuaActu = 1;
-  }else{
-      $carp_codi         = $ent;
-      $rad->radiUsuaActu = $codusuario;
-  }
-
-  $carp_per      = "0";
-
-
 
 
   /**************************************************/
   /*********** RADICAR DOCUMENTO  *******************/
   /**************************************************/
   $rad               = new Radicacion($db);
+
+  //Si el radicado que se esta realizando es un memorando
+  //este debe quedar guardado en la bandeja del usuario que
+  //realiza el radicado por esta razon guardamos el radicado
+  //con el codigo del usuario que realiza la accion.
+  if($ent == 2){
+    $carp_codi         = 0;
+    $rad->radiUsuaActu = 1;
+  }else{
+    $carp_codi         = $ent;
+    $rad->radiUsuaActu = $codusuario;
+  }
+
+
   $rad->radiTipoDeri = $tpRadicado;
   $rad->radiCuentai  = trim($cuentai);
   $rad->guia         = trim(substr($guia,0 ,20));
