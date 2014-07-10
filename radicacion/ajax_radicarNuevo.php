@@ -70,23 +70,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $modificar     = $_POST['modificar'];
   $nurad         = $_POST['nurad'];
 
-  if($ent == 2){
-      $carp_codi     = 0;
-  }else{
-      $carp_codi     = $ent;
-  }
-
-  $carp_per      = "0";
-
-  $radi_usua_actu = 1;
-
   //Si el radicado que se esta realizando es un memorando
   //este debe quedar guardado en la bandeja del usuario que
   //realiza el radicado por esta razon guardamos el radicado
   //con el codigo del usuario que realiza la accion.
-  if($ent == 3){
-      $radi_usua_actu = $codusuario;
+  if($ent == 2){
+      $carp_codi         = 0;
+      $rad->radiUsuaActu = 1;
+  }else{
+      $carp_codi         = $ent;
+      $rad->radiUsuaActu = $codusuario;
   }
+
+  $carp_per      = "0";
+
+
+
 
   /**************************************************/
   /*********** RADICAR DOCUMENTO  *******************/
@@ -111,9 +110,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $rad->radiNumeDeri = trim($radicadopadre);
   $rad->descAnex     = substr($ane, 0, 99);
-  $rad->radiDepeActu = "'$coddepe'";
+  $rad->radiDepeActu = "'$dependencia'";
   $rad->radiDepeRadi = "'$coddepe'";
-  $rad->radiUsuaActu = $radi_usua_actu;
   $rad->trteCodi     = $tip_rem;
   $rad->tdocCodi     = $tdoc;
   $rad->nofolios     = $nofolios;
@@ -149,7 +147,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             $dependencia ,
                             $codusuario,
                             $coddepe,
-                            $radi_usua_actu,
+                            $codusuario,
                             " ",
                             2);
 

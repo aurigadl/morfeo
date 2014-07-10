@@ -470,26 +470,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </label>
                 </section>
 
-                <section class="smart-form col col-6">
+                <section class="smart-form">
 
                     <label class="label">
                         Usuarios Seleccionados para notificar
                     </label>
 
-                    <label class="textarea">
-                        <label class="textarea">
-                            <div class="inline-group" id="showusers"></div>
-                        </label>
-                    </label>
+                    <div class="inline-group" id="showusers"></div>
 
-                    <label class="textarea">
-                        <label class="label">
-                            <div class="alert alert-block alert-success hide">
-                                <a class="close" data-dismiss="alert" href="#">×</a>
-                                <div class="inline-group" id="showresult"></div>
-                            </div>
-                        </label>
-                    </label>
+                    <div class="alert alert-block alert-success hide">
+                        <a class="close" data-dismiss="alert" href="#">×</a>
+                        <div class="inline-group" id="showresult"></div>
+                    </div>
 
                 </section>
 
