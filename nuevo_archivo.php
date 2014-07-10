@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-/*error_reporting(E_ALL);
-ini_set('display_errors',1);*/
+/*error_reporting(E_ALL); */
+ini_set('display_errors',1);
 
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
@@ -307,16 +307,6 @@ if(!$radicado_rem){
       <input type="checkbox" class="select"  name="sololect" <?php  if($sololect){echo " checked ";}  ?> id="sololect">
       <small>Solo lectura</small>
     </td>
-    <td ><small>
-      <input type="radio" name="medioRadicar" <?php if($medioRadicar == 0){echo " checked ";}  ?> value="0">
-      Envio correo fisico
-      <input type="radio" name="medioRadicar" <?php if($medioRadicar == 1){echo " checked ";}  ?> value="1">
-      Envio correo electronico
-      <input type="radio" name="medioRadicar" <?php if($medioRadicar == 2){echo " checked ";}  ?> value="2">
-      Fisico y electronico
-    </small></td>
-  </tr>
-  <tr>
     <td colspan="3" >
     <table border=0 width=100% cellspacing="1" cellpadding="1">
     <tr>
@@ -567,7 +557,7 @@ if( $rs_exp->RecordCount() == 0 ){
               <td colspan='2'>
               <table width='100%' class='table table-bordered'> ";
 
-          while(!$rs->EOF){
+          while(!$rs->EOF && $rs ){
               $i_copias++;
               $sgd_ciu_codigo = "";
               $sgd_esp_codi   = ""; $sgd_oem_codi = "";
@@ -630,7 +620,8 @@ if( $rs_exp->RecordCount() == 0 ){
               }
 
               $rs2 = $db->conn->Execute($isql);
-              $nombre_otros = "";
+        	$db->conn->debug = true;      
+		$nombre_otros = "";
               if($rs2 && !$rs2->EOF){
                   $nombre_otros =$rs2->fields["NOMBRE"]."".$rs2->fields["APELL1"]." ".$rs2->fields["APELL2"];
               }
