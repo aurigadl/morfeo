@@ -678,7 +678,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         $.post("./ajax_informarUsuario.php", {addUser : text, radicado: nurad}).done(
             function( data ) {
-                $('#showresult').removeClass('hide').text(data['true']);
+                $('#showresult').text(data['true']);
+                $('#showresult').parent().removeClass('hide')
             }
         );
     });
