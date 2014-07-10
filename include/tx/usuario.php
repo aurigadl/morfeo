@@ -278,7 +278,7 @@ class Usuario {
         $autoquote = true);
 
         if($insertSQL){
-            $this->result[] = $codigo;
+            $this->result[] = $nextval;
             return true;
         }else{
             $this->result[] = array( "error"  => 'No se puedo agregar usuario al radicado');
@@ -388,7 +388,11 @@ class Usuario {
                   </label>
                 </td>';
             }else{
-                $html .= '<td>'.$result["CEDULA"].'</td>';
+                $html .= '<td>
+                  <label name="inp_'.$idtx.'_ced" class="input">
+                    <input readonly type="text" name="'.$idtx.'_cedula" value="'.$result["CEDULA"].'">
+                  </label>
+                </td>';
             }
 
             $html .= '  <td>

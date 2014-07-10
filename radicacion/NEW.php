@@ -484,7 +484,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                     <label class="textarea">
                         <label class="label">
-                            <div class="alert alert-block alert-success">
+                            <div class="alert alert-block alert-success hide">
                                 <a class="close" data-dismiss="alert" href="#">×</a>
                                 <div class="inline-group" id="showresult"></div>
                             </div>
@@ -1085,6 +1085,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 $('#asociar').html(contentasocia);
             }
 
+            $("#inforshow").removeClass('hide');
             $('#copyradicar').html($('#showModificar').clone());
 
           }).fail(function() {
@@ -1093,7 +1094,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
           $( "#modificaRad" ).prop( "disabled", false );
 
-          $("inforshow").removeClass('hide');
+
 
         };
   });
