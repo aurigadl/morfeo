@@ -224,7 +224,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <th>Radicado</th>
                       <th>Fecha Radicado</th>
                       <th>Asunto</th>
-                      <th>Remitente</th>
+                      <th>Remitente / Destinatario</th>
                       <th>Tipo Documento</th>
                       <th>Dias Restantes</th>
                       <th>Enviado Por</th>

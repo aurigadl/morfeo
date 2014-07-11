@@ -246,8 +246,12 @@ class Usuario {
         $record['SGD_DIR_MAIL']      = $user['email'];
         $record['SGD_DIR_TIPO']      = $user['tipo_consec'];
         $record['SGD_DIR_CODIGO']    = $nextval; // Identificador unico
+        $record['SGD_DIR_NOMBRE']    = $user['nombre'].' '.$user['apellido'];
 
-        $record['SGD_DIR_NOMREMDES'] = $user['nombre'].' '.$user['apellido'];
+        if($user['dignatario']){
+            $record['SGD_DIR_NOMREMDES'] = $user['dignatario'];
+        }
+
         $record['SGD_DIR_DOC']       = $user['cedula'];
 
         $record['RADI_NUME_RADI']    = $nurad; // No de radicado
@@ -313,7 +317,7 @@ class Usuario {
      *
      */
     public function resRadicadoHtml(){
-        $htmltotal;
+
         $select = "  SELECT
                        tdid_codi, tdid_desc
                      FROM tipo_doc_identificacion";
@@ -426,6 +430,12 @@ class Usuario {
                           </label>
                         </td>';
 
+            $html .= '  <td>
+                          <label name="inp_'.$idtx.'_digna" class="input">
+                            <input type="text" name="'.$idtx.'_dignatario" value="'.$result["DIGNATARIO"].'">
+                          </label>
+                        </td>';
+
             $html .= '  <td class="toogletd">
                           <label name="inp_'.$idtx.'_muni" class="input">
                             <input type="text" name="'.$idtx.'_muni" value="'.$result["MUNI"].'">
@@ -459,7 +469,8 @@ class Usuario {
         $isql = "
             select
                 s.SGD_DIR_CODIGO    as codigo
-              , s.SGD_DIR_NOMREMDES as nombre
+              , s.SGD_DIR_NOMBRE    as nombre
+              , s.SGD_DIR_NOMREMDES as dignatario
               , s.SGD_DIR_DIRECCION as direccion
               , s.SGD_DIR_TELEFONO  as telef
               , s.SGD_DIR_MAIL      as email

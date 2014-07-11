@@ -151,6 +151,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
 		  $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
           $guia            = $rs->fields["RADI_NUME_GUIA"];
+          $numFolio        = $rs->fields["RADI_NUME_FOLIO"];
+          $numAnexo        = $rs->fields["RADI_NUME_ANEXO"];
       }
 
       $date1 = date_create($radi_fecha);
@@ -426,6 +428,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <th>Telefono</th>
                                 <th>Direcci&oacute;n</th>
                                 <th>Correo Electronico</th>
+                                <th>Dignatario</th>
                                 <th class="toogletd">Municipio</th>
                                 <th class="toogletd">Departamento</th>
                                 <th class="toogletd">Pais</th>
@@ -513,24 +516,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <label class="select">
                     <?=$medioRec?>
                 </label>
-                <label class="label">
-                    Dignatario
-                </label>
-                  <label class="input">
-                  <input type="text" value="" name="otro_us">
-                </label>
                   <label class="label">
                       No. Folios
                   </label>
                   <label class="input">
-                      <input name="nofolios" id="nofolios" type="text" size="10"  value="">
+                      <input name="nofolios" id="nofolios" type="text" size="10"  value="<?=$numFolio?>">
                   </label>
 
                   <label class="label">
                       No. Anexos
                   </label>
                   <label class="input">
-                      <input name="noanexos" id="noanexos" type="text" size="10" value="">
+                      <input name="noanexos" id="noanexos" type="text" size="10" value="<?=$numAnexo?>">
                   </label>
                   <label class="label">
                       Descripci&oacute;n Anexos
@@ -576,7 +573,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
      onClick="window.open ('../uploadFiles/uploadFileRadicado.php?<?=$idsession?>&busqRadicados=xxxxxx&Buscar=Buscar&alineacion=Center','busqRadicados=xxxxxx','menubar=0,resizable=0,scrollbars=0,width=550,height=280,toolbar=0,location=0');"
   class="btn btn-link hide">Asociar Imagen</a>
 
-  <label class='radio userinfo'>
+  <label class='radio userinfo hide'>
       <input type="checkbox"  checked name='radio[]' value=''><i></i>
   </label>
 
@@ -653,6 +650,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             var text    = $(selected).text();
             var value   = $(selected).val();
 
+            newUser.removeClass('hide');
             newUser.append(text);
             newUser.find('input').val( $('#informar').val() + '_' + value);
 

@@ -58,18 +58,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $usuarios      = $_POST['usuario'];
   $asu           = $_POST['asu'];
   $med           = $_POST['med'];
+
   $nofolios      = $_POST['nofolios'];
   $noanexos      = $_POST['noanexos'];
+  $otro_us       = $_POST['otro_us'];
+
   $ane           = $_POST['ane'];
   $coddepe       = $_POST['coddepe'];
   $tdoc          = $_POST['tdoc'];
-  $otro_us       = $_POST['otro_us'];
+
   $ent           = $_POST['ent'];
 
   //Enviados solo si es para modificar
   $modificar     = $_POST['modificar'];
   $nurad         = $_POST['nurad'];
-
 
 
   /**************************************************/
@@ -106,6 +108,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   if(!$ent){
     $radicadopadre = null;
   }
+
 
   $rad->radiNumeDeri = trim($radicadopadre);
   $rad->descAnex     = substr($ane, 0, 99);
@@ -201,6 +204,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "cedula"         => $_POST[$valor."_".cedula],
             "nombre"         => $_POST[$valor."_".nombre],
             "apellido"       => $_POST[$valor."_".apellido],
+            "apellido"       => $_POST[$valor."_".apellido],
+            "dignatario"     => $_POST[$valor."_".dignatario],
             "telef"          => $_POST[$valor."_".telefono],
             "direccion"      => $_POST[$valor."_".direccion],
             "email"          => $_POST[$valor."_".email],
