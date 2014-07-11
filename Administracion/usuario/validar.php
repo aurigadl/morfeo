@@ -241,18 +241,18 @@ echo $tPermis;
   	<tr>
     <td width="40%" height="26" > <input type="checkbox" name="usua_nuevoM" value="$usua_nuevoM" <?php if ($usua_nuevoM == '0') echo "checked"; else echo "";?>>
       Usuario Nuevo.</td>
-    <td width="40%" height="26" >Firma Digital.
+    <!--<td width="40%" height="26" >Firma Digital.
 	<?php
-	$contador = 0;
-	while($contador <= 3)
-	{
-		echo "<input name='firma' type='radio' value=$contador ";
-		if ($firma == $contador) echo "checked"; else echo "";
-		echo " >".$contador;
-		$contador = $contador + 1;
-	}
+  $contador = 0;
+  while($contador <= 3)
+  {
+    echo "<input name='firma' type='radio' value=$contador ";
+    if ($firma == $contador) echo "checked"; else echo "";
+    echo " >".$contador;
+    $contador = $contador + 1;
+  }
 	  ?>
-	</td>
+	</td>-->
   	</tr>
   	<tr>
 	<td height='26' width='40%' >
