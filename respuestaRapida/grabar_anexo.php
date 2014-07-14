@@ -175,7 +175,7 @@
     include './crear_pdf.php';
     echo '<br>
             <script>
-              javascript:window.parent.opener.cargarPagina("' . $recargar_anexos . '","tabs-c");
+              javascript:window.parent.opener.$.fn.cargarPagina("' . $recargar_anexos . '","tabs-c");
               window.parent.close();
             </script>';
   }
