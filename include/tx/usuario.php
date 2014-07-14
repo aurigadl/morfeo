@@ -529,10 +529,10 @@ class Usuario {
             case 0:
 
                 if(!empty($name)){
-                    $where = $this->db->conn->Concat(" UPPER(sgd_ciu_nombre) "
-                            , " UPPER(sgd_ciu_apell1) "
-                            , " UPPER(sgd_ciu_apell2) ")
-                        . " LIKE '%". strtoupper($name) ."%' ";
+
+                    $where = $this->db->conn->Concat("(UPPER(s.SGD_CIU_NOMBRE) LIKE '%". strtoupper($name) ."%' OR
+                                                       UPPER(s.SGD_CIU_APELL1) LIKE '%". strtoupper($name) ."%' OR
+                                                       UPPER(s.SGD_CIU_APELL2) LIKE '%". strtoupper($name) ."%')") ;
                 }
 
                 if(!empty($docu)){
@@ -589,12 +589,6 @@ class Usuario {
                 ORDER BY s.SGD_CIU_NOMBRE, s.SGD_CIU_APELL1, s.SGD_CIU_APELL2
                 LIMIT 24";
 
-                $rs = $this->db->query($isql);
-                while(!$rs->EOF){
-                    $this->result[] = $rs->fields;
-                    $rs->MoveNext();
-                }
-                return !empty($this->result) ? true : false;
                 break;
 
             // Empresas ....................................................................
@@ -660,12 +654,6 @@ class Usuario {
                 LIMIT 24
               ";
 
-                $rs = $this->db->query($isql);
-                while(!$rs->EOF){
-                    $this->result[] = $rs->fields;
-                    $rs->MoveNext();
-                }
-                return !empty($this->result) ? true : false;
                 break;
 
             case 6:
@@ -730,15 +718,17 @@ class Usuario {
                 ORDER  BY usua_nomb
                 LIMIT 24";
 
-                $rs = $this->db->query($isql);
-
-                while(!$rs->EOF){
-                    $this->result[] = $rs->fields;
-                    $rs->MoveNext();
-                }
-                return !empty($this->result) ? true : false;
-
                 break;
         }
+
+        $rs = $this->db->query($isql);
+
+        while(!$rs->EOF){
+            $this->result[] = $rs->fields;
+            $rs->MoveNext();
+        }
+
+        return !empty($this->result) ? true : false;
+
     }
 }
