@@ -126,18 +126,18 @@ class Radicacion
 		if(!$this->mrecCodi) $this->mrecCodi=0;
 
 
-		$recordR["SGD_SPUB_CODIGO"] =  $this->nivelRad;
-		$this->radiCuentai="'".str_replace("'"," ",$this->radiCuentai)."'";
-		$recordR["RADI_CUENTAI"] =  $this->radiCuentai;
-		$recordR["EESP_CODI"]    =	$this->eespCodi?$this->eespCodi:0;
-		$recordR["MREC_CODI"]    =	$this->mrecCodi;
+		$recordR["SGD_SPUB_CODIGO"] = $this->nivelRad;
+		$this->radiCuentai          = "'".str_replace("'"," ",$this->radiCuentai)."'";
+		$recordR["RADI_CUENTAI"]    = $this->radiCuentai;
+		$recordR["EESP_CODI"]       = $this->eespCodi?$this->eespCodi:0;
+		$recordR["MREC_CODI"]       = $this->mrecCodi;
 
         $fechofic = $this->radiFechOfic;
 
-        if(!empty($fechofi)){
+        if(!empty($fechofic)){
             switch ($this->db->driver){
                 case 'postgres':
-                    $recordR["radi_fech_ofic"]=	"'".$fechofi."'";
+                    $recordR["radi_fech_ofic"]=	"'".$fechofic."'";
                     break;
                 default:
                     $recordR["radi_fech_ofic"]=	$this->db->conn->DBDate($this->radiFechOfic);

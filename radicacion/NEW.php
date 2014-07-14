@@ -124,13 +124,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           $modificar = 'hide';
           $showtable = '';
       }
-
   }
 
   //CARGAR INFORMACION SI SE ENVIA NUMERO DE RADICADO PARA MODIFICAR
   if($nurad){
 
-      $query = "SELECT
+     $query = "SELECT
                 a.*
               FROM
                 RADICADO A

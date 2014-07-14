@@ -204,7 +204,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "cedula"         => $_POST[$valor."_".cedula],
             "nombre"         => $_POST[$valor."_".nombre],
             "apellido"       => $_POST[$valor."_".apellido],
-            "apellido"       => $_POST[$valor."_".apellido],
             "dignatario"     => $_POST[$valor."_".dignatario],
             "telef"          => $_POST[$valor."_".telefono],
             "direccion"      => $_POST[$valor."_".direccion],
