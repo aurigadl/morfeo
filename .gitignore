@@ -6,7 +6,7 @@ img/login_background.jpeg
 respuestaRapida/templates_c/*
 .idea
 .svn
-.tcpdf/cache
+.tcpdf/cache/*
 *~
 .idea/
 HEAD
