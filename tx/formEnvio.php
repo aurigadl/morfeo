@@ -4,7 +4,6 @@ $ruta_raiz = ".";
 if (!$_SESSION['dependencia'])
     header ("Location: $ruta_raiz/cerrar_session.php");
 
- 
  foreach ($_POST as $key => $valor) ${$key} = $valor;
  foreach ($_GET as $key => $valor)  ${$key} = $valor;
  $krd         = $_SESSION["krd"];
@@ -14,19 +13,18 @@ if (!$_SESSION['dependencia'])
 
 $ruta_raiz = "..";
 $mensaje_error = false;
-include_once "$ruta_raiz/js/funtionImage.php";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-if (!isset($db))	$db = new ConnectionHandler("$ruta_raiz");
+if (!isset($db))	$db = new ConnectionHandler($ruta_raiz);
+$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+
 require_once("$ruta_raiz/class_control/Dependencia.php");
 
-//$db->conn->debug = true;
 $objDep = new Dependencia($db);
 $encabezado = "".session_name()."=".session_id()."&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion";
 $linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=";
 
-/*  FILTRO DE DATOS
- */
+// Filtro de datos
 
  if(!$codTx) $codTx = $AccionCaliope;
 if($checkValue)
@@ -44,18 +42,18 @@ if($checkValue)
 				{	if (strpos($record_id,'-'))
 					{	//Si trae el informador concatena el informador con el radicado sino solo concatena los radicados.
 						$tmp = explode('-',$record_id);
-						if ($tmp[0])
-						{	$whereFiltro .= ' (b.radi_nume_radi = '.$tmp[1].' and i.info_codi='.$tmp[0].') or';
+						if ($tmp[0]) {
+              $whereFiltro .= 'and (b.radi_nume_radi = '.$tmp[1].' and i.info_codi='.$tmp[0].') or';
 							$tmp_arr_id=2;
 						}
 						else
-						{	$whereFiltro .= ' b.radi_nume_radi = '.$tmp[1].' or';
+						{	$whereFiltro .= 'and b.radi_nume_radi = '.$tmp[1].' or';
 							$tmp_arr_id=1;
 						}
 
 					}
 					else
-					{	$whereFiltro .= ' b.radi_nume_radi = '.$record_id.' or';
+					{	$whereFiltro .= 'and b.radi_nume_radi = '.$record_id.' or';
 						$tmp_arr_id=0;
 					}
 					$record_id = $tmp[1];
@@ -74,7 +72,7 @@ if($checkValue)
 			    			 	$pasaFiltro2 = "Si";
 		    				
 		    			}
-                                }
+          }
 				
 			case 13:
 				{	
@@ -108,7 +106,7 @@ if($checkValue)
 						$pasaFiltro="Si";
 					if($codTx == 12){
 				            $isqlw="select b.RADI_USU_ANTE as RADI_USU_ANTE  from radicado  b, usuario u where b.radi_nume_radi = ".$record_id." AND b.RADI_USU_ANTE=u.USUA_LOGIN and  u.usua_esta=0";
-					    $UsuIn  = $db->query($isqlw);										 					
+					    $UsuIn  = $db->conn->query($isqlw);										 					
 			    	            $usuInAct=$UsuIn->fields["RADI_USU_ANTE"];	
 					if ($usuInAct != null)
 		    			{
@@ -118,7 +116,6 @@ if($checkValue)
 			    			 	$pasaFiltro2 = "Si";
 		    				
 		    			}
-					 //$pasaFiltro2 = "Si";
 				 	}
 					 $pasaFiltro = "Si";
 					   /*
@@ -149,7 +146,7 @@ if($checkValue)
 						}
 						$i++;
 					}
-					$whereFiltro.= ' b.radi_nume_radi = '.$record_id.' or';
+					$whereFiltro.= 'and b.radi_nume_radi = '.$record_id.' or';
 					 $pasaFiltro = "Si";
 
 
@@ -250,7 +247,7 @@ if($checkValue)
 						}
 						$i++;
 					
-					$whereFiltro.= ' b.radi_nume_radi = '.$record_id.' or';
+					$whereFiltro.= 'and b.radi_nume_radi = '.$record_id.' or';
  $pasaFiltro = "Si";
 
 					/**
@@ -297,7 +294,7 @@ if($checkValue)
 				}break;			
 			default:
 				{
-					$whereFiltro.= ' b.radi_nume_radi = '.$record_id.' or';
+					$whereFiltro.= 'and b.radi_nume_radi = '.$record_id.' or';
 				}break;
 		}
 
@@ -321,24 +318,18 @@ if($checkValue)
 	if ( $setFiltroSinEXP ) {
 			$mensaje_errorEXP = "<br>NO SE PERMITE ESTA OPERACION PARA LOS RADICADOS <BR> < $setFiltroSinEXP > <BR> PORQUE NO SE ENCUENTRAN EN NING&Uacute;N EXPEDIENTE";
 	}
-
-	if(substr($whereFiltro,-2)=="or")
-	{
-	  $whereFiltro = substr($whereFiltro,0,strlen($whereFiltro)-2);
-	}
-	if(trim($whereFiltro))
-	{	$whereFiltro = "and ( $whereFiltro ) ";
-	}
-
   
-}
-else
-{	$mensaje_error="NO HAY REGISTROS SELECCIONADOS";
+  $whereFiltro = (substr($whereFiltro,-2)=="or")? substr($whereFiltro,0,strlen($whereFiltro)-2) : "and ( $whereFiltro ) ";
+} else {
+  $mensaje_error="NO HAY REGISTROS SELECCIONADOS";
 }
 ?>
 <html>
 <head>
 <title>Enviar Datos</title>
+<?php
+  include_once "$ruta_raiz/js/funtionImage.php";
+?>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <?php
  include_once $ruta_raiz."/htmlheader.inc.php";
@@ -423,12 +414,9 @@ function Anular(tipoAnulacion)
 	<?
 	}	
     ?>
-	if(marcados>=1)
-	{
+	if(marcados>=1) {
 	  return 1;
-	}
-	else
-	{
+	} else {
 		alert("Debe marcar un elemento");
 		return 0;
 	}
@@ -607,8 +595,6 @@ switch ($codTx)
 							$rs2 = $db->conn->Execute($sql);
 							$depNombP = $rs2->fields["DEPE_NOMB"];
 							$valOptionP .= " [ ".$depNombP."] ";
-							
-
 							$class = " class='leidos'";
 						}
 
@@ -721,7 +707,7 @@ switch ($codTx)
 				<input type=checkbox name=chkConjunto Value="Si" id="chkConjunto" >
 				<span class="info">Tramite Conjunto  </span>
 	    <? }else{    ?>
-					<input type=checkbox name=chkConjunto id="chkConjunto" disabled >
+					<input type="checkbox" name="chkConjunto" id="chkConjunto" disabled >
      <? }  ?>
 	    </td>
 	    </tr>
@@ -790,13 +776,12 @@ switch ($codTx)
         </div>
                 </td></tr>
 </TABLE>
-		<?
+<?php
 	/*  GENERACION LISTADO DE RADICADOS
 	 *  Aqui utilizamos la clase adodb para generar el listado de los radicados
 	 *  Esta clase cuenta con una adaptacion a las clases utiilzadas de orfeo.
 	 *  el archivo original es adodb-pager.inc.php la modificada es adodb-paginacion.inc.php
 	 */
-	error_reporting(0);
 	if(!$orderNo)  $orderNo=0;
 	$order = $orderNo + 1;
 
@@ -808,6 +793,8 @@ switch ($codTx)
 			}break;
 		default:break;
 	}
+  //var_dump($isql);
+  //exit();
 	$pager = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);
 	$pager->toRefLinks = $linkPagina;
 	$pager->toRefVars = $encabezado;

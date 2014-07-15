@@ -8,7 +8,6 @@ session_start();
 foreach ($_GET  as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
-//print_r($_POST);
 if($_POST["usCodSelect"]) $usCodSelect = $_POST["usCodSelect"];	
 
 $krd         = $_SESSION["krd"];
@@ -75,14 +74,9 @@ $fechaAgenda = $_POST["fechaAgenda"];
 <body>
 <?php
 $txSql = "";
-if($chkNivel and $codusuario==1)
-{
-	$tomarNivel = "si";
-}
-else
-{
-	$tomarNivel = "no";
-}
+
+$tomarNivel = ($chkNivel and $codusuario==1)? 'si' : 'no';
+
 include "$ruta_raiz/include/tx/Tx.php";
 
 $rs = new Tx($db);
