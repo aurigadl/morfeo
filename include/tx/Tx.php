@@ -134,9 +134,7 @@ function registrarNovedad($tipo, $docUsuarioDest, $numRad, $ruta_raiz=".."){
 		$xarray['USUA_DOC'].=$docUsuarioDest;
 		$xarray['USUA_DOC'].='"';
 		
-		$tipo1='"';
 		$tipo1.=$tipo;
-		$tipo1.='"';
 		
 		$xarray["$tipo"].="'";
 		$xarray["$tipo"].=$rads;

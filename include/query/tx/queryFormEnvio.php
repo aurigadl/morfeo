@@ -1,12 +1,17 @@
-<?
-switch ($tmp_arr_id)
-{	case 1:$tmp_where = " and (i.info_codi is null) ";break;
-	default:$tmp_where = " ";break;
+<?php
+
+switch ($tmp_arr_id) {
+  case 1:
+    $tmp_where = " and (i.info_codi is null) ";
+    break;
+	default:
+    $tmp_where = " ";
+    break;
 }
 //($tmp_arr_id)? $tmp_where = " " : $tmp_where = " and i.info_codi is null ";
-switch($db->driver)
-{	case 'mssql':
-	{	switch ($tmp_arr_id)
+switch($db->driver) {
+  case 'mssql':
+  {	switch ($tmp_arr_id)
 		{	case 0:
 				{	$isql = 'select
 							cast(b.RADI_NUME_RADI as varchar(20)) as "IMG_Numero Radicado"
@@ -172,7 +177,7 @@ switch($db->driver)
 				 	where
 						b.radi_nume_radi is not null '.
 						' and b.tdoc_codi=c.sgd_tpr_codigo
-						'.$whereFiltro.$whereCarpeta.'
+						'.$whereFiltro . $whereCarpeta.'
 				  	order by '.$order .' ' .$orderTipo;
 				}break;
 			case 1:
