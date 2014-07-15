@@ -97,9 +97,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $rad->guia         = trim(substr($guia,0 ,20));
   $rad->eespCodi     = $documento_us3;
   $rad->mrecCodi     = $med;// "dd/mm/aaaa"
-  $rad->radiFechOfic =       substr($fecha_gen_doc,0 ,2)
+  $rad->radiFechOfic =       substr($fecha_gen_doc,6 ,4)
                        ."-". substr($fecha_gen_doc,3 ,2)
-                       ."-". substr($fecha_gen_doc,6 ,4);
+                       ."-". substr($fecha_gen_doc,0 ,2);
 
   if(!$radicadopadre){
     $radicadopadre = null;
