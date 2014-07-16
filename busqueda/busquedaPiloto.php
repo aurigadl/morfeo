@@ -528,7 +528,6 @@ function Ciudadano_show($nivelus, $tpRemDes, $whereFlds) {
   $sSQL = "";
   $db = new ConnectionHandler($ruta_raiz);
   //$db->conn->debug = true;
-    echo "<pre>";
 	if($tpRemDes==1){
 		$tpRemDesNombre = "Por Ciudadano";
 	}if($tpRemDes==2){
