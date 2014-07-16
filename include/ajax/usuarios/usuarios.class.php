@@ -43,7 +43,7 @@ class usuarios{
 	
 	var $depeCodi;
 	var $usuaCodi;
-  var $usuaDoc;
+    var $usuaDoc;
 	/*
 	 * Metodo constructor de la Clase
 	 *
@@ -57,8 +57,7 @@ class usuarios{
 	  */
 
 
-	function usuarios($db,$ruta_raiz)
-	{
+	function usuarios($db,$ruta_raiz){
 		$this->db = $db;
 		$this->ruta_raiz = $ruta_raiz; 
 	}
@@ -96,13 +95,12 @@ class usuarios{
 	function getUsuarios($idObjetoHtml,$depeCodi,$txAccion) {
 		$response = new HTML_AJAX_Action();
 		$indexSelected=0;
-	$iSql = "select (CASE u.SGD_ROL_CODIGO WHEN 0 THEN u.USUA_NOMB WHEN 1 THEN u.USUA_NOMB WHEN 2 THEN u.USUA_NOMB||'(Encargado)' END) as USUA_NOMB , u.USUA_CODI, u.SGD_ROL_CODIGO from usuario u where u.depe_codi=$depeCodi AND u.USUA_ESTA='1' ";
+	    $iSql = "select (CASE u.SGD_ROL_CODIGO WHEN 0 THEN u.USUA_NOMB WHEN 1 THEN u.USUA_NOMB WHEN 2 THEN u.USUA_NOMB||'(Encargado)' END) as USUA_NOMB , u.USUA_CODI, u.SGD_ROL_CODIGO from usuario u where u.depe_codi=$depeCodi AND u.USUA_ESTA='1' ";
 		if($txAccion){
 			$iSql .= " AND (u.USUA_CODI=1 or u.sgd_rol_codigo=2) ";
 		}
 		$iSql .= " ORDER BY U.SGD_ROL_CODIGO DESC, u.USUA_NOMB";
-		//return $iSql;
-		//ECHO "$isql";
+
 		$rsUs = $this->db->conn->Execute($iSql);
 		$cadena = ' document.getElementById("'.$idObjetoHtml.'").length=0;';
 		$j=0;
@@ -111,7 +109,7 @@ class usuarios{
 		{
 			$usuaCodi = htmlentities($rsUs->fields["USUA_CODI"]);
 			$usuaRolCodi = $rsUs->fields["SGD_ROL_CODIGO"];
-			$usuaNomb = strtoupper(($rsUs->fields["USUA_NOMB"]));
+			$usuaNomb =  ucwords(($rsUs->fields["USUA_NOMB"]));
 			$cadenaX .= ' document.getElementById("'.$idObjetoHtml.'").options['.$j.'] = new Option("'.$usuaNomb.'","'.$usuaCodi.'");';
 			if($usuaCodi==1 || $usuaRolCodi==2) $indexSelected = $j;
 			$j++;

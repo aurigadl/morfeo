@@ -114,7 +114,7 @@ $usua_login      = $rs->fields["USUA_LOGIN"];
 
               <header>
                 <h2>
-                  Cambio de contraseña<br>
+                  Cambio de contrase&ntilde;a<br>
                   <small><?=$tituloCrear ?></small>
                 </h2>
               </header>

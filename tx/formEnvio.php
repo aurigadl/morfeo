@@ -329,7 +329,7 @@ if($checkValue)
 <?php
   include_once "$ruta_raiz/js/funtionImage.php";
 ?>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=uft-8">
 <?php
  include_once $ruta_raiz."/htmlheader.inc.php";
 ?>

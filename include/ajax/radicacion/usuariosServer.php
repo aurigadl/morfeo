@@ -17,38 +17,35 @@ include 'HTML/AJAX/Server.php';
  * @version    Release: 0.5.6
  * @link       http://pear.php.net/package/HTML_AJAX
  */
-// extend HTML_AJAX_Server creating our own custom one with init{ClassName} methods for each class it supports calls on
-class UsuariosServer extends HTML_AJAX_Server {
-	// this flag must be set to on init methods
-	var $initMethods = false;
-	//Conexion a Base de datos de Orfeo
-	var $db;
-  var $ruta_raiz;
-	// init method for the testHaa class, includes needed files an registers it for ajax, directly passes in methods to register to specify case in php4
-	function initUsuarios() {
-    $ruta_raiz = "../../..";
-    //alert("Entro a initUsuarios");
-		include 'usuarios.class.php';
-		$this->registerClass(new usuarios($this->db,$this->ruta_raiz),'usuarios',array('getUsuarios','informarUsuario','borrarInformado','borrarDerivado'));
-  
-	}
-	function conexion($db,$ruta_raiz)
-	{
-	  $this->db = $db;
-    $this->ruta_raiz = $ruta_raiz;
-	}	
-}
+  // extend HTML_AJAX_Server creating our own custom one with init{ClassName} methods for each class it supports calls on
+  class UsuariosServer extends HTML_AJAX_Server {
+        // this flag must be set to on init methods
+        var $initMethods = false;
+        //Conexion a Base de datos de Orfeo
 
-// create an instance of our test server
+        var $db;
+        var $ruta_raiz;
+        // init method for the testHaa class, includes needed files an registers it for ajax, directly passes in methods to register to specify case in php
+        function initUsuarios() {
+            $ruta_raiz = "../../..";
+            include 'usuarios.class.php';
+            $this->registerClass(new usuarios($this->db,$this->ruta_raiz), 'usuarios', array('getUsuarios','informarUsuario','borrarInformado','borrarDerivado'));
+        }
 
+        function conexion($db,$ruta_raiz){
+            $this->db = $db;
+            $this->ruta_raiz = $ruta_raiz;
+        }
+
+  }
+
+  // create an instance of our test server
   include_once ("../../../include/db/ConnectionHandler.php");
   $ruta_raiz = "../../..";
   $db = new ConnectionHandler($ruta_raiz);
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-  //error_reporting(7);
-  
-$server = new UsuariosServer();
-$server->conexion($db,$ruta_raiz);
-$server->initUsuarios();
-$server->handleRequest();
+  $server = new UsuariosServer();
+  $server->conexion($db,$ruta_raiz);
+  $server->initUsuarios();
+  $server->handleRequest();
 ?>
