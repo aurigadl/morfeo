@@ -27,7 +27,8 @@ include "$ruta_raiz/include/query/queryver_datosrad.php";
 
 
 $isqlrem = "select
-              sgd_dir_nomremdes
+              sgd_dir_nomremdes,
+              sgd_dir_nombre
             from
 	          sgd_dir_drecciones
             where
@@ -37,7 +38,7 @@ $isqlrem = "select
 $rs = $db->conn->Execute($isqlrem);
 
 if (!$rs->EOF) {
-   $remite = $rs->fields["SGD_DIR_NOMREMDES"];
+   $remite = empty($rs->fields["SGD_DIR_NOMREMDES"])? $rs->fields["SGD_DIR_NOMBRE"] : $rs->fields["SGD_DIR_NOMREMDES"];
 }
 
 $isql = "select a.*, $numero, $radi_nume_radi as RADI_NUME_RADI,
@@ -45,7 +46,6 @@ $radi_nume_deri as RADI_NUME_DERI,
 			a.SGD_SPUB_CODIGO AS NIVEL_SEGURIDAD
 		FROM radicado a
 		WHERE a.radi_nume_radi = $verradicado";
-
 
 $rs = $db->conn->Execute($isql);
 

@@ -216,11 +216,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "pais_tmp"       => $_POST[$valor."_".pais_codigo],
             "cont_tmp"       => 1,
             "tdid_codi"      => $_POST[$valor."_".tdid_codi],
-            "consecutivo"    => $consecutivo,
             "sgdTrd"         => $sgdTrd,
             "id_sgd_dir_dre" => $id_sgd_dir_dre,
-            "id_table"       => $id_table,
-            "tipo_consec"    => $clave + 1
+            "id_table"       => $id_table
         );
 
         if($classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad)){
