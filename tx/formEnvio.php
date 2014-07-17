@@ -42,17 +42,17 @@ if($checkValue)
 					{	//Si trae el informador concatena el informador con el radicado sino solo concatena los radicados.
 						$tmp = explode('-',$record_id);
 						if ($tmp[0]) {
-              $whereFiltro .= 'and (b.radi_nume_radi = '.$tmp[1].' and i.info_codi='.$tmp[0].') or';
+                            $whereFiltro .= ' (b.radi_nume_radi = '.$tmp[1].' and i.info_codi='.$tmp[0].') or';
 							$tmp_arr_id=2;
 						}
 						else
-						{	$whereFiltro .= 'and b.radi_nume_radi = '.$tmp[1].' or';
+						{	$whereFiltro .= ' b.radi_nume_radi = '.$tmp[1].' or';
 							$tmp_arr_id=1;
 						}
 
 					}
 					else
-					{	$whereFiltro .= 'and b.radi_nume_radi = '.$record_id.' or';
+					{	$whereFiltro .= ' b.radi_nume_radi = '.$record_id.' or';
 						$tmp_arr_id=0;
 					}
 					$record_id = $tmp[1];
@@ -145,7 +145,7 @@ if($checkValue)
 						}
 						$i++;
 					}
-					$whereFiltro.= 'and b.radi_nume_radi = '.$record_id.' or';
+					$whereFiltro.= ' b.radi_nume_radi = '.$record_id.' or';
 					 $pasaFiltro = "Si";
 
 
@@ -246,7 +246,7 @@ if($checkValue)
 						}
 						$i++;
 					
-					$whereFiltro.= 'and b.radi_nume_radi = '.$record_id.' or';
+					$whereFiltro.= ' b.radi_nume_radi = '.$record_id.' or';
  $pasaFiltro = "Si";
 
 					/**
@@ -293,7 +293,7 @@ if($checkValue)
 				}break;			
 			default:
 				{
-					$whereFiltro.= 'and b.radi_nume_radi = '.$record_id.' or';
+					$whereFiltro.= ' b.radi_nume_radi = '.$record_id.' ';
 				}break;
 		}
 
@@ -315,13 +315,19 @@ if($checkValue)
 	 * si la variable $setFiltroSinEXP tiene algo, es porque algun radicado no esta en expediente
 	 */
 	if ( $setFiltroSinEXP ) {
-			$mensaje_errorEXP = "<br>NO SE PERMITE ESTA OPERACION PARA LOS RADICADOS <BR> < $setFiltroSinEXP > <BR> PORQUE NO SE ENCUENTRAN EN NING&Uacute;N EXPEDIENTE";
+	    $mensaje_errorEXP = "<br>NO SE PERMITE ESTA OPERACION PARA LOS RADICADOS <BR> < $setFiltroSinEXP > <BR> PORQUE NO SE ENCUENTRAN EN NING&Uacute;N EXPEDIENTE";
 	}
-  
-  $whereFiltro = (substr($whereFiltro,-2)=="or")? substr($whereFiltro,0,strlen($whereFiltro)-2) : "and ( $whereFiltro ) ";
+
+    if(substr($whereFiltro,-2)=="or"){
+        $whereFiltro = substr($whereFiltro,0,strlen($whereFiltro)-2);
+    }
+
+    $whereFiltro =  "and ( $whereFiltro ) ";
+
 } else {
-  $mensaje_error="NO HAY REGISTROS SELECCIONADOS";
+    $mensaje_error="NO HAY REGISTROS SELECCIONADOS";
 }
+
 ?>
 <html>
 <head>

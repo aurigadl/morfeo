@@ -527,6 +527,7 @@ function Ciudadano_show($nivelus, $tpRemDes, $whereFlds) {
   $sOrder = "";
   $sSQL = "";
   $db = new ConnectionHandler($ruta_raiz);
+  //$db->conn->debug = true;
 	if($tpRemDes==1){
 		$tpRemDesNombre = "Por Ciudadano";
 	}if($tpRemDes==2){
@@ -813,7 +814,11 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
             $tok = strtok($ps_RADI_NOMB," ");
             if ($yaentro == true ) $sWhere .= " and (";
 
-            $sWhere .= "UPPER(".$db->conn->Concat("r.ra_asun","r.radi_cuentai","dir.sgd_dir_telefono","dir.sgd_dir_direccion","r.radi_nume_guia") . ") LIKE '%".$ps_RADI_NOMB."%' ";
+            $sWhere .= "UPPER(".$db->conn->Concat("r.ra_asun") . ") LIKE '%".$ps_RADI_NOMB."%' ";
+            //$sWhere .= "UPPER(".$db->conn->Concat("r.radi_cuentai") . ") LIKE '%".$ps_RADI_NOMB."%' ";
+            //$sWhere .= "UPPER(".$db->conn->Concat("dir.sgd_dir_telefono") . ") LIKE '%".$ps_RADI_NOMB."%' ";
+            //$sWhere .= "UPPER(".$db->conn->Concat("dir.sgd_dir_direccion") . ") LIKE '%".$ps_RADI_NOMB."%' ";
+            //$sWhere .= "UPPER(".$db->conn->Concat("r.radi_nume_guia") . ") LIKE '%".$ps_RADI_NOMB."%' ";
               $tok = strtok(" ");
             if ($yaentro == true ) $sWhere .= ")";
 

@@ -10,6 +10,25 @@ if(!$mostrar_opc_envio) $mostrar_opc_envio=0;
 ?>
 
 <script language="javascript">
+
+function markAll(){
+    if(document.form1.elements.checkAll.checked)
+    {
+        for(i=2;i<document.form1.elements.length;i++)
+        {
+            document.form1.elements[i].checked=1;
+        }
+    }
+    else
+    {
+        for(i=2;i<document.form1.elements.length;i++)
+        {
+            document.form1.elements[i].checked=0;
+        }
+    }
+    clickTx();
+}
+
 $( document ).ready(function(){
 
   function returnKrd(){
@@ -128,23 +147,7 @@ $( document ).ready(function(){
       }
     }
 
-    function markAll(){
-      if(document.form1.elements.checkAll.checked)
-      {
-        for(i=2;i<document.form1.elements.length;i++)
-        {
-          document.form1.elements[i].checked=1;
-        }
-      }
-      else
-      {
-        for(i=2;i<document.form1.elements.length;i++)
-        {
-          document.form1.elements[i].checked=0;
-        }
-      }
-      clickTx();
-    }
+
 
 
 
