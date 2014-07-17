@@ -127,10 +127,10 @@ if(file_exists($archivo1)){
                           </tr>
                           <tr align="justify" class="etextomenu">
                               <td  class='listado2'>
-                                  <p> Listado de Fuentes de Codigo de barra que debe tener instalado en el PC.<br>
-                                      Para el caso de Windows existen dos formas de Instalarlas. Con click derecho "Guardar enlace como ...".  <br>
-                                      1. Descargar la fuente y abir directamente con Windows el Administrador de Fuentes, Luego Dar la Opcion Instalar. <br>
-                                      2. o Tambien puede copiar estos archivos en la carpeta c:\windows\fonts</br>
+                                  <p> Listado de Fuentes de Código de barra que debe tener instalado en el PC o Dispositivo M&oacute;vil.<br>
+					
+                                      - Descargar las fuentes desde GNU/Linux, MAC, OSX o Windows  y abir directamente con el Administrador de Fuentes, Luego Dar la Opci&oacute;n Instalar. <br>
+                                      - o copiar estos archivos en el directorio fuentes: \fonts</br>
                                   </p>
                                       <a href='include/fuentes/FREE3OF9.TTF'   class="e"> FREE3OF9.TTF</a> -
                                       <a href='include/fuentes/free3of9.ttf'>free3of9.ttf</a> -
