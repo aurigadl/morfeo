@@ -173,6 +173,7 @@ if(trim($linkarchivo))
                     $rs->fields["EXT"]=="docx" or
                     $rs->fields["EXT"]=="odt" or
                     $rs->fields["EXT"]=="xml") and $no_es_impreso;
+  
   if($es_extension) {
     if($valImg == "SI"){
 		  echo"<a class=\"vinculos\" style='cursor:pointer;cursor:hand;' onclick=\"vistaPreliminar('$coddocu','$linkarchivo','$linkarchivotmp');\">";
@@ -197,11 +198,16 @@ if(trim($linkarchivo))
  <td ><font size=1>
 	<?php
   $es_pdf = $rs->fields["EXT"] == "pdf";
+  $ruta_archivo_txt = 'bodega/' . substr($rs->fields["DOCU"], 0, 4) . '/' .
+                      substr($rs->fields["DOCU"], 4, 3) . '/docs/' .
+                      $rs->fields["DOCU"] . '.txt';
+  
+  $existe_txt = file_exists($ruta_archivo_txt);
 
   if($origen!=1 and $linkarchivo  and $verradPermisos == "Full" ) {
     $no_esta_enviado = $anex_estado < 4;
     if ($no_esta_enviado) {
-      if ($es_pdf && $para_radicar) {
+      if ($es_pdf && $para_radicar && $existe_txt) {
 	      echo "<a class='vinculos' href=javascript:editar_anexo('$coddocu')><img src='img/icono_modificar.png' title='Modificar Archivo'></a> ";
       } else {
 	      echo "<a class='vinculos' href=javascript:verDetalles('$coddocu','$tpradic','$aplinteg')><img src='img/icono_modificar.png' title='Modificar Archivo'></a> ";
@@ -236,7 +242,7 @@ if(trim($linkarchivo))
 	?>
  	</small></td>
 	<td >
-	<?php
+<?php
   $es_administrador = $codusuario == 1;
   $usuario_creador = $rs->fields["RADI_NUME_SALIDA"] == 0 and
                       $ruta_raiz != ".." and
