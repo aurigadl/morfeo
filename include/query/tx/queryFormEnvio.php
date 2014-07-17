@@ -206,9 +206,9 @@ switch($db->driver) {
 				}break;
 			case 2:
 				{	
-					// Modificado Infométrika 21-Septiembre-2009
+					// Modificado Infomï¿½trika 21-Septiembre-2009
                                         // Compatibilidad con PostgreSQL 8.3
-                                        // Cambió i.info_codi = u.usua_doc and
+                                        // Cambiï¿½ i.info_codi = u.usua_doc and
                                         // por CAST( i.info_codi AS VARCHAR(10) ) = u.usua_doc and
 					$radi_nume_radi = "cast(b.RADI_NUME_RADI as 		varchar(20))";
 					$tmp_cad1 = $db->conn->concat("'0'","'-'",$radi_nume_radi);
