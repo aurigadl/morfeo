@@ -118,7 +118,8 @@ switch($db->driver)
 		$whereUsuario.$whereFiltro.'
 		'.$whereCarpeta.'
 		'.$sqlAgendado.'
-	  order by '.$order .' ' .$orderTipo;
+	  order by '.$order .' ' .$orderTipo
+	  . ' limit 5000 ';
 	break;
 	}
 	//echo $isql;

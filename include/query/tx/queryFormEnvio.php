@@ -230,7 +230,7 @@ switch($db->driver) {
 						 		CAST( i.info_codi AS VARCHAR(20) ) = u.usua_doc and
 						  		i.RADI_NUME_RADI is not null
 						  		AND (i.USUA_CODI = '.$_SESSION['codusuario'].') AND (i.DEPE_CODI = '.$_SESSION['dependencia'].')
-								'.$whereFiltro.$tmp_where.'
+								'.$whereFiltro.' '.$tmp_where.'
 								'.$whereCarpeta.'
 					  		order by '.$order.' '.$orderTipo;
 				}break;

@@ -132,6 +132,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     $rs->MoveNext();
   }
+  //$data       = "Documenos para Visto Bueno";
+  //$link1      = $enlace."$fechah&nomcarpeta=$data&carpeta=11&tipo_carpt=0\"";
+  //$link1show .= "<li><a $link1 target=\"mainFrame\" >Visto Bueno ()</a></li>";
 
   //Agendado
   $isql        =" SELECT COUNT(1) AS CONTADOR
@@ -186,7 +189,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   if($numerot>=1){
     $link5show= "<li><a $enlace4 target=\"mainFrame\"> Tramite Conjunto ($numerot)</a></li>";
   }
-
   //Ultimas transacciones del usuario
   $data     ="Ultimas Transacciones del Usuario";
   $link6    = $enlace5."$fechah&nomcarpeta=$data&tipo_carpt=0\"";

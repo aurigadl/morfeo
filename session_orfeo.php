@@ -23,7 +23,7 @@
 	include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 	include_once "$ruta_raiz/config.php";
 	//contiene función que verifica usuario y Password en LDAP
-	include("$ruta_raiz/autenticaLDAP.php");
+	include("$ruta_raiz/autenticaMail.php");
 	if(!$krd) $krd = $_REQUEST["krd"];
 
 
@@ -190,8 +190,7 @@
     		$validacionUsuario    = 'No Pasa Validacion Base de Datos';
     	}
     }else{
-
-        //El usuario tiene Validacion por LDAP
+         //El usuario tiene Validacion por LDAP
     	$correoUsuario     = $rs->fields['USUA_EMAIL'];
     	//Verificamos que tenga correo en la DB, si no tiene no se puede validar por LDAP
     	if ( $correoUsuario == '' ){
@@ -200,12 +199,14 @@
     	   $mensajeError = "EL USUARIO NO TIENE CORREO ELECTR&Oacute;NICO REGISTRADO";
     	}else{
     	   //Tiene correo, luego lo verificamos por LDAP
-    	   $validacionUsuario    = checkldapuser( $krd, $drd, $ldapServer );
+    	   $validacionUsuario    = checkMailuser( $correoUsuario, $drd, $ruta_raiz );
     	   $mensajeError         = $validacionUsuario;
+    	   
     	}
     }
-
-    if ( !$validacionUsuario ){
+    
+    // die ("Fin".$validacionUsuario);
+    if ( !$validacionUsuario  ){
     	$perm_radi_salida_tp = 0;
     	if (!isset($tpDependencias)) $tpDependencias = "";
     	foreach ($tpNumRad as $key => $valueTp){
