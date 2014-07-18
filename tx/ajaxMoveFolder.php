@@ -7,7 +7,7 @@ $codCarpeta = $_POST["codCarpeta"];
 $rads = $_POST["rads"];
 $dato = substr($codCarpeta,0,2);
 if($dato=="11") $carpetaPersonal = "1"; else $carpetaPersonal = "0";
-$carpetaDestino = substr($codCarpeta,2,4);
+$carpetaDestino = substr($codCarpeta,2,5);
 //  changeFolder( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$tomarNivel,$observa)
 if(trim($rads)){
  $tx = new Tx($db);

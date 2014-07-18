@@ -114,12 +114,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   </div>
                   <?}?>
                 </div>
+                <div> sdfasdf
+                <span id="signinButton">
+                    <span
+                      class="g-signin"
+                      data-callback="signinCallback"
+                      data-clientid="CLIENT_ID"
+                      data-cookiepolicy="single_host_origin"
+                      data-requestvisibleactions="http://schemas.google.com/AddActivity"
+                      data-scope="https://www.googleapis.com/auth/plus.login">
+                    </span>
+                  </span>
+                </div>
              </div>
           </div>
         </div>
       </div>
       <!-- End Login box -->
-
+<div>
+      
+</div>
+      
       <footer class="container">
         <p id="footer-text"><small>Copyleft 2014, basado en Caliope 0.9 de la fundaci&oacute;n <a href="http://www.correlibre.org/">Correlibre</a></small></p>
       </footer>
