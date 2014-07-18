@@ -216,7 +216,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "dpto_tmp"       => $_POST[$valor."_".dep_codigo],
             "pais"           => $_POST[$valor."_".pais],
             "pais_tmp"       => $_POST[$valor."_".pais_codigo],
-            "cont_tmp"       => 1,
+            "cont_tmp"       => $clave + 1 ,
             "tdid_codi"      => $_POST[$valor."_".tdid_codi],
             "sgdTrd"         => $sgdTrd,
             "id_sgd_dir_dre" => $id_sgd_dir_dre,
