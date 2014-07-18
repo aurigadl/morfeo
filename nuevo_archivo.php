@@ -394,10 +394,7 @@ foreach ($tpNumRad as $key => $valueTp){
 
     //Si se definio prioridad en algun tipo de radicacion
     $valueDesc = $tpDescRad[$key];
-
-    if(($tpPerRad[$valueTp]==2 or $tpPerRad[$valueTp]==3) and $valueTp!=2){
-        $comboRadOps =$comboRadOps . "<option value='".$valueTp."' $sel>".$valueDesc."</option>";
-    }
+    $comboRadOps =$comboRadOps . "<option value='".$valueTp."' $sel>".$valueDesc."</option>";
     $sel="";
 }
 
@@ -448,7 +445,6 @@ $rs_exp = $db->conn->Execute( $q_exp );
 if( $rs_exp->RecordCount() == 0 ){
   $mostrarAlerta  = "<td align=\"center\" >";
   $mostrarAlerta .= "<b><small>EL RADICADO PADRE NO ESTA INCLUIDO  EN UN EXPEDIENTE.</small></b>
-            
           </td>";
   $sqlt = "select RADI_USUA_ACTU,RADI_DEPE_ACTU from RADICADO where RADI_NUME_RADI = '$numrad'";
   $rsE  = $db->conn->Execute($sqlt);

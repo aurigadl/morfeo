@@ -145,59 +145,11 @@ Descripci&oacute;n Anexos</b></small></td><td><small> <?=$radi_desc_anex ?></sma
 		if($verradPermisos == "Full" or $datoVer=="985") {
 	?>
 		<input type=button name=mosrtar_tipo_doc2 value='...' class="btn btn-primary btn-xs" onClick="ver_tipodocuTRD(<?=$codserie?>,<?=$tsub?>);">
-	</small></td><td><small><b>
-	Tema</b></small></td><td><small><?=$sector_nombre?>
-	
-      <? 
-		$nombreSession = session_name();
-		$idSession = session_id();
-		if ($verradPermisos == "Full"  or $datoVer=="985") {
-	  		$sector_grb = (isset($sector_grb)) ? $sector_grb : 1;
-	  		$causal_grb = (isset($causal_grb) ||$causal_grb !='') ? $causal_grb : 0;
-	  		$deta_causal_grb = (isset($deta_causal_grb) || $deta_causal_grb!='') ? $deta_causal_grb : 0;
-	  		
-			$datosEnviar = "'$ruta_raiz/causales/mod_causal.php?" . 						$nombreSession . "=" . $idSession .
-					"&krd=" . $krd . 
-					"&verrad=" . $verrad . 
-					"&sector=" . $sector_grb . 
-					"&sectorCodigoAnt=" . $sector_grb . 
-					"&sectorNombreAnt=" . $sector_nombre . 
-					"&causal_grb=" . $causal_grb . 
-					"&causal_nombre=" . $causal_nombre . 
-					"&deta_causal_grb=" . $deta_causal_grb .
-					"&ddca_causal_grb=" . $ddca_causal .  
-					"&ddca_causal_nombre=". $ddca_causal_nombre . "'";
-	  ?>
-      <input type=button name="mostrar_causal" value="..." class="btn btn-primary btn-xs" onClick="window.open(<?=$datosEnviar?>,'Tipificacion_Documento','height=300,width=750,scrollbars=no')">
-      <input type="hidden" name="mostrarCausal" value="N">
+	</small></td>
       <?
-	   }
-	   ?>
-   </small></td><td><small><b> Sub-Tema</b></small></td>
-    <?
-	$causal_nombre_grb = $causal_nombre;
-	$dcausal_nombre_grb = $dcausal_nombre;
-	$$ddca_causal_nombre_grb = $ddca_causal_nombre;
-	?><td><small>
-      <?=$causal_nombre ?>
-      / 
-      <?=$dcausal_nombre ?>
-      / 
-      <?=$ddca_causal_nombre ?>
-      / 
-      <? 
 	  if ($verradPermisos == "Full"  or $datoVer=="985" ) {
 	  ?>
       	<input type=button name="mostrar_causal" value="..." class="btn btn-primary btn-xs" onClick="window.open(<?=$datosEnviar?>,'Tipificacion_Documento','height=300,width=750,scrollbars=no')">
-      <?
-	  } 
-	  ?>
-	  </small></td></tr><td><small><b>
-    Poblaci&oacute;n</b><td><small> <?=$tema_nombre ?>
-      <? 
-	  if ($verradPermisos == "Full"  or $datoVer=="985") {
-	  ?>
-      <input type=button name="mostrar_temas" id='mostrar_temas'  value='...' class="btn btn-primary btn-xs" onClick="ver_temas();">
       <?
 	  }
 }
