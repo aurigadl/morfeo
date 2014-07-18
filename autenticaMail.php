@@ -15,6 +15,7 @@ function checkMailuser($username,$password,$ruta_raiz){
   $pop3->html_debug               = 1;     /* Debug information is in HTML                */
   $pop3->join_continuation_header_lines=1; /* Concatenate headers split in multiple lines */
   $pop3->Open();
+//echo "$username,$password,$apop";
   $connect = $pop3->Login($username,$password,$apop);
   
   if (!$connect) 

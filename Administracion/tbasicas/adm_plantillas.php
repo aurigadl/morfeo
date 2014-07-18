@@ -1,6 +1,6 @@
 <?php
+
 /**
-* @module crearUsuario
 *
 * @author Jairo Losada   <jlosada@gmail.com>
 * @author Cesar Gonzalez <aurigadl@gmail.com>
@@ -54,7 +54,7 @@ if (@!file_exists($direcTor)) {
 * Plantillas agregar y eliminar
 *****************************************/
 //Eliminar plantillas si se envian la solicitud
-if(($btn_acc == Borrar)){
+if(($btn_acc == "Borrar")){
     if(!empty($nomPlant)){
         $doc->load($archivo3);
         $campos     = $doc->getElementsByTagName("campo");
@@ -111,15 +111,16 @@ if(@!$doc->load($archivo3)){
 }
 
 
-if($btn_acc == adjuntar){
+if($btn_acc == "adjuntar"){
 
-	$extension = end(explode('.',$_FILES['userfile']['name']));
-
+    $extension = end(explode('.',$_FILES['userfile']['name']));
     $nomb       = "plant".time().rand(0,1000).".".$extension;
     $uploadfile = $direcTor.$nomb;
+var_dump($uploadfile);
     $tipValidoOdt  = 'application/vnd.oasis.opendocument.text';
     $tipoValidoDocx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
     $tipoValidoXls = 'application/vnd.ms-excel';
+var_dump(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile));
     $tipValidoOds = 'application/vnd.oasis.opendocument.spreadsheet';
     if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile) &&
            ($_FILES['userfile']['type']==$tipoValidoXls) ||  ($_FILES['userfile']['type']==$tipValidoOds) || ($_FILES['userfile']['type'] == $tipValidoOdt) || ($_FILES['userfile']['type'] == $tipoValidoDocx)){
@@ -130,8 +131,10 @@ if($btn_acc == adjuntar){
 
         $r = $doc3->createElement("campos");
         $doc3->appendChild($r);
+
         $plantill[] = array('nombre' => $_FILES['userfile']['name'],
                             'ruta'   => $nomb);
+
         foreach($plantill as $campo){
             $b = $doc3->createElement( "campo" );
             if(!empty($campo)){
@@ -168,7 +171,7 @@ if(!empty($plantill)){
 /****************************************
  * Modificar datos en el xml
  *****************************************/
-if($btn_acc == Modificar){
+if($btn_acc == "Modificar"){
     $formSim  = explode(",", trim($simple));
     $formMas  = explode(",", trim($masiva));
     $formPlan = explode(",", trim($planti));
