@@ -459,7 +459,7 @@ if($verradPermisos=="Full"){ ?>
             <option value="8">a Informar...</option>
             <option value="12	">Devolver...</option>
             <option value="13">Archivar...</option>
-            <option value="14">Agendar...</option>
+           <!--  <option value="14">Agendar...</option> -->
           </select>
         </label>
         <label class="select" > <?=$depencia?> </label>

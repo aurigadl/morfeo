@@ -1,13 +1,32 @@
 <?php
+/**
+* @author Jairo Losada   <jlosada@gmail.com>
+* @author Cesar Gonzalez <aurigadl@gmail.com>
+* @license  GNU AFFERO GENERAL PUBLIC LICENSE
+* @copyright
+
+SIIM2 Models are the data definition of SIIM2 Information System
+Copyright (C) 2013 Infometrika Ltda.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 session_start();
 
     $ruta_raiz = "."; 
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");
-/**
-  * Se añadio compatibilidad con variables globales en Off
-  * @autor Jairo Losada 2009-05
-  */
 define('ADODB_ASSOC_CASE', 2);
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
@@ -36,18 +55,22 @@ $ruta_raiz = ".";
 $verrad = "";
 ?>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="./estilos/orfeo.css">
-<script src="./js/popcalendar.js"></script>
-<script src="./js/mensajeria.js"></script>
- <div id="spiffycalendar" class="text"></div>
+<html>
+
+  <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap core CSS -->
+  <?php include_once "htmlheader.inc.php"; ?>
+  <script src="./js/popcalendar.js"></script>
+  <script src="./js/mensajeria.js"></script>
+<div id="spiffycalendar" class="text"></div>
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 </head>
 <?
 include "./envios/paEncabeza.php";
 ?>
-<body bgcolor="#FFFFFF" topmargin="0" onLoad="window_onload();">
+<body class="smart-form" topmargin="0" onLoad="window_onload();">
 
 <?php
    include_once "./include/db/ConnectionHandler.php";
@@ -93,8 +116,8 @@ if ($swLog==1)
    $linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo&carpeta=8";
    $encabezado = "".session_name()."=".session_id()."&adodb_next_page=1&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion&carpeta=8&tipo_carp=$tipo_carp&nomcarpeta=Agendados&agendado=$agendado&orderTipo=$orderTipo&orderNo=";
 ?>
-<TABLE width="100%" align="center" cellspacing="0" cellpadding="0" class="borde_tab">
-<tr class="tablas">
+<TABLE  class="table table-bordered">
+<tr >
 	<TD >
 	<span class="etextomenu">
 	<FORM name="form_busq_rad" id="form_busq_rad" action='<?=$_SERVER['PHP_SELF']?>?<?=$encabezado?>' method="GET">
@@ -136,7 +159,7 @@ if ($swLog==1)
 		  </tr>
 	 </table>
 	 
-<form name="form1" id="form1" action="./tx/formEnvio.php?<?=$encabezado?>" method="GET">
+<form name="form1" id="form1" action="./tx/formEnvio.php?<?=$encabezado?>" method="GET" class="smart-form">
   <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'> 
   <?php
   $controlAgenda=1;
