@@ -212,7 +212,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
                     </div>
 
-                <table id="dt_basic" class="table table-striped table-hover smart-form"">
+                <table id="dt_basic" class="table table-striped table-hover smart-form">
                   <thead>
                     <tr>
                       <th  width=20>
@@ -345,7 +345,8 @@ $_SESSION['numExpedienteSelected'] = null;
 		 * BASIC
 		 */
 		$('#dt_basic').dataTable({
-			"sPaginationType" : "bootstrap_full"
+			 "lengthMenu": [[10, 25, 50, -3], [10, 25, 50, "All"]],
+			 "iDisplayLength" : 25,
 		});
 
 		/* END BASIC */
@@ -387,7 +388,7 @@ $_SESSION['numExpedienteSelected'] = null;
 		 * COL ORDER
 		 */
 		$('#datatable_col_reorder').dataTable({
-			"sPaginationType" : "bootstrap",
+			"lengthMenu": [[10, 25, 50, -3], [10, 25, 50, "All"]],
 			"sDom" : "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
 			"fnInitComplete" : function(oSettings, json) {
 				$('.ColVis_Button').addClass('btn btn-default btn-sm').html('Columns <i class="icon-arrow-down"></i>');
