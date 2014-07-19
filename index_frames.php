@@ -187,7 +187,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $numerot = ($rs1)? $rs1->fields["CONTADOR"] : 0;
   if($numerot>=1){
-    $link5show= "<li><a $enlace4 target=\"mainFrame\"> Tramite Conjunto ($numerot)</a></li>";
+    // $link5show= "<li><a $enlace4 target=\"mainFrame\"> Tramite Conjunto ($numerot)</a></li>";
   }
   //Ultimas transacciones del usuario
   $data     ="Ultimas Transacciones del Usuario";

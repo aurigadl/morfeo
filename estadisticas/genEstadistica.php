@@ -33,8 +33,11 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
 <html>
 <head>
-<title>ORFEO - IMAGEN ESTADISTICAS </title>
-  <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+<title>..:: <?=$_SESSION["entidad_largo"]?> ::..</title>
+  <?php 
+  // include $ruta_raiz."/config.php";
+  include_once "$ruta_raiz/htmlheader.inc.php"; 
+  ?>
 </head>
 <?php
 
@@ -42,10 +45,6 @@ $krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $usua_doc    = $_SESSION["usua_doc"];
 $codusuario  = $_SESSION["codusuario"];
-$tip3Nombre  = $_SESSION["tip3Nombre"];
-$tip3desc    = $_SESSION["tip3desc"];
-$tip3img     = $_SESSION["tip3img"];
-
 $nomcarpeta = $_GET["carpeta"];
 $tipo_carpt = $_GET["tipo_carpt"];
 
