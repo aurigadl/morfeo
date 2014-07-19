@@ -268,8 +268,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="SIIM2">
-        <meta name="keywords" content="siim, metrovivienda, gestion, misional">
-        <link rel="shortcut icon" href="./img/favicon.png">
+        <link rel="shortcut icon" href="./img/favicon.png" onClick="this.reload();">
         <!-- Bootstrap core CSS -->
         <link href="./estilos/bootstrap.min.css" rel="stylesheet">
         <!-- font-awesome CSS -->

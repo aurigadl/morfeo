@@ -225,6 +225,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <th>Fecha Radicado</th>
                       <th>Asunto</th>
                       <th>Remitente / Destinatario</th>
+                      <th>Referencia</th>
                       <th>Tipo Documento</th>
                       <th>Dias Restantes</th>
                       <th>Enviado Por</th>
@@ -239,6 +240,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
                     $numeroRadicado        = $rs->fields["HID_RADI_NUME_RADI"];
                     $fechaRadicado         = $rs->fields["HID_RADI_FECH_RADI"];
+                    $refRadicado        = $rs->fields["REFERENCIA"];
                     $asuntoRadicado        = $rs->fields["ASUNTO"];
                     $remitenteRadicado     = $rs->fields["REMITENTE"];
                     $tipoDocumentoRadicado = $rs->fields["TIPO DOCUMENTO"];
@@ -270,6 +272,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <td class="inbox-data-from"> <div><small><a href="<?=$linkVerRadicado?>" target="mainFrame"><?=$fechaRadicado?></a></small></div></td>
                       <td class="inbox-data-from"> <div><span><small><?=$asuntoRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$remitenteRadicado?></small> </div> </td>
+                      <td class="inbox-data-from"> <div><span><small><?=$refRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$tipoDocumentoRadicado?></small> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$diasRadicado?></small> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$enviadoPor?></small> </div> </td>

@@ -78,11 +78,7 @@ switch($db->driver)
 	   $whereFiltro = str_replace("b.radi_nume_radi","cast(b.radi_nume_radi as varchar(20))",$whereFiltro);
 
 		$redondeo="date_part('days', radi_fech_radi-".$db->conn->sysTimeStamp.")+floor(c.sgd_tpr_termino * 7/5)+(select count(1) from sgd_noh_nohabiles where NOH_FECHA between radi_fech_radi and ".$db->conn->sysTimeStamp.")";
-        if($dependencia==4240){
-          $whereCuentaI = ", b.RADI_CUENTAI ";
-	}else{
-          $whereCuentaI = "";
-        }
+          
 
 
 	$isql = 'select
@@ -91,8 +87,8 @@ switch($db->driver)
 				,'.$sqlFecha.' "DAT_Fecha Radicado"
 				,'.$sqlFecha.' "HID_RADI_FECH_RADI"
 				, b.RADI_NUME_RADI "HID_RADI_NUME_RADI"
-				'.$whereCuentaI.'
-				,b.RA_ASUN  "Asunto"'.
+				,b.RA_ASUN  "Asunto"
+				, b.RADI_CUENTAI "Referencia"'.
 				$colAgendado.
 				',d.SGD_DIR_NOMREMDES "Remitente"
 				,c.SGD_TPR_DESCRIP "Tipo Documento"
@@ -119,8 +115,7 @@ switch($db->driver)
 		'.$whereCarpeta.'
 		'.$sqlAgendado.'
 	  order by '.$order .' ' .$orderTipo
-	  . ' limit 5000 ';
+	  . ' limit 1000 ';
 	break;
 	}
-	//echo $isql;
 ?>
