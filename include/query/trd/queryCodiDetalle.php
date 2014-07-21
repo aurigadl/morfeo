@@ -21,6 +21,7 @@ switch($db->driver)
     $sqlFechaHoy = $db->conn->SQLDate('Y-m-d',$db->conn->sysTimeStamp);
 	case 'postgres':
 			$sqlConcat = $db->conn->Concat("$nomb_varc","'-'","$nomb_varde");
+      $sqlConcat = $db->conn->Concat("$nomb_varde","'-'","$nomb_varc");
       $sqlFechaHoy = $db->conn->sysTimeStamp;
 	break;		
 	}

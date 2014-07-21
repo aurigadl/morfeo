@@ -88,13 +88,13 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
       $expediente = new Expediente($db);
 
       if(!$expManual) {
-        $secExp = $expediente->secExpediente($dependencia,$codiSRD,$codiSBRD,$anoExp);
+        $secExp = $expediente->secExpediente($dependenciaExp,$codiSRD,$codiSBRD,$anoExp);
       }else {
         $secExp = $consecutivoExp;
       }
 
       $consecutivoExp   = substr("00000".$secExp,-5);
-      $cDependencia     = str_pad($dependencia, $digitosDependencia, "0", STR_PAD_LEFT);
+      $cDependencia     = str_pad($dependenciaExp, $digitosDependencia, "0", STR_PAD_LEFT);
       $numeroExpediente = $anoExp . $cDependencia . $trdExp . $consecutivoExp . $digCheck;
 
       foreach ( $_POST as $elementos => $valor ){
@@ -137,10 +137,10 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
 Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual) 
 </div>
 
-                    <table class="table table-bordered table-striped" width=80%>
+                    <table class="table table-bordered table-striped" width=100%>
                       <?php if( $numeroExpedienteE != 0 ) { ?>
                         <tr align="center" >
-                          <td width="33%" height="25" align="center" colspan="2">
+                          <td  align="center" colspan="2">
                               <font color="#CC0000" face="arial" size="2">
                                 Se ha creado el Expediente No.
                               </font>
@@ -159,19 +159,19 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                             $arrTRDExp = $expediente->getTRDExp( $numeroExpediente, $codserie, $tsub, $codProc );
                        ?>
                         <tr >
-                          <td>SERIE</td>
+                          <td><SMALL>Serie</SMALL></td>
                           <td>
                             <?php print $arrTRDExp['serie']; ?>
                         </td>
                       </tr>
                       <tr >
-                        <td>SUBSERIE</td>
+                        <td><SMALL>SubSerie</SMALL></td>
                         <td>
                             <?php print $arrTRDExp['subserie']; ?>
                         </td>
                       </tr>
                       <tr >
-                          <td>PROCESO</td>
+                          <td><SMALL>Proceso</SMALL></td>
                           <td>
                             <?php print $arrTRDExp['proceso']; ?>
                           </td>
@@ -181,10 +181,29 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                   </div>
                   <?php if (!isset( $Actualizar )){?>
                   <div ">
-                    <table class="table table-bordered table-striped" style="width:650;" align=center >
+                    <table class="table table-bordered table-striped" style="width:850;" align=center >
                       <tr>
-                        <td width="10"  >SERIE</td>
-                        <td width="200"  >
+                        <td   ><small>Dependencia</small></td>
+                        <td   ><small>
+                        <label class=select>
+                          <?php
+                          $queryDep = "select depe_nomb, d.depe_codi
+                            from dependencia d
+                            where
+                             d.depe_estado=1
+                            order by depe_nomb
+                          ";
+                          $rsD=$db->conn->Execute($queryDep);
+                          $comentarioDev = "Muestra las Series Docuementales";
+                          include "$ruta_raiz/include/tx/ComentarioTx.php";
+                          print $rsD->GetMenu2("dependenciaExp", $dependenciaExp, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
+                        ?><i></i>
+                        </label></small>
+                         </td>
+                      </tr>                    
+                      <tr>
+                        <td   ><small>Serie</small></td>
+                        <td   ><small>
                         <label class=select>
                           <?php
                           if(!$tdoc) $tdoc = 0;
@@ -196,6 +215,7 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                           $check=1;
                           $fechaf=date("dmy") . "_" . time("hms");
                           $num_car = 4;
+                          if(!$dependenciaExp) $dependenciaExp = $dependencia;
                           $nomb_varc = "s.sgd_srd_codigo";
                           $nomb_varde = "s.sgd_srd_descrip";
                           include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
@@ -203,22 +223,22 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                           $querySerie = "select distinct ($sqlConcat) as detalle, s.sgd_srd_codigo, s.sgd_srd_descrip
                             from sgd_mrd_matrird m, sgd_srd_seriesrd s
                             where
-                            (cast(m.depe_codi as varchar(".$digitosDependencia.")) = '$coddepe' or cast(m.depe_codi_aplica as varchar(".$digitosDependencia.")) like '%$coddepe%' or cast(m.depe_codi as varchar(".$digitosDependencia."))='$depDireccion')
+                            (cast(m.depe_codi as varchar(".$digitosDependencia.")) = '$dependenciaExp' or cast(m.depe_codi_aplica as varchar(".$digitosDependencia.")) like '%$dependenciaExp%' or cast(m.depe_codi as varchar(".$digitosDependencia."))='$depDireccion')
                               and s.sgd_srd_codigo = m.sgd_srd_codigo
                               and ".$db->sysdate()." between s.sgd_srd_fechini and s.sgd_srd_fechfin
-                            order by s.sgd_srd_codigo desc,  s.sgd_srd_descrip
+                            order by  s.sgd_srd_descrip, s.sgd_srd_codigo
                           ";
                           $rsD=$db->conn->Execute($querySerie);
                           $comentarioDev = "Muestra las Series Docuementales";
                           include "$ruta_raiz/include/tx/ComentarioTx.php";
                           print $rsD->GetMenu2("codserie", $codserie, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
                         ?><i></i>
-                        </label>
+                        </label></small>
                          </td>
                       </tr>
                       <tr>
-                        <td  >SUBSERIE</td>
-                        <td  ><label class=select> <?
+                        <td  ><small>SubSerie</small></td>
+                        <td  ><small><label class=select> <?
                           $nomb_varc = "su.sgd_sbrd_codigo";
                           $nomb_varde = "su.sgd_sbrd_descrip";
                           include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
@@ -249,11 +269,12 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                         $texp = $rs->fields["SGD_PEXP_CODIGO"];
                         ?><i></i>
                         </label>
+                        </small>
                         </td>
                       </tr>
                       <tr>
-                        <td  >PROCESO</td>
-                        <td class="listado5" colspan="2" >
+                        <td  ><small>Proceso</small></td>
+                        <td colspan="2" >
                         <label class=select>
                               <?
                                 $comentarioDev = "Muestra los procesos segun la combinacion Serie-Subserie";
@@ -282,7 +303,7 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                                         $expDesc = "<small> $expTerminos Dias Calendario de Termino Total </small>";
                                     }
                                 }
-                                print "<small>&nbsp;".$expDesc ."</small>";
+                                if($expDesc) print "<small>&nbsp;".$expDesc ."</small>";
                               ?>
                               <i></i>
                           </label>
@@ -291,9 +312,9 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                     </table>
                   </div>
                   <div >
-                    <table class="table table-bordered table-striped"  style="width:650;" align=center >
+                    <table class="table table-bordered table-striped"  style="width:850;" align=center >
                       <tr align="center">
-                        <td width="5" colspan=2>
+                        <td width="5" colspan=4>
                         <?
                         if(!$digCheck){
                           $digCheck = "E";
@@ -341,49 +362,44 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                           <option value='<?=(date('Y')-4)?>' <?=$datoss?>>
                           <?=(date('Y')-4)?>
                           </option>
-
-                          </option>
-
                           </select>
                           <i></i>
                           </label>
                          </section> 
-                         <section class="col col-2"><label class=input><input type=text name=depExp value='<?=$dependencia?>' class=select maxlength="3" size="2"> </label></section> 
+                         <section class="col col-2"><label class=input><input type=text name=depExp value='<?=$dependenciaExp?>' class=select maxlength="3" size="2"> </label></section> 
                          <section class="col col-2"><label class=input><input type=text name=depExp value='<?=$trdExp?>' class=select maxlength="4" size="5"> </label></section> 
                          <section class="col col-2"><label class=input><input type=text name=consecutivoExp value='<?=$consecutivoExp?>'  class=select maxlength="5" size=4> </label></section> 
                          <section class="col col-1"><label class=input><input type=text name=digCheckExp value='<?=$digCheck?>' class=select maxlength="1" size="1"> </label></section> 
                         <?
                         $cDependencia = str_pad($dependencia, $digitosDependencia, "0", STR_PAD_LEFT);
-                        $numeroExpediente = $anoExp . $cDependencia . $trdExp . $consecutivoExp . $digCheck;
+                        $numeroExpediente = $anoExp . $dependenciaExp . $trdExp . $consecutivoExp . $digCheck;
                         ?>
                         </center>
-                        </td></tr><tr><td colspan=2 align=center>
-                         <small>   A&ntilde;o-Dependencia-Serie Subserie-Consecutivo-E<br>
-                            El consecutivo "<?=$consecutivoExp?>" es temporal y puede cambiar en el momento de crear el expediente.</small>
-                        <br>
-                        <?=$numeroExpediente?>
-                        </td>
-                      </tr>
-                      <tr align="center">
-                        <td width="13%" height="25"  align="center" colspan=2>
-                        Consecutivo de Expediente Manual
+                         
+                         <small> <b><?=$numeroExpediente?></b> ( A&ntilde;o-Dependencia-Serie Subserie-Consecutivo-E<br>
+                            El consecutivo "<?=$consecutivoExp?>" es temporal y puede cambiar en el momento de crear el expediente.<br></small>
+                        <SMALL>Consecutivo de Expediente Manual </SMALL>
+                        
                         <?
                             if($expManual) $datoss=" checked "; else $datoss = "";
                         ?>
-                        <input type=checkbox name=expManual <?=$datoss?>  >
+                        <input type=checkbox name=expManual <?=$datoss?>  >&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                        <input type="button" name="Button" value="Buscar Etiqueta" class="btn btn-primary btn-xs" onClick="Start('buscarParametro.php?busq_salida=<?=$busq_salida?>&krd=<?=$krd?>',1124,620);">
                         </td>
                       </tr>
                       <?php
                       $sqlParExp  = "SELECT SGD_PAREXP_ETIQUETA, SGD_PAREXP_ORDEN,";
                       $sqlParExp .= " SGD_PAREXP_EDITABLE";
                       $sqlParExp .= " FROM SGD_PAREXP_PARAMEXPEDIENTE PE";
-                      $sqlParExp .= " WHERE PE.DEPE_CODI = ".$dependencia;
+                      $sqlParExp .= " WHERE PE.DEPE_CODI = ".$dependenciaExp;
                       $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN";
                       // print $sqlParExp;
                       $rsParExp = $db->conn->Execute( $sqlParExp );
+                      
                       while ( !$rsParExp->EOF ){ ?>
                       <tr align="center">
-                        <td width="13%" height="25"  align="left">
+                        <td  align="left" colspan=1>
+                        <SMALL>
                           <?php
                           $valorTxt = "";
                                 print $rsParExp->fields['SGD_PAREXP_ETIQUETA'];
@@ -403,30 +419,32 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                                 $valorTxt = trim(substr($valorTxt, 0, 120));
                             }
                           ?>
+                          </SMALL>
                         </td>
-                        <td width="13%" height="25"  align="left">
+                        <td align="left" colspan=2>
                         <?
+                          $parExpOrden = $rsParExp->fields['SGD_PAREXP_ORDEN'];
                           $nombreInput ="parExp_".$rsParExp->fields['SGD_PAREXP_ORDEN'];
                           if($_GET[$nombreInput]) $valorTxt = $_GET[$nombreInput];
                           if($_POST[$nombreInput]) $valorTxt = $_POST[$nombreInput];
                           $valorTxt = strtoupper(trim($valorTxt));
+                          if($parExpOrden==4){
+                        ?>
+                          <textarea name="<?=$nombreInput?>" rows="2" cols="60" <?php print $readonly; ?>><?=$valorTxt?></textarea>
+                        <?
+                        }else{
                         ?>
                           <input type="text" name="<?=$nombreInput?>" value="<?=$valorTxt?>" size="60" <?php print $readonly; ?>>
+                        <?
+                        }
+                        ?>
                         </td>
                       </tr>
                         <?php $rsParExp->MoveNext(); } ?>
-
-                      <tr align="center">
-                        <td width="13%" height="25"  align="center" colspan="2">
-                          <input type="button" name="Button" value="Buscar Etiqueta" class="btn btn-primary btn-xs" onClick="Start('buscarParametro.php?busq_salida=<?=$busq_salida?>&krd=<?=$krd?>',1024,420);">
-                        </td>
-                      </tr>
-
                       <tr>
-                        <td class=titulos5>
-                          Fecha de Inicio del Proceso.
-                        </td>
                         <td >
+                          <SMALL>Fecha de Inicio </SMALL><br>
+                        
                               <script language="javascript">
                               <?  if(!$fechaExp) $fechaExp = date("d/m/Y"); ?>
                               var dateAvailable1 = new ctlSpiffyCalendarBox("dateAvailable1", "TipoDocu", "fechaExp","btnDate1","<?=$fechaExp?>",scBTNMODE_CUSTOMBLUE);
@@ -437,10 +455,8 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                                 dateAvailable1.dateFormat="dd-MM-yyyy";
                               </script>
                         </td>
-                      </tr>
-                      <tr>
-                        <td class=titulos5>
-                          Usuario Responsable del Proceso
+                        <td >
+                          <small>Responsable</small>
                         </td>
                         <td >
                         <label class=select>
@@ -449,7 +465,7 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                           From Usuario U, Dependencia D
                           Where U.Usua_Esta='1'
                             And U.Depe_Codi=D.Depe_Codi
-                            and d.Depe_Codi=$dependencia
+                            and d.Depe_Codi=$dependenciaExp
                             order by d.depe_codi, u.usua_nomb";
                             //  -- And D.Dep_Direccion In (Select Dep_Direccion From Dependencia Where Depe_Codi=$dependencia)
                           $rsUs = $db->conn->Execute($queryUs);//var_dump($rsUS);
@@ -481,7 +497,7 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                 <div>
                   <table class="table table-bordered table-striped">
                     <tr align="center">
-                      <td width="33%" height="25"  align="center">
+                      <td  align="center">
                         <center>
                         <?php
                           if($tsub and $codserie && !$Actualizar and $usuaDocExp){
@@ -500,7 +516,7 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                       </td>
                     </tr>
                     <tr>
-                      <td width="650">
+                      <td width="750">
                         <center>
                           <input name="cerrar" type="button" class="btn btn-primary btn-xs" id="envia22" onClick="window.opener.$.fn.cargarPagina('expediente/lista_expedientes.php','tabs-a'); window.close();" value=" Cerrar ">
                         </center>
