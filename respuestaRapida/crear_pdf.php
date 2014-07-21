@@ -3,14 +3,13 @@
   require '../tcpdf/tcpdf.php';
   require '../config.php';
   
-  define ('AUTOR_PDF', 'Sistema de Gesti&oacute;n Documental Caliope');
-  define ('TITULO_PDF', 'Respuesta a solicitud');
-  define ('ASUNTO_PDF', 'Metrovivienda');
+  define ('AUTOR_PDF',    'Sistema de Gesti&oacute;n Documental Caliope');
+  define ('TITULO_PDF',   'Respuesta a solicitud');
+  define ('ASUNTO_PDF',   'Metrovivienda');
   define ('KEYWORDS_PDF', 'metrovivienda, respuesta, salida, generar');
   define ('IMAGEN_PDF', '../img/banerPDF.JPG');
   define ('ENTIDAD_DIR', $entidad_dir);
   define ('ENTIDAD_TEL', $entidad_tel);
-
 
   // Extend the TCPDF class to create custom Header and Footer
   class MYPDF extends TCPDF {

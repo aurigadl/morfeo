@@ -256,7 +256,7 @@ if(trim($linkarchivo))
   }
 		?>
 	</small></td>
-	<td >
+	<td>
 	<?php
 
   //*********************************************
@@ -267,13 +267,13 @@ if(trim($linkarchivo))
     
   if ($permitir_radicar and $es_extension){
       if (!$rs->fields["RADI_NUME_SALIDA"]){
-        if((($num_archivos>=2 and substr($verrad,-1)!=2) or (substr($verrad,-1) == 2 or $num_archivos>=2 ))){
+        if((($num_archivos>=2 and substr($verrad,-1)!=2) or (substr($verrad,-1) == 2 or (substr($verrad,-1) == 9) or $num_archivos>=2 ))){
         echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"radicarArchivo('$coddocu','$linkarchivo','si',0,'$tpradic','$aplinteg','$numextdoc');\"> <img src='img/icono_radicar.png' title='Generar Radicado (-$tpradic)'> </a>";
         $radicado = "false";
         $anexo = $cod_radi;
     }
-    // echo "(substr($verrad,-1)!=2) and $num_archivos==1 ;
-    if((substr($verrad,-1)!=2) and $num_archivos==1 ){
+
+    if((substr($verrad,-1)!=2) and (substr($verrad,-1)!=9) and $num_archivos==1 ){
       echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> <img src='img/icono_radicar.png' title='Asignar Radicado (-$tpradic)'> </a>";
       $radicado = "false";
       $anexo = $cod_radi;
