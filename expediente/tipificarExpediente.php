@@ -132,10 +132,10 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&opcionExp=$opcionE
     } ?>
 
 <div class="widget-body no-padding" width=80% align=center>
-<div class="alert alert-info no-margin fade in" width=80%>
+<!--<div class="alert alert-info no-margin fade in" width=80%>
 <i class="fa-fw fa fa-info"></i>
 Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual) 
-</div>
+</div> -->
 
                     <table class="table table-bordered table-striped" width=100%>
                       <?php if( $numeroExpedienteE != 0 ) { ?>
@@ -187,7 +187,7 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                         <td   ><small>
                         <label class=select>
                           <?php
-                          $queryDep = "select depe_nomb, d.depe_codi
+                          $queryDep = "select depe_nomb||' - '||depe_codi, d.depe_codi
                             from dependencia d
                             where
                              d.depe_estado=1
@@ -371,6 +371,8 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                          <section class="col col-2"><label class=input><input type=text name=depExp value='<?=$trdExp?>' class=select maxlength="4" size="5"> </label></section> 
                          <section class="col col-2"><label class=input><input type=text name=consecutivoExp value='<?=$consecutivoExp?>'  class=select maxlength="5" size=4> </label></section> 
                          <section class="col col-1"><label class=input><input type=text name=digCheckExp value='<?=$digCheck?>' class=select maxlength="1" size="1"> </label></section> 
+                        </td></tr>
+                        <tr><td colspan=4 align=center>
                         <?
                         $cDependencia = str_pad($dependencia, $digitosDependencia, "0", STR_PAD_LEFT);
                         $numeroExpediente = $anoExp . $dependenciaExp . $trdExp . $consecutivoExp . $digCheck;
