@@ -39,9 +39,9 @@
   $enviadoA       = '';
   $cCopOcu        = '';
 
-  $ddate          = date("d");
-  $mdate          = date("m");
-  $adate          = date("Y");
+  $ddate          = date('d');
+  $mdate          = date('m');
+  $adate          = date('Y');
   $fechproc4      = substr($adate,2,4);
   $fecha1         = time();
   $fecha          = fechaFormateada($fecha1);
@@ -135,7 +135,7 @@
   $rad->radiCuentai   = 'null';  // ok, Cuenta Interna, Oficio, Referencia
   $rad->eespCodi      = $iden;   //codigo emepresa de servicios publicos bodega
   $rad->mrecCodi      = 3;       // medio de correspondencia, 3 internet
-  $rad->radiFechOfic  = "$ddate/$mdate/$adate"; // igual fecha radicado;
+  $rad->radiFechOfic  = 'now()'; // igual fecha radicado;
   $rad->radiNumeDeri  = $numRadicadoPadre; //ok, radicado padre
   $rad->radiPais      = $pais;   //OK, codigo pais
   $rad->descAnex      = '.';     //OK anexos
@@ -163,12 +163,12 @@
       die;
   }
 
-  $sql_radi_cuentai = 'SELECT radi_cuentai FROM radicado WHERE radi_nume_radi = ' $numRadicadoPadre;
+  $sql_radi_cuentai = 'SELECT radi_cuentai FROM radicado WHERE radi_nume_radi = ' . $numRadicadoPadre;
 
-  $rs_radi_cuentai = $db->Execute($sql_radi_cuentai);
+  $rs_radi_cuentai = $db->conn->Execute($sql_radi_cuentai);
   $referencia = '';
 
-  if ($rs_radi_cuentai->EOF)
+  if (!$rs_radi_cuentai->EOF)
     $referencia = $rs_radi_cuentai->fields["RADI_CUENTAI"];
   
   //datos para guardar los anexos en la carpeta del nuevo radicado
