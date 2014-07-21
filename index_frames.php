@@ -277,6 +277,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <link href="./estilos/siim_temp.css" rel="stylesheet">
         <script type="text/javascript" src="<?=$ruta_raiz?>/js/jquery.min.js"></script>
         <script type="text/javascript" src="<?=$ruta_raiz?>/js/bootstrap.js"></script>
+        <script>
+            function recapagi() {
+                location.reload();
+            }
+        </script>
     </head>
 
     <body>
@@ -292,7 +297,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">siim</a>
+              <a class="navbar-brand"  onclick="recapagi()" href="#">siim</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

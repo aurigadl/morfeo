@@ -87,6 +87,7 @@ function arrayToJsArray( $array, $name, $nl = "\n", $encoding = false ) {
 
 require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler($ruta_raiz);
+
 $error = 0;
 
 
