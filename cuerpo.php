@@ -224,10 +224,11 @@ $_SESSION['numExpedienteSelected'] = null;
                       <th>Fecha Radicado</th>
                       <th>Asunto</th>
                       <th>Remitente / Destinatario</th>
+                      <th>Enviado Por</th>
                       <th>Referencia</th>
                       <th>Tipo Documento</th>
                       <th>Dias Restantes</th>
-                      <th>Enviado Por</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -271,10 +272,11 @@ $_SESSION['numExpedienteSelected'] = null;
                       <td class="inbox-data-from"> <div><small><a href="<?=$linkVerRadicado?>" target="mainFrame"><?=$fechaRadicado?></a></small></div></td>
                       <td class="inbox-data-from"> <div><span><small><?=$asuntoRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$remitenteRadicado?></small> </div> </td>
+                      <td class="inbox-data-from"> <div> <small><?=$enviadoPor?></small> </div> </td>
                       <td class="inbox-data-from"> <div><span><small><?=$refRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$tipoDocumentoRadicado?></small> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$diasRadicado?></small> </div> </td>
-                      <td class="inbox-data-from"> <div> <small><?=$enviadoPor?></small> </div> </td>
+
                     </tr>
                   <?php
                   $rs->MoveNext();
