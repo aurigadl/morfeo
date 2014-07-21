@@ -480,24 +480,26 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                   </table>
                 </div>
                 <? if( $crearExpediente ) { ?>
-                <div class="">
-                  <table class="table table-bordered table-striped" width=650>
+                <div  id='confirmacionExp' style="position:absolute;left:10px; top:20px;height=1400;width=400">
+                  <table class="table table-striped smart-form dataTable " height="500" >
                     <tr align="center">
-                      <td align="center">
+                      <td align="center" height=800>
                         <center class="alert alert-info no-margin fade in">
                             ESTA SEGURO DE CREAR EL EXPEDIENTE ? <BR>
                             EL EXPEDIENTE QUE VA HA CREAR ES EL :
                         </center><b><center class="style1"><?=$numeroExpediente?></center> </b>
                         <div align="justify"><br>
                               <small><b>Recuerde:</b>No podr&aacute; modificar el numero de expediente si hay un error en el expediente, mas adelante tendr&aacute; que excluir este radicado del expediente y si es el caso solicitar la anulaci&oacute;n del mismo. Ademas debe tener en cuenta que apenas coloca un nombre de expediente, en Archivo crean una carpeta f&iacute;sica en el cual empezaran a incluir los documentos pertenecientes al mismo. </small>
-                        </div>
-                      </td>
-                    </tr>
+                        </div><footer>
+                        <input name="Actualizar" type=submit class="btn btn-primary btn-xs" value=" Confirmacion Creacion de Expediente ">
+                        <input name="Actualizar" type=button class="btn btn-success btn-xs" value=" Cancelar Creaci&oacute;n " onclick="ocultarConfirmaExp();">
+                        </footer></td>
                   </table>
+
                 </div>
                 <?} } ?>
                 <div>
-                  <table class="table table-bordered table-striped">
+                  <table class="table table-bordered" >
                     <tr align="center">
                       <td  align="center">
                         <center>
@@ -510,7 +512,7 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                                 echo "<input name=\"crearExpediente\" type=submit class=\"btn btn-primary btn-xs\" value=\" Crear Expediente \">";
                               }
                             }else{
-                              echo "<input name=\"Actualizar\" type=submit class=\"btn btn-primary btn-xs\" value=\" Confirmacion Creacion de Expediente \">";
+                              // echo "<input name=\"Actualizar\" type=submit class=\"btn btn-primary btn-xs\" value=\" Confirmacion Creacion de Expediente \">";
                             }
                           }
                         ?>
@@ -569,7 +571,11 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
       }
       return;
     }
-  </script>
+                    function ocultarConfirmaExp(){
+                      // $("#confirmacionExp").addClass('hide');
+                      $("#confirmacionExp").hide();
+                    }
+                  </script>
   <?=$mensaje_err?>
  </body>
 </html>

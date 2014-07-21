@@ -146,6 +146,7 @@ $nurad       = $_GET["nurad"];
 if($seriesVistaTodos!=1){
         $sql.="  AND  DEPE_CODI =  '$coddepe'";
 }
+echo "NO discriminañ...";
 	$rs=$db->conn->query($sql);
 	$radiNumero = $rs->fields["RADI_NUME_RADI"];
 
@@ -260,12 +261,14 @@ function regresar(){
    	include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
 	$querySerie = "select distinct($sqlConcat) as detalle, s.sgd_srd_codigo 
 	     from sgd_mrd_matrird m, sgd_srd_seriesrd s
-			 where (cast(m.depe_codi as varchar(5)) = '$coddepe' or m.depe_codi_aplica like '%$coddepe%' or cast(m.depe_codi as varchar(5))='$depDireccion')
-						 and s.sgd_srd_codigo = m.sgd_srd_codigo
+			 where 
+						  s.sgd_srd_codigo = m.sgd_srd_codigo
 			       and CAST(m.sgd_mrd_esta AS numeric(1) )       = 1 
              and ".$db->sysdate()." between s.sgd_srd_fechini and s.sgd_srd_fechfin";
 	if($seriesVistaTodos!=1){
-		 $querySerie .= " and m.depe_codi = $dependencia ";
+		 $querySerie .= " and (cast(m.depe_codi as varchar(5)) = '$coddepe' or m.depe_codi_aplica like '%$coddepe%' or cast(m.depe_codi as varchar(5))='$depDireccion') ";
+	}else{
+	  
 	}
 	
 			//     and ".$sqlFechaHoy." between $sgd_srd_fechini and $sgd_srd_fechfin
@@ -288,14 +291,14 @@ function regresar(){
    	$querySub = "select distinct ($sqlConcat) as detalle, su.sgd_sbrd_codigo 
 	         from sgd_mrd_matrird m, sgd_sbrd_subserierd su
 			 where
-         (cast(m.depe_codi as varchar(5)) = '$coddepe' or m.depe_codi_aplica  like '%$coddepe%' or cast(m.depe_codi as varchar(5))='$depDireccion')
-         and cast(m.sgd_mrd_esta as numeric(1))       = 1
+         cast(m.sgd_mrd_esta as numeric(1))       = 1
 			   and m.sgd_srd_codigo = $codserie
 				 and su.sgd_srd_codigo = $codserie
 			   and su.sgd_sbrd_codigo = m.sgd_sbrd_codigo
          and ".$db->sysdate()." between su.sgd_sbrd_fechini and su.sgd_sbrd_fechfin ";
 	if($seriesVistaTodos!=1){
-		// $querySub .= " and m.depe_codi = $dependencia ";
+		 $querySub .= " and (cast(m.depe_codi as varchar(5)) = '$coddepe' or m.depe_codi_aplica  like '%$coddepe%' or cast(m.depe_codi as varchar(5))='$depDireccion') ";
+		
 	}
  	$querySub .= " order by 1
 			  ";
