@@ -18,7 +18,7 @@ function verTipoExpediente(numeroExpediente,codserie,tsub,tdoc,opcionExp) {
 		$ind_ProcAnex = "N";
 	  	$fechaH = Date("Ymdhis");
   ?>
-  window.open("./expediente/tipificarExpediente.php?opcionExp="+opcionExp+"&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&codserie="+codserie+"&tsub="+tsub+"&tdoc="+tdoc+"&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","MflujoExp<?=$fechaH?>","height=750,width=850,scrollbars=yes");
+  window.open("./expediente/tipificarExpediente.php?opcionExp="+opcionExp+"&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&codserie="+codserie+"&tsub="+tsub+"&tdoc="+tdoc+"&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","MflujoExp<?=$fechaH?>","height=850,width=970,scrollbars=yes");
 }
 function verHistExpediente(numeroExpediente,codserie,tsub,tdoc,opcionExp) {
   <?php
@@ -99,7 +99,7 @@ function CambiarE(est,numeroExpediente) {
 }
 function insertarExpediente()
 {
-  window.open( "./expediente/insertarExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=900,width=1040,scrollbars=yes" );
+  window.open( "./expediente/insertarExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>","HistExp<?=$fechaH?>","height=900,width=1100,scrollbars=yes" );
 }
 function verWorkFlow(numeroExpediente, codigoProceso){
   var numeroExpediente = numeroExpediente || '';
