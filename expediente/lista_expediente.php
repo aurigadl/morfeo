@@ -190,7 +190,7 @@ if ( $expIncluido != "" ) {
 	}
 	if( $arrDatosParametro != "" ) {
 		foreach( $arrDatosParametro as $clave => $datos ) {
-           echo "<small><br><b>".ucwords(strtolower($datos['etiqueta'])).":</b>".ucwords(strtolower($datos['parametro'])). "</small>";
+           echo "<small><br><b>".ucwords(strtolower($datos['etiqueta'])).":</b>".ucwords(strtolower(htmlentities($datos['parametro']))). "</small>";
         }
       }
     ?>
