@@ -132,6 +132,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     $rs->MoveNext();
   }
+  //$data       = "Documenos para Visto Bueno";
+  //$link1      = $enlace."$fechah&nomcarpeta=$data&carpeta=11&tipo_carpt=0\"";
+  //$link1show .= "<li><a $link1 target=\"mainFrame\" >Visto Bueno ()</a></li>";
 
   //Agendado
   $isql        =" SELECT COUNT(1) AS CONTADOR
@@ -184,9 +187,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $numerot = ($rs1)? $rs1->fields["CONTADOR"] : 0;
   if($numerot>=1){
-    $link5show= "<li><a $enlace4 target=\"mainFrame\"> Tramite Conjunto ($numerot)</a></li>";
+    // $link5show= "<li><a $enlace4 target=\"mainFrame\"> Tramite Conjunto ($numerot)</a></li>";
   }
-
   //Ultimas transacciones del usuario
   $data     ="Ultimas Transacciones del Usuario";
   $link6    = $enlace5."$fechah&nomcarpeta=$data&tipo_carpt=0\"";
@@ -266,8 +268,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="SIIM2">
-        <meta name="keywords" content="siim, metrovivienda, gestion, misional">
-        <link rel="shortcut icon" href="./img/favicon.png">
+        <link rel="shortcut icon" href="./img/favicon.png" onClick="this.reload();">
         <!-- Bootstrap core CSS -->
         <link href="./estilos/bootstrap.min.css" rel="stylesheet">
         <!-- font-awesome CSS -->
@@ -276,6 +277,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <link href="./estilos/siim_temp.css" rel="stylesheet">
         <script type="text/javascript" src="<?=$ruta_raiz?>/js/jquery.min.js"></script>
         <script type="text/javascript" src="<?=$ruta_raiz?>/js/bootstrap.js"></script>
+        <script>
+            function recapagi() {
+                location.reload();
+            }
+        </script>
     </head>
 
     <body>
@@ -291,7 +297,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">siim</a>
+              <a class="navbar-brand"  onclick="recapagi()" href="#">siim</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

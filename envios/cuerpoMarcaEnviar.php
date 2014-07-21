@@ -34,7 +34,6 @@ $tip3Nombre  = $_SESSION["tip3Nombre"];
 $tip3desc    = $_SESSION["tip3desc"];
 $tip3img     = $_SESSION["tip3img"];
 
-
 $adodb_next_page=$_GET["adodb_next_page"];
 if($_GET["gen_lisDefi"]) $gen_lisDefi=$_GET["gen_lisDefi"];
 if($_GET["dep_sel"]) $dep_sel=$_GET["dep_sel"];
@@ -55,6 +54,7 @@ include_once "$ruta_raiz/class_control/TipoDocumento.php";
 include_once "$ruta_raiz/class_control/firmaRadicado.php";
 
 $db = new ConnectionHandler($ruta_raiz);
+//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 //Se crea el objeto de an�lisis de firmas
 $objFirma = new  FirmaRadicado($db);
@@ -355,7 +355,7 @@ function marcar(){
                     */
 
                             include "$ruta_raiz/include/query/envios/queryCuerpoMarcaEnviar.php";
-
+//$db->conn->debug = true;
 
                             $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
                               $rs=$db->query($isql);

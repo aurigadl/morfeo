@@ -269,9 +269,8 @@ function regresar(){
 	}
 	
 			//     and ".$sqlFechaHoy." between $sgd_srd_fechini and $sgd_srd_fechfin
-	$querySerie .= "
-			  ";
-//        $db->conn->debug=true;
+      //  $db->conn->debug=true;
+  $querySerie .= " order by 1 ";
 	$rsD=$db->conn->query($querySerie);
 	$comentarioDev = "Muestra las Series Docuementales";
 	include "$ruta_raiz/include/tx/ComentarioTx.php";
@@ -298,7 +297,7 @@ function regresar(){
 	if($seriesVistaTodos!=1){
 		// $querySub .= " and m.depe_codi = $dependencia ";
 	}
- 	$querySub .= " order by detalle
+ 	$querySub .= " order by 1
 			  ";
 	$rsSub=$db->conn->query($querySub);
 	include "$ruta_raiz/include/tx/ComentarioTx.php";

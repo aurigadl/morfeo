@@ -112,8 +112,7 @@ $_SESSION['numExpedienteSelected'] = null;
   }
 
 
-  $sqlNoRad = "
-               select
+  $sqlNoRad = "select
                     b.carp_codi as carp, count(1) as COUNT
                from
                     radicado b left outer join SGD_TPR_TPDCUMENTO c on
@@ -212,7 +211,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
                     </div>
 
-                <table id="dt_basic" class="table table-striped table-hover smart-form"">
+                <table id="dt_basic" class="table table-striped table-hover smart-form">
                   <thead>
                     <tr>
                       <th  width=20>
@@ -225,6 +224,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <th>Fecha Radicado</th>
                       <th>Asunto</th>
                       <th>Remitente / Destinatario</th>
+                      <th>Referencia</th>
                       <th>Tipo Documento</th>
                       <th>Dias Restantes</th>
                       <th>Enviado Por</th>
@@ -239,6 +239,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
                     $numeroRadicado        = $rs->fields["HID_RADI_NUME_RADI"];
                     $fechaRadicado         = $rs->fields["HID_RADI_FECH_RADI"];
+                    $refRadicado        = $rs->fields["REFERENCIA"];
                     $asuntoRadicado        = $rs->fields["ASUNTO"];
                     $remitenteRadicado     = $rs->fields["REMITENTE"];
                     $tipoDocumentoRadicado = $rs->fields["TIPO DOCUMENTO"];
@@ -270,6 +271,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <td class="inbox-data-from"> <div><small><a href="<?=$linkVerRadicado?>" target="mainFrame"><?=$fechaRadicado?></a></small></div></td>
                       <td class="inbox-data-from"> <div><span><small><?=$asuntoRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$remitenteRadicado?></small> </div> </td>
+                      <td class="inbox-data-from"> <div><span><small><?=$refRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$tipoDocumentoRadicado?></small> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$diasRadicado?></small> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$enviadoPor?></small> </div> </td>
@@ -342,7 +344,8 @@ $_SESSION['numExpedienteSelected'] = null;
 		 * BASIC
 		 */
 		$('#dt_basic').dataTable({
-			"sPaginationType" : "bootstrap_full"
+			 "lengthMenu": [[10, 25, 50, -3], [10, 25, 50, "All"]],
+			 "iDisplayLength" : 25,
 		});
 
 		/* END BASIC */
@@ -384,7 +387,7 @@ $_SESSION['numExpedienteSelected'] = null;
 		 * COL ORDER
 		 */
 		$('#datatable_col_reorder').dataTable({
-			"sPaginationType" : "bootstrap",
+			"lengthMenu": [[10, 25, 50, -3], [10, 25, 50, "All"]],
 			"sDom" : "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
 			"fnInitComplete" : function(oSettings, json) {
 				$('.ColVis_Button').addClass('btn btn-default btn-sm').html('Columns <i class="icon-arrow-down"></i>');

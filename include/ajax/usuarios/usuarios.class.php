@@ -1,7 +1,6 @@
 <?php
 include("../../../config.php");
 require_once 'HTML/AJAX/Action.php';
-ini_set("display_errors",1);
 /**
  * Clase Usuarios desde AJAX
  *
@@ -134,7 +133,7 @@ class usuarios{
     //return "$iSql   $depeCodiOrigen   $usuaCodiOrigen";
     $this->depeCodi = $depeCodiOrigen;
     $this->usuaCodi = $usuaCodiOrigen;
-    
+    //$this->db->conn->debug = true;
     $rsUs = $this->db->conn->Execute($iSql);
     $radicados = array_filter(explode(",", $radicado));
     //$var1 = "--> $idObjetoHtml+$radicados+$depeCodiOrigen+$usuaCodiOrigen+$depeCodiDestino+$usuaCodiDestino+{$observacion}";

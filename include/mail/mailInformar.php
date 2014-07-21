@@ -34,7 +34,7 @@ try {
 $mail->Host       = $hostPHPMailer; // SMTP server
 $mail->SMTPDebug  = $debugPHPMailer;                     // enables SMTP debug information (for testing) 2 debuger
 $mail->SMTPAuth   = true;
-$mail->SMTPSecure = "tls";                  // enable SMTP authentication
+//$mail->SMTPSecure = "tls";                  // enable SMTP authentication
 $mail->Host       = $hostPHPMailer; // sets the SMTP server
 $mail->Port       = $portPHPMailer;                    // set the SMTP port for the GMAIL server
 $mail->Username   = $userPHPMailer; // SMTP account username
@@ -42,7 +42,7 @@ $mail->Password   = $passwdPHPMailer;        // SMTP account password
 //  $mail->AddReplyTo('name@yourdomain.com', 'First Last');
 $mail->AddAddress($mailDestino, "$mailDestino");
 $mail->SetFrom($admPHPMailer, $admPHPMailer);
-$mail->AddReplyTo('sgdorfeo@correlibre.org', 'sgdorfeo');
+//$mail->AddReplyTo('sgdorfeo@correlibre.org', 'sgdorfeo');
   $mensaje = file_get_contents($ruta_raiz."/conf/MailRadicado.html");
 
   $asuntoMail =  $asuntoMailRadicado;
@@ -57,7 +57,7 @@ $mail->AddReplyTo('sgdorfeo@correlibre.org', 'sgdorfeo');
     $asuntoMail =  $asuntoMailReasignado;
   }
   
-  $mail->Subject = "OrfeoGPL: $asuntoMail"; 
+  $mail->Subject = "$entidad: $asuntoMail"; 
   $mail->AltBody = 'Para ver correctamente el mensaje, por favor use un visor de mail compatible con HTML!'; // optional - MsgHTML will create an alternate automatically
   $mensaje = str_replace("*RAD_S*", $radicadosSelText, $mensaje);
   $mensaje = str_replace("*USUARIO*", $krd, $mensaje);
@@ -68,7 +68,7 @@ $mail->AddReplyTo('sgdorfeo@correlibre.org', 'sgdorfeo');
   $mensaje = str_replace("*NOM_R*", $nom_r, $mensaje);
   $mensaje = str_replace("*RADICADO_PADRE*", $radicadopadre, $mensaje);
   $mensaje = str_replace("*MENSAJE*", $observa, $mensaje);
-  $mensaje .= "<hr>Sistema de gestion Orfeo. http://www.orfeogpl.org - http://www.correlibre.org";
+  $mensaje .= "<hr>$entidad_largo<br>Sistema de Gestion. http://www.correlibre.org";
   $mail->MsgHTML($mensaje);
   //$mail->AddAttachment('images/phpmailer.gif');      // attachment
   //$mail->AddAttachment('images/phpmailer_mini.gif'); // attachment

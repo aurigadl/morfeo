@@ -844,6 +844,7 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
     */
 	function getDatosParamExp( $numExp, $depeCodi )
 	{
+	   $depeExp = substr($numExp,4,3);
         $q_datosParametro  = "SELECT CASE WHEN PAREXP.SGD_PAREXP_ORDEN = 1 THEN SEXP.SGD_SEXP_PAREXP1";
         $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 2 THEN SEXP.SGD_SEXP_PAREXP2";
         $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 3 THEN SEXP.SGD_SEXP_PAREXP3";
@@ -854,11 +855,12 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
         $q_datosParametro .= " FROM SGD_SEXP_SECEXPEDIENTES SEXP,";
         $q_datosParametro .= " SGD_PAREXP_PARAMEXPEDIENTE PAREXP";
         $q_datosParametro .= " WHERE SEXP.SGD_EXP_NUMERO = '".$numExp."'";
-        $q_datosParametro .= " AND SEXP.DEPE_CODI = PAREXP.DEPE_CODI";
-        $q_datosParametro .= " AND SEXP.DEPE_CODI = ".$depeCodi;
+        //$q_datosParametro .= " AND SEXP.DEPE_CODI = PAREXP.DEPE_CODI";
+        $q_datosParametro .= " AND parexp.DEPE_CODI = ".$depeExp;
         // print $q_datosParametro;
-		$q_datosParametro .="ORDER BY SEXP.SGD_SEXP_FECH desc"	;
-        $rs_datosParametro = $this->db->conn->SelectLimit($q_datosParametro,2);
+		$q_datosParametro .=" ORDER BY SEXP.SGD_SEXP_FECH desc"	;
+		  // $this->db->conn->debug = true;
+        $rs_datosParametro = $this->db->conn->SelectLimit($q_datosParametro,5);
 
         $p = 0;
         while ( !$rs_datosParametro->EOF )

@@ -63,14 +63,14 @@ unset($frm);
 					<li>
 					<?php
 							$url = $servidorPyForms."seleccion_predios/get_predios_list?expediente=$numExpediente";
-							$predios2 = file_get_contents($url);
-							$predios = str_replace('"',"'",$predios2);
-							$arrPredios = json_decode($predios2);
-							$listPredios = "";
-							foreach($arrPredios as $key => $valor){
-							  $listPredios .= "'".$valor->chip ."',";
-							}
-							$listPredios .= "'0'";
+							//$predios2 = file_get_contents($url);
+							//$predios = str_replace('"',"'",$predios2);
+							//$arrPredios = json_decode($predios2);
+							//$listPredios = "";
+							//&&foreach($arrPredios as $key => $valor){
+							//  $listPredios .= "'".$valor->chip ."',";
+							//}
+							//$listPredios .= "'0'";
 							$vars = "&nombreProyecto=$param1($numExpediente)";
 						?>
 						<a  onClick="reportePredios(&quot;<?=$numExpediente?>&quot;,&quot;<?=$listPredios?>&quot;,&quot;<?=$vars?>&quot;,'modeloPredial');">Reporte Inventario de Predios </a>
@@ -190,7 +190,7 @@ if ( $expIncluido != "" ) {
 	}
 	if( $arrDatosParametro != "" ) {
 		foreach( $arrDatosParametro as $clave => $datos ) {
-           echo ">  ".$datos['etiqueta'].":".print $datos['parametro'];
+           echo "<small><br><b>".ucwords(strtolower($datos['etiqueta'])).":</b>".ucwords(strtolower(htmlentities($datos['parametro']))). "</small>";
         }
       }
     ?>

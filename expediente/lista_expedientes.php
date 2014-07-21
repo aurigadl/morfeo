@@ -18,7 +18,7 @@ function verTipoExpediente(numeroExpediente,codserie,tsub,tdoc,opcionExp) {
 		$ind_ProcAnex = "N";
 	  	$fechaH = Date("Ymdhis");
   ?>
-  window.open("./expediente/tipificarExpediente.php?opcionExp="+opcionExp+"&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&codserie="+codserie+"&tsub="+tsub+"&tdoc="+tdoc+"&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","MflujoExp<?=$fechaH?>","height=650,width=750,scrollbars=yes");
+  window.open("./expediente/tipificarExpediente.php?opcionExp="+opcionExp+"&numeroExpediente="+numeroExpediente+"&nurad=<?=$verrad?>&codserie="+codserie+"&tsub="+tsub+"&tdoc="+tdoc+"&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","MflujoExp<?=$fechaH?>","height=850,width=970,scrollbars=yes");
 }
 function verHistExpediente(numeroExpediente,codserie,tsub,tdoc,opcionExp) {
   <?php
@@ -71,7 +71,7 @@ function modFlujo(numeroExpediente,texp,codigoFldExp,ventana) {
 if(ventana=="Max"){
    opcVentana = "fullscreen=yes, scrollbars=auto";
   }else{
-   opcVentana = "height=250,width=750,scrollbars=yes";
+   opcVentana = "height=350,width=850,scrollbars=yes";
   }
 
 window.open("./flujo/modFlujoExp.php?codigoFldExp="+codigoFldExp+"&krd=<?=$krd?>&numeroExpediente="+numeroExpediente+"&numRad=<?=$verrad?>&texp="+texp+"&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>","TexpE<?=$fechaH?>",opcVentana);

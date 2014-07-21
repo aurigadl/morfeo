@@ -86,9 +86,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   if($ent == 2){
     $carp_codi         = 0;
     $rad->radiUsuaActu = 1;
+    $rad->radiDepeActu = $coddepe;
   }else{
     $carp_codi         = $ent;
     $rad->radiUsuaActu = $codusuario;
+    $rad->radiDepeActu = $dependencia;
   }
 
 
@@ -110,9 +112,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }
 
 
+
   $rad->radiNumeDeri = trim($radicadopadre);
   $rad->descAnex     = substr($ane, 0, 99);
-  $rad->radiDepeActu = "'$dependencia'";
   $rad->radiDepeRadi = "'$coddepe'";
   $rad->trteCodi     = $tip_rem;
   $rad->tdocCodi     = $tdoc;
@@ -214,7 +216,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "dpto_tmp"       => $_POST[$valor."_".dep_codigo],
             "pais"           => $_POST[$valor."_".pais],
             "pais_tmp"       => $_POST[$valor."_".pais_codigo],
-            "cont_tmp"       => 1,
+            "cont_tmp"       => $clave + 1 ,
             "tdid_codi"      => $_POST[$valor."_".tdid_codi],
             "sgdTrd"         => $sgdTrd,
             "id_sgd_dir_dre" => $id_sgd_dir_dre,

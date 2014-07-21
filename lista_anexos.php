@@ -272,7 +272,7 @@ if(trim($linkarchivo))
         $radicado = "false";
         $anexo = $cod_radi;
     }
-    // echo "(substr($verrad,-1)!=2) and $num_archivos==1 ;    
+    // echo "(substr($verrad,-1)!=2) and $num_archivos==1 ;
     if((substr($verrad,-1)!=2) and $num_archivos==1 ){
       echo "<a class=\"vinculos\" href=\"JavaScript:void(0);\" onclick=\"asignarRadicado('$coddocu','$linkarchivo','$cod_radi','$numextdoc');\"> <img src='img/icono_radicar.png' title='Asignar Radicado (-$tpradic)'> </a>";
       $radicado = "false";

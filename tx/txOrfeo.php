@@ -10,6 +10,41 @@ if(!$mostrar_opc_envio) $mostrar_opc_envio=0;
 ?>
 
 <script language="javascript">
+
+function markAll(){
+    if(document.form1.elements.checkAll.checked)
+    {
+        for(i=2;i<document.form1.elements.length;i++)
+        {
+            document.form1.elements[i].checked=1;
+        }
+    }
+    else
+    {
+        for(i=2;i<document.form1.elements.length;i++)
+        {
+            document.form1.elements[i].checked=0;
+        }
+    }
+    clickTx();
+}
+
+
+function clickTx(){
+    sw=0;
+    for(i=1;i<document.form1.elements.length;i++)
+        if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
+            sw=1;
+    if (sw==0)
+    {
+        document.getElementById('AccionCaliope').style.display = 'none';
+        return;
+    }else{
+        document.getElementById('AccionCaliope').style.display = '';
+    }
+}
+
+
 $( document ).ready(function(){
 
   function returnKrd(){
@@ -114,37 +149,7 @@ $( document ).ready(function(){
       document.form1.submit();
     }
 
-    function clickTx(){
-      sw=0;
-      for(i=1;i<document.form1.elements.length;i++)
-      if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
-          sw=1;
-      if (sw==0)
-      {
-      document.getElementById('AccionCaliope').style.display = 'none';
-      return;
-      }else{
-      document.getElementById('AccionCaliope').style.display = '';
-      }
-    }
 
-    function markAll(){
-      if(document.form1.elements.checkAll.checked)
-      {
-        for(i=2;i<document.form1.elements.length;i++)
-        {
-          document.form1.elements[i].checked=1;
-        }
-      }
-      else
-      {
-        for(i=2;i<document.form1.elements.length;i++)
-        {
-          document.form1.elements[i].checked=0;
-        }
-      }
-      clickTx();
-    }
 
 
 
@@ -456,7 +461,7 @@ if($verradPermisos=="Full"){ ?>
             <option value="8">a Informar...</option>
             <option value="12	">Devolver...</option>
             <option value="13">Archivar...</option>
-            <option value="14">Agendar...</option>
+           <!--  <option value="14">Agendar...</option> -->
           </select>
         </label>
         <label class="select" > <?=$depencia?> </label>
