@@ -154,10 +154,9 @@ $_SESSION['numExpedienteSelected'] = null;
   <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
   <!-- Bootstrap core CSS -->
   <?php include_once "htmlheader.inc.php"; ?>
-  <script src="./js/grabRadSessCarrito.js"></script>
 </head>
 
-<body onLoad="window_onload();">
+<body>
   <form name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/  >
   <div id="content" style="opacity: 1;">
 

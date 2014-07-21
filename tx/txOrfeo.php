@@ -29,6 +29,22 @@ function markAll(){
     clickTx();
 }
 
+
+function clickTx(){
+    sw=0;
+    for(i=1;i<document.form1.elements.length;i++)
+        if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
+            sw=1;
+    if (sw==0)
+    {
+        document.getElementById('AccionCaliope').style.display = 'none';
+        return;
+    }else{
+        document.getElementById('AccionCaliope').style.display = '';
+    }
+}
+
+
 $( document ).ready(function(){
 
   function returnKrd(){
@@ -131,20 +147,6 @@ $( document ).ready(function(){
         }
       <?}?>
       document.form1.submit();
-    }
-
-    function clickTx(){
-      sw=0;
-      for(i=1;i<document.form1.elements.length;i++)
-      if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
-          sw=1;
-      if (sw==0)
-      {
-      document.getElementById('AccionCaliope').style.display = 'none';
-      return;
-      }else{
-      document.getElementById('AccionCaliope').style.display = '';
-      }
     }
 
 
