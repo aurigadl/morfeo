@@ -21,7 +21,6 @@
   $anex    = new Anexo($db);
   $anexTip = new Anex_tipo($db);
   $mail    = new PHPMailer(true);
-
   
   // Es necesario liberar la variable ya que este se utilizara mas adelante como clase
   unset($anexo);
@@ -163,6 +162,14 @@
     header("Location: salidaRespuesta.php?$encabe&error=1");
       die;
   }
+
+  $sql_radi_cuentai = 'SELECT radi_cuentai FROM radicado WHERE radi_nume_radi = ' $numRadicadoPadre;
+
+  $rs_radi_cuentai = $db->Execute($sql_radi_cuentai);
+  $referencia = '';
+
+  if ($rs_radi_cuentai->EOF)
+    $referencia = $rs_radi_cuentai->fields["RADI_CUENTAI"];
   
   //datos para guardar los anexos en la carpeta del nuevo radicado
   $primerno  = substr($nurad, 0, 4);
@@ -180,8 +187,8 @@
                               SGD_DIR_DOC,
                               DPTO_CODI,
                               MUNI_CODI,
-                              id_pais,
-                              id_cont,
+                              ID_PAIS,
+                              ID_CONT,
                               SGD_DOC_FUN,
                               SGD_OEM_CODIGO,
                               SGD_CIU_CODIGO,
@@ -213,8 +220,9 @@
                               1,
                               $nextval,
                               '$dir_nombre')";
-
-  $rsg               = $db->conn->Execute($isql);
+  
+  $dignatario       = $dir_nombre;
+  $rsg              = $db->conn->Execute($isql);
 
   $mensajeHistorico  = "Se envia respuesta rapida";
 
@@ -425,10 +433,11 @@ if (!$bien) {
   $closing_result = fclose($file_content);
 }
 
-// REMPLAZAR DATOS EN EL ASUNTO
-//REMPLAZO DE DATOS
-$respuesta = str_replace('F_RAD_S', $fecharad, $respuesta);
-$respuesta = str_replace('RAD_S', $nurad, $respuesta);
+// Remplazar datos en el documento
+$respuesta = str_replace('*F_RAD_S*', $fecharad, $respuesta);
+$respuesta = str_replace('*RAD_S*', $nurad, $respuesta);
+$respuesta = str_replace('*DIGNATARIO*', $dignatario, $respuesta);
+$respuesta = str_replace('*REFERENCIA*', $referencia, $respuesta);
 $respuesta = str_replace("\xe2\x80\x8b", '', $respuesta);
 
 // CREACION DE PDF RESPUESTA AL RADICADO
