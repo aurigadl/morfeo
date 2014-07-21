@@ -129,8 +129,8 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 		}
 		if($prefijo!="HID_" AND $prefijo!="CHU_" AND $prefijo!="CHR_" AND $prefijo!="CHK_" AND $prefijo!="HOR_")
 		{
-			//$hdr .= "<Th class=titulos3><span class=titulos3>";
-			$hdr .= "<Th class=titulos3><a href='".$_SERVER['PHP_SELF']."?$encabezado&orden_cambio=1&ordenN0'><span class=titulos3>";
+			//$hdr .= "<th class=titulos3><span class=titulos3>";
+			$hdr .= "<th class='titulos3'><a href='".$_SERVER['PHP_SELF']."?$encabezado&orden_cambio=1&ordenN0'><span class='titulos3'>";
 			if($img_no==$i)
 				{
 					$hdr .= "<img src=$rutaRaiz/iconos/flecha$orderTipo.gif border=0>";
@@ -184,25 +184,21 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 	{
 	  if($ii==0)
 		{
-			$class_grid = "listado1";
+			$class_grid = 'listado1';
 			$ii=1;
 		}
 		else
 		{
-		  $class_grid = "listado2";
+		  $class_grid = 'listado2';
 			$ii = 0;
 		}
-		$s .= "<TR class=$class_grid valign=top>\n";
+		$s .= "<tr class='$class_grid' valign='top'>\n";
 			$estadoRad = $rsTmp->fields["HID_RADI_LEIDO"];
 			$radicado = $rsTmp->fields[$iRad];
 			if($radicado) include("$rutaRaiz/tx/imgRadicado.php");
-			if($estadoRad==1)
-			{
-				$radFileClass = "leidos";
-			}else
-			{
-				$radFileClass = "no_leidos";
-			}
+
+      $radFileClass = ($estadoRad==1)? '"leidos"' : '"no_leidos"';
+      
 		if (strlen(trim($estadoRad)) == 0)
 			$radFileClass = "leidos";
 		for ($i=0; $i < $ncols; $i++)
@@ -271,7 +267,7 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 			if ($vNext !=0 AND $vNext !=NULL AND $vNext1 ==3)
 			$v = "<img src=$rutaRaiz/imagenes/check_x.jpg alt='Debe Modificar el Documento para poder reenviarlo'  title='Debe Modificar el Documento para poder reenviarlo' >";
 			else
-			$v = "<input type=radio    name='valRadio' value=$chk_value class='ebuttons2'>";
+			$v = '<input type="radio" name="valRadio" value="' . $chk_value . '" class="ebuttons2">';
 			$special = "si";
 			break;
 			case 'CHK_';
@@ -281,9 +277,9 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 			if($checkAll==true) $valueCheck = " checked "; else $valueCheck = "";
 
 			if ($noCheckjDevolucion=="disable")
-			$v = "<img src=$rutaRaiz/imagenes/check_x.jpg alt='Debe Modificar el Documento para poder reenviarlo'  title='Debe Modificar el Documento para poder reenviarlo' >";
+			$v = "<img src='$rutaRaiz/imagenes/check_x.jpg' alt='Debe Modificar el Documento para poder reenviarlo' title='Debe Modificar el Documento para poder reenviarlo' >";
 			else
-			$v = "<input type=checkbox name='checkValue[$chk_value]' id='$chk_value' value='$chk_nomb' $valueCheck >";
+			$v = "<input type='checkbox' name='checkValue[$chk_value]' id='$chk_value' value='$chk_nomb' $valueCheck >";
 			$special = "si";
 			break;
                 case ($fname =='ACT_');
@@ -303,7 +299,7 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 			 * @funcion funlinkArchivo
 			 */
 			 
-			 	$v = "<a href=$rutaRaiz/bodega/$pathImagen><span class=$radFileClass>$v</span></a>";
+			 	$v = "<a href='$rutaRaiz/bodega/$pathImagen'><span class='$radFileClass'>$v</span></a>";
 			  }
 			else
 			{
@@ -420,13 +416,11 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
               */
 			// if($i ==$iRad)  $v = $imgEstado.$imgRad.$v;
 			//if($i ==$iRad)  $v = $imgEstado."&nbsp;".$imgExpediente.$imgRad.$v;
-			if($i ==$iRad)
-				{
-				if ($info_resp and $info_resp="'Responder'")
-						$v = $imgEstado."&nbsp;".$imgExpediente."&nbsp;".$imginfo.$imgRad.$v;
-				else
-					$v = $imgEstado."&nbsp;".$imgExpediente."&nbsp;".$imgRad.$v;
-				}
+			if($i ==$iRad) {
+        $v = ($info_resp and $info_resp="'Responder'")?
+                $imgEstado."&nbsp;".$imgExpediente."&nbsp;".$imginfo.$imgRad.$v : 
+                $imgEstado."&nbsp;".$imgExpediente."&nbsp;".$imgRad.$v;
+			}
 			break;
 		case 'DAT_';
 			$i_radicado = $i+1;
@@ -434,7 +428,7 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 			$fnameDAT = $fieldDAT->name;
 			// Modificado SGD 21-Septiembre-2007
 			$verNumRadicado = trim(strtoupper($rsTmp->fields[$fnameDAT]));
-			$v = "<a href=".$rutaRaiz."/verradicado.php?verrad=".$verNumRadicado."&".$encabezado."><span class=$radFileClass>".$v."</span></a>";
+			$v = "<a href='".$rutaRaiz."/verradicado.php?verrad=".$verNumRadicado."&".$encabezado."'><span class='$radFileClass'>".$v."</span></a>";
 			$special = "si";
 			break;
 		}
@@ -444,11 +438,11 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 		case 'D1':
 			if (!strpos($v,':'))
 			{
-				$s .= "	<TD><span class=$radFileClass>".$rsTmp->UserDate($v,"d-m-Y, H:i") ."&nbsp;</span></TD>\n";
+				$s .= "	<td><span class='$radFileClass'>".$rsTmp->UserDate($v,"d-m-Y, H:i") ."&nbsp;</span></TD>\n";
 				break;
 			}
 		case 'T1':
-		$s .= "	<TD><span class=$radFileClass>".$rsTmp->UserTimeStamp($v,"d-m-Y, H:I") ."&nbsp;</span></TD>\n";
+		$s .= "	<td><span class='$radFileClass'>".$rsTmp->UserTimeStamp($v,"d-m-Y, H:I") ."&nbsp;</span></td>\n";
 		break;
 		case 'I':
 		/*case 'N':
@@ -480,7 +474,7 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 			if (strlen($v) == 0) $v = '&nbsp;';
 			if(substr($fname,0,4)!="HID_" AND substr($fname,0,4)!="HOR_"  )
 			{
-				$s .= "	<TD><span class=$radFileClass>". str_replace("\n",'<br>',$v) ."</span></TD>\n";
+				$s .= "<td><span class='$radFileClass'>". str_replace("\n",'<br>',$v) ."</span></td>\n";
 			}
 			}
 		} // for
@@ -510,7 +504,7 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
         }
 
 
-		$s .= "</TR>\n\n";
+		$s .= "</tr>\n\n";
 		$rows += 1;
 		if ($rows >= $gSQLMaxRows) {
 			$rows = "<p>Truncated at $gSQLMaxRows</p>";
@@ -523,49 +517,49 @@ GLOBAL $gSQLMaxRows,$gSQLBlockRows,$HTTP_GET_VARS,$HTTP_SESSION_VARS;
 		if (!$rsTmp->EOF && $rows % $gSQLBlockRows == 0) {
 
 		//if (connection_aborted()) break;// not needed as PHP aborts script, unlike ASP
-			if ($echo) print $s . "</TABLE>\n\n";
-			else $html .= $s ."</TABLE>\n\n";
+			if ($echo) print $s . "</table>\n\n";
+			else $html .= $s ."</table>\n\n";
 			$s = $hdr;
 		}
 	} // while
 
-	if ($echo) print $s."</TABLE>\n\n";
-	else $html .= $s."</TABLE>\n\n";
-		if ($docnt) if ($echo) print "<H2>".$rows." Rows</H2>";
+	if ($echo) print $s."</table>\n\n";
+	else $html .= $s."</table>\n\n";
+		if ($docnt) if ($echo) print "<h2>".$rows." Rows</h2>";
 		return ($echo) ? $rows : $html;
  }
 // pass in 2 dimensional array
 function arr2html(&$arr,$ztabhtml='',$zheaderarray='')
 {
 	if (!$ztabhtml) $ztabhtml = '';
-	$s = "<TABLE $ztabhtml class='table table-bordered' width=98%>";//';print_r($arr);
+	$s = "<table $ztabhtml class='table table-bordered' width='98%'>";
 	if ($zheaderarray)
 	{
-		$s .= '<TR >';
+		$s .= '<tr >';
 		for ($i=0; $i<sizeof($zheaderarray); $i++)
 		{
-			$s .= "	<TH><small>{$zheaderarray[$i]}</small></TH>\n";
+			$s .= "	<th><small>{$zheaderarray[$i]}</small></th>\n";
 		}
-		$s .= "\n</TR>";
+		$s .= "\n</tr>";
 	}
 	for ($i=0; $i<sizeof($arr); $i++)
 	{
-		$s .= '<TR >';
+		$s .= '<tr>';
 		$a = &$arr[$i];
 		if (is_array($a))
 			for ($j=0; $j<sizeof($a); $j++)
 			{
 				$val = $a[$j];
 				if (empty($val)) $val = '&nbsp;';
-				$s .= "	<TD><small>$val </small></TD>\n";
+				$s .= "	<td><small>$val </small></td>\n";
 			}
 		else if ($a)
 		{
-			$s .=  '	<TD><small>'.$a."</small></TD>\n";
-		} else $s .= "	<TD>&nbsp;</TD>\n";
-		$s .= "\n</TR>\n";
+			$s .=  '	<td><small>'.$a."</small></td>\n";
+		} else $s .= "	<td>&nbsp;</td>\n";
+		$s .= "\n</tr>\n";
 	}
-	$s .= '</TABLE>';
+	$s .= '</table>';
 	print $s;
 }
 ?>

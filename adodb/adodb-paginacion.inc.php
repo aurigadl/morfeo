@@ -171,7 +171,7 @@ class ADODB_Pager {
 
 		for($i=$start; $i <= $end; $i++) {
 					if ($this->rs->AbsolutePage() == $i)
-							$numbers .= "<font color='$this->linkSelectedColor' size=2><b>$i</b></font>  ";
+							$numbers .= "<font color='$this->linkSelectedColor' size='2'><b>$i</b></font>  ";
 					else
 							$numbers .= "<a href='".$this->toRefLinks."&$link=$i'>$i</a> ";
 			}
@@ -258,7 +258,7 @@ class ADODB_Pager {
 		$lastPage = $this->rs->LastPageNo();
 		if ($lastPage == -1) $lastPage = 1; // check for empty rs.
 		if ($this->curr_page > $lastPage) $this->curr_page = 1;
-		return "<font size=1 class=tpar>$this->page ".$this->curr_page."/".$lastPage."</font>";
+		return "<font size='1' class='tpar'>$this->page " . $this->curr_page . '/' . $lastPage."</font>";
 	}
 
 	//-----------------------------------
@@ -303,18 +303,16 @@ class ADODB_Pager {
 
 		echo "<table class='table table-bordered table-striped'>
 
-			<tr class=tpar><td class=tpar>",
+			<tr class='tpar'><td class='tpar'>",
 				$grid,
 			"</td></tr>
-				<tr><td class=titulos3 align=center>",
+				<tr><td class='titulos3' align='center'>",
 				$header,
 			"</td></tr>
-			<tr class=paginacion align=center><td>",
+			<tr class='paginacion' align='center'><td>",
 				$footer,
 			"</td></tr>
 			</table>";
 	}
 }
-
-
 ?>
