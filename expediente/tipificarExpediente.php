@@ -196,6 +196,7 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                           $rsD=$db->conn->Execute($queryDep);
                           $comentarioDev = "Muestra las Series Docuementales";
                           include "$ruta_raiz/include/tx/ComentarioTx.php";
+                          if(!$dependenciaExp) $dependenciaExp = $dependencia;
                           print $rsD->GetMenu2("dependenciaExp", $dependenciaExp, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
                         ?><i></i>
                         </label></small>
@@ -374,11 +375,10 @@ Creaci&otilde;n y/o Adici&otilde;n de Expediente (Carpteta Virtual)
                         $cDependencia = str_pad($dependencia, $digitosDependencia, "0", STR_PAD_LEFT);
                         $numeroExpediente = $anoExp . $dependenciaExp . $trdExp . $consecutivoExp . $digCheck;
                         ?>
-                        </center>
-                         
-                         <small> <b><?=$numeroExpediente?></b> ( A&ntilde;o-Dependencia-Serie Subserie-Consecutivo-E<br>
-                            El consecutivo "<?=$consecutivoExp?>" es temporal y puede cambiar en el momento de crear el expediente.<br></small>
-                        <SMALL>Consecutivo de Expediente Manual </SMALL>
+                        </center><small> 
+                         <b><?=$numeroExpediente?></b> ( A&ntilde;o-Dependencia-Serie Subserie-Consecutivo-E)<br>
+                            El consecutivo "<?=$consecutivoExp?>" es temporal y puede cambiar en el momento de crear el expediente.<br>
+                            Consecutivo de Expediente Manual </SMALL>
                         
                         <?
                             if($expManual) $datoss=" checked "; else $datoss = "";
