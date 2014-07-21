@@ -112,8 +112,7 @@ $_SESSION['numExpedienteSelected'] = null;
   }
 
 
-  $sqlNoRad = "
-               select
+  $sqlNoRad = "select
                     b.carp_codi as carp, count(1) as COUNT
                from
                     radicado b left outer join SGD_TPR_TPDCUMENTO c on
