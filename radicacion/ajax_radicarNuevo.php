@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $tpDepeRad     = $_SESSION["tpDepeRad"];
 
-  $tpRadicado    = $_POST['radicado_tipo'] || 1;
+  $tpRadicado    = empty($_POST['radicado_tipo'])? 0 : $_POST['radicado_tipo'];
   $cuentai       = $_POST['cuentai'];
   $guia          = $_POST['guia'];
   $fecha_gen_doc = $_POST['fecha_gen_doc'];
@@ -222,12 +222,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         if($classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad)){
             //Numeros de los usuario que se relacionan en el actual radicado
-            if(is_array($classusua->result)){
-                $codeUser = $classusua->result;
-            }else{
-                $codeUser[] = $classusua->result;
+            if($classusua->result['state'] == true){
+                $codeUser[] = $classusua->result['value'];
             }
-
         }
     }
 

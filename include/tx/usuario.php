@@ -288,11 +288,11 @@ class Usuario {
         'SGD_DIR_CODIGO',
         $autoquote = true);
 
-        if($insertSQL){
-            $this->result[] = $nextval;
+        if(!$insertSQL){
+            $this->result =  array( "state"  => true, "value" => $nextval);
             return true;
         }else{
-            $this->result[] = array( "error"  => 'No se puedo agregar usuario al radicado');
+            $this->result = array( "error"  => 'No se puedo agregar usuario al radicado');
             return false;
         }
     }
