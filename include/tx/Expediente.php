@@ -395,6 +395,7 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
 			WHERE
 			SGD_EXP_NUMERO='$numExpediente'
 			";
+			//$this->db->conn->debug = true;
 	if($expOld=="false")
 	{
 	$rs = $this->db->conn->Execute($query);
@@ -742,7 +743,7 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
 				SGD_SRD_CODIGO=$codiSRD
 				AND SGD_SBRD_CODIGO=$codiSBRD
 				AND SGD_SEXP_ANO=$anoExp
-				AND DEPE_CODI = $dependencia
+				-- AND DEPE_CODI = $dependencia
 				AND SGD_SEXP_SECUENCIA IS NOT NULL
 			ORDER BY
 				substr(sgd_exp_NUMERO,length(sgd_exp_numero)-5,5) desc, sgd_sexp_secuencia DESC
