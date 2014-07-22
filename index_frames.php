@@ -23,6 +23,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+  // Esto es para darle al usuario acceso al menu Opciones
+  $usuarios_admin = array ('EALARCON');
 
   session_start();
 
@@ -257,10 +259,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   //Estadisticas
   $link22      = $enlace22."&fechah=$fechah\"";
   $link22show  = "<li><a tabindex=\"-1\" $link22 target=\"mainFrame\"> Estadisticas </a></li>";
-
-
+  
+  $tiene_acceso_admin = in_array($krd, $usuarios_admin);
 ?>
-
 <html lang="es">
     <head>
         <meta charset="utf-8">
@@ -361,10 +362,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </ul>
                       </li>
                       <?php }
-                      if($_SESSION["usua_perm_envios"]>=1) { ?>
+                     
+                     if($_SESSION["usua_perm_envios"]>=1) { ?>
                       <li><a href="radicacion/formRadEnvios.php?<?=$phpsession ?>&<? echo "fechah=$fechah&usr=".md5($dep)."&primera=1&ent=1"; ?>" target='mainFrame' class="menu_princ">Envios</a></li>
                       <?php }
-
+                      
                       if($_SESSION["usua_perm_modifica"] >=1) { ?>
                       <li><a href="radicacion/edtradicado.php?<?=$phpsession ?>&fechah=<?=$fechah?>&primera=1&ent=2" target='mainFrame' class="menu_princ">Modificaci&oacute;n</a></li>
                       <?php }
