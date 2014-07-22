@@ -305,7 +305,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <ul class="nav navbar-nav">
 
-                  <?php if($_SESSION["usua_admin_sistema"]==1 && $tiene_acceso_admin) {?>
+                  <?php if($_SESSION["usua_admin_sistema"]==1 || $tiene_acceso_admin) {?>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Acciones <b class="caret"></b></a>
                     <ul class="dropdown-menu">
