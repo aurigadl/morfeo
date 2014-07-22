@@ -152,6 +152,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             " ",
                             2);
 
+    //Borramos todos los usuarios existentes en sgd_dir_drecciones y los
+    //grabamos nuevamente con los datos suministrados.
+    $select = "delete from sgd_dir_drecciones where radi_nume_radi = $nurad";
+    $db->query($select);
+
     /**********************************************************************
      *********** GRABAR DIRECCIONES ***************************************
      **********************************************************************
@@ -220,29 +225,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "id_table"       => $id_table
         );
 
-        if($classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad)){
-            //Numeros de los usuario que se relacionan en el actual radicado
-            if($classusua->result['state'] == true){
-                $codeUser[] = $classusua->result['value'];
-            }
-        }
-    }
-
-    $classusua->usuariosDelRadicado($nurad);
-    //Numeros de los usuarios guardados antes de revisar los nuevos
-    $realCodeUser = $classusua->result;
-
-    //Verificamos cuantos de los usuarios anteriores y los nuevos
-    //continuan de lo contrario borramos la diferencia.
-    if(count($realCodeUser) > 0){
-        $arrUserToDelete = array_diff($realCodeUser, array_filter($codeUser));
-        foreach ($arrUserToDelete as $valor) {
-            $classusua->borrarUsuarioRadicado($valor, $nurad);
-        }
-    }
-
-    if($modificar){
-        $data[] = array( "answer"  => 'Modificación realizada');
+        $classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad);
     }
 
     echo json_encode($data);
