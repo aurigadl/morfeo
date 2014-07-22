@@ -261,7 +261,7 @@ $mensaje_error = false;
 	<tr bgcolor="White">
 	<td width="100" align="right" ><small>Estado:</small></td>
 		<td align="left"><label class=select><select class="select" name="s_PRES_ESTADO" onChange="javascript: ver(); ">
-<?    $query="select PARAM_CODI, PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' and PARAM_CODI in (2,5) ORDER BY PARAM_CODI"; 
+<?    $query="select PARAM_CODI, PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' and PARAM_CODI in (2,5,6) ORDER BY PARAM_CODI"; 
 	$rs = $db->conn->query($query);
 	while($rs && !$rs->EOF) {
 			$idEstado =$rs->fields("PARAM_CODI");
