@@ -228,5 +228,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         $classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad);
     }
 
-    $data[] = array( "answer"  => 'Modificación realizada');
     echo json_encode($data);
