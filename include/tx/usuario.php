@@ -76,7 +76,7 @@ class Usuario {
                 //Regresa 0 si falla, 1 si efectuo el update y 2 si no se
                 //encontro el registro y el insert fue con exito
                 if($insertSQL){
-                    $this->result[] = $nextval;
+                    $this->result = $nextval;
                     return true;
                 }
 
@@ -88,7 +88,7 @@ class Usuario {
                     $nextval=$this->db->nextId("sgd_oem_oempresas");
 
                     if ($nextval==-1){
-                        $this->result[] = array( "error"  => 'No se encontr&oacute; la secuencia sgd_oem_oempresas');
+                        $this->result = array( "error"  => 'No se encontr&oacute; la secuencia sgd_oem_oempresas');
                         return false;
                     }
 
@@ -115,7 +115,7 @@ class Usuario {
                 $insertSQL = $this->db->conn->Replace("sgd_oem_oempresas",$record,'sgd_ciu_codigo',$autoquote = true);
 
                 if($insertSQL){
-                    $this->result[] = $codigo;
+                    $this->result = $codigo;
                     return true;
                 }
 
@@ -123,7 +123,7 @@ class Usuario {
 
             // Funcionario .................................................................
             case 6:
-                $this->result[] = $idUser;
+                $this->result = $idUser;
                 return true;
                 break;
         }
@@ -225,7 +225,7 @@ class Usuario {
 
         //Modificar o Crea un usuario
         if($this->usuarioCreaEdita($user)){
-            $coduser = $this->result[0];
+            $coduser = $this->result;
         };
 
         //agregar usuario al radicado
@@ -245,7 +245,7 @@ class Usuario {
         $record['MUNI_CODI']         = $user['muni_tmp'];
         $record['DPTO_CODI']         = $user['dpto_tmp'];
         $record['ID_PAIS']           = $user['pais_tmp'];
-        $record['ID_CONT']           = $user['cont_tmp'];
+        $record['ID_CONT']           = 1;
         $record['SGD_TRD_CODIGO']    = $user['sgdTrd']; // Tipo de documento
 
         $record['SGD_DIR_DIRECCION'] = $user['direccion'];
@@ -473,7 +473,7 @@ class Usuario {
 
 
     public function usuarioPorRadicado($nurad) {
-        $isql = "
+         $isql = "
             select
                 s.SGD_DIR_CODIGO    as codigo
               , s.SGD_DIR_NOMBRE    as nombre

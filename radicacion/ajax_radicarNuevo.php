@@ -93,7 +93,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     $rad->radiDepeActu = $dependencia;
   }
 
-
   $rad->radiTipoDeri = $tpRadicado;
   $rad->radiCuentai  = trim($cuentai);
   $rad->guia         = trim(substr($guia,0 ,20));
@@ -110,8 +109,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   if(!$ent){
     $radicadopadre = null;
   }
-
-
 
   $rad->radiNumeDeri = trim($radicadopadre);
   $rad->descAnex     = substr($ane, 0, 99);
@@ -216,7 +213,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "dpto_tmp"       => $_POST[$valor."_".dep_codigo],
             "pais"           => $_POST[$valor."_".pais],
             "pais_tmp"       => $_POST[$valor."_".pais_codigo],
-            "cont_tmp"       => $clave + 1 ,
+            "cont_tmp"       => $clave + 1,
             "tdid_codi"      => $_POST[$valor."_".tdid_codi],
             "sgdTrd"         => $sgdTrd,
             "id_sgd_dir_dre" => $id_sgd_dir_dre,
@@ -225,9 +222,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         if($classusua->guardarUsuarioRadicado($usuarios[$clave], $nurad)){
             //Numeros de los usuario que se relacionan en el actual radicado
-            $codeUser = $classusua->result;
-        }
+            if(is_array($classusua->result)){
+                $codeUser = $classusua->result;
+            }else{
+                $codeUser[] = $classusua->result;
+            }
 
+        }
     }
 
     $classusua->usuariosDelRadicado($nurad);
@@ -238,7 +239,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     //continuan de lo contrario borramos la diferencia.
     if(count($realCodeUser) > 0){
         $arrUserToDelete = array_diff($realCodeUser, array_filter($codeUser));
-
         foreach ($arrUserToDelete as $valor) {
             $classusua->borrarUsuarioRadicado($valor, $nurad);
         }
