@@ -1,15 +1,19 @@
-<?
-session_start();
-
-    $ruta_raiz = "..";
-    if (!$_SESSION['dependencia'])
-        header ("Location: $ruta_raiz/cerrar_session.php");
+<?php
 /**
   * Modificacion para aceptar Variables GLobales
   * @autor Jairo Losada 
   * @fecha 2009/05
   */
-import_request_variables("gp", "");
+
+session_start();
+$ruta_raiz = "..";
+
+if (!$_SESSION['dependencia'])
+  header ("Location: $ruta_raiz/cerrar_session.php");
+
+foreach ($_GET as $key => $valor)   ${$key} = $valor;
+foreach ($_POST as $key => $valor)   ${$key} = $valor;
+
 $krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $depe_nomb = $_SESSION["depe_nomb"];
@@ -22,31 +26,27 @@ $htmlE ="";
 ?>
 <html>
 <head>
-<title>Untitled Document</title>
+<title>Planilla de Envios</title>
 <link rel="stylesheet" href="../estilos/orfeo.css">
 </head>
 <body>
 <?php
-if($indi_generar=="SI")
-{
+if($indi_generar=='SI') {
 ?>
 	<table class=borde_tab width='100%' cellspacing="5"><tr><td class=titulos2><center>LISTADO DOCUMENTOS IMPRESOS</center></td></tr></table>
 	<table><tr><td></td></tr></table>
 	<form name='forma' action='generaListaImpresos.php?<?=session_name()."=".session_id()."&krd=$krd&hora_ini=$hora_ini&hora_fin=$hora_fin&minutos_ini=$minutos_ini&minutos_fin=$minutos_fin&tip_radi=$tip_radi&fecha_busq=$fecha_busq&fecha_busqH=$fecha_busqH&fecha_h=$fechah&dep_sel=$dep_sel&num=$num"?>' method=post>
-	<?php
+<?php
 	$fecha_ini = $fecha_busq . ":" .$hora_ini. ":" .$minutos_ini ;
 	$fecha_fin = $fecha_busqH . ":" .$hora_fin. ":" .$minutos_fin ;
- 	if ($checkValue)
- 	{
+ 	if ($checkValue) {
 	$num = count($checkValue);
 	$i = 0;
-	while ($i < $num)
-	{
-	   $record_id = key($checkValue);
-	   $radicadosSel[$i] = $record_id;
-		$setFiltroSelect .= $record_id ;
-		if($i<=($num-2))
-		{
+	while ($i < $num) {
+	  $record_id = key($checkValue);
+	  $radicadosSel[$i] = $record_id;
+		$setFiltroSelect .= $record_id;
+		if ($i<=($num-2)) {
 			$setFiltroSelect .= ",";
 		}
   	next($checkValue);
@@ -74,104 +74,102 @@ if($indi_generar=="SI")
  
 	$carp_codi = substr($dep_radicado,0,2);
 
-	error_reporting(7);
-
-    include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-    $db = new ConnectionHandler("$ruta_raiz");
-    define('ADODB_FETCH_ASSOC',2);
-    $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
+  $db = new ConnectionHandler("$ruta_raiz");
+  define('ADODB_FETCH_ASSOC',2);
+  $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	include "$ruta_raiz/include/query/envios/queryListaImpresos.php";			
 	
-	$rsMarcar = $db->query($isql);	
+	$rsMarcar = $db->conn->query($isql);	
 	$no_registros = 0;
     //$no_registros = $rsMarcar->recordcount(); 
      $radiNumero = $rsMarcar->fields["RADI_NUME_RADI"];
-	//if ($no_registros <=0) {
-	if ($radiNumero =='') {
-       $estado = "Error";
- 	   $mensaje = "Verifique..."; 
-	   foreach ($textElements as $item) {
+	
+  if ($radiNumero =='') {
+    $estado = "Error";
+ 	  $mensaje = "Verifique..."; 
+	  
+    foreach ($textElements as $item)
 	      $verrad_sal = trim ( $item );
-    	   }
+    
 	   echo "<script>alert('No se puede Generar el Listado $verrad_sal . $mensaje  ')</script>";
-	}
-	else 
-	{
+	} else {
 	//Modificacion 28112005
 		$archivo = "../bodega/pdfs/planillas/envios/$krd". date("Ymd_hms") . "_lis_IMP.csv";
 		$fp=fopen($archivo,"w");
 		$com = chr(34); 
-  	        $contenido="$com*Radicado*$com,$com*Radicado Padre*$com,$com*Destinatario*$com,$com*Direccion*$com,$com*Municipio*$com,$com*Departamento*$com,$com*Observacion*$com\n";
-            $query_t = $isql ;
+  	$contenido="$com*Radicado*$com,$com*Radicado Padre*$com,$com*Destinatario*$com,$com*Direccion*$com,$com*Municipio*$com,$com*Departamento*$com,$com*Observacion*$com\n";
+    $query_t = $isql ;
 			
-			$ruta_raiz = "..";
-			error_reporting(7);
-			define('ADODB_FETCH_NUM',1);
-			$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
-			require "../envios/classControlLis.php";
-			$btt = new CONTROL_ORFEO($db);
-			$campos_align = array("C","C","L","L","L","L","L");
-			$campos_tabla = array("$verrad_sal","$verrad","$nombre_us","$direccion_us","$destino","$departamento","$observa");
-			$campos_vista = array ("Radicado","Radicado Padre","Destinatario","Direccion","Municipio","Departamento","Observacion");
-			$campos_width = array (120        ,120            ,280           ,290        ,120         ,110            ,80         );
-			$btt->campos_align = $campos_align;
-			$btt->campos_tabla = $campos_tabla;
-			$btt->campos_vista = $campos_vista;
-			$btt->campos_width = $campos_width;
-			$btt->tabla_sql($query_t,$fecha_ini,$fecha_fin);
-			$htmlE = $btt->tabla_htmlE;
-	   //Fin Modificacion 28112005
-	   while (!$rsMarcar->EOF) {
-	      $no_registros = $no_registros + 1;
-          $mensaje = "";
-		  $verrad_sal     = $rsMarcar->fields["RADI_NUME_SALIDA"];  
-	      $verradicado    = $rsMarcar->fields["RADI_NUME_RADI"];
-		  $ref_pdf        = $rsMarcar->fields["ANEX_NOMB_ARCHIVO"];
-		  $asunto         = $rsMarcar->fields["ANEX_DESC"];
-		  $sgd_dir_tipo   = $rsMarcar->fields["SGD_DIR_TIPO"];
-		  $rem_destino    = $rsMarcar->fields["SGD_DIR_TIPO"];
-		  $anex_radi_nume = $rsMarcar->fields["ANEX_RADI_NUME"];
-		  $dep_radicado   = substr($verrad_sal,4,3);
-		  $ano_radicado   = substr($verrad_sal,0,4);
-		  $carp_codi      = substr($dep_radicado,0,2);
-		  $radi_path_sal = "/$ano_radicado/$dep_radicado/docs/$ref_pdf";
+		$ruta_raiz = "..";
+    define('ADODB_FETCH_NUM',1);
+    $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+    require "../envios/classControlLis.php";
+    $btt = new CONTROL_ORFEO($db);
+    $campos_align = array("C","C","L","L","L","L","L");
+    $campos_tabla = array("$verrad_sal","$verrad","$nombre_us","$direccion_us","$destino","$departamento","$observa");
+    $campos_vista = array ("Radicado","Radicado Padre","Destinatario","Direccion","Municipio","Departamento","Observacion");
+    $campos_width = array (120        ,120            ,280           ,290        ,120         ,110            ,80         );
+    $btt->campos_align = $campos_align;
+    $btt->campos_tabla = $campos_tabla;
+    $btt->campos_vista = $campos_vista;
+    $btt->campos_width = $campos_width;
+    $btt->tabla_sql($query_t,$fecha_ini,$fecha_fin);
+    $htmlE = $btt->tabla_htmlE;
+    
+    //Fin Modificacion 28112005
+    while (!$rsMarcar->EOF) {
+      $no_registros = $no_registros + 1;
+      $mensaje = "";
+      
+      $verrad_sal     = $rsMarcar->fields["RADI_NUME_SALIDA"];  
+      $verradicado    = $rsMarcar->fields["RADI_NUME_RADI"];
+      $ref_pdf        = $rsMarcar->fields["ANEX_NOMB_ARCHIVO"];
+      $asunto         = $rsMarcar->fields["ANEX_DESC"];
+      $sgd_dir_tipo   = $rsMarcar->fields["SGD_DIR_TIPO"];
+      $rem_destino    = $rsMarcar->fields["SGD_DIR_TIPO"];
+      $anex_radi_nume = $rsMarcar->fields["ANEX_RADI_NUME"];
+      $dep_radicado   = substr($verrad_sal,4,3);
+      $ano_radicado   = substr($verrad_sal,0,4);
+      $carp_codi      = substr($dep_radicado,0,2);
+      $radi_path_sal = "/$ano_radicado/$dep_radicado/docs/$ref_pdf";
 
-	      if(substr($rem_destino,0,1)=="7") $anex_radi_nume = $verrad_sal;
-	      $nurad = $anex_radi_nume;
-  	      $verrad = $anex_radi_nume;
-  	      $verradicado = $anex_radi_nume;
+      if(substr($rem_destino,0,1)=="7") $anex_radi_nume = $verrad_sal;
+      $nurad = $anex_radi_nume;
+      $verrad = $anex_radi_nume;
+      $verradicado = $anex_radi_nume;
 
-  	      $ruta_raiz= "..";
-          include "../ver_datosrad.php";
+      $ruta_raiz= "..";
+      include "../ver_datosrad.php";
 
 		  if ($radicadopadre) $radicado = $radicadopadre;
-  	      if ($nurad) 	      $radicado = $nurad;
+  	  if ($nurad) 	      $radicado = $nurad;
 	
 		  $pCodDep = $dpto;
 		  $pCodMun = $muni;
 
-          $nombre_us    = $otro . "-".substr($nombre . " " . $papel . " " . $sapel,0 ,29);
+      $nombre_us    = $otro . "-".substr($nombre . " " . $papel . " " . $sapel,0 ,29);
 
-	      if(!$rem_destino) $rem_destino =1; 
+	    if(!$rem_destino) $rem_destino =1; 
 		  $sgd_dir_tipo = 1;
-          echo "<input type=hidden name=$espcodi value='$espcodi'>";
+      echo "<input type='hidden' name='$espcodi' value='$espcodi'>";
 
-	      $ruta_raiz = "..";
-	      include "../jh_class/funciones_sgd.php";
+      $ruta_raiz = "..";
+      include "../jh_class/funciones_sgd.php";
 		  /*
 		  *Se incluyen ya que en ver_datosrad no esta contemplada esta opcion
 		  *que corresponde a copias
 		  */
 		  $a = new LOCALIZACION($codep_us7,$muni_us7,$db);
-   		  $dpto_nombre_us7 = $a->departamento; 
-          $muni_nombre_us7 = $a->municipio;
+      $dpto_nombre_us7 = $a->departamento; 
+      $muni_nombre_us7 = $a->municipio;
 		  /*
 		  * Fin modificacion
 		  */ 
-	      $a = new LOCALIZACION($pCodDep,$pCodMun,$db);
- 	      $dpto_nombre_us = $a->departamento;
-	      $muni_nombre_us = $a->municipio;
-  	      $direccion_us = $dir;
+      $a = new LOCALIZACION($pCodDep,$pCodMun,$db);
+      $dpto_nombre_us = $a->departamento;
+      $muni_nombre_us = $a->municipio;
+      $direccion_us = $dir;
 		  $destino      = $muni_nombre_us;
 		  $departamento = $dpto_nombre_us;
 		  $dir_codigo   = $documento;
@@ -259,22 +257,22 @@ if($indi_generar=="SI")
 //Fin Modificacion 28112005
  	       $rsMarcar->MoveNext();
 	
-	   } // FIN del WHILE (!$rsMarcar->EOF)
-	   fputs($fp,$contenido);
+	  } // FIN del WHILE (!$rsMarcar->EOF)
+	  fputs($fp,$contenido);
 		fclose($fp);
 		$fecha_dia = date("Ymd - H:i:s");
 		$html  = $htmlE;
 		$html  .= $btt->tabla_html;
-		//$html  = $btt->tabla_html;
-		error_reporting(7);
-		define(FPDF_FONTPATH,'../fpdf/font/');
+		
+    define(FPDF_FONTPATH,'../fpdf/font/');
 		require("../fpdf/html_table.php");
-		error_reporting(7);
+		
 		$pdf = new PDF("L","mm","A4");
 		$pdf->AddPage();
 		$pdf->SetFont('Arial','',8);
 		$entidad = $db->entidad;
-		$encaenti = "../png/cabeceraEntidad.png";
+		//$encaenti = "../png/cabeceraEntidad.png";
+		$encaenti = "../img/footer_metrovivienda.png";
 		$encabezado = "<table border=0>
             <tr><td width=1120 height=70><img src=$encaenti width=750 height=65></td></tr>
 			<tr><td width=1120 height=40> </td></tr>
@@ -312,11 +310,8 @@ if($indi_generar=="SI")
 	//FIN else if ($no_registros <=0)
 ?>
  </form>
- <?
-
-}
-else
-{
+<?php
+} else {
 	echo "<hr><center><b><span class='alarmas'>Operacion CANCELADA</span></center></b></hr>";
 }
 ?>  
