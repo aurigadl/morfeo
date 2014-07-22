@@ -212,14 +212,6 @@ class Usuario {
      */
     public function guardarUsuarioRadicado($user, $nurad){
 
-        /** $isqlsec = "select
-                        MAX(sgd_dir_tipo) as COUNTDATA
-                     from sgd_dir_drecciones
-                     where radi_nume_radi = $nurad";
-
-        $rs   = $this->db->query($isqlsec);
-        $codi = empty($rs->fields['COUNTDATA'])? 1 : $rs->fields['COUNTDATA'] + 1; **/
-
         $idUser       = intval($user['id_table']); //Id del usuario
         $idInRadicado = intval($user['id_sgd_dir_dre']);//Id usuario registrado en radicado
 
@@ -288,7 +280,7 @@ class Usuario {
         'SGD_DIR_CODIGO',
         $autoquote = true);
 
-        if(!$insertSQL){
+        if(!empty($insertSQL)){
             $this->result =  array( "state"  => true, "value" => $nextval);
             return true;
         }else{
