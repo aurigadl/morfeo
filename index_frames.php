@@ -377,7 +377,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         if(!isset($usua_perm_impresion)){
                           $usua_perm_impresion = "";
                         } ?>
-                        <li><a href="envios/cuerpoMarcaEnviar.php?<?=$phpsession?>&<?php echo "fechaf=$fechah&usua_perm_impresion=$usua_perm_impresion&carpeta=8&nomcarpeta=Documentos Para Impresion&orderTipo=desc&orderNo=3"; ?>" target='mainFrame' class="menu_princ">Impresi&oacute;n</a></li>
+                        <li><a href="envios/cuerpoMarcaEnviar.php?<?=$phpsession?>&<?php echo "fechaf=$fechah&usua_perm_impresion=$usua_perm_impresion&carpeta=8&nomcarpeta=Documentos Para Impresion&orderTipo=desc&orderNo=3"; ?>" target='mainFrame' class="menu_princ">Por Enviar</a></li>
                       <?php }
 
                       if ($_SESSION["usua_perm_anu"]==3 or $_SESSION["usua_perm_anu"]==1){?>
