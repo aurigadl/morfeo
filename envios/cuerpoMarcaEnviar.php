@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 * @author Jairo Losada   <jlosada@gmail.com>
 * @author Cesar Gonzalez <aurigadl@gmail.com>
@@ -54,9 +54,9 @@ include_once "$ruta_raiz/class_control/TipoDocumento.php";
 include_once "$ruta_raiz/class_control/firmaRadicado.php";
 
 $db = new ConnectionHandler($ruta_raiz);
-//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//Se crea el objeto de an�lisis de firmas
+
+//Se crea el objeto de analisis de firmas
 $objFirma = new  FirmaRadicado($db);
 
 if (!$_SESSION['dependencia']) include "../rec_session.php";
@@ -65,7 +65,6 @@ if (!$dep_sel) $dep_sel = $dependencia;
 
 $sqlFechaHoy=$db->conn->DBDate($fecha_hoy);
 ?>
-
 <html>
 <head>
   <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
@@ -249,29 +248,22 @@ function marcar(){
 
    $sqlFecha = $db->conn->SQLDate("Y/m/d","r.SGD_RENV_FECH");
 	$img1="";$img2="";$img3="";$img4="";$img5="";$img6="";$img7="";$img8="";$img9="";
-  IF($ordcambio){
-  		IF($ascdesc=="" )
-  			{$ascdesc="DESC";	$imagen="flechadesc.gif";}
-  		else
-  			{$ascdesc="";$imagen="flechaasc.gif";}
-  }else
-  		if ($ascdesc=="DESC")
-  			$imagen="flechadesc.gif";
-  		else
-  			$imagen="flechaasc.gif";
-
-
+  
+  if($ordcambio) {
+    $ascdesc = ($ascdesc == '')? 'DESC' : '';
+    $imagen  = ($ascdesc == '')? 'flechadesc.gif' : 'flechaasc.gif';
+  }else { 
+    $imagen = ($ascdesc=='DESC')? 'flechadesc.gif' : 'flechaasc.gif';
+  }
 
   if($orno==1){$order=" a.radi_nume_salida  $ascdesc";$img1="<img src='../iconos/$imagen' border=0 alt='$data'>";}
 	if($orno==2){$order=" 6  $ascdesc";$img2="<img src='../iconos/$imagen' border=0 alt='$data'>";}
 	if($orno==3){$order=" a.anex_radi_nume $ascdesc";$img3="<img src='../iconos/$imagen' border=0 alt='$data'>";}
-	If($orno==4){$order=" c.radi_fech_radi  $ascdesc";$img4="<img src='../iconos/$imagen' border=0 alt='$data'>";}
-	If($orno==5){$order=" a.anex_desc  $ascdesc";$img5="<img src='../iconos/$imagen' border=0 alt='$data'>";}
-	If($orno==6){$order=" a.sgd_fech_impres  $ascdesc";$img6="<img src='../iconos/$imagen' border=0 alt='$data'>";}
-	If($orno==7){$order=" a.anex_creador $ascdesc";$img7="<img src='../iconos/$imagen' border=0 alt='$data'>";}
-	If($orno==8){$order=" a.anex_creador $ascdesc";$img7="<img src='../iconos/$imagen' border=0 alt='$data'>";}
-
-
+	if($orno==4){$order=" c.radi_fech_radi  $ascdesc";$img4="<img src='../iconos/$imagen' border=0 alt='$data'>";}
+	if($orno==5){$order=" a.anex_desc  $ascdesc";$img5="<img src='../iconos/$imagen' border=0 alt='$data'>";}
+	if($orno==6){$order=" a.sgd_fech_impres  $ascdesc";$img6="<img src='../iconos/$imagen' border=0 alt='$data'>";}
+	if($orno==7){$order=" a.anex_creador $ascdesc";$img7="<img src='../iconos/$imagen' border=0 alt='$data'>";}
+	if($orno==8){$order=" a.anex_creador $ascdesc";$img7="<img src='../iconos/$imagen' border=0 alt='$data'>";}
 
   $encabezado = session_name()."=".session_id()."&dep_sel=$dep_sel&krd=$krd&estado_sal=$estado_sal&usua_perm_impresion=$usua_perm_impresion&fechah=$fechah&estado_sal_max=$estado_sal_max&ascdesc=$ascdesc&orno=";
   $fechah=date("dmy") . "_". time("h_m_s");
@@ -325,27 +317,15 @@ function marcar(){
 
                     </td>
                     <td class="titulos2" align="center">
-
-
-
                     <a href='<?=$pagina_sig?>?<?=$encabezado?> '></a>
                     <input type=submit value="<?=$accion_sal?>" name=Enviar id=Enviar valign='middle' class='botones_largo' onclick="marcar();">
-
-
-
                     </td>
-
                   </tr>
                   </table>
-
-
-
                   </td>
-
-
                   </tr>
                   </table>
-                      <?
+<?php
                         $accion_sal2 = "Generar Listado de Entrega";
                         include "../envios/paListado.php";
                     /*  GENERACION LISTADO DE RADICADOS
@@ -358,24 +338,23 @@ function marcar(){
 //$db->conn->debug = true;
 
                             $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-                              $rs=$db->query($isql);
+                            $rs=$db->conn->query($isql);
 
                               if ($usua_perm_firma==2 || $usua_perm_firma==3){
-                          ?>
+?>
                               <table class="table table-bordered table-striped">
                                 <tr  class="titulos2" >
                                   <td align='left' height="17"  > <span class='etextomenu'>
-                                    </span> </td>
+                                    </span>
+                                  </td>
                                   <td width='10%' align="left" height="17">
                                     <input type=button value='Solicitar Firma' name=solicfirma valign='middle' class='botones' onclick="solicitarFirma();" >
                                   </td>
                                 </tr>
                               </table>
-
-                              <?
+<?php
                             }
-                            ?>
-
+?>
                             </td>
                         </tr>
                     </table>
@@ -424,13 +403,12 @@ function marcar(){
                 </tr>
                 <?
 
-		 $i = 1;
-		 $ki=0;
-	   $registro=$pagina*200;
-   while($rs&&!$rs->EOF)
-	 	 {
-
-       if($ki>=$registro and $ki<($registro+200)){
+		  $i = 1;
+		  $ki=0;
+	    $registro=$pagina*200;
+      
+      while($rs&&!$rs->EOF) {
+        if($ki>=$registro and $ki<($registro+200)){
 
 			$swEsperaFirma =  false;
 			$estado=	$rs->fields['CHU_ESTADO'];
@@ -446,7 +424,6 @@ function marcar(){
 		    $generadoPor = $rs->fields['GENERADO_POR'];
 		    $path_imagen = $rs->fields['HID_RADI_PATH'];
 
-			//***********************************************
 			$edoDev = 0;
 
 				if ($cod_dev ==0 OR $cod_dev ==NULL)  {$edoDev = 97;} else {if ($cod_dev > 0)  $edoDev = 98;}
@@ -499,10 +476,7 @@ function marcar(){
 			break;
 		}
 
-			//************************************************
-            if($data =="") $data = "NULL";
-			error_reporting(7);
-
+      if($data =="") $data = "NULL";
 
 			 if($i==1){
 			    $formato ="listado2";
@@ -564,25 +538,18 @@ function marcar(){
                     </script>
                       <?}?>
                     <input type=checkbox name='checkValue[<?=$rad_salida?>]' value='<?=$rad_salida?>'  >
-
-
-
                   </td>
                 </tr>
-                <?
-
+<?php
 				}
 					$ki=$ki+1;
 				  $rs->MoveNext();
        }
-
-
 	 ?>
               </table>
-            </TD>
+            </td>
           </tr>
-        </TABLE>
-
+        </table>
 	 </form>
    <table class="table table-bordered table-striped">
         <tr align="center">
@@ -614,7 +581,5 @@ function marcar(){
       </div>
     </section>
   </div>
-
-
 </body>
 </html>
