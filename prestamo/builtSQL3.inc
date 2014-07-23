@@ -5,7 +5,8 @@
 
             // Build SQL statement
             $sSQL_non_exp=$sSelect_non_exp.$sFrom_non_exp.$sWhere_non_exp;  		 
-            $sSQL_exp=$sSelect_exp.$sFrom_exp.$sWhere_exp;  		 
+            $sSQL_exp=$sSelect_exp.$sFrom_exp.$sWhere_exp;  		
+            echo ">zzz $sFileName <<<*****";
             if ($sFileName=="formEnvio.php") {
                $sSQL=$sSQL_exp.$sSQLsele." union all ".$sSQL_non_exp.$sSQLsele;  		             
             }
