@@ -30,6 +30,8 @@ header ("Location: $ruta_raiz/cerrar_session.php");
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
+
+define('ADODB_ASSOC_CASE', 1);
 ?>
 <HTML>
 <?
@@ -47,7 +49,7 @@ $mensaje_error = false;
    define('ADODB_ASSOC_CASE', 1);
    include_once "$ruta_raiz/include/db/ConnectionHandler.php";
    $db = new ConnectionHandler($ruta_raiz);	 
-
+   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
    if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
 
 /*********************************************************************************
@@ -65,7 +67,8 @@ $mensaje_error = false;
    $opcionMenu=$_POST["opcionMenu"]; //opci�n: prestar(1), cancelar(3) o devolver(2)                  
    $ordenar=strip($_POST["ordenar"]);//1 si se dio ordenar y 0 de otro modo 
     // Recupera el identificador de los registros seleccionados   
-   $cantRegistros=intval($_POST["prestado"]); //cantidad de registros listados en la consulta	
+   // $cantRegistros=intval($_POST["prestado"]); //cantidad de registros listados en la consulta	
+   $cantRegistros=100;
    if($ordenar=="1"){ $setFiltroSelect=strip($_POST["s_PRES_ID"]); } //Recupera todos los registros presentados si se da ordenar	  
    else { //Recupera solo los registros seleccionados
       $j=0;
@@ -81,7 +84,7 @@ $mensaje_error = false;
    }
    // Inicializa la identificaci�n del usuario solicitante   
    $usua_codi=strip($_POST["usua_codi"]);   
-   //$db->conn->debug = true;
+   $db->conn->debug = true;
    $query="select USUA_LOGIN_ACTU from PRESTAMO where PRES_ID in ($setFiltroSelect)";  //primer usuario de los registros    		
    $rs = $db->conn->query($query);		 
    
@@ -261,7 +264,7 @@ $mensaje_error = false;
 	<tr bgcolor="White">
 	<td width="100" align="right" ><small>Estado:</small></td>
 		<td align="left"><label class=select><select class="select" name="s_PRES_ESTADO" onChange="javascript: ver(); ">
-<?    $query="select PARAM_CODI, PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' and PARAM_CODI in (2,5,6) ORDER BY PARAM_CODI"; 
+<?    $query="select PARAM_CODI, PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' and PARAM_CODI in (2,5) ORDER BY PARAM_CODI"; 
 	$rs = $db->conn->query($query);
 	while($rs && !$rs->EOF) {
 			$idEstado =$rs->fields("PARAM_CODI");
@@ -316,32 +319,20 @@ $mensaje_error = false;
    $db->conn->SetFetchMode(ADODB_FETCH_NUM);           
    // Display grid based on recordset
    $y=0; // Cantidad de registros presentados 
-   include_once "getRtaSQLAntIn.inc"; //Une en un solo campo los expedientes
    while($rs && !$rs->EOF) {
       // Inicializa las variables con los resultados
+      echo "<hr> Entrooooo";
 	  include "getRtaSQL.inc";		
-	  if ($antfldPRESTAMO_ID!=$fldPRESTAMO_ID) {
-		 if ($y!=0) {  include "cuerpoTabla.inc"; } // Fila de la tabla con los resultados
-		 include "getRtaSQLAnt.inc";	
-		 $y++;
-	  }else {		 
-		 if ($antfldEXP!=""){ 
-			$antfldEXP.="<br>"; 
-   	        $antfldARCH.="<br>"; 
-		 }
-		 $antfldEXP.=$fldEXP;
+		 $antfldEXP=$fldEXP;
 		 if ($fldARCH=='SI') {
   			$encabARCH = session_name()."=".session_id()."&buscar_exp=".tourl($fldEXP)."&krd=$krd&tipo_archivo=&nomcarpeta=";
 		    $antfldARCH.="<a href='".$ruta_raiz."/expediente/datos_expediente.php?".$encabARCH."&num_expediente=".tourl($fldEXP)."&nurad=".tourl($antfldRADICADO)."' class='vinculos'>".$fldARCH."</a>";
 		 }
-	     else { $antfldARCH.=$fldARCH; }		 		 
-	  }
+	     else { $antfldARCH=$fldARCH; }		 		 
+	  
+	  include "cuerpoTabla.inc"; 
       $rs->MoveNext(); 			
    }
-   if ($y!=0) {	  		 
-      include "cuerpoTabla.inc";  // Fila de la tabla con lso resultados						 
-      $y++;	  
-   } 
    $iCounter=$y-1;  //cantidad de registros
  ?>
 	</table>
@@ -399,9 +390,9 @@ $mensaje_error = false;
     } 
 	// Valida los campos antes de enviar el formulario 
     function okTx() {
-       valCheck = 0;
-       for (i=0; i<<?=$iCounter?>; i++) {
-          if (eval('document.rta.rta_'+i+'.checked')==true){ 
+       var valCheck = 0;
+       for (i=0; i<<?=$iCounter+1?>; i++) {
+          if (eval('document.rta.rta_'+(i+1)+'.checked')==true){ 
              valCheck = 1;
              break;
           }
@@ -413,7 +404,7 @@ $mensaje_error = false;
        verClave=<?=$verClave?>;	   
 	   if (verClave==1) {
 		  if (document.rta.s_CONTRASENA.value=="") { 
-		     alert('Digite la contrase�a del usuario solicitante');
+		     alert('Digite la contraseña del usuario solicitante');
 			 return 0;
 		  }
 	   }	   

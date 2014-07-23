@@ -47,7 +47,7 @@ $ruta_raiz = "..";
 $verrad = "";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);	 
-//$db->conn->debug = true;
+//$db->conn->debug = true; 
 if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
 
 //===============================
@@ -145,7 +145,8 @@ $ver=$_POST["s_sql"];      //consulta
       }
       // Set variables with search parameters
       $flds_PRES_ESTADO   =strip($_POST["s_PRES_ESTADO"]); 
-      $flds_RADI_NUME_RADI=strip($_POST["s_RADI_NUME_RADI"]); 
+      $flds_RADI_NUME_RADI=strip($_POST["s_RADI_NUME_RADI"]);
+      $flds_numeroExpediente=strip($_POST["s_numeroExpediente"]);
       $flds_USUA_LOGIN    =strip($_POST["s_USUA_LOGIN"]);
 	  if ($opcionMenu==4) { $flds_USUA_LOGIN=$krd; } // Inicializa el usuario para el caso en que el ingresa por la opci�n de SOLICITADOS
       $flds_DEPE_NOMB     =strip($_POST["s_DEPE_NOMB"]);
@@ -196,6 +197,11 @@ $ver=$_POST["s_sql"];      //consulta
 		<td ><p align="left">Radicado</p></td>	 
 		<td ><label class="input"><input type="text" name="s_RADI_NUME_RADI" maxlength="15" value="<?= $flds_RADI_NUME_RADI; ?>" size="25"></label></td>			   
 	</tr>	  
+  <tr id="b0" style="display:<?= $tipoBusqueda[$opcionMenu][0]; ?>">
+    <td ><p align="left">Expediente</p></td>   
+    <td ><label class="input"><input type="text" name="s_numeroExpediente" maxlength="22" value="<?= $flds_numeroExpediente; ?>" size="25"></label></td>         
+  </tr>   
+
 	<tr id="b1" style="display:<?= $tipoBusqueda[$opcionMenu][1]; ?>">
 		<td ><p align="left">Login de Usuario</p></td>	 		 
 		<td ><label class="input"><input type="text" name="s_USUA_LOGIN" maxlength="15" value="<?= $flds_USUA_LOGIN; ?>" size="25"></label></td>
@@ -372,6 +378,7 @@ $dependencia = $_SESSION["dependencia"];
 $usua_doc = $_SESSION["usua_doc"];
 $ps_PRES_ESTADO   =strip($_POST["s_PRES_ESTADO"]); 
 $ps_RADI_NUME_RADI=strip(trim($_POST["s_RADI_NUME_RADI"]));
+$ps_numeroExpediente=strip(trim($_POST["s_numeroExpediente"]));
 $ps_USUA_LOGIN    = strip($_POST['s_USUA_LOGIN']); ;
 $ps_DEPE_NOMB     =strip($_POST["s_DEPE_NOMB"]);
 $ps_USUA_NOMB     =strip($_POST["s_USUA_NOMB"]);
@@ -382,7 +389,8 @@ $ps_PRES_REQUERIMIENTO=strip($_POST["s_PRES_REQUERIMIENTO"]);
 if (strlen($pageAnt)==0){
 include_once $ruta_raiz."/include/query/prestamo/builtSQL1.inc";
 include_once $ruta_raiz."/include/query/prestamo/builtSQL2.inc";
-include_once $ruta_raiz."/include/query/prestamo/builtSQL3.inc";							     	  	  
+include_once $ruta_raiz."/include/query/prestamo/builtSQL3.inc";
+//$db->conn->debug = true;
 $iSort=strip(get_param("FormPedidos_Sorting"));                  
 if(!$iSort) $iSort =20;
 		$iSorted=strip(get_param("FormPedidos_Sorted")); 
@@ -392,7 +400,7 @@ if(!$iSort) $iSort =20;
 	if(strcasecmp($sDirection," DESC ")==0){ $sDirection=" ASC "; }
 	else {                                   $sDirection=" DESC "; }  
 	}
-		$sOrder=" order by ".$iSort.$sDirection.",PRESTAMO_ID";
+		$sOrder=" order by ".$iSort.$sDirection.",PRESTAMO_ID limit 1000";
 		include_once "inicializarRTA.inc";
 		$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 		$rs=$db->query($sSQL.$sOrder);
@@ -419,6 +427,7 @@ if(!$iSort) $iSort =20;
 		<input type="hidden"  value='<?=$krd?>' name="krd">					 					 					 		 
 		<input type="hidden" value=" " name="radicado">  	 
 		<input type="hidden" value="" name="prestado">  	 
+		<input type="hidden" value="<?=$ps_numeroExpediente?>" name="ps_numeroExpediente">
 		<input type="hidden" name="opcionMenu" value="<?= $opcionMenu ?>">	  
 		<!-- orden de presentaci�n del resultado en el formulario de envio !-->	  		 		 
 		<input type="hidden" name="FormPedidos_Sorting" value="<?=$iSort?>">
@@ -453,34 +462,23 @@ $ant=$new;
 }          
 $iCounterIni=$iCounter;		 		 
 // Display grid based on recordset
-$y=0; // Cantidad de registros presentados
+$y=1; // Cantidad de registros presentados
 include_once "getRtaSQLAntIn.inc"; //Une en un solo campo los expedientes
-while($rs && !$rs->EOF && $y<$iRecordsPerPage) {    
+while($rs && !$rs->EOF) {
 		// Inicializa las variables con los resultados
-include "getRtaSQL.inc";								
-if ($antfldPRESTAMO_ID!=$fldPRESTAMO_ID) { //Une en un solo campo los expedientes
-		if ($y!=0) { include "cuerpoTabla.inc"; } // Fila de la tabla con los resultados								  				  			   
-		include "getRtaSQLAnt.inc";			   			   
-				$y++;				  			   
-	}
-	else {
-	if ($antfldEXP!=""){ 
-		$antfldEXP.="<br>"; 
-			$antfldARCH.="<br>"; 
-	}
-	$antfldEXP.=$fldEXP;
-	if ($fldARCH=='SI') {
+  include "getRtaSQL.inc";								
+  // Fila de la tabla con los resultados								  				  			   
+  include "getRtaSQLAnt.inc";			   			   
+	//$antfldEXP.=$fldEXP;
+	if ($fldARCH!='SI') {
 			$encabARCH = session_name()."=".session_id()."&buscar_exp=".tourl($fldEXP)."&krd=$krd&tipo_archivo=&nomcarpeta=";
 		$antfldARCH.="<a href='".$ruta_raiz."/expediente/datos_expediente.php?".$encabARCH."&num_expediente=".tourl($fldEXP)."&nurad=".tourl($antfldRADICADO)."' class='vinculos'>".$fldARCH."</a>";
 	}
-		else { $antfldARCH.=$fldARCH; }
-	}			
+				$y++;
+				include "cuerpoTabla.inc"; 
 				$rs->MoveNext(); 						
 			}
-	if ($y!=0) {				  		 		 
-				include "cuerpoTabla.inc";  // Fila de la tabla con lso resultados						 
-			$y++;						
-			}
+	  // Fila de la tabla con lso resultados						 
 	$cantRegPorPagina=$y;
 	$iCounter=$iCounter+$y;		 
 ?>
@@ -489,6 +487,16 @@ if ($antfldPRESTAMO_ID!=$fldPRESTAMO_ID) { //Une en un solo campo los expediente
 	var cantRegPorPagina=<?=$cantRegPorPagina-1?>;	   		   
 	// Marca todas las casillas si la del titulo es marcada
 	function seleccionarRta() {
+	  for(i=1;i<document.rta.elements.length;i++){
+	     if(document.rta.elements[i].type == "checkbox")
+         if(document.rta.rta_.checked==0) {
+          document.rta.elements[i].checked=1;
+          document.rta.rta_.checked=1;
+         }else{
+          document.rta.elements[i].checked=0;
+          document.rta.rta_.checked=0;
+        }
+    }   
 		valor=document.rta.rta_.checked;
 <?       for ($j=0; $j<$cantRegPorPagina; $j++) { ?>
               document.rta.rta_<?=$j?>.checked=valor;			  
@@ -497,16 +505,21 @@ if ($antfldPRESTAMO_ID!=$fldPRESTAMO_ID) { //Une en un solo campo los expediente
 	// Valida y envia el formulario
 	function enviar() {			  
 		var cant=0;
-	for (i=0; i<cantRegPorPagina; i++) {
-			if (eval('document.rta.rta_'+i+'.checked')==true){ 
-			cant=1;
-		break;
+		var kk = 1;
+		alert("red" + cantRegPorPagina);
+	for(i=1;i<document.rta.elements.length;i++){
+	   if(document.rta.elements[i].type == "checkbox"){
+			 if (eval(document.rta.elements[i].checked)==true){ 
+		  	cant=1;
+	    	// break;
+	    }
+	  kk++;  
 	}
 	}
 	if (cant==0) { alert("Debe seleccionar al menos un radicado"); }
 	else { 
-			document.rta.prestado.value=cantRegPorPagina;			  			  
-			document.rta.action="formEnvio.php";
+		document.rta.prestado.value=cantRegPorPagina;			  			  
+	  document.rta.action="formEnvio.php";
 		document.rta.submit();
 	}
 	}

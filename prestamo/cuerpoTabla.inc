@@ -31,6 +31,6 @@ if($antfldPATH!="") {
 	<td id="r16" style="display:<?=$tipoRespuesta[$opcionMenu][16];?>"  ><div align="center"><small><?= $antfldARCHIVADO; ?></div></small></td>
 	<td id="r17" style="display:<?=$tipoRespuesta[$opcionMenu][17];?>"  ><small><a href="historico.php?<?=$form_params_hist?>&">Ver hist&oacute;rico</a></small></td>
 	<td id="r18" style="display:<?=$tipoRespuesta[$opcionMenu][18];?>"  ><a><small><?=$antaccion?></a></small></td>
-	<td id="r19" style="display:<?=$tipoRespuesta[$opcionMenu][19];?>"   align="right"><small><input type="checkbox" name="rta_<?=$y-1; ?>" value="<?=$antfldPRESTAMO_ID; ?>"></small></td>			
+	<td id="r19" style="display:<?=$tipoRespuesta[$opcionMenu][19];?>"   align="right"><small><input type="checkbox" name="rta_<?=$y; ?>" value="<?=$fldPRESTAMO_ID; ?>"></small></td>			
 </tr>
 <?PHP?>		 
