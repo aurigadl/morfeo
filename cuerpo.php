@@ -264,7 +264,7 @@ $_SESSION['numExpedienteSelected'] = null;
                       <?php
                       $fechasymd = date('ymdhis');
                       if(!empty($radiPath)){
-                          echo "<td class='inbox-data-from'> <div><small> <a target='_blank' onClick='window.open('$linkImagen','imgCaliope$fechasymd','width=500,height=400');' href='#'> $numeroRadicado</a></small></div></td>";
+                          echo "<td class='inbox-data-from'> <div><small> <a onClick='window.open('$linkImagen','imgCaliope$fechasymd','width=500,height=400');' href='#'> $numeroRadicado</a></small></div></td>";
                       }else{
                           echo "<td class='inbox-data-from'> <div><small> $numeroRadicado</small></div></td>";
                       }
