@@ -237,27 +237,34 @@ function informar( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino
  return $nombreUsuario;	
 }
 
-function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino, $codUsOrigen,$observa)
-{	$tmp_rad = array();
+function borrarInformado( $radicados, $loginOrigen,$depDestino,$depOrigen,$codUsDestino, $codUsOrigen,$observa){
+    $tmp_rad   = array();
 	$deleteSQL = true;
-	while ((list(,$noRadicado)=each($radicados)) and $deleteSQL)
-	{	//foreach($radicados as $noRadicado)
+	while ((list(,$noRadicado)=each($radicados)) and $deleteSQL){
+	    //foreach($radicados as $noRadicado)
 		# Borrar el informado seleccionado
-		$tmp = explode('-',$noRadicado);
-		($tmp[0]) ? $wtmp = ' and INFO_CODI = '.$tmp[0] : $wtmp = ' and INFO_CODI IS NULL ';
-		$tmp[1] = str_replace(",","",$tmp[1]);
-		$record["RADI_NUME_RADI"] = $tmp[1];
-		$record["USUA_CODI"] = $codUsOrigen;
-		$record["DEPE_CODI"] = $depOrigen;
-		$deleteSQL = $this->db->conn->Execute("DELETE FROM INFORMADOS WHERE RADI_NUME_RADI=".$tmp[1]." and USUA_CODI=".$codUsOrigen." and DEPE_CODI=".$depOrigen.$wtmp);
-		if ($deleteSQL)	$tmp_rad[] = $record["RADI_NUME_RADI"];
+        if(stripos($noRadicado, "-")){
+            $record["USUA_CODI"] = $codUsOrigen;
+            $record["DEPE_CODI"] = $depOrigen;
+            $tmp = explode('-',$noRadicado);
+            ($tmp[0]) ? $wtmp = ' and INFO_CODI = '.$tmp[0] : $wtmp = ' and INFO_CODI IS NULL ';
+            $tmp[1] = str_replace(",","",$tmp[1]);
+            $record["RADI_NUME_RADI"] = $tmp[1];
+            $deleteSQL = $this->db->conn->Execute("DELETE FROM INFORMADOS WHERE RADI_NUME_RADI=".$tmp[1]." and USUA_CODI=".$codUsOrigen." and DEPE_CODI=".$depOrigen.$wtmp);
+            if ($deleteSQL)	$tmp_rad[] = $record["RADI_NUME_RADI"];
+        }else{
+            $deleteSQL = $this->db->conn->Execute("DELETE FROM INFORMADOS WHERE RADI_NUME_RADI=".$noRadicado." and USUA_CODI=".$codUsOrigen." and DEPE_CODI=".$depOrigen);
+            if ($deleteSQL)	$tmp_rad[] = $noRadicado;
+        }
 	}
+
 	$codTx = 7;
-	if ($deleteSQL)
-	{	$this->insertarHistorico($tmp_rad,$depOrigen,$codUsOrigen,$depOrigen,$codUsOrigen, $observa,$codTx,$observa);
+	if($deleteSQL){
+        $this->insertarHistorico($tmp_rad,$depOrigen,$codUsOrigen,$depOrigen,$codUsOrigen, $observa,$codTx,$observa);
 		return $tmp_rad;
-	}
-	else return $deleteSQL;
+	}else{
+        return $deleteSQL;
+    }
 }
 
 function changeFolder( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$tomarNivel,$observa)

@@ -343,7 +343,29 @@ $( document ).ready(function(){
     if(enviara==8 ){
       envioTx();
     }
+
+    //Borrar informado
+    if(enviara==19 ){
+        var rads;
+        rads="";
+
+        $('input[name^="checkValue"]').each(function(index){
+            if($(this).prop('checked') && $(this) != undefined) {
+                rads += $(this).attr('id')+",";
+            }
+        });
+
+        $.post("./tx/ajaxBorrarInformado.php", {"rads":rads}).done(
+            function( data ) {
+                $('#informarUsuario').html(data);
+                setTimeout("location.reload(true);", 2500);
+            }
+        );
+
+    }
+
   }
+
   function changeFolder(){
    var rads;
    var i;
@@ -390,12 +412,13 @@ if (($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $_
 		   	?>
 		     <a href="#" onMouseOut="MM_swapImgRestore()" onClick="seleccionBarra = 19;tipificar();" onMouseOver="MM_swapImage('Image19','','<?=$ruta_raiz?>/imagenes/internas/tipificarA.gif',1)">
 		     </a>
-		  <?php  }
+  <?php
+  }
 
-			if(!empty($permArchi) && $permArchi != 0) {
+      if(!empty($permArchi) && $permArchi != 0) {
 
-			}
-	}
+      }
+  }
 }
 /* Final de opcion de enviar para carpetas que no son 11 y 0(VoBo)
 /* si esta en la Carpeta de Visto Bueno no muesta las opciones de reenviar */
@@ -404,7 +427,8 @@ if ((($mostrar_opc_envio==0) || ($_SESSION['codusuario'] == $radi_usua_actu && $
 	$row1 = array();
 	// Combo en el que se muestran las dependencias, en el caso  de que el usuario escoja reasignar.
 	$dependencianomb=substr($dependencianomb,0,35);
-  $subDependencia = $db->conn->substr ."(depe_nomb,0,80)";
+    $subDependencia = $db->conn->substr ."(depe_nomb,0,80)";
+
   if($_SESSION["codusuario"]!=1 && $_SESSION["usuario_reasignacion"] !=1){
 	  $whereReasignar = " where depe_codi = $dependencia and depe_estado = 1";
 	}else{
