@@ -503,25 +503,26 @@ while($rs && !$rs->EOF) {
 <?       } ?>
 	}
 	// Valida y envia el formulario
-	function enviar() {			  
+	function enviar() {
+
 		var cant=0;
 		var kk = 1;
-		alert("red" + cantRegPorPagina);
-	for(i=1;i<document.rta.elements.length;i++){
-	   if(document.rta.elements[i].type == "checkbox"){
-			 if (eval(document.rta.elements[i].checked)==true){ 
-		  	cant=1;
-	    	// break;
-	    }
-	  kk++;  
-	}
-	}
-	if (cant==0) { alert("Debe seleccionar al menos un radicado"); }
-	else { 
-		document.rta.prestado.value=cantRegPorPagina;			  			  
-	  document.rta.action="formEnvio.php";
-		document.rta.submit();
-	}
+
+        for(i=1;i<document.rta.elements.length;i++){
+               if(document.rta.elements[i].type == "checkbox"){
+                     if (eval(document.rta.elements[i].checked)==true){
+                    cant=1;
+                }
+                kk++;
+            }
+        }
+        if (cant==0){
+            alert("Debe seleccionar al menos un radicado");
+        }else {
+            document.rta.prestado.value=cantRegPorPagina;
+            document.rta.action="formEnvio.php";
+            document.rta.submit();
+        }
 	}
 	// Regresa al men� de pr�stamos
 	function regresar() {
@@ -596,7 +597,7 @@ while($rs && !$rs->EOF) {
 	if ($tipoRespuesta[$opcionMenu][$numRtaMax]=="") {?>						
 	<tr  align="center">		 
 			<td  colspan="<?=($numCol+1);?>" align="center"><center>
-			<input type="button" class='botones' value="<?=$tituloSubmitRta[$opcionMenu]?>" onClick="javascript:enviar();">
+			<input type="button" class='botones' value="Prestar" onClick="enviar();">
 			<input type="button" class='botones' value="Cancelar" title="Regresa al men&uacute; de pr&eacute;stamo y control de documentos" onClick="javascript:regresar();"></center>
 			</td>		
          </tr>				

@@ -1,5 +1,4 @@
 <?PHP
-echo "Entro kakakak";
 /********* SEGUNDA PARTE DE LA CONSULTA. WHERE PARA LOS CRITERIOS DE BUSQUEDA DEFINIDOS POR EL USUARIO prestamo.php *********/
 // AdecuaciÃ³n de las fechas 
 	    $sqlWHERE_PRES_FECH_PEDI=$db->conn->SQLDate("Ymd","P.PRES_FECH_PEDI"); 
@@ -13,8 +12,8 @@ echo "Entro kakakak";
 
             // inicializaciÃ³n de algunos parÃ¡metros para limitar la bÃºsqueda
 
-            // Modificado Infométrika 14-Julio-2009
-            // Compatibilidad con PostgreSQL 8.3 cuando se realiza la búsqueda de un radicado específico.
+            // Modificado Infomï¿½trika 14-Julio-2009
+            // Compatibilidad con PostgreSQL 8.3 cuando se realiza la bï¿½squeda de un radicado especï¿½fico.
             //if ($ps_RADI_NUME_RADI!="")    { $sWhere.=" and P.RADI_NUME_RADI LIKE '%".$ps_RADI_NUME_RADI."'"; }
             switch ( $db->driver ) {
               case 'postgres':
