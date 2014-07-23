@@ -107,7 +107,6 @@ $_SESSION['numExpedienteSelected'] = null;
     $whereUsuario = " and b.radi_usua_actu='$codusuario' ";
   }
 
-
   $sqlNoRad = "
                select
                     b.carp_codi as carp, count(1) as COUNT
@@ -160,6 +159,8 @@ $_SESSION['numExpedienteSelected'] = null;
   <form name=form1 id=form1 action="./tx/formEnvio.php?<?=$encabezado?>" methos=post/  >
   <div id="content" style="opacity: 1;">
 
+    <div class="row" id="informarUsuario"></div>
+
     <div class="row">
       <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
       <h1 class="page-title txt-color-blueDark"><i class="glyphicon glyphicon-inbox"></i> Bandeja <span><?=$nomcarpeta?></span></h1>
@@ -201,9 +202,10 @@ $_SESSION['numExpedienteSelected'] = null;
                   <div style="position:absolute; left: 195; top:5;">
                     <span class="smart-form">
                         <label class="select" style="width:230px">
-                        <select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic" onChange="changedepesel1();">
+                        <select id="AccionCaliope" name="AccionCaliope" size="1" aria-controls="dt_basic">
                           <option value="0" selected="selected">Escoja una accion...</option>
-                          <option value="8	">Informar...</option>
+                          <option value="8">Informar ...</option>
+                          <option value="19">Borrar ...</option>
                         </select>
                     </span>
                   </div>
@@ -245,8 +247,9 @@ $_SESSION['numExpedienteSelected'] = null;
                   <tbody>
                   <?php
                   include "$ruta_raiz/include/query/queryCuerpoinf.php";
-                  //$db->conn->debug = true;
-                      $rs     =$db->conn->Execute($isql);
+
+                  $rs =$db->conn->Execute($isql);
+
                   while(!$rs->EOF){
 
                     $numeroRadicado        = $rs->fields["HID_RADI_NUME_RADI"];

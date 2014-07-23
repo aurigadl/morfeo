@@ -88,7 +88,6 @@ $_SESSION['numExpedienteSelected'] = null;
       }
   }
 
-
   $fecha_hoy      = Date("Y-m-d");
   $sqlFechaHoy    = $db->conn->DBDate($fecha_hoy);
 
@@ -111,7 +110,6 @@ $_SESSION['numExpedienteSelected'] = null;
     $whereUsuario = " and b.radi_usua_actu='$codusuario' ";
   }
 
-
   $sqlNoRad = "select
                     b.carp_codi as carp, count(1) as COUNT
                from
@@ -124,7 +122,7 @@ $_SESSION['numExpedienteSelected'] = null;
 		                and b.radi_depe_actu= $dependencia
                     $whereUsuario
                     GROUP BY carp";
- //$db->conn->debug = true;
+
   $rs          = $db->conn->Execute($sqlNoRad);
 
   while(!$rs->EOF){
@@ -140,12 +138,8 @@ $_SESSION['numExpedienteSelected'] = null;
                         b.radi_nume_radi is not null
                         and d.sgd_dir_tipo = 1";
 
-  $rs          = $db->conn->Execute($sqlTotalRad);
-  $numTotal      = $rs->fields["TOTAL"];
-
-
-
-
+  $rs       = $db->conn->Execute($sqlTotalRad);
+  $numTotal = $rs->fields["TOTAL"];
   ?>
 <html>
 
