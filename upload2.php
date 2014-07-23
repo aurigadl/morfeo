@@ -6,8 +6,6 @@ $ruta_raiz = ".";
 if (!$_SESSION['dependencia'])
   header ("Location: $ruta_raiz/cerrar_session.php");
 
-
-
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
@@ -22,7 +20,6 @@ $tip3Nombre  = $_SESSION["tip3Nombre"];
 $dependencia = $_SESSION["dependencia"];
 $ln          = $_SESSION["digitosDependencia"];
 $lnr         = 11+$ln;
-             
 
     /** * Retorna la cantidad de bytes de una expresion como 7M, 4G u 8K.
      *
@@ -47,9 +44,7 @@ $lnr         = 11+$ln;
     include_once("$ruta_raiz/class_control/anex_tipo.php");
 
     if (!$db)	$db = new ConnectionHandler($ruta_raiz);
-             if ($krd == 'INFO') {
-              var_dump($numrad);
-             }
+    //$db->conn->debug = true;
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
     $anex       = & new Anexo($db);
     $anexTip    = & new Anex_tipo($db);
@@ -58,8 +53,8 @@ $lnr         = 11+$ln;
         $aplinteg='null';
     if (!$tpradic)
         $tpradic='null';
-    
     if(!$cc){
+      
       $nuevo = ($codigo)? 'no' : 'si';
       
       $auxsololect = ($sololect)? 'S' : 'N';
@@ -77,25 +72,23 @@ $lnr         = 11+$ln;
         }
 
         $anex_salida = ($radicado_salida)? 1 : 0;
-        $archivo_temporal = $_FILES['userfile1']['tmp_name'];
-        $arreglo_archivo = explode('.', $archivo_temporal);
-        
-        $tipo = $arreglo_archivo[1]; 
 
-        $anexTip->anex_tipo_codigo($tipo);
-        
-        $ext        = $anexTip->get_anex_tipo_ext();
-        $ext        = strtolower($ext);
-        $auxnumero  = str_pad($auxnumero,5,"0",STR_PAD_LEFT);
-        $archivo    = trim($numrad."_".$auxnumero.".".$ext);
-        $archivoconversion = trim("1").trim(trim($numrad)."_".trim($auxnumero).".".trim($ext));
-
-        if(!$radicado_rem)
-          $radicado_rem = 7;
+        $bien = "si";
+        if ($bien and $tipo){	
+            $anexTip->anex_tipo_codigo($tipo);
+            
+            $ext=$anexTip->get_anex_tipo_ext();
+            $ext = strtolower($ext);
+            $auxnumero = str_pad($auxnumero,5,"0",STR_PAD_LEFT);
+            $archivo=trim($numrad."_".$auxnumero.".".$ext);
+            $archivoconversion=trim("1").trim(trim($numrad)."_".trim($auxnumero).".".trim($ext));
+        }
+    if(!$radicado_rem)
+            $radicado_rem=7;
     
-        $tamano = ($_FILES['userfile1']['size'])? ($_FILES['userfile1']['size']/1000) : 0;
+    $tamano = ($_FILES['userfile1']['size'])? ($_FILES['userfile1']['size']/1000) : 0;
      
-        if ($nuevo_archivo == true) {
+     if ($nuevo_archivo == true) {
 
         include "$ruta_raiz/include/query/queryUpload2.php";
 
@@ -174,15 +167,12 @@ $lnr         = 11+$ln;
          if ($bien){
              $respUpdate="OK";
              $bien2 = false;
-             
              if ($subir_archivo){	
                  $directorio        = "./bodega/".substr(trim($archivo),0,4)."/".intval(substr(trim($archivo),4,$ln))."/docs/";
+                 //echo "directorio ". $directorio ;
                  $userfile1_Temp    = $_FILES['userfile1']['tmp_name'];
                  $bien2             = move_uploaded_file($userfile1_Temp,$directorio.trim(strtolower($archivoconversion)));
-                 if ($krd == 'INFO') {
-                  var_dump();
-                 var_dump($directorio);
-                 }
+                 
                  //Si intento anexar archivo y Subio correctamente
                  if ($bien2){
                     $resp1 = "OK";
