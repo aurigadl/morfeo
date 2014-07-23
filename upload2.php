@@ -90,10 +90,6 @@ $lnr         = 11+$ln;
         $archivo    = trim($numrad."_".$auxnumero.".".$ext);
         $archivoconversion = trim("1").trim(trim($numrad)."_".trim($auxnumero).".".trim($ext));
 
-        if ($krd == 'INFO') {
-          var_dump($archivo);
-        }
-
         if(!$radicado_rem)
           $radicado_rem = 7;
     
@@ -178,13 +174,9 @@ $lnr         = 11+$ln;
          if ($bien){
              $respUpdate="OK";
              $bien2 = false;
-             if ($krd == 'INFO') {
-              var_dump($subir_archivo);
-              var_dump($archivo);
-             }
+             
              if ($subir_archivo){	
                  $directorio        = "./bodega/".substr(trim($archivo),0,4)."/".intval(substr(trim($archivo),4,$ln))."/docs/";
-                 //echo "directorio ". $directorio ;
                  $userfile1_Temp    = $_FILES['userfile1']['tmp_name'];
                  $bien2             = move_uploaded_file($userfile1_Temp,$directorio.trim(strtolower($archivoconversion)));
                  if ($krd == 'INFO') {
