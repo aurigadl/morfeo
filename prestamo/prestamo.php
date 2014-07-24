@@ -80,7 +80,7 @@ $ver=$_POST["s_sql"];      //consulta
       </head>
       <body class="PageBODY">
 	     <div align="center">	  	  
-         <table width="97%">
+         <table >
             <tr>   
                <td valign="top"><?php Search_Show(); ?></td>
             </tr>
