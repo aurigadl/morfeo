@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 * @author Jairo Losada   <jlosada@gmail.com>
 * @author Cesar Gonzalez <aurigadl@gmail.com>
@@ -46,8 +46,8 @@ $ruta_raiz = "..";
 $ruta_raiz = "..";
 $verrad = "";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-$db = new ConnectionHandler($ruta_raiz);	 
-//$db->conn->debug = true; 
+$db = new ConnectionHandler($ruta_raiz);
+
 if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
 
 //===============================
@@ -80,7 +80,7 @@ $ver=$_POST["s_sql"];      //consulta
       </head>
       <body class="PageBODY">
 	     <div align="center">	  	  
-         <table>
+         <table width="97%">
             <tr>   
                <td valign="top"><?php Search_Show(); ?></td>
             </tr>
@@ -108,9 +108,7 @@ $ver=$_POST["s_sql"];      //consulta
       // De sesi�n
 
 	  global $db;
-      global $ruta_raiz;	  
-  //$db->conn->debug = true;
-	  // Control de visualizaci�n	  
+      global $ruta_raiz;
 	$sFileName  = $_POST["sFileName"];
 	$opcionMenu  = $_POST["opcionMenu"];  
       // Valores
