@@ -1,7 +1,9 @@
 <?php
 session_start();
-/*error_reporting(E_ALL); */
-//ini_set('display_errors',1);
+
+/*error_reporting(E_ALL);
+ini_set('display_errors',1);*/
+
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -24,8 +26,6 @@ if($subir_archivo != true){
     include_once "$ruta_raiz/class_control/AplIntegrada.php";
     include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 }
-
-
 
 if(!$ent){
     $ent = substr(trim($numrad),strlen($numrad)-1,1);
@@ -63,7 +63,6 @@ if ($rs->EOF){
 }
 
 if ($resp1=="OK"){
-
     $mensaje = ($subir_archivo)? "<span class=info>Archivo anexado correctamente</span></br>" :
                                 "Anexo Modificado Correctamente<br>No se anex&oacute; ning&uacute;n archivo</br>";
 }else if ($resp1=="ERROR"){
@@ -87,19 +86,20 @@ if (!function_exists(return_bytes)){
     }
 }
 
-$consultaESP = "select r.EESP_CODI from radicado r where r.radi_nume_radi = $numrad";
-$rsESP = $db->conn->Execute($consultaESP);
-$codigoESP = $rsESP->fields["EESP_CODI"];
+$consultaESP  = "select r.EESP_CODI from radicado r where r.radi_nume_radi = $numrad";
+$rsESP        = $db->conn->Execute($consultaESP);
+$codigoESP    = $rsESP->fields["EESP_CODI"];
 $consultaRUPS = "select FLAG_RUPS from bodega_empresas where ARE_ESP_SECUE = $codigoESP";
 
 $rsESPRUPS = $db->conn->Execute( $consultaRUPS );
 $espEnRUPS = $rsESPRUPS->fields[ "FLAG_RUPS" ];
 
-$datos_envio= "&otro_us11=$otro_us11&codigo=$codigo&dpto_nombre_us11=$dpto_nombre_us11&direccion_us11=".urlencode($direccion_us11)."&muni_nombre_us11=$muni_nombre_us11&nombret_us11=$nombret_us11";
-$datos_envio.="&otro_us2=$otro_us2&dpto_nombre_us2=$dpto_nombre_us2&muni_nombre_us2=$muni_nombre_us2&direccion_us2=".urlencode($direccion_us2)."&nombret_us2=$nombret_us2";
-$datos_envio.="&dpto_nombre_us3=$dpto_nombre_us3&muni_nombre_us3=$muni_nombre_us3&direccion_us3=".urlencode($direccion_us3)."&nombret_us3=$nombret_us3";
-$variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$datos_envio";
+$datos_envio  = "&otro_us11=$otro_us11&codigo=$codigo&dpto_nombre_us11=$dpto_nombre_us11&direccion_us11=".urlencode($direccion_us11)."&muni_nombre_us11=$muni_nombre_us11&nombret_us11=$nombret_us11";
+$datos_envio .="&otro_us2=$otro_us2&dpto_nombre_us2=$dpto_nombre_us2&muni_nombre_us2=$muni_nombre_us2&direccion_us2=".urlencode($direccion_us2)."&nombret_us2=$nombret_us2";
+$datos_envio .="&dpto_nombre_us3=$dpto_nombre_us3&muni_nombre_us3=$muni_nombre_us3&direccion_us3=".urlencode($direccion_us3)."&nombret_us3=$nombret_us3";
+$variables    = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$datos_envio";
 ?>
+
 <html>
 <head>
 <title>Informaci&oacute;n de Anexos</title>
@@ -217,10 +217,12 @@ $variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$dato
 
   function actualizar(){
 
-      if (!validarGenerico()){
-          return;
-      }
+      if (!validarGenerico()) return;
+
       var integracion = document.formulario.tpradic.value;
+
+      document.formulario.radicado_salida.disabled=false;
+      document.formulario.tpradic.disabled=false;
       document.formulario.submit();
   }
 
@@ -233,7 +235,9 @@ $variables = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$dato
 <input type="hidden" name="nuevo_archivo" value="<?=$nuevo_archivo?>"> 
 <?php
 $i_copias = 0;
+
 if ($codigo){
+
     $isql = "SELECT CODI_NIVEL
                   ,ANEX_SOLO_LECT
                   ,ANEX_CREADOR
@@ -271,7 +275,7 @@ if ($codigo){
     $direccionAlterna = $rs->fields["SGD_DIR_DIRECCION"];
     $direccionAlterna = $rs->fields["SGD_DIR_DIRECCION"];
     $medioRadicar     = $rs->fields["ANEX_TIPO_ENVIO"];
-  // SGD_DIR_TIPO  = 7 es otro reminte
+    // SGD_DIR_TIPO  = 7 es otro reminte
 
     if(!empty($remitente)){
         $radicado_rem = $remitente;
@@ -283,11 +287,7 @@ if ($codigo){
 if(!$radicado_rem){
   $radicado_rem = 1;
 }
-/**
-$markcheck = "";
 
-if($radicado_salida==1 and ){
-    $markcheck = "checked";*/
 ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -312,29 +312,19 @@ if($radicado_salida==1 and ){
     <tr>
     <td width=50% >
 <?php
-<<<<<<< HEAD
 $us_1   = "";
 $us_2   = "";
 $us_3   = "";
+$datoss = "";
 
 if ($nombret_us11 and $direccion_us11 and $dpto_nombre_us11 and $muni_nombre_us11){
     $us_1 = "si"; $usuar=1;
     if($remitente==1) {$datoss1=" checked " ;  }
 }else{
     $datoss1=" disabled ";
-=======
-$us_1 = "";
-$us_2 = "";
-$us_3 = "";
-$datoss = "";
-if ($nombret_us11 and $direccion_us11 and $dpto_nombre_us11 and $muni_nombre_us11)
-{ $us_1 = "si"; $usuar=1;
-  if($remitente==1) {$datoss1=" checked " ;  }
->>>>>>> Archivo recuperado del repo, no se ha realizado la correcion
 }
-else
-{  $datoss1=" disabled "; }
 
+$datoss = "";
 if ($nombret_us2 and $direccion_us2 and $dpto_nombre_us2 and $muni_nombre_us2  )
 { $us_2 = "si"; $predi=1;
   if($remitente==2) $datoss2=" checked  " ;
@@ -342,6 +332,7 @@ if ($nombret_us2 and $direccion_us2 and $dpto_nombre_us2 and $muni_nombre_us2  )
 else
 { $datoss2=" disabled ";  }
 
+$datoss = "";
 if ($nombret_us3 and $direccion_us3 and $dpto_nombre_us3 and $muni_nombre_us3 )
 {
   $us_3 = "si";
@@ -353,9 +344,16 @@ else  {  $datoss3=" disabled " ;}
 if ($remitente==7)  $datoss4=" checked  ";
 else  $datoss4 = "";
 
-if($us_1 or $us_2 or $us_3){
-  echo "<input type='checkbox' class='select' name='radicado_salida' value='radsalida' $markcheck";
+if($us_1 or $us_2 or $us_3)
+{
+  if ($radicado_salida) $datoss=" checked ";
+  else $datoss="";
+?>
+  <input type="checkbox" class="select" name="radicado_salida" value="radsalida"
+<?php
   if (!$radicado_salida and $ent==1)  $radicado_salida=1;
+  if($radicado_salida==1 or $datoss)
+  { echo " checked "; }
 ?> onClick="doc_radicado();" id="radicado_salida"><small>  Este documento ser&aacute; radicado</small>
 <?php
 }else{
@@ -363,9 +361,11 @@ if($us_1 or $us_2 or $us_3){
   <small>Este documento no puede ser radicado ya que faltan datos.<br>
   (Para envio son obligatorios Nombre, Direccion, Departamento,
   Municipio)</small>
-    <input type="checkbox" class="select" name="radicado_salida" value="radsalida" <?=$markcheck?>
+    <input type="checkbox" class="select" name="radicado_salida" value="radsalida"
 		<?php
 			if (!$radicado_salida and $ent==1)  $radicado_salida=1;
+			if($radicado_salida==1 or $datoss)
+			{ echo " checked "; }
 		?> onClick="doc_radicado();" id="radicado_salida">  Este documento ser&aacute; radicado
 <?php
 }
@@ -393,10 +393,13 @@ foreach ($tpNumRad as $key => $valueTp){
         $comboIntSwSel=1;
     }
 
-    //Si se definio prioridad en algun tipo de radicacion
-    $valueDesc = $tpDescRad[$key];
-    $comboRadOps =$comboRadOps . "<option value='".$valueTp."' $sel>".$valueDesc."</option>";
-    $sel="";
+    if($valueTp != 9){
+        //Si se definio prioridad en algun tipo de radicacion
+        $valueDesc = $tpDescRad[$key];
+        $comboRadOps =$comboRadOps . "<option value='".$valueTp."' $sel>".$valueDesc."</option>";
+        $sel="";
+    }
+
 }
 
 $comboRad = $comboRad.$comboRadSelecc.$comboRadOps."</select></label>";
@@ -488,16 +491,6 @@ if( $rs_exp->RecordCount() == 0 ){
   </tr>
 
 
-<!--    <tr valign="top">
-      <td valign="top" colspan='2' ><small>
-        <input type="radio" name="radicado_rem" id="rpredi" value=2 <?/*=$datoss2*/?> '<?php /* if($radicado_rem==2){echo " checked ";}  */?> '>
-        <?/*=$tip3Nombre[2][$ent]*/?>
-        <?/*=$otro_us2." - ".substr($nombret_us2,0,35)*/?>
-        <?/*=$direccion_us2*/?>
-        <?/*="$dpto_nombre_us2/$muni_nombre_us2" */?>
-      </small></td>
-    </tr>-->
-
 <?php if($codigo){ ?>
         <tr><td height='3px' colspan="2"></td></tr>
 
@@ -571,7 +564,7 @@ if( $rs_exp->RecordCount() == 0 ){
                       SGD_CIU_APELL1 AS APELL1,
                       SGD_CIU_APELL2 AS APELL2,
                       SGD_CIU_CEDULA AS IDENTIFICADOR,
-                      SGD_CIU_EMAIL AS MAIL,
+                      SGD_CIU_EMAIL  AS MAIL,
                       SGD_CIU_DIRECCION  AS DIRECCION
                       FROM
                       SGD_CIU_CIUDADANO
@@ -617,8 +610,7 @@ if( $rs_exp->RecordCount() == 0 ){
               }
 
               $rs2 = $db->conn->Execute($isql);
-        	$db->conn->debug = true;      
-		$nombre_otros = "";
+		      $nombre_otros = "";
               if($rs2 && !$rs2->EOF){
                   $nombre_otros =$rs2->fields["NOMBRE"]."".$rs2->fields["APELL1"]." ".$rs2->fields["APELL2"];
               }
