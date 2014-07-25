@@ -53,35 +53,33 @@ $mensaje_error = false;
  *       Filename: formEnvio.php
  *       Modificado 1/3/2006 IIAC
  *********************************************************************************/
- 
 
-   // formEnvio CustomIncludes begin
-   include ("common.php");   
-   // Save Page and File Name available into variables
-   $sFileName = "formEnvio.php";
-   // Variables de control
-   $pageAnt=strip($_POST["sFileName"]);    
-   $opcionMenu=$_POST["opcionMenu"]; //opci�n: prestar(1), cancelar(3) o devolver(2)                  
-   $ordenar=strip($_POST["ordenar"]);//1 si se dio ordenar y 0 de otro modo 
-    // Recupera el identificador de los registros seleccionados   
-   $cantRegistros=intval($_POST["prestado"]); //cantidad de registros listados en la consulta	
-   if($ordenar=="1"){ $setFiltroSelect=strip($_POST["s_PRES_ID"]); } //Recupera todos los registros presentados si se da ordenar	  
-   else { //Recupera solo los registros seleccionados
-      $j=0;
-      $setFiltroSelect=""; //PRES_ID separados por coma
-      for($i=0; $i<$cantRegistros; $i++) {
-         $x=$_POST["rta_".$i];
-         if($x!=""){ 
-	  	    if ($j!=0) { $setFiltroSelect.=","; }
-		    $setFiltroSelect.=$x;		 
- 	        $j++; 
-	     }
-      }              
-   }
-   // Inicializa la identificaci�n del usuario solicitante   
+    // formEnvio CustomIncludes begin
+    include ("common.php");
+    // Save Page and File Name available into variables
+    $sFileName  = "formEnvio.php";
+    // Variables de control
+    $pageAnt    = strip($_POST["sFileName"]);
+    $opcionMenu = $_POST["opcionMenu"]; //opcion: prestar(1), cancelar(3) o devolver(2)
+    $ordenar    = strip($_POST["ordenar"]);//1 si se dio ordenar y 0 de otro modo
+
+    // Recupera el identificador de los registros seleccionados
+    $cantRegistros =intval($_POST["prestado"]); //cantidad de registros listados en la consulta
+
+    if($ordenar=="1"){
+       //Recupera todos los registros presentados si se da ordenar
+       $setFiltroSelect=strip($_POST["s_PRES_ID"]);
+    } else {
+        foreach ($_POST as $key => $valor){
+            if (preg_match('/rta/',$key)){
+                $setFiltroSelect .= empty($setFiltroSelect)? $valor : ", ".$valor ;
+            }
+        }
+    }
+   // Inicializa la identificacion del usuario solicitante
    $usua_codi=strip($_POST["usua_codi"]);   
-   //$db->conn->debug = true;
-   $query="select USUA_LOGIN_ACTU from PRESTAMO where PRES_ID in ($setFiltroSelect)";  //primer usuario de los registros    		
+
+   $query="select USUA_LOGIN_ACTU from PRESTAMO where PRES_ID in ($setFiltroSelect)";  //primer usuario de los registros
    $rs = $db->conn->query($query);		 
    
    if($rs && !$rs->EOF){ $usua_codi_n=$rs->fields("USUA_LOGIN_ACTU"); } //primer usuario de los registros    		
@@ -138,7 +136,7 @@ $mensaje_error = false;
 	     if($flds_PRES_ESTADO==5){ $encabezado.="prestamoIndefinido&"; }
 	     else                    { $encabezado.="prestamo&"; }	  
          $titCaj="Prestar Documento"; 	  
-         // Inicializaci�n de la fecha de vencimiento     
+         // Inicializacion de la fecha de vencimiento
          if ($fechaVencimiento=="") {	  	  	  
             $query="select PARAM_VALOR,PARAM_NOMB from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_DIAS_PREST'"; 
             $rs = $db->conn->query($query);
@@ -222,6 +220,7 @@ $mensaje_error = false;
 	<!-- Bootstrap core CSS -->
 	<?php include_once "../htmlheader.inc.php"; ?>	 
 </head>
+
 <body class="smart-form">
 <table class="table table-bordered smart-form">
 	<tr>
@@ -239,12 +238,12 @@ $mensaje_error = false;
 			<input type="hidden" name="ordenar" value="0"> <!-- no ordena !-->
 			<input type="hidden" name="s_PRES_ID" value="<?=$setFiltroSelect?>">				                 	  								
 		<table width="100%" class="table table-bordered">
-		<tr>
-			<TD width=30% ><SMALL>USUARIO:<?=$usua_nomb?><br></SMALL></TD>
-				<TD width='30%' ><SMALL>DEPENDENCIA:<?=$depe_nomb?><br></SMALL></TD>
-			<TD width="35%" ><SMALL><?=$titCaj?></SMALL></td>
-			<td width='5' ><input type=button value=REALIZAR onclick="okTx();" name=enviardoc align=bottom  id=REALIZAR class="btn btn-primary"></td>
-		</tr>
+            <tr>
+                <TD width=30% ><SMALL>USUARIO:<?=$usua_nomb?><br></SMALL></TD>
+                    <TD width='30%' ><SMALL>DEPENDENCIA:<?=$depe_nomb?><br></SMALL></TD>
+                <TD width="35%" ><SMALL><?=$titCaj?></SMALL></td>
+                <td width='5' ><input type=button value=REALIZAR onclick="okTx();" name=enviardoc align=bottom  id=REALIZAR class="btn btn-primary"></td>
+            </tr>
 			<tr align="center">
 				<td colspan="4"  align=center><center>
 				<table class="table table-bordered">
@@ -274,14 +273,14 @@ $mensaje_error = false;
 	</tr>						  									  					  
 		<tr bgcolor="White" id="fecha">
 			<td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Fecha de Vencimiento(aaaa/mm/dd)</td>	 
-	<td align="left">
-		<section class="col col-3">
-			<label class="input">
-			<i class="icon-append fa fa-calendar"></i>
-			<input id="startdate" type="text" placeholder="Seleccione la Fecha" name="fechaVencimiento">
-			</label>
-		</section>
-		 </td>
+            <td align="left">
+                <section class="col col-3">
+                    <label class="input">
+                    <i class="icon-append fa fa-calendar"></i>
+                    <input id="startdate" type="text" placeholder="Seleccione la Fecha" name="fechaVencimiento">
+                    </label>
+                </section>
+		    </td>
 			</tr>
 	<script>
 		// Oculta o hace visible el campo de la fecha de vencimiento dependiendo del estado seleccionado por el usuario
@@ -428,7 +427,7 @@ $mensaje_error = false;
 		  return 0;
 	   }	 	     
     }
-	// Marca todas las cajas de seleccion arrancando la p�gina
+	// Marca todas las cajas de seleccion arrancando la pagina
     document.rta.rta_.checked=true;
  	seleccionarRta();
   </script>

@@ -1,6 +1,5 @@
 <?php
 session_start();
-ini_set("display_errors",1);
 
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia'])

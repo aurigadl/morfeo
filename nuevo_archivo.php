@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-/*error_reporting(E_ALL);
-ini_set('display_errors',1);*/
-
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -217,12 +214,10 @@ $variables    = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$d
 
   function actualizar(){
 
-      if (!validarGenerico()) return;
-
+      if (!validarGenerico()){
+          return;
+      }
       var integracion = document.formulario.tpradic.value;
-
-      document.formulario.radicado_salida.disabled=false;
-      document.formulario.tpradic.disabled=false;
       document.formulario.submit();
   }
 
@@ -287,7 +282,11 @@ if ($codigo){
 if(!$radicado_rem){
   $radicado_rem = 1;
 }
+/**
+$markcheck = "";
 
+if($radicado_salida==1 and ){
+    $markcheck = "checked";*/
 ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -315,7 +314,6 @@ if(!$radicado_rem){
 $us_1   = "";
 $us_2   = "";
 $us_3   = "";
-$datoss = "";
 
 if ($nombret_us11 and $direccion_us11 and $dpto_nombre_us11 and $muni_nombre_us11){
     $us_1 = "si"; $usuar=1;
@@ -324,7 +322,6 @@ if ($nombret_us11 and $direccion_us11 and $dpto_nombre_us11 and $muni_nombre_us1
     $datoss1=" disabled ";
 }
 
-$datoss = "";
 if ($nombret_us2 and $direccion_us2 and $dpto_nombre_us2 and $muni_nombre_us2  )
 { $us_2 = "si"; $predi=1;
   if($remitente==2) $datoss2=" checked  " ;
@@ -332,7 +329,6 @@ if ($nombret_us2 and $direccion_us2 and $dpto_nombre_us2 and $muni_nombre_us2  )
 else
 { $datoss2=" disabled ";  }
 
-$datoss = "";
 if ($nombret_us3 and $direccion_us3 and $dpto_nombre_us3 and $muni_nombre_us3 )
 {
   $us_3 = "si";
@@ -344,16 +340,9 @@ else  {  $datoss3=" disabled " ;}
 if ($remitente==7)  $datoss4=" checked  ";
 else  $datoss4 = "";
 
-if($us_1 or $us_2 or $us_3)
-{
-  if ($radicado_salida) $datoss=" checked ";
-  else $datoss="";
-?>
-  <input type="checkbox" class="select" name="radicado_salida" value="radsalida"
-<?php
+if($us_1 or $us_2 or $us_3){
+  echo "<input type='checkbox' class='select' name='radicado_salida' value='radsalida' $markcheck";
   if (!$radicado_salida and $ent==1)  $radicado_salida=1;
-  if($radicado_salida==1 or $datoss)
-  { echo " checked "; }
 ?> onClick="doc_radicado();" id="radicado_salida"><small>  Este documento ser&aacute; radicado</small>
 <?php
 }else{
@@ -361,11 +350,9 @@ if($us_1 or $us_2 or $us_3)
   <small>Este documento no puede ser radicado ya que faltan datos.<br>
   (Para envio son obligatorios Nombre, Direccion, Departamento,
   Municipio)</small>
-    <input type="checkbox" class="select" name="radicado_salida" value="radsalida"
+    <input type="checkbox" class="select" name="radicado_salida" value="radsalida" <?=$markcheck?>
 		<?php
 			if (!$radicado_salida and $ent==1)  $radicado_salida=1;
-			if($radicado_salida==1 or $datoss)
-			{ echo " checked "; }
 		?> onClick="doc_radicado();" id="radicado_salida">  Este documento ser&aacute; radicado
 <?php
 }

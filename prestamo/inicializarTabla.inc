@@ -4,7 +4,7 @@
 
 
 // Oculta o Hace visible la flecha que indica la columna por la cual se ordena el resultado
-$numRta=16; //número de columnas de la respuestas
+$numRta=16; //nï¿½mero de columnas de la respuestas
 for($j=1; $j<$numRta; $j++) {
 	if($j==$iSort){ 
 			if($sDirection==" DESC ") { $flecha[$j]="<img src='".$ruta_raiz."/iconos/flechadesc.gif' border=0 alt=''>"; }
@@ -20,6 +20,7 @@ $j=0;
 if($sFileName=="formEnvio.php") { $j=1; } 
 ?>
 <tr  align="center">
+    <th id="r19" style="display:<?=$tipoRespuesta[$opcionMenu][19];?>"><input type="checkbox" name="rta_" value="checkbox" onClick="javascript: seleccionarRta();"></small></th>
 	<th id="r0"  style="display:<?=$tipoRespuesta[$opcionMenu][0]; ?>"><small><a  <?=$href[$j][1]?>> <?=$flecha[1]?> Radicado</a></small></th>
 	<th id="r1"  style="display:<?=$tipoRespuesta[$opcionMenu][1]; ?>"><small><a >Expediente</a></small></th>	 
 	<th id="r2"  style="display:<?=$tipoRespuesta[$opcionMenu][2]; ?>"><small><a  <?=$href[$j][3]?>> <?=$flecha[3]?> Usuario</a></small></th>	 
@@ -38,6 +39,5 @@ if($sFileName=="formEnvio.php") { $j=1; }
 	<th id="r15" style="display:<?=$tipoRespuesta[$opcionMenu][15];?>"><small><a  <?=$href[$j][15]?>><?=$flecha[15]?> Usuario<br>Recibe</a></small></th>
 	<th id="r16" style="display:<?=$tipoRespuesta[$opcionMenu][16];?>"><small><a >Archivado</a></small></th>		 		 
 	<th id="r17" style="display:<?=$tipoRespuesta[$opcionMenu][17];?>"><small><a >Ver Hist&oacute;rico</a></small></th>
-	<th id="r18" style="display:<?=$tipoRespuesta[$opcionMenu][18];?>"><small><a >Acci&oacute;n</a></small></th>			
-	<th id="r19" style="display:<?=$tipoRespuesta[$opcionMenu][19];?>"><input type="checkbox" name="rta_" value="checkbox" onClick="javascript: seleccionarRta();"></small></th>
+	<th id="r18" style="display:<?=$tipoRespuesta[$opcionMenu][18];?>"><small><a >Acci&oacute;n</a></small></th>
 </tr> 
