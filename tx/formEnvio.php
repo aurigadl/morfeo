@@ -247,7 +247,7 @@ if($checkValue)
 						$i++;
 					
 					$whereFiltro.= ' b.radi_nume_radi = '.$record_id.' or';
- $pasaFiltro = "Si";
+                    $pasaFiltro = "Si";
 
 					/**
 					 * Modificaciones Febrero de 2007, por SSPD para el DNP

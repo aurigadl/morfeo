@@ -717,8 +717,6 @@ if( $rs_exp->RecordCount() == 0 ){
 }
   $maximo_tamano = number_format((return_bytes(ini_get('upload_max_filesize')))/1000000,2);
   $tamano_archivo = return_bytes(ini_get('upload_max_filesize'));
-  
-  $mostrar_mensaje = (isset($codigo) && $codigo != '')? 'El numero del Anexo es: ' . $codigo :  null;
 ?>
     <tr><td colspan="2"></td></tr>
     <tr align="center">
