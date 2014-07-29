@@ -231,6 +231,7 @@ $variables    = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$d
 <body class="smart-form">
 <div>
 <form enctype="multipart/form-data" method="POST" name="formulario" id="formulario" action='upload2.php?<?=$variables?>' >
+
 <input type="hidden" name="subir_archivo" value="<?=$subir_archivo?>"> 
 <input type="hidden" name="nuevo_archivo" value="<?=$nuevo_archivo?>"> 
 <?php
@@ -393,7 +394,7 @@ foreach ($tpNumRad as $key => $valueTp){
         $comboIntSwSel=1;
     }
 
-    if($valueTp != 9){
+    if($valueTp != 9 and $valueTp != 2){
         //Si se definio prioridad en algun tipo de radicacion
         $valueDesc = $tpDescRad[$key];
         $comboRadOps =$comboRadOps . "<option value='".$valueTp."' $sel>".$valueDesc."</option>";
@@ -484,14 +485,16 @@ if( $rs_exp->RecordCount() == 0 ){
       if($radicado_rem==1){echo " checked ";}
     ?> '>
     <?=$tip3Nombre[1][$ent]?>
-    <?=$otro_us11." - ".substr($nombret_us11,0,35)?>
+    <?=$otro_us11?>
     <?=$direccion_us11?>
     <?="$dpto_nombre_us11/$muni_nombre_us11" ?>
     </small></td>
   </tr>
 
 
-<?php if($codigo){ ?>
+<?php
+
+    if($codigo){ ?>
         <tr><td height='3px' colspan="2"></td></tr>
 
       <!-- Listado de destinos buscados por usuario-->
@@ -617,11 +620,9 @@ if( $rs_exp->RecordCount() == 0 ){
               ?>
 
               <tr>
-                <td align="center"  >
-                    <input type="radio"   name="radicado_rem" value=<?=$sgd_dir_tipo?>  id="rusuario"
+                    <input type="hidden"   name="radicado_rem" value=<?=$sgd_dir_tipo?>  id="rusuario"
                     '<?php  if($radicado_rem==$sgd_dir_tipo){echo " checked ";}?>'>
-                </td>
-                <td width='100%' align="center"  >
+                <td width='100%' align="center"  colspan="2" >
                   <small>
                       <?=$nombre_otros?>
                       <?=$rs2->fields["DIRECCION"];?>
@@ -677,15 +678,15 @@ if( $rs_exp->RecordCount() == 0 ){
           <input type=hidden name="idpais1" id="idpais1" value='<?=$idpais1 ?>' class=e_cajas size=4>
           <input type=hidden name="codep_us1" id="codep_us1" value='<?=$codep_us1 ?>' class=e_cajas size=4 >
           <input type=hidden name="muni_us1" id="muni_us1"  value='<?=$muni_us1 ?>' class=e_cajas size=4 >
-          <input type=text name=cc_documento_us1 value='<?=$cc_documento_us1 ?>' class=e_cajas size=8 >
+          <input type=text   name="cc_documento_us1" value='<?=$cc_documento_us1 ?>' class=e_cajas size=8 >
         </TD>
-        <TD width="329" align="center" >
+        <TD width="329" align="center">
           <input type="text" name="nombre_us1" value='' size="3" class="tex_area">
           <input type="text" name="prim_apel_us1" value='' size="3" class="tex_area">
           <input type="text" name="seg_apel_us1" value='' size="3" class="tex_area">
         </TD>
         <TD width="140" align="center"  colspan='2'>
-          <input type=text name=otro_us7 value='' class=tex_area   size=20 maxlength="45">
+          <input type=text name="otro_us7" value='' class=tex_area   size=20 maxlength="45">
         </TD>
         <TD align="center" >
           <input type=text name=direccion_us1 value='' class=tex_area  size=6>
@@ -694,7 +695,7 @@ if( $rs_exp->RecordCount() == 0 ){
           <input type=text name=mail_us1 value='' class="tex_area" size="11">
         </TD>
         <TD width="68" align="center" colspan="2">
-          <input type=text name=otro_us1 value='' class=tex_area" size="11">
+          <input type=text name="otro_us1" value='' class=tex_area" size="11">
         </TD>
       </tr>
       <tr>

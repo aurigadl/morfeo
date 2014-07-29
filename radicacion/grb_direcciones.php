@@ -1,10 +1,11 @@
-<?
-error_reporting(7);
+<?php
+
 /**
- * Modulo en el cual se inserta y actualizan datos de los remitentes y destinatarios de los radicados
- * @autor JAIRO LOSASDA
- * Modificado por HLP.
- */
+* Modulo en el cual se inserta y actualizan datos de los remitentes y destinatarios de los radicados
+* @autor JAIRO LOSASDA
+* Modificado por HLP.
+*/
+
 include_once("$ruta_raiz/class_control/Municipio.php");
 
 if (!$muni_us1) $muni_us1 = "NULL";
@@ -178,9 +179,9 @@ if($documento_us1 and !$cc)
 	unset($record);
 	$ADODB_COUNTRECS = false;
 }
-	// ***********************  us2
-if($documento_us2)
-{
+
+
+if($documento_us2){
 	$sgd_ciu_codigo='null';
 	$sgd_oem_codigo='null';
 	$sgd_esp_codigo='null';

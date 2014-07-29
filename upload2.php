@@ -20,16 +20,17 @@ $dependencia = $_SESSION["dependencia"];
 $ln          = $_SESSION["digitosDependencia"];
 $lnr         = 11+$ln;
 
+
     /** * Retorna la cantidad de bytes de una expresion como 7M, 4G u 8K.
      *
      * @param char $var
      * @return numeric
      */
-    function return_bytes($val)
-    {	$val = trim($val);
+    function return_bytes($val){
+        $val    = trim($val);
         $ultimo = strtolower($val{strlen($val)-1});
-        switch($ultimo)
-        {	// El modificador 'G' se encuentra disponible desde PHP 5.1.0
+        switch($ultimo){
+        // El modificador 'G' se encuentra disponible desde PHP 5.1.0
             case 'g':	$val *= 1024;
             case 'm':	$val *= 1024;
             case 'k':	$val *= 1024;
@@ -145,8 +146,7 @@ $lnr         = 11+$ln;
                                                                    ,anex_tipo         = $tipo, " : 0;
           
           $isql = "update 
-                anexos set 
-                      $subir_archivo 
+                anexos set
                       anex_salida=$anex_salida
                     , sgd_rem_destino=$radicado_rem
                     , sgd_dir_tipo=$radicado_rem
