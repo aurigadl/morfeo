@@ -261,10 +261,12 @@ $_SESSION['numExpedienteSelected'] = null;
                           </label>
                         </div>
                       </td>
+
                       <?php
                       $fechasymd = date('ymdhis');
                       if(!empty($radiPath)){
-                          echo "<td class='inbox-data-from'> <div><small> <a target='_blank' href='$linkImagen'>$numeroRadicado</a></small> </div></td>";
+                          //echo "<td class='inbox-data-from'> <div><small> <a target='_blank' href='$linkImagen'>$numeroRadicado</a></small> </div></td>";
+                          echo "<td class='inbox-data-from'> <div><small><a target='_blank' onclick=\"funlinkArchivo('$numeroRadicado','$ruta_raiz');\" href='#'>$numeroRadicado</a></small></div></td>";
                       }else{
                           echo "<td class='inbox-data-from'> <div><small> $numeroRadicado</small></div></td>";
                       }
@@ -304,6 +306,14 @@ $_SESSION['numExpedienteSelected'] = null;
 </form>
 
 <script type="text/javascript">
+    // Muestra las imagenes de los radicados
+    function funlinkArchivo(numrad, rutaRaiz){
+        var nombreventana = "linkVistArch";
+        var url           = rutaRaiz + "/linkArchivo.php?<? echo session_name()."=".session_id()?>"+"&numrad="+numrad;
+        var ventana       = window.open(url,nombreventana,'scrollbars=1,height=50,width=250');
+        //setTimeout(nombreventana.close, 70);
+        return;
+    }
 
 	// DO NOT REMOVE : GLOBAL FUNCTIONS!
 	pageSetUp();
