@@ -376,6 +376,8 @@ Anexar Archivo</a>
 		window.open(url, "Respuesta Rapida", params);
 	}
 
+
+
 	function verDetalles(anexo, tpradic, aplinteg, num){
 			optAsigna = "";
 			if (swradics==0){
@@ -569,13 +571,59 @@ Anexar Archivo</a>
 			window.open("./radicacion/tipificar_anexo.php?krd=<?=$krd?>&nurad="+cod_radi+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie,"Tipificacion_Documento_Anexos","height=300,width=750,scrollbars=yes");
 	}
 
-
 	function vistaPreliminar(anexo,linkarch,linkarchtmp){
-			contadorVentanas=contadorVentanas+1;
-			nombreventana="mainFrame";
-			url="<?=$ruta_raiz?>/genarchivo.php?vp=s&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&linkarchivotmp="+linkarchtmp+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>";
-			window.open(url,nombreventana,'height=450,width=600');
-			return;
+        var tagalert = $( "<div>" ).addClass("alert alert-block")
+            .html("<a class='close' data-dismiss='alert' href='#'>×</a>" +
+                "<h4 class='alert-heading'><i class='fa fa-check-square-o'></i></h4>");
+
+        var title1   = "Transaccion exitosa";
+
+		url  =  "<?=$ruta_raiz?>/genarchivo.php?vp=s&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&linkarchivotmp="+linkarchtmp+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>";
+        $.post( url, function( data ) {
+
+            if((data.success !== undefined) && (data.success.length>0)){
+                var answer = content = '';
+                for(var i=0;i < data.success.length; i++){
+                    var data_answer = " "+data.success[i]+" ";
+                    answer  = (answer.length>0)? answer + data_answer : data_answer ;
+                    radinum = data_answer.match(/[\d]{14}/);
+                    if((radinum !== undefined)  && (Array.isArray(radinum)) && (radinum.length > 0)){
+                        radinum = radinum[0];
+                    }
+                }
+                content  = $("<div></div>").html(answer);
+                newalert = tagalert.clone();
+                newalert.find('h4').html(title1);
+                newalert.addClass('alert-success');
+                newalert.removeClass('alert-danger');
+                newalert.find('h4').after(content);
+                var tdalert = $('<td colspan="14">').append(newalert);
+                var tralert = $('<tr>').append(tdalert);
+                $('#' + anexo).after(tralert);
+
+                if(radinum){
+                    $($('#' + anexo).find('td')[2]).children().children().text(radinum);
+                }
+            }
+
+            if((data.error !== undefined) && (data.error.length>0)){
+                var answer  = '';
+                var content = '';
+                for(var i=0;i < data.error.length; i++){
+                    var data_answer = " "+data.error[i]+" ";
+                    answer = (answer.length>0)? answer + data_answer: data_answer ;
+                }
+                content  = $("<div></div>").html(answer);
+                newalert = tagalert.clone();
+                newalert.find('h4').html(title2);
+                newalert.find('h4').after(content);
+                newalert.addClass('alert-danger');
+                newalert.removeClass('alert-success');
+                var tdalert = $('<td colspan="14">').append(newalert);
+                var tralert = $('<tr>').append(tdalert);
+                $('#' + anexo).after(tralert);
+            }
+        });
 	}
 
 	function nuevoArchivo(asigna){

@@ -516,7 +516,7 @@ function ver_listado()
 </script>
 </head>
 <body>
-  <form name="formSeleccion" id="formSeleccion" method="post" action="<?= $_SERVER['PHP_SELF']?>">
+  <form name="formSeleccion" id="formSeleccion" class="smart-form" method="post" action="<?= $_SERVER['PHP_SELF']?>">
   <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
     <div class="col-sm-12">
       <!-- widget grid -->
