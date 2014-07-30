@@ -50,7 +50,6 @@ include_once "$ruta_raiz/tx/verLinkArchivo.php";
 $verLinkArchivo = new verLinkArchivo($db);
 
 /** verificacion si el radicado se encuentra en el usuario Actual*/
-
 include "$ruta_raiz/tx/verifSession.php";
 
 ?>
@@ -157,8 +156,7 @@ function ver_temas(){
   ?><small>
 	DOCUMENTO N.
 	<?
-	if ($mostrar_opc_envio==0 and $carpeta!=8 and !$agendado)
-	{
+	if ($mostrar_opc_envio==0 and $carpeta!=8 and !$agendado and $verradPermisos=="Full"){
 		$ent=substr($verrad, -1);
         echo "<a title='Click para modificar el Documento' href='./radicacion/NEW.php?nurad=$verrad&Buscar=BuscarDocModUS&".session_name()."=".session_id()."&Submit3=ModificarDocumentos&Buscar1=BuscarOrfeo78956jkgf' notborder >$verrad</a>";
 	}else echo $verrad;
