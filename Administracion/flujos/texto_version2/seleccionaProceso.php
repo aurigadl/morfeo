@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   include "$ruta_raiz/config.php";
   include_once "$ruta_raiz/include/db/ConnectionHandler.php";
   $db = new ConnectionHandler( "$ruta_raiz" );
-  $db->conn->debug = true;
+
   if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
   $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
@@ -75,7 +75,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <header>
                 <h2>
                   Administraci&oacute;n de flujos<br>
-                  <small><?=$tituloCrear ?></small>
                 </h2>
               </header>
               <!-- widget div-->

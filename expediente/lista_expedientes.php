@@ -227,7 +227,6 @@ $time_start = microtime_float();
 		print '<input type="hidden" name="verBorrados" id="verBorrados" value="'.$anexosRadicado.'">';
 	}
 
-	error_reporting(7);
 	include ("$ruta_raiz/include/js/digitoControl.js");
 	$verradicado = $verrad;
 	if($menu_ver_tmp) {

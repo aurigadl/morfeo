@@ -16,7 +16,7 @@
 /* C.R.A.  "COMISION DE REGULACION DE AGUAS Y SANEAMIENTO AMBIENTAL"                 */
 /*   Liliana Gomez        lgomezv@gmail.com                Desarrolladora            */
 /*   Lucia Ojeda          lojedaster@gmail.com             Desarrolladora            */
-/* D.N.P. "Departamento Nacional de Planeación"                                      */
+/* D.N.P. "Departamento Nacional de Planeaciï¿½n"                                      */
 /*   Hollman Ladino       hollmanlp@gmail.com                Desarrollador           */
 /*                                                                                   */
 /* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
@@ -27,13 +27,12 @@
 $krdOld = $krd;
 session_start();
 
-// Modificado Infométrika 24-Septiembre-2009
+// Modificado Infomï¿½trika 24-Septiembre-2009
 // Compatibilidad con register_globals = Off
 $valRadio = $_POST['valRadio'];
 $usModo = $_GET['usModo'];
 $dep_sel = $_GET['dep_sel'];
 
-error_reporting(0);
 $ruta_raiz = "../..";
 $carpetaOld = $carpeta;
 $tipoCarpOld = $tipo_carp;
@@ -46,8 +45,8 @@ $salida = 0;
 ?>
 <html>
 <head>
-<title>Untitled Document</title>
-<link rel="stylesheet" href="<?=$ruta_raiz."/estilos/".$_SESSION["ESTILOS_PATH"]?>/orfeo.css">
+<title>Administracion de usuarios y perfiles</title>
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </head>
 <script language="javascript">
 function envio_datos()
@@ -64,7 +63,7 @@ function envio_datos()
 
 	if((document.forms[0].cedula.value == "") || (isNaN(document.forms[0].cedula.value)))
 	{
-		alert("No se ha diligenciado el Número de la Cedula del Usuario, o a diligenciado un valor no númerico.");
+		alert("No se ha diligenciado el NÃºmero de la Cedula del Usuario, o a diligenciado un valor no nÃºmerico.");
 		document.forms[0].cedula.focus();
 		return false;
 	}
@@ -92,6 +91,21 @@ function envio_datos()
 </script>
 
 <body>
+<div class="col-sm-12">
+<!-- widget grid -->
+<section id="widget-grid">
+<!-- row -->
+<div class="row">
+<!-- NEW WIDGET START -->
+<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<!-- Widget ID (each widget will need unique ID)-->
+<div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+
+<header>
+    <h2>
+        Administraci&oacute;n de usuarios y perfiles
+    </h2>
+</header>
 <?
     include "../../config.php";
 	include_once "$ruta_raiz/include/db/ConnectionHandler.php";
@@ -102,17 +116,8 @@ function envio_datos()
 ?>
 <center>
 <form name='frmCrear' action='consultaPermisos.php?<?=session_name()."=".session_id()."&$encabezado"?>' method="post">
-<table width="93%"  border="1" align="center">
-  	<tr bordercolor="#FFFFFF">
-    <td colspan="2" class="titulos4">
-	<center>
-	<p><B><span class=etexto>ADMINISTRACION DE USUARIOS Y PERFILES</span></B> </p>
-		<p><B><span class=etexto> Consulta de Usuario</span></B> </p></center>
-	</td>
-	</tr>
-</table>
 
-	<table border=1 width=93% class=t_bordeGris>
+    <table class="table table-bordered table-striped">
 	<?
 	if ($usModo ==2) {				//modo editar
 
@@ -121,9 +126,7 @@ function envio_datos()
 			$usuario_mat = split("-",$usuSelec,2);
 			$usuDocSel = $usuario_mat[0];
 			$usuLoginSel = $usuario_mat[1];
-//		}
 
-//		if ($usuLoginSel) {
 			$isql = "SELECT *
 				 FROM USUARIO
 				 WHERE USUA_LOGIN = '$usuLoginSel'";
@@ -195,7 +198,7 @@ function envio_datos()
 		</tr>
 	</table>
 
-<table border=1 width=93% class=t_bordeGris>
+<table class="table table-bordered table-striped">
 	<tr class=timparr>
     <input name="nombreJefe" type="hidden" value='<?=$nombreJefe?>'>
 	<td class="titulos2" height="26">Nro Cedula <input readonly="yes" type=text name=cedula id=cedula value='<?=$cedula?>' size=15 maxlenght="14" > </td>
@@ -203,7 +206,7 @@ function envio_datos()
 	</tr>
 </table>
 
-<table border=1 width=93% class=t_bordeGris>
+<table class="table table-bordered table-striped">
 	<tr class=timparr>
 	<td class="titulos2" height="26">Nombres y Apellidos <input readonly="yes" type=text name=nombre id=nombre value='<?=$nombre?>' size=50 maxlenght=45> </td>
 	<td class="titulos2" height="26">Fecha de Nacimiento </td>
@@ -258,14 +261,15 @@ function envio_datos()
 	</tr>
 </table>
 
-<table border=1 width=93% class=t_bordeGris>
+<table class="table table-bordered table-striped">
 	<tr class=timparr>
 	<td class="titulos2" height="26">Ubicacion AT <input readonly="yes" type=text name=ubicacion id=ubicacion value='<?=$ubicacion?>' size=20></td>
 	<td class="titulos2" height="26">Piso <input readonly="yes" type=text name=piso id=piso value='<?=$piso?>' size=10 ></td>
 	<td class="titulos2" height="26">Extension <input readonly="yes" type=text name=extension id=extension value='<?=$extension?>' size=10></td>
 	</tr>
 </table>
-<table border=1 width=93% class=t_bordeGris>
+
+<table class="table table-bordered table-striped">
 	<tr class=timparr>
 	<td width="54%" height="26" class="titulos2">Mail
 	<input readonly="yes" type=text name=email id=email value='<?=$email?>' size=40>
@@ -295,7 +299,8 @@ function envio_datos()
 </table>
 
 <div align="center">
-<table border=1 width=93% class=t_bordeGris>
+
+<table class="table table-bordered table-striped">
 	<tr class=timparr>
 	<td height="30" colspan="2" class="listado2"><center><input class="botones" type=button name=reg_crear id=Continuar_button Value=Continuar onClick="envio_datos();"></center>  </td>
 	<td height="30" colspan="2" class="listado2"><center>
@@ -316,6 +321,11 @@ function envio_datos()
 ?>
 
 </center></span>
-
+</center>
+</div>
+</article>
+</div>
+</section>
+</div>
 </body>
 </html>
