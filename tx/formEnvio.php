@@ -23,6 +23,32 @@ $objDep = new Dependencia($db);
 $encabezado = "".session_name()."=".session_id()."&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion";
 $linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=";
 
+$sql_cont = "SELECT
+	                sgd_msg_desc,
+	                sgd_msg_codi,
+	                sgd_msg_etiqueta
+	             FROM
+	                sgd_msg_mensaje";
+
+$salida   = $db->conn->query($sql_cont);
+$select1  = "<select name='idmensaje' id='idmensaje' class='select'>";
+$select1 .= "<option value='0_0'>   </option>";
+
+while (!$salida->EOF){
+
+    $checked  = '';
+    $seleCodi = $salida->fields['SGD_MSG_CODI'];
+    $seleDesc = $salida->fields['SGD_MSG_DESC'];
+    $seleEtiq = $salida->fields['SGD_MSG_ETIQUETA'];
+
+    $select2 .= "<option value='$seleCodi"."_"."$seleDesc'>$seleEtiq</option>";
+    $salida->MoveNext ();
+
+}
+
+$select3 = "</select>";
+$select  = $select1.$select2.$select3;
+
 // Filtro de datos
 
  if(!$codTx) $codTx = $AccionCaliope;
@@ -685,16 +711,19 @@ switch ($codTx)
 			<?php 
 		}
 		?>
-		<center>
-		<table width="100%"  align="center" class="table table-bordered">
-		<TR bgcolor="White"><TD width="100%" colspan=4>
-	        <label class="textarea">
-					<i class="icon-append fa fa-comment"></i>
-					<textarea name=observa id=observa placeholder="Escriba un Comentario" rows="3"></textarea>
-					</label>	
-					
-			</TD></TR>
-		</center>
+		<tr bgcolor="White">
+            <td>
+
+            </td>
+            <td width="100%" colspan=3>
+                <?=$select?>
+                <br />
+                <label class="textarea">
+                    <i class="icon-append fa fa-comment"></i>
+                    <textarea name=observa id=observa placeholder="Escriba un Comentario" rows="3"></textarea>
+                </label>
+			</td>
+        </tr>
 		<input type=hidden name=enviar value=enviarsi>
 		<input type=hidden name=enviara value='9'>
 		<input type=hidden name=carpeta value=12>
