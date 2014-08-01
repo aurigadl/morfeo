@@ -58,17 +58,14 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
                             $anoAnterior = $anoActual - 1;
                             $dependencia_busq1 .= " and c.depe_codi = $dep_sel";
                           }
-                        if($busq_radicados)
-                        {
+                        if($busq_radicados){
                             $busq_radicados = trim($busq_radicados);
                             $textElements = split (",", $busq_radicados);
                             $newText = "";
                             $i = 0;
-                            foreach ($textElements as $item)
-                            {
+                            foreach ($textElements as $item){
                                  $item = trim ( $item );
-                                 if ( strlen ( $item ) != 0 )
-                                 {
+                                 if ( strlen ( $item ) != 0 ){
                                    $i++;
                                    if ($i != 1) $busq_and = " and "; else $busq_and = " ";
                                    $busq_radicados_tmp .= " $busq_and cast(radi_nume_sal as varchar(20)) like '%$item%' ";
@@ -81,8 +78,7 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
                                         $dependencia_busq1 .= " and c.depe_codi = $dep_sel";
 
-                        }else
-                        {
+                        }else{
                            $sql_masiva = " and a.sgd_renv_planilla != '00' ";
                            $sql_masiva = "";
                         }

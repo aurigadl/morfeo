@@ -353,6 +353,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             </a>
                           </li>
 
+                            <li>
+                                <a href="./Administracion/tbasicas/adm_mensajeRapido.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                    Mensajes Rapidos
+                                </a>
+                            </li>
+
                           <li>
                             <a href="./Administracion/tbasicas/adm_tsencillas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
                               Tablas sencillas
