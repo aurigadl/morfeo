@@ -33,8 +33,6 @@ session_start();
     include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 
     $db = new ConnectionHandler($ruta_raiz);
-    $db->conn->debug = true;
-
 
     if (isset($_POST['btn_accion'])){
 
