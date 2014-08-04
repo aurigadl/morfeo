@@ -33,17 +33,21 @@ $sql_cont = "SELECT
 $salida   = $db->conn->query($sql_cont);
 $select1  = "<select name='idmensaje' id='idmensaje' class='select'>";
 $select1 .= "<option value='0_0'>   </option>";
-
+$i        = 0;
 while (!$salida->EOF){
-
+    $i++;
     $checked  = '';
-    $seleCodi = $salida->fields['SGD_MSG_CODI'];
     $seleDesc = $salida->fields['SGD_MSG_DESC'];
     $seleEtiq = $salida->fields['SGD_MSG_ETIQUETA'];
 
-    $select2 .= "<option value='$seleCodi"."_"."$seleDesc'>$seleEtiq</option>";
+    $select2 .= "<option value='$seleDesc'>$seleEtiq</option>";
     $salida->MoveNext ();
 
+    if($i < 7 and $i%2 == 0){
+        $buttacc1  .= "<button type='button' class='btn btn-default attrtext' attrtext='$seleDesc'> $seleEtiq </button>";
+    }elseif($i < 7 and $i%2 != 0){
+        $buttacc2  .= "<button type='button' class='btn btn-default attrtext' attrtext='$seleDesc'> $seleEtiq </button>";
+    }
 }
 
 $select3 = "</select>";
@@ -486,6 +490,18 @@ function okTx()
 		alert("Atención:  Falta la observación, el número de caracteres minimo es de 6 letras, (Digitó :"+numCaracteres+")");
 	}
 }
+
+
+$( document ).ready(function() {
+
+    $( "body" ).on( "click", "#idmensaje", function(){
+        $('#observa').val($('#idmensaje :selected').val());
+    });
+
+    $( "body" ).on( "click", ".attrtext", function(){
+        $('#observa').val($(this).attr('attrtext'));
+    });
+});
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 </head>
@@ -523,7 +539,7 @@ else
 	<input type='hidden' name=codTx value='<?=$codTx?>'>
 	<input type='hidden' name=EnviaraV value='<?=$EnviaraV?>'>
 	<input type='hidden' name=fechaAgenda value='<?=$fechaAgenda?>'>
-	<table width="98%" border="0" cellpadding="0" cellspacing="5" class='table table-striped table-bordered table-hover dataTable' aria-describedby='dt_basic_info'">
+	<table width="98%" border="0" cellpadding="0" cellspacing="5" class='smart-form table table-striped table-bordered table-hover dataTable' aria-describedby='dt_basic_info'">
 	<TR>
 	<td class="titulos4">
 <?
@@ -713,14 +729,26 @@ switch ($codTx)
 		?>
 		<tr bgcolor="White">
             <td>
-
+                <ul class="demo-btns">
+                    <li>
+                        <div class="btn-group-vertical"><?=$buttacc1?></div>
+                    </li>
+                    <li>
+                        <div class="btn-group-vertical"><?=$buttacc2?></div>
+                    </li>
+                </ul>
             </td>
-            <td width="100%" colspan=3>
-                <?=$select?>
+            <td colspan=3>
+
+                <label class="select">
+                    <?=$select?>
+                    <i></i>
+                </label>
+
                 <br />
                 <label class="textarea">
                     <i class="icon-append fa fa-comment"></i>
-                    <textarea name=observa id=observa placeholder="Escriba un Comentario" rows="3"></textarea>
+                    <textarea name="observa" id="observa" placeholder="Escriba un Comentario" rows="3"></textarea>
                 </label>
 			</td>
         </tr>
