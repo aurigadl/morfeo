@@ -168,26 +168,25 @@ Descripci&oacute;n Anexos</b></small></td><td><small> <?=$radi_desc_anex ?></sma
  <th  class='alert alert-info'>Telefono</th>
 </tr>
 <tr> 
-  <td   ><?=$nomRemDes["x1"] ?> </small></td>
-	<td  ><?=$dirDireccion["x1"] ?></small></td>
-	<td  ><?=$dirDpto["x1"]."/".$dirMuni["x1"] ?></small></td>
-	<td   ><?=$email["x1"] ?> </small></td>
-	<td   ><?=$telefono["x1"] ?> </small></td>
+ <td><?=$nomRemDes["x1"] ?> </small></td>
+ <td><?=$dirDireccion["x1"] ?></small></td>
+ <td><?=$dirDpto["x1"]."/".$dirMuni["x1"] ?></small></td>
+ <td><?=$email["x1"] ?> </small></td>
+ <td><?=$telefono["x1"] ?> </small></td>
 </tr>
 <tr> 
-	<td   > <?=$nomRemDes["x2"]?></small></td>
-  <td  > <?=$dirDireccion["x2"] ?></small></td>
- <td  > <?=$dirDpto["x2"]."/".$dirMuni["x2"] ?></small></td>
-	<td   ><?=$email["x2"] ?> </small></td>
-	<td   ><?=$telefono["x2"] ?> </small></td>
- 
+ <td><?=$nomRemDes["x2"]?></small></td>
+ <td><?=$dirDireccion["x2"] ?></small></td>
+ <td><?=$dirDpto["x2"]."/".$dirMuni["x2"] ?></small></td>
+ <td><?=$email["x2"] ?> </small></td>
+ <td><?=$telefono["x2"] ?> </small></td>
 </tr>
 <tr>
-	<td   > <?=$nombret_us3 ?> -- <?=$cc_documento_us3?></small></td>
-  <td  > <?=$direccion_us3 ?></small></td>
-  <td  > <?=$dpto_nombre_us3."/".$muni_nombre_us3 ?></small></td>
-  	<td   ><?=$email["x3"] ?> </small></td>
-	<td   ><?=$telefono["x3"] ?> </small></td>
+  <td> <?=$nombret_us3 ?> -- <?=$cc_documento_us3?></small></td>
+  <td> <?=$direccion_us3 ?></small></td>
+  <td> <?=$dpto_nombre_us3."/".$muni_nombre_us3 ?></small></td>
+  <td><?=$email["x3"] ?> </small></td>
+  <td><?=$telefono["x3"] ?> </small></td>
 
 </tr>
 </table>

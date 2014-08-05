@@ -33,7 +33,7 @@ if(!$ruta_raiz)	$ruta_raiz=".";
 $numrad = $verrad;
 error_reporting(7);
 $db = new ConnectionHandler(".");
-// $db->conn->debug = true;
+
 $db->conn->SetFetchMode(3);
 
 if($carpeta==8){	$info=8;

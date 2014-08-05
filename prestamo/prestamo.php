@@ -367,15 +367,15 @@ else {?>
 	global $pageAnt; // Pagina de la cual viene	 
 		// Valores
 
-$sFileName  = $_POST["sFileName"];
-$opcionMenu  = $_POST["opcionMenu"];  
-	// Valores
-$fechaFinal = $_POST["fechaFinal"];
+$sFileName   = $_POST["sFileName"];
+$opcionMenu  = empty($_POST["opcionMenu"])? $_GET["opcionMenu"] : $_POST["opcionMenu"];
+// Valores
+$fechaFinal   = $_POST["fechaFinal"];
 $fechaInicial = $_POST["fechaInicial"];
 
-$krd = $_SESSION["krd"];
-$dependencia = $_SESSION["dependencia"];
-$usua_doc = $_SESSION["usua_doc"];
+$krd          = $_SESSION["krd"];
+$dependencia  = $_SESSION["dependencia"];
+$usua_doc     = $_SESSION["usua_doc"];
 $ps_PRES_ESTADO   =strip($_POST["s_PRES_ESTADO"]); 
 $ps_RADI_NUME_RADI=strip(trim($_POST["s_RADI_NUME_RADI"]));
 $ps_numeroExpediente=strip(trim($_POST["s_numeroExpediente"]));
@@ -600,7 +600,7 @@ while($rs && !$rs->EOF) {
 	if ($tipoRespuesta[$opcionMenu][$numRtaMax]=="") {?>						
 	     <tr  align="center">
 			<td  colspan="<?=($numCol+1);?>" align="center"><center>
-			<input type="button" class='botones' value="Prestar" onClick="enviar();">
+			<input type="button" class='botones' value="Enviar" onClick="enviar();">
 			<input type="button" class='botones' value="Cancelar" title="Regresa al men&uacute; de pr&eacute;stamo y control de documentos" onClick="javascript:regresar();"></center>
 			</td>		
          </tr>				
