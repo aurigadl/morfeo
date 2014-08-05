@@ -248,9 +248,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     }
 
-  //Administracion
-  $link20show  = "<a  href=\"#\" onclick=\"return false;\"> Administraci&oacute;n </a>";
-
   //Consultas
   $link21      = $enlace21."&etapa=1&s_Listado=VerListado&fechah=$fechah\"";
   $link21show  = "<li><a tabindex=\"-1\" $link21 target=\"mainFrame\"> Consultas </a></li>";
@@ -305,105 +302,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <ul class="nav navbar-nav">
 
-                  <?php if($_SESSION["usua_admin_sistema"]==1 || $tiene_acceso_admin) {?>
+                  <?php if(   $_SESSION["usua_perm_envios"]    >=1 || $_SESSION["usua_perm_adminflujos"]== 1
+                           || $_SESSION["usua_perm_modifica"]  >=1 || $_SESSION["usua_perm_intergapps"] == 1
+                           || $_SESSION["usua_perm_impresion"] >=1 || ($_SESSION["usua_perm_anu"]==3 or $_SESSION["usua_perm_anu"]==1)
+                           || $_SESSION["usua_perm_trd"]       ==1 || $_SESSION["usua_admin_archivo"]   >= 1
+                           || $_SESSION["usua_perm_prestamo"]  ==1 || $_SESSION["usua_perm_dev"]        == 1
+                  ) {?>
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Acciones <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-
-                      <li class="dropdown-submenu">
-                        <?php if($_SESSION["usua_admin_sistema"]==1) {?>
-                        <?=$link20show?>
-                        <ul class="dropdown-menu">
-                          <li class="dropdown-submenu">
-                            <a href="#" onclick="return false;">Usuarios y Perfiles</a>
-                            <ul class="dropdown-menu">
-                              <li>
-                                <a href='./Administracion/usuario/crear.php?<?=$sendSession?>&usModo=1' class="vinculos" target='mainFrame'>
-                                  Crear Usuario
-                                </a>
-                              </li>
-                              <li>
-                                <a href='./Administracion/usuario/cuerpoEdicion.php?<?=$sendSession?>&usModo=2' class="vinculos" target='mainFrame'>
-                                  Editar Usuario
-                                </a>
-                              </li>
-                              <li>
-                                <a href='./Administracion/usuario/cuerpoConsulta.php?<?=$sendSession?>' class="vinculos" target='mainFrame'>
-                                  Consultar Usuario
-                                </a>
-                              </li>
-                            </ul>
-                          </li>
-                          
-                          <li>
-                            <a href="./Administracion/tbasicas/adm_dependencias.php?<?=$sendSession?>" class="vinculos" target="mainFrame">
-                              Dependencias
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="./Administracion/tbasicas/adm_nohabiles.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
-                              Dias no habiles
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="./Administracion/tbasicas/adm_fenvios.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
-                              Env&iacute;o de correspondencia
-                            </a>
-                          </li>
-
-                            <li>
-                                <a href="./Administracion/tbasicas/adm_mensajeRapido.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
-                                    Mensajes Rapidos
-                                </a>
-                            </li>
-
-                          <li>
-                            <a href="./Administracion/tbasicas/adm_tsencillas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
-                              Tablas sencillas
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="./Administracion/tbasicas/adm_trad.php?<?=$sendSession?>&krd=<?=$krd?>" class="vinculos" target='mainFrame'>
-                              Tipos de radicaci&oacute;n
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="./Administracion/tbasicas/adm_paises.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
-                              Pa&iacute;ses
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="./Administracion/tbasicas/adm_dptos.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
-                              Departamentos
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="./Administracion/tbasicas/adm_mcpios.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
-                              Municipios
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="./Administracion/tbasicas/adm_tarifas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
-                              Tarifas
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="./Administracion/tbasicas/adm_plantillas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
-                              Plantillas
-                            </a>
-                          </li>
-
-                        </ul>
-                        <?php } ?>
-                      </li>
                       
                       <li>
                         <a href='ReportesR/indexReportes.php' alt='Generar planilla de distribucion y entrega'  target='mainFrame' class="menu_princ">Planilla Reasignados</a></li>
@@ -488,6 +395,104 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </ul>
                   </li>
                   <?php } ?>
+
+
+
+                  <?php if($_SESSION["usua_admin_sistema"]==1 || $tiene_acceso_admin) {?>
+                      <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Administraci&oacute;n <b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                              <li class="dropdown-submenu">
+                                  <a href="#" onclick="return false;">Usuarios y Perfiles</a>
+                                  <ul class="dropdown-menu">
+                                      <li>
+                                          <a href='./Administracion/usuario/crear.php?<?=$sendSession?>&usModo=1' class="vinculos" target='mainFrame'>
+                                              Crear Usuario
+                                          </a>
+                                      </li>
+                                      <li>
+                                          <a href='./Administracion/usuario/cuerpoEdicion.php?<?=$sendSession?>&usModo=2' class="vinculos" target='mainFrame'>
+                                              Editar Usuario
+                                          </a>
+                                      </li>
+                                      <li>
+                                          <a href='./Administracion/usuario/cuerpoConsulta.php?<?=$sendSession?>' class="vinculos" target='mainFrame'>
+                                              Consultar Usuario
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_dependencias.php?<?=$sendSession?>" class="vinculos" target="mainFrame">
+                                      Dependencias
+                                  </a>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_nohabiles.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                      Dias no habiles
+                                  </a>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_fenvios.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                      Env&iacute;o de correspondencia
+                                  </a>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_mensajeRapido.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                      Mensajes Rapidos
+                                  </a>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_tsencillas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                      Tablas sencillas
+                                  </a>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_trad.php?<?=$sendSession?>&krd=<?=$krd?>" class="vinculos" target='mainFrame'>
+                                      Tipos de radicaci&oacute;n
+                                  </a>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_paises.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                      Pa&iacute;ses
+                                  </a>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_dptos.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                      Departamentos
+                                  </a>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_mcpios.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                      Municipios
+                                  </a>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_tarifas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                      Tarifas
+                                  </a>
+                              </li>
+
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_plantillas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                      Plantillas
+                                  </a>
+                              </li>
+
+                          </ul>
+                      </li>
+                  <?php } ?>
+
 
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Bandejas <b class="caret"></b></a>

@@ -299,28 +299,27 @@ $time_start = microtime_float();
 						$iExp++;
 						}
 					}else{
-					if ( $usuaPermExpediente ) {
-						if(!$tsub)$tsub = "0";
-	if(!$tdoc)$tdoc = "0";
-	if(!$codserie)$codserie = "0";
-   ?> <span class="dropdown">
-    		<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><small>Expediente </small><b class="caret"></b> </a>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="#" onClick="insertarExpediente();">Incluir en...</a>
-					</li>
-					<li>
-						<a href="#" onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
-					</li>
-					<?
-					}
-				?>
-			</ul>
-			</span>
+					    if ( !empty($usuaPermExpediente)){
+						    if(!$tsub)$tsub = "0";
+                            if(!$tdoc)$tdoc = "0";
+                            if(!$codserie)$codserie = "0";?> <span class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><small>Expediente </small><b class="caret"></b> </a>
+                                <ul class="dropdown-menu">
 
-				<?php
-				}
-				?>
+                                    <li>
+                                        <a href="#" onClick="insertarExpediente();">Incluir en...</a>
+                                    </li>
+
+                                    <?if($usuaPermExpediente > 1){?>
+                                        <li>
+                                            <a href="#" onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
+                                        </li>
+                                    <?}?>
+
+                                </ul>
+                                </span>
+                        <?}?>
+				    <?php } ?>
 			</div>
 		</div>
 		<!-- end widget content -->

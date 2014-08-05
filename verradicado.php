@@ -31,7 +31,7 @@ include_once "./include/db/ConnectionHandler.php";
 if($verradicado)	$verrad= $verradicado;
 if(!$ruta_raiz)	$ruta_raiz=".";
 $numrad = $verrad;
-error_reporting(7);
+
 $db = new ConnectionHandler(".");
 
 $db->conn->SetFetchMode(3);
