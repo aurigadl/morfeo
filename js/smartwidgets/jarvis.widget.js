@@ -1324,7 +1324,6 @@
                     btn.button('reset');
                     ajaxLoader.removeClass("widget-body-ajax-loading");
                     self._loadAjaxFile(rItem, pathToFile, ajaxLoader);
-
                 }, 1000)
 
                 e.preventDefault();

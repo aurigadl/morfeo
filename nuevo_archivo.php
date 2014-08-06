@@ -98,6 +98,25 @@ $datos_envio  = "&otro_us11=$otro_us11&codigo=$codigo&dpto_nombre_us11=$dpto_nom
 $datos_envio .="&otro_us2=$otro_us2&dpto_nombre_us2=$dpto_nombre_us2&muni_nombre_us2=$muni_nombre_us2&direccion_us2=".urlencode($direccion_us2)."&nombret_us2=$nombret_us2";
 $datos_envio .="&dpto_nombre_us3=$dpto_nombre_us3&muni_nombre_us3=$muni_nombre_us3&direccion_us3=".urlencode($direccion_us3)."&nombret_us3=$nombret_us3";
 $variables    = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$datos_envio";
+
+if (!empty($codigo)){
+
+    $isql  = "SELECT
+                    ANEX_SALIDA
+                FROM
+                    ANEXOS
+                WHERE
+                  ANEX_CODIGO='$codigo'";
+
+    $rest       = $db->conn->Execute($isql);
+    $anexsalida = $rest->fields['ANEX_SALIDA'];
+    if($anexsalida == 1){
+        $anexsalida = 'checked';
+    }else{
+        $anexsalida = '';
+    }
+}
+
 ?>
 
 <html>
@@ -208,23 +227,22 @@ $variables    = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$d
 
       copias = document.getElementById('i_copias').value;
 
-      if(copias==0 && document.getElementById('radicado_salida').checked==true){
-          document.getElementById('radicado_salida').checked=false;
-      }
+//      if(copias==0 && document.getElementById('radicado_salida').checked==true){
+//          document.getElementById('radicado_salida').checked=false;
+//      }
 
       return true;
   }
+  $(document).ready(function() {
 
-  function actualizar(){
-
-      if (!validarGenerico()) return;
-
-      var integracion = document.formulario.tpradic.value;
-
-      document.formulario.radicado_salida.disabled=false;
-      document.formulario.tpradic.disabled=false;
-      document.formulario.submit();
-  }
+      $("#actualizar").on("click", function(e){
+          if (!validarGenerico()){
+              return;
+          }
+          $(this).prop('disabled',true)
+          document.formulario.submit();
+      });
+  });
 
 </script>
 </head>
@@ -345,29 +363,13 @@ else  {  $datoss3=" disabled " ;}
 if ($remitente==7)  $datoss4=" checked  ";
 else  $datoss4 = "";
 
-if($us_1 or $us_2 or $us_3)
-{
-  if ($radicado_salida) $datoss=" checked ";
-  else $datoss="";
-?>
-  <input type="checkbox" class="select" name="radicado_salida" value="radsalida"
-<?php
-  if (!$radicado_salida and $ent==1)  $radicado_salida=1;
-  if($radicado_salida==1 or $datoss)
-  { echo " checked "; }
-?> onClick="doc_radicado();" id="radicado_salida"><small>  Este documento ser&aacute; radicado</small>
-<?php
-}else{
-?>
+if($us_1 or $us_2 or $us_3){
+  echo "<input type='checkbox' class='select' name='radicado_salida' $anexsalida value='1' onClick='doc_radicado();' id='radicado_salida'>
+        <small>  Este documento ser&aacute; radicado</small>";
+}else{ ?>
   <small>Este documento no puede ser radicado ya que faltan datos.<br>
   (Para envio son obligatorios Nombre, Direccion, Departamento,
   Municipio)</small>
-    <input type="checkbox" class="select" name="radicado_salida" value="radsalida"
-		<?php
-			if (!$radicado_salida and $ent==1)  $radicado_salida=1;
-			if($radicado_salida==1 or $datoss)
-			{ echo " checked "; }
-		?> onClick="doc_radicado();" id="radicado_salida">  Este documento ser&aacute; radicado
 <?php
 }
 ?>
@@ -733,7 +735,7 @@ if( $rs_exp->RecordCount() == 0 ){
     <tr>
         <TD colspan="2" align="center">
         <footer>
-            <input name="button" type="button" class="btn btn-success" onClick="actualizar()" value="ACTUALIZAR <?=$codigo?>">
+            <button name="button" type="button" class="btn btn-success" id="actualizar" <?=$codigo?>> Actualizar </button>
             <?php
                 echo "<input type='button' id='cerraranexar' class='btn btn-default' value='Cerrar'>";
             ?>

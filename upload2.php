@@ -44,7 +44,7 @@ $lnr         = 11+$ln;
     include_once("$ruta_raiz/class_control/anex_tipo.php");
 
     if (!$db)	$db = new ConnectionHandler($ruta_raiz);
-    //$db->conn->debug = true;
+
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
     $anex       = & new Anexo($db);
     $anexTip    = & new Anex_tipo($db);
@@ -71,7 +71,7 @@ $lnr         = 11+$ln;
           $codigo = trim($numrad).trim(str_pad($auxnumero,5,"0",STR_PAD_LEFT));
         }
 
-        $anex_salida = ($radicado_salida)? 1 : 0;
+        $anex_salida = empty($radicado_salida)? 0 : 1;
 
         $bien = "si";
         if ($bien and $tipo){	
@@ -93,8 +93,7 @@ $lnr         = 11+$ln;
         include "$ruta_raiz/include/query/queryUpload2.php";
 
         $expAnexo = ($expIncluidoAnexo)? $expIncluidoAnexo : null;
-        
-        if(!$anex_salida && $tpradic) $anex_salida=1;
+
         
         $isql = "insert
                     into anexos

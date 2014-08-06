@@ -329,14 +329,7 @@ if(trim($linkarchivo))
 	$rs->MoveNext();
 }
 }
-/*
-$mostrar_lista = 0;
-if($mostrar_lista==1)
-{
-?>
-</TABLE>
-<?
-}*/
+
 ?>
 
 </table>
@@ -413,6 +406,7 @@ Anexar Archivo</a>
 
 			if (confirm('Se asignar\xe1 un n\xfamero de radicado a \xe9ste documento. Est\xe1 seguro  ?')){
 					url = "?radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id())?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>&numfe="+procesoNumeracionFechado+"&tpradic="+tpradic+"&aplinteg="+aplinteg+"&numextdoc="+numextdoc;
+                    $('#tableDocument').addClass('widget-body-ajax-loading');
 					$.post( "<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php" + url, function( data ) {
 
 							if((data.success !== undefined) && (data.success.length>0)){
@@ -457,6 +451,7 @@ Anexar Archivo</a>
 									var tralert = $('<tr>').append(tdalert);
 									$('#' + anexo).after(tralert);
 							}
+                        $('#tableDocument').removeClass('widget-body-ajax-loading');
 					});
 			};
 	}
@@ -471,6 +466,7 @@ Anexar Archivo</a>
 
       if (confirm('Se asignar\xe1 un n\xfamero de radicado a \xe9ste documento. Est\xe1 seguro  ?')){
           url = "?numextdoc="+numextdoc+"&generar_numero=no&radicar=1&radicar_a="+radicar_a+"&vp=n&<?="&".session_name()."=".trim(session_id())?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>";
+          $('#tableDocument').addClass('widget-body-ajax-loading');
           $.post( "<?=$ruta_raiz?>/lista_anexos_seleccionar_transaccion.php" + url, function( data ) {
 
               if((data.success !== undefined) && (data.success.length>0)){
@@ -515,6 +511,9 @@ Anexar Archivo</a>
                   var tralert = $('<tr>').append(tdalert);
                   $('#' + anexo).after(tralert);
               }
+
+              $('#tableDocument').removeClass('widget-body-ajax-loading');
+
           });
       };
   }
@@ -579,6 +578,7 @@ Anexar Archivo</a>
         var title1   = "Transaccion exitosa";
 
 		url  =  "<?=$ruta_raiz?>/genarchivo.php?vp=s&<?="krd=$krd&".session_name()."=".trim(session_id()) ?>&radicar_documento=<?=$verrad?>&numrad=<?=$verrad?>&anexo="+anexo+"&linkarchivo="+linkarch+"&linkarchivotmp="+linkarchtmp+"<?=$datos_envio?>"+"&ruta_raiz=<?=$ruta_raiz?>";
+        $('#tableDocument').addClass('widget-body-ajax-loading');
         $.post( url, function( data ) {
 
             if((data.success !== undefined) && (data.success.length>0)){
