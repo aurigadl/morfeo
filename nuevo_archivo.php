@@ -98,6 +98,25 @@ $datos_envio  = "&otro_us11=$otro_us11&codigo=$codigo&dpto_nombre_us11=$dpto_nom
 $datos_envio .="&otro_us2=$otro_us2&dpto_nombre_us2=$dpto_nombre_us2&muni_nombre_us2=$muni_nombre_us2&direccion_us2=".urlencode($direccion_us2)."&nombret_us2=$nombret_us2";
 $datos_envio .="&dpto_nombre_us3=$dpto_nombre_us3&muni_nombre_us3=$muni_nombre_us3&direccion_us3=".urlencode($direccion_us3)."&nombret_us3=$nombret_us3";
 $variables    = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$datos_envio";
+
+if (!empty($codigo)){
+
+    $isql  = "SELECT
+                    ANEX_SALIDA
+                FROM
+                    ANEXOS
+                WHERE
+                  ANEX_CODIGO='$codigo'";
+
+    $rest       = $db->conn->Execute($isql);
+    $anexsalida = $rest->fields['ANEX_SALIDA'];
+    if($anexsalida == 1){
+        $anexsalida = 'checked';
+    }else{
+        $anexsalida = '';
+    }
+}
+
 ?>
 
 <html>
@@ -208,29 +227,29 @@ $variables    = "ent=$ent&".session_name()."=".trim(session_id())."&tipo=$tipo$d
 
       copias = document.getElementById('i_copias').value;
 
-      if(copias==0 && document.getElementById('radicado_salida').checked==true){
-          document.getElementById('radicado_salida').checked=false;
-      }
+//      if(copias==0 && document.getElementById('radicado_salida').checked==true){
+//          document.getElementById('radicado_salida').checked=false;
+//      }
 
       return true;
   }
+  $(document).ready(function() {
 
-  function actualizar(){
-
-      if (!validarGenerico()) return;
-
-      var integracion = document.formulario.tpradic.value;
-
-      document.formulario.radicado_salida.disabled=false;
-      document.formulario.tpradic.disabled=false;
-      document.formulario.submit();
-  }
+      $("#actualizar").on("click", function(e){
+          if (!validarGenerico()){
+              return;
+          }
+          $(this).prop('disabled',true)
+          document.formulario.submit();
+      });
+  });
 
 </script>
 </head>
 <body class="smart-form">
 <div>
 <form enctype="multipart/form-data" method="POST" name="formulario" id="formulario" action='upload2.php?<?=$variables?>' >
+
 <input type="hidden" name="subir_archivo" value="<?=$subir_archivo?>"> 
 <input type="hidden" name="nuevo_archivo" value="<?=$nuevo_archivo?>"> 
 <?php
@@ -344,29 +363,13 @@ else  {  $datoss3=" disabled " ;}
 if ($remitente==7)  $datoss4=" checked  ";
 else  $datoss4 = "";
 
-if($us_1 or $us_2 or $us_3)
-{
-  if ($radicado_salida) $datoss=" checked ";
-  else $datoss="";
-?>
-  <input type="checkbox" class="select" name="radicado_salida" value="radsalida"
-<?php
-  if (!$radicado_salida and $ent==1)  $radicado_salida=1;
-  if($radicado_salida==1 or $datoss)
-  { echo " checked "; }
-?> onClick="doc_radicado();" id="radicado_salida"><small>  Este documento ser&aacute; radicado</small>
-<?php
-}else{
-?>
+if($us_1 or $us_2 or $us_3){
+  echo "<input type='checkbox' class='select' name='radicado_salida' $anexsalida value='1' onClick='doc_radicado();' id='radicado_salida'>
+        <small>  Este documento ser&aacute; radicado</small>";
+}else{ ?>
   <small>Este documento no puede ser radicado ya que faltan datos.<br>
   (Para envio son obligatorios Nombre, Direccion, Departamento,
   Municipio)</small>
-    <input type="checkbox" class="select" name="radicado_salida" value="radsalida"
-		<?php
-			if (!$radicado_salida and $ent==1)  $radicado_salida=1;
-			if($radicado_salida==1 or $datoss)
-			{ echo " checked "; }
-		?> onClick="doc_radicado();" id="radicado_salida">  Este documento ser&aacute; radicado
 <?php
 }
 ?>
@@ -393,7 +396,7 @@ foreach ($tpNumRad as $key => $valueTp){
         $comboIntSwSel=1;
     }
 
-    if($valueTp != 9){
+    if($valueTp != 9 and $valueTp != 2){
         //Si se definio prioridad en algun tipo de radicacion
         $valueDesc = $tpDescRad[$key];
         $comboRadOps =$comboRadOps . "<option value='".$valueTp."' $sel>".$valueDesc."</option>";
@@ -484,14 +487,16 @@ if( $rs_exp->RecordCount() == 0 ){
       if($radicado_rem==1){echo " checked ";}
     ?> '>
     <?=$tip3Nombre[1][$ent]?>
-    <?=$otro_us11." - ".substr($nombret_us11,0,35)?>
+    <?=$otro_us11?>
     <?=$direccion_us11?>
     <?="$dpto_nombre_us11/$muni_nombre_us11" ?>
     </small></td>
   </tr>
 
 
-<?php if($codigo){ ?>
+<?php
+
+    if($codigo){ ?>
         <tr><td height='3px' colspan="2"></td></tr>
 
       <!-- Listado de destinos buscados por usuario-->
@@ -617,11 +622,9 @@ if( $rs_exp->RecordCount() == 0 ){
               ?>
 
               <tr>
-                <td align="center"  >
-                    <input type="radio"   name="radicado_rem" value=<?=$sgd_dir_tipo?>  id="rusuario"
+                    <input type="hidden"   name="radicado_rem" value=<?=$sgd_dir_tipo?>  id="rusuario"
                     '<?php  if($radicado_rem==$sgd_dir_tipo){echo " checked ";}?>'>
-                </td>
-                <td width='100%' align="center"  >
+                <td width='100%' align="center"  colspan="2" >
                   <small>
                       <?=$nombre_otros?>
                       <?=$rs2->fields["DIRECCION"];?>
@@ -677,15 +680,15 @@ if( $rs_exp->RecordCount() == 0 ){
           <input type=hidden name="idpais1" id="idpais1" value='<?=$idpais1 ?>' class=e_cajas size=4>
           <input type=hidden name="codep_us1" id="codep_us1" value='<?=$codep_us1 ?>' class=e_cajas size=4 >
           <input type=hidden name="muni_us1" id="muni_us1"  value='<?=$muni_us1 ?>' class=e_cajas size=4 >
-          <input type=text name=cc_documento_us1 value='<?=$cc_documento_us1 ?>' class=e_cajas size=8 >
+          <input type=text   name="cc_documento_us1" value='<?=$cc_documento_us1 ?>' class=e_cajas size=8 >
         </TD>
-        <TD width="329" align="center" >
+        <TD width="329" align="center">
           <input type="text" name="nombre_us1" value='' size="3" class="tex_area">
           <input type="text" name="prim_apel_us1" value='' size="3" class="tex_area">
           <input type="text" name="seg_apel_us1" value='' size="3" class="tex_area">
         </TD>
         <TD width="140" align="center"  colspan='2'>
-          <input type=text name=otro_us7 value='' class=tex_area   size=20 maxlength="45">
+          <input type=text name="otro_us7" value='' class=tex_area   size=20 maxlength="45">
         </TD>
         <TD align="center" >
           <input type=text name=direccion_us1 value='' class=tex_area  size=6>
@@ -694,7 +697,7 @@ if( $rs_exp->RecordCount() == 0 ){
           <input type=text name=mail_us1 value='' class="tex_area" size="11">
         </TD>
         <TD width="68" align="center" colspan="2">
-          <input type=text name=otro_us1 value='' class=tex_area" size="11">
+          <input type=text name="otro_us1" value='' class=tex_area" size="11">
         </TD>
       </tr>
       <tr>
@@ -717,8 +720,6 @@ if( $rs_exp->RecordCount() == 0 ){
 }
   $maximo_tamano = number_format((return_bytes(ini_get('upload_max_filesize')))/1000000,2);
   $tamano_archivo = return_bytes(ini_get('upload_max_filesize'));
-  
-  $mostrar_mensaje = (isset($codigo) && $codigo != '')? 'El numero del Anexo es: ' . $codigo :  null;
 ?>
     <tr><td colspan="2"></td></tr>
     <tr align="center">
@@ -734,7 +735,7 @@ if( $rs_exp->RecordCount() == 0 ){
     <tr>
         <TD colspan="2" align="center">
         <footer>
-            <input name="button" type="button" class="btn btn-success" onClick="actualizar()" value="ACTUALIZAR <?=$codigo?>">
+            <button name="button" type="button" class="btn btn-success" id="actualizar" <?=$codigo?>> Actualizar </button>
             <?php
                 echo "<input type='button' id='cerraranexar' class='btn btn-default' value='Cerrar'>";
             ?>

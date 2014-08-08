@@ -78,10 +78,7 @@ if ($db->conn){
 		$Rs_pais = $db->conn->Execute($sql_pais);
 		if (!($Rs_pais)) $error = 2;
 	}
-}
-else
-{	$error = 1;
-}
+}else{	$error = 1;}
 ?>
 <html>
 <head>
@@ -101,8 +98,7 @@ function rightTrim(sString)
 	return sString;
 }
 
-function ver_listado()
-{
+function ver_listado(){
 	window.open('listados.php?<?=session_name()."=".session_id()?>&var=pai','','scrollbars=yes,menubar=no,height=600,width=800,resizable=yes,toolbar=no,location=no,status=no');
 }
 //-->
@@ -233,8 +229,9 @@ function ver_listado()
 
 <script ID="clientEventHandlersJS" LANGUAGE="JavaScript">
 <!--
-function ValidarInformacion()
-{	var strMensaje = "Por favor ingrese las datos.";
+function ValidarInformacion(){
+
+    var strMensaje = "Por favor ingrese las datos.";
 
 	if (document.form1.idcont.value == "0")
 	{	alert("Debe seleccionar el continente.\n" + strMensaje);

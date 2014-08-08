@@ -1,6 +1,5 @@
 <?php
 session_start();
-ini_set("display_errors",1);
 
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia'])
@@ -21,16 +20,17 @@ $dependencia = $_SESSION["dependencia"];
 $ln          = $_SESSION["digitosDependencia"];
 $lnr         = 11+$ln;
 
+
     /** * Retorna la cantidad de bytes de una expresion como 7M, 4G u 8K.
      *
      * @param char $var
      * @return numeric
      */
-    function return_bytes($val)
-    {	$val = trim($val);
+    function return_bytes($val){
+        $val    = trim($val);
         $ultimo = strtolower($val{strlen($val)-1});
-        switch($ultimo)
-        {	// El modificador 'G' se encuentra disponible desde PHP 5.1.0
+        switch($ultimo){
+        // El modificador 'G' se encuentra disponible desde PHP 5.1.0
             case 'g':	$val *= 1024;
             case 'm':	$val *= 1024;
             case 'k':	$val *= 1024;
@@ -44,7 +44,7 @@ $lnr         = 11+$ln;
     include_once("$ruta_raiz/class_control/anex_tipo.php");
 
     if (!$db)	$db = new ConnectionHandler($ruta_raiz);
-    //$db->conn->debug = true;
+
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
     $anex       = & new Anexo($db);
     $anexTip    = & new Anex_tipo($db);
@@ -71,7 +71,7 @@ $lnr         = 11+$ln;
           $codigo = trim($numrad).trim(str_pad($auxnumero,5,"0",STR_PAD_LEFT));
         }
 
-        $anex_salida = ($radicado_salida)? 1 : 0;
+        $anex_salida = empty($radicado_salida)? 0 : 1;
 
         $bien = "si";
         if ($bien and $tipo){	
@@ -93,8 +93,7 @@ $lnr         = 11+$ln;
         include "$ruta_raiz/include/query/queryUpload2.php";
 
         $expAnexo = ($expIncluidoAnexo)? $expIncluidoAnexo : null;
-        
-        if(!$anex_salida && $tpradic) $anex_salida=1;
+
         
         $isql = "insert
                     into anexos
@@ -146,8 +145,7 @@ $lnr         = 11+$ln;
                                                                    ,anex_tipo         = $tipo, " : 0;
           
           $isql = "update 
-                anexos set 
-                      $subir_archivo 
+                anexos set
                       anex_salida=$anex_salida
                     , sgd_rem_destino=$radicado_rem
                     , sgd_dir_tipo=$radicado_rem

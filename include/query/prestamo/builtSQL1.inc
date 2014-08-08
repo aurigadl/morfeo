@@ -71,6 +71,7 @@ $sqlOrderPRES_FECH_DEVO=$db->conn->SQLDate("YmdHis","P.PRES_FECH_DEVO");
     $sWhere=" where
                 U.USUA_LOGIN=P.USUA_LOGIN_ACTU and
                 D.DEPE_CODI=P.DEPE_CODI and
+                P.PRES_ESTADO < 3 and
                 ES.PARAM_CODI=P.PRES_ESTADO and
                 ES.PARAM_NOMB='PRESTAMO_ESTADO' and
                 RE.PARAM_CODI=P.PRES_REQUERIMIENTO and

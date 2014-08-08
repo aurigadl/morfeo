@@ -877,12 +877,12 @@ if ($ext == "ODT" || $ext == "odt") {
  **/
 
 
-$link = $ABSOL_PATH . "/bodega" . $linkarchivo_grabar;
-$tam = filesize($link);
-$linkFuente = str_replace("d.", ".", $linkarchivo_grabar);
-$linkF = $ABSOL_PATH . "/bodega" . $linkFuente;
-$tamFuente = filesize($linkF);
-//$db->conn->debug = true;
+$link         = $ABSOL_PATH . "/bodega/" . $linkarchivo_grabar;
+$tam          = filesize($link);
+$linkFuente   = str_replace("d.", ".", $linkarchivo_grabar);
+$linkF        = $ABSOL_PATH . "/bodega/" . $linkFuente;
+$tamFuente    = filesize($linkF);
+
 saveMessage('success', " ".($tam) / 1000 . " kb");
 
 if ($tam >= 100) {

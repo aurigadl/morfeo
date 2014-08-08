@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 * @author Jairo Losada   <jlosada@gmail.com>
 * @author Cesar Gonzalez <aurigadl@gmail.com>
@@ -46,8 +46,8 @@ $ruta_raiz = "..";
 $ruta_raiz = "..";
 $verrad = "";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-$db = new ConnectionHandler($ruta_raiz);	 
-//$db->conn->debug = true; 
+$db = new ConnectionHandler($ruta_raiz);
+
 if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
 
 //===============================
@@ -79,17 +79,19 @@ $ver=$_POST["s_sql"];      //consulta
          <link rel="stylesheet" type="text/css" href="<?=$ruta_raiz?>/js/spiffyCal/spiffyCal_v2_1.css">		 
       </head>
       <body class="PageBODY">
-	     <div align="center">	  	  
-         <table>
-            <tr>   
+	     <div align="center">
+         <table >
+            <tr>
                <td valign="top"><?php Search_Show(); ?></td>
             </tr>
          </table>
-         <table>
-            <tr>
-               <td valign="top"><?php if($ver=="") Pedidos_Show(); ?></td>
-            </tr>
-         </table>
+         <?php if(!empty($buscarPres)){ ?>
+             <table>
+                <tr>
+                   <td valign="top"><?php if($ver=="") Pedidos_Show(); ?></td>
+                </tr>
+             </table>
+         <?php } ?>
 		 </div>		 
       </body>	  
    </html>
@@ -105,12 +107,10 @@ $ver=$_POST["s_sql"];      //consulta
 // Search_Show begin
 //===============================
    function Search_Show(){  
-      // De sesi�n
+   // De sesion
 
-	  global $db;
-      global $ruta_raiz;	  
-  //$db->conn->debug = true;
-	  // Control de visualizaci�n	  
+        global $db;
+        global $ruta_raiz;
 	$sFileName  = $_POST["sFileName"];
 	$opcionMenu  = $_POST["opcionMenu"];  
       // Valores
@@ -190,13 +190,14 @@ $ver=$_POST["s_sql"];      //consulta
 	</script>
 
 	<table  class='table table-bordered'>	  
-		<tr>
-	<td  colspan="2"><a name="Search"><?=$sFormTitle[$opcionMenu]; ?> </a></td>
-	</tr>
+		<!--<tr>
+	<td  colspan="2"><a name="Search"><?/*=$sFormTitle[$opcionMenu]; */?> </a></td>
+	</tr>-->
 	<tr id="b0" style="display:<?= $tipoBusqueda[$opcionMenu][0]; ?>">
 		<td ><p align="left">Radicado</p></td>	 
 		<td ><label class="input"><input type="text" name="s_RADI_NUME_RADI" maxlength="15" value="<?= $flds_RADI_NUME_RADI; ?>" size="25"></label></td>			   
-	</tr>	  
+	</tr>
+
   <tr id="b0" style="display:<?= $tipoBusqueda[$opcionMenu][0]; ?>">
     <td ><p align="left">Expediente</p></td>   
     <td ><label class="input"><input type="text" name="s_numeroExpediente" maxlength="22" value="<?= $flds_numeroExpediente; ?>" size="25"></label></td>         
@@ -227,7 +228,6 @@ $ver=$_POST["s_sql"];      //consulta
 				<td ><label class="select"><select name="s_USUA_NOMB" class=select>
 				<option value="">- TODOS LOS USUARIOS -</option>			
 <?                  $validUsuaActiv="";
-			// Modificado Infom�trika 14-Julio-2009
 			// Compatibilidad con PostgreSQL 8.3
 			// Cambi� USUA_ESTA=1 por USUA_ESTA='1' para listar los usuarios activos.
 				if ($opcionMenu==1) { $validUsuaActiv=" USUA_ESTA='1' "; }ELSE { $validUsuaActiv=" USUA_LOGIN IS NOT NULL "; } //Verifica que el usuario se encuentre activo para hacer el prEstamo                                
@@ -335,8 +335,8 @@ if ($h==$v_hora_limite)  {	$seleccion="SELECTED";	}	 ?>
 	<input type="submit" class="btn btn-primary" value="Generar">
 	</footer>
 <?                               }
-											else {?>		
-		<footer><input type="submit" class="btn btn-primary" value="Buscar"></footer>
+else {?>
+    <footer><input type="submit" class="btn btn-primary" name="buscarPres" value="Buscar"></footer>
 <?       
 }?>
 
@@ -367,15 +367,15 @@ if ($h==$v_hora_limite)  {	$seleccion="SELECTED";	}	 ?>
 	global $pageAnt; // Pagina de la cual viene	 
 		// Valores
 
-$sFileName  = $_POST["sFileName"];
-$opcionMenu  = $_POST["opcionMenu"];  
-	// Valores
-$fechaFinal = $_POST["fechaFinal"];
+$sFileName   = $_POST["sFileName"];
+$opcionMenu  = empty($_POST["opcionMenu"])? $_GET["opcionMenu"] : $_POST["opcionMenu"];
+// Valores
+$fechaFinal   = $_POST["fechaFinal"];
 $fechaInicial = $_POST["fechaInicial"];
 
-$krd = $_SESSION["krd"];
-$dependencia = $_SESSION["dependencia"];
-$usua_doc = $_SESSION["usua_doc"];
+$krd          = $_SESSION["krd"];
+$dependencia  = $_SESSION["dependencia"];
+$usua_doc     = $_SESSION["usua_doc"];
 $ps_PRES_ESTADO   =strip($_POST["s_PRES_ESTADO"]); 
 $ps_RADI_NUME_RADI=strip(trim($_POST["s_RADI_NUME_RADI"]));
 $ps_numeroExpediente=strip(trim($_POST["s_numeroExpediente"]));
@@ -429,7 +429,7 @@ if(!$iSort) $iSort =20;
 		<input type="hidden" value="" name="prestado">  	 
 		<input type="hidden" value="<?=$ps_numeroExpediente?>" name="ps_numeroExpediente">
 		<input type="hidden" name="opcionMenu" value="<?= $opcionMenu ?>">	  
-		<!-- orden de presentaci�n del resultado en el formulario de envio !-->	  		 		 
+		<!-- orden de presentacion del resultado en el formulario de envio !-->
 		<input type="hidden" name="FormPedidos_Sorting" value="<?=$iSort?>">
 		<input type="hidden" name="FormPedidos_Sorted" value="<?=$iSorted?>">
 		<input type="hidden" name="s_Direction" value="<?=$sDirection?>">
@@ -465,20 +465,23 @@ $iCounterIni=$iCounter;
 $y=1; // Cantidad de registros presentados
 include_once "getRtaSQLAntIn.inc"; //Une en un solo campo los expedientes
 while($rs && !$rs->EOF) {
-		// Inicializa las variables con los resultados
-  include "getRtaSQL.inc";								
-  // Fila de la tabla con los resultados								  				  			   
-  include "getRtaSQLAnt.inc";			   			   
-	//$antfldEXP.=$fldEXP;
+	// Inicializa las variables con los resultados
+    include "getRtaSQL.inc";
+
+    // Fila de la tabla con los resultados
+    include "getRtaSQLAnt.inc";
+
 	if ($fldARCH!='SI') {
-			$encabARCH = session_name()."=".session_id()."&buscar_exp=".tourl($fldEXP)."&krd=$krd&tipo_archivo=&nomcarpeta=";
-		$antfldARCH.="<a href='".$ruta_raiz."/expediente/datos_expediente.php?".$encabARCH."&num_expediente=".tourl($fldEXP)."&nurad=".tourl($antfldRADICADO)."' class='vinculos'>".$fldARCH."</a>";
+	    $encabARCH   = session_name()."=".session_id()."&buscar_exp=".tourl($fldEXP)."&krd=$krd&tipo_archivo=&nomcarpeta=";
+	    $antfldARCH .="<a href='".$ruta_raiz."/expediente/datos_expediente.php?".$encabARCH."&num_expediente=".tourl($fldEXP)."&nurad=".tourl($antfldRADICADO)."' class='vinculos'>".$fldARCH."</a>";
 	}
-				$y++;
-				include "cuerpoTabla.inc"; 
-				$rs->MoveNext(); 						
-			}
-	  // Fila de la tabla con lso resultados						 
+
+    $y++;
+    include "cuerpoTabla.inc";
+    $rs->MoveNext();
+}
+
+    // Fila de la tabla con lso resultados
 	$cantRegPorPagina=$y;
 	$iCounter=$iCounter+$y;		 
 ?>
@@ -537,7 +540,7 @@ while($rs && !$rs->EOF) {
 			else { $sDirectionPages=" DESC "; }  
 			$form_params_page = $form_params_search."&opcionMenu=".tourl($opcionMenu)."&FormPedidos_Sorted=".tourl($iSort).
 												"&s_Direction=".tourl($sDirectionPages)."&krd=".tourl($krd)."&FormPedidos_Sorting=".tourl($iSort); 
-			// N�mero total de registros
+			// Numero total de registros
 			$ant=$antfldPRESTAMO_ID;
 			while($rs && !$rs->EOF) {
 				$new=$rs->fields["PRESTAMO_ID"]; //para el manejo de expedientes			   
@@ -561,7 +564,7 @@ while($rs && !$rs->EOF) {
 	else {
 		if($iPage>$iNumberOfPages) { $iStartPages=$iPage-$iNumberOfPages+1; }
 	}		 		 
-	// Genera las p�ginas visualizables		
+	// Genera las paginas visualizables
 	$sPages= "";
 			if($iHasPages>$iNumberOfPages) {
 		if($iStartPages==1){ $sPages.="|<  <<   "; }
@@ -587,7 +590,7 @@ while($rs && !$rs->EOF) {
 						$sPages.="&nbsp;<a href=\"$sFileName?$form_params_page&FormPedidos_Page=$iHasPages&FormStarPage=tourl($iStartPages)
 										 &FormSiguiente=1&\"><font class=\"ColumnFONT\" title=\"Ver la &uacute;ltima p&aacute;gina\">>|</font></a>";
 		}
-		else { $sPages.="   >>  >|"; }			
+		else { $sPages.=" >> |"; }
 	}
 ?>
 		<tr class="titulos5" align="center">		 
@@ -595,9 +598,9 @@ while($rs && !$rs->EOF) {
 		</tr>
 <?       // Botones para procesar
 	if ($tipoRespuesta[$opcionMenu][$numRtaMax]=="") {?>						
-	<tr  align="center">		 
+	     <tr  align="center">
 			<td  colspan="<?=($numCol+1);?>" align="center"><center>
-			<input type="button" class='botones' value="Prestar" onClick="enviar();">
+			<input type="button" class='botones' value="Enviar" onClick="enviar();">
 			<input type="button" class='botones' value="Cancelar" title="Regresa al men&uacute; de pr&eacute;stamo y control de documentos" onClick="javascript:regresar();"></center>
 			</td>		
          </tr>				

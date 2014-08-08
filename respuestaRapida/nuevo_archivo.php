@@ -586,7 +586,7 @@ if( $rs_exp->RecordCount() == 0 ){
 
           $i_copias = 0; //Cuantos copias se han añadido
 
-          include_once "$ruta_raiz/include/query/queryNuevo_archivo.php";
+
           $isql = $query1;
           $rs=$db->conn->Execute($isql);
 

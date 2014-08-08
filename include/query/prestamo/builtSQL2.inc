@@ -85,15 +85,3 @@
       }			
         }
 
-
-
-        // limita los resultados a la territorial que custodia los documentos
-
-        if ($opcionMenu==1 || $opcionMenu==2 || $opcionMenu==3) { //préstamo, devolución o cancelación
-            $sWhere.=" and DA.DEPE_CODI_TERRITORIAL=
-                      ( select UD.DEPE_CODI_TERRITORIAL 
-                        from   USUARIO UP, DEPENDENCIA UD 
-                        where  UP.USUA_LOGIN LIKE '".strtoupper($krd)."' and UP.DEPE_CODI=UD.DEPE_CODI ) ";
-        }	 
-          echo "fin";
-?>		 
