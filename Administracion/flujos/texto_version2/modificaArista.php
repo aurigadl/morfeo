@@ -128,6 +128,8 @@ function regresar(){
 		$queryModifica = "SELECT * FROM SGD_FARS_FARISTAS WHERE SGD_FARS_CODIGO = " .$aristaAModificar;
 		$rs = $db->conn->query( $queryModifica );
 		$descripcionArista = $rs->fields['SGD_FARS_DESC'];
+		$frmNombre = $rs->fields['SGD_FARS_FRMNOMBRE'];
+		$frmUrl = $rs->fields['SGD_FARS_FRMLINK'];
 		$diasMinimo = $rs->fields['SGD_FARS_DIASMINIMO'];
 		$diasMaximo = $rs->fields['SGD_FARS_DIASMAXIMO'];
 		$automatico = ( $rs->fields['SGD_FARS_AUTOMATICO'] == 1 ? "automatico" : null );
@@ -156,7 +158,7 @@ function regresar(){
 			include "$ruta_raiz/include/tx/Proceso.php";
 	 		$flujo = new AristaFlujo( $db );
 
-	 		$flujo->initArista( $etapaInicial, $etapaFinal, $descripcionArista, $diasMinimo, $diasMaximo, $trad,$codserie,$tsub, $tipo, $procesoSelected, $_POST['automatico'], $tipificacion );	
+	 		$flujo->initArista( $etapaInicial, $etapaFinal, $descripcionArista, $diasMinimo, $diasMaximo, $trad,$codserie,$tsub, $tipo, $procesoSelected, $_POST['automatico'], $tipificacion ,$frmUrl,$frmNombre );	
 			$resultadoInsercion = $flujo-> modificaArista( $aristaAModificar );
 	}
 ?>
@@ -192,14 +194,25 @@ function regresar(){
 	</tr>
 </table>
 <table class="table table-bordered" width=93%  align="center">
-                <tr>
-                <td height="23" align="left" colspan="3"  width="25%">
-                Descripci&oacute;n:
-                        </td>
-                        <td height="23" colspan="3"  width="75%">
-                        <input type="text" name="descripcionArista"  id="descripcionArista" value="<?=$descripcionArista?>"  size=60 lenght=80 >
-                </td>
-                </tr>
+  <tr>
+  <td height="23" align="left" colspan="1"  width="25%">
+  Descripci&oacute;n:
+          </td>
+          <td height="23" colspan="3"  width="75%"><label class="input state-success">
+          <input type="text" name="descripcionArista"  id="descripcionArista" value="<?=$descripcionArista?>"  size=80 lenght=80 ></label>
+  </td>
+  </tr>
+    <tr>
+  <td height="23" align="left" colspan="1"  width="25%">
+  Url / Formulario 
+          </td>
+          <td height="23" colspan="3"  width="75%"><label class="input state-success">
+          <input type="text" name="frmNombre"  id="frmNombre" value="<?=$frmNombre?>"  size=80 lenght=100  class="select state-success"></label>
+    </td></tr>
+    <tr><td>Nombre Formulario/Link</td><td>
+          <label class="input state-success"><input type="text" name="frmUrl"  id="frmUrl" value="<?=$frmUrl?>"  size=80 lenght=100 class="select state-success" ></label>
+  </td>
+  </tr>
         </td>
   </tr>
 </table>
@@ -209,13 +222,13 @@ function regresar(){
 	        	D&iacute;as M&iacute;nimo:
 	        </td>
 	        <td height="23" colspan="4"  width="25%">
-	        	<input type="text" name="diasMinimo" value="<?=$diasMinimo?>" size="15" lenght="3" >
+	        	<label class="input state-success"><input type="text" name="diasMinimo" value="<?=$diasMinimo?>" size="15" lenght="3" ></label>
 	        </td>
 	        <td height="23" colspan="4"  width="25%">
 	        	D&iacute;as M&aacute;ximo:
 	        </td>
 	        <td height="23" colspan="4"  width="25%">
-	        	<input type="text" name="diasMaximo" value="<?=$diasMaximo?>" size="15" lenght="3">
+	        	<label class="input state-success"><input type="text" name="diasMaximo" value="<?=$diasMaximo?>" size="15" lenght="3"></label>
 	        </td>
         </tr>
         <tr>
@@ -329,11 +342,10 @@ function regresar(){
 <input type=hidden id="aristaAModificar" name="aristaAModificar" value='<?=$aristaAModificar?>'>
 
 <table  width=93% class="table table-bordered" align="center">
-	<tr class=timparr>
-	      <td height="30" colspan="2" ><span class="celdaGris"> <span class="e_texto1">
-		  <center> <input class="botones" type="submit" Value="Modificar"  onClick=" return validarDatos();" name="ClickModifica"> </center> </span> </span></td>
-	      <td height="30" colspan="2" ><span class="celdaGris"> <span class="e_texto1">
-			<center><input class="botones" type=button name=Cerrar id=Cerrar Value=Cerrar onclick='cerrar();'></a></center>  </span> </span>
+	<tr >
+	      <td height="30" colspan="2" >
+		  <footer> <input class="btn btn-success" type="submit" Value="Modificar"  onClick=" return validarDatos();" name="ClickModifica"> 
+			<input class="btn" type=button name=Cerrar id=Cerrar Value=Cerrar onclick='cerrar();'></footer>
 		  </td>
 	</tr>
 </table>

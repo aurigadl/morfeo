@@ -15,6 +15,8 @@ var $mensajeResultadoStyle = "";
 var $mensajeResultadoFooter = "</td></tr></table></center>";
 var $estiloError = "class=titulosError2>";
 var $estiloExito = "class=titulos>";
+var $frmUrl;
+var $frmNombre;
 
 function Proceso( $db, $nombreProceso,$serieProceso = null, $subSerieProceso = null, 
 				  $flujoAutomatico = null,  $terminosProceso = null ){
@@ -237,10 +239,10 @@ var $estiloExito = "class=titulos>";
 
 	}
 	
-	function initArista( $etapaInicial, $etapaFinal, $descripcionArista, $diasMinimo, $diasMaximo, $trad,$codserie,$tsub, $tipo, $procesoSelected, $automatico, $tipificacion ){			
+	function initArista( $etapaInicial, $etapaFinal, $descripcionArista, $diasMinimo, $diasMaximo, $trad,$codserie,$tsub, $tipo, $procesoSelected, $automatico, $tipificacion,$frmUrl,$frmNombre ){			
 
 		include_once "../class.Arista.php";
-		$this->arista = new Arista( $etapaInicial, $etapaFinal, $descripcionArista, $diasMinimo, $diasMaximo, $trad,$codserie,$tsub, $tipo, $procesoSelected, $automatico, $tipificacion );
+		$this->arista = new Arista( $etapaInicial, $etapaFinal, $descripcionArista, $diasMinimo, $diasMaximo, $trad,$codserie,$tsub, $tipo, $procesoSelected, $automatico, $tipificacion,$frmUrl,$frmNombre );
 
 	}	
 	
@@ -264,21 +266,22 @@ var $estiloExito = "class=titulos>";
 		$desc = $this->arista->getDescripcion();
 		$rol = $this->arista->getRol();
 		$trad = ($this->arista->getTRad() != null ? $this->arista->getTRad() : 0 );
-
+    $frmNombre = $this->arista->getFrmNombre(); $frmUrl = $this->arista->getFrmUrl();
 		$queryAristMod = "update sgd_fars_faristas set sgd_fexp_codigoini = " . $inicio . ", sgd_fexp_codigofin = " . $fin;
 		$queryAristMod .= ", sgd_fars_diasminimo =  " . $min . ", sgd_fars_diasmaximo = " . $max;
 		$queryAristMod .= ", sgd_fars_desc =   '$desc' , sgd_trad_codigo = " . $trad;
 		$queryAristMod .= ", sgd_srd_codigo =  " . $codserie . ", sgd_sbrd_codigo = " . $tsub;
 		$queryAristMod .= ", sgd_tpr_codigo =  " . $tpr . ", sgd_fars_automatico = " . $automatico;
 		$queryAristMod .= ", sgd_fars_rolgeneral =  " . $rol . ", sgd_fars_tipificacion = " . $tipificacion;
+		$queryAristMod .= ", sgd_fars_frmnombre =  '" . trim($frmNombre) ."' " ;
+		$queryAristMod .= ", sgd_fars_frmlink = '" . trim($frmUrl) ."' ";
 		$queryAristMod .= "  where  sgd_fars_codigo = " . $aristaAModificar;
-		
-
-        if ( !$rs = $this->db->conn->query( $queryAristMod ) ){
-            return  $this->mensajeResultadoHeader . $this->estiloError .' Lo siento no se pudo modificar la Arista '. $this->mensajeResultadoFooter;
-        }else{
-            return  $this->mensajeResultadoHeader . $this->estiloExito .'Conexi&oacute;n modificada Correctamente: ' . $aristaAModificar . $this->mensajeResultadoFooter;
-        }
+    //$this->db->conn->debug = true;
+		if ( !$rs = $this->db->conn->query( $queryAristMod ) ){
+        return  $this->mensajeResultadoHeader . $this->estiloError .' Lo siento no se pudo modificar la Arista '. $this->mensajeResultadoFooter;
+    }else{
+        return  $this->mensajeResultadoHeader . $this->estiloExito .'Conexi&oacute;n modificada Correctamente: ' . $aristaAModificar . $this->mensajeResultadoFooter;
+    }
 	}
 	
 	function insertaArista(  ){

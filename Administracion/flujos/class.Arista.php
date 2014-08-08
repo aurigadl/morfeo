@@ -16,6 +16,8 @@ class Arista{
 	var $rolGeneral = '';
 	var $etapaInicio ;
 	var $etapaFin ;
+	var $frmNombre;
+	var $frmUrl;
 	var $db;
 
 	
@@ -42,7 +44,7 @@ class Arista{
 		$this->rolGeneral = '';
     }*/
     
-    function Arista(  $etapaInicial, $etapaFinal, $descripcionArista, $diasMinimo, $diasMaximo, $trad,$codserie,$tsub, $tipo, $procesoSelected, $automatico, $tipificacion ) {
+    function Arista(  $etapaInicial, $etapaFinal, $descripcionArista, $diasMinimo, $diasMaximo, $trad,$codserie,$tsub, $tipo, $procesoSelected, $automatico, $tipificacion ,$frmUrl,$frmNombre) {
 		$this->etapaInicio = $etapaInicial;
 		$this->etapaFin = $etapaFinal;
 		$this->codigoArista = 0;
@@ -59,6 +61,8 @@ class Arista{
 		$this->automatica = ( $automatico ? 1 : 0 );
 		$this->tipificacion = ( $tipificacion ? 1 : 0 );
 		$this->rolGeneral = 0;
+		$this->frmUrl = $frmUrl;
+		$this->frmNombre = $frmNombre;
     }
     
     function addInicio( $nuevoInicio ){
@@ -184,6 +188,14 @@ class Arista{
     
     function getInicio( ){
     	return $this->etapaInicio;
+    }
+    
+    function getFrmNombre( ){
+      return $this->frmNombre;
+    }
+
+    function getFrmUrl( ){
+      return $this->frmUrl;
     }
         
     function getFin(  ){
