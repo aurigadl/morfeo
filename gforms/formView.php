@@ -476,8 +476,7 @@
 
  
  function cargarPagina(pagina,nombreDiv){
-  $.post( pagina,{verradicado:"<?=$verradicado?>",verradPermisos:"<?=
-  ?>",permRespuesta:"<?=$permRespuesta?>"}, function( data ) {
+  $.post( pagina,{verradicado:"<?=$verradicado?>",verradPermisos:"<?=$verradPermisos?>",permRespuesta:"<?=$permRespuesta?>"}, function( data ) {
   $('#'+ nombreDiv).html(data);
   });
 }
