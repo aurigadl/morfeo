@@ -120,13 +120,12 @@ $mensaje_error = false;
    $encabezado="&krd=".tourl($krd)."&s_PRES_ID=".tourl($setFiltroSelect)."&dependencia=".tourl($dependencia).
                "&radicado=".tourl($fldRADICADO)."&s_PRES_REQUERIMIENTO=&FormAction=";
    $enviar=0;
+
    if($opcionMenu==3) {  //cancelar
       $encabezado.="delete&";	  
       $enviar=1; 	  
    }			   
    elseif ($opcionMenu==1 || $opcionMenu==2) {  //prestamo y devoluci�n
-      // Oculta o hace visible el campo que solicita la contrase�a
-      $verClave=0;
       $query="select PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_PASW'"; 
       $rs = $db->conn->query($query);
       if ($rs && !$rs->EOF) { $verClave = $rs->fields("PARAM_VALOR"); }         
@@ -168,7 +167,7 @@ $mensaje_error = false;
 			   $nover=1;
 			}
   	     }
-         // Validaci�n de la contrase�a
+         /*// Validaci�n de la contrase�a
 	     $flds_CONTRASENA=strip($_POST["s_CONTRASENA"]);
 		 if ($ordenar==0 && $verClave==1 && $nover!=1) {
             $query="select USUA_CODI from USUARIO where USUA_LOGIN='".$usua_codi."' and USUA_PASW='".SUBSTR(md5($flds_CONTRASENA),1,26)."'"; 
@@ -178,9 +177,13 @@ $mensaje_error = false;
 			   echo "<script> alert('La contraseña del usuario solicitante es incorrecta'); </script>"; 
                $enviar=0;
 			}			
-		 } 
+		 } */
 	  }    
    }
+
+   // Oculta o hace visible el campo que solicita la contrase�a
+   $verClave=0;
+
    if ($enviar==1) {  // Llama la p�gina que hace el procesamiento
       echo "<form action='".$ruta_raiz."/solicitar/Reservar.php?<?=$encabezado?>' method='post' name='go'> </form>";
       echo "<script>document.go.submit();</script>";   	  
@@ -320,7 +323,7 @@ $mensaje_error = false;
 	  include "getRtaSQL.inc";		
 	  if ($antfldPRESTAMO_ID!=$fldPRESTAMO_ID) {
 		 if ($y!=0) {  include "cuerpoTabla.inc"; } // Fila de la tabla con los resultados
-		 include "getRtaSQLAnt.inc";	
+		 include "getRtaSQLAnt.inc";
 		 $y++;
 	  }else {		 
 		 if ($antfldEXP!=""){ 
@@ -372,8 +375,9 @@ $mensaje_error = false;
     // Marca todas las casillas si la del titulo es marcada
 	function seleccionarRta() {
 	   valor=document.rta.rta_.checked;
-<? for ($j=0; $j<$iCounter; $j++) { ?>
-       document.rta.rta_<?=$j?>.checked=valor;			  
+<? for ($j=0; $j<$iCounter; $j++) {
+       $v = $j + 1 ;?>
+       document.rta.rta_<?=$v?>.checked=valor;
 <? } ?>
     } 
     // Verifica que el navegador soporte las funciones de Javascript 
@@ -397,24 +401,18 @@ $mensaje_error = false;
     } 
 	// Valida los campos antes de enviar el formulario 
     function okTx() {
-       valCheck = 0;
-       for (i=0; i<<?=$iCounter?>; i++) {
-          if (eval('document.rta.rta_'+i+'.checked')==true){ 
-             valCheck = 1;
-             break;
-          }
-	   }
+       valCheck = $( "input:checked" ).length - 1;
 	   if(valCheck==0) {
      	  alert('Debe seleccionar al menos un radicado');	   	   
 	      return 0;
 	   }
-       verClave=<?=$verClave?>;	   
+       verClave=<?=$verClave?>;
 	   if (verClave==1) {
 		  if (document.rta.s_CONTRASENA.value=="") { 
-		     alert('Digite la contrase�a del usuario solicitante');
+		     alert('Digite la contraseña del usuario solicitante');
 			 return 0;
 		  }
-	   }	   
+	   }
 	   numCaracteres = document.rta.observa.value.length;
 	   if(numCaracteres>=6){
 		 if (valMaxChars(550)) {
