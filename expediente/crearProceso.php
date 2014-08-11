@@ -64,7 +64,8 @@ function crearProcesoExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$
   $record["SGD_FARS_CODIGO"] = "0";
   $record["SGD_HFLD_AUTOMATICO"] = 1;
 
-  if(!$fechaExp) $fechaExp = $fecha_hoy; $db->conn->debug=true;
+  if(!$fechaExp) $fechaExp = $fecha_hoy;
+    
   $sqlFechaHoy=$db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
   $query="insert into SGD_SEXP_SECEXPEDIENTES(SGD_EXP_NUMERO   ,SGD_SEXP_FECH      ,DEPE_CODI   ,USUA_DOC   ,SGD_FEXP_CODIGO,SGD_SRD_CODIGO,SGD_SBRD_CODIGO,SGD_SEXP_SECUENCIA, SGD_SEXP_ANO,USUA_DOC_RESPONSABLE,SGD_PEXP_CODIGO)
     VALUES ('$numExpediente',". $sqlFechaHoy ." ,'$depe_codi','$usua_doc',$codEtapa,$codiSRD,$codiSBRD,$secExp ,$anoExp,$usuaDocExp,$proc)";
