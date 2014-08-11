@@ -180,26 +180,32 @@ if ( $expIncluido != "" ) {
 	$arrTRDExp = $expediente->getTRDExp( $num_expediente, "", "", "" );
 }
 ?>
-<Tr><td><small>Clasificacion D.</small></td><td><small>
-    <?php echo ucwords(strtolower($arrTRDExp['serie']))." / ".ucwords(strtolower($arrTRDExp['subserie'])); ?>
-    <br><button type="submit" id="edittemasexp" class="btn btn-primary btn-xs">Editar ..</button>
-        <button type='submit' id='savetemasexp' class='btn btn-primary btn-xs'>Grabar..</button>
-    <?php
-	if ( $expIncluido != "" ) {
-		$arrDatosParametro = $expediente->getDatosParamExp( $expIncluido, $dependencia );
-	}
-	else if( $numExpediente != "" ) {
-		$arrDatosParametro = $expediente->getDatosParamExp( $numExpediente, $dependencia );
-	}
-	if( $arrDatosParametro != "" ) {
-		foreach( $arrDatosParametro as $clave => $datos ) {
-           echo "<small><br><b>".ucwords(strtolower($datos['etiqueta']))." : </b><span class='showfield'>".ucwords(strtolower(htmlentities($datos['parametro']))). "</span></small>
-                 <input  class='editfield' type='text' name='country' value='".ucwords(strtolower(htmlentities($datos['parametro'])))."'>";
-        }
-      }
-    ?>
+<Tr><td><small>Clasificacion D.</small></td>
+         <td>
+             <small>
+                <?php echo ucwords(strtolower($arrTRDExp['serie']))." / ".ucwords(strtolower($arrTRDExp['subserie'])); ?>
+                <br><button type="submit" id="edittemasexp" class="btn btn-primary btn-xs">Editar ..</button>
+                    <button type='submit' id='savetemasexp' class='btn btn-primary btn-xs'>Grabar..</button>
+                    <table>
+                        <?php
+                        if ( $expIncluido != "" ) {
+                            $arrDatosParametro = $expediente->getDatosParamExp( $expIncluido, $dependencia );
+                        }else if( $numExpediente != "" ) {
+                            $arrDatosParametro = $expediente->getDatosParamExp( $numExpediente, $dependencia );
+                        }
 
-  </small></td></tr>
+                        if( $arrDatosParametro != "" ){
+                            foreach( $arrDatosParametro as $clave => $datos ) {
+                               echo "<tr><td><small><br><b>".ucwords(strtolower($datos['etiqueta']))." : </b><span class='showfield'>".ucwords(strtolower(htmlentities($datos['parametro']))). "</span></small></td>
+                                     <td><input  class='editfield' style='display: none;' type='text' name='country' value='".ucwords(strtolower(htmlentities($datos['parametro'])))."'></td></tr>";
+                            }
+                        }
+
+                        ?>
+                   </table>
+            </small>
+         </td>
+     </tr>
 	<tr>
   <td>
     <span class="dropdown">
@@ -355,7 +361,6 @@ if($descPExpediente){
 ?>
 </td></tr></table>
 <script>
-    $('.editfield').toggle();
     $('body').on('click', '#edittemasexp', function () {
         $('.showfield').toggle();
         $('.editfield').toggle();
