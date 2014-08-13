@@ -46,7 +46,6 @@ $verrad="";
 define('ADODB_ASSOC_CASE', 1);
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
-$db->conn->debug = true;
 
    if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
 
@@ -153,20 +152,31 @@ $db->conn->debug = true;
          $titCaj="Devolver Documento"; 	  
       }	  
       // Procesa la solicitud
-      if ($pageAnt==$sFileName) {
-   	     $nover=0;	  
-	     $observa=strip($_POST["observa"]); 
-         $encabezado.="&observa=".tourl($observa)."&";
-         // Validaci�n de la fecha de vencimiento para los prestamos
-         if ($ordenar==0 && $opcionMenu==1 && $flds_PRES_ESTADO==2) { 
-            $x=date("Y-m-d");
-	        if ($fechaVencimiento>$x){ 
+      if ($pageAnt==$sFileName){
+         $enviar     = 1;
+   	     $nover      = 0;
+	     $observa    = strip($_POST["observa"]);
+         $encabezado.= "&observa=".tourl($observa)."&";
+
+         if ($fechaVencimiento=="") {
+              $query="select PARAM_VALOR,PARAM_NOMB from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_DIAS_PREST'";
+              $rs = $db->conn->query($query);
+              if(!$rs->EOF) {
+                  $x = $rs->fields("PARAM_VALOR");  // d�as por defecto
+                  $hastaXDias = strtotime("+".$x." day");
+                  $fechaVencimiento=date("Y-m-d",$hastaXDias);
+              }
+         }
+          // Validacion de la fecha de vencimiento para los prestamos
+         if ($ordenar==0 && $opcionMenu ==1){
+            $dat=date("Y-m-d");
+	        if ($fechaVencimiento > $dat){
 			   $encabezado.="&fechaVencimiento=".tourl($fechaVencimiento)."&"; 
-			   $enviar=1;   			
-			}
-			else { 
+
+			} else {
 			   echo "<script> alert('La fecha de vencimiento no puede ser menor o igual que la actual'); </script>"; 
-			   $nover=1;
+			   $nover   = 1;
+               $enviar  = 0;
 			}
   	     }
          /*// Validaci�n de la contrase�a
@@ -186,7 +196,7 @@ $db->conn->debug = true;
     // Oculta o hace visible el campo que solicita la contrase�a
     $verClave = 0;
 
-    if ($enviar==1) {
+    if ($enviar==1 and $process==1) {
           // Llama la pagina que hace el procesamiento
         echo "<form action='".$ruta_raiz."/solicitar/Reservar.php?<?=$encabezado?>' method='post' name='go'> </form>";
         echo "<script>document.go.submit();</script>";
@@ -233,7 +243,8 @@ $db->conn->debug = true;
 	<tr>
 		<td width=100%>
 			<form action='<?=$ruta_raiz?>/solicitar/Reservar.php?<?=$encabezado?>' method=post name="rta" class="smart-form" >
-			<input type="hidden"  value='<?=$krd?>' name="krd">					 					 					 		 
+			<input type="hidden"  value='<?=$krd?>' name="krd">
+            <input type="hidden"  value='0' name="process">
 			<input type="hidden" value=" " name="radicado">  	 
 			<input type="hidden" value="<?=$cantRegistros?>" name="prestado">  	 								
 			<input type="hidden" value="<?=$sFileName?>" name="sFileName">  				 								
@@ -420,8 +431,9 @@ $db->conn->debug = true;
 	   numCaracteres = document.rta.observa.value.length;
 	   if(numCaracteres>=6){
 		 if (valMaxChars(550)) {
-	      document.rta.prestado.value=<?=$iCounter?>;
-        document.rta.action='<?=$sFileName?>?';		
+	        document.rta.prestado.value=<?=$iCounter?>;
+            document.rta.action  ='<?=$sFileName?>?';
+            document.rta.process.value = 1;
 		    document.rta.submit(); 
 		 }
 	   }else{ 

@@ -789,7 +789,7 @@ switch ($codTx)
         ?>
      </label>
             </td>	
-        <td align=center  colspan=2>
+        <td align=center>
         <label class='select select-multiple'>
 	 <select name="usuariosInformar" id="usuariosInformar" size="5" width=450
     onclick="remote.informarUsuario('usuariosInformados','<?=$radicadosTx?>','<?=$krd?>','<?=$dependencia?>','<?=$codusuario ?>',document.getElementById('coddepeinf').value,document.getElementById('usuariosInformar').value,<?=$observaInf?> , 1, 0,  document.getElementById('chkConjunto').checked,'<?=$usua_doc?>') ; " 
