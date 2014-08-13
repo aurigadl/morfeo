@@ -39,14 +39,11 @@ $codusuario = $_SESSION["codusuario"];
 $tip3Nombre=$_SESSION["tip3Nombre"];
 $tip3desc = $_SESSION["tip3desc"];
 $tip3img =$_SESSION["tip3img"];   $verrad = "";
-  $ruta_raiz = "..";
-  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-  $db = new ConnectionHandler($ruta_raiz);	 
-  $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-  //$db->conn->debug = true;
-
-
-
+$ruta_raiz = "..";
+include_once "$ruta_raiz/include/db/ConnectionHandler.php";
+$db = new ConnectionHandler($ruta_raiz);
+$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+$db->conn->debug = true;
 
 /*********************************************************************************
  *       Filename: Reservar.php
@@ -203,7 +200,6 @@ function PRESTAMO_action($sAction) {
       $sSQL = "insert into PRESTAMO(
                   PRES_ID,
                   RADI_NUME_RADI,
-                  SGD_EXP_NUMERO,
 		   	      USUA_LOGIN_ACTU,
 			      DEPE_CODI,
                   PRES_FECH_PEDI,
@@ -212,8 +208,7 @@ function PRESTAMO_action($sAction) {
                   PRES_REQUERIMIENTO)
                values (". 
                   tosql($sec,"Number")."," . 
-                  tosql($fldradicado,"Text")."," . 
-                  tosql($fldexpediente,"Text")."," . 
+                  tosql($fldradicado,"Text")."," .
                   tosql($krd,"Text")."," . 
 		  tosql($dependencia,"Number")."," .
 		  $fldPRES_FECH_PEDI."," . 
@@ -323,7 +318,6 @@ function ESTADO_PRESTAMO_show() {
 	  $sSQL="select 
                 r.PRES_ID as PRESTAMO_ID,
                 $radi_nume_radi as RADICADO,
-                r.SGD_EXP_NUMERO,
                 r.USUA_LOGIN_ACTU as LOGIN,
                 D.DEPE_NOMB as DEPENDENCIA,".
                 $sqlPRES_FECH_PEDI." as F_SOLICITUD,".

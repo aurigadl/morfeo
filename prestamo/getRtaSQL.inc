@@ -36,17 +36,14 @@
 		else             { $fldARCH="NO"; }              
 	}
 		
-				// Determina si es o no posible cancelar la solicitud
-	$accion="";
+	// Determina si es o no posible cancelar la solicitud
+	$accion = "";
 	if (strcasecmp($fldLOGIN_ACTU,$ps_USUA_LOGIN)==0 && strlen($fldF_CANC)==0 && strlen($fldF_VENCIDO)==0 && strlen($fldF_DEVUELTO)==0 && strlen($fldF_PRESTADO)==0) { 
 		$accion="<a href=\"$ruta_raiz/solicitar/Reservar.php?&krd=".tourl($krd)."&s_PRES_ID=".tourl($fldPRESTAMO_ID).
 				"&dependencia=".tourl($fldDEPE_CODI)."&FormAction=delete&radicado=".tourl($fldRADICADO)."&s_PRES_REQUERIMIENTO=&\"><font class=\"ColumnFONT\">Cancelar Solicitud</font></a>";
 	}
 
-
-
-	// Cálculo del tiempo de espera
-
+	// Calculo del tiempo de espera
 	$difFecha="";
 	if($opcionMenu==1 || $opcionMenu==3){ 
 		$s = strtotime(date("Y-m-d h:i A"))-strtotime($fldF_PEDIDO);

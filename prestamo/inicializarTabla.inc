@@ -1,8 +1,5 @@
 <?PHP
-
 /********* TITULO DE LAS COLUMNAS DE LA TABLA CON LOS RESULTADOS DE LA CONSULTA *********/
-
-
 // Oculta o Hace visible la flecha que indica la columna por la cual se ordena el resultado
 $numRta=16; //n�mero de columnas de la respuestas
 for($j=1; $j<$numRta; $j++) {

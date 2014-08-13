@@ -32,20 +32,21 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 ?>
 <HTML>
 <?
-$krd = $_SESSION["krd"];
-$dependencia = $_SESSION["dependencia"];
+$krd          = $_SESSION["krd"];
+$dependencia  = $_SESSION["dependencia"];
 $usua_nomb    = $_SESSION["usua_nomb"];
 $depe_nomb    = $_SESSION["depe_nomb"];
-$usua_doc = $_SESSION["usua_doc"];
-$codusuario = $_SESSION["codusuario"];
+$usua_doc     = $_SESSION["usua_doc"];
+$codusuario   = $_SESSION["codusuario"];
 
 $ruta_raiz = "..";
 $mensaje_error = false;
-   
-   $verrad="";
-   define('ADODB_ASSOC_CASE', 1);
-   include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-   $db = new ConnectionHandler($ruta_raiz);	 
+
+$verrad="";
+define('ADODB_ASSOC_CASE', 1);
+include_once "$ruta_raiz/include/db/ConnectionHandler.php";
+$db = new ConnectionHandler($ruta_raiz);
+$db->conn->debug = true;
 
    if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
 
@@ -71,7 +72,7 @@ $mensaje_error = false;
        $setFiltroSelect=strip($_POST["s_PRES_ID"]);
     } else {
         foreach ($_POST as $key => $valor){
-            if (preg_match('/rta/',$key)){
+            if (preg_match('/rta.[0-9]/',$key)){
                 $setFiltroSelect .= empty($setFiltroSelect)? $valor : ", ".$valor ;
             }
         }
@@ -102,6 +103,7 @@ $mensaje_error = false;
    $fldRADICADO="";  //RADI_NUME_RADI separados por coma
    $setFiltroSelect=""; //PRES_ID separados por coma
    $j=0;
+
    while($rs && !$rs->EOF) {
       $x=$rs->fields("RADI_NUME_RADI");
 	  $y=$rs->fields("PRES_ID");
@@ -181,13 +183,14 @@ $mensaje_error = false;
 	  }    
    }
 
-   // Oculta o hace visible el campo que solicita la contrase�a
-   $verClave=0;
+    // Oculta o hace visible el campo que solicita la contrase�a
+    $verClave = 0;
 
-   if ($enviar==1) {  // Llama la p�gina que hace el procesamiento
-      echo "<form action='".$ruta_raiz."/solicitar/Reservar.php?<?=$encabezado?>' method='post' name='go'> </form>";
-      echo "<script>document.go.submit();</script>";   	  
-   }
+    if ($enviar==1) {
+          // Llama la pagina que hace el procesamiento
+        echo "<form action='".$ruta_raiz."/solicitar/Reservar.php?<?=$encabezado?>' method='post' name='go'> </form>";
+        echo "<script>document.go.submit();</script>";
+    }
    
    
    // Build SQL
@@ -206,7 +209,8 @@ $mensaje_error = false;
    else{ 	
 	  if (strcasecmp($sDirection," DESC ")==0){ $sDirection=" ASC "; }
 	  else { $sDirection=" DESC "; }  
-   }  		    
+   }
+
    $sOrder=" order by ".$iSort.$sDirection.",PRESTAMO_ID";   
    $sSQLtot=$sSQL.$sOrder;
    // Inicializa los campos de la tabla que van a ser vistos

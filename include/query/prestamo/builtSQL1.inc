@@ -71,12 +71,17 @@ $sqlOrderPRES_FECH_DEVO=$db->conn->SQLDate("YmdHis","P.PRES_FECH_DEVO");
     $sWhere=" where
                 U.USUA_LOGIN=P.USUA_LOGIN_ACTU and
                 D.DEPE_CODI=P.DEPE_CODI and
-                P.PRES_ESTADO < 3 and
                 ES.PARAM_CODI=P.PRES_ESTADO and
                 ES.PARAM_NOMB='PRESTAMO_ESTADO' and
                 RE.PARAM_CODI=P.PRES_REQUERIMIENTO and
                 RE.PARAM_NOMB='PRESTAMO_REQUERIMIENTO' and
                 DA.DEPE_CODI=P.PRES_DEPE_ARCH and ";
+
+    if($opcionMenu == 1) {
+        $sWhere .= "P.PRES_ESTADO = 1 and";
+    }else{
+        $sWhere .= "P.PRES_ESTADO < 3 and P.PRES_ESTADO > 1 and";
+    }
 
   if(!$ps_numeroExpediente){
     $sWhere .= " P.RADI_NUME_RADI=R.RADI_NUME_RADI  ";

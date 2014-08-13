@@ -1,7 +1,10 @@
 <?PHP
             $sWhere_non_exp=$sWhere." and P.RADI_NUME_RADI not in (select RADI_NUME_RADI from SGD_EXP_EXPEDIENTE) ";
-            $sWhere_exp=$sWhere." and E.RADI_NUME_RADI=P.RADI_NUME_RADI ";            
+            $sWhere_exp=$sWhere." and E.RADI_NUME_RADI=P.RADI_NUME_RADI ";
 
+            if($opcionMenu == 1) {
+                $sWhere .= "and PRES_ESTADO = 1";
+            }
 
             // Build SQL statement
             $sSQL_non_exp=$sSelect_non_exp.$sFrom_non_exp.$sWhere_non_exp;  		 

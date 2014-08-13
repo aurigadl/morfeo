@@ -47,6 +47,7 @@ $ruta_raiz = "..";
 $verrad = "";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
+$db->conn->debug = true;
 
 if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
 
@@ -150,7 +151,7 @@ $ver=$_POST["s_sql"];      //consulta
       $flds_USUA_LOGIN    =strip($_POST["s_USUA_LOGIN"]);
 	  if ($opcionMenu==4) { $flds_USUA_LOGIN=$krd; } // Inicializa el usuario para el caso en que el ingresa por la opci�n de SOLICITADOS
       $flds_DEPE_NOMB     =strip($_POST["s_DEPE_NOMB"]);
-      $flds_USUA_NOMB     =strip($_POST["s_USUA_NOMB"]); 
+      $flds_USUA_NOMB     =strip($_POST["s_USUA_NOMB"]);
       $flds_PRES_REQUERIMIENTO=strip($_POST["s_PRES_REQUERIMIENTO"]);
       if ($v_hora_limite=="")  { $v_hora_limite  =strip($_POST["s_hora_limite"]); }
       if ($v_minuto_limite==""){ $v_minuto_limite=strip($_POST["s_minuto_limite"]); }
