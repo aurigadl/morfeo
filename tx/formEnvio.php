@@ -541,7 +541,7 @@ else
 	<input type='hidden' name=fechaAgenda value='<?=$fechaAgenda?>'>
 	<table width="98%" border="0" cellpadding="0" cellspacing="5" class='smart-form table table-striped table-bordered table-hover dataTable' aria-describedby='dt_basic_info'">
 	<TR>
-	<td class="titulos4">
+	<td class="titulos4" width="14%" >
 <?
 
 switch ($codTx)
@@ -789,7 +789,7 @@ switch ($codTx)
         ?>
      </label>
             </td>	
-        <td align=center>
+        <td align=center width="36%">
         <label class='select select-multiple'>
 	 <select name="usuariosInformar" id="usuariosInformar" size="5" width=450
     onclick="remote.informarUsuario('usuariosInformados','<?=$radicadosTx?>','<?=$krd?>','<?=$dependencia?>','<?=$codusuario ?>',document.getElementById('coddepeinf').value,document.getElementById('usuariosInformar').value,<?=$observaInf?> , 1, 0,  document.getElementById('chkConjunto').checked,'<?=$usua_doc?>') ; " 
