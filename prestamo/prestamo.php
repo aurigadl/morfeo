@@ -62,10 +62,9 @@ include("common.php");
 // Save Page and File Name available into variables
 $sFileName  = "prestamo.php";
 // Variables de control
-$opcionMenu = strip($_POST["opcionMenu"]); //opci0n seleccionada del menu
+$opcionMenu = strip($_POST["opcionMenu"]); //opción seleccionada del menu
 $pageAnt    = strip($_POST["sFileName"]);
-$ver        = $_POST["s_sql"]; //consulta
-// HTML Page layout  
+
 ?>
 <html>
 <head>
@@ -87,11 +86,11 @@ $ver        = $_POST["s_sql"]; //consulta
             <td valign="top"><?php Search_Show(); ?></td>
         </tr>
     </table>
-    <?php if (!empty($buscarPres)) { ?>
+    <?php if (!empty($_POST["genearreporte"])){ ?>
         <table>
             <tr>
-                <td valign="top"><?php if ($ver == "")
-                        Pedidos_Show(); ?></td>
+                <td valign="top">
+                    <?php  Pedidos_Show(); ?></td>
             </tr>
         </table>
     <?php } ?>
@@ -394,7 +393,7 @@ function Search_Show() {
                         <footer>
                             <input type="reset" class='btn btn-default' value="Limpiar"
                                    onClick="javascript: limpiar();">
-                            <input type="submit" class="btn btn-primary" value="Generar">
+                            <input type="submit" class="btn btn-primary" name="genearreporte" value="Generar">
                         </footer>
                     <?
                     } else {
