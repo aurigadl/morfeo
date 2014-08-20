@@ -201,7 +201,7 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
         Nombres y Apellidos <strong>(*)</strong>
       </label>
       <label class="input">
-        <input type="text" name="nombre" pattern="[_A-z 0-9]*" id="nombre" value="<?=$nombre?>" size="50" maxlenght="45" placeholder="Nombres Apellidos"required>
+        <input type="text" name="nombre" pattern="[_A-z 0-9\.áéíóúñÁÉÍÓÚÑ]*" id="nombre" value="<?=$nombre?>" size="50" maxlenght="45" placeholder="Nombres Apellidos"required>
       </label>
     </section>
 		<section class="col col-1">
