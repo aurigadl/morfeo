@@ -288,7 +288,7 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
         Correo Electr&oacute;nico (Principal) <strong>(*)</strong>
       </label>
       <label class="input">
-        <input type="email" name="email" id="email" value="<?=$email?>" size="40" placeholder="usuario@metrovivienda.gov.co">
+        <input type="text" name="email" id="email" value="<?=$email?>" size="40" placeholder="usuario@metrovivienda.gov.co">
       </label>
     </section>
 		<section class="col col-4">
