@@ -679,7 +679,24 @@ function Pedidos_Show() {
                         </small>
                     </td>
                 </tr>
+
             </table>
+
+            <?php if (!empty($_POST["genearreporte"])) { ?>
+                <table align="center" class="table table-bordered table-striped"><tr>
+                        <td align="center">
+                            <?
+                            $xsql = serialize ( $sSQL ); // SERIALIZO EL QUERY CON EL QUE SE QUIERE GENERAR EL REPORTE
+                            $_SESSION ['xheader'] = "<center><b>$titulo</b></center><br><br>"; // ENCABEZADO DEL REPORTE
+                            $_SESSION ['xsql'] = $xsql; // SUBO A SESION EL QUERY// CREO LOS LINKS PARA LOS REPORTES
+                            echo "<b><a href='$ruta_raiz/adodb/adodb-doc.inc.php' target='_blank'><img src='$ruta_raiz/adodb/compfile.png' width='40' heigth='40' border='0'></a></b> - "; //
+                            echo "<a href='$ruta_raiz/adodb/adodb-xls.inc.php' target='_blank'><img src='$ruta_raiz/adodb/spreadsheet.png' width='40' heigth='40' border='0'></a>";
+                            ?>
+                        </td>
+                    </tr>
+                </table>
+            <?php } ?>
+
         </form>
     <?
     } //fin if
