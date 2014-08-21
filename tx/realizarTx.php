@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-    $ruta_raiz = ".."; 
-    if (!$_SESSION['dependencia'])
-        header ("Location: $ruta_raiz/cerrar_session.php");
+$ruta_raiz = ".."; 
+if (!$_SESSION['dependencia'])
+  header ("Location: $ruta_raiz/cerrar_session.php");
     
 foreach ($_GET  as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
@@ -37,7 +37,8 @@ $fechaAgenda = $_POST["fechaAgenda"];
   *
   */
    include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-   $db = new ConnectionHandler("$ruta_raiz");
+   $db = new ConnectionHandler($ruta_raiz);
+   $db->conn->debug = true;
  /*
 	* Genreamos el encabezado que envia las variable a la paginas siguientes.
 	* Por problemas en las sesiones enviamos el usuario.
@@ -54,10 +55,10 @@ $fechaAgenda = $_POST["fechaAgenda"];
            $record_id = key($checkValue);
            $setFiltroSelect .= $record_id ;
            $radicadosSel[] = $record_id;
+           
            if($i<=($num-2))
-           {
-               $setFiltroSelect .= ",";
-           }
+            $setFiltroSelect .= ",";
+           
            next($checkValue);
            $i++;
        }
