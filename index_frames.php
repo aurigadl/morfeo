@@ -163,7 +163,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }
   
   // Cuenta los numero de radicados por visto bueno
-  var_dump($isql);
   $data       = "Documenos para Visto Bueno";
   $rs         = $db->conn->query($isql);
   $numero_radicados = (!$rs->EOF)? $rs->fields['CONTADOR'] : 0;
