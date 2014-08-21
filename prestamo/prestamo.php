@@ -679,19 +679,6 @@ function Pedidos_Show() {
                         </small>
                     </td>
                 </tr>
-                <? // Botones para procesar
-                if ($tipoRespuesta[$opcionMenu][$numRtaMax] == "") {
-                    ?>
-                    <tr align="center">
-                        <td colspan="<?= ($numCol + 1); ?>" align="center">
-                            <center>
-                                <input type="button" class='botones' value="Enviar" onClick="enviar();">
-                                <input type="button" class='botones' value="Cancelar"
-                                       title="Regresa al men&uacute; de pr&eacute;stamo y control de documentos"
-                                       onClick="javascript:regresar();"></center>
-                        </td>
-                    </tr>
-                <? } ?>
             </table>
         </form>
     <?
