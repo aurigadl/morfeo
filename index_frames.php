@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   include_once "$ruta_raiz/include/db/ConnectionHandler.php";
   include_once "$ruta_raiz/config.php";
 
-  $db = new ConnectionHandler("$ruta_raiz");
+  $db = new ConnectionHandler($ruta_raiz);
 
   $krd            = $_SESSION["krd"];
   $dependencia    = $_SESSION["dependencia"];
@@ -133,9 +133,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     $rs->MoveNext();
   }
-  //$data       = "Documenos para Visto Bueno";
-  //$link1      = $enlace."$fechah&nomcarpeta=$data&carpeta=11&tipo_carpt=0\"";
-  //$link1show .= "<li><a $link1 target=\"mainFrame\" >Visto Bueno ()</a></li>";
+
+  // Se realiza la cuenta de radicados en Visto Bueno VoBo
+  if ($numdata == 11) {                                                                                                                                 
+    if ($codusuario == 1) {
+      $isql = "select count(*) as CONTADOR
+                    from radicado
+                    where carp_per = 0 and
+                    carp_codi = $numdata and
+                    radi_depe_actu = $dependencia and
+                    radi_usua_actu = $codusuario";
+    } else {
+      $isql = "select count(*) as CONTADOR
+                    from radicado
+                    where carp_per = 0 and
+                    carp_codi = $numdata and
+                    radi_depe_actu = $dependencia and
+                    (radi_usu_ante = '$krd' or
+                    (radi_usua_actu = $codusuario and radi_depe_actu=$dependencia))";
+    }
+  } else {
+    $isql   = "select count(*) as CONTADOR                                                                                                              
+                  from radicado
+                  where carp_per = 0 and
+                  carp_codi = 11 and
+                  radi_depe_actu = $dependencia and
+                  radi_usua_actu = $codusuario";
+    $addadm = "&adm=0";
+  }
+  
+  // Cuenta los numero de radicados por visto bueno
+  var_dump($isql);
+  $data       = "Documenos para Visto Bueno";
+  $rs         = $db->conn->query($isql);
+  $numero_radicados = (!$rs->EOF)? $rs->fields['CONTADOR'] : 0;
+  $link11      = $enlace."$fechah&nomcarpeta=$data&carpeta=11&tipo_carpt=0\"";
+  $link11show .= "<li><a $link11 target=\"mainFrame\" >Visto Bueno ($numero_radicados)</a></li>";
 
   //Agendado
   $isql        =" SELECT COUNT(1) AS CONTADOR
@@ -144,13 +177,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   and agen.SGD_AGEN_ACTIVO=1
                   and (agen.SGD_AGEN_FECHPLAZO >= $sqlFechaHoy )";
 
-  $rs       = $db->query($isql);
+  $rs       = $db->conn->query($isql);
   $num_exp  = $rs->fields["CONTADOR"];
   $data     = "Agendados no vencidos";
   $link2    = $enlace1."$fechah&nomcarpeta=$data&tipo_carpt=0\"";
   $link2show= "<li><a $link2 target=\"mainFrame\" >Agendado($num_exp)</a></li>";
-
-
 
   //Agendado  Vencido
   $isql="SELECT COUNT(1) AS CONTADOR
@@ -159,7 +190,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           and agen.SGD_AGEN_ACTIVO=1
           and (agen.SGD_AGEN_FECHPLAZO <= $sqlFechaHoy)";
 
-  $rs=$db->query($isql);
+  $rs       = $db->conn->query($isql);
 
   $num_exp  = $rs->fields["CONTADOR"];
 	$data     ="Agendados vencidos";
@@ -174,7 +205,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               and usua_codi=$codusuario
               and info_conjunto=0";
 
-  $rs1     = $db->query($isql);
+  $rs1     = $db->conn->query($isql);
   $numerot = ($rs1)? $rs1->fields["CONTADOR"] : 0;
   $link4show= "<li><a $enlace3 target=\"mainFrame\" >Informados ($numerot)</a></li>";
 
@@ -500,6 +531,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <?=$link21show?>
                       <?=$link22show?>
                       <?=$link1show?>
+                      <?=$link11show?>
                       <?=$link4show?>
                       <?=$link5show?>
                       <?=$link6show?>
