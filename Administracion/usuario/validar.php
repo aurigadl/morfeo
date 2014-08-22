@@ -122,10 +122,9 @@ else
 ?>
 <center>
 <form name="frmPermisos" action='grabar.php?<?=session_name()."=".session_id()."&$encabezado"?>' method="post" class="smart-form">
-
 <tr>
 <td>
-<table  width=80% class="table table-bordered">
+<table width="80%" class="table table-bordered">
 	<tr>
     <td colspan="2" >
 	<center>
@@ -358,15 +357,19 @@ $ADODB_COUNTRECS = false;
           <input name="krd" type="hidden" value='<?=$krd?>'>
           <input name="nusua_codi" type="hidden" value='<?=$nusua_codi?>'>
           <input name="cedula" type="hidden" value='<?=$cedula?>'>
-          <center><button class="btn btn-primary" type="submit" name="Submit3" value="Grabar">
-          <i class="fa fa-save"></i> Grabar
-					</button>
+          <center>
+            <button class="btn btn-primary" type="submit" name="Submit3" value="Grabar">
+              <i class="fa fa-save"></i>
+              Grabar
+					  </button>
           </center>
 	</td>
-    <td height="30" colspan="2" >
-          <center>
+  <td height="30" colspan="2" >
+    <center>
 		  <a href='../formAdministracion.php?<?=session_name()."=".session_id()."&$encabezado"?>'>
-		  <input class="btn btn-primary" type="reset" name="Submit4" value="Cancelar"></a></center>
+        Cancelar
+      </a>
+    </center>
 	</td>
 </table>
 </td>
