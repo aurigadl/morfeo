@@ -169,8 +169,8 @@
 				}
 				return $nurad;
 	 }
-	 function grabar_usuario($no_documento,$nombre_us1,$direccion_us1,$prim_apell_us1,$seg_apell_us1,$telefono_us1,$mail_nus1,$codep_us,$muni_us)
-	 {
+
+	 function grabar_usuario($no_documento,$nombre_us1,$direccion_us1,$prim_apell_us1,$seg_apell_us1,$telefono_us1,$mail_nus1,$codep_us,$muni_us){
 	   $query = "select max(SGD_CIU_CODIGO) as MAXIMO  from SGD_CIU_CIUDADANO";
 		 $rs=$this->cursor->query($query);
 		 
@@ -192,8 +192,8 @@
 			
 			return $nextval;
 	 }
-	 function grabar_oem($no_documento,$nombre_us1,$direccion_us1,$prim_apell_us1,$seg_apell_us1,$telefono_us1,$mail_nus1,$codep_us,$muni_us)
-	 {
+
+	 function grabar_oem($no_documento,$nombre_us1,$direccion_us1,$prim_apell_us1,$seg_apell_us1,$telefono_us1,$mail_nus1,$codep_us,$muni_us){
 	   $query = "select max(SGD_OEM_CODIGO) as MAXIMO  from SGD_OEM_OEMPRESAS ";
 		 $rs=$this->cursor->query($query);
 			
@@ -213,8 +213,8 @@
 			}												
 			return $nextval;
 	 }
-	 function grabar_dir($tipo_rem,$nombre,$prim_apell,$seg_apell,$dignatario,$direccion,$depto,$muni,$radicado,$cod_usuario)
-	 {
+	 function grabar_dir($tipo_rem,$nombre,$prim_apell,$seg_apell,$dignatario,$direccion,$depto,$muni,$radicado,$cod_usuario){
+
 	          $isql = "insert into SGD_DIR_DRECCIONES(MUNI_CODI         ,DPTO_CODI ,SGD_OEM_CODIGO    ,SGD_CIU_CODIGO ,SGD_ESP_CODI   ,RADI_NUME_RADI,SGD_SEC_CODIGO ,SGD_DIR_DIRECCION  ,SGD_DIR_TELEFONO ,SGD_DIR_MAIL,SGD_DIR_TIPO,SGD_DIR_CODIGO,SGD_DIR_NOMBRE)";
 	          $isql .= "                      values($muni              ,$depto    ,0                 ,0              ,$esp           ,$nurad        ,0              ,'$direccion'       ,'$telefono'      ,'$mail_us1' ,1           ,$nextval      ,'$nombre' )";
 				$query="select sec_$coddepe.nextval as SEC from dual";
@@ -236,27 +236,24 @@
 				}
 				return $nurad;
 	 }
-	 function tabla_sql($query)
-	 {
+
+	 function tabla_sql($query){
 	    $jh_db = $this->cursor->query($query);
-	    //echo "<br>Numero de Registros " . $this->cursor->num_row();
-		if ($jh_db) 
-		{
+		if ($jh_db){
 		   $numreginf = 0;
 		 	while(!$jh_db->EOF)
 				{ 
 	  				$numreginf++;
 					 $jh_db->MoveNext();
 	  			}
-			echo "<p><span class=listado2>Numero de Registros " . $numreginf."</span>";
+			echo "<p>Numero de Registros " . $numreginf."</p>";
 		}
 		global $ADODB_FETCH_MODE;
 		$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 		$jh_db = $this->cursor->conn->Execute($query);
-	    $tabla_html = "<table border=1 width=100%>";
-	    echo "<table class='borde_tab' width=100%>";
-		if ($jh_db)
-		  {
+	    $tabla_html = "<table border=1 width=100% class='table table-bordered table-striped' >";
+	    echo "<table class='table table-bordered table-striped' width=100%>";
+		if ($jh_db){
 			echo "<tr class='titulos2'>";
 			$tabla_html .= "<tr bgcolor='#D0D0FF'>";
 			$iii = 0;
