@@ -38,7 +38,6 @@ $fechaAgenda = $_POST["fechaAgenda"];
   */
    include_once "$ruta_raiz/include/db/ConnectionHandler.php";
    $db = new ConnectionHandler($ruta_raiz);
-   $db->conn->debug = true;
  /*
 	* Genreamos el encabezado que envia las variable a la paginas siguientes.
 	* Por problemas en las sesiones enviamos el usuario.
