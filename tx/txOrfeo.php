@@ -12,19 +12,12 @@ if(!$mostrar_opc_envio) $mostrar_opc_envio=0;
 <script language="javascript">
 
 function markAll(){
-    if(document.form1.elements.checkAll.checked)
-    {
-        for(i=2;i<document.form1.elements.length;i++)
-        {
-            document.form1.elements[i].checked=1;
-        }
-    }
-    else
-    {
-        for(i=2;i<document.form1.elements.length;i++)
-        {
-            document.form1.elements[i].checked=0;
-        }
+    if(document.form1.elements.checkAll.checked) {
+      for(i=2;i<document.form1.elements.length;i++)
+        document.form1.elements[i].checked=1;
+    } else {
+      for(i=2;i<document.form1.elements.length;i++)
+        document.form1.elements[i].checked=0;
     }
     clickTx();
 }
@@ -35,12 +28,11 @@ function clickTx(){
     for(i=1;i<document.form1.elements.length;i++)
         if (document.form1.elements[i].checked && document.form1.elements[i].name!="checkAll")
             sw=1;
-    if (sw==0)
-    {
-        document.getElementById('AccionCaliope').style.display = 'none';
-        return;
-    }else{
-        document.getElementById('AccionCaliope').style.display = '';
+    if (sw==0) {
+      document.getElementById('AccionCaliope').style.display = 'none';
+      return;
+    } else {
+      document.getElementById('AccionCaliope').style.display = '';
     }
 }
 
@@ -48,32 +40,31 @@ function clickTx(){
 $( document ).ready(function(){
 
   function returnKrd(){
-        return '<?=$krd?>';
+    return '<?=$krd?>';
   }
 
 
   function vistoBueno() {
-
-      changedepesel(9);
-      document.getElementById('EnviaraV').value = 'VoBo';
-      envioTx();
+    changedepesel(9);
+    document.getElementById('EnviaraV').value = 'VoBo';
+    envioTx();
   }
 
   function enviar() {
-      envioTx();
+    envioTx();
   }
 
 
   function devolver() {
-      changedepesel(12);
-      envioTx();
+    changedepesel(12);
+    envioTx();
   }
 
   function txAgendar() {
-      if (!validaAgendar('SI'))
-        return;
+    if (!validaAgendar('SI'))
+      return;
     changedepesel(14);
-      envioTx();
+    envioTx();
   }
 
   function txNoAgendar() {
@@ -148,10 +139,6 @@ $( document ).ready(function(){
       <?}?>
       document.form1.submit();
     }
-
-
-
-
 
   function respuestaTx(){
       var valor = sw = 0;
@@ -385,7 +372,6 @@ $( document ).ready(function(){
   $('#AccionCaliope').on('change', changedepesel1);
   $('input[name^="checkValue"]').on('change', clickTx);
   $('#carpper').on('change', changeFolder);
-
 });
 </script>
 

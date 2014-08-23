@@ -1,6 +1,6 @@
 <?php
 session_start();
-//ini_set("display_errors",1);
+
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia']) header ("Location: $ruta_raiz/cerrar_session.php");
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -32,7 +32,7 @@ if($verradicado)	$verrad= $verradicado;
 if(!$ruta_raiz)	$ruta_raiz=".";
 $numrad = $verrad;
 
-$db = new ConnectionHandler(".");
+$db = new ConnectionHandler('.');
 
 $db->conn->SetFetchMode(3);
 
@@ -133,11 +133,9 @@ function ver_temas(){
     $_SESSION['dir_doc_us1'] = $cc_documento_us1;
     $_SESSION['dir_doc_us2'] = $cc_documento_us2;
 
-	if($verradPermisos == "Full" or $datoVer=="985")
- 		{
-
- 		}else
- 		{
+	if($verradPermisos == "Full" or $datoVer=="985") {
+    // No hace ni un carajo!!! Mal escrito Atte Cmauricio
+  } else {
  			$numRad = $verrad;
  			if($nivelRad==1) include "$ruta_raiz/seguridad/sinPermisoRadicado.php";
  			if($nivelRad==1) die("-");
@@ -150,7 +148,7 @@ function ver_temas(){
  if($krd)
 	{
 	$isql = "select * From usuario where USUA_LOGIN ='$krd' and USUA_SESION='". substr(session_id(),0,29)."' ";
-	$rs = $db->query($isql);
+	$rs = $db->conn->query($isql);
 	if (($krd))
 	{
   ?><small>
@@ -237,9 +235,9 @@ $hdatos = session_name()."=".session_id()."&leido=$leido&nomcarpeta=$nomcarpeta&
 	?>
 </form>
 <form name='form11' action='enviar.php' method='GET'>
-<input type=hidden name=depsel>
-<input type=hidden name=depsel8>
-<input type=hidden name=carpper>
+<input type="hidden" name="depsel">
+<input type="hidden" name="depsel8">
+<input type="hidden" name="carpper">
 <CENTER>
 	<span class='titulosError'>SU SESION HA TERMINADO O HA SIDO INICIADA EN OTRO EQUIPO</span><BR>
 	<span class='eerrores'>
@@ -252,7 +250,6 @@ echo "<div class='actions2'>";
           include_once("$ruta_raiz/tx/txOrfeo.php");
 echo "</div>";
 ?>
-
 </form>
 <!-- row -->
  <input type=hidden name=reftab id=reftab >

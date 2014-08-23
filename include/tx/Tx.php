@@ -282,9 +282,8 @@ function changeFolder( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$toma
 				WHERE
 					b.USUA_LOGIN = '$usuaLogin'";
 		# Busca el usuairo Origen para luego traer sus datos.
-		//$this->db->conn->debug = true;
 		$this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-		$rs = $this->db->query($sql); # Ejecuta la busqueda
+		$rs = $this->db->conn->query($sql); # Ejecuta la busqueda
 		
 		$usNivel = $rs->fields["CODI_NIVEL"];
 		$depOrigen = $rs->fields["DEPE_CODI"];
@@ -302,7 +301,7 @@ function changeFolder( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$toma
 				 where RADI_NUME_RADI in($radicadosIn)";
 
 		//$this->conn->Execute($isql);
-		$rs = $this->db->query($sql); # Ejecuta la busqueda
+		$rs = $this->db->conn->query($sql);
 		$retorna = 1;
 		if(!$rs)
 		{
