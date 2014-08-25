@@ -76,7 +76,7 @@ function getRadicados($tipo, $usua_cod){
 	  $campo1 .='"';
 	  $campo1 .= $tipo;
 	  $campo1 .='"';
-	  $campo2 = '"USUA_DOC"';
+	  $campo2 = 'USUA_DOC';
 	 $query= "SELECT $campo1 FROM SGD_NOVEDAD_USUARIO WHERE $campo2='$usua_cod'";
 	break;
 	}
@@ -142,7 +142,7 @@ function registrarNovedad($tipo, $docUsuarioDest, $numRad, $ruta_raiz=".."){
 		
 		$valor=$xarray["$tipo"];
 			
-		$campo = '"USUA_DOC"';
+		$campo = 'USUA_DOC';
 		$qs="Select count(1) as contador from SGD_NOVEDAD_USUARIO where $campo='$docUsuarioDest'";
 		$rs=$this->db->conn->query($qs);
 	        
