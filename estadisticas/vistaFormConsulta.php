@@ -153,13 +153,12 @@ function noPermiso(){
 //--></script>
 </head>
 <?php
-$ruta_raiz = "..";
-include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-include("$ruta_raiz/class_control/usuario.php");
-$db = new ConnectionHandler($ruta_raiz);
-$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-$objUsuario = new Usuario($db);
-
+  $ruta_raiz = "..";
+  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
+  include("$ruta_raiz/class_control/usuario.php");
+  $db = new ConnectionHandler($ruta_raiz);
+  $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+  $objUsuario = new Usuario($db);
 ?>
 
 <body bgcolor="#ffffff" onLoad="comboUsuarioDependencia(document.formulario,document.formulario.elements['dependencia_busq'].value,'codus');" topmargin="0">
@@ -184,7 +183,10 @@ $objUsuario = new Usuario($db);
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped smart-form">
                     <tr>
-                      <td colspan="2" class="titulos4">POR RADICADOS  -  <A href='vistaFormProc.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>'>POR PROCESOS </A> </td>
+                      <td colspan="2" class="titulos4">
+                        POR RADICADOS -
+                        <a href='vistaFormProc.php?<?=session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah"?>'>POR PROCESOS </a>
+                      </td>
                     </tr>
                     <tr>
                       <td colspan="2" class="titulos3"><span class="cal-TextBox"><?=$helpE[$tipoEstadistica]?></span></td>
@@ -209,7 +211,19 @@ $objUsuario = new Usuario($db);
                         <label class="select">
                           <select name=dependencia_busq  class="select"  onChange="formulario.submit();">
                           <?php
-                            $encabezado = "&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&";
+                            $encabezado = '&genDetalle=' . $genDetalle .
+                                          '&tipoEstadistica=' . $tipoEstadistica .
+                                          '&codus=' . $codus .
+                                          '&dependencia_busq=' . $dependencia_busq .
+                                          '&dependencia_busqOri=' . $dependencia_busqOri .
+                                          '&ruta_raiz=' . $ruta_raiz .
+                                          '&fecha_ini=' . $fecha_ini .
+                                          '&fecha_fin=' . $fecha_fin .
+                                          '&tipoRadicado=' . $tipoRadicado .
+                                          '&tipoDocumento=' . $tipoDocumento .
+                                          '&codUs=' . $codUs .
+                                          '&fecSel=' . $fecSel .
+                                          '&';
 
                             if($usua_perm_estadistica>1)  {
                               if($dependencia_busq==99999)  {
@@ -256,13 +270,25 @@ $objUsuario = new Usuario($db);
                         <label class="select">
                           <select name=dependencia_busqOri  class="select"  onChange="formulario.submit();">
                             <?php
-                            $encabezado = "&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&";
+                            $encabezado = '&genDetalle=' . $genDetalle .
+                                          '&tipoEstadistica=' . $tipoEstadistica .
+                                          '&codus=' . $codus .
+                                          '&dependencia_busq=' . $dependencia_busq .
+                                          '&dependencia_busqOri=' . $dependencia_busqOri .
+                                          '&ruta_raiz=' . $ruta_raiz .
+                                          '&fecha_ini=' . $fecha_ini .
+                                          '&fecha_fin=' . $fecha_fin .
+                                          '&tipoRadicado=' . $tipoRadicado .
+                                          '&tipoDocumento=' . $tipoDocumento .
+                                          '&codUs=' . $codUs .
+                                          '&fecSel=' . $fecSel .
+                                          '&';
                             if($usua_perm_estadistica>1)  {
                               if($dependencia_busqOri==99999)  {
                                   $datossOri= " selected ";
                                 }
                               ?>
-                              <option value=99999  <?=$datossOri?>>-- Todas las Dependencias --</option>
+                              <option value="99999" <?=$datossOri?>>-- Todas las Dependencias --</option>
                               <?php
                               }
                             $whereDepSelectOri=" DEPE_CODI = $dependencia ";
@@ -294,11 +320,12 @@ $objUsuario = new Usuario($db);
                     </td>
                   </tr>
                 <?}
-                  if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
-                    $tipoEstadistica==4 or $tipoEstadistica==5 or $tipoEstadistica==6 or
-                    $tipoEstadistica==7 or $tipoEstadistica==11 or $tipoEstadistica==12 or
-                          $tipoEstadistica==17 or $tipoEstadistica==18)
-                {?>
+                  // Variable para controlar el la vista de opcion a los usuarios segun el tipo de estadistica
+                  $mostrar_estadisticas = array(1,2,3,4,5,6,7,11,12,17,18);
+                  $mostrar_usuario = in_array($tipoEstadistica, $mostrar_estadisticas);
+                  
+                  if($mostrar_usuario) {
+                ?>
                   <tr id="cUsuario">
                     <td width="30%" class="titulos2">Usuario
                       <br />
@@ -308,7 +335,7 @@ $objUsuario = new Usuario($db);
                           <i></i>Incluir Usuarios Inactivos
                         </label>
                           <?  if($tipoEstadistica==17 or $tipoEstadistica==18) { ?>
-                          <?	$datoss = isset($conSinRep) && ($conSinRep) ?" checked ":"";	?>
+                          <?	$datoss = isset($conSinRep) && ($conSinRep)? " checked " : '';	?>
                                   <label class="checkbox">
                                     <input name="conSinRep" type="checkbox" class="select" <?=$datoss?> onChange="formulario.submit();">
                                     <i></i> Limitar a una respuesta
@@ -337,7 +364,7 @@ $objUsuario = new Usuario($db);
                                     order by u.USUA_NOMB";
                               //if($codusuario!=1) $isqlus .= " and a.usua_codi=$codusuario ";
                               echo "<hr>".$isqlus;
-                              $rs1=$db->query($isqlus);
+                              $rs1=$db->conn->query($isqlus);
                               while(!$rs1->EOF)  {
                                 $codigo = $rs1->fields["USUA_CODI"];
                                 $vecDeps[]=$codigo;
@@ -456,7 +483,7 @@ $objUsuario = new Usuario($db);
                       <td width="30%" class="titulos2">Desde fecha (aaaa/mm/dd) </td>
                       <td class="listado2">
                         <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                          <input type="text" name="fecha_ini1" id="startdate1" placeholder="Fecha de busqueda final" value="<?=$fecha_fin?>">
+                          <input type="text" name="fecha_ini1" id="startdate1" placeholder="Fecha de busqueda final" value="<?=$fecha_ini?>">
                         </label>
                     </td>
                     </tr>
