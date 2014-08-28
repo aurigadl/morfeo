@@ -11,7 +11,7 @@ $dependencia = $_SESSION["dependencia"];
 $usua_doc = $_SESSION["usua_doc"];
 $codusuario = $_SESSION["codusuario"];
 $ruta_raiz = "..";
-
+header('Content-Type: text/html; charset=ISO-8859-1');
 if (!$fecha_busq)
     $fecha_busq = date("Y-m-d");
 if (!$fecha_busq2)
@@ -312,15 +312,13 @@ if ($aceptarAnular and $actaNo) {
 
         define(FPDF_FONTPATH, '../fpdf/font/');
         $radAnulados = join(",", $radAnularE);
-        error_reporting(7);
         $radicadosPdf = "<table class='table table-bordered table-striped'>
               <tr><td><b>Radicado&nbsp;&nbsp;&nbsp;&nbsp;</b></td><td><b>;&nbsp;&nbsp;Observacion Solicitante</b></td></tr>";
         foreach ($radAnularE as $id => $noRadicado) {
-            $radicadosPdf .= "<tr><td>" . $radAnularE[$id] . "</td>&nbsp;&nbsp;&nbsp;&nbsp;<td>" . $radObservaE[$id] . "</td></tr>";
+            $radicadosPdf .= "<tr><td>" . $radAnularE[$id] . "</td><td>" . $radObservaE[$id] . "</td></tr>";
         }
         $anoActual = date("Y");
         $radicadosPdf .= "</table>";
-        error_reporting(7);
         $ruta_raiz = "..";
         include("$ruta_raiz/fpdf/html2pdf.php");
 
@@ -333,26 +331,27 @@ if ($aceptarAnular and $actaNo) {
         $html = "
               <p>
               <br><br><br>
-              <b><center>ACTA DE ANULACI&Oacute;N  No.  $actaNo </center></b><br>
-              <center><b>NUMEROS DE RADICACI&Oacute;N DE CORRESPONDENCIA ENVIADA A&Ntilde;O $anoActual</center></b><br>
-              <center><b>CENTRO DE DOCUMENTACION </center></b></p><br>
+              <b><center>ACTA DE ANULACIÓN  No.  $actaNo </center></b><br>
+              <b><center>ACTA DE ANULACIÓN  No.  $actaNo </center></b><br>
+              <center><b>NUMEROS DE RADICACIÓN DE CORRESPONDENCIA ENVIADA AÑO $anoActual</center></b><br>
+              <center><b>CENTRO DE DOCUMENTACIÓN </center></b></p><br>
               <p>
               En cumplimiento a lo establecido en el Acuerdo No.060 del 30 de octubre de 2001 expedido<br>
-              por el Archivo General de la Naci&oacute;n, en el cual se establecen pautas para la  administraci&oacute;n<br>
-              de las comunicaciones oficiales en las entidades p&uacute;blicas y privadas que cumplen funciones<br>
-              p&uacute;blicas,y con base especialmente en el par&aacute;grafo del Articulo Quinto, el cual establece que:<br>
-              Cuando existan errores en la radicaci&oacute;n y se anulen los n&uacute;meros, se  debe dejar  constancia<br>
-              por escrito, con la respectiva justificaci&oacute;n y firma del  Jefe de la unidad  de  correspondencia.<br>
-              El    Coordinador   de    Gesti&oacute;n   Documental   y   Correspondencia de<br>
-              $entidad_largo procede a anular los siguientes n&uacute;meros<br>
-              de  radicaci&oacute;n de $TituloActam que no fueron tramitados por las dependencias radicadoras:</p>
+              por el Archivo General de la Nación, en el cual se establecen pautas para la  administración<br>
+              de las comunicaciones oficiales en las entidades públicas y privadas que cumplen funciones<br>
+              públicas,y con base especialmente en el parpágrafo del Articulo Quinto, el cual establece que:<br>
+              Cuando existan errores en la radicación y se anulen los números, se  debe dejar  constancia<br>
+              por escrito, con la respectiva justificación y firma del  Jefe de la unidad  de  correspondencia.<br>
+              El    Coordinador   de    Gestión   Documental   y   Correspondencia de<br>
+              $entidad_largo procede a anular los siguientes números<br>
+              de  radicación de $TituloActam que no fueron tramitados por las dependencias radicadoras:</p>
               <p>
-              1.- N&uacute;meros de radicaci&oacute;n de $TituloActam a anular:<br></p>
+              1.- Números de radicación de $TituloActam a anular:<br></p>
               $radicadosPdf
               <br><br>
               <p>
-              2.- Se deja copia de la presente acta en el archivo central de la Entidad para el tr&aacute;mite<br>
-              respectivo de la organizaci&oacute;n f&iacute;sica de los archivos.
+              2.- Se deja copia de la presente acta en el archivo central de la Entidad para el trámite<br>
+              respectivo de la organización física de los archivos.
               <br>
               <br> 
               Se firma la presente el $fecha_hoy.</p>
@@ -371,7 +370,7 @@ if ($aceptarAnular and $actaNo) {
         $pdf->AddPage();
         if (ini_get('magic_quotes_gpc') == '1')
             $html = stripslashes($html);
-        $pdf->WriteHTML($html);
+        $pdf->WriteHTML(iconv('UTF-8', 'ISO-8859-1', $html));
         //save and redirect
         $noArchivo = "../bodega" . $noArchivo;
         $pdf->Output($noArchivo);
