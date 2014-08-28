@@ -43,7 +43,6 @@ $( document ).ready(function(){
     return '<?=$krd?>';
   }
 
-
   function vistoBueno() {
     changedepesel(9);
     document.getElementById('EnviaraV').value = 'VoBo';
@@ -326,6 +325,7 @@ $( document ).ready(function(){
       $('#depsel').show();
       $('#carpper, #Enviar').hide();
     }
+    
     //Informar
     if(enviara==8 ){
       envioTx();
@@ -358,7 +358,7 @@ $( document ).ready(function(){
    var i;
    codCarpeta= $('#carpper').val();
    rads="";
-   $('input[name^="checkValue"]').each(function(index){
+   $('input[name^="checkValue"]').each(function(index) {
       if($(this).prop('checked') && $(this) != undefined) {
       rads += $(this).attr('id')+","; 
       }
