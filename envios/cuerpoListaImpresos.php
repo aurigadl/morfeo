@@ -23,10 +23,12 @@ if (!$dep_sel) $dep_sel = $dependencia;
 $depeBuscada =$dep_sel; 
 ?>
 <html>
+
 <head>
-<title>Untitled Document</title>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+    <title>Listado de impresos</title>
+    <?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
 </head>
+
 <body>
 <div id="spiffycalendar" class="text"></div>
 <link rel="stylesheet" type="text/css" href="js/spiffyCal/spiffyCal_v2_1.css">
@@ -147,7 +149,6 @@ if(strlen($orderNo)==0)
 	<table border=0 cellspace=2 cellpad=2 WIDTH=50%  class="t_bordeGris" >
 	<tr tr align= "right">
     <td width="1120" height="26" colspan="2" valign="top" class="titulos2"> 
-	
 		<INPUT TYPE=submit name=gen_lisDefi Value=' Confirmar ' class=botones id=Confirmar onclick="Marcar();">
 	   	<INPUT TYPE=submit name=cancelarListado value=Cancelar class=botones></td></tr>
 	</table>

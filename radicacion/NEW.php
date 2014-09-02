@@ -263,7 +263,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ?>
 
 <html>
-  <head>
+<head>
   <?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
 </head>
 

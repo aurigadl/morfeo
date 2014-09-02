@@ -178,8 +178,7 @@ if($indi_generar=='SI') {
 		  * Se modifica para que asuma el destinatario
 		  */
 		  	
-		  	if($rem_destino==1)
-			  {
+		  	if($rem_destino==1){
 	   			$email_us = $email_us1;
 	   			$telefono_us = $telefono_us1;
 	   			$nombre_us = trim($nombre_us1);
@@ -271,8 +270,7 @@ if($indi_generar=='SI') {
 		$pdf->AddPage();
 		$pdf->SetFont('Arial','',8);
 		$entidad = $db->entidad;
-		//$encaenti = "../png/cabeceraEntidad.png";
-		$encaenti = "../img/footer_metrovivienda.png";
+		$encaenti = "../img/banerPDF.jpg";
 		$encabezado = "<table border=0>
             <tr><td width=1120 height=70><img src=$encaenti width=750 height=65></td></tr>
 			<tr><td width=1120 height=40> </td></tr>
