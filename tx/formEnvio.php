@@ -40,7 +40,7 @@ while (!$salida->EOF){
     $seleDesc = $salida->fields['SGD_MSG_DESC'];
     $seleEtiq = $salida->fields['SGD_MSG_ETIQUETA'];
 
-    $select2 .= "<option value='$seleDesc'>$seleEtiq</option>";
+    $select2 .= "<option value='$seleDesc'>$seleEtiq => $seleDesc</option>";
     $salida->MoveNext ();
 
     if($i < 7 and $i%2 == 0){
