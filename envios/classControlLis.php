@@ -26,10 +26,7 @@
 	    $jh_db = $this->cursor->query($query);
 	
 		if ($jh_db) { 
-		    echo "<table border=0 cellspace=2 cellpad=2 WIDTH=50%  class='t_bordeGris'>";
-	    	echo "<tr>";
-			echo "<td colspan=2 class='titulos4'>GENERACION LISTADO DE ENTREGA</td>";
-			echo "</tr>";
+		    echo "<table class='table table-bordered table-striped'>";
 			echo "<tr>";
 			echo "<td align=right bgcolor='#CCCCCC' height=25 class='titulos2'>FECHA INICIAL : </td>";
 	    	echo "<td  width=65% height=25 class='listado2_no_identa'>";
@@ -50,8 +47,8 @@
 	    	echo "</tr>";	
 			echo "</table>";
 		  }
-	    $tabla_htmlE = "<table border=1 width=100%>";
-	    echo "<table class='borde_tab' width=100%>";
+	    $tabla_htmlE = "<table class='table table-bordered table-striped'>";
+	    echo "<table class='table table-bordered table-striped'>";
 		if ($jh_db)
 			{
 			echo "<tr class='tpar'>";
@@ -75,7 +72,7 @@
 	
     function tabla_Cuerpo()
 	 {
-	   $tabla_html = "<table border=1 width=100%>";
+	   $tabla_html = "<table class='table table-bordered table-striped'>";
 	    error_reporting(7);
 		$tabla_html .=  "<tr>";
 		echo "<tr class=paginacion>";
@@ -97,8 +94,7 @@
 						$align = "Left";
 						break;
 				     }
-				error_reporting(7);
-			
+
 				$width = $this->campos_width[$iii];
 				$width_max = intval(36 * $width / 250);	
 	
@@ -114,4 +110,3 @@
 	return $nextval;
     }
 }
-?>
