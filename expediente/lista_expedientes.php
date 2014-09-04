@@ -239,18 +239,18 @@ $time_start = microtime_float();
 	if(!$menu_ver) {
 		$menu_ver=4;
 	}
-	$fechah = date("dmy_h_m_s") . " ". time("h_m_s");
-	$check = 1;
+	$fechah  = date("dmy_h_m_s") . " ". time("h_m_s");
+	$check   = 1;
 	$numeroa = 0;
-	$numero = 0;
+	$numero  = 0;
 	$numeros = 0;
 	$numerot = 0;
 	$numerop = 0;
 	$numeroh = 0;
-		$rs =$db->conn->Execute($isql);
-		include_once "$ruta_raiz/tx/verLinkArchivo.php";
+	$rs      = $db->conn->Execute($isql);
 
-	  $verLinkArch = new verLinkArchivo($db);
+	include_once "$ruta_raiz/tx/verLinkArchivo.php";
+    $verLinkArch = new verLinkArchivo($db);
 
 
 	  include_once ("$ruta_raiz/include/tx/Expediente.php");
@@ -269,12 +269,12 @@ $time_start = microtime_float();
 				$iExp = 1;
 
 				foreach($arrExpedientes as $numExpediente => $datosExp){
-				if($iExp==1) $datoss = " active "; else  $datoss = " ";
-				?>
-					<li class="<?=$datoss?>">
-						<a href="#tab-<?=$numExpediente?>" data-toggle="tab"><span class="badge bg-color-blue txt-color-white">*</span><?=$numExpediente?></a>
-					</li>
-				<?php
+                    if($iExp==1) $datoss = " active "; else  $datoss = " ";
+                    ?>
+                        <li class="<?=$datoss?>">
+                            <a href="#tab-<?=$numExpediente?>" data-toggle="tab"><span class="badge bg-color-blue txt-color-white">*</span><?=$numExpediente?></a>
+                        </li>
+                    <?php
 					$iExp++;
 				}
 				?>
