@@ -1,6 +1,4 @@
 <?php 
-ini_set("display_errors",1);
-define('ADODB_ASSOC_CASE', 1);
 if (!$ruta_raiz) $ruta_raiz=".";
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -14,8 +12,6 @@ if(!$verrad) $verrad = $verradicado;
 if(!$verradicado) $verradicado = $verrad;
 
 $db = new ConnectionHandler("$ruta_raiz");
-//var_dump($db);
-//$db->conn->debug = true;
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $objTipoDocto = new TipoDocumento($db);
 
@@ -32,4 +28,3 @@ $tpDescRad          = $_SESSION["tpDescRad"];
 $usuaPermExpediente = $_SESSION["usuaPermExpediente"];
 
 if($verradicado) require_once("$ruta_raiz/ver_datosrad.php");
-?>
