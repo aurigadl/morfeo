@@ -182,9 +182,12 @@ if ( $expIncluido != "" ) {
          <td>
              <small>
                 <?php echo ucwords(strtolower($arrTRDExp['serie']))." / ".ucwords(strtolower($arrTRDExp['subserie'])); ?>
-                <br><button type="submit" name='edittemasexp_<?=$num_expediente?>' class="btn btn-primary btn-xs">Editar ..</button>
+                <br>
+                 <?php if($usuaPermExpediente > 1){ ?>
+                    <button type="submit" name='edittemasexp_<?=$num_expediente?>' class="btn btn-primary
+                  btn-xs">Editar ..</button>
                     <button type='submit' name='savetemasexp_<?=$num_expediente?>' value="<?=$num_expediente?>" class='btn btn-primary  btn-xs'>Grabar..</button>
-                    <input name="expedienteEdit" type="hidden" id='expedienteEdit' value="" >
+                 <?php } ?>
                     <table>
                         <?php
                         if ( $expIncluido != "" ) {
