@@ -84,30 +84,23 @@
 											<div class="row">
                          <div class="col-sm-12">
                           <div class="form-group">
-                            <div class="input-group"><label class="col-md-2 control-label">Chip</label>
+                            <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-envelope fa-lg fa-fw"></i></span>
                               <input class="form-control input-lg" placeholder="CHIP - AAA......." type="text" name="chip" id="chip">
                             </div>
                             </div>
-                            <div class="form-group">
-                            <div class="input-group"><label class="col-md-2 control-label">Valor</label>
-                              <span class="input-group-addon"><i class="fa fa-envelope fa-lg fa-fw"></i></span>
-                              <input class="form-control input-lg" placeholder="" type="text" name="valA1" id="valA1">
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                              <span class="input-group-addon"></span>
+                              <input class="form-control input-lg" placeholder="Area a Trasladar" type="text" name="valA1" id="valA1">
                             </div>
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                                                         <input class="form-control input-lg" placeholder="Valor del terreno en M" type="text" name="valA2" id="valA2">
                             </div>
-                            <div class="form-group">
-                            <div class="input-group"><label class="col-md-2 control-label">Valor </label>
-                              <span class="input-group-addon"><i class="fa fa-envelope fa-lg fa-fw"></i></span>
-                              <input class="form-control input-lg" placeholder="" type="text" name="valA2" id="valA2">
+                            <div class="input-group"> </label></div><div>
+                              <span class="input-group-addon"></span>
+                              <input class="form-control input-lg" placeholder="Valor Obligación" type="text" name="valA2" id="valA2">
                             </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="input-group"> </label>
-                              <span class="input-group-addon"><i class="fa fa-envelope fa-lg fa-fw"></i></span>
-                              <input class="form-control input-lg" placeholder="" type="text" name="valA2" id="valA2">
-                            </div>
-                          </div>
-                        </div>
+                                                </div>
 											</div>
 
 										</div>
