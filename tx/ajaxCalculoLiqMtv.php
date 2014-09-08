@@ -27,6 +27,8 @@
       $chipB = $rs->fields["CHIP"];
       $valM2T = $rs->fields["VAL_M2_T"];
       $areaTerreno = $rs->fields["A_TER_CAT"];
+      $nombrePropietario = $rs->fields["NOM_PRO"];
+      $direccionPredio = $rs->fields["DIR_REAL"];
       $valorReferencia = 1394292.03;
       $valorCatastralPromedio = 1088049.31;
       $valorA2 =  ($valM2T / $valorCatastralPromedio) * $valA1;
@@ -45,7 +47,7 @@
     $valorObligacionF = "$ " . number_format($valorObligacion,2,",",".");
     $valM2TF = number_format($valM2T,2,",",".");
     $valorReferenciaF = number_format($valorReferencia,2,",",".");
-    $textoFinal = "CHIP : $chip <BR>Valor M<sup>2</sup> :$ $valM2TF<br>Area : $areaTerreno<br>Valor de Referencia : $ $valorReferenciaF <br>Valor Estimado de la Obligación : $ $valorObligacionF <br> <br>Descargue aqui el documento de radicacion No. 2014900000000002";
+    $textoFinal = "Nombre Propietario: $nombrePropietario <br> Direccion : $direccionPredio <BR>CHIP : $chip <BR>Valor M<sup>2</sup> :$ $valM2TF<br>Area : $areaTerreno<br>Valor de Referencia : $ $valorReferenciaF <br>Valor Estimado de la Obligación : $ $valorObligacionF <br> <br>Descargue aqui el documento de radicacion No. 2014900000000002";
     echo "
     <script>
       $('#valorO').val('$valorObligacionF');  
