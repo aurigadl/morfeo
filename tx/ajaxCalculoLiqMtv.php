@@ -43,7 +43,7 @@
     $valorObligacionF = "$ " . number_format($valorObligacion,2,",",".");
     $valM2TF = number_format($valM2T,2,",",".");
     $valorReferenciaF = number_format($valorReferencia,2,",",".");
-    $textoFinal = "CHIP : $chip <BR>Valor M<sup>2</sup> : $valM2TF<br>Area : $areaTerreno<br>Valor de Referencia : $valorReferenciaF <br>Valor Estimado de la Obligación $valorObligacionF <br> <br>Descargue aqui el documento de radicacion No. 2014900000000002";
+    $textoFinal = "CHIP : $chip <BR>Valor M<sup>2</sup> :$ $valM2TF<br>Area : $areaTerreno<br>Valor de Referencia : $ $valorReferenciaF <br>Valor Estimado de la Obligación : $ $valorObligacionF <br> <br>Descargue aqui el documento de radicacion No. 2014900000000002";
     
     echo "
     <script>
@@ -52,7 +52,7 @@
       $('#valRef').val('$valorReferenciaF');
       $('#chip').val('$chip');
       $('#resultado').html('$textoFinal');
-      $('#areaTerreno').html('(Area del terreno $areaTerreno m<sup>2</sup>)')
+      $('#areaTerreno').html('(Area del terreno  $areaTerreno m<sup>2</sup>)')
     </script>
     ";
   } else {
