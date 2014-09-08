@@ -28,7 +28,9 @@
       $valM2T = $rs->fields["VAL_M2_T"];
       $areaTerreno = $rs->fields["A_TER_CAT"];
       $valorReferencia = 1394292.03;
-      $valorObligacion =  ($valM2T / $valorReferencia) * $valA1;
+      $valorCatastralPromedio = 1088049.31;
+      $valorA2 =  ($valM2T / $valorCatastralPromedio) * $valA1;
+      $valorObligacion = $valorA2 * $valorReferencia;
       //echo "--> ($valM2T / $valorReferencia) * $valA1; ";  
       
       $rtaMove = 1;

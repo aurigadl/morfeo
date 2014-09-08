@@ -97,15 +97,15 @@
                             </div>
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
                                 <span class="input-group-addon">Valor de Referencia</span>
-                                <input class="form-control input-lg" placeholder="Valor de Referencia" type="text" name="valRef" id="valRef">
+                                <input class="form-control input-lg" placeholder="Valor de Referencia" disabled type="text" name="valRef" id="valRef">
                             </div>
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
                                <span class="input-group-addon" >Valor del Terreno en m<sup>2</sup></span>
-                               <input class="form-control input-lg" placeholder="Valor del terreno en m<sup>2</sup>" type="text" name="valM2T" id="valM2T" >
+                               <input class="form-control input-lg" placeholder="Valor del terreno en m<sup>2</sup>" disabled type="text" name="valM2T" id="valM2T" >
                             </div>
                             <div class="input-group"> </label></div><div>
                               <span class="input-group-addon">Valor Obligación</span>
-                              <input class="form-control input-lg" placeholder="Valor Obligación" type="text" name="valorO" id="valorO">
+                              <input class="form-control input-lg" placeholder="Valor Obligación" type="text" name="valorO" disabled id="valorO">
                             </div>
                                                 </div>
 											</div>
