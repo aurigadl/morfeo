@@ -83,33 +83,45 @@
 											<br>
 											<h3><strong>Paso 1 </strong> - Liquidacion</h3>
 
+											                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group"><span class="input-group-addon">CHIP </span>            
+                              <input class="form-control input-lg" placeholder="Ingrese el Chip Ej. AAA0000HJRX " type="text" name="chip" id="chip" onChange="calcularLiquidacion();" >
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group"><span class="input-group-addon">Area a Trasladar <div id=areaTerreno></div></span>
+                              
+                              <input class="form-control input-lg" placeholder="Valor atrasladar segun documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">
+
+                          </div>
+                        </div>
+											</div>
+											
 											<div class="row">
-                         <div class="col-sm-12">
-                          <div class="form-group">
-                            <div class="input-group">
-                              <span class="input-group-addon"><i class="fa fa-envelope fa-lg fa-fw"></i></span>
-                              <input class="form-control input-lg" placeholder="Ingrese el CHIP " type="text" name="chip" id="chip" onChange="calcularLiquidacion();" >
-                            </div>
-                            </div>
-                            <div class="input-group"></div><div>
-                              <span class="input-group-addon">Area a Trasladar<div id=areaTerreno></div></span>
-                              <input class="form-control input-lg" placeholder="Ingrese el Valor del Area a Trasladar" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">
-                            </div>
-                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
-                                <span class="input-group-addon">Valor de Referencia</span>
+                         <div class="col-sm-6">
+                                <div class="input-group"><label class="col-md-2 control-label"></label></div>
+                                <div><span class="input-group-addon">Valor de Referencia</span>
                                 <input class="form-control input-lg" placeholder="Valor de Referencia" disabled type="text" name="valRef" id="valRef">
                             </div>
+                         </div>   
+                         <div class="col-sm-6">
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
                                <span class="input-group-addon" >Valor del Terreno en m<sup>2</sup></span>
-                               <input class="form-control input-lg" placeholder="Valor del terreno en m<sup>2</sup>" disabled type="text" name="valM2T" id="valM2T" >
+                               <input class="form-control input-lg" placeholder="" disabled type="text" name="valM2T" id="valM2T" >
                             </div>
-                            <div class="input-group"> </label></div><div>
-                              <span class="input-group-addon">Valor Obligación</span>
-                              <input class="form-control input-lg" placeholder="Valor Obligación" type="text" name="valorO" disabled id="valorO">
+                         </div>
+                      </div>   
+                      
+                      <div class="row">
+                         <div class="col-sm-12">
+                                <div class="input-group"><label class="col-md-2 control-label"></label></div>
+                                <div><span class="input-group-addon">VALOR ESTIMADO DE LA OBLIGACION</span>
+                                <input class="form-control input-lg" placeholder="Valor Obligación" type="text" name="valorO" disabled id="valorO">
                             </div>
-                                                </div>
-											</div>
-
+                         </div> 
+                      </DIV>   
+        
 										</div>
 										<div class="tab-pane" id="tab2">
 											<br>
