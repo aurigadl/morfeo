@@ -251,78 +251,73 @@
 											
 											<div class="form-group smart-form">
 											
-											<section>
-<label class="label">Seleccionar Certificado de Libertar y tradicion</label>
-<label class="input input-file" for="file">
-<div class="button">
-<input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file1">
- Escoger Archivo
-</div>
-<input type="text" readonly="" placeholder="">
-</label>
-
-<label class="label">Certificado Catastral</label>
-<label class="input input-file" for="file">
-<div class="button">
-<input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file2">
- Escoger Archivo
-</div>
-<input type="text" readonly="" placeholder="">
-</label>
 											
-<label class="label">Certificado de Existencia y Representación Legal de la sociedad constructora titular de licencia</label>
-<label class="input input-file" for="file">
-<div class="button">
-<input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file3">
- Escoger Archivo
-</div>
-<input type="text" readonly="" placeholder="">
-</label>
+                      <label class="label">Seleccionar Certificado de Libertar y tradicion</label>
+                      <label class="input input-file" for="file">
+                      <div class="button">
+                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file1">
+                      Escoger Archivo
+                      </div>
+                      <input type="text" readonly="" placeholder="">
+                      </label>
 
-<label class="label">Cédula de Ciudadanía del Titular de la licencia (En caso de ser persona natural el titular de la licencia)</label>
-<label class="input input-file" for="file">
-<div class="button">
-<input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file4">
- Escoger Archivo
-</div>
-<input type="text" readonly="" placeholder="">
-</label>
+                      <label class="label">Certificado Catastral</label>
+                      <label class="input input-file" for="file">
+                      <div class="button">
+                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file2">
+                      Escoger Archivo
+                      </div>
+                      <input type="text" readonly="" placeholder="">
+                      </label>
+                                            
+                      <label class="label">Certificado de Existencia y Representación Legal de la sociedad constructora titular de licencia</label>
+                      <label class="input input-file" for="file">
+                      <div class="button">
+                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file3">
+                      Escoger Archivo
+                      </div>
+                      <input type="text" readonly="" placeholder="">
+                      </label>
+
+                      <label class="label">Cédula de Ciudadanía del Titular de la licencia (En caso de ser persona natural el titular de la licencia)</label>
+                      <label class="input input-file" for="file">
+                      <div class="button">
+                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file4">
+                      Escoger Archivo
+                      </div>
+                      <input type="text" readonly="" placeholder="">
+                      </label>
+                      <label class="label">Certificación de la Curaduría Urbana en donde se indiquen las áreas del proyecto, el tipo de proyecto y se establezca la provisión de VIS o VIP.</label>
+                      <label class="input input-file" for="file">
+                      <div class="button">
+                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file5">
+                      Escoger Archivo
+                      </div>
+                      <input type="text" readonly="" placeholder="">
+                      </label>
 
 
-<label class="label">Certificación de la Curaduría Urbana en donde se indiquen las áreas del proyecto, el tipo de proyecto y se establezca la provisión de VIS o VIP.</label>
-<label class="input input-file" for="file">
-<div class="button">
-<input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file5">
- Escoger Archivo
-</div>
-<input type="text" readonly="" placeholder="">
-</label>
-
-
-<label class="label">Certificado Catastral</label>
-<label class="input input-file" for="file">
-<div class="button">
-<input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file2">
- Escoger Archivo
-</div>
-<input type="text" readonly="" placeholder="">
-</label>
-</div>
+                      <label class="label">Certificado Catastral</label>
+                      <label class="input input-file" for="file">
+                      <div class="button">
+                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file2">
+                      Escoger Archivo
+                      </div>
+                      <input type="text" readonly="" placeholder="">
+                      </label>
 
 										</div>
-										<div class="tab-pane" id="tab4" >
+										</div>
+										<div class="tab-pane" id="tab4">
 											<br>
 											<h3><strong>Paso 4</strong> - Finalizar Liquidación</h3>
 											<br>
 											<h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Se ha completado la solicitud</strong></h1>
-											<h4 class="text-center">
-											Se Radico su Solicitud con la Siguiente Informaci&oacute;n </h4>
-                      
-                    
-											<div id=resultado>
-											
-											</div>
-											
+											<h4 class="text-center">Descargue aqui el documento de radicacion No. 2014900000000002</h4>
+											<br>
+											<br>
+											<div id=resultado> </div>
+										</div>
 
 										<div class="form-actions">
 											<div class="row">
