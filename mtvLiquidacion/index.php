@@ -6,7 +6,7 @@
 
 ?>
 <div class="row">
-	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+	<div class="col-xs-8 col-sm-7 col-md-7 col-lg-4">
 		<h1 class="page-title txt-color-blueDark"><i class="fa fa-pencil-square-o fa-fw "></i> Formularios <span>>
 			Liquidacion </span></h1>
 	</div>
@@ -20,7 +20,7 @@
 	<div class="row">
 
 		<!-- NEW WIDGET START -->
-		<article class="col-sm-12 col-md-12 col-lg-12">
+		<article class="col-sm-8 col-md-8 col-lg-8">
 
 			<!-- Widget ID (each widget will need unique ID)-->
 			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
@@ -58,7 +58,7 @@
 
 						<div class="row">
 							<form id="wizard-1" novalidate="novalidate">
-								<div id="bootstrap-wizard-1" class="col-sm-12">
+								<div id="bootstrap-wizard-1" class="col-sm-8">
 									<div class="form-bootstrapWizard">
 										<ul class="bootstrapWizard form-wizard">
 											<li class="active" data-target="#step1">
