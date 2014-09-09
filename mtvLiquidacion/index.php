@@ -5,7 +5,8 @@
 <?php include_once "$ruta_raiz/htmlheader.inc.php"; 
 
 ?>
-<div class="row">
+<body style="background-image: url(../img/login_background.jpeg);">
+<div class="row" >
 	<div class="col-xs-8 col-sm-7 col-md-7 col-lg-8">
 		<h1 class="page-title txt-color-blueDark"><i class="fa fa-pencil-square-o fa-fw "></i> Formularios <span>>
 			Radicaci&oacute;n de solicitud de traslado VIS / VIP</span></h1>
@@ -16,10 +17,10 @@
 <div id=res name=res> </div>
 
 <!-- widget grid -->
-<section id="widget-grid" class="">
+<section id="widget-grid" class="" >
 
 	<!-- row -->
-	<div class="row">
+	<div class="row"  >
 
 		<!-- NEW WIDGET START -->
 		<article class="col-sm-8 col-md-8 col-lg-8">
@@ -46,7 +47,7 @@
 				</header>
 
 				<!-- widget div-->
-				<div >
+				<div  >
 
 					<!-- widget edit box -->
 					<div class="jarviswidget-editbox">
@@ -539,3 +540,4 @@
 	pagefunction();
 
 </script>
+</body>
