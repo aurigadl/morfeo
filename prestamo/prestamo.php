@@ -1,11 +1,12 @@
 <?php
+#echo "hello"; exit;
 /**
  * @author Jairo Losada   <jlosada@gmail.com>
  * @author Cesar Gonzalez <aurigadl@gmail.com>
  * @license  GNU AFFERO GENERAL PUBLIC LICENSE
  * @copyright
-
-SIIM2 Models are the data definition of SIIM2 Information System
+*
+*SIIM2 Models are the data definition of SIIM2 Information System
  * Copyright (C) 2013 Infometrika Ltda.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -217,8 +218,9 @@ function Search_Show() {
 
         <table class='table table-bordered'>
             <!--<tr>
-	            <td  colspan="2"><a name="Search"><? /*=$sFormTitle[$opcionMenu]; */ ?> </a></td>
-	        </tr>-->
+                <td  colspan="2"><a name="Search"><? /*=$sFormTitle[$opcionMenu]; */ ?> </a></td>
+            </tr>-->
+            <?php /* */ ?>
             <tr id="b0" style="display:<?= $tipoBusqueda[$opcionMenu][0]; ?>">
                 <td><p align="left">Radicado</p></td>
                 <td><label class="input"><input type="text" name="s_RADI_NUME_RADI" maxlength="15"
@@ -286,6 +288,7 @@ function Search_Show() {
                             } ?>
                         </select></label></td>
             </tr>
+            <?php /**/ ?>
             <tr id="b4" style="display:<?= $tipoBusqueda[$opcionMenu][4]; ?>">
                 <td><p align="left">Requerimiento</p></td>
                 <td><label class=select><select name="s_PRES_REQUERIMIENTO" class=select>
@@ -398,7 +401,7 @@ function Search_Show() {
                     <?
                     } else {
                         ?>
-                        <footer><input type="submit" class="btn btn-primary" name="buscarPres" value="Buscar"></footer>
+                     <footer><input type="submit" class="btn btn-primary" name="buscarPres" value="Buscar!!"></footer>
                     <?
                     }?>
 
@@ -647,7 +650,7 @@ function Pedidos_Show() {
                         $sPages .= "|<  <<   ";
                     } else {
                         $sPages .= "<a href=\"$sFileName?$form_params_page&FormPedidos_Page=1&FormStarPage=1&FormSiguiente=0&\">
-								<font class=\"ColumnFONT\" title=\"Ver la primera p&aacute;gina\">|<</font></a>&nbsp;";
+                                <font class=\"ColumnFONT\" title=\"Ver la primera p&aacute;gina\">|<</font></a>&nbsp;";
                         $sPages .= "&nbsp;<a href=\"$sFileName?$form_params_page&FormPedidos_Page=" . tourl($iStartPages - 1) . "&FormStarPage=" .
                             tourl($iStartPages - 1) . "&FormSiguiente=-1&\"><font class=\"ColumnFONT\" title=\"Ver la p&aacute;gina " .
                             ($iStartPages - 1) . "\"><<</font></a>&nbsp;&nbsp;&nbsp;";
@@ -656,7 +659,7 @@ function Pedidos_Show() {
                 for ($iPageCount = $iStartPages; $iPageCount < ($iStartPages + $iNumberOfPages); $iPageCount++) {
                     if ($iPageCount <= $iHasPages) {
                         $sPages .= "<a href=\"$sFileName?$form_params_page&FormPedidos_Page=$iPageCount&FormStarPage=" . tourl($iStartPages) . "&FormSiguiente=0&\">
-								<font class=\"ColumnFONT\" title=\"Ver la p&aacute;gina " . $iPageCount . "\">" . $iPageCount . "</font></a>&nbsp;";
+                                <font class=\"ColumnFONT\" title=\"Ver la p&aacute;gina " . $iPageCount . "\">" . $iPageCount . "</font></a>&nbsp;";
                     } else {
                         break;
                     }
@@ -666,7 +669,7 @@ function Pedidos_Show() {
                         $sPages .= "...&nbsp;&nbsp;<a href=\"$sFileName?$form_params_page&FormPedidos_Page=$iPageCount&FormStarPage=" . tourl($iStartPages) .
                             "&FormSiguiente=1&\"><font class=\"ColumnFONT\" title=\"Ver la p&aacute;gina " . $iPageCount . "\">>></font></a>&nbsp;&nbsp;";
                         $sPages .= "&nbsp;<a href=\"$sFileName?$form_params_page&FormPedidos_Page=$iHasPages&FormStarPage=tourl($iStartPages)
-										 &FormSiguiente=1&\"><font class=\"ColumnFONT\" title=\"Ver la &uacute;ltima p&aacute;gina\">>|</font></a>";
+                                         &FormSiguiente=1&\"><font class=\"ColumnFONT\" title=\"Ver la &uacute;ltima p&aacute;gina\">>|</font></a>";
                     } else {
                         $sPages .= " >> |";
                     }
