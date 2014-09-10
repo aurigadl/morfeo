@@ -90,7 +90,7 @@ $carpeta    = "xx";
 
 $pagina_actual = "../anulacion/cuerpo_anulacion.php";
 $varBuscada = "radi_nume_radi";
-//include "../envios/paBuscar.php";
+include "../envios/paBuscar.php";
 $pagina_sig = "../anulacion/solAnulacion.php";
 //$swListar = "no";
 $accion_sal="Solicitar Anulacion";

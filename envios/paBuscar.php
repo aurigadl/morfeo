@@ -21,7 +21,8 @@
 	 $datosss = "";
 	}
 	?>
-	<input type=checkbox name=bTodasDep id=bTodasDep <?=$datosss?> value="SelecionaTodas"><small> Buscar en Todas las Dependencias</small>
+	<!--<input type=checkbox name=bTodasDep id=bTodasDep <?=$datosss?> value="SelecionaTodas"><small> Buscar en Todas
+            las Dependencias</small>-->
 	</footer>
 	<?
 	if ($busqRadicados) {
