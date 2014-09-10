@@ -86,11 +86,11 @@ $encabezado = "".session_name()."=".session_id()."&krd=$krd&filtroSelect=$filtro
 $linkPagina = "$PHP_SELF?$encabezado&accion_sal=$accion_sal&orderTipo=$orderTipo&orderNo=$orderNo";
 $carpeta    = "xx";
 
-include "../envios/paEncabeza.php";
+//include "../envios/paEncabeza.php";
 
 $pagina_actual = "../anulacion/cuerpo_anulacion.php";
 $varBuscada = "radi_nume_radi";
-include "../envios/paBuscar.php";
+//include "../envios/paBuscar.php";
 $pagina_sig = "../anulacion/solAnulacion.php";
 //$swListar = "no";
 $accion_sal="Solicitar Anulacion";
