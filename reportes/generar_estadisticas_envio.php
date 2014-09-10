@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-$ruta_raiz = "..";
-$krd = $_SESSION["krd"];
-$dependencia = $_SESSION["dependencia"];
-$usua_doc = $_SESSION["usua_doc"];
-$codusuario = $_SESSION["codusuario"];
+$ruta_raiz    = "..";
+$krd          = $_SESSION["krd"];
+$dependencia  = $_SESSION["dependencia"];
+$usua_doc     = $_SESSION["usua_doc"];
+$codusuario   = $_SESSION["codusuario"];
 $depe_codi_territorial = $_SESSION["depe_codi_territorial"];
 
 include_once "../include/db/ConnectionHandler.php";
@@ -26,6 +26,7 @@ if (!$fecha_busq2)
 $ruta_raiz = "..";
 $db = new ConnectionHandler("$ruta_raiz");
 ?>
+
 <head>
     <title>LISTADO DE DOCUMENTOS ENVIADOS POR AGENCIA DE CORREO</title>
     <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
