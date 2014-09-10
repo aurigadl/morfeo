@@ -140,26 +140,25 @@ if ($generar_informe or $aceptarAnular) {
                     order by sgd_trad_codigo";
                     $rsTR = $db->conn->Execute($sqlTR);
                     print $rsTR->GetMenu2("tipoRadicado", "$tipoRadicado", false, false, 0, " class='select'>");
-                    //if(!$depeBuscada) $depeBuscada=$dependencia;
                     ?>
                 </label>
             </TD>
         </tr>
-        <tr>
+<!--        <tr>
             <TD height="26" class='titulos2'>Dependencia</TD>
             <TD valign="top" align="left" class='listado2'>
                 <label class="select">
-                    <?
+                    <?/*
                     $sqlD = "select depe_nomb,depe_codi from dependencia
                        where depe_codi_territorial = $depe_codi_territorial
                                 order by depe_codi";
                     $rsD = $db->conn->Execute($sqlD);
                     print $rsD->GetMenu2("depeBuscada", "$depeBuscada", false, false, 0, " class='select'> <option value=0>--- TODAS LAS DEPENDENCIAS --- </OPTION ");
                     //if(!$depeBuscada) $depeBuscada=$dependencia;
-                    ?>
+                    */?>
                 </label>
             </td>
-        </tr>
+        </tr>-->
         <tr>
             <td height="26" colspan="2" valign="top" class='titulos2'>
                 <center>
@@ -286,7 +285,7 @@ if ($aceptarAnular and $actaNo) {
         $i++;
         $rsSel->MoveNext();
     }
-    
+
     if (!$radAnularE)
         die("<P><span class=etextomenu><CENTER><FONT COLOR=RED>NO HAY RADICADOS PARA ANULAR</FONT></CENTER><span>");
     else {
