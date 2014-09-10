@@ -286,7 +286,7 @@ if ($aceptarAnular and $actaNo) {
         $i++;
         $rsSel->MoveNext();
     }
-    //
+    
     if (!$radAnularE)
         die("<P><span class=etextomenu><CENTER><FONT COLOR=RED>NO HAY RADICADOS PARA ANULAR</FONT></CENTER><span>");
     else {
@@ -312,8 +312,11 @@ if ($aceptarAnular and $actaNo) {
 
         define(FPDF_FONTPATH, '../fpdf/font/');
         $radAnulados = join(",", $radAnularE);
-        $radicadosPdf = "<table style="text-align:left;"> <tr> <td>Radicado</td> <td>Observación
-        Solicitante</td> </tr>";
+        $radicadosPdf = "<table>
+                            <tr>
+                                <td>Radicado</td>
+                                <td>Observación Solicitante</td>
+                            </tr>";
         foreach ($radAnularE as $id => $noRadicado) {
             $radicadosPdf .= "<tr><td> " . $radAnularE[$id]. " </td><td> " . $radObservaE[$id] . " </td></tr>";
         }
@@ -351,13 +354,13 @@ if ($aceptarAnular and $actaNo) {
               <br>
               <br>
               <br> ____________________________________________________ <br>
-              Director administrativo.";
+              Director administrativo
 EOD;
         $html = '<img src="../img/banerPDF.jpg" width="220">' . $html;
         $ruta_raiz = "..";
 
 
-    $pdf = new PDF();
+        $pdf = new PDF();
         $pdf->Open();
         $pdf->SetCreator("HTML2PDF");
         $pdf->SetTitle("Acta de Anulacion de Radicados");
