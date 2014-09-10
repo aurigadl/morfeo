@@ -401,7 +401,7 @@ function Search_Show() {
                     <?
                     } else {
                         ?>
-                     <footer><input type="submit" class="btn btn-primary" name="buscarPres" value="Buscar!!"></footer>
+                     <footer><input type="submit" class="btn btn-primary" name="buscarPres" value="!! Buscar!!"></footer>
                     <?
                     }?>
 
