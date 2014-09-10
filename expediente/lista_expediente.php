@@ -98,7 +98,6 @@ unset($frm);
 <?
 	// CONSULTA SI EL EXPEDIENTE TIENE UNA CLASIFICACION TRD
 
-	error_reporting(7);
 	$codserie = "";
 	$tsub = "";
 	include_once ("$ruta_raiz/include/tx/Expediente.php");
@@ -117,7 +116,6 @@ unset($frm);
 	if(!$tsub) $tsub=0;
 	if(!$tdoc) $tdoc=0;
 
-	error_reporting(7);
 	$resultadoExp = 0;
 	if($funExpediente == "INSERT_EXP") {
 		$resultadoExp = $expediente->insertar_expediente($num_expediente,
@@ -184,8 +182,12 @@ if ( $expIncluido != "" ) {
          <td>
              <small>
                 <?php echo ucwords(strtolower($arrTRDExp['serie']))." / ".ucwords(strtolower($arrTRDExp['subserie'])); ?>
-                <br><button type="submit" id="edittemasexp" class="btn btn-primary btn-xs">Editar ..</button>
-                    <button type='submit' id='savetemasexp' class='btn btn-primary btn-xs'>Grabar..</button>
+                <br>
+                 <?php if($usuaPermExpediente > 1){ ?>
+                    <button type="submit" name='edittemasexp_<?=$num_expediente?>' class="btn btn-primary
+                  btn-xs">Editar ..</button>
+                    <button type='submit' name='savetemasexp_<?=$num_expediente?>' value="<?=$num_expediente?>" class='btn btn-primary  btn-xs'>Grabar..</button>
+                 <?php } ?>
                     <table>
                         <?php
                         if ( $expIncluido != "" ) {
@@ -197,7 +199,9 @@ if ( $expIncluido != "" ) {
                         if( $arrDatosParametro != "" ){
                             foreach( $arrDatosParametro as $clave => $datos ) {
                                echo "<tr><td><small><br><b>".ucwords(strtolower($datos['etiqueta']))." : </b><span class='showfield'>".ucwords(strtolower(htmlentities($datos['parametro']))). "</span></small></td>
-                                     <td><input  class='editfield' style='display: none;' type='text' name='country' value='".ucwords(strtolower(htmlentities($datos['parametro'])))."'></td></tr>";
+                                     <td><input  class='editfield' style='display: none;' type='text' name='etique_"
+                                   .$numExpediente."[]'
+                                      value='".ucwords(strtolower(htmlentities($datos['parametro'])))."'></td></tr>";
                             }
                         }
 
@@ -361,8 +365,17 @@ if($descPExpediente){
 ?>
 </td></tr></table>
 <script>
-    $('body').on('click', '#edittemasexp', function () {
+
+    $('body').on('click', "button[name^=edittemasexp]", function () {
         $('.showfield').toggle();
         $('.editfield').toggle();
+    })
+
+    $('body').on('click', "button[name^='savetemasexp']", function () {
+        var complement = $(this).val();
+        var datos = $("input[name^='etique_" + complement + "']").serialize() + "&saveEtiq=1";
+        $.post( "./expediente/lista_expedientes.php", datos, function( data ) {
+            $( ".result" ).html( data );
+        });
     })
 </script>

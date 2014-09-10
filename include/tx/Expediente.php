@@ -190,11 +190,11 @@ class Expediente {
                 $iRr = 0;
                 if (!$rsRas->EOF) {
                     while (!$rsRad->EOF) {
-                        $numRadicado = $rsRad->fields['RADI_NUME_RADI'];
-                        $fechaRadicado = $rsRad->fields['RADI_FECH_RADI'];
-                        $tipoDRadicado = $rsRad->fields['SGD_TPR_DESCRIP'];
+                        $numRadicado    = $rsRad->fields['RADI_NUME_RADI'];
+                        $fechaRadicado  = $rsRad->fields['RADI_FECH_RADI'];
+                        $tipoDRadicado  = $rsRad->fields['SGD_TPR_DESCRIP'];
                         $asuntoRadicado = $rsRad->fields['RA_ASUN'];
-                        $pathRadicado = $rsRad->fields['RADI_PATH'];
+                        $pathRadicado   = $rsRad->fields['RADI_PATH'];
 
                         $expArr[$numExpediente][$iRr]["NUM_RADICADO"] = $numRadicado;
                         $expArr[$numExpediente][$iRr]["FECHA_RADICADO"] = $fechaRadicado;
@@ -808,6 +808,39 @@ class Expediente {
         return $arrTRDExp;
     }
 
+    /** Descripcion: FUNCION QUE MODIFICA LAS ETIQUETAS DE UN EXPEDIENTE
+     * Esta funcion devuelve la confirmacion o negacion de la accion.
+     * Parametros:
+     *
+     * @param $numExp String Numero del expediente.
+     * Retorna:
+     * @return boolean confirma o niega la accion realizada.
+     */
+    function editDatosParamExp($numExp, $params) {
+
+        $q_datosParametro = "UPDATE sgd_sexp_secexpedientes SET ";
+
+        foreach ($params as $clave => $valor){
+           $campo = $clave + 1;
+           if(empty($descrip)){
+               $descrip .= "sgd_sexp_parexp".$campo. " = '$valor'";
+           }else{
+               $descrip .= ", sgd_sexp_parexp".$campo . " = '$valor'" ;
+           }
+        }
+
+        if(!empty($descrip)){
+            $q_datosParametro .= $descrip . " WHERE sgd_exp_numero = '$numExp'";
+        };
+
+        if ($this->db->conn->query($q_datosParametro) === false) {
+            return false;
+        }
+        return true;
+    }
+
+
+
     /** Descripcion: FUNCION QUE CONSULTA LOS PARAMETROS ASIGANDOS A UN EXPEDIENTE
      * Esta funcion devuelve las etiquetas y los valores asociados a un expediente.
      * Parametros:
@@ -822,27 +855,26 @@ class Expediente {
      * Fecha de modificacion:
      * Modificador:
      */
-    function getDatosParamExp($numExp, $depeCodi) {
+    function getDatosParamExp($numExp, $depeCodi){
         $depeExp = substr($numExp, 4, 3);
-        $q_datosParametro = "SELECT CASE WHEN PAREXP.SGD_PAREXP_ORDEN = 1 THEN SEXP.SGD_SEXP_PAREXP1";
-        $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 2 THEN SEXP.SGD_SEXP_PAREXP2";
-        $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 3 THEN SEXP.SGD_SEXP_PAREXP3";
-        $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 4 THEN SEXP.SGD_SEXP_PAREXP4";
-        $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 5 THEN SEXP.SGD_SEXP_PAREXP5";
-        $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 6 THEN SEXP.SGD_SEXP_PAREXP6";
-        $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 7 THEN SEXP.SGD_SEXP_PAREXP7";
-        $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 8 THEN SEXP.SGD_SEXP_PAREXP8";
-        $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 9 THEN SEXP.SGD_SEXP_PAREXP9";
-        $q_datosParametro .= " WHEN PAREXP.SGD_PAREXP_ORDEN = 0 THEN SEXP.SGD_SEXP_PAREXP10";
-        $q_datosParametro .= " END AS PARAMETRO,";
-        $q_datosParametro .= " PAREXP.SGD_PAREXP_ETIQUETA";
-        $q_datosParametro .= " FROM SGD_SEXP_SECEXPEDIENTES SEXP,";
-        $q_datosParametro .= " SGD_PAREXP_PARAMEXPEDIENTE PAREXP";
-        $q_datosParametro .= " WHERE SEXP.SGD_EXP_NUMERO = '" . $numExp . "'";
-        //$q_datosParametro .= " AND SEXP.DEPE_CODI = PAREXP.DEPE_CODI";
-        $q_datosParametro .= " AND parexp.DEPE_CODI = " . $depeExp;
-        $q_datosParametro .= " ORDER BY SEXP.SGD_SEXP_FECH desc";
-        $rs_datosParametro = $this->db->conn->query($q_datosParametro);
+        $q_datosParametro = "SELECT CASE WHEN PAREXP.SGD_PAREXP_ORDEN = 1 THEN SEXP.SGD_SEXP_PAREXP1
+         WHEN PAREXP.SGD_PAREXP_ORDEN = 2 THEN SEXP.SGD_SEXP_PAREXP2
+         WHEN PAREXP.SGD_PAREXP_ORDEN = 3 THEN SEXP.SGD_SEXP_PAREXP3
+         WHEN PAREXP.SGD_PAREXP_ORDEN = 4 THEN SEXP.SGD_SEXP_PAREXP4
+         WHEN PAREXP.SGD_PAREXP_ORDEN = 5 THEN SEXP.SGD_SEXP_PAREXP5
+         WHEN PAREXP.SGD_PAREXP_ORDEN = 6 THEN SEXP.SGD_SEXP_PAREXP6
+         WHEN PAREXP.SGD_PAREXP_ORDEN = 7 THEN SEXP.SGD_SEXP_PAREXP7
+         WHEN PAREXP.SGD_PAREXP_ORDEN = 8 THEN SEXP.SGD_SEXP_PAREXP8
+         WHEN PAREXP.SGD_PAREXP_ORDEN = 9 THEN SEXP.SGD_SEXP_PAREXP9
+         WHEN PAREXP.SGD_PAREXP_ORDEN = 0 THEN SEXP.SGD_SEXP_PAREXP10
+         END AS PARAMETRO,
+         PAREXP.SGD_PAREXP_ETIQUETA
+         FROM SGD_SEXP_SECEXPEDIENTES SEXP,
+         SGD_PAREXP_PARAMEXPEDIENTE PAREXP
+         WHERE SEXP.SGD_EXP_NUMERO = '$numExp'
+         AND parexp.DEPE_CODI = '$depeExp'
+         ORDER BY SEXP.SGD_SEXP_FECH desc LIMIT 10";
+         $rs_datosParametro = $this->db->conn->query($q_datosParametro);
 
         $p = 0;
         while (!$rs_datosParametro->EOF) {
