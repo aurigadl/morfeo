@@ -87,11 +87,13 @@ $pageAnt    = strip($_POST["sFileName"]);
             <td valign="top"><?php Search_Show(); ?></td>
         </tr>
     </table>
-    <?php if (!empty($_POST["genearreporte"])){ ?>
+
+    <?php if (isset($_POST['genearreporte'])){ ?>
         <table>
             <tr>
                 <td valign="top">
-                    <?php  Pedidos_Show(); ?></td>
+                 <?php  Pedidos_Show(); ?>
+                </td>
             </tr>
         </table>
     <?php } ?>
@@ -401,7 +403,8 @@ function Search_Show() {
                     <?
                     } else {
                         ?>
-                     <footer><input type="submit" class="btn btn-primary" name="buscarPres" value="!! Buscar!!"></footer>
+                     <footer> <input type="hidden" class="btn btn-primary" name="genearreporte" value="Generar">
+                        <input type="submit" class="btn btn-primary" name="buscarPres" value="Buscar"></footer>
                     <?
                     }?>
 
@@ -685,7 +688,7 @@ function Pedidos_Show() {
 
             </table>
 
-            <?php if (!empty($_POST["genearreporte"])) { ?>
+            <?php  if (isset($_POST['genearreporte'])) { ?>
                 <table align="center" class="table table-bordered table-striped"><tr>
                         <td align="center">
                             <?
@@ -697,7 +700,7 @@ function Pedidos_Show() {
                         </td>
                     </tr>
                 </table>
-            <?php } ?>
+            <?php }  ?>
 
         </form>
     <?
