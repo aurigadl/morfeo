@@ -6,19 +6,46 @@
 
 ?>
 <body style="background-image: url(../img/login_background.jpeg);">
+
 <div id=res name=res> </div>
-
+<div STYLE="position:absolute; top:10px; right:500px;width:90%; background-image: url();" align=right>adfaf </div>
 <!-- widget grid -->
-<section id="widget-grid" class="" >
 
-	<!-- row -->
-	<div class="row"  >
+      <div class="row" STYLE="position:absolute; top:20px; left:50px;width:90%;" >
+        <div class="col-sm-12">
+              <div class="input-group "    ><label class="col-md-2 control-label"></label></div>
+              
+              <div  style=""><span class="input-group-addon alert-success"><b>LIQUIDACION DE LA OBLIGACION VIP / VIS</b><br><br>
+              Decreto Distrital 327/2004&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              Decreto Nacional 075/2013<br>
+              Resoluci&oacute;n Metrovivienda 117 del 22 de agosto de 2014.
+              </span>
+          </div>
+        </div> 
+    </DIV>
+    
+    <div class="row" STYLE="position:absolute; top:20px; left:70px; background-image: url('');" >
+      <table >
+       <tr><td><img src="../imagenes/logoFrmWeb.png" height=80></td></tr>
+      </table>
+    </div>
 
+    <div class="row" STYLE="position:absolute; top:20px; right:100px; background-image: url('');" >
+      <table width="100%">
+       <tr><td><img src="../imagenes/logoFrmWeb2.png" height=80></td></tr>
+      </table>
+    </div>    
+
+    
+    <!-- row -->
+	<div class="row" STYLE="position:absolute; top:100px; left:50px;width:90%;"  >
+                
 		<!-- NEW WIDGET START -->
-		<article class="col-sm-8 col-md-8 col-lg-8">
+		<article class="col-sm-12 col-md-12 col-lg-12">
 
 			<!-- Widget ID (each widget will need unique ID)-->
-			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
+			<div class="jarviswidget " id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
 				<!-- widget options:
 				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -32,12 +59,6 @@
 				data-widget-sortable="false"
 
 				-->
-				<header>
-					
-					<h2>Liquidacion valor de un proyecto </h2>
-
-				</header>
-
 				<!-- widget div-->
 				<div  >
 
@@ -76,18 +97,7 @@
 											<br>
 											<h3><strong>Paso 1 </strong> - Liquidacion</h3>
 
-											                      <div class="row">
-                         <div class="col-sm-12">
-                                <div class="input-group "><label class="col-md-2 control-label"></label></div>
-                                <div><span class="input-group-addon alert-success"><b>LIQUIDACION DE LA OBLIGACION VIP / VIS</b><br><br>
-                                Decreto Distrital 327/2004&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                Decreto Nacional 075/2013<br>
-                                Resoluci&oacute;n Metrovivienda 117 del 22 de agosto de 2014.
-                                </span>
-                            </div>
-                         </div> 
-                      </DIV><br>
+
 											
 											
 											 <div class="row">
@@ -489,8 +499,9 @@
 		</article>
 		<!-- WIDGET END -->
 
-</section>
 <!-- end widget grid -->
+
+
 
 <script type="text/javascript">
 	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -576,11 +587,11 @@
 						minlength : 4
 					},
 					wphone : {
-						required : true,
+						required : false,
 						minlength : 10
 					},
 					hphone : {
-						required : true,
+						required : false,
 						minlength : 10
 					}
 				},
