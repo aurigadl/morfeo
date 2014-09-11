@@ -6,14 +6,6 @@
 
 ?>
 <body style="background-image: url(../img/login_background.jpeg);">
-<div class="row" >
-	<div class="col-xs-8 col-sm-7 col-md-7 col-lg-8">
-		<h1 class="page-title txt-color-blueDark"><i class="fa fa-pencil-square-o fa-fw "></i> Formularios <span>>
-			Radicaci&oacute;n de solicitud de traslado VIS / VIP</span></h1>
-	</div>
-
-</div>
-
 <div id=res name=res> </div>
 
 <!-- widget grid -->
@@ -41,7 +33,7 @@
 
 				-->
 				<header>
-					<span class="widget-icon"> <i class="fa fa-check"></i> </span>
+					
 					<h2>Liquidacion valor de un proyecto </h2>
 
 				</header>
@@ -85,40 +77,73 @@
 											<h3><strong>Paso 1 </strong> - Liquidacion</h3>
 
 											                      <div class="row">
+                         <div class="col-sm-12">
+                                <div class="input-group "><label class="col-md-2 control-label"></label></div>
+                                <div><span class="input-group-addon alert-success"><b>LIQUIDACION DE LA OBLIGACION VIP / VIS</b><br><br>
+                                Decreto Distrital 327/2004&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                Decreto Nacional 075/2013<br>
+                                Resoluci&oacute;n Metrovivienda 117 del 22 de agosto de 2014.
+                                </span>
+                            </div>
+                         </div> 
+                      </DIV><br>
+											
+											
+											 <div class="row">
                         <div class="col-sm-6">
                           <div class="form-group"><span class="input-group-addon">CHIP </span>            
                               <input class="form-control input-lg" placeholder="Ingrese el Chip Ej. AAA0000HJRX " type="text" name="chip" id="chip" onChange="calcularLiquidacion();" >
                           </div>
                         </div>
                         <div class="col-sm-6">
-                          <div class="form-group"><span class="input-group-addon">Area a Trasladar <div id=areaTerreno></div></span>
+                          <div class="form-group"><span class="input-group-addon">AREA DE OBLIGACION VIS/VIP m<sup>2</sup><div id=areaTerreno></div></span>
                               
-                              <input class="form-control input-lg" placeholder="Valor atrasladar segun documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">
+                              <input class="form-control input-lg" placeholder="Valor Area segun documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">
 
                           </div>
                         </div>
 											</div>
-											
-											<div class="row">
-                         <div class="col-sm-6">
-                                <div class="input-group"><label class="col-md-2 control-label"></label></div>
-                                <div><span class="input-group-addon">Valor de Referencia</span>
-                                <input class="form-control input-lg" placeholder="Valor de Referencia" disabled type="text" name="valRef" id="valRef">
-                            </div>
-                         </div>   
+
+                      <div class="row">
                          <div class="col-sm-6">
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
-                               <span class="input-group-addon" >Valor del Terreno en m<sup>2</sup></span>
+                               <span class="input-group-addon" >VALOR CATASTRAL DEL PREDIO 2014 m<sup>2</sup></span>
                                <input class="form-control input-lg" placeholder="" disabled type="text" name="valM2T" id="valM2T" >
                             </div>
                          </div>
+                      
+                            <div class="col-sm-6">
+                                <div class="input-group"><label class="col-md-2 control-label"></label></div>
+                                <div><span class="input-group-addon">PROMEDIO VALOR CATASTRAL 2014 m<sup>2</sup> </span>
+                                <input class="form-control input-lg" placeholder="Valor de Referencia" disabled type="text" name="valorCatastralPromedio" id="valorCatastralPromedio">
+                            </div>
+                         </div>   
+
+                      </div>											
+											
+											<div class="row">
+
+											    <div class="col-sm-6">
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                               <span class="input-group-addon" >AREA A TRASLADAR m<sup>2</sup></span>
+                               <input class="form-control input-lg" placeholder="" disabled type="text" name="valorA2" id="valorA2" >
+                            </div>
+                         </div>
+											   <div class="col-sm-6">
+                                <div class="input-group"><label class="col-md-2 control-label"></label></div>
+                                <div><span class="input-group-addon">PROMEDIO VALOR  COMERCIAL DE REFERENCIA 2014/m²</span>
+                                <input class="form-control input-lg" placeholder="Valor de Referencia" disabled type="text" name="valRef" id="valRef">
+                            </div>
+                         </div>   
+
                       </div>   
                       
                       <div class="row">
                          <div class="col-sm-12">
                                 <div class="input-group"><label class="col-md-2 control-label"></label></div>
-                                <div><span class="input-group-addon">VALOR ESTIMADO DE LA OBLIGACION</span>
-                                <input class="form-control input-lg" placeholder="Valor Obligación" type="text" name="valorO" disabled id="valorO">
+                                <div><span class="input-group-addon alert-success">VALOR OBLIGACION</span>
+                                <input class="form-control input-lg alert-success" placeholder="Valor Obligación" type="text" name="valorO" disabled id="valorO">
                             </div>
                          </div> 
                       </DIV>   
@@ -234,6 +259,100 @@
 														</div>
 													</div>
 												</div>
+												
+                      <h4><strong>Datos del Proyecto</strong> </h4>
+
+                      
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                        
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                               <span class="input-group-addon" >Nombre del Proyecto</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pNombre" id="pNombre" >
+                            </div>
+
+                         </div>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                               <span class="input-group-addon" >Constructora</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pConstructora" id="pConstructora" >
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                               <span class="input-group-addon" >Representante Legal</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pRep" id="pRep" >
+                            </div>
+                          </div>
+                        </div>
+                        <h4><strong>Identificaci&oacute;n del predio</H4></STRONG>
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                        
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                               <span class="input-group-addon" >Direccion del Predio</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pdir" id="pDir" >
+                            </div>
+
+                         </div>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                               <span class="input-group-addon" >FMI</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pFMI" id="pFMI" >
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                               <span class="input-group-addon" >CHIP</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pChip" id="pChip" >
+                            </div>
+                          </div>
+                        </div>
+                        
+                      <h4><strong>Datos Urbanisticos</H4></STRONG>
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                        
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                               <span class="input-group-addon" >Licencia / Expediente</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pLic1" id="pLic1" >
+                            </div>
+
+                         </div>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                               <span class="input-group-addon" >Area Bruta</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pAreaB" id="pAreaB" >
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            
+                            <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
+                               <span class="input-group-addon" >Licencia</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pLic2" id="pLic2" >
+                            </div>
+                          </div>
+                        </div>												
 												<div class="smart-form">
                         <div class="col-sm-6">
                           <div class="form-group">
