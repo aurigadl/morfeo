@@ -403,7 +403,7 @@ function Search_Show() {
                     <?
                     } else {
                         ?>
-                     <footer> <input type="hidden" class="btn btn-primary" name="genearreporte" value="Generar">
+                     <footer> <input type="hidden" class="btn btn-primary" name="genearreporte" value="noGenerar">
                         <input type="submit" class="btn btn-primary" name="buscarPres" value="Buscar"></footer>
                     <?
                     }?>
@@ -579,7 +579,6 @@ function Pedidos_Show() {
 
                     // Valida y envia el formulario
                     function enviar() {
-
                         var cant = 0;
                         var kk = 1;
 
@@ -681,14 +680,21 @@ function Pedidos_Show() {
                 <tr class="titulos5" align="center">
                     <td colspan="<?= ($numCol + 1); ?>">
                         <small>
-                            <center><br><?= $sPages ?> (P&aacute;gina <?= $iPage ?>/<?= $iHasPages ?></center>
+                            <center><br><?= $sPages ?> (P&aacute;gina <?= $iPage ?>/<?= $iHasPages ?>)</center>
                         </small>
                     </td>
                 </tr>
-
+                  <?php  if ($_POST['genearreporte']!="Generar") {  ?>
+                    <? if ($opcionMenu == 1) { ?>
+                <tr align="center">
+                    <td colspan="11" align="center">
+                        <input type="button" class="botones" value="Prestar" onclick="enviar();">
+                        <input type="button" class="botones" value="Cancelar" title="Regresa al menú de préstamo y control de documentos" onclick="javascript:regresar();"></center>
+                    </td>       
+                </tr>
             </table>
-
-            <?php  if (isset($_POST['genearreporte'])) { ?>
+                     <?php } }  ?>
+            <?php  if ($_POST['genearreporte']=="Generar") {  ?>
                 <table align="center" class="table table-bordered table-striped"><tr>
                         <td align="center">
                             <?
@@ -700,7 +706,7 @@ function Pedidos_Show() {
                         </td>
                     </tr>
                 </table>
-            <?php }  ?>
+            <?php  }  ?>
 
         </form>
     <?
