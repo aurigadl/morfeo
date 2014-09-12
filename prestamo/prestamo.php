@@ -685,6 +685,7 @@ function Pedidos_Show() {
                     </td>
                 </tr>
                   <?php  if ($_POST['genearreporte']!="Generar") {  ?>
+
                     <? if ($opcionMenu == 1) { ?>
                 <tr align="center">
                     <td colspan="11" align="center">
@@ -693,7 +694,15 @@ function Pedidos_Show() {
                     </td>       
                 </tr>
             </table>
-                     <?php } }  ?>
+                     <?php } else { #SI el documento se va a devolver
+                if ($opcionMenu == 2) { ?>
+                <tr align="center">
+                    <td colspan="11" align="center">
+                        <input type="button" class="botones" value="Devolver" onclick="enviar();">
+                        <input type="button" class="botones" value="Cancelar" title="Regresa al menú de préstamo y control de documentos" onclick="javascript:regresar();"></center>
+                    </td>       
+                </tr>
+                    <?php  } } }  ?>
             <?php  if ($_POST['genearreporte']=="Generar") {  ?>
                 <table align="center" class="table table-bordered table-striped"><tr>
                         <td align="center">
