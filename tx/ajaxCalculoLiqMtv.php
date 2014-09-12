@@ -29,6 +29,8 @@
       $areaTerreno = $rs->fields["A_TER_CAT"];
       $nombrePropietario = $rs->fields["NOM_PRO"];
       $direccionPredio = $rs->fields["DIR_REAL"];
+      $direccionCorr = $rs->fields["DIR_CORR"];
+      $pFMI = $rs->fields["FMI"];
       $valorReferencia = 1394292.03;
       $valorCatastralPromedio = 1088049.31;
       $valorA2 =  ($valM2T / $valorCatastralPromedio) * $valA1;
@@ -56,8 +58,14 @@
       $('#valM2T').val('$valM2TF');
       $('#valRef').val('$valorReferenciaF');
       $('#valorA2').val('$valorA2F');
+      $('#pDir').val('$direccionPredio');
+      $('#address').val('$direccionCorr');
+      $('#pRep').val('$nombrePropietario');
+      $('#pAreaB').val('$areaTerreno');
+      $('#pFMI').val('$pFMI');
       $('#valorCatastralPromedio').val('$valorCatastralPromedioF');
       $('#chip').val('$chip');
+      $('#pChip').val('$chip');
       $('#resultado').html('$textoFinal');
       $('#areaTerreno').html('(Area del terreno  $areaTerreno m<sup>2</sup>)')
     </script>

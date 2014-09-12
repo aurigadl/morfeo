@@ -15,7 +15,7 @@
         <div class="col-sm-12">
               <div class="input-group "    ><label class="col-md-2 control-label"></label></div>
               
-              <div  style=""><span class="input-group-addon alert-success"><b>LIQUIDACION DE LA OBLIGACION VIP / VIS</b><br><br>
+              <div  style=""><span class="input-group-addon alert-success"><b>Simulación del calculo de la obligación VIP/VIS.</b><br><br>
               Decreto Distrital 327/2004&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               Decreto Nacional 075/2013<br>
@@ -31,9 +31,9 @@
       </table>
     </div>
 
-    <div class="row" STYLE="position:absolute; top:20px; right:100px; background-image: url('');" >
+    <div class="row" STYLE="position:absolute; top:20px; left:50px;width:90%;" >
       <table width="100%">
-       <tr><td><img src="../imagenes/logoFrmWeb2.png" height=80></td></tr>
+       <tr><td><img src="../imagenes/logoFrmWeb2.png" height=80 align="right" ></td></tr>
       </table>
     </div>    
 
@@ -95,10 +95,7 @@
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab1">
 											<br>
-											<h3><strong>Paso 1 </strong> - Liquidacion</h3>
-
-
-											
+											<br>						
 											
 											 <div class="row">
                         <div class="col-sm-6">
@@ -157,11 +154,21 @@
                             </div>
                          </div> 
                       </DIV>   
+                      
+                            <div class="row" >
+        <div class="col-sm-12">
+              <div class="input-group "    ><label class="col-md-2 control-label"></label></div>
+              
+              <div  style=""><span class="input-group-addon alert-success"><b>*En todo caso el valor definitivo será adoptado mediante resolución motivada tras la verificación<br> de los soportes del traslado de la obligación urbanística.</b>
+              </span>
+          </div>
+        </div> 
+    </DIV>
         
 										</div>
 										<div class="tab-pane" id="tab2">
 											<br>
-											<h3><strong>Paso 2</strong> - Radicacion</h3>
+											<br>
 
 											<div class="row">
 											
@@ -203,7 +210,7 @@
                           <div class="form-group">
                             <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-envelope fa-lg fa-fw"></i></span>
-                              <input class="form-control input-lg" placeholder="Direccion" type="text" name="address" id="addrees">
+                              <input class="form-control input-lg" placeholder="Direccion" type="text" name="address" id="address">
 
                             </div>
                           </div>
@@ -308,7 +315,7 @@
                         
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
                                <span class="input-group-addon" >Direccion del Predio</span>
-                               <input class="form-control input-lg" placeholder=""  type="text" name="pdir" id="pDir" >
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pDir" id="pDir" >
                             </div>
 
                          </div>
@@ -358,8 +365,8 @@
                             <div class="form-group">
                             
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
-                               <span class="input-group-addon" >Licencia</span>
-                               <input class="form-control input-lg" placeholder=""  type="text" name="pLic2" id="pLic2" >
+                               <span class="input-group-addon" >Area Util</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pAreaU" id="pAreaU" >
                             </div>
                           </div>
                         </div>												
@@ -380,8 +387,7 @@
 										</div>
 										<div class="tab-pane" id="tab3">
 											<br>
-											<h3><strong>Step 3</strong> - Documentacion requerida</h3>
-											<div class="alert alert-info fade in">
+																						<div class="alert alert-info fade in">
 												<button class="close" data-dismiss="alert">
 													×
 												</button>
@@ -394,7 +400,7 @@
 											<div class="form-group smart-form">
 											
 											
-                      <label class="label">Seleccionar Certificado de Libertar y tradicion</label>
+                      <label class="label">Seleccionar Certificado de Libertad y tradicion</label>
                       <label class="input input-file" for="file">
                       <div class="button">
                       <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file1">
@@ -452,8 +458,7 @@
 										</div>
 										<div class="tab-pane" id="tab4">
 											<br>
-											<h3><strong>Paso 4</strong> - Finalizar Liquidación</h3>
-											<br>
+																						<br>
 											<h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Se ha completado la solicitud</strong></h1>
 											<h4 class="text-center">Descargue aqui el documento de radicacion No. 2014900000000002</h4>
 											<br>
