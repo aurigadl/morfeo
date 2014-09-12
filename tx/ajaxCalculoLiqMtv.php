@@ -51,7 +51,7 @@
     $valorReferenciaF = number_format($valorReferencia,2,",",".");
     $valorCatastralPromedioF = number_format($valorCatastralPromedio,2,",",".");
     $valorA2F = number_format($valorA2,4,",",".");
-    $textoFinal = "Nombre Propietario: $nombrePropietario <br> Direccion : $direccionPredio <BR>CHIP : $chip <BR>Valor M<sup>2</sup> :$ $valM2TF<br>Area : $areaTerreno<br>Valor de Referencia : $ $valorReferenciaF <br>Valor Estimado de la Obligación : $ $valorObligacionF <br> <br>Descargue aqui el documento de radicacion No. 2014900000000002";
+    $textoFinal = "$codBarras Nombre Propietario: $nombrePropietario <br> Direccion : $direccionPredio <BR>CHIP : $chip <BR>Valor M<sup>2</sup> :$ $valM2TF<br>Area : $areaTerreno<br>Valor de Referencia : $ $valorReferenciaF <br>Valor Estimado de la Obligación : $ $valorObligacionF <br> <br>Si esta seguro de los datos Presione Generar la Solicitud.";
     echo "
     <script>
       $('#valorO').val('$valorObligacionF');  
