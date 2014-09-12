@@ -15,7 +15,7 @@
         <div class="col-sm-12">
               <div class="input-group "    ><label class="col-md-2 control-label"></label></div>
               
-              <div  style=""><span class="input-group-addon alert-success"><b>LIQUIDACION DE LA OBLIGACION VIP / VIS</b><br><br>
+              <div  style=""><span class="input-group-addon alert-success"><b>Simulación del calculo de la obligación VIP/VIS.</b><br><br>
               Decreto Distrital 327/2004&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               Decreto Nacional 075/2013<br>
@@ -31,9 +31,9 @@
       </table>
     </div>
 
-    <div class="row" STYLE="position:absolute; top:20px; right:100px; background-image: url('');" >
+    <div class="row" STYLE="position:absolute; top:20px; left:50px;width:90%;" >
       <table width="100%">
-       <tr><td><img src="../imagenes/logoFrmWeb2.png" height=80></td></tr>
+       <tr><td><img src="../imagenes/logoFrmWeb2.png" height=80 align="right" ></td></tr>
       </table>
     </div>    
 
@@ -78,16 +78,16 @@
 									<div class="form-bootstrapWizard">
 										<ul class="bootstrapWizard form-wizard">
 											<li class="active" data-target="#step1">
-												<a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Liquidacion Predio</span> </a>
+												<a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Liquidaci&oacute;n Predio</span> </a>
 											</li>
 											<li data-target="#step2">
-												<a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Radicacion Solicitud</span> </a>
+												<a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Radicaci&oacute;n Solicitud</span> </a>
 											</li>
 											<li data-target="#step3">
-												<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Adjuntar Documentos</span> </a>
+												<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">A&ntilde;adir Documentos Requeridos</span> </a>
 											</li>
 											<li data-target="#step4">
-												<a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Finalizar Transaccion</span> </a>
+												<a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Finalizar Transacci&oacute;n</span> </a>
 											</li>
 										</ul>
 										<div class="clearfix"></div>
@@ -95,10 +95,7 @@
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab1">
 											<br>
-											<h3><strong>Paso 1 </strong> - Liquidacion</h3>
-
-
-											
+											<br>						
 											
 											 <div class="row">
                         <div class="col-sm-6">
@@ -157,11 +154,19 @@
                             </div>
                          </div> 
                       </DIV>   
+                      
+                            <div class="row" >
+        <div class="col-sm-12">
+              <div class="input-group "    ><label class="col-md-2 control-label"></label></div>
+              
+              
+        </div> 
+    </DIV>
         
 										</div>
 										<div class="tab-pane" id="tab2">
 											<br>
-											<h3><strong>Paso 2</strong> - Radicacion</h3>
+											<br>
 
 											<div class="row">
 											
@@ -203,7 +208,7 @@
                           <div class="form-group">
                             <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-envelope fa-lg fa-fw"></i></span>
-                              <input class="form-control input-lg" placeholder="Direccion" type="text" name="address" id="addrees">
+                              <input class="form-control input-lg" placeholder="Direccion" type="text" name="address" id="address">
 
                             </div>
                           </div>
@@ -244,7 +249,7 @@
 														<div class="input-group">
 															<span class="input-group-addon"><i class="fa fa-map-marker fa-lg fa-fw"></i></span>
 															<select class="form-control input-lg" name="city">
-																<option value="" selected="selected">Ciudad</option>
+																
 																<option value=1>Bogota</option>
 															</select>
 														</div>
@@ -308,7 +313,7 @@
                         
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
                                <span class="input-group-addon" >Direccion del Predio</span>
-                               <input class="form-control input-lg" placeholder=""  type="text" name="pdir" id="pDir" >
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pDir" id="pDir" >
                             </div>
 
                          </div>
@@ -358,8 +363,8 @@
                             <div class="form-group">
                             
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
-                               <span class="input-group-addon" >Licencia</span>
-                               <input class="form-control input-lg" placeholder=""  type="text" name="pLic2" id="pLic2" >
+                               <span class="input-group-addon" >Area Util</span>
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pAreaU" id="pAreaU" >
                             </div>
                           </div>
                         </div>												
@@ -380,8 +385,7 @@
 										</div>
 										<div class="tab-pane" id="tab3">
 											<br>
-											<h3><strong>Step 3</strong> - Documentacion requerida</h3>
-											<div class="alert alert-info fade in">
+																						<div class="alert alert-info fade in">
 												<button class="close" data-dismiss="alert">
 													×
 												</button>
@@ -394,11 +398,11 @@
 											<div class="form-group smart-form">
 											
 											
-                      <label class="label">Seleccionar Certificado de Libertar y tradicion</label>
+                      <label class="label">Seleccionar Certificado de Libertad y tradicion</label>
                       <label class="input input-file" for="file">
                       <div class="button">
                       <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file1">
-                      Escoger Archivo
+                      A&ntilde;adir Archivo
                       </div>
                       <input type="text" readonly="" placeholder="">
                       </label>
@@ -407,7 +411,7 @@
                       <label class="input input-file" for="file">
                       <div class="button">
                       <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file2">
-                      Escoger Archivo
+                      A&ntilde;adir Archivo
                       </div>
                       <input type="text" readonly="" placeholder="">
                       </label>
@@ -416,7 +420,7 @@
                       <label class="input input-file" for="file">
                       <div class="button">
                       <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file3">
-                      Escoger Archivo
+                      A&ntilde;adir Archivo
                       </div>
                       <input type="text" readonly="" placeholder="">
                       </label>
@@ -425,7 +429,7 @@
                       <label class="input input-file" for="file">
                       <div class="button">
                       <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file4">
-                      Escoger Archivo
+                      A&ntilde;adir Archivo
                       </div>
                       <input type="text" readonly="" placeholder="">
                       </label>
@@ -433,7 +437,7 @@
                       <label class="input input-file" for="file">
                       <div class="button">
                       <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file5">
-                      Escoger Archivo
+                      A&ntilde;adir Archivo
                       </div>
                       <input type="text" readonly="" placeholder="">
                       </label>
@@ -443,7 +447,7 @@
                       <label class="input input-file" for="file">
                       <div class="button">
                       <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file2">
-                      Escoger Archivo
+                      A&ntilde;adir Archivo
                       </div>
                       <input type="text" readonly="" placeholder="">
                       </label>
@@ -452,13 +456,21 @@
 										</div>
 										<div class="tab-pane" id="tab4">
 											<br>
-											<h3><strong>Paso 4</strong> - Finalizar Liquidación</h3>
+																						<br>
+											<h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> </strong></h1>
+											<h4 class="text-center"></h4>
 											<br>
-											<h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Se ha completado la solicitud</strong></h1>
-											<h4 class="text-center">Descargue aqui el documento de radicacion No. 2014900000000002</h4>
 											<br>
-											<br>
-											<div id=resultado> </div>
+											              <div id=resultadoRad>
+                      
+                      </div>
+											                      <div id=resultado>
+                      
+                      </div>
+											<div id=resultadoR>
+											<footer><center><input type=button onClick="radicarDocumento();" class="btn btn-lg btn-primary" value="Generar Solicitud" align="center"></footer>
+											</div>
+
 										</div>
 
 										<div class="form-actions">
@@ -471,15 +483,19 @@
 														<li class="previous disabled">
 															<a href="javascript:void(0);" class="btn btn-lg btn-default"> Anterior </a>
 														</li>
-														<!--<li class="next last">
-														<a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
-														</li>-->
+														               
+														
+														 
 														<li class="next">
 															<a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> Siguiente </a>
 														</li>
-													</ul>
+													</ul><br>
+													<div class="text-alert"><span class="input-group-addon alert-success">
+                            * En todo caso el valor definitivo será adoptado mediante resolución motivada 
+                             tras la verificación de los soportes del traslado de la obligación urbanística.</span></div> 
+                      </div>
 												</div>
-											</div>
+												
 										</div>
 
 									</div>
@@ -504,6 +520,16 @@
 
 
 <script type="text/javascript">
+	function radicarDocumento(){
+	          $.post("../tx/ajaxRadicarLiq.php", {"rads":"rads"}).done(
+            function( data ) {
+                $('#resultadoR').html(data);
+               
+            }
+        );
+	
+	}
+	
 	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
 	 *
 	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS

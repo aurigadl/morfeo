@@ -29,6 +29,8 @@
       $areaTerreno = $rs->fields["A_TER_CAT"];
       $nombrePropietario = $rs->fields["NOM_PRO"];
       $direccionPredio = $rs->fields["DIR_REAL"];
+      $direccionCorr = $rs->fields["DIR_CORR"];
+      $pFMI = $rs->fields["FMI"];
       $valorReferencia = 1394292.03;
       $valorCatastralPromedio = 1088049.31;
       $valorA2 =  ($valM2T / $valorCatastralPromedio) * $valA1;
@@ -49,15 +51,21 @@
     $valorReferenciaF = number_format($valorReferencia,2,",",".");
     $valorCatastralPromedioF = number_format($valorCatastralPromedio,2,",",".");
     $valorA2F = number_format($valorA2,4,",",".");
-    $textoFinal = "Nombre Propietario: $nombrePropietario <br> Direccion : $direccionPredio <BR>CHIP : $chip <BR>Valor M<sup>2</sup> :$ $valM2TF<br>Area : $areaTerreno<br>Valor de Referencia : $ $valorReferenciaF <br>Valor Estimado de la Obligación : $ $valorObligacionF <br> <br>Descargue aqui el documento de radicacion No. 2014900000000002";
+    $textoFinal = "$codBarras Nombre Propietario: $nombrePropietario <br> Direccion : $direccionPredio <BR>CHIP : $chip <BR>Valor M<sup>2</sup> :$ $valM2TF<br>Area : $areaTerreno<br>Valor de Referencia : $ $valorReferenciaF <br>Valor Estimado de la Obligación : $ $valorObligacionF <br> <br>Si esta seguro de los datos Presione Generar la Solicitud.";
     echo "
     <script>
       $('#valorO').val('$valorObligacionF');  
       $('#valM2T').val('$valM2TF');
       $('#valRef').val('$valorReferenciaF');
       $('#valorA2').val('$valorA2F');
+      $('#pDir').val('$direccionPredio');
+      $('#address').val('$direccionCorr');
+      $('#pRep').val('$nombrePropietario');
+      $('#pAreaB').val('$areaTerreno');
+      $('#pFMI').val('$pFMI');
       $('#valorCatastralPromedio').val('$valorCatastralPromedioF');
       $('#chip').val('$chip');
+      $('#pChip').val('$chip');
       $('#resultado').html('$textoFinal');
       $('#areaTerreno').html('(Area del terreno  $areaTerreno m<sup>2</sup>)')
     </script>
