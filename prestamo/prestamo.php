@@ -398,7 +398,7 @@ function Search_Show() {
                         <footer>
                             <input type="reset" class='btn btn-default' value="Limpiar"
                                    onClick="javascript: limpiar();">
-                            <input type="submit" class="btn btn-primary" name="genearreporte" value="Generar">
+                            <input type="submit" class="btn btn-primary" name="genearreporte" value="Generar!">
                         </footer>
                     <?
                     } else {
