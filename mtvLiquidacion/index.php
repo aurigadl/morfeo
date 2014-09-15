@@ -123,7 +123,7 @@
                             <div class="col-sm-6">
                                 <div class="input-group"><label class="col-md-2 control-label"></label></div>
                                 <div><span class="input-group-addon">PROMEDIO VALOR CATASTRAL 2014 m<sup>2</sup> </span>
-                                <input class="form-control input-lg" placeholder="Valor de Referencia" disabled type="text" name="valorCatastralPromedio" id="valorCatastralPromedio">
+                                <input class="form-control input-lg" placeholder="Valor de Referencia catastral /m²" disabled type="text" name="valorCatastralPromedio" id="valorCatastralPromedio">
                             </div>
                          </div>   
 
@@ -139,8 +139,8 @@
                          </div>
 											   <div class="col-sm-6">
                                 <div class="input-group"><label class="col-md-2 control-label"></label></div>
-                                <div><span class="input-group-addon">PROMEDIO VALOR  COMERCIAL DE REFERENCIA 2014/m²</span>
-                                <input class="form-control input-lg" placeholder="Valor de Referencia" disabled type="text" name="valRef" id="valRef">
+                                <div><span class="input-group-addon">PROMEDIO VALOR  COMERCIAL DE REFERENCIA </span>
+                                <input class="form-control input-lg" placeholder="Valor comercial de Referencia /m²" disabled type="text" name="valRef" id="valRef">
                             </div>
                          </div>   
 
