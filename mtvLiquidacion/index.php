@@ -1,4 +1,5 @@
 <?php
+ session_start();
  $ruta_raiz = "..";
  include "../conn.php";
 ?>
@@ -87,7 +88,7 @@
 												<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">A&ntilde;adir Documentos Requeridos</span> </a>
 											</li>
 											<li data-target="#step4">
-												<a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Finalizar Transacci&oacute;n</span> </a>
+												<a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Finalizar la simulaci&oacute;n</span> </a>
 											</li>
 										</ul>
 										<div class="clearfix"></div>
@@ -398,7 +399,7 @@
 											<div class="form-group smart-form">
 											
 											
-                      <label class="label">Seleccionar Certificado de Libertad y tradicion</label>
+                      <label class="label">Seleccionar Certificado de Tradici&oacute;n y Libertad.</label>
                       <label class="input input-file" for="file">
                       <div class="button">
                       <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file1">
@@ -407,8 +408,8 @@
                       <input type="text" readonly="" placeholder="">
                       </label>
 
-                      <label class="label">Certificado Catastral</label>
-                      <label class="input input-file" for="file">
+                      <label class="label">Certificado Catastral vigente</label>
+                      <label class="input input-file" for="file2">
                       <div class="button">
                       <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file2">
                       A&ntilde;adir Archivo
@@ -416,7 +417,7 @@
                       <input type="text" readonly="" placeholder="">
                       </label>
                                             
-                      <label class="label">Certificado de Existencia y Representación Legal de la sociedad constructora titular de licencia</label>
+                      <label class="label">Certificado de Existencia y Representación <br> (En caso de ser Persona juridica el titular de la licencia)</label>
                       <label class="input input-file" for="file">
                       <div class="button">
                       <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file3">
@@ -451,6 +452,16 @@
                       </div>
                       <input type="text" readonly="" placeholder="">
                       </label>
+                      
+                      
+                                            <label class="label">Poder (en caso de ser autorizado a realizar tramites ante Metrovivienda).</label>
+                      <label class="input input-file" for="file">
+                      <div class="button">
+                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file6">
+                      A&ntilde;adir Archivo
+                      </div>
+                      <input type="text" readonly="" placeholder="">
+                      </label>
 
 										</div>
 										</div>
@@ -461,11 +472,9 @@
 											<h4 class="text-center"></h4>
 											<br>
 											<br>
-											              <div id=resultadoRad>
-                      
+                      <div id=resultadoRad>
                       </div>
-											                      <div id=resultado>
-                      
+                      <div id=resultado>
                       </div>
 											<div id=resultadoR>
 											<footer><center><input type=button onClick="radicarDocumento();" class="btn btn-lg btn-primary" value="Generar Solicitud" align="center"></footer>
@@ -521,6 +530,7 @@
 
 <script type="text/javascript">
 	function radicarDocumento(){
+	  radData = $('#resultado').html();
 	          $.post("../tx/ajaxRadicarLiq.php", {"rads":"rads"}).done(
             function( data ) {
                 $('#resultadoR').html(data);
@@ -608,7 +618,7 @@
 					city : {
 						required : true
 					},
-					postal : {
+					address : {
 						required : true,
 						minlength : 4
 					},

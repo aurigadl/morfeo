@@ -48,21 +48,22 @@ session_start();
     $rad->carpCodi     = 9;
     $rad->carPer       = 0;
     $rad->trteCodi     = 0;
-    $rad->raAsun       = "Liquidacin vis/vip";
+    $rad->raAsun       = "Liquidacion VIP/VIS";
   $numeroRadicado =  $rad->newRadicado("9","900");
   $msg = '';
   
   $codBarras = "<table align=right><tr><td></td><td><img src=codBarras.png width=300><br> Radicado $numeroRadicado<br>Fecha ".date("Y/m/d H:i:s")."<br></td></tr></table>";
   
   if ($numeroRadicado) {
+    $fechaHoy = date("ymdhmsi");
     echo "<script>
       $('#resultadoRad').html('$codBarras'); 
     </script>";  
-    echo "<div class='alert alert-success fade in'>
+    echo "<br><br><div class='alert alert-success fade in'>
             <button class='close' data-dismiss='alert'> × </button>
             <i class='fa-fw fa fa-check'></i>
             <strong>Solicitud Genrada con Numero de Radicado No. $numeroRadicado </strong>
-            <a href='#' onClick='window.print();'> - Imprimir Solicitud -</a>
+            <a href='#' onClick='window.open(\"radPrint.php?radNumero=$numeroRadicado&\",\"mtvImprimir$fechaHoy\");'> - Imprimir Solicitud -</a>
             <span id=refresh class='btn btn-ribbon' data-reset-msg='Recargar Pagina' data-html='true' rel='tooltip' data-title='refresh' data-action='resetWidgets'></div>";
   } else {
     echo "<div class='alert alert-danger fade in'>
