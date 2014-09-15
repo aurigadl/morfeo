@@ -1,4 +1,7 @@
-<htm>
+<html>
+<heder>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</header>
 <?
 session_start();
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -61,7 +64,7 @@ El estado de su tramite lo podra consultar en: http://www.metrovivienda.gov.co
 <script>
   pData = window.opener.resultado.innerHTML;
   document.getElementById("pData").innerHTML =pData;
-  document.getElementById("fname").innerHTML = window.opener.fname.value;
+  document.getElementById("fname").innerHTML = window.opener.fname.value + " " + window.opener.lname.value;
   document.getElementById("faddress").innerHTML = window.opener.address.value;
   window.print();
 </script>
