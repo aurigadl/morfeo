@@ -79,7 +79,7 @@
 									<div class="form-bootstrapWizard">
 										<ul class="bootstrapWizard form-wizard">
 											<li class="active" data-target="#step1">
-												<a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Liquidaci&oacute;n Predio</span> </a>
+												<a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Simulaci&oacute;n</span> </a>
 											</li>
 											<li data-target="#step2">
 												<a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Radicaci&oacute;n Solicitud</span> </a>
@@ -163,6 +163,9 @@
               
         </div> 
     </DIV>
+     <CENTER>
+     <input type=button class="btn btn-lg txt-color-darken" value="Imprimir Simulaci&oacute;n" onClick="window.open('simuPrint.php','SimuPrin<?=date("ymdhis")?>')">
+            </CENTER>             
         
 										</div>
 										<div class="tab-pane" id="tab2">
@@ -494,10 +497,10 @@
 														</li>
 														               
 														
-														 
 														<li class="next">
-															<a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> Siguiente </a>
-														</li>
+                              <a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> Siguiente </a>
+                            </li> 
+														
 													</ul><br>
 													<div class="text-alert"><span class="input-group-addon alert-success">
                             * En todo caso el valor definitivo será adoptado mediante resolución motivada 
