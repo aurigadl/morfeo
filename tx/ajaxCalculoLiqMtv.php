@@ -55,7 +55,7 @@
     $textoFinal = " <table width=\"70%\" border=1><tr><td>Nombre del proyecto</td><td> <label id=pNombreI></label> </td></tr>";
     $textoFinal .= " <tr><td>Direci&oacute;n</td><td>$direccionPredio  </td></tr>";
     $textoFinal .= " <tr><td>CHIP</td><td>$chip  </td></tr>";
-    $textoFinal .= " <tr><td>Urbanizador / Constructor / Patrimonio Aut&oacute;nomo</td><td>$chip  </td></tr>";
+    $textoFinal .= " <tr><td>Urbanizador / Constructor / Patrimonio Aut&oacute;nomo</td><td><label id=pConstructoraI></label>  </td></tr>";
     $textoFinal .= " <tr><td>Representante Legal</td><td> $nombrePropietario </td></tr>";
     $textoFinal .= "<tr><td>Area obligaci&oacute;n VIP (A1) </td><td> $valA1 m<sup>2</sup> </Td></tr>";
     $textoFinal .= "<tr><td>Area a trasladar</td><td>$valorA2F m<sup>2</sup></Td></tr>";
@@ -63,6 +63,7 @@
     $textoFinal .= "<tr><td></td></tr></table>";
     echo "<script>
       pNombreI = $('#pNombre').val();
+      pConstructoraI = $('#pConstructora').val();
       $('#valorO').val('$valorObligacionF');  
       $('#valM2T').val('$valM2TF');
       $('#valRef').val('$valorReferenciaF');
