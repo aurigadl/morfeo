@@ -33,8 +33,8 @@ Bogot&aacute;, <?=$fechaRad?>    <br><br><br>
 <bR>
 <br><br>
 
-Simulacion del Calculo de la Obigaci&oacute;n VIP/VIS.
-<br><br>
+Los siguientes datos han sido extraídos de la simulación del calculo de la obligación VIS/VIP, en todo caso el valor definitivo será adoptado 
+mediante resolución motivada tras la verificación de los soportes del traslado de la obligación urbanística.<br><br>
 
 <div id=pData>
  <?=$pData?>
@@ -43,9 +43,11 @@ Simulacion del Calculo de la Obigaci&oacute;n VIP/VIS.
 
 
 
-* En todo caso el valor definitivo será adoptado mediante resolución motivada tras la verificación de los soportes del traslado de la obligación urbanística.
 <br>
 <br>
+Recuerde:
+
+Metrovivienda organiza, garantiza y articula una oferta y una demanda de vivienda de interés social para las poblaciones más vulnerables de Bogotá D.C.
 </div>
 
 <script>

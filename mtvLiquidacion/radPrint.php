@@ -45,7 +45,9 @@ Se&ntilde;or(a)<br>
 <label id=faddress name=faddress ></label>
 <br><br>
 
-Se ha generado una solicitud de Simulaci&oacute;n del calculo de la obligacion VIP/VIS, con los siguientes datos.
+Los siguientes datos han sido extraídos de la simulación del calculo de la obligación VIS/VIP,
+en todo caso el valor definitivo será adoptado mediante resolución motivada tras la verificación de los soportes 
+del traslado de la obligación urbanística.
 <br><br>
 
 <div id=pData>
@@ -55,10 +57,12 @@ Se ha generado una solicitud de Simulaci&oacute;n del calculo de la obligacion V
 
 
 
-* En todo caso el valor definitivo será adoptado mediante resolución motivada tras la verificación de los soportes del traslado de la obligación urbanística.
 <br>
 <br>
-El estado de su tramite lo podra consultar en: http://www.metrovivienda.gov.co
+Recuerde:
+<br><br>
+Metrovivienda organiza, garantiza y articula una oferta y una demanda de vivienda de interés social para las poblaciones más vulnerables de Bogotá D.C.
+<br>El estado de su tramite lo podra consultar en: http://www.metrovivienda.gov.co
 </div>
 
 <script>
