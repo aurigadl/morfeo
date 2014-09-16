@@ -40,7 +40,6 @@ Bogot&aacute;, <?=$fechaRad?>    <br><br><br>
 
 <bR>
 Se&ntilde;or(a)<br>
-<?=$radNombre?><br>
 <label id=fname name=fname></label><br>
 <label id=faddress name=faddress ></label>
 <br><br>
@@ -54,9 +53,16 @@ del traslado de la obligación urbanística.
  <?=$pData?>
 </div>
 <br><br>
-
-
-
+<small>
+<b>Documentos Ajuntos a esta solicitud.</b><br>
+<label name=file1 id=file1></label>
+<label name=file2 id=file2></label>
+<label name=file3 id=file3></label>
+<label name=file4 id=file4></label>
+<label name=file5 id=file5></label>
+<label name=file6 id=file6></label>
+<label name=file7 id=file7></label>
+</small>
 <br>
 <br>
 Recuerde:
@@ -68,8 +74,14 @@ Metrovivienda organiza, garantiza y articula una oferta y una demanda de viviend
 <script>
   pData = window.opener.resultado.innerHTML;
   document.getElementById("pData").innerHTML =pData;
-  document.getElementById("fname").innerHTML = window.opener.fname.value + " " + window.opener.lname.value;
-  document.getElementById("faddress").innerHTML = window.opener.address.value;
+  document.getElementById("fname").innerHTML = window.opener.fname.value;
+  document.getElementById("faddress").innerHTML = window.opener.address.value + "<br>";
+  if(window.opener.file1.value) document.getElementById("file1").innerHTML = window.opener.file1.value + " (Certificado de Tradici&oacute;n y Libertad.)<br>";
+  if(window.opener.file2.value) document.getElementById("file2").innerHTML = window.opener.file2.value + " (Certificado Catastral vigente)<br>";
+  if(window.opener.file3.value) document.getElementById("file3").innerHTML = window.opener.file3.value + " (Certificado de Existencia y Representación )<br>";
+  if(window.opener.file4.value) document.getElementById("file4").innerHTML = window.opener.file4.value + " (Cédula de Ciudadanía del Titular de la licencia.)<br>";
+  if(window.opener.file5.value) document.getElementById("file5").innerHTML = window.opener.file5.value + " (Certificación de la Curaduría Urbana)<br>";
+  if(window.opener.file6.value) document.getElementById("file6").innerHTML = window.opener.file6.value + " (Poder)<br>";
   window.print();
 </script>
 </body>

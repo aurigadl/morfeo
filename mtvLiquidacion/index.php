@@ -3,13 +3,15 @@
  $ruta_raiz = "..";
  include "../conn.php";
 ?>
+<HTML>
+<HEADER>
 <?php include_once "$ruta_raiz/htmlheader.inc.php"; 
 
 ?>
-<body style="background-image: url(../img/login_background.jpeg);">
+</HEADER>
+<body style="background-image: url(../img/login_background.jpeg); background-repeat: repeat-y;">
 
 <div id=res name=res> </div>
-<div STYLE="position:absolute; top:10px; right:500px;width:90%; background-image: url();" align=right>adfaf </div>
 <!-- widget grid -->
 
       <div class="row" STYLE="position:absolute; top:20px; left:50px;width:90%;" >
@@ -116,7 +118,7 @@
                       <div class="row">
                          <div class="col-sm-6">
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
-                               <span class="input-group-addon" >VALOR CATASTRAL DEL PREDIO 2014 m<sup>2</sup></span>
+                               <span class="input-group-addon" >VALOR CATASTRAL DEL m<sup>2</sup> EN EL PREDIO 2014 </span>
                                <input class="form-control input-lg" placeholder="" disabled type="text" name="valM2T" id="valM2T" >
                             </div>
                          </div>
@@ -188,7 +190,7 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                           <div class="form-group">
                             <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-user fa-lg fa-fw"></i></span>
@@ -197,16 +199,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-sm-6">
-                          <div class="form-group">
-                            <div class="input-group">
-                              <span class="input-group-addon"><i class="fa fa-user fa-lg fa-fw"></i></span>
-                              <input class="form-control input-lg" placeholder="Apellidos" type="text" name="lname" id="lname">
-
-                            </div>
-                          </div>
-                        </div>
-											
+										
                                            
                         <div class="col-sm-12">
                           <div class="form-group">
@@ -279,7 +272,7 @@
 													</div>
 												</div>
 												
-                      <h4><strong>Datos del Proyecto</strong> </h4>
+                      &nbsp;&nbsp;<H4>Datos del Proyecto</H4>
 
                       
                         <div class="col-sm-4">
@@ -296,7 +289,7 @@
                         <div class="col-sm-4">
                           <div class="form-group">
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
-                               <span class="input-group-addon" >Constructora</span>
+                               <span class="input-group-addon" >Urbanizador / Constructor / Patrimonio Aut&oacute;nomo</span>
                                <input class="form-control input-lg" placeholder=""  type="text" name="pConstructora" id="pConstructora" >
                             </div>
                           </div>
@@ -311,7 +304,7 @@
                             </div>
                           </div>
                         </div>
-                        <h4><strong>Identificaci&oacute;n del predio</H4></STRONG>
+                        &nbsp;&nbsp;<H4>Identificaci&oacute;n del predio</H4>
                         <div class="col-sm-4">
                           <div class="form-group">
                         
@@ -342,7 +335,8 @@
                           </div>
                         </div>
                         
-                      <h4><strong>Datos Urbanisticos</H4></STRONG>
+                      &nbsp;&nbsp;<H4>Datos Urbanisticos</H4>
+                      
                         <div class="col-sm-4">
                           <div class="form-group">
                         
@@ -379,7 +373,7 @@
                               <label class="checkbox">
                               <input type="checkbox" checked="checked" name="checkbox">
                               <i></i>
-                              Acepto notificaci&oacute;n y envio de copia por correo electr&oacute;nico.
+                              &nbsp;&nbsp;Acepto notificaci&oacute;n y envio de copia por correo electr&oacute;nico.
                               </label>
                             </div>
                           </div>
@@ -403,69 +397,35 @@
 											
 											
                       <label class="label">Seleccionar Certificado de Tradici&oacute;n y Libertad.</label>
-                      <label class="input input-file" for="file">
-                      <div class="button">
-                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file1">
-                      A&ntilde;adir Archivo
-                      </div>
-                      <input type="text" readonly="" placeholder="">
+                      <input id="file1" class="btn btn-primary" type="file" value=""  name="file1">
                       </label>
 
                       <label class="label">Certificado Catastral vigente</label>
-                      <label class="input input-file" for="file2">
-                      <div class="button">
-                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file2">
-                      A&ntilde;adir Archivo
-                      </div>
-                      <input type="text" readonly="" placeholder="">
+                      <input id="file2" class="btn btn-primary" type="file" value=""  name="file2">
                       </label>
                                             
                       <label class="label">Certificado de Existencia y Representación <br> (En caso de ser Persona juridica el titular de la licencia)</label>
-                      <label class="input input-file" for="file">
-                      <div class="button">
-                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file3">
-                      A&ntilde;adir Archivo
-                      </div>
-                      <input type="text" readonly="" placeholder="">
+                      <input id="file3" class="btn btn-primary" type="file" value=""  name="file3">
+
                       </label>
 
                       <label class="label">Cédula de Ciudadanía del Titular de la licencia (En caso de ser persona natural el titular de la licencia)</label>
-                      <label class="input input-file" for="file">
-                      <div class="button">
-                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file4">
-                      A&ntilde;adir Archivo
-                      </div>
-                      <input type="text" readonly="" placeholder="">
+                                            <input id="file4" class="btn btn-primary" type="file" value=""  name="file4">
+
                       </label>
                       <label class="label">Certificación de la Curaduría Urbana en donde se indiquen las áreas del proyecto, el tipo de proyecto y se establezca la provisión de VIS o VIP.</label>
-                      <label class="input input-file" for="file">
-                      <div class="button">
-                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file5">
-                      A&ntilde;adir Archivo
-                      </div>
-                      <input type="text" readonly="" placeholder="">
+                                            <input id="file5" class="btn btn-primary" type="file" value=""  name="file5">
+
                       </label>
 
 
-                      <label class="label">Certificado Catastral</label>
-                      <label class="input input-file" for="file">
-                      <div class="button">
-                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file2">
-                      A&ntilde;adir Archivo
-                      </div>
-                      <input type="text" readonly="" placeholder="">
+                          <label class="label">Poder (en caso de ser autorizado a realizar tramites ante Metrovivienda).</label>
+                                                              <input id="file6" class="btn btn-primary" type="file" value=""  name="file6">
+
                       </label>
                       
                       
-                                            <label class="label">Poder (en caso de ser autorizado a realizar tramites ante Metrovivienda).</label>
-                      <label class="input input-file" for="file">
-                      <div class="button">
-                      <input type="file" onchange="this.parentNode.nextSibling.value = this.value" name="file6">
-                      A&ntilde;adir Archivo
-                      </div>
-                      <input type="text" readonly="" placeholder="">
-                      </label>
-
+                  
 										</div>
 										</div>
 										<div class="tab-pane" id="tab4">
@@ -710,3 +670,4 @@
 
 </script>
 </body>
+</HTML>
