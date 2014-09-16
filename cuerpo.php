@@ -228,7 +228,6 @@ $_SESSION['numExpedienteSelected'] = null;
                   </thead>
                   <tbody>
                   <?php
-			echo "PROBANDO ESTO.. PARA...";
                     include "$ruta_raiz/include/query/queryCuerpo.php";
 			//$db->conn->debug = true;
 			  $rs = $db->conn->Execute($isql);
