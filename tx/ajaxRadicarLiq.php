@@ -32,7 +32,7 @@ session_start();
     if(!$radicadopadre)  $radicadopadre = null;
 
     $rad->radiNumeDeri = trim($radicadopadre);
-    $rad->radiPais     = 179;
+    $rad->radiPais     = 170;
     $rad->descAnex     = "Prueba web";
     $rad->radiDepeActu = "'900'";
     $rad->radiDepeRadi = "'900'";
@@ -58,6 +58,12 @@ session_start();
     $fechaHoy = date("ymdhmsi");
     echo "<script>
       $('#resultadoRad').html('$codBarras'); 
+      pRepI = $('#pRep').val().toUpperCase();
+      pNombreI = $('#pNombre').val().toUpperCase();
+      pConstructoraI = $('#pConstructora').val().toUpperCase();
+      $('#pRepI').text(pRepI);
+      $('#pConstructoraI').text(pConstructoraI);
+      $('#pNombreI').text(pNombreI);
     </script>";  
     echo "<br><br><div class='alert alert-success fade in'>
             <button class='close' data-dismiss='alert'> × </button>

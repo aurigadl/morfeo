@@ -56,7 +56,7 @@
     $textoFinal .= " <tr><td>Direci&oacute;n</td><td>$direccionPredio  </td></tr>";
     $textoFinal .= " <tr><td>CHIP</td><td>$chip  </td></tr>";
     $textoFinal .= " <tr><td>Urbanizador / Constructor / Patrimonio Aut&oacute;nomo</td><td><label id=pConstructoraI></label>  </td></tr>";
-    $textoFinal .= " <tr><td>Representante Legal</td><td> $nombrePropietario </td></tr>";
+    $textoFinal .= " <tr><td>Representante Legal</td><td> <label id=pRepI> </td></tr>";
     $textoFinal .= "<tr><td>Area obligaci&oacute;n VIP (A1) </td><td> $valA1 m<sup>2</sup> </Td></tr>";
     $textoFinal .= "<tr><td>Area a trasladar</td><td>$valorA2F m<sup>2</sup></Td></tr>";
     $textoFinal .= "<tr><td>Valor estimado de la Obligaci&oacute;n por traslado VIP/VIS </td><td>$valorObligacionF </Td></tr>";
@@ -64,13 +64,14 @@
     echo "<script>
       pNombreI = $('#pNombre').val();
       pConstructoraI = $('#pConstructora').val();
+      pRepI = $('#pRep').val();
       $('#valorO').val('$valorObligacionF');  
       $('#valM2T').val('$valM2TF');
       $('#valRef').val('$valorReferenciaF');
       $('#valorA2').val('$valorA2F');
       $('#pDir').val('$direccionPredio');
       $('#address').val('$direccionCorr');
-      $('#pRep').val('$nombrePropietario');
+      //$('#pRep').val('$nombrePropietario');
       $('#pAreaB').val('$areaTerreno');
       $('#pFMI').val('$pFMI');
       $('#valorCatastralPromedio').val('$valorCatastralPromedioF');
@@ -79,6 +80,7 @@
       $('#resultado').html('$textoFinal');
       $('#areaTerreno').html('(Area del terreno  $areaTerreno m<sup>2</sup>)')
       $('#pNombreI').text(pNombreI);
+      $('#pRepI').text(pRepI);
     </script>
     ";
   } else {
