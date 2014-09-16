@@ -1,8 +1,9 @@
 <?php
+  session_start();
   include '../config.php';
   include '../include/db/ConnectionHandler.php';
   
-  session_start();
+  
   
   $ruta_raiz  = '..';
   include '../include/tx/Tx.php';
@@ -50,10 +51,19 @@
     $valM2TF = number_format($valM2T,2,",",".");
     $valorReferenciaF = number_format($valorReferencia,2,",",".");
     $valorCatastralPromedioF = number_format($valorCatastralPromedio,2,",",".");
-    $valorA2F = number_format($valorA2,4,",",".");
-    $textoFinal = "$codBarras Nombre Propietario: $nombrePropietario <br> Direccion : $direccionPredio <BR>CHIP : $chip <BR>Valor M<sup>2</sup> :$ $valM2TF<br>Area : $areaTerreno<br>Valor de Referencia : $ $valorReferenciaF <br>Valor Estimado de la Obligación : $ $valorObligacionF <br> <br>Si esta seguro de los datos Presione Generar la Solicitud.";
-    echo "
-    <script>
+    $valorA2F = number_format($valorA2,2,",",".");
+    $textoFinal = " <table width=\"70%\" border=1><tr><td>Nombre del proyecto</td><td> <label id=pNombreI></label> </td></tr>";
+    $textoFinal .= " <tr><td>Direci&oacute;n</td><td>$direccionPredio  </td></tr>";
+    $textoFinal .= " <tr><td>CHIP</td><td>$chip  </td></tr>";
+    $textoFinal .= " <tr><td>Urbanizador / Constructor / Patrimonio Aut&oacute;nomo</td><td><label id=pConstructoraI></label>  </td></tr>";
+    $textoFinal .= " <tr><td>Representante Legal</td><td> $nombrePropietario </td></tr>";
+    $textoFinal .= "<tr><td>Area obligaci&oacute;n VIP (A1) </td><td> $valA1 m<sup>2</sup> </Td></tr>";
+    $textoFinal .= "<tr><td>Area a trasladar</td><td>$valorA2F m<sup>2</sup></Td></tr>";
+    $textoFinal .= "<tr><td>Valor estimado de la Obligaci&oacute;n por traslado VIP/VIS </td><td>$valorObligacionF </Td></tr>";
+    $textoFinal .= "<tr><td></td></tr></table>";
+    echo "<script>
+      pNombreI = $('#pNombre').val();
+      pConstructoraI = $('#pConstructora').val();
       $('#valorO').val('$valorObligacionF');  
       $('#valM2T').val('$valM2TF');
       $('#valRef').val('$valorReferenciaF');
@@ -68,6 +78,7 @@
       $('#pChip').val('$chip');
       $('#resultado').html('$textoFinal');
       $('#areaTerreno').html('(Area del terreno  $areaTerreno m<sup>2</sup>)')
+      $('#pNombreI').text(pNombreI);
     </script>
     ";
   } else {
@@ -75,7 +86,7 @@
               <button class='close' data-dismiss='alert'> × </button>
               <i class='fa-fw fa fa-times'></i>
               <strong>CHIP $chip</strong>
-               No se ha encontrado en la Base de datos.  Porfavor verifiquelo.
+               No se ha encontrado en la Base de datos.  Por favor verifiquelo.
               </div>
               
               ";
