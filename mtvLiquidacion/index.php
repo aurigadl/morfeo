@@ -397,36 +397,128 @@
 											
 											
                       <label class="label">Seleccionar Certificado de Tradici&oacute;n y Libertad.</label>
-                      <input id="file1" class="btn btn-primary" type="file" value=""  name="file1">
-                      </label>
+                      <?php
+                        $norandom = "file1";
+                        
+                        echo("<div $addAttr id='$norandom'>A&ntilde;dir Archivos</div>
+                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                        $scriptJS .= "
+                                    var uploaderId = '$norandom';
+                                    $('#$norandom').uploadFile({
+                                        url:'./server.php?tx=2',
+                                        fileName:'fileFormDinamic',
+                                        multiple:false,
+                                        onSuccess:function(files,data,xhr){
+                                            $('#inp_$norandom').val(JSON.parse(data)[0]);
+                                        }
+                                    });
+                                ";
+                      ?>
 
                       <label class="label">Certificado Catastral vigente</label>
-                      <input id="file2" class="btn btn-primary" type="file" value=""  name="file2">
-                      </label>
+                      <?php
+                        $norandom = "file2";
+                        
+                        echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
+                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                        $scriptJS .= "
+                                    var uploaderId = '$norandom';
+                                    $('#$norandom').uploadFile({
+                                        url:'./server.php?tx=2',
+                                        fileName:'fileFormDinamic',
+                                        multiple:false,
+                                        onSuccess:function(files,data,xhr){
+                                            $('#inp_$norandom').val(JSON.parse(data)[0]);
+                                        }
+                                    });
+                                ";
+                      ?>
                                             
                       <label class="label">Certificado de Existencia y Representación <br> (En caso de ser Persona juridica el titular de la licencia)</label>
-                      <input id="file3" class="btn btn-primary" type="file" value=""  name="file3">
-
-                      </label>
+                      <?php
+                        $norandom = "file3";
+                        
+                        echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
+                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                        $scriptJS .= "
+                                    var uploaderId = '$norandom';
+                                    $('#$norandom').uploadFile({
+                                        url:'./server.php?tx=2',
+                                        fileName:'fileFormDinamic',
+                                        multiple:false,
+                                        onSuccess:function(files,data,xhr){
+                                            $('#inp_$norandom').val(JSON.parse(data)[0]);
+                                        }
+                                    });
+                                ";
+                      ?>
 
                       <label class="label">Cédula de Ciudadanía del Titular de la licencia (En caso de ser persona natural el titular de la licencia)</label>
-                                            <input id="file4" class="btn btn-primary" type="file" value=""  name="file4">
-
-                      </label>
+                      <?php
+                        $norandom = "file4";
+                        
+                        echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
+                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                        $scriptJS .= "
+                                    var uploaderId = '$norandom';
+                                    $('#$norandom').uploadFile({
+                                        url:'./server.php?tx=2',
+                                        fileName:'fileFormDinamic',
+                                        multiple:false,
+                                        onSuccess:function(files,data,xhr){
+                                            $('#inp_$norandom').val(JSON.parse(data)[0]);
+                                        }
+                                    });
+                                ";
+                      ?>
                       <label class="label">Certificación de la Curaduría Urbana en donde se indiquen las áreas del proyecto, el tipo de proyecto y se establezca la provisión de VIS o VIP.</label>
-                                            <input id="file5" class="btn btn-primary" type="file" value=""  name="file5">
+<?php
+                        $norandom = "file5";
+                        
+                        echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
+                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                        $scriptJS .= "
+                                    var uploaderId = '$norandom';
+                                    $('#$norandom').uploadFile({
+                                        url:'./server.php?tx=2',
+                                        fileName:'fileFormDinamic',
+                                        multiple:false,
+                                        onSuccess:function(files,data,xhr){
+                                            $('#inp_$norandom').val(JSON.parse(data)[0]);
+                                        }
+                                    });
+                                ";
+                      ?>
 
-                      </label>
 
-
-                          <label class="label">Poder (en caso de ser autorizado a realizar tramites ante Metrovivienda).</label>
-                                                              <input id="file6" class="btn btn-primary" type="file" value=""  name="file6">
-
-                      </label>
-                      
-                      
+                      <label class="label">        Poder (en caso de ser autorizado a realizar tramites ante Metrovivienda).</label>   
+                      <?php
+                        $norandom = "file6";
+                        
+                        echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
+                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                        $scriptJS .= "
+                                    var uploaderId = '$norandom';
+                                    $('#$norandom').uploadFile({
+                                        url:'./server.php?tx=2',
+                                        fileName:'fileFormDinamic',
+                                        multiple:false,
+                                        onSuccess:function(files,data,xhr){
+                                            $('#inp_$norandom').val(JSON.parse(data)[0]);
+                                        }
+                                    });
+                                ";
+                      ?>
                   
+                    
+                    
 										</div>
+										<div class="alert alert-warning fade in">
+<button class="close" data-dismiss="alert"> × </button>
+<i class="fa-fw fa fa-warning"></i>
+<strong>Nota.</strong>
+¡Página en prueba, aun no puedes cargar los archivos!
+</div>
 										</div>
 										<div class="tab-pane" id="tab4">
 											<br>
@@ -441,8 +533,17 @@
                       </div>
 											<div id=resultadoR>
 											<footer><center><input type=button onClick="radicarDocumento();" class="btn btn-lg btn-primary" value="Generar Solicitud" align="center"></footer>
-											</div>
+										
+										
+										</div>
+                    <div class="alert alert-warning fade in">
+<button class="close" data-dismiss="alert"> × </button>
+<i class="fa-fw fa fa-warning"></i>
+<strong>Nota.</strong>
+La generación de este radicado es temporal, si desea radicar su solicitud acérquese a Metrovivienda.
+</div>
 
+										
 										</div>
 
 										<div class="form-actions">
@@ -668,6 +769,7 @@
 	// Load bootstrap wizard dependency then run pagefunction
 	pagefunction();
 
+	<?=$scriptJS?>
 </script>
 </body>
 </HTML>

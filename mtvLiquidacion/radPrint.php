@@ -33,7 +33,8 @@ Bogot&aacute;, <?=$fechaRad?>    <br><br><br>
     <div class="row" STYLE="position:absolute; top:20px; left:50px;width:90%;" >
       <table width="30%"  align=right>
        <tr><td><img src="./codBarras.png" ></td></tr>
-       <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No Radicaci&oacute;n  <?=$radNumero?></td>
+       <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No Radicaci&oacute;n  2014XXXXXX<?=$radNumerox?><BR>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Liquidacion de Prueba - No Valido</td>
        </tr>
       </table>
     </div>  
