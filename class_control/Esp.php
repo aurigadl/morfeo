@@ -330,8 +330,8 @@ $y=0;
 $com = chr(34);
 //variable que almacena el contenido del archivo
 $contenido="$com*TIPO*$com,$com*NOMBRE*$com,$com*DIR*$com,$com*MUNI_NOMBRE*$com,$com*DEPTO_NOMBRE*$com,$com*PAIS_NOMBRE*$com,$com*NUIR*$com,$com*NOMBRE_REP*$com,$com*DIGNATARIO*$com,$com*CARGO*$com\n";
-$depto = & new Departamento($this->cursor);
-$muni = & new Municipio($this->cursor);
+$depto =  new Departamento($this->cursor);
+$muni =  new Municipio($this->cursor);
 for ($i=0; $i<3; $i++)	//Ciclo de 0 a 2 para cubrir los 3 vectores de seleccionados
 { 	if (${'s'.$i})		//Si se envio el vector....
 	{

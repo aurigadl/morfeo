@@ -1,4 +1,5 @@
 <?php
+ini_set("display_errors",1);
 /*************************************************************************************
  * ORFEO : Sistema de Gestion Documental     http://www.orfeogpl.org
  * Idea Original de la SUPERINTENDENCIA DE SERVICIOS PUBLICOS DOMICILIARIOS
@@ -28,6 +29,7 @@
 
 
 	$db = new ConnectionHandler("$ruta_raiz");
+	//$db->conn->debug = true;
 	$db->conn->SetFetchMode(ADODB_FETCH_NUM);
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	if (!defined('ADODB_ASSOC_CASE'))define('ADODB_ASSOC_CASE', 1);

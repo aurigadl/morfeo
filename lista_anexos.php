@@ -15,7 +15,7 @@ define('ADODB_ASSOC_CASE', 1);
 $objTipoDocto  = new TipoDocumento($db);
 $objTipoDocto->TipoDocumento_codigo($tdoc);
 $num_archivos=0;
-$anex = & new Anexo($db);
+$anex = new Anexo($db);
 $sqlFechaDocto = $db->conn->SQLDate("Y-m-D H:i:s A","sgd_fech_doc");
 $sqlFechaAnexo = $db->conn->SQLDate("Y-m-D H:i:s A","anex_fech_anex");
 //$sqlFechaAnexo = "to_char(anex_fech_anex, 'YYYY/DD/MM HH:MI:SS')";

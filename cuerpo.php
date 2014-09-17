@@ -48,6 +48,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
   include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 	if (!$db) $db = new ConnectionHandler($ruta_raiz);
+	//$db->conn->debug = true;
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_RADI");
 	  if(strlen($orderNo)==0){
@@ -121,7 +122,7 @@ $_SESSION['numExpedienteSelected'] = null;
                     and d.sgd_dir_tipo = 1
 		                and b.radi_depe_actu= $dependencia
                     $whereUsuario
-                    GROUP BY carp";
+                    GROUP BY B.carp_codi";
 
   $rs          = $db->conn->Execute($sqlNoRad);
 
@@ -228,7 +229,8 @@ $_SESSION['numExpedienteSelected'] = null;
                   <tbody>
                   <?php
                     include "$ruta_raiz/include/query/queryCuerpo.php";
-                    $rs = $db->conn->Execute($isql);
+			//$db->conn->debug = true;
+			  $rs = $db->conn->Execute($isql);
                       
                   while(!$rs->EOF){
 
