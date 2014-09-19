@@ -1,4 +1,4 @@
-<?
+<?php
 $coltp3Esp = '"'.$tip3Nombre[3][2].'"';
 switch($db->driver)
 	{
@@ -36,74 +36,44 @@ switch($db->driver)
 		'.$sqlAgendado.'
 	  order by '.$order .' ' .$orderTipo;
 	break;
-	case 'oracle':
-	case 'oci8':
-	case 'oci805':
-	case 'ocipo':
-	$isql = 'select
-				to_char(b.RADI_NUME_RADI)  "IDT_Numero Radicado"
-				,b.RADI_PATH "HID_RADI_PATH"
-				,'.$sqlFecha.' "DAT_Fecha Radicado"
-				,to_char(b.RADI_NUME_RADI) "HID_RADI_NUME_RADI"
-				,UPPER(b.RA_ASUN)  "Asunto"'.
-				$colAgendado.
-				',d.NOMBRE_DE_LA_EMPRESA "'.$tip3Nombre[3][2].'"
-				,c.SGD_TPR_DESCRIP "Tipo Documento"
-				,round(((radi_fech_radi+(c.sgd_tpr_termino * 7/5))-sysdate)) "Dias Restantes"
-				,b.RADI_USU_ANTE "Enviado Por"
-				,to_char(b.RADI_NUME_RADI) "CHK_CHKANULAR"
-				,b.RADI_LEIDO "HID_RADI_LEIDO"
-				,b.RADI_NUME_HOJA "HID_RADI_NUME_HOJA"
-				,b.CARP_PER "HID_CARP_PER"
-				,b.CARP_CODI "HID_CARP_CODI"
-				,b.SGD_EANU_CODIGO "HID_EANU_CODIGO"
-				,b.RADI_NUME_DERI "HID_RADI_NUME_DERI"
-				,b.RADI_TIPO_DERI "HID_RADI_TIPO_DERI"
-		 from
-		 radicado b,
-		 SGD_TPR_TPDCUMENTO c,
-		 BODEGA_EMPRESAS d
-	 where
-		b.radi_nume_radi is not null
-		and b.sgd_dir_tipo=1
-		and b.radi_depe_actu='.$dependencia.
-		$whereUsuario.$whereFiltro.
-		'and b.tdoc_codi=c.sgd_tpr_codigo (+)
-		and b.eesp_codi=d.identificador_empresa (+)
-		'.$whereCarpeta.'
-		'.$sqlAgendado.'
-	  order by '.$order .' ' .$orderTipo;
-	break;
 	case 'postgres':
+	case 'oci8':
 	   $whereFiltro = str_replace("b.radi_nume_radi","cast(b.radi_nume_radi as varchar(20))",$whereFiltro);
 
-		$redondeo="date_part('days', radi_fech_radi-".$db->conn->sysTimeStamp.")+floor(c.sgd_tpr_termino * 7/5)+(select count(1) from sgd_noh_nohabiles where NOH_FECHA between radi_fech_radi and ".$db->conn->sysTimeStamp.")";
-          
-
+//	$redondeo="date_part('days', radi_fech_radi-".$db->conn->sysTimeStamp.")+floor(c.sgd_tpr_termino * 7/5)+(select count(1) from sgd_noh_nohabiles where NOH_FECHA between radi_fech_radi and ".$db->conn->sysTimeStamp.")";
+        if($db->driver=="oci8") {
+          $fechaT = "((radi_fech_radi-".$db->conn->sysTimeStamp.")+(c.sgd_tpr_termino))";
+	  $diasHabiles = " fech_vcmto -5 "; // ".$db->conn->sysdate ." ";
+	}else{
+	  $fechaT = "(date_part('days', radi_fech_radi-".$db->conn->sysTimeStamp."))+floor(c.sgd_tpr_termino * 7/5)";
+	  $diasHabiles = '- extract(days from date_trunc('."'".'days'."'".', NOW()) - date_trunc('."'".'days'."'".',fech_vcmto))';
+	}
+	$redondeo="$fechaT+(select count(1) from sgd_noh_nohabiles where NOH_FECHA between radi_fech_radi and ".$db->conn->sysTimeStamp.")";
+	//$redondeo="date_part('days', radi_fech_radi-".$db->conn->sysTimeStamp.")+floor(c.sgd_tpr_termino * 7/5)+(select count(1) from sgd_noh_nohabiles where NOH_FECHA between radi_fech_radi and ".$db->conn->sysTimeStamp.")";
 
 	$isql = 'select
-				b.RADI_NUME_RADI "IDT_Numero Radicado"
-				,b.RADI_PATH "HID_RADI_PATH"
-				,'.$sqlFecha.' "DAT_Fecha Radicado"
-				,'.$sqlFecha.' "HID_RADI_FECH_RADI"
-				, b.RADI_NUME_RADI "HID_RADI_NUME_RADI"
-				,b.RA_ASUN  "Asunto"
-				, b.RADI_CUENTAI "Referencia"'.
-				$colAgendado.
-				',d.SGD_DIR_NOMREMDES "Remitente"
-				,c.SGD_TPR_DESCRIP "Tipo Documento"
-                ,- extract(days from date_trunc('."'".'days'."'".', NOW()) - date_trunc('."'".'days'."'".',fech_vcmto)) "Dias Restantes"
-				,b.RADI_USU_ANTE "Enviado Por"
-				,b.RADI_NUME_RADI "CHK_CHKANULAR"
-				,b.RADI_LEIDO "HID_RADI_LEIDO"
-				,b.RADI_NUME_HOJA "HID_RADI_NUME_HOJA"
-				,b.CARP_PER "HID_CARP_PER"
-				,b.CARP_CODI "HID_CARP_CODI"
-				,b.SGD_EANU_CODIGO "HID_EANU_CODIGO"
-				,b.RADI_NUME_DERI "HID_RADI_NUME_DERI"
-				,b.RADI_TIPO_DERI "HID_RADI_TIPO_DERI"
+			b.RADI_NUME_RADI "IDT_Numero RADICADO"
+			,b.RADI_PATH "HID_RADI_PATH"
+			,'.$sqlFecha.' "DAT_FECHA RADICADO"
+			,'.$sqlFecha.' "HID_RADI_FECH_RADI"
+			, b.RADI_NUME_RADI "HID_RADI_NUME_RADI"
+			,b.RA_ASUN  "ASUNTO"
+			, b.RADI_CUENTAI "REFERENCIA"'.
+			$colAgendado.
+			',d.SGD_DIR_NOMREMDES "REMITENTE"
+			,c.SGD_TPR_DESCRIP "TIPO DOCUMENTO"
+                	,'.$diasHabiles.' " DIAS RESTANTES"
+			,b.RADI_USU_ANTE "ENVIADO POR"
+			,b.RADI_NUME_RADI "CHK_CHKANULAR"
+			,b.RADI_LEIDO "HID_RADI_LEIDO"
+			,b.RADI_NUME_HOJA "HID_RADI_NUME_HOJA"
+			,b.CARP_PER "HID_CARP_PER"
+			,b.CARP_CODI "HID_CARP_CODI"
+			,b.SGD_EANU_CODIGO "HID_EANU_CODIGO"
+			,b.RADI_NUME_DERI "HID_RADI_NUME_DERI"
+			,b.RADI_TIPO_DERI "HID_RADI_TIPO_DERI"
 		 from
-		 radicado b
+	 radicado b
 	left outer join SGD_TPR_TPDCUMENTO c
 	on b.tdoc_codi=c.sgd_tpr_codigo
 	left outer join SGD_DIR_DRECCIONES d
@@ -115,7 +85,7 @@ switch($db->driver)
 		'.$whereCarpeta.'
 		'.$sqlAgendado.'
 	  order by '.$order .' ' .$orderTipo
-	  . ' limit 1000 ';
+	  . ' ';
 	break;
 	}
 ?>

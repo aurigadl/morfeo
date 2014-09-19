@@ -53,7 +53,7 @@ Metrovivienda organiza, garantiza y articula una oferta y una demanda de viviend
 <script>
   pData = window.opener.resultado.innerHTML;
   document.getElementById("pData").innerHTML =pData;
-  document.getElementById("fname").innerHTML = window.opener.fname.value + " " + window.opener.lname.value;
+  document.getElementById("fname").innerHTML = window.opener.fname.value;
   document.getElementById("faddress").innerHTML = window.opener.address.value;
   window.print();
 </script>
