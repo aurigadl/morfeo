@@ -368,7 +368,7 @@ function PRESTAMO_show()
 // Build SQL statement and execute query
 //-------------------------------
    $radiATexto = $db->conn->numToString("RADI_NUME_RADI  ");
-  $sSQL = "select PRES_ID,
+  echo $sSQL = "select PRES_ID,
 			$radiATexto as RADI_NUME_RADI,
 			USUA_LOGIN_ACTU,
 			DEPE_CODI,

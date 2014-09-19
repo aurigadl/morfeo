@@ -209,14 +209,14 @@ function PRESTAMO_action($sAction) {
                   tosql($sec,"Number")."," . 
                   tosql($fldradicado,"Text")."," .
                   tosql($krd,"Text")."," . 
-		  tosql($dependencia,"Number")."," .
-		  $fldPRES_FECH_PEDI."," . 
+            		  tosql($dependencia,"Number")."," .
+            		  $fldPRES_FECH_PEDI."," . 
                   tosql($dependencia,"Number").", 
                   1," . 
                   tosql($fldPRES_REQUERIMIENTO,"Number"). 
               ")";
       // Execute SQL statement  
-      if($db->conn->query($sSQL)) {}
+      if($db->conn->query($sSQL)) { echo "actualizo regitro"; exit; }
 	  else{ echo "<script> alert(\" El registro no pudo ser realizado\"); </script>";	}
    }
    
