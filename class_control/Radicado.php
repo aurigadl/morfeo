@@ -114,8 +114,8 @@ class Radicado{
 		$contCodi = $rs->fields['ID_CONT'];
 		//Agregada por Johnny debido a solicitud de usuarios
 		$nombre = $rs->fields['SGD_DIR_NOMREMDES']; 
-		$dep=& new Departamento($this->cursor);
-		$mun = & new Municipio($this->cursor); 
+		$dep= new Departamento($this->cursor);
+		$mun =  new Municipio($this->cursor); 
 		$dep->departamento_codigo($paisCodi.'-'.$deptoCodi);
 		$mun->municipio_codigo($paisCodi.'-'.$deptoCodi,$paisCodi.'-'.$deptoCodi.'-'.$muniCodi);
 	

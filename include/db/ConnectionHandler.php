@@ -68,10 +68,20 @@ $cursor = $this->conn->Execute($sql);
 //  Retorna la fecha actual segun la BD del driver;
 function sysdate()
 {
-	if($this->driver == "postgres")  return "now()";
+  if($this->driver == "postgres")  return "now()";
   if($this->driver == "oci8")  return "sysdate";
   if($this->driver == "mssql")  return "GETDATE()";
 }
+
+//  Retorna la fecha actual segun la BD del driver;
+function limit()
+{
+  if($this->driver == "postgres")  return " limit ";
+  if($this->driver == "oci8")  return " ROWNUM <= ";
+  if($this->driver == "mssql")  return "GETDATE()";
+}
+
+
 
 /* Devuelve un array correspondiente a la fila de una consulta */
 /*	function fetch_row() {
