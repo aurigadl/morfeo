@@ -591,7 +591,7 @@ function Pedidos_Show() {
                                 }
                                 kk++;
                             }
-                        }
+                        } 
                         if (cant == 0) {
                             alert("Debe seleccionar al menos un radicado");
                         } else {
