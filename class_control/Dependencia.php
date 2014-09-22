@@ -247,7 +247,7 @@ function getDepe_codi_padre	(){
 	function Dependencia_codigo($codigo){
   //almacena el query
 		
-		$muni = & new Municipio($this->cursor);
+		$muni =  new Municipio($this->cursor);
 		$q=  "select * from dependencia where depe_codi =$codigo";
 		$rs=$this->cursor->query($q);
 		

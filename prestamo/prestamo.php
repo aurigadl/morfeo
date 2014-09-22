@@ -482,11 +482,13 @@ function Pedidos_Show() {
             <?          return;
         }
         // Build parameters for order
-        $form_params_search = "s_RADI_NUME_RADI=" . tourl($ps_RADI_NUME_RADI) . "&s_USUA_LOGIN=" . tourl($ps_USUA_LOGIN) .
+        /* */ $form_params_search = "s_RADI_NUME_RADI=" . tourl($ps_RADI_NUME_RADI) . "&s_USUA_LOGIN=" . tourl($ps_USUA_LOGIN) .
             "&s_DEPE_NOMB=" . tourl($ps_DEPE_NOMB) . "&s_USUA_NOMB=" . tourl($ps_USUA_NOMB) . "&s_PRES_REQUERIMIENTO=" .
             tourl($ps_PRES_REQUERIMIENTO) . "&s_PRES_ESTADO=" . tourl($ps_PRES_ESTADO) . "&fechaInicial=" .
             tourl($fechaInicial) . "&fechaFinal=" . tourl($fechaFinal) . "&s_hora_limite=" . tourl($ps_hora_limite) .
-            "&s_minuto_limite=" . tourl($ps_minuto_limite) . "&s_meridiano=" . tourl($ps_meridiano);
+            "&s_minuto_limite=" . tourl($ps_minuto_limite) . "&s_meridiano=" . tourl($ps_meridiano); 
+
+ 
 
         $form_params_page = "&FormPedidos_Page=1&FormStarPage=1&FormSiguiente=0";
         $form_params = $form_params_search . $form_params_page . "&opcionMenu=" . tourl($opcionMenu) . "&krd=" . tourl($krd) .
@@ -589,7 +591,7 @@ function Pedidos_Show() {
                                 }
                                 kk++;
                             }
-                        }
+                        } 
                         if (cant == 0) {
                             alert("Debe seleccionar al menos un radicado");
                         } else {

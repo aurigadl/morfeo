@@ -64,7 +64,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $enlace4        = "href=\"tx/cuerpoInfConjunto.php?$phpsession&mostrar_opc_envio=1&orderNo=2&fechaf=$fechah&
                      carpeta=66&nomcarpeta=Informados&orderTipo=desc&adodb_next_page=1\"";
   $enlace5        = "href=\"cuerpoTx.php?$phpsession&";
-  $enlace6        = "href=\"cuerpoPrioritario.php?$phpsession&";
+  //$enlace6        = "href=\"cuerpoPrioritario.php?$phpsession&";
   $enlace7        = "href=\"crear_carpeta.php?$phpsession&krd=$krd&";
   $enlace8        = "href=\"cuerpo.php?$phpsession&";
   $enlace21       = "href=\"busqueda/busquedaPiloto.php?$phpsession&";
@@ -226,6 +226,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $link6show= "<li><a $link6 target=\"mainFrame\">Transacciones</a></li>";
 
   //Prioritarios
+  /*
   $numeroP = 0;
   include ("include/query/queryCuerpoPrioritario.php");
   $rsP               = $db->conn->query($isqlPrioritario);
@@ -233,7 +234,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $clasePrioritarios = ($numeroP >= 1)? "titulosError" : "menu_princ";
   $link7             = $enlace6."$fechah&nomcarpeta=$data&tipo_carpt=0\"";
   $link7show         = "<li><a $link6 target=\"mainFrame\">Prioritarios ($numeroP)</a></li>";
-
+*/
   //Enlace carpetas Personales
   $link8             = $enlace7."fechah=$fechah&adodb_next_page=1\"";
   $link8show         = "<a tabindex=\"-1\"  target=\"mainFrame\" > Personales </a>";

@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+ini_set("display_errors",1);
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia'])
   header ("Location: $ruta_raiz/cerrar_session.php");
@@ -46,9 +46,9 @@ $lnr         = 11+$ln;
     if (!$db)	$db = new ConnectionHandler($ruta_raiz);
 
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
-    $anex       = & new Anexo($db);
-    $anexTip    = & new Anex_tipo($db);
-
+    $anex       =  new Anexo($db);
+    $anexTip    =  new Anex_tipo($db);
+    //$db->conn->debug = true;
     if (!$aplinteg)
         $aplinteg='null';
     if (!$tpradic)
