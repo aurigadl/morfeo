@@ -115,7 +115,7 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
   
 <header class="page-title txt-color-blueDark">
 	<h2>
-		Administracion de usuarios y perfiles<br>
+		Administraci&oacute;n de usuarios y perfiles<br>
 	</h2>
 </header>
 
@@ -168,7 +168,7 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
 		<input name="cedulaYa" type="hidden" value='<?=$cedulaYa?>'>
 		<? if ($usModo == 1) { ?>
 		<section class="col col-6">
-      <label class="label">No. Cedula <strong>(*)</strong></label>
+      <label class="label">No. C&eacute;dula <strong>(*)</strong></label>
       <label class="input">
         <input type="text" name="cedula" pattern="[0-9]*" id="cedula" value="<?=$cedula?>" size=15 maxlenght="14" placeholder="Digite C&eacute;dula" required>
         <span class="help-block with-errors">Digite el n&uacute;mero de la c&eacute;dula</span>
@@ -183,7 +183,7 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
 		<? }else { ?>
 		  <section class="col col-6">
         <label class="label">
-          Nro Cedula <strong>(*)</strong>
+          Nro C&eacute;dula <strong>(*)</strong>
           <input  type="text" name="cedula" pattern="[0-9]*" id="cedula" value="<?=$cedula?>" size="15" maxlenght="14" placeholder="Digite C&eacute;dula" required>
         </label>
       </section>
@@ -276,7 +276,7 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
       </label>
     </section>
 		<section class="col col-4">
-      <label class="label">Extension</label>
+      <label class="label">Extensi&oacute;n</label>
       <label class="input">
         <input type="text" pattern="[0-9]*" name="extension" id="extension" value="<?=$extension?>" size="10">
       </label>

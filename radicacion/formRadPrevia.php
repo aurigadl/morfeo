@@ -88,7 +88,7 @@ function solonumeros(){
     <div class="row">
       <section class="col col-4">
         <label class="label">
-          Identificacion (T.I.,C.C.,Nit) *
+          Identificaci&oacute;n (T.I.,C.C.,Nit) *
         </label>
         <label class="input"> </i>
           <input name="buscar_por_doc" type="text" class="ecajasfecha" id="cuentai" size="35" value="<?=$buscar_por_doc ?>">
