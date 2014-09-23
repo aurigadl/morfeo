@@ -190,8 +190,8 @@ function Esp_nit($nit){
 */
 function generarCSV($archivo,$s0,$sc0,$s1 = null,$s2 = null,$sc1 = null, $sc2 = null)
 {
-$depto = & new Departamento($this->cursor);
-$muni = & new Municipio($this->cursor);
+$depto =  new Departamento($this->cursor);
+$muni =  new Municipio($this->cursor);
 $com = chr(34);
 $contenido="$com*TIPO*$com,$com*NOMBRE*$com,$com*DIR*$com,$com*MUNI_NOMBRE*$com,$com*DEPTO_NOMBRE*$com,$com*PAIS_NOMBRE*$com,$com*NUIR*$com,$com*NOMBRE_REP*$com,$com*DIGNATARIO*$com,$com*CARGO*$com\n";
 for ($i=0; $i<3; $i++)	//Ciclo de 0 a 2 para cubrir los 3 vectores de seleccionados

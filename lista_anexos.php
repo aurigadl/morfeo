@@ -11,7 +11,7 @@ include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $ln          = $_SESSION["digitosDependencia"];
 $db = new ConnectionHandler("$ruta_raiz");
 define('ADODB_ASSOC_CASE', 1);
-
+//$db->conn->debug = true;
 $objTipoDocto  = new TipoDocumento($db);
 $objTipoDocto->TipoDocumento_codigo($tdoc);
 $num_archivos=0;
@@ -22,26 +22,25 @@ $sqlFechaAnexo = $db->conn->SQLDate("Y-m-D H:i:s A","anex_fech_anex");
 $sqlSubstDesc =  $db->conn->substr."(anex_desc, 0, 50)";
 //include_once("include/query/busqueda/busquedaPiloto1.php");
 // Modificado SGD 06-Septiembre-2007
-$isql = "select anex_codigo AS DOCU
-            ,anex_tipo_ext AS EXT
-			,anex_tamano AS TAMA
-			,anex_solo_lect AS RO
+$maxRows = $db->limit();
+$isql = "select a.anex_codigo AS DOCU
+            ,at.anex_tipo_ext AS EXT
+			,a.anex_tamano AS TAMA
+			,a.anex_solo_lect AS RO
             ,usua_nomb AS CREA
 			,$sqlSubstDesc AS DESCR
-			,anex_nomb_archivo AS NOMBRE
-			,ANEX_CREADOR
-			,ANEX_ORIGEN
-			,ANEX_SALIDA
+			,a.anex_nomb_archivo AS NOMBRE
+			,a.ANEX_CREADOR
+			,a.ANEX_ORIGEN
+			,a.ANEX_SALIDA
 			,$radi_nume_salida RADI_NUME_SALIDA
-			,ANEX_ESTADO
+			,a.ANEX_ESTADO
 			,SGD_PNUFE_CODI
 			,SGD_DOC_SECUENCIA
 			,SGD_DIR_TIPO
 			,SGD_DOC_PADRE
-			,SGD_TPR_CODIGO
-			,SGD_APLI_CODI
-			,SGD_TRAD_CODIGO
-			,SGD_TPR_CODIGO
+			,a.SGD_TPR_CODIGO
+			,a.SGD_TRAD_CODIGO
 			,a.ANEX_TIPO
 			,CASE WHEN a.ANEX_FECH_ANEX IS NULL THEN (SELECT a2.ANEX_FECH_ANEX FROM ANEXOS A2 WHERE A2.RADI_NUME_SALIDA=A.RADI_NUME_SALIDA AND A2.ANEX_FECH_ANEX IS NOT NULL)
             ELSE a.ANEX_FECH_ANEX
@@ -51,11 +50,12 @@ $isql = "select anex_codigo AS DOCU
 			,$sqlFechaDocto FECDOC
 			,$sqlFechaAnexo FEANEX
 			,a.ANEX_TIPO NUMEXTDOC
-			,(SELECT d.sgd_dir_nomremdes from sgd_dir_drecciones d where (d.sgd_anex_codigo=a.anex_codigo  or d.radi_nume_radi=a.radi_nume_salida) AND (a.sgd_dir_tipo=d.sgd_dir_tipo ) limit 1) destino
+			,(SELECT d.sgd_dir_nomremdes from sgd_dir_drecciones d where (d.sgd_anex_codigo=a.anex_codigo  or d.radi_nume_radi=a.radi_nume_salida)
+ AND a.sgd_dir_tipo=d.sgd_dir_tipo and $maxRows 1) destino
 		from anexos a, anexos_tipo at ,usuario u
-      where anex_radi_nume=$verrad and anex_tipo=anex_tipo_codi
-		   and anex_creador=usua_login and anex_borrado='N'
-	   order by AANEX_FECH_ANEX,sgd_dir_tipo,a.anex_radi_nume,a.radi_nume_salida";
+      where anex_radi_nume=$verrad and a.anex_tipo=at.anex_tipo_codi
+		   and a.anex_creador=u.usua_login and a.anex_borrado='N'
+	   order by a.ANEX_FECH_ANEX,sgd_dir_tipo,a.anex_radi_nume,a.radi_nume_salida";
 ?>
 <table WIDTH="100%" align="center" id="tableDocument" class="table table-striped table-hover" >
     <thead>
@@ -77,7 +77,7 @@ include_once "$ruta_raiz/tx/verLinkArchivo.php";
 $verLinkArchivo = new verLinkArchivo($db);
 $rowan = array();
 $rs = $db->conn->query($isql);
-
+//$db->conn->debug = true;
 if (!$ruta_raiz_archivo) $ruta_raiz_archivo = $ruta_raiz;
 $directoriobase="$ruta_raiz_archivo/bodega/";
 //Flag que indica si el radicado padre fue generado desde esta area de anexos

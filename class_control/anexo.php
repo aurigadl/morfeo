@@ -517,7 +517,7 @@ function obtenerAnexosRadicablesPaquete(){
 $sql="select * from anexos where sgd_doc_padre='$this->sgd_doc_padre'";
 $rs=$this->cursor->query($sql);
 $i=0;
-$tipoDocumento= & new TipoDocumento($this->cursor);
+$tipoDocumento=  new TipoDocumento($this->cursor);
 
 //itera por todo el grupo de anexos
 while  (!$rs->EOF){
@@ -542,7 +542,7 @@ function obtenerAnexosNoRadicablesPaquete(){
 $sql="select * from anexos where sgd_doc_padre='$this->sgd_doc_padre'";
 $rs=$this->cursor->query($sql);
 $i=0;
-$tipoDocumento= & new TipoDocumento($this->cursor);
+$tipoDocumento=  new TipoDocumento($this->cursor);
 
 //itera por todo el grupo de anexos
 while  (!$rs->EOF) 	{

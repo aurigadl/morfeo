@@ -88,11 +88,11 @@ if (!function_exists(return_bytes)){
 
 $consultaESP  = "select r.EESP_CODI from radicado r where r.radi_nume_radi = $numrad";
 $rsESP        = $db->conn->Execute($consultaESP);
-$codigoESP    = $rsESP->fields["EESP_CODI"];
-$consultaRUPS = "select FLAG_RUPS from bodega_empresas where ARE_ESP_SECUE = $codigoESP";
 
-$rsESPRUPS = $db->conn->Execute( $consultaRUPS );
-$espEnRUPS = $rsESPRUPS->fields[ "FLAG_RUPS" ];
+
+
+
+
 
 $datos_envio  = "&otro_us11=$otro_us11&codigo=$codigo&dpto_nombre_us11=$dpto_nombre_us11&direccion_us11=".urlencode($direccion_us11)."&muni_nombre_us11=$muni_nombre_us11&nombret_us11=$nombret_us11";
 $datos_envio .="&otro_us2=$otro_us2&dpto_nombre_us2=$dpto_nombre_us2&muni_nombre_us2=$muni_nombre_us2&direccion_us2=".urlencode($direccion_us2)."&nombret_us2=$nombret_us2";

@@ -56,7 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <?
                   if ($busqRadicados) {
                     $busqRadicados = trim($busqRadicados);
-                    $textElements = split (",", $busqRadicados);
+                    $textElements =explode (",", $busqRadicados);
                     $newText = "";
                     $i = 0;
                     foreach ($textElements as $item) {
