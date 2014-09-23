@@ -1,6 +1,5 @@
 <?php
 session_start();
-ini_set("display_errors",1);
 $ruta_raiz = ".";
 if (!$_SESSION['dependencia'])
   header ("Location: $ruta_raiz/cerrar_session.php");
@@ -160,7 +159,6 @@ $lnr         = 11+$ln;
         $_POST['nuevo_archivo'] = $nuevo_archivo;
         $_POST['codigo']        = $codigo;
          $bien = $db->conn->query($isql);
-
         //Si actualizo BD correctamente 
          if ($bien){
              $respUpdate="OK";
