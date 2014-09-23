@@ -77,7 +77,7 @@ function sysdate()
 function limit()
 {
   if($this->driver == "postgres")  return " limit ";
-  if($this->driver == "oci8")  return " ROWNUM <= ";
+  if($this->driver == "oci8")  return " and  ROWNUM <= ";
   if($this->driver == "mssql")  return "GETDATE()";
 }
 

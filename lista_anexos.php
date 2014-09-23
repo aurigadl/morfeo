@@ -51,7 +51,7 @@ $isql = "select a.anex_codigo AS DOCU
 			,$sqlFechaAnexo FEANEX
 			,a.ANEX_TIPO NUMEXTDOC
 			,(SELECT d.sgd_dir_nomremdes from sgd_dir_drecciones d where (d.sgd_anex_codigo=a.anex_codigo  or d.radi_nume_radi=a.radi_nume_salida)
- AND a.sgd_dir_tipo=d.sgd_dir_tipo and $maxRows 1) destino
+ AND a.sgd_dir_tipo=d.sgd_dir_tipo $maxRows 1) destino
 		from anexos a, anexos_tipo at ,usuario u
       where anex_radi_nume=$verrad and a.anex_tipo=at.anex_tipo_codi
 		   and a.anex_creador=u.usua_login and a.anex_borrado='N'
