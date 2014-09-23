@@ -64,8 +64,8 @@
   
   $sqlFechaHoy = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
   
-  $anex =& new Anexo($db);
-  $anexTip =& new Anex_tipo($db);
+  $anex = new Anexo($db);
+  $anexTip = new Anex_tipo($db);
   
   if (!$tpradic)
     $tpradic = 'null';
