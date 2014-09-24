@@ -120,7 +120,7 @@ if(trim($linkarchivo))
 		}else{
 			echo $msg;
 		}
- ?>
+?>
  </td><td width="1" valign="middle" align=right>
 <?
      $total_digitos = 11 + $ln;

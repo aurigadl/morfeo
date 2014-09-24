@@ -258,27 +258,27 @@ $i_copias = 0;
 if ($codigo){
 
     $isql = "SELECT CODI_NIVEL
-                  ,ANEX_SOLO_LECT
-                  ,ANEX_CREADOR
-                  ,ANEX_DESC
-                  ,ANEX_TIPO_EXT
-                  ,ANEX_NUMERO
-                  ,ANEX_RADI_NUME
-                  ,ANEX_NOMB_ARCHIVO AS nombre
-                  ,ANEX_SALIDA
-                  ,ANEX_ESTADO
-                  ,SGD_DIR_TIPO
-                  ,RADI_NUME_SALIDA
+                  ,a.ANEX_SOLO_LECT
+                  ,a.ANEX_CREADOR
+                  ,a.ANEX_DESC
+                  ,at.ANEX_TIPO_EXT
+                  ,a.ANEX_NUMERO
+                  ,a.ANEX_RADI_NUME
+                  ,a.ANEX_NOMB_ARCHIVO AS nombre
+                  ,a.ANEX_SALIDA
+                  ,a.ANEX_ESTADO
+                  ,a.SGD_DIR_TIPO
+                  ,a.RADI_NUME_SALIDA
                   ,SGD_DIR_DIRECCION
-                  ,ANEX_TIPO_ENVIO
+                  ,a.ANEX_TIPO_ENVIO
               FROM
-                  ANEXOS,
-                  ANEXOS_TIPO,
+                  ANEXOS a,
+                  ANEXOS_TIPO at,
                   RADICADO
               WHERE
-                  ANEX_CODIGO='$codigo'
-                  AND ANEX_RADI_NUME=RADI_NUME_RADI
-                  AND ANEX_TIPO=ANEX_TIPO_CODI";
+                  a.ANEX_CODIGO='$codigo'
+                  AND a.ANEX_RADI_NUME=RADI_NUME_RADI
+                  AND a.ANEX_TIPO=at.ANEX_TIPO_CODI";
 
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
   $rs=$db->conn->Execute($isql);
