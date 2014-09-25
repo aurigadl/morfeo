@@ -96,7 +96,9 @@ if($_POST['saveEtiq']){
 
         window.open("./flujo/modFlujoExp.php?codigoFldExp=" + codigoFldExp + "&krd=<?=$krd?>&numeroExpediente=" + numeroExpediente + "&numRad=<?=$verrad?>&texp=" + texp + "&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>", "TexpE<?=$fechaH?>", opcVentana);
     }
+    <?php /* */ ?> 
     function Responsable(numeroExpediente) {
+         frm = document.form2;
         <?php
             $isqlDepR = "SELECT RADI_DEPE_ACTU,RADI_USUA_ACTU
                     FROM radicado
@@ -114,6 +116,7 @@ if($_POST['saveEtiq']){
         window.open("./expediente/responsable.php?&numeroExpediente=" + numeroExpediente +
             "&numRad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&responsable=<?=$responsable?>&coddepe=<?=$coddepe?>&codusua=<?=$codusua?>", "Responsable", "height=400,width=550,scrollbars=yes");
     }
+    <?php  ?>
     function CambiarE(est, numeroExpediente) {
         window.open("./archivo/cambiar.php?krd=<?=$krd?>&numRad=<?=$verrad?>&expediente=" + numeroExpediente + "&est=" + est + "&dependencia=<?=$dependencia?>", "Cambio Estado Expediente", "height=200,width=200,scrollbars=yes");
     }
@@ -217,6 +220,7 @@ if($_POST['saveEtiq']){
             return false;
         }
     }
+
     // Crear Subexpediente
     function incluirSubexpediente(numeroExpediente, numeroRadicado) {
         window.open("./expediente/datosSubexpediente.php?sessid=<?=session_id()?>&nurad=" + numeroRadicado + "&krd=<?=$krd?>&num_expediente=" + numeroExpediente, "HistExp<?=$fechaH?>", "height=350,width=700,scrollbars=yes");

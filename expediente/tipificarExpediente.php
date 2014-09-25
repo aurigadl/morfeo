@@ -108,12 +108,12 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
             $arrParametro[$indice] = $valor;
         }
     }
-
     $numeroExpedienteE = $expediente->crearExpediente($numeroExpediente, $nurad, $dependencia, $codusuario, $usua_doc, $usuaDocExp, $codiSRD, $codiSBRD, 'false', $fechaExp, $_POST['codProc'], $arrParametro);
     if ($numeroExpedienteE == 0) {
         echo "<CENTER><table class=borde_tab><tr><td class=titulosError>EL EXPEDIENTE QUE INTENTO CREAR YA EXISTE.</td></tr></table>";
     } else {
         $insercionExp = $expediente->insertar_expediente($numeroExpediente, $nurad, $dependencia, $codusuario, $usua_doc);
+        echo "<br>hola";
     }
 
     $codiTRDS = $codiTRD;

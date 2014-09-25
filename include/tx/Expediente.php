@@ -379,6 +379,7 @@ class Expediente {
      *         indexado con el orden.
      */
     function crearExpediente($numExpediente, $radicado, $depe_codi, $usua_codi, $usua_doc, $usuaDocExp, $codiSRD, $codiSBRD, $expOld = null, $fechaExp = null, $codiPROC = null, $arrParametro = null) {
+
         $p = 1;
         // Valida que $arrParametro contenga un arreglo
         if (is_array($arrParametro)) {
@@ -387,7 +388,7 @@ class Expediente {
                 if ($p == count($arrParametro)) {
                     $coma = "";
                 }
-                $campoParametro .= "SGD_SEXP_PAREXP" . $orden . $coma;
+                $campoParametro .= "SGD_SEXP_PAREXP" . ($orden+1) . $coma;
                 $valorParametro .= "'" . $datoParametro . "'" . $coma;
                 $p++;
             }
@@ -399,25 +400,38 @@ class Expediente {
 			WHERE
 			SGD_EXP_NUMERO='$numExpediente'
 			";
+     
+    $dependencia = $depe_codi;
         if ($expOld == "false") {
+           #echo "--><pre>$query</pre>";
             $rs = $this->db->conn->Execute($query);
-            $trdExp = substr("00" . $codiSRD, -2) . substr("00" . $codiSBRD, -2);
+             $trdExp = substr("00" . $codiSRD, -2) . substr("00" . $codiSBRD, -2);
             $anoExp = substr($numExpediente, 0, 4);
             if ($expManual == 1) {
-                $secExp = $this->secExpediente($dependencia, $codiSRD, $codiSBRD, $anoExp);
+                 $secExp = $this->secExpediente($dependencia, $codiSRD, $codiSBRD, $anoExp);
             } else {
-                $secExp = substr("00000" . $secExp, -5);
+                 #echo "thishere"; exit;
+                 $secExp = substr("00000" . $secExp, -5);
             }
             $consecutivoExp = substr("00000" . $secExp, -5);
             $numeroExpediente = $anoExp . $dependencia . $trdExp . $consecutivoExp;
+          /*  echo "-->".$anoExp."<br>"; 
+            echo "-->".$dependencia."<br>"; 
+            echo "-->".$trdExp."<br>"; 
+            echo "-->".$consecutivoExp."<br>"; 
+            echo "--".$numeroExpediente."<br>"; 
+
+            echo "--".$rs->fields["SGD_EXP_NUMERO"]; exit;*/
         } else {
-            $secExp = "0";
+             $secExp = "0";
             $consecutivoExp = "00000";
             $anoExp = substr($numExpediente, 0, 4);
         }
         if ($rs->fields["SGD_EXP_NUMERO"] == $numExpediente) {
+           # echo "1"; exit;
             return 0;
         } else {
+           # echo "2"; exit;
             $fecha_hoy = Date("Y-m-d");
             if (!$fechaExp)
                 $fechaExp = $fecha_hoy;
@@ -426,7 +440,7 @@ class Expediente {
                 $codiPROC = "0";
             if (!$secExp)
                 $secExp = 1;
-
+#echo "<pre>$query</pre>"; exit; 
             $query = "insert into SGD_SEXP_SECEXPEDIENTES(SGD_EXP_NUMERO   ,SGD_SEXP_FECH      ,DEPE_CODI   ,USUA_DOC   ,SGD_FEXP_CODIGO,SGD_SRD_CODIGO,SGD_SBRD_CODIGO,SGD_SEXP_SECUENCIA, SGD_SEXP_ANO, USUA_DOC_RESPONSABLE, SGD_PEXP_CODIGO";
             if ($campoParametro != "") {
                 $query .= ", $campoParametro";
@@ -437,6 +451,8 @@ class Expediente {
                 $query .= " , $valorParametro";
             }
             $query .= " )";
+#echo $campoParametro; exit; 2014900029900002E
+#echo "<pre>$query</pre>"; exit; 
             if (!$rs = $this->db->conn->Execute($query)) {
                 //echo '<br>Lo siento no pudo agregar el expediente<br>';
                 echo "No se ha podido insertar el Expediente";
@@ -508,7 +524,7 @@ class Expediente {
 
         if (is_array($arrParametro)) {
             foreach ($arrParametro as $orden => $datoParametro) {
-                $campoParametro = "SGD_SEXP_PAREXP" . $orden;
+                $campoParametro = "SGD_SEXP_PAREXP" . ($orden+1) ;
                 $valorParametro = "'" . $datoParametro . "'";
                 $p++;
                 $fecha_hoy = Date("Y-m-d");
