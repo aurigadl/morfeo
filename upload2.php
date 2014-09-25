@@ -144,11 +144,15 @@ $lnr         = 11+$ln;
                                                                    ,anex_tamano       = $tamano
                                                                    ,anex_tipo         = $tipo, " : 0;
           
+        if ($subir_archivo){
+                $datosModificar=",anex_nomb_archivo  ='1$archivo',anex_tamano=$tamano,anex_tipo=$tipo";
+        }  
           $isql = "update 
                 anexos set
                       anex_salida=$anex_salida
                     , sgd_rem_destino=$radicado_rem
                     , sgd_dir_tipo=$radicado_rem
+                    $datosModificar
                     , anex_desc='$descr'
                     , SGD_TRAD_CODIGO = $tpradic
                     , SGD_APLI_CODI = $aplinteg  
