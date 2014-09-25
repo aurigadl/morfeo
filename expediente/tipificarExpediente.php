@@ -191,7 +191,7 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
     </table>
 </div>
 <?php if (!isset($Actualizar)) { ?>
-    <div ">
+    <div>
                     <table class="table table-bordered table-striped" style="width:850;" align=center>
                         <tr>
                             <td>
@@ -444,7 +444,8 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
                                   <input type="button" name="Button" value="Buscar Etiqueta"
                                          class="btn btn-primary btn-xs"
                                          onClick="Start('buscarParametro.php?busq_salida=<?= $busq_salida ?>&krd=<?= $krd ?>',1124,620);">
-                              </td>
+                                 <button type="button" class="btn btn-success btn-xs" id ="OcultarMostrarCampos" >Mostrar/Ocultar</button>
+                               </td>
                           </tr>
                           <?php
                           $sqlParExp = "SELECT SGD_PAREXP_ETIQUETA, SGD_PAREXP_ORDEN,";
@@ -453,13 +454,14 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
                           $sqlParExp .= " WHERE PE.DEPE_CODI = " . $dependenciaExp;
                           $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN";
                           $rsParExp = $db->conn->Execute($sqlParExp);
-
+                            $auxiliar_formulario = 0;
                           while (!$rsParExp->EOF) { ?>
-                              <tr align="center">
+                              <tr align="center" <?php if($auxiliar_formulario>=5){echo 'class = "my_toogle" style = "display:none" ';} ?> >
                                   <td align="left" colspan=1>
                                       <SMALL>
                                           <?php
-                                          $valorTxt = "";
+
+                                           $valorTxt = "";
                                           print $rsParExp->fields['SGD_PAREXP_ETIQUETA'];
 
                                           if ($rsParExp->fields['SGD_PAREXP_EDITABLE'] == 1) {
@@ -478,7 +480,8 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
                                                   $valorTxt = $_SESSION['NOMBRE_US3'];
                                               $valorTxt = trim(substr($valorTxt, 0, 120));
                                           }
-                                          ?>
+                                           ?>
+
                                       </SMALL>
                                   </td>
                                   <td align="left" colspan=2>
@@ -501,6 +504,7 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
                                   </td>
                               </tr>
                               <?php $rsParExp->MoveNext();
+                              $auxiliar_formulario = $auxiliar_formulario +1;
                           } ?>
                           <tr>
                               <td>
@@ -651,7 +655,14 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
         // $("#confirmacionExp").addClass('hide');
         $("#confirmacionExp").hide();
     }
+
 </script>
 <?= $mensaje_err ?>
 </body>
 </html>
+<!-- Ocultamos los campos inecesarios por el momento -->
+<script>
+$( "#OcultarMostrarCampos" ).click(function() { 
+$( ".my_toogle" ).toggle( "slow", function() { });
+});
+ </script>
