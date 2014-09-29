@@ -32,9 +32,6 @@ $fechah=date("YmdHis");
 <title><?=$entidad_largo ?> - SISTEMA DE GESTION DOCUMENTAL - CUIDADANOS</title>
 <meta http-equiv="Content-Type" content="text/html;">
 <style type="text/css">
-<!--
-@import url("web.css");
--->
 </style><script language="JavaScript" type="text/JavaScript">
 <!--
 function MM_preloadImages() { //v3.0
@@ -48,6 +45,7 @@ preview = window.open(URL , "preview", windowprops);
 }
 //-->
 </script>
+<?php include_once "../htmlheader.inc.php"; ?>
 </head>
 <body bgcolor="#ffffff">
 <form name=form_cerrar action=index_web.php?<?=session_name()."=".session_id()."&fechah=$fechah&krd=$krd"?> method=post>
@@ -55,7 +53,10 @@ preview = window.open(URL , "preview", windowprops);
 <?
 	include "cabez.php";
 ?>
-<table width="100%"  border="0" cellspacing="5" cellpadding="0">
+<div class="col-sm-12">
+<div class="row">
+<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<table class="table table-bordered smart-form" width="100%"  border="0" cellspacing="5" cellpadding="0">
   <tr>
     <td class="titulos2" ALIGN=CENTER >
 			<FONT SIZE=2>INFORMACION DEL DOCUMENTO CON NUMERO DE RADICADO <?=$verrad?>
@@ -63,11 +64,11 @@ preview = window.open(URL , "preview", windowprops);
 		</td>
 	</tr>
 </table>
-<table width="100%"  border="0" cellspacing="5" cellpadding="0">
+<table  class="table table-bordered smart-form" width="100%"  border="0" cellspacing="5" cellpadding="0">
   <tr>
-    <td><table width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
+    <td><table  class="table table-bordered smart-form" width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
       <tr>
-        <td><table width="100%"  border="0" cellspacing="5" cellpadding="0">
+        <td><table  class="table table-bordered smart-form" width="100%"  border="0" cellspacing="5" cellpadding="0">
           <tr>
             <td width="40%" class="titulos2">
 		TIPO DOCUMENTO
@@ -97,9 +98,9 @@ preview = window.open(URL , "preview", windowprops);
         </table></td>
       </tr>
     </table></td>
-    <td><table width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
+    <td><table  class="table table-bordered smart-form" width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
 	<tr>
-	<td><table width="100%"  border="0" cellspacing="5" cellpadding="0">
+	<td><table  class="table table-bordered smart-form" width="100%"  border="0" cellspacing="5" cellpadding="0">
 		<tr>
 		<td width="40%" class="titulos2"><?=$tip3Nombre[1][$ent]?></td>
 		<td class="listado2"><?=$nombret_us1 ?> </td>
@@ -117,9 +118,9 @@ preview = window.open(URL , "preview", windowprops);
 	</table></td>
   </tr>
   <tr>
-    <td><table width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
+    <td><table  class="table table-bordered smart-form" width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
       <tr>
-	<td><table width="100%"  border="0" cellspacing="5" cellpadding="0">
+	<td><table  class="table table-bordered smart-form" width="100%"  border="0" cellspacing="5" cellpadding="0">
 		<tr>
 		<td width="40%" class="titulos2"><?=$tip3Nombre[2][$ent]?></td>
 		<td class="listado2"><?=$nombret_us2 ?></td>
@@ -135,9 +136,9 @@ preview = window.open(URL , "preview", windowprops);
 	</table></td>
 	</tr>
 	</table></td>
-	<td><table width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
+	<td><table  class="table table-bordered smart-form" width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
 	<tr>
-	<td><table width="100%"  border="0" cellspacing="5" cellpadding="0">
+	<td><table  class="table table-bordered smart-form" width="100%"  border="0" cellspacing="5" cellpadding="0">
 		<tr>
 		<td width="40%" class="titulos2"><?=$tip3Nombre[3][$ent]?></td>
 		<td class="listado2"><?=$nombret_us3 ?></td>
@@ -155,9 +156,9 @@ preview = window.open(URL , "preview", windowprops);
 	</table></td>
   </tr>
   <tr>
-    <td><table width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
+    <td><table  class="table table-bordered smart-form" width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
       <tr>
-        <td><table width="100%"  border="0" cellspacing="5" cellpadding="0">
+        <td><table  class="table table-bordered smart-form" width="100%"  border="0" cellspacing="5" cellpadding="0">
           <tr>
             <td width="40%" class="titulos2">REF/OFICIO/CUENTA INT </td>
             <td class="listado2"><?=$cuentai?>-</td>
@@ -165,9 +166,9 @@ preview = window.open(URL , "preview", windowprops);
         </table></td>
       </tr>
     </table></td>
-    <td><table width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
+    <td><table  class="table table-bordered smart-form" width="100%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
       <tr>
-        <td><table width="100%"  border="0" cellspacing="5" cellpadding="0">
+        <td><table  class="table table-bordered smart-form" width="100%"  border="0" cellspacing="5" cellpadding="0">
           <tr>
             <td width="40%" class="titulo3">ESTADO ACTUAL </td>
 		<?
@@ -204,7 +205,7 @@ preview = window.open(URL , "preview", windowprops);
     </table></td>
   </tr>
   <tr>
-    <td colspan="2"><table width="99%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
+    <td colspan="2"><table  class="table table-bordered smart-form" width="99%"  border="0" cellpadding="0" cellspacing="0" class="borde_tab">
       <tr>
         <td>
 	<?
@@ -271,14 +272,14 @@ $i=1;
 if(!$rs->EOF)
 {
 ?>
-<table><tr><td><p></p></td></tr></table>
-<table width="99%" class="borde_tab" align="center">
+<table class="table table-bordered smart-form" ><tr><td><p></p></td></tr></table>
+<table  class="table table-bordered smart-form" width="99%" class="borde_tab" align="center">
   <tr>
     <td height="25" class="titulo1">DOCUMENTOS ANEXOS</td>
   </tr>
 </table>
 <CENTER>
-<table  class="borde_tab"  width="99%" align="center">
+<table   width="99%" align="center">
 <tr  class="titulo1" align="center">
 	<td width=10% height="24">
 	Tipo</td>
@@ -385,13 +386,13 @@ $i=1;
 if(!$rs->EOF)
 {
 ?>
-<table><tr><td><br></td></tr></table>
- <table width="99%" class="borde_tab">
+<table class="table table-bordered smart-form" ><tr><td><br></td></tr></table>
+ <table  class="table table-bordered smart-form" width="99%" class="borde_tab">
   <tr>
     <td height="25" class="titulo1">DATOS DE ENVIOS REALIZADOS</td>
   </tr>
 </table>
-<table  width="99%" class="borde_tab" align="center"  >
+<table  class="table table-bordered smart-form"  width="99%" class="borde_tab" align="center"  >
   <tr class='titulo1' align="center">
     <td width=10%  height="24">
       RADICADO</td>
