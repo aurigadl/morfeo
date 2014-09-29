@@ -28,3 +28,4 @@ respuestaRapida/*.txt
 logoEntidad.png
 logoEntidad_blanco.png
 README
+*.tpl.php

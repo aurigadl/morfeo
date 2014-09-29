@@ -25,10 +25,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 session_start();
 
+if(empty($ruta_raiz)){
+    $ruta_raiz = "../..";
+}
+
 if($gridCss=="Ok"){
  $cssGrid = '<link rel="stylesheet" type="text/css" media="screen" href="'.$ruta_raiz.'/estilos/smartadmin-production.min.css">';
 }
-$str = <<<EOF
+echo <<<EOF
 
       <title>..:: $entidad - Caliope ::..</title>
 
@@ -123,4 +127,3 @@ $str = <<<EOF
 		<!-- jquery uploadfile permite subir archivos masivamente o Individuales -->
 		<script src="$ruta_raiz/js/jquery.uploadfile.js"></script>
 EOF;
-echo  $str;
