@@ -274,7 +274,6 @@ class Usuario {
                 break;
         }
 
-        $this->db->conn->debug = true;
         $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
         $record,
         'SGD_DIR_CODIGO',
