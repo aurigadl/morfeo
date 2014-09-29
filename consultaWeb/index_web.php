@@ -36,24 +36,23 @@ if(isset($numeroRadicado) && isset($codigoverificacion) && isset($captcha)){
 		include "$ruta_raiz/include/tx/ConsultaRad.php";
 		$ConsultaRad = new ConsultaRad($db);
 		$idWeb = $ConsultaRad->idRadicadoConCodigoVerificacion($numeroRadicado, $codigoverificacion);
-		if($numeroRadicado==$idWeb and substr($numeroRadicado,-1)=='2' && (strcasecmp ($captcha ,$_SESSION['captcha_consulta']['code'] ) == 0))
+		if($numeroRadicado==$idWeb and substr($numeroRadicado,-1)=='2')
 		{
 			$ValidacionWeb="Si";
 			$idRadicado = $idWeb;
+	$krd = "usWeb";
+	$datosEnvio = "$fechah&".session_name()."=".trim(session_id())."&ard=$krd";
+	$ulrPrincipal = "Location: principal.php?fechah=$datosEnvio&pasar=no&verdatos=no&idRadicado=$numeroRadicado&estadosTot=".md5(date('Ymd'));
+	header($ulrPrincipal);
 		}
 		else
 		{
 			$ValidacionWeb="No";
 			$mensaje = "El numero de radicado digitado no existe, el codigo de verificacion no corresponde o esta mal escrito o la imagen de verificacion no fue bien digitada.  Por favor corrijalo e intente de nuevo.";
 			echo "<center><font color=red class=tpar><font color=red size=3>$mensaje</font></font>";
-			echo "<script>alert('$mensaje');</script>";
+			return "<script>alert('$mensaje');</script>";
 		}
 	}
-	$krd = "usWeb";
-	$datosEnvio = "$fechah&".session_name()."=".trim(session_id())."&ard=$krd";
-	$ulrPrincipal = "Location: principal.php?fechah=$datosEnvio&pasar=no&verdatos=no&idRadicado=$numeroRadicado&estadosTot=".md5(date('Ymd'));
-	header($ulrPrincipal);
-	return ;
 }
 
 
@@ -107,10 +106,10 @@ Los datos suministrados no son correctos.
 <form id="consultaweb" action= "<?=$_SERVER['PHP_SELF']?>" name="consultaweb" enctype="multipart/form-data" method="post" autocomplete="on">
 <input id="numeroRadicado" placeholder="N&uacute;mero de Radicado (s&oacute;lo n&uacute;meros)" required="" name="numeroRadicado" type="text" class="field text small" value="" maxlength="15" tabindex="1" onkeypress="return alpha(event,numbers)" />
 <input id="codigoverificacion"  placeholder="C&oacute;digo verificaci&oacute;n radicado" required="" name="codigoverificacion" type="text" class="field text small" value="" maxlength="5"	tabindex="2" onkeypress="return alpha(event,numbers+letters)" />
-<input id="campo_captcha"  placeholder="Captcha (Sensible a min&uacute;sculas y may&uacute;sculas)" required="" name="captcha" type="text"	class="field text small" value="" maxlength="5" tabindex="3"	onkeypress="return alpha(event,numbers+letters)"	alt="Digite las letras y n&uacute;meros de la im&aacute;gen" />
+<input id="campo_captcha"  placeholder="Captcha (Sensible a min&uacute;sculas y may&uacute;sculas)" required="" name="captcha" type="text"	class="field text small" value="" maxlength="5" tabindex="3"	onkeypress="return alpha(event,numbers+letters)"	alt="Digite las letras y n&uacute;meros de la im&aacute;gen" autocomplete="off" />
 <?php
 	echo '<img id="imgcaptcha" src="' . $_SESSION['captcha_consulta']['image_src'] . '" alt="CAPTCHA" /><br>';
-	echo '<a href="#" onClick="return reloadImg(\'imgcaptcha\');">Cambiar im&aacute;gen<a>'
+	echo '<a  class="btn btn-login" href="#" onClick="return reloadImg(\'imgcaptcha\');">Cambiar im&aacute;gen<a>'
 ?>
 
 <button id="saveForm" type="submit" class="btn btn-login" onclick="return validar_formulario();">Entrar</button>
