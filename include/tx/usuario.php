@@ -251,7 +251,7 @@ class Usuario {
             $record['SGD_DIR_NOMREMDES'] = $user['dignatario'];
         }
 
-        $record['SGD_DIR_DOC']       = $user['cedula'];
+        $record['SGD_DIR_DOC']       = empty($user['cedula'])?  '0' : $user['cedula'];
 
         $record['RADI_NUME_RADI']    = $nurad; // No de radicado
         $record['SGD_SEC_CODIGO']    = 0;
@@ -274,7 +274,7 @@ class Usuario {
                 break;
         }
 
-        //$this->db->conn->debug = true;
+        $this->db->conn->debug = true;
         $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
         $record,
         'SGD_DIR_CODIGO',
@@ -515,12 +515,12 @@ class Usuario {
 
     public function buscarPorParametros($search) {
 
-        $tipo   = $search['tdoc'];
-        $docu   = $search['docu'];
-        $name   = $search['name'];
-        $tele   = $search['tele'];
-        $mail   = $search['mail'];
-        $codi   = $search['codi'];
+        $tipo   = (is_array($search['tdoc']))? $search['tdoc']['value'] : $search['tdoc'];
+        $docu   = (is_array($search['docu']))? $search['docu']['value'] : $search['docu'];
+        $name   = (is_array($search['name']))? $search['name']['value'] : $search['name'];
+        $tele   = (is_array($search['tele']))? $search['tele']['value'] : $search['tele'];
+        $mail   = (is_array($search['mail']))? $search['mail']['value'] : $search['mail'];
+        $codi   = (is_array($search['codi']))? $search['codi']['value'] : $search['codi'];
 
         switch ( $tipo ) {
 
@@ -535,8 +535,10 @@ class Usuario {
                 }
 
                 if(!empty($docu)){
+
                     $sub    = " UPPER(SGD_CIU_CEDULA)  LIKE '%$docu%'";
                     $where .= (empty($where))? $sub : ' and '. strtoupper($sub);
+
                 }
 
 

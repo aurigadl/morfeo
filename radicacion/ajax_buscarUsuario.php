@@ -37,11 +37,11 @@ if($_POST['search']){
     $usuario= new Usuario($db);
     $trans  = json_decode($_POST['search'], true);
 
-    $search['tdoc'] = $trans['tdoc']['value'];
-    $search['docu'] = $trans['docu']['value'];
-    $search['name'] = $trans['name']['value'];
-    $search['tele'] = $trans['tele']['value'];
-    $search['mail'] = $trans['mail']['value'];
+    $search['tdoc'] = $trans['tdoc'];
+    $search['docu'] = $trans['docu'];
+    $search['name'] = $trans['name'];
+    $search['tele'] = $trans['tele'];
+    $search['mail'] = $trans['mail'];
 
     //Filtro por el tipo de usuario
     $result = $usuario->buscarPorParametros( $search );
