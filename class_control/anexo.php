@@ -138,6 +138,14 @@ var $radi_nume_salida;
   * @var numeric
   * @access public
   */
+
+var $anexSha1;
+/**
+  * Variable que contiene la cadena de conprobacion de archivos tipo sha1
+  * @var String
+  * @access public
+  */
+  
 var $sgd_apli_codi;
 
 var $codi_anexos;
@@ -175,7 +183,7 @@ function anexoRadicado($radicado,$codigo) {
 
 	if 	(!$rs->EOF)
  		{
-		  	 $this->sgd_rem_destino=$rs->fields["SGD_REM_DESTINO"];
+		   $this->sgd_rem_destino=$rs->fields["SGD_REM_DESTINO"];
 			 $this->anex_radi_nume=$rs->fields["ANEX_RADI_NUME"];
 			 $this->anex_codigo=$rs->fields["ANEX_CODIGO"];
 			 $this->anex_tipo=$rs->fields["ANEX_TIPO"];
@@ -702,7 +710,7 @@ function seHaRadicadoAnexo($cod){
              where anex_tipo_ext='$filedatatype'";
 
         $rs = $this->cursor->conn->Execute($q);
-        $codigoAnexo = $rs->fields['anex_tipo_codi'];
+        $codigoAnexo = $rs->fields['ANEX_TIPO_CODI'];
 	
         return $codigoAnexo;
         
@@ -715,6 +723,7 @@ function seHaRadicadoAnexo($cod){
      * 
      */
     function anexarFilaRadicado($codMax = 0){
+        // $this->cursor->conn->debug = true;
         $codMax = $this->obtenerMaximoNumeroAnexo($this->anex_radi_nume);
         $codMax++;
 
@@ -751,6 +760,7 @@ function seHaRadicadoAnexo($cod){
         if($this->sgd_exp_numero) $recordR["SGD_EXP_NUMERO"]      = $this->sgd_exp_numero;
         if($this->anex_estado_mail) $recordR["ANEX_ESTADO_EMAIL"] = $this->anex_estado_mail;
         if($this->usuaDoc) $recordR["USUA_DOC"] = $this->usuaDoc;
+        if($this->anexSha1) $recordR["ANEX_SHA1"] = "'".$this->anexSha1."'";
         $insert = $this->cursor->insert("ANEXOS", $recordR);
         if($insert==1)
         {

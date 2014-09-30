@@ -1,15 +1,32 @@
 <?php
- session_start();
+// Inicializar la sesión.
+// Si está usando session_name("algo"), ¡no lo olvide ahora!
+session_start();
+
+// Destruir todas las variables de sesión.
+$_SESSION = array();
+
+// Si se desea destruir la sesión completamente, borre también la cookie de sesión.
+// Nota: ¡Esto destruirá la sesión, y no la información de la sesión!
+if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
+}
+
+// Finalmente, destruir la sesión.
+session_destroy();
  $ruta_raiz = "..";
  include "../conn.php";
 ?>
 <HTML>
 <HEADER>
 <?php include_once "$ruta_raiz/htmlheader.inc.php"; 
-
 ?>
 </HEADER>
-<body style="background-image: url(../img/login_background.jpeg); background-repeat: repeat-y;">
+<body style="background-image: url(../img/login_background.jpeg); background-repeat: repeat; height: 900px;">
 
 <div id=res name=res> </div>
 <!-- widget grid -->
@@ -95,26 +112,20 @@
 										</ul>
 										<div class="clearfix"></div>
 									</div>
+									<br>
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab1">
-											<br>
-											<br>						
-											
 											 <div class="row">
                         <div class="col-sm-6">
                           <div class="form-group"><span class="input-group-addon">CHIP </span>            
-                              <input class="form-control input-lg" placeholder="Ingrese el Chip Ej. AAA0000HJRX " type="text" name="chip" id="chip" onChange="calcularLiquidacion();" >
+                              <input class="form-control input-lg" placeholder="Ingrese Los  Chip Ej. AAA000ZHRX " type="text" name="chip" id="chip" onChange="calcularLiquidacion();" >
                           </div>
                         </div>
                         <div class="col-sm-6">
                           <div class="form-group"><span class="input-group-addon">AREA DE OBLIGACION VIS/VIP m<sup>2</sup><div id=areaTerreno></div></span>
-                              
-                              <input class="form-control input-lg" placeholder="Valor Area segun documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">
-
-                          </div>
+                              <input class="form-control input-lg" placeholder="Valor Area segun documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">                          </div>
                         </div>
 											</div>
-
                       <div class="row">
                          <div class="col-sm-6">
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
@@ -156,14 +167,16 @@
                                 <input class="form-control input-lg alert-success" placeholder="Valor Obligación" type="text" name="valorO" disabled id="valorO">
                             </div>
                          </div> 
-                      </DIV>   
+                      </DIV>
                       
-                            <div class="row" >
+                      <div id=chips>
+                      </div>
+                      
+      <div class="row" >
         <div class="col-sm-12">
-              <div class="input-group "    ><label class="col-md-2 control-label"></label></div>
-              
-              
-        </div> 
+        <div class="input-group "    ><label class="col-md-2 control-label"></label></div>
+     </div> 
+        
     </DIV>
      <CENTER>
      <input type=button class="btn btn-lg txt-color-darken" value="Imprimir Simulaci&oacute;n" onClick="window.open('simuPrint.php','SimuPrin<?=date("ymdhis")?>')">
@@ -176,7 +189,17 @@
 
 											<div class="row">
 											
-											                        <div class="col-sm-12">
+											<div class="col-sm-6">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-user fa-lg fa-fw"></i></span>
+                              <input class="form-control input-lg" placeholder="Nombre Solicitante" type="text" name="fname" id="fname">
+
+                            </div>
+                          </div>
+                        </div>
+											
+                        <div class="col-sm-6">
                           <div class="form-group">
                             <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-envelope fa-lg fa-fw"></i></span>
@@ -187,18 +210,7 @@
 
                         </div>
 
-                      </div>
-
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                            <div class="input-group">
-                              <span class="input-group-addon"><i class="fa fa-user fa-lg fa-fw"></i></span>
-                              <input class="form-control input-lg" placeholder="Nombre Solicitante" type="text" name="fname" id="fname">
-
-                            </div>
-                          </div>
-                        </div>
+                        
 										
                                            
                         <div class="col-sm-12">
@@ -233,7 +245,7 @@
                                     '0:-- Seleccione un Departamento--',
                                     false,
                                     false,
-                                    "class='form-control input-lg' id=coddepe");
+                                    "class='form-control input-lg' id=codDpto");
 															 
 															 echo $depselect;
 															?>
@@ -245,7 +257,7 @@
 													<div class="form-group">
 														<div class="input-group">
 															<span class="input-group-addon"><i class="fa fa-map-marker fa-lg fa-fw"></i></span>
-															<select class="form-control input-lg" name="city">
+															<select class="form-control input-lg" name="city" id="city">
 																
 																<option value=1>Bogota</option>
 															</select>
@@ -253,21 +265,11 @@
 													</div>
 												</div>
 												
-											</div>
-											<div class="row">
-												<div class="col-sm-6">
+												<div class="col-sm-4">
 													<div class="form-group">
 														<div class="input-group">
 															<span class="input-group-addon"><i class="fa fa-phone fa-lg fa-fw"></i></span>
-															<input class="form-control input-lg" data-mask="(999) 999-9999" data-mask-placeholder= "X" placeholder="Numero Celular" type="text" name="wphone" id="wphone">
-														</div>
-													</div>
-												</div>
-												<div class="col-sm-6">
-													<div class="form-group">
-														<div class="input-group">
-															<span class="input-group-addon"><i class="fa fa-mobile fa-lg fa-fw"></i></span>
-															<input class="form-control input-lg" data-mask="(9) 9999999" data-mask-placeholder= "X" placeholder="Numero Fijo" type="text" name="hphone" id="hphone">
+															<input class="form-control input-lg" data-mask-placeholder= "X" placeholder="Numeros de Telefono" type="text" name="wphone" id="wphone">
 														</div>
 													</div>
 												</div>
@@ -304,6 +306,8 @@
                             </div>
                           </div>
                         </div>
+                        
+                        <!--
                         &nbsp;&nbsp;<H4>Identificaci&oacute;n del predio</H4>
                         <div class="col-sm-4">
                           <div class="form-group">
@@ -365,7 +369,8 @@
                                <input class="form-control input-lg" placeholder=""  type="text" name="pAreaU" id="pAreaU" >
                             </div>
                           </div>
-                        </div>												
+                        </div>
+                        -->
 												<div class="smart-form">
                         <div class="col-sm-6">
                           <div class="form-group">
@@ -391,42 +396,53 @@
 												<strong>Documentos Requeridos para la liquidacion!</strong> Por favor adjunte los documentos de la lista.
 											</div>
 											
+											Certificado de Tradición y Libertad.
+											
+											<label class="label"><div class="form-group smart-form" id=""></label>
 											
 											
-											<div class="form-group smart-form">
-											
-											
-                      <label class="label">Seleccionar Certificado de Tradici&oacute;n y Libertad.</label>
+                      
                       <?php
                         $norandom = "file1";
                         
-                        echo("<div $addAttr id='$norandom'>A&ntilde;dir Archivos</div>
-                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                        echo("
+                        <div $addAttr id='$norandom'>A&ntilde;dir Archivos  <input  type='HIDDEN' value='' id='inp_$norandom'  /> 
+                        <input type=hidden id=nFile1>
+                        
+                              ");
                         $scriptJS .= "
                                     var uploaderId = '$norandom';
                                     $('#$norandom').uploadFile({
                                         url:'./server.php?tx=2',
                                         fileName:'fileFormDinamic',
                                         multiple:false,
+                                        dragDrop: false,
+                                        showFileCounter: false,
                                         onSuccess:function(files,data,xhr){
                                             $('#inp_$norandom').val(JSON.parse(data)[0]);
+                                            // alert ('Subido Ok'+ files + 'data' + data + ' xhr '+ xhr);
+                                            $('#nFile1').val('files');
+                                              
                                         }
                                     });
                                 ";
+                        echo "</div>";
                       ?>
 
                       <label class="label">Certificado Catastral vigente</label>
                       <?php
                         $norandom = "file2";
                         
-                        echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
-                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                        echo("<div  id='$norandom'>A&ntilde;adir Archivos</div>
+                              <input class='input input-file'  type='HIDDEN' value='' id='inp_$norandom'  />");
                         $scriptJS .= "
                                     var uploaderId = '$norandom';
                                     $('#$norandom').uploadFile({
                                         url:'./server.php?tx=2',
                                         fileName:'fileFormDinamic',
                                         multiple:false,
+                                        dragDrop: false,
+                                        showFileCounter: false,                                        
                                         onSuccess:function(files,data,xhr){
                                             $('#inp_$norandom').val(JSON.parse(data)[0]);
                                         }
@@ -439,13 +455,16 @@
                         $norandom = "file3";
                         
                         echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
-                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                              <input  type='HIDDEN' value='' id='inp_$norandom'  />");
                         $scriptJS .= "
                                     var uploaderId = '$norandom';
                                     $('#$norandom').uploadFile({
                                         url:'./server.php?tx=2',
                                         fileName:'fileFormDinamic',
                                         multiple:false,
+                                        delete:true,
+                                        dragDrop: false,
+                                        showFileCounter: false,                                        
                                         onSuccess:function(files,data,xhr){
                                             $('#inp_$norandom').val(JSON.parse(data)[0]);
                                         }
@@ -458,13 +477,15 @@
                         $norandom = "file4";
                         
                         echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
-                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                              <input  type='HIDDEN' value='' id='inp_$norandom'  />");
                         $scriptJS .= "
                                     var uploaderId = '$norandom';
                                     $('#$norandom').uploadFile({
                                         url:'./server.php?tx=2',
                                         fileName:'fileFormDinamic',
                                         multiple:false,
+                                        dragDrop: false,
+                                        showFileCounter: false,                                        
                                         onSuccess:function(files,data,xhr){
                                             $('#inp_$norandom').val(JSON.parse(data)[0]);
                                         }
@@ -476,13 +497,15 @@
                         $norandom = "file5";
                         
                         echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
-                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                              <input  type='HIDDEN' value='' id='inp_$norandom'  />");
                         $scriptJS .= "
                                     var uploaderId = '$norandom';
                                     $('#$norandom').uploadFile({
                                         url:'./server.php?tx=2',
                                         fileName:'fileFormDinamic',
                                         multiple:false,
+                                        dragDrop: false,
+                                        showFileCounter: false,                                        
                                         onSuccess:function(files,data,xhr){
                                             $('#inp_$norandom').val(JSON.parse(data)[0]);
                                         }
@@ -496,13 +519,15 @@
                         $norandom = "file6";
                         
                         echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
-                              <input  type='HIDDEN' value='Subir Archivo' id='inp_$norandom'  />");
+                              <input  type='HIDDEN' value='' id='inp_$norandom'  />");
                         $scriptJS .= "
                                     var uploaderId = '$norandom';
                                     $('#$norandom').uploadFile({
                                         url:'./server.php?tx=2',
                                         fileName:'fileFormDinamic',
                                         multiple:false,
+                                        dragDrop: false,
+                                        showFileCounter: false,                                        
                                         onSuccess:function(files,data,xhr){
                                             $('#inp_$norandom').val(JSON.parse(data)[0]);
                                         }
@@ -529,6 +554,7 @@
 											<br>
                       <div id=resultadoRad>
                       </div>
+                      <br><br><br>
                       <div id=resultado>
                       </div>
 											<div id=resultadoR>
@@ -536,6 +562,9 @@
 										
 										
 										</div>
+										<div id=resultadoRTmp>
+                      <footer><center><input type=button onClick="radicarDocumento();" class="btn btn-lg btn-primary" value="Generar Solicitud" align="center"></footer>
+                    </div>
                     <div class="alert alert-warning fade in">
 <button class="close" data-dismiss="alert"> × </button>
 <i class="fa-fw fa fa-warning"></i>
@@ -595,17 +624,39 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
 <script type="text/javascript">
 	function radicarDocumento(){
 	  radData = $('#resultado').html();
-	          $.post("../tx/ajaxRadicarLiq.php", {"rads":"rads"}).done(
+	    sEmail = $("#email").val();
+      sFname = $("#fname").val();
+      sAddress = $("#address").val();
+      sCodDpto = $("#codDpto").val();
+      sCodMuni = $("#city").val();
+      sNomDpto = "";
+      sPhone1 = $("#wPhone").val();
+      pName = $("#pName").val();
+      pNombre = $("#pNombre").val();
+      pRep = $("#pRep").val();
+      pConstructora = $("#pConstructora").val();
+      valA1 = $("#valA1").val();
+      valA2 = $("#valorA2").val();
+      valM2T = $("#valM2T").val();
+      valorO = $("#valorO").val();
+      valorCatastralPromedio = $("#valorCatastralPromedio").val();
+      valRef = $("#valRef").val();
+      f1 = $("#inp_file1").val();
+      f2 = $("#inp_file2").val();
+      f3 = $("#inp_file3").val();
+      f4 = $("#inp_file4").val();
+      f5 = $("#inp_file5").val();
+      f6 = $("#inp_file6").val();
+      $.post("../tx/ajaxRadicarLiq.php", {"valA1":valA1,"valA2":valA2,"valorO":valorO,"valM2T":valM2T,"valorCatastralPromedio":valorCatastralPromedio,"valRef":valRef, "sEmail":sEmail, "sFname":sFname, "sAddress":sAddress, "sCodDpto":sCodDpto, "sCodMuni":sCodMuni, "sPhone1":sPhone1,"pRep":pRep, "pNombre":pNombre, "pName":pName, "fname":sFname, "pConstructora":pConstructora, "f1":f1, "f2":f2, "f3":f3, "f4":f4, "f5":f5, "f6":f6}).done(
             function( data ) {
                 $('#resultadoR').html(data);
-               
             }
         );
 	
 	}
 	
 	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
-	 *
+	 *  $.post("../tx/ajaxRadicarLiq.php", {"valA1":valA1,"valA2":valA2,"valorO":valorO,"valM2T":valM2T,"valorCatastralPromedio":valorCatastralPromedio,"valRef":valRef, "sEmail":sEmail, "sFname":sFname, "sAddress":sAddress,"sNomDpto":sNomDpto, "sCodMuni":sNomMuni, "sCodDpto":sCodDpto, "sCodMuni":sCodMuni, "sPhone1":sPhone1,"pRep":pRep, "pNombre":pNombre, "pName":pName, "fname":sFname, "pConstructora":pConstructora, "pDir":pDir, "pLic1":pLic1, "f1":f1, "f2":f2, "f3":f3, "f4":f4, "f5":f5, "f6":f6}).done(
 	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
 	 *
 	 * // activate tooltips
@@ -645,6 +696,8 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
 	 //alert("Calculando Liquidacion");
 	 chip = $("#chip").val();
 	 valA1 = $("#valA1").val();
+
+	 
 	 $.post("../tx/ajaxCalculoLiqMtv.php", {"chip":chip,"valA1":valA1}).done(
             function( data ) {
                 $('#res').html(data);
@@ -755,7 +808,7 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
 					content : "<i class='fa fa-clock-o'></i><i>1 seconds ago...</i>",
 					color : "#5F895F",
 					iconSmall : "fa fa-check bounce animated",
-					timeout : 4000
+					timeout : 8000
 				});
 
 			});
@@ -770,6 +823,16 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
 	pagefunction();
 
 	<?=$scriptJS?>
+	
+	
+    // Muestra las imagenes de los radicados
+    function funlinkArchivo(numrad, rutaRaiz){
+        var nombreventana = "linkVistArch";
+        var url           = "../linkArchivo.php?<? echo session_name()."=".session_id()?>"+"&numrad="+numrad;
+        var ventana       = window.open(url,nombreventana,'scrollbars=1,height=50,width=250');
+        //setTimeout(nombreventana.close, 70);
+        //return;
+    }
 </script>
 </body>
 </HTML>

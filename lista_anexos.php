@@ -19,7 +19,7 @@ $anex = new Anexo($db);
 $sqlFechaDocto = $db->conn->SQLDate("Y-m-D H:i:s A","sgd_fech_doc");
 $sqlFechaAnexo = $db->conn->SQLDate("Y-m-D H:i:s A","anex_fech_anex");
 //$sqlFechaAnexo = "to_char(anex_fech_anex, 'YYYY/DD/MM HH:MI:SS')";
-$sqlSubstDesc =  $db->conn->substr."(anex_desc, 0, 50)";
+$sqlSubstDesc =  $db->conn->substr."(anex_desc, 0, 100)";
 //include_once("include/query/busqueda/busquedaPiloto1.php");
 // Modificado SGD 06-Septiembre-2007
 $maxRows = $db->limit();
