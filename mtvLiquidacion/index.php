@@ -426,7 +426,7 @@ session_destroy();
                                         showFileCounter: false,
                                         onSuccess:function(files,data,xhr){
                                             $('#inp_$norandom').val(JSON.parse(data)[0]);
-                                            alert ('Subido Ok'+ files + 'data' + data + ' xhr '+ xhr);
+                                            // alert ('Subido Ok'+ files + 'data' + data + ' xhr '+ xhr);
                                             $('#nFile1').val('files');
                                               
                                         }
@@ -653,7 +653,7 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
       f4 = $("#inp_file4").val();
       f5 = $("#inp_file5").val();
       f6 = $("#inp_file6").val();
-      $.post("../tx/ajaxRadicarLiq.php", {"valA1":valA1,"valA2":valA2,"valorO":valorO,"valM2T":valM2T,"valorCatastralPromedio":valorCatastralPromedio,"valRef":valRef, "sEmail":sEmail, "sFname":sFname, "sAddress":sAddress,"sNomDpto":sNomDpto, "sCodMuni":sNomMuni, "sCodDpto":sCodDpto, "sCodMuni":sCodMuni, "sPhone1":sPhone1,"pRep":pRep, "pNombre":pNombre, "pName":pName, "fname":sFname, "pConstructora":pConstructora, "f1":f1, "f2":f2, "f3":f3, "f4":f4, "f5":f5, "f6":f6}).done(
+      $.post("../tx/ajaxRadicarLiq.php", {"valA1":valA1,"valA2":valA2,"valorO":valorO,"valM2T":valM2T,"valorCatastralPromedio":valorCatastralPromedio,"valRef":valRef, "sEmail":sEmail, "sFname":sFname, "sAddress":sAddress, "sCodDpto":sCodDpto, "sCodMuni":sCodMuni, "sPhone1":sPhone1,"pRep":pRep, "pNombre":pNombre, "pName":pName, "fname":sFname, "pConstructora":pConstructora, "f1":f1, "f2":f2, "f3":f3, "f4":f4, "f5":f5, "f6":f6}).done(
             function( data ) {
                 $('#resultadoR').html(data);
             }
