@@ -39,13 +39,13 @@ $paginaHtml = "
 <body>
     <div class='row' STYLE='position:absolute; top:20px; left:70px;' >
       <table >
-       <tr><td><img src='./logoFrmWeb.png' align=left width=150></td></tr>
+       <tr><td><img src='../../imagenes/logoFrmWeb.png' align=left width=150></td></tr>
       </table>
     </div>
 
     <div class='row' STYLE='position:absolute; top:20px; left:50px;width:90%;' >
       <table width='100%'>
-       <tr><td><img src='./logoFrmWeb2.png' width=150 align='right' ></td></tr>
+       <tr><td><img src='../../imagenes/logoFrmWeb2.png' width=150 align='right' ></td></tr>
       </table>
     </div>  
 <div  STYLE='position:absolute; top:120px; left:70px;' >

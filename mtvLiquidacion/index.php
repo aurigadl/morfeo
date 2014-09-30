@@ -112,11 +112,9 @@ session_destroy();
 										</ul>
 										<div class="clearfix"></div>
 									</div>
+									<br>
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab1">
-											<br>
-											<br>						
-											
 											 <div class="row">
                         <div class="col-sm-6">
                           <div class="form-group"><span class="input-group-addon">CHIP </span>            
@@ -125,13 +123,9 @@ session_destroy();
                         </div>
                         <div class="col-sm-6">
                           <div class="form-group"><span class="input-group-addon">AREA DE OBLIGACION VIS/VIP m<sup>2</sup><div id=areaTerreno></div></span>
-                              
-                              <input class="form-control input-lg" placeholder="Valor Area segun documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">
-
-                          </div>
+                              <input class="form-control input-lg" placeholder="Valor Area segun documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">                          </div>
                         </div>
 											</div>
-
                       <div class="row">
                          <div class="col-sm-6">
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
