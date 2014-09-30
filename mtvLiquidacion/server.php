@@ -24,7 +24,7 @@
         case 2:
 
             $year       = date("Y");
-            $output_dir = "../bodega/$year/formFiles/";
+            $output_dir = "../bodega/tmp/";
 
             if(isset($_FILES["fileFormDinamic"])){
                 $ret = array();
@@ -33,7 +33,7 @@
                 //If Any browser does not support serializing of multiple files using FormData()
                 if(!is_array($_FILES["fileFormDinamic"]["name"])) //single file
                 {
-                    $namefile = rand(9999, 99999);
+                    $namefile = rand(99999, 99999);
                     $fileName = $namefile.'_'.$_FILES["fileFormDinamic"]["name"];
                     move_uploaded_file($_FILES["fileFormDinamic"]["tmp_name"],$output_dir.$fileName);
                     $ret[]= $fileName;

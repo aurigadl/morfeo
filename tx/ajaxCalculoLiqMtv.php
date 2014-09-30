@@ -14,15 +14,16 @@
   $valA1       = $_POST["valA1"];
   $db = new ConnectionHandler($ruta_raiz);
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-
+  if(trim($chip)) $_SESSION["chips"] .= "'". trim($chip). "'," ;
   $carpetaPersonal = ($dato == 11)? 1 : 0;
   
   $carpetaDestino = substr($codCarpeta,2,5);
   
   //  changeFolder( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$tomarNivel,$observa)
 
-  if(trim($chip)) {
-    $isql = "SELECT * FROM predial2014_20140819 WHERE CHIP = '". trim(strtoupper($chip))."'";
+  if(trim( $_SESSION["chips"])) {
+    $isql = "SELECT * FROM predial2014_20140819 WHERE CHIP in (". $_SESSION["chips"]."'0') order by CAST(VAL_M2_T AS NUMERIC) DESC";
+    //echo $isql;
     $rs = $db->conn->query($isql);
     if($rs->fields["CHIP"]){
       $chipB = $rs->fields["CHIP"];
@@ -61,6 +62,23 @@
     $textoFinal .= "<tr><td>Area a trasladar</td><td>$valorA2F m<sup>2</sup></Td></tr>";
     $textoFinal .= "<tr><td>Valor estimado de la Obligaci&oacute;n por traslado VIP/VIS </td><td>$valorObligacionF </Td></tr>";
     $textoFinal .= "<tr><td></td></tr></table>";
+    
+    $tablaChips = "<TABLE class=\"table table-bordered\">";
+    $tablaChips .= "<TR><Th>Chip</Th><Th>Direcci&oacute;n</Th><Th>Area Bruta</Th><Th>Representante Legal</Th><Th>Valor Catastral M<sup>2</sup></Th><Th></Th></TR>";
+    while(!$rs->EOF){
+      $chipB = $rs->fields["CHIP"];
+      $valM2T = $rs->fields["VAL_M2_T"];
+      $valM2TF = number_format($valM2T,2,",",".");
+      $areaTerreno = $rs->fields["A_TER_CAT"];
+      $nombrePropietario = $rs->fields["NOM_PRO"];
+      $direccionPredio = $rs->fields["DIR_REAL"];
+      $direccionCorr = $rs->fields["DIR_CORR"];
+      $pFMI = $rs->fields["FMI"];
+      $tablaChips .= "<TR><TD>$chipB</TD><TD>$direccionPredio</TD><TD>$areaTerreno</TD><TD>$nombrePropietario</TD><TD align=right>$valM2TF</TD><TD></TD>";
+      $tablaChips .= "</TR>";
+      $rs->MoveNext();
+    }
+    $tablaChips .= "</TABLE>";
     echo "<script>
       pNombreI = $('#pNombre').val();
       pConstructoraI = $('#pConstructora').val();
@@ -73,9 +91,10 @@
       $('#address').val('$direccionCorr');
       //$('#pRep').val('$nombrePropietario');
       $('#pAreaB').val('$areaTerreno');
+      $('#chips').html('$tablaChips');
       $('#pFMI').val('$pFMI');
       $('#valorCatastralPromedio').val('$valorCatastralPromedioF');
-      $('#chip').val('$chip');
+      $('#chip').val('');
       $('#pChip').val('$chip');
       $('#resultado').html('$textoFinal');
       $('#areaTerreno').html('(Area del terreno  $areaTerreno m<sup>2</sup>)')
