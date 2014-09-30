@@ -35,7 +35,7 @@ td{
 $noRad = $_REQUEST['nurad'];
 ?>
 <body topmargin="5" leftmargin="0">
-    <table width="400px" cellpadding="0" cellspacing="0">
+    <table width="400px" cellpadding="0" cellspacing="0" onload="window.print()">
         <tr>
             <td  align=left width="300px">
 	    	<table width="100%">

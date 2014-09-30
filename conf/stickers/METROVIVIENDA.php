@@ -1,3 +1,4 @@
+<?$ruta_raiz="../.."?>
 <html>
 <head>
 <title>Sticker web</title>
@@ -30,11 +31,11 @@ td{
 
 </style>
 </head>
-<body topmargin="5" leftmargin="0"  onload="window.print();">
+<body topmargin="5" leftmargin="0"  onload="window.print()">
     <table width="250px" cellpadding="0" cellspacing="0">
         <tr>
             <td  align=left width="300px">
-              <?=$_SESSION['entidad']?>
+              <?=$entidad_corto?>
                <!-- <center>
                <p><span><b><h3><?=$entidad_largo?></h3><b></span></p>
                 </center> -->
