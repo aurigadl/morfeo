@@ -50,7 +50,7 @@ $noRad = $_REQUEST['nurad'];
                 <b>C&oacute;d veri: <?=$sgd_rad_codigoverificacion?> </b><br>
 		<!--Falta incluir el destinatario-->
                 <p><center><b><?=$entidad_largo?></b></br>
-		<?=$entidad_dir?>, Tel: <?=$entidad_tel?>
+		<font size=2><?=$entidad_dir?>, Tel: <?=$entidad_tel?></font>
 		</center></p>
                 <span  align="left"><b>
                 </span>
