@@ -582,6 +582,7 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
                 <center>
                     <?php
                     if ($tsub and $codserie && !$Actualizar and $usuaDocExp) {
+                        echo "---------------------------";
                         if (!$crearExpediente) {
                             if (is_array($arrProceso) && $codProc == 0) {
                                 echo "<input name=\"crearExpediente\" type=\"button\" class=\"btn btn-primary btn-xs\" value=\" Crear Expediente \" onClick=\"alert('Por favor seleccione un proceso.'); document.TipoDocu.codProc.focus();\">";
