@@ -205,7 +205,7 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
   if(!$usuaDocExp) $usuaDocExp=$usua_doc;
   
 	//$queryDel = "DELETE FROM SGD_SEXP_SECEXPEDIENTES WHERE SGD_EXP_NUMERO='$numExpediente'";
-	//$this->db->conn->query($queryDel);
+	$this->db->conn->query($queryDel);
 	echo "**** <hr>";
 	$query="insert into SGD_SEXP_SECEXPEDIENTES(SGD_EXP_NUMERO   ,SGD_SEXP_FECH      ,DEPE_CODI   ,USUA_DOC   ,SGD_FEXP_CODIGO,SGD_SRD_CODIGO,SGD_SBRD_CODIGO,SGD_SEXP_SECUENCIA, SGD_SEXP_ANO,USUA_DOC_RESPONSABLE)
 	VALUES ('$numExpediente',". $sqlFechaHoy ." ,'$depe_codi','$usua_doc',1              ,$codiSRD     ,$codiSBRD        ,$secExp ,$anoExp,$usuaDocExp)";
