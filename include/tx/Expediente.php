@@ -452,7 +452,7 @@ class Expediente {
             }
             $query .= " )";
 #echo $campoParametro; exit; 2014900029900002E
-#echo "<pre>$query</pre>"; exit; 
+echo "<pre>$query</pre>"; exit; 
             if (!$rs = $this->db->conn->Execute($query)) {
                 //echo '<br>Lo siento no pudo agregar el expediente<br>';
                 echo "No se ha podido insertar el Expediente";
