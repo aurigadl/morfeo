@@ -388,7 +388,7 @@ class Expediente {
                 if ($p == count($arrParametro)) {
                     $coma = "";
                 }
-                $campoParametro .= "SGD_SEXP_PAREXP" . ($orden+1) . $coma;
+                $campoParametro .= "SGD_SEXP_PAREXP" . $orden . $coma;
                 $valorParametro .= "'" . $datoParametro . "'" . $coma;
                 $p++;
             }
@@ -452,7 +452,7 @@ class Expediente {
             }
             $query .= " )";
 #echo $campoParametro; exit; 2014900029900002E
-echo "<pre>$query</pre>"; exit; 
+#echo "<pre>$query</pre>"; exit; 
             if (!$rs = $this->db->conn->Execute($query)) {
                 //echo '<br>Lo siento no pudo agregar el expediente<br>';
                 echo "No se ha podido insertar el Expediente";
@@ -524,7 +524,7 @@ echo "<pre>$query</pre>"; exit;
 
         if (is_array($arrParametro)) {
             foreach ($arrParametro as $orden => $datoParametro) {
-                $campoParametro = "SGD_SEXP_PAREXP" . ($orden+1) ;
+                $campoParametro = "SGD_SEXP_PAREXP" . $orden ;
                 $valorParametro = "'" . $datoParametro . "'";
                 $p++;
                 $fecha_hoy = Date("Y-m-d");
