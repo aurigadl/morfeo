@@ -875,8 +875,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         $.each(data, function(i){
 
           var li     = $('<li/>').appendTo(indiv);
-          var nombre = data[i].NOMBRE.replace(/\w\S*/g, uppFirs);
-          var apell  = data[i].APELLIDO.replace(/\w\S*/g, uppFirs);
+          var nombre = (data[i].NOMBRE === null)? '' : data[i].NOMBRE.replace(/\w\S*/g, uppFirs);
+          var apell  = (data[i].APELLIDO === null)? '' :  data[i].APELLIDO.replace(/\w\S*/g, uppFirs);
           var telef  = data[i].TELEF;
           var email  = (data[i].EMAIL)? data[i].EMAIL.toLowerCase() : '';
           var cedula = data[i].CEDULA;

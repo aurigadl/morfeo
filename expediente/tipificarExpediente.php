@@ -452,7 +452,7 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
                           $sqlParExp .= " SGD_PAREXP_EDITABLE";
                           $sqlParExp .= " FROM SGD_PAREXP_PARAMEXPEDIENTE PE";
                           $sqlParExp .= " WHERE PE.DEPE_CODI = " . $dependenciaExp;
-                          $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN";
+                          $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN ASC";
                           $rsParExp = $db->conn->Execute($sqlParExp);
                             $auxiliar_formulario = 0;
                           while (!$rsParExp->EOF) { ?>
@@ -582,6 +582,7 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
                 <center>
                     <?php
                     if ($tsub and $codserie && !$Actualizar and $usuaDocExp) {
+                        echo "---------------------------";
                         if (!$crearExpediente) {
                             if (is_array($arrProceso) && $codProc == 0) {
                                 echo "<input name=\"crearExpediente\" type=\"button\" class=\"btn btn-primary btn-xs\" value=\" Crear Expediente \" onClick=\"alert('Por favor seleccione un proceso.'); document.TipoDocu.codProc.focus();\">";

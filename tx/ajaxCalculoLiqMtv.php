@@ -27,6 +27,7 @@
     $rs = $db->conn->query($isql);
     if($rs->fields["CHIP"]){
       $chipB = $rs->fields["CHIP"];
+      $chipMax = $chipB;
       $valM2T = $rs->fields["VAL_M2_T"];
       $areaTerreno = $rs->fields["A_TER_CAT"];
       $nombrePropietario = $rs->fields["NOM_PRO"];
@@ -95,6 +96,7 @@
       $('#pFMI').val('$pFMI');
       $('#valorCatastralPromedio').val('$valorCatastralPromedioF');
       $('#chip').val('');
+      $('#chip').attr('placeholder', '$chipMax');
       $('#pChip').val('$chip');
       $('#resultado').html('$textoFinal');
       $('#areaTerreno').html('(Area del terreno  $areaTerreno m<sup>2</sup>)')
