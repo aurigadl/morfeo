@@ -452,7 +452,7 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
                           $sqlParExp .= " SGD_PAREXP_EDITABLE";
                           $sqlParExp .= " FROM SGD_PAREXP_PARAMEXPEDIENTE PE";
                           $sqlParExp .= " WHERE PE.DEPE_CODI = " . $dependenciaExp;
-                          $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN ASC";
+                          $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN ASC  ";
                           $rsParExp = $db->conn->Execute($sqlParExp);
                             $auxiliar_formulario = 0;
                           while (!$rsParExp->EOF) { ?>
