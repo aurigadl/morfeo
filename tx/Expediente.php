@@ -404,3 +404,5 @@ function crearExpediente($numExpediente,$radicado,$depe_codi,$usua_codi,$usua_do
 	}
 }
 ?>
+
+
