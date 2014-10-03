@@ -65,7 +65,8 @@
     $textoFinal .= "<tr><td></td></tr></table>";
     
     $tablaChips = "<TABLE class=\"table table-bordered\">";
-    $tablaChips .= "<TR><Th>Chip</Th><Th>Direcci&oacute;n</Th><Th>Area Bruta</Th><Th>Representante Legal</Th><Th>Valor Catastral M<sup>2</sup></Th><Th></Th></TR>";
+    //$tablaChips .= "<TR><Th>Chip</Th><Th>Direcci&oacute;n</Th><Th>Area Bruta</Th><Th>Representante Legal</Th><Th>Valor Catastral M<sup>2</sup></Th><Th></Th></TR>";
+    $tablaChips .= "<TR><Th>Chip</Th><Th>Direcci&oacute;n</Th><Th>Area Bruta</Th><Th></Th></TR>";
     while(!$rs->EOF){
       $chipB = $rs->fields["CHIP"];
       $valM2T = $rs->fields["VAL_M2_T"];
@@ -75,7 +76,8 @@
       $direccionPredio = $rs->fields["DIR_REAL"];
       $direccionCorr = $rs->fields["DIR_CORR"];
       $pFMI = $rs->fields["FMI"];
-      $tablaChips .= "<TR><TD>$chipB</TD><TD>$direccionPredio</TD><TD>$areaTerreno</TD><TD>$nombrePropietario</TD><TD align=right>$valM2TF</TD><TD></TD>";
+      //$tablaChips .= "<TR><TD>$chipB</TD><TD>$direccionPredio</TD><TD>$areaTerreno</TD><TD>$nombrePropietario</TD><TD align=right>$valM2TF</TD><TD></TD>";
+      $tablaChips .= "<TR><TD>$chipB</TD><TD>$direccionPredio</TD><TD>$areaTerreno</TD><TD></TD>";
       $tablaChips .= "</TR>";
       $rs->MoveNext();
     }
