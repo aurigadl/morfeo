@@ -30,11 +30,9 @@
   $lnr         = 11 + $ln;
   
   if (isset($radPadre)) {
-    echo "llego radicado padre"; exit;
     $directorio_ano  = substr($radPadre, YEAR_INICIO, YEAR_LENGTH);
     $depe_radi_padre = substr($radPadre, RADI_INICIO, RADI_LENGTH);
   } else {
-    echo "FALTA radicado padre"; exit;
     var_dump('Error');
     exit();
   }
