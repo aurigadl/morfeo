@@ -184,9 +184,8 @@ if ( $expIncluido != "" ) {
                 <?php echo ucwords(strtolower($arrTRDExp['serie']))." / ".ucwords(strtolower($arrTRDExp['subserie'])); ?>
                 <br>
                  <?php if($usuaPermExpediente > 1){ ?>
-                    <button type="submit" name='edittemasexp_<?=$num_expediente?>' class="btn btn-primary
-                  btn-xs">Editar ..</button>
-                    <button type='submit' name='savetemasexp_<?=$num_expediente?>' value="<?=$num_expediente?>" class='btn btn-primary  btn-xs'>Grabar..</button>
+                    <button type="submit" name='edittemasexp_<?=$num_expediente?>' class="btn btn-primary btn-xs" id ="editadorapidoexpediente">Editar ..</button>
+                    <button type='submit' name='savetemasexp_<?=$num_expediente?>' value="<?=$num_expediente?>" id ="grabadorapidoexpediente" class='btn btn-success  btn-xs'>Grabar ..</button>
                  <?php } ?>
                     <table>
                         <?php
@@ -365,7 +364,9 @@ if($descPExpediente){
 ?>
 </td></tr></table>
 <script>
-
+$( document ).ready(function() {
+$( "#grabadorapidoexpediente" ).hide();
+});
     $('body').on('click', "button[name^=edittemasexp]", function () {
         $('.showfield').toggle();
         $('.editfield').toggle();
@@ -378,4 +379,14 @@ if($descPExpediente){
             $( ".result" ).html( data );
         });
     })
+
+$( "#grabadorapidoexpediente" ).click(function() {
+	/*location.reload();*/
+	/*document.getElementsByName(mainFrame).contentDocument.location.reload(true);*/
+});
+$( "#editadorapidoexpediente" ).click(function() {
+	$( "#grabadorapidoexpediente" ).show();
+	$( "#editadorapidoexpediente" ).hide();
+});
+
 </script>

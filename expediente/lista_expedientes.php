@@ -19,9 +19,12 @@ if($_POST['saveEtiq']){
     }
 
     include_once ("$ruta_raiz/include/tx/Expediente.php");
+    #echo "<script> alert('Intento imprimir el mensaje  de actualización de datos');</script>";
     $expediente = new Expediente($db);
     return $expediente->editDatosParamExp($noExp, $_POST[$matches[0][0]]);
     die;
+    #Despues de editado un expediente.
+    
 }
 
 ?>
