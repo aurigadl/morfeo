@@ -1,9 +1,9 @@
 <?php
-echo "<br>step0"; exit;
+echo "ingreso pdf"; exit;
   require '../tcpdf/config/lang/eng.php';
   require '../tcpdf/tcpdf.php';
   require '../config.php';
-  echo "<br>step##";
+  
   define ('AUTOR_PDF',    'Sistema de Gesti&oacute;n Documental Caliope');
   define ('TITULO_PDF',   'Respuesta a solicitud');
   define ('ASUNTO_PDF',   'Metrovivienda');
@@ -11,7 +11,7 @@ echo "<br>step0"; exit;
   define ('IMAGEN_PDF', '../img/banerPDF.JPG');
   define ('ENTIDAD_DIR', $entidad_dir);
   define ('ENTIDAD_TEL', $entidad_tel);
-echo "<br>step1";
+
   // Extend the TCPDF class to create custom Header and Footer
   class MYPDF extends TCPDF {
     //Page header
@@ -53,7 +53,7 @@ echo "<br>step1";
                     false,
                     false);
     }
-echo "<br>step2";
+
     // Page footer
     public function Footer() {
       // Position at 15 mm from bottom
@@ -64,7 +64,7 @@ echo "<br>step2";
 
   // create new PDF document
   $pdf = new MYPDF('P', PDF_UNIT, 'LETTER', true, 'UTF-8', false);
-echo "<br>step3";
+
   // set document information
   $pdf->SetCreator(PDF_CREATOR);
   $pdf->SetAuthor(AUTOR_PDF);
@@ -105,9 +105,8 @@ echo "<br>step3";
   
   // output the HTML content
   $pdf->writeHTML($respuesta, true, false, true, false, '');
-echo "<br>step4";
+
   // Close and output PDF document
   // This method has several options, check the source code documentation for more information.
   $pdf_result = $pdf->Output($archivo_grabar, 'F');
-  echo "<br>step5";
 ?>
