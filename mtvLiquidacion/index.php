@@ -245,7 +245,7 @@ session_destroy();
                                     '0:-- Seleccione un Departamento--',
                                     false,
                                     false,
-                                    "class='form-control input-lg' id=codDpto");
+                                    "class='form-control input-lg' id=codDpto onChange='getArrayMuni();'");
 															 
 															 echo $depselect;
 															?>
@@ -696,7 +696,7 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
 	 //alert("Calculando Liquidacion");
 	 chip = $("#chip").val();
 	 valA1 = $("#valA1").val();
-
+   idCity = $("#city").val();
 	 
 	 $.post("../tx/ajaxCalculoLiqMtv.php", {"chip":chip,"valA1":valA1}).done(
             function( data ) {
@@ -705,6 +705,24 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
         );
 	 
 	}
+	
+	
+    function getArrayMuni(){
+   var dptoCodi;
+   var idCont = 1;
+   var idPais = 170;
+   //alert("Calculando Liquidacion");
+   dptoCodi = $("#codDpto").val();
+   
+
+   
+   $.post("../tx/ajaxMunicipios.php", {"dptoCodi":dptoCodi,"idPais":idPais,"idCont":idCont,"selectIdMuni":"city"}).done(
+            function( data ) {
+                $('#res').html(data);
+            }
+        );
+   
+   }
 
 	var pagefunction = function() {
 
