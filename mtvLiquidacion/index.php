@@ -53,7 +53,7 @@ session_destroy();
 
     <div class="row" STYLE="position:absolute; top:20px; left:50px;width:90%;" >
       <table width="100%">
-       <tr><td><img src="../imagenes/logoFrmWeb2.png" height=80 align="right" ></td></tr>
+       <tr><td><a href="../bodega/plantillas/Resolucion-0117.pdf" target="_blank"><img src="../imagenes/bannerVIP.jpg" height=72 align="right" ></a><img src="../imagenes/logoFrmWeb2.png" height=80 align="right" ></td></tr>
       </table>
     </div>    
 
@@ -581,10 +581,10 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
 													<ul class="pager wizard no-margin">
 														<!--<li class="previous first disabled">
 														<a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
-														</li>-->
+														</li>
 														<li class="previous disabled">
 															<a href="javascript:void(0);" class="btn btn-lg btn-default"> Anterior </a>
-														</li>
+														</li>-->
 														               
 														
 														<li class="next">
