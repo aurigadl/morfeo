@@ -206,7 +206,7 @@
                     <footer>
                       <input type="submit" name="Button" value="Radicar" class="btn btn-primary">
                       &nbsp;
-                      <input type="submit" name="Button" value="Grabar como Anexo" class="btn btn-success">
+                      <input type="submit" name="Button" value="Grabar como Anexo.." class="btn btn-success">
                     </footer>
                     <!--{/if}-->
                   </td>
