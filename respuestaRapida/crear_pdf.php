@@ -1,5 +1,5 @@
 <?php
-echo "<br>step0";
+echo "<br>step0"; exit;
   require '../tcpdf/config/lang/eng.php';
   require '../tcpdf/tcpdf.php';
   require '../config.php';

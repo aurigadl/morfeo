@@ -179,6 +179,7 @@
   $recargar_anexos = './lista_anexos.php';
   #echo "<br>step9";
   if ($result) {
+    echo "antesdeingresarpedf";
      include './crear_pdf.php';
     echo '<br>
             <script>
