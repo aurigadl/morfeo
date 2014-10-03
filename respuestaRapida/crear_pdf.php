@@ -1,9 +1,9 @@
 <?php
-
+echo "<br>step0";
   require '../tcpdf/config/lang/eng.php';
   require '../tcpdf/tcpdf.php';
   require '../config.php';
-  
+  echo "<br>step##";
   define ('AUTOR_PDF',    'Sistema de Gesti&oacute;n Documental Caliope');
   define ('TITULO_PDF',   'Respuesta a solicitud');
   define ('ASUNTO_PDF',   'Metrovivienda');
