@@ -86,11 +86,9 @@
 
     // Si no es nuevo radique el anexo
     if (!$editar) {
-        echo "1";exit;
-      require './radicar_respuesta.php';
+        require './radicar_respuesta.php';
     } else {
-        echo "2"; exit;
-      require './radicar_anexo.php';
+        require './radicar_anexo.php';
     }
     
     header("Location: salidaRespuesta.php?$encabe&nurad=$nurad".$errores);
