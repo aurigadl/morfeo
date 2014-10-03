@@ -1,4 +1,5 @@
 <?php
+echo "estoy guardando como anexo"; exit;
   session_start();
   define ('YEAR_INICIO', 0);
   define ('YEAR_LENGTH', 4);

@@ -1,6 +1,6 @@
 <?php
 
-echo "estoy guardando como anexo"; exit;
+echo "estoy radicando"; exit;
     session_start();
 
     define('ARCHIVO_PDF', 7);

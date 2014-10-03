@@ -19,12 +19,12 @@
   $accion = $acciones[$Button];
 
   if ($accion == RADICAR) {
-    #echo "radicar"; exit;
-    #include ('./procRespuesta.php');
-    include ('procRespuesta.php');
+    #echo "radicar";
+    include ('./procRespuesta.php');
+    #include ('procRespuesta.php');
   } elseif ($accion == ANEXAR || $accion == GUARDAR_CAMBIOS) {
     #echo "Grabar anexo"; exit;
-    #include ('./grabar_anexo.php');
-    include ('grabar_anexo.php');
+    include ('./grabar_anexo.php');
+    #include ('grabar_anexo.php');
   }
 ?>
