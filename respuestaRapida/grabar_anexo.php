@@ -1,5 +1,5 @@
 <?php
-echo "estoy guardando como anexo"; exit;
+#echo "estoy guardando como anexo"; exit;
   session_start();
   define ('YEAR_INICIO', 0);
   define ('YEAR_LENGTH', 4);
@@ -14,6 +14,8 @@ echo "estoy guardando como anexo"; exit;
     ${$key} = $valor;
   foreach ($_POST as $key => $valor)
     ${$key} = $valor;
+
+  echo "<br>step1"; exit;
   
   $krd         = $_SESSION['krd'];
   $dependencia = $_SESSION['dependencia'];
@@ -34,6 +36,7 @@ echo "estoy guardando como anexo"; exit;
     var_dump('Error');
     exit();
   }
+  echo "<br>step2"; exit;
   
   /** * Retorna la cantidad de bytes de una expresion como 7M, 4G u 8K.
    *
@@ -56,10 +59,10 @@ echo "estoy guardando como anexo"; exit;
   }
   
   $fechaHoy = Date('Y-m-d');
-  
+  echo "<br>step3"; exit;
   include_once($ruta_raiz . '/class_control/anexo.php');
   include_once($ruta_raiz . '/class_control/anex_tipo.php');
-  
+  echo "<br>step4"; exit;
   if (!$db)
     $db = new ConnectionHandler($ruta_raiz);
   
@@ -75,6 +78,7 @@ echo "estoy guardando como anexo"; exit;
   
   $nuevo = ($codigo)? 'no' : 'si';
   // Si es nuevo busque el ultimo anexo para asignar el codigo de radicacion
+  echo "<br>step5"; exit;
   if ($nuevo == "si") {
     $auxnumero = $anex->obtenerMaximoNumeroAnexo($radPadre);
     
@@ -92,7 +96,7 @@ echo "estoy guardando como anexo"; exit;
   $anex_salida = ($radicado_salida) ? 1 : 0;
   
   $bien = 'si';
-  
+  echo "<br>step6"; exit;
   if ($bien and $tipo) {
     $anexTip->anex_tipo_codigo($tipo);
     $ext               = $anexTip->get_anex_tipo_ext();
@@ -103,7 +107,7 @@ echo "estoy guardando como anexo"; exit;
   }
   
   $numero_anexo = $radPadre . $codigo;
-  
+  echo "<br>step7"; exit;
   if (!$radicado_rem) $radicado_rem = 7;
   
   $directorio     = '../bodega/' . $directorio_ano . '/' . $depe_radi_padre . '/docs/';
@@ -120,7 +124,7 @@ echo "estoy guardando como anexo"; exit;
   $anex_salida    = 1;
   
   $tabla_anexos = 'anexos';
-  
+  echo "<br>step8"; exit;
   $anexo_record['sgd_rem_destino']  = $radicado_rem;
   $anexo_record['anex_radi_nume']   = $radPadre;
   $anexo_record['anex_codigo']      = $numero_anexo;
@@ -168,10 +172,11 @@ echo "estoy guardando como anexo"; exit;
                     "&krd=" . $krd .
                     "&editar=" . $editar .
                     "&anexo=" . $anexo;
+
   
   // Si hay resultado en base de datos.
   $recargar_anexos = './lista_anexos.php';
-  
+  echo "<br>step9"; exit;
   if ($result) {
     include './crear_pdf.php';
     echo '<br>
@@ -180,4 +185,5 @@ echo "estoy guardando como anexo"; exit;
               window.parent.close();
             </script>';
   }
+  echo "<br>step10"; exit;
 ?>

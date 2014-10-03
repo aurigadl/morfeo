@@ -1,6 +1,6 @@
 <?php
 
-echo "estoy radicando"; exit;
+#echo "estoy radicando"; exit;
     session_start();
 
     define('ARCHIVO_PDF', 7);
