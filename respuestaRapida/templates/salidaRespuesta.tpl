@@ -26,7 +26,7 @@
             <!--{if $noerror ge 1 or $salida eq 'ok'}-->
                 <tr>
                     <td <!--{if !$sali}--> colspan="2" <!--{/if}--> valign="middle">
-                        <b><span class=etexto>Radicado de respuesta No. <!--{$nurad}--></span></b>
+                        <b><span class=etexto>Radicado de respuesta -- No. <!--{$nurad}--></span></b>
                     </td>
                     <!--{if $sali}-->
                     <td valign="middle">

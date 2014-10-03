@@ -381,7 +381,7 @@ $( "#grabadorapidoexpediente" ).hide();
     })
 
 $( "#grabadorapidoexpediente" ).click(function() {
-	location.reload();
+	/*location.reload();*/
 	/*document.getElementsByName(mainFrame).contentDocument.location.reload(true);*/
 });
 /*$( "#editadorapidoexpediente" ).click(function() {
