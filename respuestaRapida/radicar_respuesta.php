@@ -457,7 +457,8 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
 
 // Remplazar datos en el documento
 $respuesta = str_replace('*F_RAD_S*', $fecharad, $respuesta);
-$respuesta = str_replace('*RAD_S*', $nurad, $respuesta);$
+#$respuesta = str_replace('*RAD_S*', $nurad, $respuesta);
+#$respuesta = str_replace('RAD_S', $nurad, $respuesta);
 $respuesta = str_replace('RAD_S', $nurad, $respuesta);
 $respuesta = str_replace('*DIGNATARIO*', $dignatario, $respuesta);
 $respuesta = str_replace('*REFERENCIA*', $referencia, $respuesta);
