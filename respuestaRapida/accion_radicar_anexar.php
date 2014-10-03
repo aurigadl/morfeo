@@ -1,6 +1,6 @@
 <?php
+  #echo "estoy entrando a radicar anexar"; exit;
 
-echo "estoy entrando a radicar anexar"; exit;
   session_start();
   define ('RADICAR' , 0);
   define ('ANEXAR'  , 1);
@@ -19,8 +19,10 @@ echo "estoy entrando a radicar anexar"; exit;
   $accion = $acciones[$Button];
 
   if ($accion == RADICAR) {
+    echo "radicar"; exit;
     include ('./procRespuesta.php');
   } elseif ($accion == ANEXAR || $accion == GUARDAR_CAMBIOS) {
+    echo "Grabar anexo"; exit;
     include ('./grabar_anexo.php');
   }
 ?>
