@@ -165,7 +165,7 @@
   $sql_update .= 'WHERE ' . $filtro;
   
   // Si es nuevo insertar de otra forma actualizar.
-  $db->conn->debug=true;
+  #$db->conn->debug=true;
   $result = ($nuevo == 'si')? $db->conn->Execute($sql_insert) : $db->conn->Execute($sql_update);
   
   $enviar_editar = "index.php?PHPSESSID=" . session_id() .
@@ -179,15 +179,13 @@
   $recargar_anexos = './lista_anexos.php';
   #echo "<br>step9";
   if ($result) {
-    echo "11111111111111111111111111";
-    include './crear_pdf.php';
+    # include './crear_pdf.php';
     echo '<br>
             <script>
               javascript:window.parent.opener.$.fn.cargarPagina("' . $recargar_anexos . '","tabs-c");
               window.parent.close();
             </script>';
   }else{
-    echo "222222222222222222222222222";
-  }
+   }
   #echo "<br>step10";
 ?>
