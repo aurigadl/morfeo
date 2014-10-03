@@ -453,6 +453,15 @@ $exte       = $db->conn->Execute($cond);
 $dep_sig  = $exte->fields["DEP_SIGLA"];
 $dep_nom  = $exte->fields["DEPE_NOMB"];
 
+echo "------->>>>".$nurad; exit;
+
+// Remplazar datos en el documento
+$respuesta = str_replace('*F_RAD_S*', $fecharad, $respuesta);
+$respuesta = str_replace('*RAD_S*', $nurad, $respuesta);
+$respuesta = str_replace('*DIGNATARIO*', $dignatario, $respuesta);
+$respuesta = str_replace('*REFERENCIA*', $referencia, $respuesta);
+$respuesta = str_replace("\xe2\x80\x8b", '', $respuesta);
+
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
 

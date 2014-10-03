@@ -84,7 +84,7 @@
     if(empty($errores)){
         $salida = 'ok'; 
     }
-echo "-------------------".$nurad."-------------------"; exit;
+#echo "-------------------".$nurad."-------------------"; exit;
 
 	$smarty->assign("krd"	    , $krd);
 	$smarty->assign("respuesta_rap", 'true');
