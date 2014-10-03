@@ -15,7 +15,7 @@
   foreach ($_POST as $key => $valor)
     ${$key} = $valor;
 
-  echo "<br>step1";
+  #echo "<br>step1";
   
   $krd         = $_SESSION['krd'];
   $dependencia = $_SESSION['dependencia'];
@@ -36,7 +36,7 @@
     var_dump('Error');
     exit();
   }
-  echo "<br>step2";
+  #echo "<br>step2";
   
   /** * Retorna la cantidad de bytes de una expresion como 7M, 4G u 8K.
    *
@@ -59,10 +59,10 @@
   }
   
   $fechaHoy = Date('Y-m-d');
-  echo "<br>step3";
+  #echo "<br>step3";
   include_once($ruta_raiz . '/class_control/anexo.php');
   include_once($ruta_raiz . '/class_control/anex_tipo.php');
-  echo "<br>step4";
+  #echo "<br>step4";
   if (!$db)
     $db = new ConnectionHandler($ruta_raiz);
   
@@ -78,7 +78,7 @@
   
   $nuevo = ($codigo)? 'no' : 'si';
   // Si es nuevo busque el ultimo anexo para asignar el codigo de radicacion
-  echo "<br>step5";
+  #echo "<br>step5";
   if ($nuevo == "si") {
     $auxnumero = $anex->obtenerMaximoNumeroAnexo($radPadre);
     
@@ -96,7 +96,7 @@
   $anex_salida = ($radicado_salida) ? 1 : 0;
   
   $bien = 'si';
-  echo "<br>step6";
+  #echo "<br>step6";
   if ($bien and $tipo) {
     $anexTip->anex_tipo_codigo($tipo);
     $ext               = $anexTip->get_anex_tipo_ext();
@@ -107,7 +107,7 @@
   }
   
   $numero_anexo = $radPadre . $codigo;
-  echo "<br>step7";
+  #echo "<br>step7";
   if (!$radicado_rem) $radicado_rem = 7;
   
   $directorio     = '../bodega/' . $directorio_ano . '/' . $depe_radi_padre . '/docs/';
@@ -124,7 +124,7 @@
   $anex_salida    = 1;
   
   $tabla_anexos = 'anexos';
-  echo "<br>step8";
+  #echo "<br>step8";
   $anexo_record['sgd_rem_destino']  = $radicado_rem;
   $anexo_record['anex_radi_nume']   = $radPadre;
   $anexo_record['anex_codigo']      = $numero_anexo;
@@ -165,6 +165,7 @@
   $sql_update .= 'WHERE ' . $filtro;
   
   // Si es nuevo insertar de otra forma actualizar.
+  $db->conn->debug=true;
   $result = ($nuevo == 'si')? $db->conn->Execute($sql_insert) : $db->conn->Execute($sql_update);
   
   $enviar_editar = "index.php?PHPSESSID=" . session_id() .
@@ -176,14 +177,17 @@
   
   // Si hay resultado en base de datos.
   $recargar_anexos = './lista_anexos.php';
-  echo "<br>step9";
+  #echo "<br>step9";
   if ($result) {
+    echo "11111111111111111111111111";
     include './crear_pdf.php';
     echo '<br>
             <script>
               javascript:window.parent.opener.$.fn.cargarPagina("' . $recargar_anexos . '","tabs-c");
               window.parent.close();
             </script>';
+  }else{
+    echo "222222222222222222222222222";
   }
-  echo "<br>step10";
+  #echo "<br>step10";
 ?>
