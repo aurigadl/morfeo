@@ -364,9 +364,9 @@ if($descPExpediente){
 ?>
 </td></tr></table>
 <script>
-$( document ).ready(function() {
+/*$( document ).ready(function() {
 $( "#grabadorapidoexpediente" ).hide();
-});
+});*/
     $('body').on('click', "button[name^=edittemasexp]", function () {
         $('.showfield').toggle();
         $('.editfield').toggle();
@@ -381,12 +381,12 @@ $( "#grabadorapidoexpediente" ).hide();
     })
 
 $( "#grabadorapidoexpediente" ).click(function() {
-	/*location.reload();*/
+	location.reload();
 	/*document.getElementsByName(mainFrame).contentDocument.location.reload(true);*/
 });
-$( "#editadorapidoexpediente" ).click(function() {
+/*$( "#editadorapidoexpediente" ).click(function() {
 	$( "#grabadorapidoexpediente" ).show();
 	$( "#editadorapidoexpediente" ).hide();
-});
+});*/
 
 </script>
