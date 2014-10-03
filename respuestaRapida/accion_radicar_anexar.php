@@ -1,4 +1,6 @@
 <?php
+
+echo "estoy entrando a radicar anexar"; exit;
   session_start();
   define ('RADICAR' , 0);
   define ('ANEXAR'  , 1);
