@@ -388,7 +388,7 @@ class Expediente {
                 if ($p == count($arrParametro)) {
                     $coma = "";
                 }
-                $campoParametro .= "SGD_SEXP_PAREXP" . ($orden+1) . $coma;
+                $campoParametro .= "SGD_SEXP_PAREXP" . $orden . $coma;
                 $valorParametro .= "'" . $datoParametro . "'" . $coma;
                 $p++;
             }
@@ -524,7 +524,7 @@ class Expediente {
 
         if (is_array($arrParametro)) {
             foreach ($arrParametro as $orden => $datoParametro) {
-                $campoParametro = "SGD_SEXP_PAREXP" . ($orden+1) ;
+                $campoParametro = "SGD_SEXP_PAREXP" . $orden ;
                 $valorParametro = "'" . $datoParametro . "'";
                 $p++;
                 $fecha_hoy = Date("Y-m-d");
@@ -890,6 +890,8 @@ class Expediente {
          WHERE SEXP.SGD_EXP_NUMERO = '$numExp'
          AND parexp.DEPE_CODI = '$depeExp'
          ORDER BY SEXP.SGD_SEXP_FECH desc LIMIT 10";
+         $db->conn->debug=true;
+         echo "<pre>$q_datosParametro</pre>"; exit;
          $rs_datosParametro = $this->db->conn->query($q_datosParametro);
 
         $p = 0;
