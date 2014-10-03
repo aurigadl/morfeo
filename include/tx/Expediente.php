@@ -890,6 +890,7 @@ class Expediente {
          WHERE SEXP.SGD_EXP_NUMERO = '$numExp'
          AND parexp.DEPE_CODI = '$depeExp'
          ORDER BY SEXP.SGD_SEXP_FECH desc LIMIT 10";
+         $db->conn->debug=true;
          $rs_datosParametro = $this->db->conn->query($q_datosParametro);
 
         $p = 0;
