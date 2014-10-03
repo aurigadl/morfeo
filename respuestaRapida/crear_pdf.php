@@ -1,4 +1,5 @@
 <?php
+echo "ingreso pdf"; exit;
   require '../tcpdf/config/lang/eng.php';
   require '../tcpdf/tcpdf.php';
   require '../config.php';

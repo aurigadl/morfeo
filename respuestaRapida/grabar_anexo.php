@@ -179,7 +179,7 @@
   $recargar_anexos = './lista_anexos.php';
   #echo "<br>step9";
   if ($result) {
-    # include './crear_pdf.php';
+     include './crear_pdf.php';
     echo '<br>
             <script>
               javascript:window.parent.opener.$.fn.cargarPagina("' . $recargar_anexos . '","tabs-c");
