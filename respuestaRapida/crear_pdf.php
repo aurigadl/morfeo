@@ -1,9 +1,9 @@
 <?php
-echo "ingreso pdf"; 
+
   require '../tcpdf/config/lang/eng.php';
   require '../tcpdf/tcpdf.php';
   require '../config.php';
-  echo "<br>step1"; 
+  
   define ('AUTOR_PDF',    'Sistema de Gesti&oacute;n Documental Caliope');
   define ('TITULO_PDF',   'Respuesta a solicitud');
   define ('ASUNTO_PDF',   'Metrovivienda');
@@ -11,7 +11,7 @@ echo "ingreso pdf";
   define ('IMAGEN_PDF', '../img/banerPDF.JPG');
   define ('ENTIDAD_DIR', $entidad_dir);
   define ('ENTIDAD_TEL', $entidad_tel);
-  echo "<br>step2"; 
+  
   // Extend the TCPDF class to create custom Header and Footer
   class MYPDF extends TCPDF {
     //Page header
@@ -61,7 +61,7 @@ echo "ingreso pdf";
       // Page number
     }
   }
-
+#$respuesta = $respuesta
   // create new PDF document
   $pdf = new MYPDF('P', PDF_UNIT, 'LETTER', true, 'UTF-8', false);
 

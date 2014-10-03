@@ -86,8 +86,10 @@
 
     // Si no es nuevo radique el anexo
     if (!$editar) {
+        echo "1";exit;
       require './radicar_respuesta.php';
     } else {
+        echo "2"; exit;
       require './radicar_anexo.php';
     }
     
