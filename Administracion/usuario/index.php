@@ -31,7 +31,7 @@ $smarty->right_delimiter = '}->';
 
 $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-$db->conn->debug = true;
+//$db->conn->debug = true;
 
 //Permisos
 $sql_perm = "     SELECT
@@ -56,7 +56,7 @@ while (!$perm->EOF) {
 $sql_grup = "     SELECT
                       id,
                       nombre,
-                      description
+                      descripcion
                   FROM
                       autg_grupos";
 
@@ -66,7 +66,6 @@ while (!$grup->EOF) {
     $grupos[] = $grup->fields;
     $grup->MoveNext();
 }
-
 
 //Usuarios
 $sql_usua = "     SELECT

@@ -1,4 +1,3 @@
-<-{debug}->
 <-{assign var="gruposHtml" value='
 	<tr>
 
@@ -229,66 +228,69 @@
 						</thead>
 						<tbody id="bdt_basic2">
 						<-{if count($permisos) eq 0}->
-							<-{$permisosHtml}->
 							<-{else}->
-							<-{foreach item=permiso from=$permisos}->
+
+							<-{foreach item=item from=$permisos}->
 								<tr>
-									<-{foreach key=key item=item from=$permiso}->
-										<-{if $key eq 'ID'}->
-											<td class="toogletd">
-												<a href="javascript:void(0);" data=" " class="button-icon
-															jarviswidget-toggle-btn" rel="tooltip" title=""
-												   data-placement="Borrar" data-original-title="Collapse">
-													<i class="fa fa-minus "></i>
-												</a>
-												<a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title=""
-												   data-placement="Guardar" data-original-title="Collapse">
-													<i class="fa fa-save "></i>
-												</a>
-											</td>
-										<-{/if}->
 
-										<-{if $key eq 'NOMBRE'}->
-											<td class="hasinput">
-												<label class="input">
-													<input type="text" name="" value="<-{$item}->">
-												</label>
-											</td>
-										<-{/if}->
+									<td class="toogletd">
+										<a href="javascript:void(0);" data=" " class="button-icon
+													jarviswidget-toggle-btn" rel="tooltip" title=""
+										   data-placement="Borrar" data-original-title="Collapse">
+											<i class="fa fa-minus "></i>
+										</a>
+										<a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title=""
+										   data-placement="Guardar" data-original-title="Collapse">
+											<i class="fa fa-save "></i>
+										</a>
+									</td>
 
-										<-{if $key eq 'DESCRIPTION'}->
-											<td class="hasinput">
-												<label name="" class="input">
-													<input type="text" name="" value="<-{$item}->">
-												</label>
-											</td>
-										<-{/if}->
+									<td class="hasinput">
+										<label class="input">
+											<input type="text" name="NOMBRE" value="<-{$item.NOMBRE}->">
+										</label>
+									</td>
 
-										<-{if $key eq 'CRUD'}->
-											<td class="hasinput">
-												<label class="input">
-													<input type="text" name="" value="<-{$item}->">
-												</label>
-											</td>
-										<-{/if}->
+									<td class="hasinput">
+										<label name="" class="input">
+											<input type="text" name="DESCRIPTION" value="<-{$item.DESCRIPCION}->">
+										</label>
+									</td>
 
-										<-{if $key eq 'DEPENDENCIA'}->
-											<td class="hasinput">
-												<label name="" class="input">
-													<input type="text" name="" value="<-{$item}->">
-												</label>
-											</td>
-										<-{/if}->
+									<td class="hasinput">
+										<label name="" class="input">
+											<input type="text" name="DEPENDENCIA" value="<-{$item.DEPENDENCIA}->">
+										</label>
+									</td>
 
-										<-{if $key eq 'AUTG_ID'}->
-											<td class="hasinput">
-												<label name="" class="input">
-													<input type="text" name="" value="<-{$item}->">
-												</label>
-											</td>
-										<-{/if}->
+									<td class="hasinput">
+										<label class="input">
+											<input type="text" name="CRUD" value="<-{$item.CRUD}->">
+										</label>
+									</td>
 
-									<-{/foreach}->
+									<td class="hasinput">
+										<label class="select">
+											<select class="input-sm">
+
+												<-{foreach item=i from=$grupos}->
+
+													<-{if $item.AUTG_ID eq $i.ID}->
+														<option value="<-{$i.ID}->" selected>
+															<-{$i.NOMBRE}->
+														</option>
+													<-{else}->
+														<option value="<-{$i.ID}->">
+															<-{$i.NOMBRE}->
+														</option>
+													<-{/if}->
+
+												<-{/foreach}->
+
+											</select> <i></i>
+										</label>
+									</td>
+
 								</tr>
 							<-{/foreach}->
 							<-{/if}->
@@ -547,13 +549,7 @@ de inserción para los nuevos registros. -->
 	}
 
 	function runDataTables() {
-		$('#dt_basic, #dt_basic2, #dt_basic3, #dt_basic4').dataTable({
-			"lengthMenu": [
-				[10, 25, 50, -3],
-				[10, 25, 50, "All"]
-			],
-			"iDisplayLength": 25
-		});
+		$('#dt_basic, #dt_basic2, #dt_basic3, #dt_basic4').dataTable();
 	}
 
 	/*
@@ -587,7 +583,7 @@ de inserción para los nuevos registros. -->
 			case 'bdt_basic':
 				//Plantillas y clonar elementos Grupos
 				var plaGrup = $('#plantillaGrupos').clone();
-				$('#bdt_basic').append($(plaGrup).html());
+				$('#bdt_basic').prepend($(plaGrup).html());
 				break;
 
 			case 'bdt_basic3':
