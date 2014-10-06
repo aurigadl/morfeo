@@ -55,8 +55,8 @@ Bogot&aacute;, $fechaRad    <br><br><br>
 
     <div class='row' STYLE='position:absolute; top:20px; left:750px;width:90%;' >
       <img src='./$pathFileBarras' width=250>
-      <br><p style='font-size: 12;'>No Radicaci&oacute;n  2014XXXXXX -  $numeroRadicado <br> $fechaRadC<BR>
-       Liquidacion de Prueba - No Valido</p>
+      <br><p style='font-size: 12;'>$numeroRadicado <br> $fechaRadC<BR>
+     </p>
     </div>  
 </p>
 <bR>
@@ -78,7 +78,7 @@ del traslado de la obligación urbanística.
 
  <table border='0' width='70%'><tbody><tr><td><p style='font-size:10px'>Nombre del proyecto</p></td>
  <td><p style='font-size:10px'>$pNombre </p> </td><td></td></tr> 
- <tr><td><p style='font-size:10px'>Direción</p></td><td><p style='font-size:10px'>$sAddress  </p></td></tr>
+ <tr><td><p style='font-size:10px'>Direción</p></td><td><p style='font-size:10px'>$pDir</p></td></tr>
  <tr><td><p style='font-size:10px'>Urbanizador / Constructor / Patrimonio Autónomo</p></td><td><label id='pConstructoraI'><p style='font-size:10px'>$pConstructora  </p></label></td></tr> 
  <tr><td><p style='font-size:10px'>Representante Legal</p></td><td> <label id='pRepI'><p style='font-size:10px'>$pRep</p></label></td></tr>
  <tr><td><p style='font-size:10px'>Area obligación VIP (A1) </p></td><td><p style='font-size:10px'> $valA1 <sup>2</sup> </p></td></tr>
