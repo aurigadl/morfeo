@@ -47,8 +47,11 @@
   }else{
     $msg = "No vienen Radicados";
   }
-  
-  if ($rtaMove == 1) {
+  $chipss=explode(',',$_SESSION['chips']);
+  $ultimoChip=$chipss[count($chipss)-2];
+  $isql="select * From predial2014_20140819 WHERE CHIP=$ultimoChip";
+  $lala=$db->conn->query($isql);
+  if ($rtaMove == 1 && $lala->fields["CHIP"]) {
     $valorObligacionF = "$ " . number_format($valorObligacion,2,",",".");
     $valM2TF = number_format($valM2T,2,",",".");
     $valorReferenciaF = number_format($valorReferencia,2,",",".");
@@ -66,7 +69,7 @@
     
     $tablaChips = "<TABLE class=\"table table-bordered\">";
     //$tablaChips .= "<TR><Th>Chip</Th><Th>Direcci&oacute;n</Th><Th>Area Bruta</Th><Th>Representante Legal</Th><Th>Valor Catastral M<sup>2</sup></Th><Th></Th></TR>";
-    $tablaChips .= "<TR><Th>Chip</Th><Th>Direcci&oacute;n</Th><Th>Area Bruta</Th><Th></Th></TR>";
+    $tablaChips .= "<TR><Th>Chip</Th><Th>Direcci&oacute;n</Th><Th>Area Bruta</Th></TR>";
     while(!$rs->EOF){
       $chipB = $rs->fields["CHIP"];
       $valM2T = $rs->fields["VAL_M2_T"];
@@ -77,7 +80,7 @@
       $direccionCorr = $rs->fields["DIR_CORR"];
       $pFMI = $rs->fields["FMI"];
       //$tablaChips .= "<TR><TD>$chipB</TD><TD>$direccionPredio</TD><TD>$areaTerreno</TD><TD>$nombrePropietario</TD><TD align=right>$valM2TF</TD><TD></TD>";
-      $tablaChips .= "<TR><TD>$chipB</TD><TD>$direccionPredio</TD><TD>$areaTerreno</TD><TD></TD>";
+      $tablaChips .= "<TR><TD>$chipB</TD><TD>$direccionPredio</TD><TD>$areaTerreno</TD>";
       $tablaChips .= "</TR>";
       $rs->MoveNext();
     }
@@ -91,7 +94,6 @@
       $('#valRef').val('$valorReferenciaF');
       $('#valorA2').val('$valorA2F');
       $('#pDir').val('$direccionPredio');
-      $('#address').val('$direccionCorr');
       //$('#pRep').val('$nombrePropietario');
       $('#pAreaB').val('$areaTerreno');
       $('#chips').html('$tablaChips');

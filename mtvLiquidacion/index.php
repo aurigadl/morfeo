@@ -35,7 +35,7 @@ session_destroy();
         <div class="col-sm-12">
               <div class="input-group "    ><label class="col-md-2 control-label"></label></div>
               
-              <div  style=""><span class="input-group-addon alert-success"><b>Simulación del calculo de la obligación VIP/VIS.</b><br><br>
+              <div  style=""><span class="input-group-addon alert-success"><b>Simulación del c&aacute;lculo de la obligación VIP/VIS.</b><br><br>
               Decreto Distrital 327/2004&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               Decreto Nacional 075/2013<br>
@@ -123,7 +123,7 @@ session_destroy();
                         </div>
                         <div class="col-sm-6">
                           <div class="form-group"><span class="input-group-addon">AREA DE OBLIGACION VIS/VIP m<sup>2</sup><div id=areaTerreno></div></span>
-                              <input class="form-control input-lg" placeholder="Valor Area segun documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">                          </div>
+                              <input class="form-control input-lg" placeholder="Valor Area seg&uacute;n documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">                          </div>
                         </div>
 											</div>
                       <div class="row">
@@ -217,7 +217,7 @@ session_destroy();
                           <div class="form-group">
                             <div class="input-group">
                               <span class="input-group-addon"><i class="fa fa-envelope fa-lg fa-fw"></i></span>
-                              <input class="form-control input-lg" placeholder="Direccion" type="text" name="address" id="address">
+                              <input class="form-control input-lg" placeholder="Direcci&oacute;n" type="text" name="address" id="address">
 
                             </div>
                           </div>
@@ -269,7 +269,7 @@ session_destroy();
 													<div class="form-group">
 														<div class="input-group">
 															<span class="input-group-addon"><i class="fa fa-phone fa-lg fa-fw"></i></span>
-															<input class="form-control input-lg" data-mask-placeholder= "X" placeholder="Numeros de Telefono" type="text" name="wphone" id="wphone">
+															<input class="form-control input-lg" data-mask-placeholder= "X" placeholder="N&uacute;mero de Telefono" type="text" name="wphone" id="wphone">
 														</div>
 													</div>
 												</div>
@@ -773,7 +773,10 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
 					email : {
 						required : "Se requiere su  email",
 						email : "el correo debe tener un formato como : name@domain.com"
-					}
+						},
+					address : {
+							required : "Este campo es requerido"
+						  }
 				},
 
 				highlight : function(element) {
