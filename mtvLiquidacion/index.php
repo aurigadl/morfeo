@@ -104,7 +104,7 @@ session_destroy();
 												<a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Radicaci&oacute;n Solicitud</span> </a>
 											</li>
 											<li data-target="#step3">
-												<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">A&ntilde;adir Documentos Requeridos</span> </a>
+												<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Adjuntar Documentos</span> </a>
 											</li>
 											<li data-target="#step4">
 												<a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Finalizar la simulaci&oacute;n</span> </a>
@@ -118,12 +118,12 @@ session_destroy();
 											 <div class="row">
                         <div class="col-sm-6">
                           <div class="form-group"><span class="input-group-addon">CHIP </span>            
-                              <input class="form-control input-lg" placeholder="Ingrese Los  Chip Ej. AAA000ZHRX " type="text" name="chip" id="chip" onChange="calcularLiquidacion();" >
+                              <input class="form-control input-lg" placeholder="Ingrese Los  Chip Ej. AAA000ZHRX " type="text" name="chip" id="chip" onChange="calcularLiquidacion(1);" >
                           </div>
                         </div>
                         <div class="col-sm-6">
                           <div class="form-group"><span class="input-group-addon">AREA DE OBLIGACION VIS/VIP m<sup>2</sup><div id=areaTerreno></div></span>
-                              <input class="form-control input-lg" placeholder="Valor Area seg&uacute;n documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion();">                          </div>
+                              <input class="form-control input-lg" placeholder="Valor Area seg&uacute;n documento emitido por Curaduria" type="text" name="valA1" id="valA1" onChange="calcularLiquidacion(0);">                          </div>
                         </div>
 											</div>
                       <div class="row">
@@ -282,7 +282,7 @@ session_destroy();
                         
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
                                <span class="input-group-addon" >Nombre del Proyecto</span>
-                               <input class="form-control input-lg" placeholder=""  type="text" name="pNombre" id="pNombre" >
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pNombre" id="pNombre" onChange="calcularLiquidacion(0);">
                             </div>
 
                          </div>
@@ -292,7 +292,7 @@ session_destroy();
                           <div class="form-group">
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
                                <span class="input-group-addon" >Urbanizador / Constructor / Patrimonio Aut&oacute;nomo</span>
-                               <input class="form-control input-lg" placeholder=""  type="text" name="pConstructora" id="pConstructora" >
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pConstructora" id="pConstructora" onChange="calcularLiquidacion(0);">
                             </div>
                           </div>
                         </div>
@@ -302,12 +302,12 @@ session_destroy();
                             
                             <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
                                <span class="input-group-addon" >Representante Legal</span>
-                               <input class="form-control input-lg" placeholder=""  type="text" name="pRep" id="pRep" >
+                               <input class="form-control input-lg" placeholder=""  type="text" name="pRep" id="pRep" onChange="calcularLiquidacion(0);">
                             </div>
                           </div>
                         </div>
                         
-                        <!--
+                        
                         &nbsp;&nbsp;<H4>Identificaci&oacute;n del predio</H4>
                         <div class="col-sm-4">
                           <div class="form-group">
@@ -370,7 +370,7 @@ session_destroy();
                             </div>
                           </div>
                         </div>
-                        -->
+                        
 												<div class="smart-form">
                         <div class="col-sm-6">
                           <div class="form-group">
@@ -406,7 +406,7 @@ session_destroy();
                         $norandom = "file1";
                         
                         echo("
-                        <div $addAttr id='$norandom'>A&ntilde;dir Archivos  <input  type='HIDDEN' value='' id='inp_$norandom'  /> 
+                        <div $addAttr id='$norandom'>A&ntilde;adir Archivos  <input  type='HIDDEN' value='' id='inp_$norandom'  /> 
                         <input type=hidden id=nFile1>
                         
                               ");
@@ -538,12 +538,12 @@ session_destroy();
                     
                     
 										</div>
-										<div class="alert alert-warning fade in">
+<!--										<div class="alert alert-warning fade in">
 <button class="close" data-dismiss="alert"> × </button>
 <i class="fa-fw fa fa-warning"></i>
 <strong>Nota.</strong>
 ¡Página en prueba, aun no puedes cargar los archivos!
-</div>
+</div>-->
 										</div>
 										<div class="tab-pane" id="tab4">
 											<br>
@@ -562,15 +562,15 @@ session_destroy();
 										
 										
 										</div>
-										<div id=resultadoRTmp>
+										<!--<div id=resultadoRTmp>
                       <footer><center><input type=button onClick="radicarDocumento();" class="btn btn-lg btn-primary" value="Generar Solicitud" align="center"></footer>
-                    </div>
-                    <div class="alert alert-warning fade in">
+                    </div>-->
+                    <!--<div class="alert alert-warning fade in">
 <button class="close" data-dismiss="alert"> × </button>
 <i class="fa-fw fa fa-warning"></i>
 <strong>Nota.</strong>
 La generación de este radicado es temporal, si desea radicar su solicitud acérquese a Metrovivienda.
-</div>
+</div>-->
 
 										
 										</div>
@@ -622,6 +622,7 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
 
 
 <script type="text/javascript">
+var chip=0;
 	function radicarDocumento(){
 	  radData = $('#resultado').html();
 	    sEmail = $("#email").val();
@@ -631,7 +632,7 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
       sCodMuni = $("#city").val();
       sNomDpto = "";
       sPhone1 = $("#wPhone").val();
-      pName = $("#pName").val();
+      pDir = $("#pDir").val();
       pNombre = $("#pNombre").val();
       pRep = $("#pRep").val();
       pConstructora = $("#pConstructora").val();
@@ -647,7 +648,7 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
       f4 = $("#inp_file4").val();
       f5 = $("#inp_file5").val();
       f6 = $("#inp_file6").val();
-      $.post("../tx/ajaxRadicarLiq.php", {"valA1":valA1,"valA2":valA2,"valorO":valorO,"valM2T":valM2T,"valorCatastralPromedio":valorCatastralPromedio,"valRef":valRef, "sEmail":sEmail, "sFname":sFname, "sAddress":sAddress, "sCodDpto":sCodDpto, "sCodMuni":sCodMuni, "sPhone1":sPhone1,"pRep":pRep, "pNombre":pNombre, "pName":pName, "fname":sFname, "pConstructora":pConstructora, "f1":f1, "f2":f2, "f3":f3, "f4":f4, "f5":f5, "f6":f6}).done(
+      $.post("../tx/ajaxRadicarLiq.php", {"valA1":valA1,"valA2":valA2,"valorO":valorO,"valM2T":valM2T,"valorCatastralPromedio":valorCatastralPromedio,"valRef":valRef, "sEmail":sEmail, "sFname":sFname, "sAddress":sAddress, "sCodDpto":sCodDpto, "sCodMuni":sCodMuni, "sPhone1":sPhone1,"pRep":pRep, "pNombre":pNombre, "pDir":pDir, "fname":sFname, "pConstructora":pConstructora, "f1":f1, "f2":f2, "f3":f3, "f4":f4, "f5":f5, "f6":f6}).done(
             function( data ) {
                 $('#resultadoR').html(data);
             }
@@ -691,19 +692,22 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
 
 	// pagefunction
 	
-	function calcularLiquidacion(){
-	 var chip;
-	 //alert("Calculando Liquidacion");
-	 chip = $("#chip").val();
-	 valA1 = $("#valA1").val();
-   idCity = $("#city").val();
-	 
-	 $.post("../tx/ajaxCalculoLiqMtv.php", {"chip":chip,"valA1":valA1}).done(
-            function( data ) {
-                $('#res').html(data);
-            }
-        );
-	 
+	function calcularLiquidacion(chipVal){
+		var nombreProyecto;
+		var urbanizadorP;
+		var repLegal;
+		if (chipVal!=0)
+	 		chip = $("#chip").val();
+ 		valA1 = $("#valA1").val();
+		idCity = $("#city").val();
+		nombreProyecto = $("#pNombre").val();
+		urbanizadorP = $("#pConstructora").val();
+		repLegal = $("#pRep").val();
+		$.post("../tx/ajaxCalculoLiqMtv.php", {"chip":chip,"valA1":valA1,"repLegal":repLegal,"urbanizadorP":urbanizadorP,"nombreProyecto":nombreProyecto}).done(
+			function( data ) {
+			$('#res').html(data);
+			}
+		);
 	}
 	
 	

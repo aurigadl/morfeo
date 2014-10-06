@@ -186,8 +186,7 @@ session_start();
     echo "<br><br><div class='alert alert-success fade in'>
             <button class='close' data-dismiss='alert'> × </button>
             <i class='fa-fw fa fa-check'></i>
-            <strong>Solicitud Genrada con Numero de Radicado No. $numeroRadicado </strong>
-            <a href='../bodega/$pathRadicado' target='new".date("ymdhis")."'>ddd</a>
+            <strong>Solicitud Generada con N&uacute;mero de Radicado No. $numeroRadicado </strong>
             <small><a  onclick=\"funlinkArchivo('$numeroRadicado','$ruta_raiz');\" href='#' >Descargar Archivo</a></small>
             <span id=refresh class='btn btn-ribbon' data-reset-msg='Recargar Pagina' data-html='true' rel='tooltip' data-title='refresh' data-action='resetWidgets'></div>";
   } else {
