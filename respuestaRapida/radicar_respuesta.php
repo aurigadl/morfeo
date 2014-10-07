@@ -14,7 +14,16 @@
   require_once($ruta_raiz."/tcpdf/config/lang/eng.php");
   require_once($ruta_raiz."/conf/configPHPMailer.php");
   require_once($ruta_raiz."/tcpdf/tcpdf.php");
+  require_once($ruta_raiz."/tcpdf/2dbarcodes.php");
+  require_once($ruta_raiz."/tcpdf/tcpdf_barcodes_1d.php");
 
+
+
+
+  $barcodeobj = new TCPDFBarcode('11122some_text', 'C128');
+  $barcode = $barcodeobj->getBarcodeHTML(1, 20, 'black'); 
+  echo $barcode;
+exit;
   $db      = new ConnectionHandler($ruta_raiz);
   $hist    = new Historico($db);
   $Tx      = new Tx($db);
@@ -557,6 +566,10 @@ $pdf->setFontSubsetting(true);
 // Add a page
 // This method has several options, check the source code documentation for more information.
 $pdf->AddPage();
+
+// CODE 128 AUTO
+//$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
+//$pdf->write1DBarcode('CODE 128 AUTO', 'C128', '', '', '', 18, 0.4, $style, 'N');
 
 // output the HTML content
 $pdf->writeHTML($respuesta, true, false, true, false, '');
