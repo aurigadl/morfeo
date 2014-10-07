@@ -50,7 +50,7 @@ $characters = array(
 
             <div class="output">
                 <section class="output">
-                    <h3>Radicado No 20149000002761 </h3>
+                  <!--  <h3>Radicado No 20149000002761 </h3>-->
                     <?php 
                         $finalRequest = '';foreach (getImageKeys() as $key => $value) {$finalRequest .= '&' . $key . '=' . urlencode($value);}if (strlen($finalRequest) > 0) {$finalRequest[0] = '?';} 
                     ?>
@@ -63,3 +63,4 @@ $characters = array(
         </form>
      </body>
 </html>
+<?php echo "---------------";exit; ?>
