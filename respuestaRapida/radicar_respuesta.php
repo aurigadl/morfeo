@@ -14,7 +14,8 @@
   require_once($ruta_raiz."/tcpdf/config/lang/eng.php");
   require_once($ruta_raiz."/conf/configPHPMailer.php");
   require_once($ruta_raiz."/tcpdf/tcpdf.php");
-  require_once($ruta_raiz."/tcpdf/2dbarcodes.php");
+  #require_once($ruta_raiz."/tcpdf/tcpdf.php");
+  #require_once($ruta_raiz."/tcpdf/2dbarcodes.php");
   require_once($ruta_raiz."/tcpdf/tcpdf_barcodes_1d.php");
 
 
