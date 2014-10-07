@@ -22,8 +22,8 @@
 
   $barcodeobj = new TCPDFBarcode('11122some_text', 'C128');
   $barcode = $barcodeobj->getBarcodeHTML(1, 20, 'black'); 
-  echo $barcode;
-  exit;
+#  echo $barcode;
+ # exit;
 
   $db      = new ConnectionHandler($ruta_raiz);
   $hist    = new Historico($db);
