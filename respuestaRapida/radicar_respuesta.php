@@ -496,7 +496,7 @@ $respuesta = str_replace('*DIGNATARIO*', $dignatario, $respuesta);
 $respuesta = str_replace('*REFERENCIA*', $referencia, $respuesta);
 $respuesta = str_replace("\xe2\x80\x8b", '', $respuesta);
 
-echo $respuesta; exit;
+#echo $respuesta; exit;
 
 
 // Extend the TCPDF class to create custom Header and Footer
