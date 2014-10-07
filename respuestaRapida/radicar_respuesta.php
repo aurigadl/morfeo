@@ -599,7 +599,15 @@ $pdf->setFontSubsetting(true);
 $pdf->AddPage();
 
 // CODE 128 AUTO
- #$pdf->write1DBarcode($nurad, 'C128', '', '', '50', 18, 0.4, $style, '');
+
+
+$pdf->Ln(2);
+
+// Right alignment
+$style['position'] = 'R';
+$pdf->write1DBarcode($nurad'C128A', '', '', '', 15, 0.4, $style, 'N');
+
+#$pdf->write1DBarcode($nurad, 'C128', '', '', '50', 18, 0.4, $style, '');
 
 #$pdf->setXY(93,272); 
 #$pdf->write1DBarcode("074001726000003006652985", 'C39', '', '', 90, 10, 0.4, '', 'N'); 
