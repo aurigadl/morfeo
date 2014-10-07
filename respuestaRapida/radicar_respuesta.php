@@ -586,6 +586,8 @@ $pdf->setLanguageArray($l);
 // set default font subsetting mode
 $pdf->setFontSubsetting(true);
 
+$pdf->addTTFfont($ruta_raiz.'/tcpdf/code128.ttf', 'TrueTypeUnicode', '', 32);
+
 // Add a page
 // This method has several options, check the source code documentation for more information.
 $pdf->AddPage();
@@ -597,7 +599,6 @@ $pdf->AddPage();
 #$pdf->setXY(93,272); 
 #$pdf->write1DBarcode("074001726000003006652985", 'C39', '', '', 90, 10, 0.4, '', 'N'); 
 
-$pdf->addTTFfont($ruta_raiz.'/tcpdf/code128.ttf', 'TrueTypeUnicode', '', 32);
 
 // output the HTML content
 $pdf->writeHTML($respuesta, true, false, true, false, '');
