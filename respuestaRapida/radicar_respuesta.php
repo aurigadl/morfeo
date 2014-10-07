@@ -467,7 +467,7 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
 
 #require_once($ruta_raiz."/respuestaRapida/gencodebar/html/BCGcode128.php");
 
-
+/* EN ESTA PARTE CREO EL CODIGO DE BARRAS MEDIANTE DE FUENTES
  $barcodeobj = new TCPDFBarcode($nurad, 'C128');
  $barcode = $barcodeobj->getBarcodeHTML(1, 20, 'black'); 
  #echo $barcode;
@@ -486,7 +486,7 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
  #exit;
  #echo "--".gettype($barcode4);
  #exit;
-
+*/
 // Remplazar datos en el documento
 $respuesta = str_replace('*F_RAD_S*', $fecharad, $respuesta);
 $respuesta = str_replace('*RAD_S*', $barcode4, $respuesta);
@@ -595,8 +595,7 @@ $pdf->setFontSubsetting(true);
 $pdf->AddPage();
 
 // CODE 128 AUTO
-$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
-$pdf->write1DBarcode('CODE 128 AUTO', 'C128', '', '', '', 18, 0.4, $style, 'N');
+ $pdf->write1DBarcode($nurad, 'C128', '', '', '', 18, 0.4, $style, 'N');
 
 #$pdf->setXY(93,272); 
 #$pdf->write1DBarcode("074001726000003006652985", 'C39', '', '', 90, 10, 0.4, '', 'N'); 
