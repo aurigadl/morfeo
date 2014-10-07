@@ -470,7 +470,15 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
 
  $barcodeobj = new TCPDFBarcode($nurad, 'C128');
  $barcode = $barcodeobj->getBarcodeHTML(1, 20, 'black'); 
- echo $barcode; exit;
+ echo "------------";
+ $barcodeobj2 = new TCPDFBarcode($nurad, 'C128');
+ $barcode2 = $barcodeobj->getBarcodeHTML(2, 20, 'black'); 
+ echo $barcode2; 
+ echo "------------";
+ $barcodeobj3 = new TCPDFBarcode($nurad, 'C128');
+ $barcode3 = $barcodeobj->getBarcodeHTML(1, 40, 'black'); 
+ echo $barcode3;
+  exit;
 
 // Remplazar datos en el documento
 $respuesta = str_replace('*F_RAD_S*', $fecharad, $respuesta);
