@@ -569,11 +569,11 @@ $pdf->setFontSubsetting(true);
 $pdf->AddPage();
 
 // CODE 128 AUTO
-//$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
-//$pdf->write1DBarcode('CODE 128 AUTO', 'C128', '', '', '', 18, 0.4, $style, 'N');
+$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
+$pdf->write1DBarcode('CODE 128 AUTO', 'C128', '', '', '', 18, 0.4, $style, 'N');
 
 #$pdf->setXY(93,272); 
-$pdf->write1DBarcode("074001726000003006652985", 'C39', '', '', 90, 10, 0.4, '', 'N'); 
+#$pdf->write1DBarcode("074001726000003006652985", 'C39', '', '', 90, 10, 0.4, '', 'N'); 
 
 // output the HTML content
 $pdf->writeHTML($respuesta, true, false, true, false, '');
