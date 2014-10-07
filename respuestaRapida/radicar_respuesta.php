@@ -483,9 +483,9 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
  $barcodeobj4 = new TCPDFBarcode($nurad, 'C128');
  $barcode4 = $barcodeobj->getBarcodeHTML(2, 40, 'black'); 
  #echo $barcode4;
-  #exit;
- echo "--".gettype($barcode4);
- exit;
+ #exit;
+ #echo "--".gettype($barcode4);
+ #exit;
 
 // Remplazar datos en el documento
 $respuesta = str_replace('*F_RAD_S*', $fecharad, $respuesta);
@@ -496,7 +496,7 @@ $respuesta = str_replace('*DIGNATARIO*', $dignatario, $respuesta);
 $respuesta = str_replace('*REFERENCIA*', $referencia, $respuesta);
 $respuesta = str_replace("\xe2\x80\x8b", '', $respuesta);
 
-
+echo $respuesta; exit;
 
 
 // Extend the TCPDF class to create custom Header and Footer
