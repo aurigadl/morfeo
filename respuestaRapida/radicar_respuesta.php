@@ -559,8 +559,8 @@ $pdf->SetTitle($SetTitle);
 $pdf->SetSubject($SetSubject);
 $pdf->SetKeywords($SetKeywords);
 
-$pdf->addTTFfont($ruta_raiz.'/tcpdf/code128.ttf', 'TrueTypeUnicode', '', 32);
-$pdf->SetFont('code128', '', 20, '', true) ;
+$pdf->addTTFfont($ruta_raiz.'/tcpdf/code1284.ttf', '', '', 32);//TrueTypeUnicode
+#$pdf->SetFont('code128', '', 20, '', true) ;
 
 // set default header data
 $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
