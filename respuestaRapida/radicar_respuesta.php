@@ -455,7 +455,7 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
 
 #echo "------->>>>".$nurad; exit;
 
-require_once($ruta_raiz."/respuestaRapida/gencodebar/html/BCGcode128.php");
+#require_once($ruta_raiz."/respuestaRapida/gencodebar/html/BCGcode128.php");
 
 
 // Remplazar datos en el documento
