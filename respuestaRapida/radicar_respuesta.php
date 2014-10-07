@@ -15,14 +15,13 @@
   require_once($ruta_raiz."/conf/configPHPMailer.php");
   require_once($ruta_raiz."/tcpdf/tcpdf.php");
   #require_once($ruta_raiz."/tcpdf/tcpdf.php");
-  #require_once($ruta_raiz."/tcpdf/2dbarcodes.php");
+  require_once($ruta_raiz."/tcpdf/2dbarcodes.php");
   require_once($ruta_raiz."/tcpdf/tcpdf_barcodes_1d.php");
 
 
 
 
-  $barcodeobj = new TCPDFBarcode('11122some_text', 'C128');
-  $barcode = $barcodeobj->getBarcodeHTML(1, 20, 'black'); 
+ 
 #  echo $barcode;
  # exit;
 
@@ -469,14 +468,20 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
 #require_once($ruta_raiz."/respuestaRapida/gencodebar/html/BCGcode128.php");
 
 
+ $barcodeobj = new TCPDFBarcode($nurad, 'C128');
+ $barcode = $barcodeobj->getBarcodeHTML(1, 20, 'black'); 
+
 // Remplazar datos en el documento
 $respuesta = str_replace('*F_RAD_S*', $fecharad, $respuesta);
-#$respuesta = str_replace('*RAD_S*', $nurad, $respuesta);
+$respuesta = str_replace('*RAD_S*', $barcode, $respuesta);
 #$respuesta = str_replace('RAD_S', $nurad, $respuesta);
 $respuesta = str_replace('RAD_S', $nurad, $respuesta);
 $respuesta = str_replace('*DIGNATARIO*', $dignatario, $respuesta);
 $respuesta = str_replace('*REFERENCIA*', $referencia, $respuesta);
 $respuesta = str_replace("\xe2\x80\x8b", '', $respuesta);
+
+
+
 
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
@@ -570,8 +575,8 @@ $pdf->setFontSubsetting(true);
 $pdf->AddPage();
 
 // CODE 128 AUTO
-$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
-$pdf->write1DBarcode('CODE 128 AUTO', 'C128', '', '', '', 18, 0.4, $style, 'N');
+#$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
+#$pdf->write1DBarcode('CODE 128 AUTO', 'C128', '', '', '', 18, 0.4, $style, 'N');
 
 #$pdf->setXY(93,272); 
 #$pdf->write1DBarcode("074001726000003006652985", 'C39', '', '', 90, 10, 0.4, '', 'N'); 
