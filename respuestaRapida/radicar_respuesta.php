@@ -484,6 +484,8 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
  $barcode4 = $barcodeobj->getBarcodeHTML(2, 40, 'black'); 
  #echo $barcode4;
   #exit;
+ echo "--".gettype($barcode4);
+ exit;
 
 // Remplazar datos en el documento
 $respuesta = str_replace('*F_RAD_S*', $fecharad, $respuesta);
