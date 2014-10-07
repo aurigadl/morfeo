@@ -22,91 +22,38 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+$ruta_raiz = '../../';
+if (!$_SESSION['dependencia'])
+    header ("Location: $ruta_raiz/cerrar_session.php");
 
-switch ( $edit['grupos'] ){
+include_once("$ruta_raiz/include/db/ConnectionHandler.php");
+include_once("$ruta_raiz/include/tx/roles.php");
 
+$db       = new ConnectionHandler("$ruta_raiz");
+$roles    = new Roles($db);
+
+switch ($_POST['accion']){
     /**************************************
      * ********** Edición de grupos ********
      * ************************************/
-    case 0:
-        if(empty($idUser)){
-            $nextval=$this->db->nextId("sec_ciu_ciudadano");
-
-            if ($nextval==-1){
-                $this->result[] = array( "error"  => 'No se encontr&oacute; la secuencia sec_ciu_ciudadano');
-                return false;
-            }
-        } else {
-            $nextval = $idUser;
-        }
-
-        $record = array();
-        $record['sgd_ciu_codigo']     = $nextval;
-        $record['sgd_ciu_nombre']     = $datos['nombre'];
-        $record['sgd_ciu_apell1']     = $datos['apellido'];
-        $record['sgd_ciu_direccion']  = $datos['direccion'];
-        $record['sgd_ciu_telefono']   = $datos['telef'];
-        $record['sgd_ciu_email']      = $datos['email'];
-        $record['sgd_ciu_cedula']     = $datos['cedula'];
-        $record['tdid_codi']          = $datos['tdid_codi'];
-        $record['muni_codi']          = $datos['muni_tmp'];
-        $record['dpto_codi']          = $datos['dpto_tmp'];
-        $record['id_cont']            = $datos['cont_tmp'];
-        $record['id_pais']            = $datos['pais_tmp'];
-
-        $insertSQL = $this->db->conn->Replace("sgd_ciu_ciudadano",$record,'sgd_ciu_codigo',$autoquote = true);
-
-        //Regresa 0 si falla, 1 si efectuo el update y 2 si no se
-        //encontro el registro y el insert fue con exito
-        if($insertSQL){
-            $this->result = $nextval;
-            return true;
-        }
-
+    case 'borrar':
         break;
 
-    // Empresas ....................................................................
-    case 2:
-        if(empty($idUser)){
-            $nextval=$this->db->nextId("sgd_oem_oempresas");
+    // Guardar registros...........................................
+    case 'guardar':
+        $nombre      = $_POST['nombre'];
+        $descripcion = $_POST['descripcion'];
+        $id          = $_POST['id'];
 
-            if ($nextval==-1){
-                $this->result = array( "error"  => 'No se encontr&oacute; la secuencia sgd_oem_oempresas');
-                return false;
-            }
+        switch ($_POST['tipo']){
 
-        } else {
-            $nextval = $idUser;
+            case 'grupos':
+                if($roles->creaEditaGrupo($nombre,$descripcion, $id)){
+                    return array('estado' => 1, 'valor' => $roles->getidGrupo());
+                }else{
+                    return array('estado' => 0, 'valor' => '');
+                }
+                break;
+
         }
-
-        $record = array();
-        $record['sgd_oem_codigo']     = $nextval;
-        $record['tdid_codi']          = $datos['tdid_codi'];
-        $record['sgd_oem_oempresa']   = $datos['nombre'];
-        $record['sgd_oem_rep_legal']  = $datos['apellido'];
-        $record['sgd_oem_nit']        = $datos['cedula'];
-
-        $record['sgd_oem_direccion']  = $datos['direccion'];
-        $record['sgd_oem_telefono']   = $datos['telef'];
-        $record['sgd_oem_email']      = $datos['email'];
-
-        $record['muni_codi']          = $datos['muni_tmp'];
-        $record['dpto_codi']          = $datos['dpto_tmp'];
-        $record['id_cont']            = $datos['cont_tmp'];
-        $record['id_pais']            = $datos['pais_tmp'];
-
-        $insertSQL = $this->db->conn->Replace("sgd_oem_oempresas",$record,'sgd_ciu_codigo',$autoquote = true);
-
-        if($insertSQL){
-            $this->result = $codigo;
-            return true;
-        }
-
-        break;
-
-    // Funcionario .................................................................
-    case 6:
-        $this->result = $idUser;
-        return true;
-        break;
 }
