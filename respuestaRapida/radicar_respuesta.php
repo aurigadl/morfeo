@@ -23,7 +23,8 @@
   $barcodeobj = new TCPDFBarcode('11122some_text', 'C128');
   $barcode = $barcodeobj->getBarcodeHTML(1, 20, 'black'); 
   echo $barcode;
-exit;
+  exit;
+
   $db      = new ConnectionHandler($ruta_raiz);
   $hist    = new Historico($db);
   $Tx      = new Tx($db);
@@ -444,7 +445,7 @@ if (!$bien) {
 
 // Remplazar datos en el documento
 $respuesta = str_replace('*F_RAD_S*', $fecharad, $respuesta);
-$respuesta = str_replace('*RAD_S*', $nurad, $respuesta);
+//$respuesta = str_replace('*RAD_S*', $nurad, $respuesta);
 $respuesta = str_replace('*DIGNATARIO*', $dignatario, $respuesta);
 $respuesta = str_replace('*REFERENCIA*', $referencia, $respuesta);
 $respuesta = str_replace("\xe2\x80\x8b", '', $respuesta);
@@ -570,6 +571,9 @@ $pdf->AddPage();
 // CODE 128 AUTO
 //$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
 //$pdf->write1DBarcode('CODE 128 AUTO', 'C128', '', '', '', 18, 0.4, $style, 'N');
+
+$pdf->setXY(93,272); 
+$pdf->write1DBarcode("074001726000003006652985", 'C39', '', '', 90, 10, 0.4, '', 'N'); 
 
 // output the HTML content
 $pdf->writeHTML($respuesta, true, false, true, false, '');
