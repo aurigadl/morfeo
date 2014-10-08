@@ -15,12 +15,12 @@ for($j=1; $j<$numRta; $j++) {
 }
 $j=0;
 if($sFileName=="formEnvio.php") { $j=1; } 
-?>
+ ?>
 <tr  align="center">
     <th id="r19" style="display:<?=$tipoRespuesta[$opcionMenu][19];?>"><input type="checkbox" name="rta_" value="checkbox" onClick="javascript: seleccionarRta();"></small></th>
 	<th id="r0"  style="display:<?=$tipoRespuesta[$opcionMenu][0]; ?>"><small><a  <?=$href[$j][1]?>> <?=$flecha[1]?> Radicado</a></small></th>
-	<th id="r1"  style="display:<?=$tipoRespuesta[$opcionMenu][1]; ?>"><small><a >Expediente</a></small></th>	 
-	<th id="r2"  style="display:<?=$tipoRespuesta[$opcionMenu][2]; ?>"><small><a  <?=$href[$j][3]?>> <?=$flecha[3]?> Usuario</a></small></th>	 
+	<th id="r1"  style="display:<?=$tipoRespuesta[$opcionMenu][1]; ?>"><small><a >Expediente</a></small></th>	  
+	<th id="r2"  style="display:<?=$tipoRespuesta[$opcionMenu][2]; ?>"><small><a  <?=$href[$j][3]?>> <?=$flecha[3]?> Usuario</a></small></th>
 	<th id="r3"  style="display:<?=$tipoRespuesta[$opcionMenu][3]; ?>"><small><a  <?=$href[$j][4]?>> <?=$flecha[4]?> Dependencia</a></small></th>
 	<th id="r4"  style="display:<?=$tipoRespuesta[$opcionMenu][4]; ?>"><small><a  <?=$href[$j][5]?>> <?=$flecha[5]?> Fecha<br>Solicitud</a></small></th>	 
 	<th id="r5"  style="display:<?=$tipoRespuesta[$opcionMenu][5]; ?>"><small><a  <?=$href[$j][6]?>> <?=$flecha[6]?> Fecha<br>Prestamo</a></small></th>

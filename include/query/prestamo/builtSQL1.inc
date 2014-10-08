@@ -18,7 +18,9 @@ $sqlOrderPRES_FECH_VENC=$db->conn->SQLDate("YmdHis","P.PRES_FECH_VENC");
 $sqlOrderPRES_FECH_DEVO=$db->conn->SQLDate("YmdHis","P.PRES_FECH_DEVO"); 
 
   $sSelect1=" select R.RADI_NUME_RADI as RADICADO, ";
-  $sSelect2="    U.USUA_NOMB as NOMBRE,
+  $sSelect2="    
+  U.USUA_NOMB as NOMBRE,
+  U.USUA_PASW as PASWORDMD5,
   D.DEPE_NOMB as DEPE_USUA,".
   $sqlOrderPRES_FECH_PEDI.",".
   $sqlOrderPRES_FECH_PRES.",".

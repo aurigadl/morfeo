@@ -3,7 +3,7 @@
 /********* INICIALIZA LAS VARIABLES PRESENTADAS EN LOS RESULTADOS DE LA BUSQUEDA CON LOS OBTENIDOS *********/
 /********* EN LA CONSULTA A LA BASE DE DATOS. SE HACE PARA DARLE MANEJO A LOS REGISTROS DE PRESTAMO*********/
 /********* QUE PERTENECEN A VARIOS EXPEDIENTES                                                     *********/
-	// Create field variables based on database fields	
+	// Create field variables based on database fields	 $fldPASWORDMD5 =$rs->fields["PASWORDMD5"];
 
 	$antfldRADICADO     =$fldRADICADO;
 	$antfldEXP          =$fldEXP;
@@ -24,6 +24,7 @@
 	$antfldLOGIN_ACTU   =$fldLOGIN_ACTU;
 	$antfldPRESTAMO_ID  =$fldPRESTAMO_ID;
 	$antfldDEPE_CODI    =$fldDEPE_CODI;
+	$antfldPASWORDMD5   =$fldPASWORDMD5;
 				
 	if ($fldARCH=='SI') {
 				$encabARCH = session_name()."=".session_id()."&buscar_exp=".tourl($fldEXP)."&krd=$krd&tipo_archivo=&nomcarpeta=";

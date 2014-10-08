@@ -22,6 +22,7 @@ include_once("$ruta_raiz/include/query/busqueda/busquedaPiloto1.php");
 
 $sSelect1=" SELECT $radi_nume_radi as RADICADO,";
 $sSelect2=" U.USUA_NOMB as NOMBRE,
+			U.USUA_PASW as PASWORDMD5,
 			D.DEPE_NOMB as DEPE_USUA,".
 			$sqlOrderPRES_FECH_PEDI.",".
 			$sqlOrderPRES_FECH_PRES.",".

@@ -300,6 +300,14 @@ $db = new ConnectionHandler($ruta_raiz);
                 </section>
 		    </td>
 			</tr>
+
+      <tr bgcolor="White" id="fecha">
+      <td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Contraseña del usuario:</td>   
+            <td align="left">
+                <input id="passrwduser" type="password"  autocomplete="off"  placeholder="" name="paswrduser">
+                 <input type="button" class="btn btn-primary" value="Comprobar" onclick="compararpassword();">
+         </td>
+      </tr>
 	<script>
 		// Oculta o hace visible el campo de la fecha de vencimiento dependiendo del estado seleccionado por el usuario
 		function ver() {
@@ -370,7 +378,12 @@ $db = new ConnectionHandler($ruta_raiz);
 	</tr>
 	</table>
  <script>
-		// START AND FINISH DATE
+
+ /**/
+    $(document).ready(function() {
+      $("#REALIZAR").hide();
+    }); 
+ 		// START AND FINISH DATE
 		$('#startdate').datepicker({
 			dateFormat : 'yy/mm/dd',
 			prevText : '<i class="fa fa-chevron-left"></i>',
@@ -444,6 +457,31 @@ $db = new ConnectionHandler($ruta_raiz);
 	// Marca todas las cajas de seleccion arrancando la pagina
     document.rta.rta_.checked=true;
  	seleccionarRta();
+
+
+      function compararpassword() {
+          var passhtml = $("#passrwduser").val();
+          var passphp = $("#use_paswor_dmd5").html();
+
+          passhtml.toString();
+          passphp.toString();
+
+   if (passhtml==passphp){
+    $("#REALIZAR").show();
+  }else{
+    //alert ('la contraseña es incorrecta');
+  $("#passrwduser").css("border", "1px solid red");
+  $("#passrwduser").val("");
+  }
+          //alert(passhtml);
+          //alert(passphp);
+        //if($("#passrwduser").val() == ){        alert ("son_iguales");        };
+
+//          $("#passrwduser").val();
+  //        $("#use_paswor_dmd5").html();
+          
+        }
+
   </script>
  </body>
 </html>

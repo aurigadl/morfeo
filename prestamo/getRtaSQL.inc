@@ -1,6 +1,7 @@
 <?PHP
 /********* INICIALIZA LoS VALORES OBTENIDOS CON LOS RESULTADOS DE LA CONSULTA A LA BD *********/
-	// Create field variables based on database fields	
+	// Create field variables based on database fields 	$fldNOMBRE       =$rs->fields["PASWORDMD5"];
+	
 	$fldRADICADO     =$rs->fields["RADICADO"];
 	$fldEXP          =$rs->fields["EXPEDIENTE"];
 	$fldNOMBRE       =$rs->fields["NOMBRE"];
@@ -23,6 +24,7 @@
 	$fldDEPE_CODI    =$rs->fields["DEPENDENCIA_CODI"];
 	$fldARCH         =$rs->fields["ESTADO_EXP"]; //"DEPE_ACTU"
 	$fldPATH         =$rs->fields["PATH"];
+	$fldPASWORDMD5   =$rs->fields["PASWORDMD5"];
 	// Verifica si el estado es vencido
 	if ($fldID_ESTADO==2) {	
 		$fecha_vencido   = str_replace("-","",$fldF_VENCIDO);
