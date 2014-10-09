@@ -172,12 +172,11 @@ $db = new ConnectionHandler($ruta_raiz);
             $dat=date("Y-m-d");
 	        if ($fechaVencimiento > $dat){
 			   $encabezado.="&fechaVencimiento=".tourl($fechaVencimiento)."&"; 
-
-			} else {
+			     } else {
 			   echo "<script> alert('La fecha de vencimiento no puede ser menor o igual que la actual'); </script>"; 
 			   $nover   = 1;
-               $enviar  = 0;
-			}
+         $enviar  = 0;
+			       }
   	     }
          /*// Validaci�n de la contrase�a
 	     $flds_CONTRASENA=strip($_POST["s_CONTRASENA"]);

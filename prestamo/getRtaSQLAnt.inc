@@ -25,7 +25,9 @@
 	$antfldPRESTAMO_ID  =$fldPRESTAMO_ID;
 	$antfldDEPE_CODI    =$fldDEPE_CODI;
 	$antfldPASWORDMD5   =$fldPASWORDMD5;
-				
+	$antfldIDUSER 		=$fldIDUSER;
+
+
 	if ($fldARCH=='SI') {
 				$encabARCH = session_name()."=".session_id()."&buscar_exp=".tourl($fldEXP)."&krd=$krd&tipo_archivo=&nomcarpeta=";
 			$antfldARCH="<a href='".$ruta_raiz."/expediente/datos_expediente.php?".$encabARCH."&num_expediente=".tourl($fldEXP)."&nurad=".tourl($antfldRADICADO)."' class='vinculos'>".$fldARCH."</a>";

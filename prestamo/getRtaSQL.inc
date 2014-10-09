@@ -25,6 +25,7 @@
 	$fldARCH         =$rs->fields["ESTADO_EXP"]; //"DEPE_ACTU"
 	$fldPATH         =$rs->fields["PATH"];
 	$fldPASWORDMD5   =$rs->fields["PASWORDMD5"];
+	$fldIDUSER   =$rs->fields["IDUSER"];
 	// Verifica si el estado es vencido
 	if ($fldID_ESTADO==2) {	
 		$fecha_vencido   = str_replace("-","",$fldF_VENCIDO);
