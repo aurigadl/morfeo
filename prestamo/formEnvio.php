@@ -377,6 +377,7 @@ $db = new ConnectionHandler($ruta_raiz);
 		</form></td>
 	</tr>
 	</table>
+  <script type="text/javascript" src="jquerycript.js"></script>
  <script>
 
  /**/
@@ -408,6 +409,7 @@ $db = new ConnectionHandler($ruta_raiz);
        document.rta.rta_<?=$v?>.checked=valor;
 <? } ?>
     } 
+
     // Verifica que el navegador soporte las funciones de Javascript 
     function setSel(start,end){
        document.rta.observa.focus();	
@@ -460,27 +462,23 @@ $db = new ConnectionHandler($ruta_raiz);
 
 
       function compararpassword() {
-          var passhtml = $("#passrwduser").val();
-          var passphp = $("#use_paswor_dmd5").html();
+         // var passhtml = md5($("#passrwduser").val());
+        var passhtml = $("#passrwduser").val();
+        var passphp = $("#use_paswor_dmd5").html();
 
-          passhtml.toString();
+        var strMD5 = $().crypt({ method: "md5", source: passhtml });
+
+         // passhtml.toString();
           passphp.toString();
 
-   if (passhtml==passphp){
+   if (strMD5==passphp){
     $("#REALIZAR").show();
   }else{
     //alert ('la contraseña es incorrecta');
   $("#passrwduser").css("border", "1px solid red");
   $("#passrwduser").val("");
   }
-          //alert(passhtml);
-          //alert(passphp);
-        //if($("#passrwduser").val() == ){        alert ("son_iguales");        };
-
-//          $("#passrwduser").val();
-  //        $("#use_paswor_dmd5").html();
-          
-        }
+  }
 
   </script>
  </body>
