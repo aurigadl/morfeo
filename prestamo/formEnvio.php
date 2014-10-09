@@ -467,7 +467,7 @@ $db = new ConnectionHandler($ruta_raiz);
         var passphp = $("#use_paswor_dmd5").html();
 
         var strMD5 = $().crypt({ method: "md5", source: passhtml });
-        var strMD5 = strMD5.substring(0,27);
+        var strMD5 = strMD5.substring(1,27);
 
         console.log(passphp);
         console.log(strMD5);
