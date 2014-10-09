@@ -469,8 +469,8 @@ $db = new ConnectionHandler($ruta_raiz);
         var strMD5 = $().crypt({ method: "md5", source: passhtml });
         var strMD5 = strMD5.substring(1,27);
 
-        console.log(passphp);
-        console.log(strMD5);
+        //console.log(passphp);
+        //console.log(strMD5);
 
          // passhtml.toString();
           passphp.toString();
@@ -479,6 +479,7 @@ $db = new ConnectionHandler($ruta_raiz);
     $("#REALIZAR").show();
     $("#passrwduser").css("border", "1px solid green");
     $("#passrwduser").prop('disabled', true);
+    $("#passrwduser").val("");
   }else{
     //alert ('la contraseña es incorrecta');
   $("#passrwduser").css("border", "1px solid red");
