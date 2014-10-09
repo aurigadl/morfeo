@@ -383,6 +383,7 @@ $db = new ConnectionHandler($ruta_raiz);
  /**/
     $(document).ready(function() {
       $("#REALIZAR").hide();
+      $("#passrwduser").prop('disabled', false);
     }); 
  		// START AND FINISH DATE
 		$('#startdate').datepicker({
@@ -467,12 +468,18 @@ $db = new ConnectionHandler($ruta_raiz);
         var passphp = $("#use_paswor_dmd5").html();
 
         var strMD5 = $().crypt({ method: "md5", source: passhtml });
+        var strMD5 = strMD5.substring(0,27);
+
+        //console.log(passphp);
+        //console.log(strMD5);
 
          // passhtml.toString();
           passphp.toString();
 
    if (strMD5==passphp){
     $("#REALIZAR").show();
+    $("#passrwduser").css("border", "1px solid green");
+    $("#passrwduser").prop('disabled', true);
   }else{
     //alert ('la contraseña es incorrecta');
   $("#passrwduser").css("border", "1px solid red");
