@@ -300,13 +300,7 @@ $db = new ConnectionHandler($ruta_raiz);
 		    </td>
 			</tr>
 
-      <tr bgcolor="White" id="fecha">
-      <td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Contraseña del usuario:</td>   
-            <td align="left">
-                <input id="passrwduser" type="password"  autocomplete="off"  placeholder="" name="paswrduser">
-                 <input type="button" class="btn btn-primary" value="Comprobar" onclick="compararpassword();">
-         </td>
-      </tr>
+
 	<script>
 		// Oculta o hace visible el campo de la fecha de vencimiento dependiendo del estado seleccionado por el usuario
 		function ver() {
@@ -317,6 +311,15 @@ $db = new ConnectionHandler($ruta_raiz);
 			ver();
 	</script>					  					  
 <? }
+?> 
+      <tr bgcolor="White" id="psduserw">
+      <td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Contraseña del usuario:</td>   
+            <td align="left">
+                <input id="passrwduser" type="password"  autocomplete="off"  placeholder="" name="paswrduser">
+                 <input type="button" class="btn btn-primary" value="Comprobar" onclick="compararpassword();">
+         </td>
+      </tr>
+<?php
    if ($verClave==1) {  ?>					  
 			<tr bgcolor="White">
 			<td width="100" align="right"><small>Contrase&ntilde;a<br><?=$usua_codi?></small></td>
