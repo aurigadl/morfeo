@@ -32,6 +32,7 @@ class Roles {
 
     function __construct($db){
         $this->db=$db;
+        //$this->db->conn->debug=true;
     }
 
 
@@ -40,15 +41,36 @@ class Roles {
      * @param  string nombre del rol
      * @param  string descripcion del rol
      * @return bool
-     */
-    public function creaEditaGrupo($nombre, $descripcion, id){
+    */
+
+    public function creaEditaGrupo($nombre, $descripcion, $id){
+        $sql_sel_id = "SELECT max(id) AS ID FROM autg_grupos";
+        $sql_sel    = $this->db->conn->query($sql_sel_id);
+        $nextval    = $sql_sel->fields["ID"] + 1;
 
         $record = array();
-        $record['id']     = $nextval;
-        $record['nombre']     = $datos['nombre'];
-        $record['descripcion']     = $datos['apellido'];
+        $record['id']           = $nextval;
+        $record['nombre']       = $nombre;
+        $record['descripcion']  = $descripcion;
 
-        $insertSQL = $this->db->conn->Replace("sgd_ciu_ciudadano",$record,'sgd_ciu_codigo',$autoquote = true);
+        $insertSQL = $this->db->conn->Replace("autg_grupos",$record,'id',$autoquote = true);
+        if(empty($insertSQL)){
+            return false;
+        }else{
+            $this->id = $nextval;
+            return true;
+        }
+    }
+
+    public function borrarGrupo($id){
+        $sql_sel_id = "delete from autg_grupos where id = $id";
+        $sql_sel    = $this->db->conn->query($sql_sel_id);
+
+        if(!$sql_sel->EOF){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 }

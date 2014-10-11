@@ -1,3 +1,4 @@
+<-debug->
 <-{assign var="gruposHtml" value='
 		<tr>
 
@@ -209,7 +210,10 @@
 
 				<!-- widget content -->
 				<div class="widget-body no-padding">
-					<div class="widget-body-toolbar"></div>
+					<div class="widget-body-toolbar text-center">
+						<span class="label label-success"> Guardado </span>
+						<span class="label label-danger"> Error </span>
+					</div>
 
 					<table id="dt_basic" class="table table-striped table-bordered table-hover smart-form"
 					       width="100%">
@@ -246,16 +250,16 @@
 
 									<td class="hasinput">
 										<label class="input">
-											<input type="text" name="<-{$grupo.ID}->_nombre"  value="<-{$grupo
-											.NOMBRE}->">
+											<input type="text" name="nombre"  value="<-{$grupo.NOMBRE}->">
 										</label>
 									</td>
 
 									<td class="hasinput">
 										<label name="" class="input">
-											<input type="text" name="<-{$grupo.ID}->_DESCRIPCION" value="<-{$grupo.DESCRIPCION}->">
+											<input type="text" name="descripcion" value="<-{$grupo.DESCRIPCION}->">
 										</label>
 									</td>
+
 								</tr>
 							<-{/foreach}->
 						<-{/if}->
@@ -290,7 +294,7 @@
 
 				<!-- widget content -->
 				<div class="widget-body no-padding">
-					<div class="widget-body-toolbar"></div>
+					<div id="permisosMessage"  class="widget-body-toolbar"></div>
 
 					<table id="dt_basic2" class="table table-striped table-bordered table-hover smart-form"
 					       width="100%">
@@ -409,7 +413,7 @@
 
 				<!-- widget content -->
 				<div class="widget-body no-padding">
-					<div class="widget-body-toolbar"></div>
+					<div id="usuariosMessage" class="widget-body-toolbar"></div>
 
 					<table id="dt_basic3" class="table table-striped table-bordered table-hover smart-form"
 					       width="100%">
@@ -461,7 +465,7 @@
 
 				<!-- widget content -->
 				<div class="widget-body no-padding">
-					<div class="widget-body-toolbar"></div>
+					<div id="membresiaMessage" class="widget-body-toolbar"></div>
 
 					<table id="dt_basic4" class="table table-striped table-bordered table-hover smart-form"
 					       width="100%">
@@ -567,6 +571,9 @@ de inserción para los nuevos registros. -->
 			header: "h4"
 		})
 
+		$('.label-success').hide();
+		$('.label-danger').hide();
+
 		//agregar elementos
 		$('#xdt_basic2, #xdt_basic, #xdt_basic3, #xdt_basic4').click(function ( event ) {
 			var nomPlus = 'b' + $(this).attr('id').substring(1);
@@ -603,20 +610,15 @@ de inserción para los nuevos registros. -->
 		//Eliminar un campo de la selección
 		$('body').on('click','.fa-minus', function(event){
 
-			var tipo    = $(this).parent().data('tipo');
-			var id      = $(this).parent().data('id');
-			var datos   = 'accion=borrar&tipo=' + tipo + '&id=' + id;
-
+			var tipo  = $(this).parent().data('tipo');
+			var id    = $(this).parent().data('id');
+			var datos = 'accion=borrar&tipo=' + tipo + '&id=' + id;
+			var boton = $(this);
 
 			switch (tipo) {
 
 				case 'grupos':
 					//Grupos
-					$(this).closest('tr').find('input').each(function( index ) {
-						datos += $($(this).closest('tr').find('input')[0]).attr('name') + '=' +
-							  $($(this).closest('tr').find('input')[1]).val();
-					});
-
 					if(id == undefined){
 						$($(this).closest('tr')).remove();
 						return;
@@ -649,23 +651,25 @@ de inserción para los nuevos registros. -->
 			}
 
 
-			$.post( "ajaxPermisos.php", datos).done(
-				function( data ){
-
+			$.post( "ajaxPermisos.php", datos).done(function( data ) {
+				if(data['estado'] == 1){
+					$($(boton).closest('tr')).remove();
+					$('.label-success').show().delay(3000).fadeOut();
+				}else{
+					$('.label-danger').show().delay(3000).fadeOut();
 				}
-			);
+			})
 
-		})
+		});
 
 
-
-		//Suma un campo de la selección
+		//Agregar o editar
 		$('body').on('click', '.fa-save',function(event){
 
 			var tipo  = $(this).parent().data('tipo');
 			var id    = $(this).parent().data('id');
 			var datos = 'accion=guardar&tipo=' + tipo;
-
+			var boton = $(this);
 
 			if(id !== undefined){
 				datos += '&id=' + id;
@@ -673,15 +677,18 @@ de inserción para los nuevos registros. -->
 				datos += '&id='
 			}
 
-
 			switch (tipo) {
 
 				case 'grupos':
+
 					//Grupos
 					$(this).closest('tr').find('input').each(function( index ) {
-						datos += '&' + $($(this).closest('tr').find('input')[0]).attr('name') + '=' +
-								$($(this).closest('tr').find('input')[1]).val();
+						var inpe = $(this).closest('tr').find('input')[index];
+						var name = $(inpe).attr('name');
+						var valu = $(inpe).val();
+						datos += '&' + name + '=' + valu;
 					});
+
 					break;
 
 				case 'permisos':
@@ -693,12 +700,15 @@ de inserción para los nuevos registros. -->
 
 					break;
 
+
 				case 'usuarios':
 					//Usuarios
 					$(this).closest('tr').find('input').each(function( index ) {
 						var nombre= $(this).val();
 					});
+
 					break;
+
 
 				case 'membresias':
 					//Membresias
@@ -708,8 +718,16 @@ de inserción para los nuevos registros. -->
 					break;
 			}
 
-			$.post( "ajaxPermisos.php", datos)
-					.done(function( data ) { });
+			$.post( "ajaxPermisos.php", datos).done(function( data ) {
+				if(data['estado'] == 1){
+					boton.closest('td').find('a').each(function( index ) {
+						$(this).attr("data-id",data['valor']);
+					});
+					$('.label-success').show().delay(3000).fadeOut();
+				}else{
+					$('.label-danger').show().delay(3000).fadeOut();
+				}
+			});
 
 		})
 

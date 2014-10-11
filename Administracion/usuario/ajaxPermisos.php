@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * @author Jairo Losada   <jlosada@gmail.com>
  * @author Cesar Gonzalez <aurigadl@gmail.com>
@@ -32,11 +33,25 @@ include_once("$ruta_raiz/include/tx/roles.php");
 $db       = new ConnectionHandler("$ruta_raiz");
 $roles    = new Roles($db);
 
+header('Content-Type: application/json');
+
 switch ($_POST['accion']){
     /**************************************
      * ********** Edición de grupos ********
      * ************************************/
     case 'borrar':
+        $id = $_POST['id'];
+
+        switch($_POST['tipo']){
+
+            case 'grupos':
+                if($roles->borrarGrupo($id)){
+                    $resultado = array('estado' => 1, 'valor' => $roles->id);
+                }else{
+                    $resultado = array('estado' => 0, 'valor' => '');
+                }
+                break;
+        }
         break;
 
     // Guardar registros...........................................
@@ -45,15 +60,18 @@ switch ($_POST['accion']){
         $descripcion = $_POST['descripcion'];
         $id          = $_POST['id'];
 
-        switch ($_POST['tipo']){
+        switch($_POST['tipo']){
 
             case 'grupos':
                 if($roles->creaEditaGrupo($nombre,$descripcion, $id)){
-                    return array('estado' => 1, 'valor' => $roles->getidGrupo());
+                    $resultado = array('estado' => 1, 'valor' => $roles->id);
                 }else{
-                    return array('estado' => 0, 'valor' => '');
+                    $resultado = array('estado' => 0, 'valor' => '');
                 }
                 break;
 
         }
+
 }
+
+echo json_encode($resultado);
