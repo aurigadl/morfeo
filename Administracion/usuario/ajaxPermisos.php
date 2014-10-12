@@ -56,13 +56,13 @@ switch ($_POST['accion']){
 
     // Guardar registros...........................................
     case 'guardar':
-        $nombre      = $_POST['nombre'];
-        $descripcion = $_POST['descripcion'];
         $id          = $_POST['id'];
 
         switch($_POST['tipo']){
 
             case 'grupos':
+                $nombre      = $_POST['nombre'];
+                $descripcion = $_POST['descripcion'];
                 if($roles->creaEditaGrupo($nombre,$descripcion, $id)){
                     $resultado = array('estado' => 1, 'valor' => $roles->id);
                 }else{
@@ -70,6 +70,17 @@ switch ($_POST['accion']){
                 }
                 break;
 
+            //"accion=guardar&tipo=permisos&id=&NOMBRE=sdf&DESCRIPTION=sdf&dependencia=905,300&crud=1&grupo=11"
+            case 'permisos':
+                $nombre      = $_POST['nombre'];
+                $descripcion = $_POST['descripcion'];
+
+                if($roles->creaEditaGrupo($nombre,$descripcion, $id)){
+                    $resultado = array('estado' => 1, 'valor' => $roles->id);
+                }else{
+                    $resultado = array('estado' => 0, 'valor' => '');
+                }
+                break;
         }
 
 }

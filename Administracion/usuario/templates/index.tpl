@@ -120,63 +120,6 @@
 	</tr>
 '}->
 
-<-{assign var="permisosHtml" value='
-	<tr>
-		<td class="toogletd">
-			<a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title=""
-			   data-placement="Borrar" data-original-title="Collapse">
-				<i class="fa fa-minus "></i>
-			</a>
-			<a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title=""
-			   data-placement="Guardar" data-original-title="Collapse">
-				<i class="fa fa-save "></i>
-			</a>
-		</td>
-
-		<td class="toogletd">
-			<label name="" class="input">
-				<input type="text" name="" value="">
-			</label>
-		</td>
-
-		<td class="toogletd">
-			<label name="" class="input">
-				<input type="text" name="" value="">
-			</label>
-		</td>
-
-		<td class="toogletd">
-			<label class="select">
-				<select class="select" id="select-1">
-					<option>Todas las Dependencias</option>
-					<option>Dependencia propia</option>
-					<option>Ninguna</option>
-				</select>
-			</label>
-		</td>
-
-		<td class="toogletd">
-			<label class="select">
-				<select class="select" id="select-1">
-					<option>Crear y Borrar</option>
-					<option>Editar</option>
-					<option>Leer</option>
-				</select>
-			</label>
-		</td>
-
-		<td class="toogletd">
-			<label class="select">
-				<select class="select" id="select-1">
-					<option>Secretarias</option>
-				</select>
-			</label>
-		</td>
-
-	</tr>
-'}->
-
-
 <!DOCTYPE>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -238,7 +181,7 @@
 
 										<a href="javascript:void(0);" data-tipo="grupos" data-id="<-{$grupo.ID}->"
 										   class="button-icon">
-											<i class="fa fa-minus" id="txt"></i>
+											<i class="fa fa-minus"></i>
 										</a>
 
 										<a href="javascript:void(0);" data-tipo="grupos" data-id="<-{$grupo.ID}->"
@@ -313,72 +256,166 @@
 						</thead>
 						<tbody id="bdt_basic2">
 						<-{if count($permisos) eq 0}->
-							<-{else}->
+							<tr>
 
-							<-{foreach item=item from=$permisos}->
-								<tr>
+								<td class="toogletd">
 
-									<td class="toogletd">
-										<a href="javascript:void(0);" data=" " class="button-icon
-													jarviswidget-toggle-btn" rel="tooltip" title=""
-										   data-placement="Borrar" data-original-title="Collapse">
-											<i class="fa fa-minus "></i>
-										</a>
-										<a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title=""
-										   data-placement="Guardar" data-original-title="Collapse">
-											<i class="fa fa-save "></i>
-										</a>
-									</td>
+									<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
+									   class="button-icon">
+										<i class="fa fa-minus"></i>
+									</a>
 
-									<td class="hasinput">
-										<label class="input">
-											<input type="text" name="NOMBRE" value="<-{$item.NOMBRE}->">
-										</label>
-									</td>
+									<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
+									   class="button-icon">
+										<i class="fa fa-save "></i>
+									</a>
 
-									<td class="hasinput">
-										<label name="" class="input">
-											<input type="text" name="DESCRIPTION" value="<-{$item.DESCRIPCION}->">
-										</label>
-									</td>
+								</td>
 
-									<td class="hasinput">
-										<label name="" class="input">
-											<input type="text" name="DEPENDENCIA" value="<-{$item.DEPENDENCIA}->">
-										</label>
-									</td>
+								<td class="hasinput">
+									<label class="input">
+										<input type="text" name="nombre" value="<-{$item.NOMBRE}->">
+									</label>
+								</td>
 
-									<td class="hasinput">
-										<label class="input">
-											<input type="text" name="CRUD" value="<-{$item.CRUD}->">
-										</label>
-									</td>
+								<td class="hasinput">
+									<label name="" class="input">
+										<input type="text" name="descripcion" value="<-{$item.DESCRIPCION}->">
+									</label>
+								</td>
 
-									<td class="hasinput">
-										<label class="select">
-											<select class="input-sm">
+								<td class="hasinput">
+									<label class="select select-multiple">
+										<select class="custom-scrollselectpicker" name="dependencia" multiple>
+											<option value="">-- Seleccione una Opción --</option>
+											<-{foreach item=i from=$dependencias}->
+												<option value="<-{$i.DEPE_CODI}->">
+													<-{$i.DEPE_NOMB}->
+												</option>
+											<-{/foreach}->
+										</select> <i></i>
+									</label>
+								</td>
 
-												<-{foreach item=i from=$grupos}->
+								<td class="hasinput">
+									<label class="select">
+										<select class="input-sm" name="crud">
+											<option value="">-- Seleccione una Opción --</option>
+											<-{foreach item=i from=$crud}->
+											<option value="<-{$i.ID}->">
+												<-{$i.NOMBRE}->
+											</option>
+											<-{/foreach}->
+										</select> <i></i>
+									</label>
+								</td>
 
-													<-{if $item.AUTG_ID eq $i.ID}->
-														<option value="<-{$i.ID}->" selected>
-															<-{$i.NOMBRE}->
-														</option>
-													<-{else}->
-														<option value="<-{$i.ID}->">
-															<-{$i.NOMBRE}->
-														</option>
-													<-{/if}->
+								<td class="hasinput">
+									<label class="select" >
+										<select class="input-sm" name="grupo">
+											<option value="">-- Seleccione una Opción --</option>
+											<-{foreach item=i from=$grupos}->
+											<-{if $item.AUTG_ID eq $i.ID}->
+											<option value="<-{$i.ID}->" selected>
+												<-{$i.NOMBRE}->
+											</option>
+											<-{else}->
+											<option value="<-{$i.ID}->">
+												<-{$i.NOMBRE}->
+											</option>
+											<-{/if}->
 
-												<-{/foreach}->
+											<-{/foreach}->
 
-											</select> <i></i>
-										</label>
-									</td>
+										</select> <i></i>
+									</label>
+								</td>
 
-								</tr>
+							</tr>
+
+						<-{else}->
+
+							<-{foreach item=grupo from=$permisos}->
+
+							<tr>
+
+								<td class="toogletd">
+
+									<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
+									   class="button-icon">
+										<i class="fa fa-minus"></i>
+									</a>
+
+									<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
+									   class="button-icon">
+										<i class="fa fa-save "></i>
+									</a>
+
+								</td>
+
+								<td class="hasinput">
+									<label class="input">
+										<input type="text" name="nombre" value="<-{$item.NOMBRE}->">
+									</label>
+								</td>
+
+								<td class="hasinput">
+									<label name="" class="input">
+										<input type="text" name="descripcion" value="<-{$item.DESCRIPCION}->">
+									</label>
+								</td>
+
+								<td class="hasinput">
+									<label class="select select-multiple">
+										<select class="custom-scrollselectpicker" multiple name="dependencia">
+											<option value="">-- Seleccione una Opción --</option>
+											<-{foreach item=i from=$dependencias}->
+												<option value="<-{$i.DEPE_CODI}->">
+													<-{$i.DEPE_NOMB}->
+												</option>
+											<-{/foreach}->
+										</select> <i></i>
+									</label>
+								</td>
+
+								<td class="hasinput">
+									<label class="select">
+										<select class="input-sm" name="crud">
+											<option value="">-- Seleccione una Opción --</option>
+											<-{foreach item=i from=$crud}->
+												<option value="<-{$i.ID}->">
+													<-{$i.NOMBRE}->
+												</option>
+											<-{/foreach}->
+										</select> <i></i>
+									</label>
+								</td>
+
+								<td class="hasinput">
+									<label class="select">
+										<select class="input-sm" name="grupos">
+											<option value="">-- Seleccione una Opción --</option>
+											<-{foreach item=i from=$grupos}->
+												<-{if $item.AUTG_ID eq $i.ID}->
+													<option value="<-{$i.ID}->" selected>
+														<-{$i.NOMBRE}->
+													</option>
+												<-{else}->
+													<option value="<-{$i.ID}->">
+														<-{$i.NOMBRE}->
+													</option>
+												<-{/if}->
+
+											<-{/foreach}->
+
+										</select> <i></i>
+									</label>
+								</td>
+
+							</tr>
+
 							<-{/foreach}->
-							<-{/if}->
+						<-{/if}->
 						</tbody>
 					</table>
 
@@ -511,7 +548,80 @@ de inserción para los nuevos registros. -->
 Elemento necesario para duplicar los campos
 de inserción para los nuevos registros. -->
 <script id="plantillaPermisos" type="text/html">
-	<-{$permisosHtml}->
+	<tr>
+		<td class="toogletd">
+			<a href="javascript:void(0);" data-tipo="permisos" data-id=""
+			   class="button-icon">
+				<i class="fa fa-minus"></i>
+			</a>
+
+			<a href="javascript:void(0);" data-tipo="permisos" data-id=""
+			   class="button-icon">
+				<i class="fa fa-save "></i>
+			</a>
+
+		</td>
+
+		<td class="hasinput">
+			<label class="input">
+				<input type="text" name="nombre" value="<-{$item.NOMBRE}->">
+			</label>
+		</td>
+
+		<td class="hasinput">
+			<label name="" class="input">
+				<input type="text" name="descripcion" value="<-{$item.DESCRIPCION}->">
+			</label>
+		</td>
+
+		<td class="hasinput">
+			<label class="select select-multiple">
+				<select class="custom-scrollselectpicker" multiple>
+					<option value="">-- Seleccione una Opción --</option>
+					<-{foreach item=i from=$dependencias}->
+						<option value="<-{$i.DEPE_CODI}->">
+							<-{$i.DEPE_NOMB}->
+						</option>
+					<-{/foreach}->
+				</select> <i></i>
+			</label>
+		</td>
+
+		<td class="hasinput">
+			<label class="select">
+				<select class="input-sm">
+					<option value="">-- Seleccione una Opción --</option>
+					<-{foreach item=i from=$crud}->
+					<option value="<-{$i.ID}->">
+						<-{$i.NOMBRE}->
+					</option>
+					<-{/foreach}->
+				</select> <i></i>
+			</label>
+		</td>
+
+		<td class="hasinput">
+			<label class="select">
+				<select class="input-sm">
+					<option value="">-- Seleccione una Opción --</option>
+					<-{foreach item=i from=$grupos}->
+					<-{if $item.AUTG_ID eq $i.ID}->
+					<option value="<-{$i.ID}->" selected>
+						<-{$i.NOMBRE}->
+					</option>
+					<-{else}->
+					<option value="<-{$i.ID}->">
+						<-{$i.NOMBRE}->
+					</option>
+					<-{/if}->
+
+					<-{/foreach}->
+
+				</select> <i></i>
+			</label>
+		</td>
+
+	</tr>
 </script>
 
 
@@ -568,7 +678,8 @@ de inserción para los nuevos registros. -->
 			heightStyle: "content",
 			collapsible: true,
 			animate: 300,
-			header: "h4"
+			header: "h4",
+			active: 1
 		})
 
 		$('.label-success').hide();
@@ -666,10 +777,11 @@ de inserción para los nuevos registros. -->
 		//Agregar o editar
 		$('body').on('click', '.fa-save',function(event){
 
-			var tipo  = $(this).parent().data('tipo');
-			var id    = $(this).parent().data('id');
-			var datos = 'accion=guardar&tipo=' + tipo;
-			var boton = $(this);
+			var tipo     = $(this).parent().data('tipo');
+			var id       = $(this).parent().data('id');
+			var datos    = 'accion=guardar&tipo=' + tipo;
+			var boton    = $(this);
+			var elemnttr = $(this).closest('tr');
 
 			if(id !== undefined){
 				datos += '&id=' + id;
@@ -682,8 +794,8 @@ de inserción para los nuevos registros. -->
 				case 'grupos':
 
 					//Grupos
-					$(this).closest('tr').find('input').each(function( index ) {
-						var inpe = $(this).closest('tr').find('input')[index];
+					elemnttr.find('input').each(function( index ) {
+						var inpe = elemnttr.find('input')[index];
 						var name = $(inpe).attr('name');
 						var valu = $(inpe).val();
 						datos += '&' + name + '=' + valu;
@@ -692,10 +804,20 @@ de inserción para los nuevos registros. -->
 					break;
 
 				case 'permisos':
-					//Permisos
 
-					$(this).closest('tr').find('input').each(function( index ) {
-						var nombre= $(this).val();
+					//Permisos
+					elemnttr.find('input').each(function( index ) {
+						var inpe = elemnttr.find('input')[index];
+						var name = $(inpe).attr('name');
+						var valu = $(inpe).val();
+						datos += '&' + name + '=' + valu;
+					});
+
+					elemnttr.find('select').each(function( index ) {
+						var inpe = elemnttr.find('select')[index];
+						var name = $(inpe).attr('name');
+						var valu = $(inpe).val();
+						datos += '&' + name + '=' + valu;
 					});
 
 					break;

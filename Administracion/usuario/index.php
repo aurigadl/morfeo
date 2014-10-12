@@ -46,6 +46,13 @@ $sql_perm = "     SELECT
 
 $perm     = $db->conn->query($sql_perm);
 
+
+//Crud
+$crud   = array( array('ID' => 1, 'NOMBRE' => 'Leer'),
+                 array('ID' => 2, 'NOMBRE' => 'Editar'),
+                 array('ID' => 3, 'NOMBRE' => 'Crear y Borrar')
+);
+
 while (!$perm->EOF) {
     $permisos[] = $perm->fields;
     $perm->MoveNext();
@@ -84,6 +91,19 @@ while (!$usua->EOF) {
     $usua->MoveNext();
 }
 
+//Dependencias
+$sql_depe = " SELECT
+                depe_nomb,
+                depe_codi
+              FROM
+                dependencia";
+
+$depe     = $db->conn->query($sql_depe);
+
+while (!$depe->EOF) {
+    $dependencias[] = $depe->fields;
+    $depe->MoveNext();
+}
 
 //Membresias
 $sql_memb = "
@@ -107,9 +127,11 @@ while (!$memb->EOF) {
     $memb->MoveNext();
 }
 
-$smarty->assign("permisos"   , $permisos);
-$smarty->assign("grupos"     , $grupos);
-$smarty->assign("membresias" , $membresias);
-$smarty->assign("usuarios"   , $usuarios);
+$smarty->assign("permisos"     , $permisos);
+$smarty->assign("crud"         , $crud);
+$smarty->assign("grupos"       , $grupos);
+$smarty->assign("dependencias" , $dependencias);
+$smarty->assign("membresias"   , $membresias);
+$smarty->assign("usuarios"     , $usuarios);
 
 $smarty->display('index.tpl');
