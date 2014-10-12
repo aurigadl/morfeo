@@ -335,8 +335,7 @@
 
 						<-{else}->
 
-							<-{foreach item=grupo from=$permisos}->
-
+							<-{foreach item=item from=$permisos}->
 							<tr>
 
 								<td class="toogletd">
@@ -367,12 +366,21 @@
 
 								<td class="hasinput">
 									<label class="select select-multiple">
-										<select class="custom-scrollselectpicker" multiple name="dependencia">
+										<select class="custom-scroll" multiple name="dependencia">
 											<option value="">-- Seleccione una Opción --</option>
 											<-{foreach item=i from=$dependencias}->
-												<option value="<-{$i.DEPE_CODI}->">
-													<-{$i.DEPE_NOMB}->
-												</option>
+												<-{foreach item=j from=$item.DEPENDENCIA}->
+													<-{if $j eq $i.DEPE_CODI}->
+														<option value="<-{$i.DEPE_CODI}->" selected>
+															<-{$i.DEPE_NOMB}->
+														</option>
+														{break}
+													<-{else}->
+														<option value="<-{$i.DEPE_CODI}->">
+															<-{$i.DEPE_NOMB}->
+														</option>
+													<-{/if}->
+												<-{/foreach}->
 											<-{/foreach}->
 										</select> <i></i>
 									</label>
@@ -383,9 +391,15 @@
 										<select class="input-sm" name="crud">
 											<option value="">-- Seleccione una Opción --</option>
 											<-{foreach item=i from=$crud}->
-												<option value="<-{$i.ID}->">
-													<-{$i.NOMBRE}->
-												</option>
+												<-{if $item.CRUD eq $i.ID}->
+													<option value="<-{$i.ID}->" selected>
+														<-{$i.NOMBRE}->
+													</option>
+												<-{else}->
+													<option value="<-{$i.ID}->">
+														<-{$i.NOMBRE}->
+													</option>
+												<-{/if}->
 											<-{/foreach}->
 										</select> <i></i>
 									</label>
@@ -647,7 +661,6 @@ de inserción para los nuevos registros. -->
 		pageSetUp();
 
 		// PAGE RELATED SCRIPTS
-
 		loadDataTableScripts();
 		function loadDataTableScripts() {
 
@@ -667,7 +680,6 @@ de inserción para los nuevos registros. -->
 		 * ACCORDION
 		 * jquery accordion
 		 */
-
 		var accordionIcons = {
 			header: "fa fa-plus",    // custom icon class
 			activeHeader: "fa fa-minus" // custom icon class
@@ -698,19 +710,19 @@ de inserción para los nuevos registros. -->
 				case 'bdt_basic2':
 					//Plantillas y clonar elementos Permisos
 					var plaPerm = $('#plantillaPermisos').clone();
-					$('#bdt_basic2').append($(plaPerm).html());
+					$('#bdt_basic2').prepend(($(plaPerm).html());
 					break;
 
 				case 'bdt_basic3':
 					//Plantillas y clonar elementos Usuarios
 					var plaUsua = $('#plantillaUsuarios').clone();
-					$('#bdt_basic3').append($(plaUsua).html());
+					$('#bdt_basic3').prepend($(plaUsua).html());
 					break;
 
 				case 'bdt_basic4':
 					//Plantillas y clonar elementos Membresias
 					var plaMemb = $('#plantillaMembresias').clone();
-					$('#bdt_basic4').append($(plaMemb).html());
+					$('#bdt_basic4').prepend($(plaMemb).html());
 					break;
 			}
 

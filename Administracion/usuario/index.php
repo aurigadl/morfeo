@@ -34,17 +34,30 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 //$db->conn->debug = true;
 
 //Permisos
-$sql_perm = "     SELECT
-                      id,
-                      autg_id,
-                      nombre,
-                      dependencia,
-                      crud,
-                      descripcion
-                  FROM
-                      autp_permisos";
+$sql_perm = " SELECT
+                  id,
+                  autg_id,
+                  nombre,
+                  dependencia,
+                  crud,
+                  descripcion
+              FROM
+                  autp_permisos";
 
 $perm     = $db->conn->query($sql_perm);
+
+while (!$perm->EOF) {
+
+    $permisos[] = array('ID'          => $perm->fields['ID'],
+                        'AUTG_ID'     => $perm->fields['AUTG_ID'],
+                        'NOMBRE'      => $perm->fields['NOMBRE'],
+                        'DEPENDENCIA' => explode(',', $perm->fields['DEPENDENCIA']),
+                        'CRUD'        => $perm->fields['CRUD'],
+                        'DESCRIPCION' => $perm->fields['DESCRIPCION']);
+
+    $perm->MoveNext();
+}
+
 
 
 //Crud
@@ -52,12 +65,6 @@ $crud   = array( array('ID' => 1, 'NOMBRE' => 'Leer'),
                  array('ID' => 2, 'NOMBRE' => 'Editar'),
                  array('ID' => 3, 'NOMBRE' => 'Crear y Borrar')
 );
-
-while (!$perm->EOF) {
-    $permisos[] = $perm->fields;
-    $perm->MoveNext();
-}
-
 
 //Grupos
 $sql_grup = "     SELECT
