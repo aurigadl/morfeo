@@ -70,12 +70,14 @@ switch ($_POST['accion']){
                 }
                 break;
 
-            //"accion=guardar&tipo=permisos&id=&NOMBRE=sdf&DESCRIPTION=sdf&dependencia=905,300&crud=1&grupo=11"
             case 'permisos':
                 $nombre      = $_POST['nombre'];
                 $descripcion = $_POST['descripcion'];
+                $dependencia = $_POST['dependencia'];
+                $crud        = $_POST['crud'];
+                $grupo       = $_POST['grupo'];
 
-                if($roles->creaEditaGrupo($nombre,$descripcion, $id)){
+                if($roles->creaEditaPermiso($nombre, $descripcion, $dependencia, $crud, $grupo, $id)){
                     $resultado = array('estado' => 1, 'valor' => $roles->id);
                 }else{
                     $resultado = array('estado' => 0, 'valor' => '');

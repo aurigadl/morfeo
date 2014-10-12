@@ -393,7 +393,7 @@
 
 								<td class="hasinput">
 									<label class="select">
-										<select class="input-sm" name="grupos">
+										<select class="input-sm" name="grupo">
 											<option value="">-- Seleccione una Opción --</option>
 											<-{foreach item=i from=$grupos}->
 												<-{if $item.AUTG_ID eq $i.ID}->
