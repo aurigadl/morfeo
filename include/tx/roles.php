@@ -121,4 +121,19 @@ class Roles {
         }
     }
 
+    /**
+     * Borrar Permiso
+     * @param  integer id del permiso
+     * @return bool
+     */
+    public function borrarPermiso($id){
+        $sql_sel_id = "delete from autp_permisos where id = $id";
+        $sql_sel    = $this->db->conn->query($sql_sel_id);
+
+        if(!$sql_sel->EOF){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
