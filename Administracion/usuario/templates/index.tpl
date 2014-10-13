@@ -1,4 +1,4 @@
-<-{debug}->
+<-debug->
 <-{assign var="gruposHtml" value='
 		<tr>
 
@@ -27,61 +27,6 @@
 			</td>
 
 		</tr>
-'}->
-
-<-{assign var="usuariosHtml" value='
-	<tr>
-		<td class="toogletd">
-			<a href="javascript:void(0);" class="button-icon
-																		jarviswidget-toggle-btn" rel="tooltip" title=""
-			   data-placement="Borrar" data-original-title="Collapse">
-				<i class="fa fa-minus "></i>
-			</a>
-			<a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title=""
-			   data-placement="Guardar" data-original-title="Collapse">
-				<i class="fa fa-save "></i>
-			</a>
-		</td>
-
-		<td class="hasinput">
-			<label name="" class="input">
-				<input type="text" name="" value="">
-			</label>
-		</td>
-
-		<td class="hasinput">
-			<label name="" class="input">
-				<input type="text" name="" value="">
-			</label>
-		</td>
-
-		<td class="hasinput">
-			<label name="" class="input">
-				<input type="text" name="" value="">
-			</label>
-		</td>
-
-		<td class="hasinput">
-			<label name="" class="input">
-				<input type="text" name="" value="">
-			</label>
-		</td>
-
-		<td class="hasinput">
-			<label name="" class="input">
-				<input type="text" name="" value="">
-			</label>
-		</td>
-
-		<td class="toogletd">
-			<label class="select">
-				<select class="select">
-					<option>900 Pruebas</option>
-				</select>
-			</label>
-		</td>
-	</tr>
-
 '}->
 
 <-{assign var="membresiasHtml" value='
@@ -119,6 +64,49 @@
 
 	</tr>
 '}->
+
+
+<-{assign var="usuariosHtml" value='
+	<tr>
+		<td class="toogletd">
+
+			<a href="javascript:void(0);" class="button-icon" data-tipo="usuarios">
+				<i class="fa fa-minus"></i>
+			</a>
+
+			<a href="javascript:void(0);" class="button-icon" data-tipo="usuarios">
+				<i class="fa fa-save"></i>
+			</a>
+
+		</td>
+
+		<td class="hasinput">
+			<label class="input">
+				<input type="text" name="nombres" value="">
+			</label>
+		</td>
+
+		<td class="hasinput">
+			<label class="input">
+				<input type="text" name="apellidos" value="">
+			</label>
+		</td>
+
+		<td class="hasinput">
+			<label class="input">
+				<input type="text" name="contrasena" value="">
+			</label>
+		</td>
+
+		<td class="hasinput">
+			<label class="input">
+				<input type="text" name="correo" value="">
+			</label>
+		</td>
+
+	</tr>
+'}->
+
 
 <!DOCTYPE>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -158,8 +146,7 @@
 						<span class="label label-danger"> Error </span>
 					</div>
 
-					<table id="dt_basic" class="table table-striped table-bordered table-hover smart-form"
-					       width="100%">
+					<table id="dt_basic" class="table table-striped table-bordered table-hover smart-form" width="100%">
 						<thead>
 						<tr>
 							<th style="width: 35px;">
@@ -193,7 +180,7 @@
 
 									<td class="hasinput">
 										<label class="input">
-											<input type="text" name="nombre"  value="<-{$grupo.NOMBRE}->">
+											<input type="text" name="nombre" value="<-{$grupo.NOMBRE}->">
 										</label>
 									</td>
 
@@ -217,236 +204,230 @@
 	</div>
 </div>
 
-
 <div>
 
-	<h4>Permisos</h4>
+<h4>Permisos</h4>
 
-	<div class="padding-10">
-		<!-- Widget ID (each widget will need unique ID)-->
-		<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
-			<header></header>
-			<!-- widget div-->
-			<div>
+<div class="padding-10">
+<!-- Widget ID (each widget will need unique ID)-->
+<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+<header></header>
+<!-- widget div-->
+<div>
 
-				<!-- widget edit box -->
-				<div class="jarviswidget-editbox">
-					<!-- This area used as dropdown edit box -->
-				</div>
-				<!-- end widget edit box -->
-
-				<!-- widget content -->
-				<div class="widget-body no-padding">
-
-					<div class="widget-body-toolbar text-center">
-						<span class="label label-success"> Guardado </span>
-						<span class="label label-danger"> Error </span>
-					</div>
-
-					<table id="dt_basic2" class="table table-striped table-bordered table-hover smart-form"
-					       width="100%">
-						<thead>
-						<tr>
-							<th style="width: 35px;">
-								<a href="javascript:void(0);" id="xdt_basic2" class="btn btn-sm"><i class="fa
-										fa-plus"></i></a>
-							</th>
-							<th>Nombre</th>
-							<th>Descripci&oacute;n</th>
-							<th>Dependencias</th>
-							<th>Crud</th>
-							<th>Grupo</th>
-						</tr>
-						</thead>
-						<tbody id="bdt_basic2">
-						<-{if count($permisos) eq 0}->
-							<tr>
-
-								<td class="toogletd">
-
-									<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
-									   class="button-icon">
-										<i class="fa fa-minus"></i>
-									</a>
-
-									<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
-									   class="button-icon">
-										<i class="fa fa-save "></i>
-									</a>
-
-								</td>
-
-								<td class="hasinput">
-									<label class="input">
-										<input type="text" name="nombre" value="<-{$item.NOMBRE}->">
-									</label>
-								</td>
-
-								<td class="hasinput">
-									<label name="" class="input">
-										<input type="text" name="descripcion" value="<-{$item.DESCRIPCION}->">
-									</label>
-								</td>
-
-								<td class="hasinput">
-									<label class="select select-multiple">
-										<select class="custom-scrollselectpicker" name="dependencia" multiple>
-											<option value="">-- Seleccione una Opción --</option>
-											<-{foreach item=i from=$dependencias}->
-												<option value="<-{$i.DEPE_CODI}->">
-													<-{$i.DEPE_NOMB}->
-												</option>
-											<-{/foreach}->
-										</select> <i></i>
-									</label>
-								</td>
-
-								<td class="hasinput">
-									<label class="select">
-										<select class="input-sm" name="crud">
-											<option value="">-- Seleccione una Opción --</option>
-											<-{foreach item=i from=$crud}->
-											<option value="<-{$i.ID}->">
-												<-{$i.NOMBRE}->
-											</option>
-											<-{/foreach}->
-										</select> <i></i>
-									</label>
-								</td>
-
-								<td class="hasinput">
-									<label class="select" >
-										<select class="input-sm" name="grupo">
-											<option value="">-- Seleccione una Opción --</option>
-											<-{foreach item=i from=$grupos}->
-											<-{if $item.AUTG_ID eq $i.ID}->
-											<option value="<-{$i.ID}->" selected>
-												<-{$i.NOMBRE}->
-											</option>
-											<-{else}->
-											<option value="<-{$i.ID}->">
-												<-{$i.NOMBRE}->
-											</option>
-											<-{/if}->
-											<-{/foreach}->
-										</select> <i></i>
-									</label>
-								</td>
-
-							</tr>
-
-						<-{else}->
-
-							<-{foreach item=item from=$permisos}->
-							<tr>
-
-								<td class="toogletd">
-
-									<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
-									   class="button-icon">
-										<i class="fa fa-minus"></i>
-									</a>
-
-									<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
-									   class="button-icon">
-										<i class="fa fa-save "></i>
-									</a>
-
-								</td>
-
-								<td class="hasinput">
-									<label class="input">
-										<input type="text" name="nombre" value="<-{$item.NOMBRE}->">
-									</label>
-								</td>
-
-								<td class="hasinput">
-									<label name="" class="input">
-										<input type="text" name="descripcion" value="<-{$item.DESCRIPCION}->">
-									</label>
-								</td>
-
-								<td class="hasinput">
-									<label class="select select-multiple">
-										<select class="custom-scroll" multiple name="dependencia">
-											<option value="">-- Seleccione una Opción --</option>
-											<-{foreach item=i from=$dependencias}->
-												<-{foreach item=j from=$item.DEPENDENCIA}->
-													<-{if $j eq $i.DEPE_CODI}->
-														<option value="<-{$i.DEPE_CODI}->" selected>
-															<-{$i.DEPE_NOMB}->
-														</option>
-														{break}
-													<-{else}->
-														<option value="<-{$i.DEPE_CODI}->">
-															<-{$i.DEPE_NOMB}->
-														</option>
-													<-{/if}->
-												<-{/foreach}->
-											<-{/foreach}->
-										</select> <i></i>
-									</label>
-								</td>
-
-								<td class="hasinput">
-									<label class="select">
-										<select class="input-sm" name="crud">
-											<option value="">-- Seleccione una Opción --</option>
-											<-{foreach item=i from=$crud}->
-												<-{if $item.CRUD eq $i.ID}->
-													<option value="<-{$i.ID}->" selected>
-														<-{$i.NOMBRE}->
-													</option>
-												<-{else}->
-													<option value="<-{$i.ID}->">
-														<-{$i.NOMBRE}->
-													</option>
-												<-{/if}->
-											<-{/foreach}->
-										</select> <i></i>
-									</label>
-								</td>
-
-								<td class="hasinput">
-									<label class="select">
-										<select class="input-sm" name="grupo">
-											<option value="">-- Seleccione una Opción --</option>
-											<-{foreach item=i from=$grupos}->
-												<-{if $item.AUTG_ID eq $i.ID}->
-													<option value="<-{$i.ID}->" selected>
-														<-{$i.NOMBRE}->
-													</option>
-												<-{else}->
-													<option value="<-{$i.ID}->">
-														<-{$i.NOMBRE}->
-													</option>
-												<-{/if}->
-
-											<-{/foreach}->
-
-										</select> <i></i>
-									</label>
-								</td>
-
-							</tr>
-
-							<-{/foreach}->
-						<-{/if}->
-						</tbody>
-					</table>
-
-				</div>
-				<!-- end widget content -->
-
-			</div>
-			<!-- end widget div -->
-
-		</div>
-		<!-- WIDGET END -->
-	</div>
+<!-- widget edit box -->
+<div class="jarviswidget-editbox">
+	<!-- This area used as dropdown edit box -->
 </div>
+<!-- end widget edit box -->
 
+<!-- widget content -->
+<div class="widget-body no-padding">
 
+	<div class="widget-body-toolbar text-center">
+		<span class="label label-success"> Guardado </span>
+		<span class="label label-danger"> Error </span>
+	</div>
+
+	<table id="dt_basic2" class="table table-striped table-bordered table-hover smart-form"
+	       width="100%">
+		<thead>
+		<tr>
+			<th style="width: 35px;">
+				<a href="javascript:void(0);" id="xdt_basic2" class="btn btn-sm"><i class="fa
+				fa-plus"></i></a>
+			</th>
+			<th>Nombre</th>
+			<th>Descripci&oacute;n</th>
+			<th>Dependencias</th>
+			<th>Crud</th>
+			<th>Grupo</th>
+		</tr>
+		</thead>
+		<tbody id="bdt_basic2">
+		<-{if count($permisos) eq 0}->
+			<tr>
+
+				<td class="toogletd">
+
+					<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
+					   class="button-icon">
+						<i class="fa fa-minus"></i>
+					</a>
+
+					<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
+					   class="button-icon">
+						<i class="fa fa-save "></i>
+					</a>
+
+				</td>
+
+				<td class="hasinput">
+					<label class="input">
+						<input type="text" name="nombre" value="<-{$item.NOMBRE}->">
+					</label>
+				</td>
+
+				<td class="hasinput">
+					<label name="" class="input">
+						<input type="text" name="descripcion" value="<-{$item.DESCRIPCION}->">
+					</label>
+				</td>
+
+				<td class="hasinput">
+					<label class="select select-multiple">
+						<select class="custom-scrollselectpicker" name="dependencia" multiple>
+							<option value="">-- Seleccione una Opción --</option>
+							<-{foreach item=i from=$dependencias}->
+								<option value="<-{$i.DEPE_CODI}->">
+									<-{$i.DEPE_NOMB}->
+								</option>
+							<-{/foreach}->
+						</select> <i></i>
+					</label>
+				</td>
+
+				<td class="hasinput">
+					<label class="select">
+						<select class="input-sm" name="crud">
+							<option value="">-- Seleccione una Opción --</option>
+							<-{foreach item=i from=$crud}->
+								<option value="<-{$i.ID}->">
+									<-{$i.NOMBRE}->
+								</option>
+							<-{/foreach}->
+						</select> <i></i>
+					</label>
+				</td>
+
+				<td class="hasinput">
+					<label class="select">
+						<select class="input-sm" name="grupo">
+							<option value="">-- Seleccione una Opción --</option>
+							<-{foreach item=i from=$grupos}->
+								<-{if $item.AUTG_ID eq $i.ID}->
+									<option value="<-{$i.ID}->" selected>
+										<-{$i.NOMBRE}->
+									</option>
+								<-{else}->
+									<option value="<-{$i.ID}->">
+										<-{$i.NOMBRE}->
+									</option>
+								<-{/if}->
+							<-{/foreach}->
+						</select> <i></i>
+					</label>
+				</td>
+
+			</tr>
+		<-{else}->
+
+			<-{foreach item=item from=$permisos}->
+				<tr>
+
+					<td class="toogletd">
+
+						<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
+						   class="button-icon">
+							<i class="fa fa-minus"></i>
+						</a>
+
+						<a href="javascript:void(0);" data-tipo="permisos" data-id="<-{$item.ID}->"
+						   class="button-icon">
+							<i class="fa fa-save "></i>
+						</a>
+
+					</td>
+
+					<td class="hasinput">
+						<label class="input">
+							<input type="text" name="nombre" value="<-{$item.NOMBRE}->">
+						</label>
+					</td>
+
+					<td class="hasinput">
+						<label name="" class="input">
+							<input type="text" name="descripcion" value="<-{$item.DESCRIPCION}->">
+						</label>
+					</td>
+
+					<td class="hasinput">
+						<label class="select select-multiple">
+							<select class="custom-scroll" multiple name="dependencia">
+								<option value="">-- Seleccione una Opción --</option>
+								<-{foreach item=i from=$dependencias}->
+									<-{foreach item=j from=$item.DEPENDENCIA}->
+										<-{if $j eq $i.DEPE_CODI}->
+											<option value="<-{$i.DEPE_CODI}->" selected>
+												<-{$i.DEPE_NOMB}->
+											</option>
+											{break}
+										<-{else}->
+											<option value="<-{$i.DEPE_CODI}->">
+												<-{$i.DEPE_NOMB}->
+											</option>
+										<-{/if}->
+									<-{/foreach}->
+								<-{/foreach}->
+							</select> <i></i>
+						</label>
+					</td>
+
+					<td class="hasinput">
+						<label class="select">
+							<select class="input-sm" name="crud">
+								<option value="">-- Seleccione una Opción --</option>
+								<-{foreach item=i from=$crud}->
+									<-{if $item.CRUD eq $i.ID}->
+										<option value="<-{$i.ID}->" selected>
+											<-{$i.NOMBRE}->
+										</option>
+									<-{else}->
+										<option value="<-{$i.ID}->">
+											<-{$i.NOMBRE}->
+										</option>
+									<-{/if}->
+								<-{/foreach}->
+							</select> <i></i>
+						</label>
+					</td>
+
+					<td class="hasinput">
+						<label class="select">
+							<select class="input-sm" name="grupo">
+								<option value="">-- Seleccione una Opción --</option>
+								<-{foreach item=i from=$grupos}->
+									<-{if $item.AUTG_ID eq $i.ID}->
+										<option value="<-{$i.ID}->" selected>
+											<-{$i.NOMBRE}->
+										</option>
+									<-{else}->
+										<option value="<-{$i.ID}->">
+											<-{$i.NOMBRE}->
+										</option>
+									<-{/if}->
+								<-{/foreach}->
+
+							</select> <i></i>
+						</label>
+					</td>
+
+				</tr>
+			<-{/foreach}->
+		<-{/if}->
+		</tbody>
+	</table>
+
+</div>
+<!-- end widget content -->
+
+</div>
+<!-- end widget div -->
+
+</div>
+<!-- WIDGET END -->
+</div>
+</div>
 
 <div>
 	<h4>Usuarios</h4>
@@ -474,18 +455,61 @@
 						<tr>
 							<th style="width: 35px;">
 								<a href="javascript:void(0);" id="xdt_basic3" class="btn btn-sm"><i
-											class="fa
-											fa-plus"></i></a>
+											class="fa fa-plus"></i></a>
 							</th>
-							<th>Primer Nombre</th>
-							<th>Segundo Nombre</th>
-							<th>Primer Apellido</th>
+							<th>Nombres</th>
+							<th>Apellidos</th>
 							<th>Contraseña</th>
 							<th>Correo</th>
-							<th>Dependencias</th>
 						</tr>
 						</thead>
-						<tbody id="bdt_basic3"></tbody>
+						<tbody id="bdt_basic3">
+						<-{if count($usuarios) eq 0}->
+							<-{$usuariosHtml}->
+						<-{else}->
+							<-{foreach item=item from=$usuarios}->
+								<tr>
+									<td class="toogletd">
+
+										<a href="javascript:void(0);" data-tipo="usuarios" data-id="<-{$item.ID}->"
+										   class="button-icon">
+											<i class="fa fa-minus"></i>
+										</a>
+
+										<a href="javascript:void(0);" data-tipo="usuarios" data-id="<-{$item.ID}->"
+										   class="button-icon">
+											<i class="fa fa-save "></i>
+										</a>
+
+									</td>
+
+									<td class="hasinput">
+										<label class="input">
+											<input type="text" name="nombres" value="<-{$item.NOMBRES}->">
+										</label>
+									</td>
+
+									<td class="hasinput">
+										<label class="input">
+											<input type="text" name="apellidos" value="<-{$item.APELLIDOS}->">
+										</label>
+									</td>
+
+									<td class="hasinput">
+										<label class="input">
+											<input type="text" name="contrasena" value="<-{$item.CONTRASENA}->">
+										</label>
+									</td>
+
+									<td class="hasinput">
+										<label class="input">
+											<input type="text" name="correo" value="<-{$item.CORREO}->">
+										</label>
+									</td>
+								</tr>
+							<-{/foreach}->
+						<-{/if}->
+						</tbody>
 					</table>
 
 				</div>
@@ -498,7 +522,6 @@
 		<!-- WIDGET END -->
 	</div>
 </div>
-
 
 <div>
 	<h4>Membresia</h4>
@@ -546,7 +569,9 @@
 		<!-- WIDGET END -->
 	</div>
 </div>
+
 </div>
+
 </article>
 
 </body>
@@ -593,12 +618,15 @@ de inserción para los nuevos registros. -->
 			<label class="select select-multiple">
 				<select class="custom-scrollselectpicker" multiple name="dependencia">
 					<option value="">-- Seleccione una Opción --</option>
-					<-{foreach item=i from=$dependencias}->
-						<option value="<-{$i.DEPE_CODI}->">
+
+										<-{foreach item=i from=$dependencias}->
+
+					<option value="<-{$i.DEPE_CODI}->">
 							<-{$i.DEPE_NOMB}->
 						</option>
-					<-{/foreach}->
-				</select> <i></i>
+
+										<-{/foreach}->
+									</select> <i></i>
 			</label>
 		</td>
 
@@ -606,12 +634,15 @@ de inserción para los nuevos registros. -->
 			<label class="select">
 				<select class="input-sm" name="crud">
 					<option value="">-- Seleccione una Opción --</option>
-					<-{foreach item=i from=$crud}->
+
+										<-{foreach item=i from=$crud}->
+
 					<option value="<-{$i.ID}->">
 						<-{$i.NOMBRE}->
 					</option>
-					<-{/foreach}->
-				</select> <i></i>
+
+										<-{/foreach}->
+									</select> <i></i>
 			</label>
 		</td>
 
@@ -619,12 +650,15 @@ de inserción para los nuevos registros. -->
 			<label class="select">
 				<select class="input-sm" name="grupo">
 					<option value="">-- Seleccione una Opción --</option>
-					<-{foreach item=i from=$grupos}->
+
+										<-{foreach item=i from=$grupos}->
+
 					<option value="<-{$i.ID}->">
 						<-{$i.NOMBRE}->
 					</option>
-					<-{/foreach}->
-				</select> <i></i>
+
+										<-{/foreach}->
+									</select> <i></i>
 			</label>
 		</td>
 
@@ -649,7 +683,7 @@ de inserción para los nuevos registros. -->
 
 
 <script type="text/javascript">
-	(function($){
+	(function ($) {
 		// DO NOT REMOVE : GLOBAL FUNCTIONS!
 		pageSetUp();
 
@@ -684,14 +718,14 @@ de inserción para los nuevos registros. -->
 			collapsible: true,
 			animate: 300,
 			header: "h4",
-			active: 1
+			active: 2
 		})
 
 		$('.label-success').hide();
 		$('.label-danger').hide();
 
 		//agregar elementos
-		$('#xdt_basic2, #xdt_basic, #xdt_basic3, #xdt_basic4').click(function ( event ) {
+		$('#xdt_basic2, #xdt_basic, #xdt_basic3, #xdt_basic4').click(function (event) {
 			var nomPlus = 'b' + $(this).attr('id').substring(1);
 			switch (nomPlus) {
 				case 'bdt_basic':
@@ -724,42 +758,42 @@ de inserción para los nuevos registros. -->
 		});
 
 		//Eliminar un campo de la selección
-		$('body').on('click','.fa-minus', function(event){
+		$('body').on('click', '.fa-minus', function (event) {
 
 			var tipo  = $(this).parent().data('tipo');
 			var id    = $(this).parent().data('id');
 			var datos = 'accion=borrar&tipo=' + tipo + '&id=' + id;
 			var boton = $(this);
 
-			if(id == undefined){
+			if (id == undefined) {
 				$($(this).closest('tr')).remove();
 				return;
 			}
 
-
-			$.post( "ajaxPermisos.php", datos).done(function( data ){
-				if(data['estado'] == 1){
+			$.post("ajaxPermisos.php", datos).done(function (data) {
+				if (data['estado'] == 1) {
 					$($(boton).closest('tr')).remove();
 					$('.label-success').show().delay(3000).fadeOut();
-				}else{
+				} else {
 					$('.label-danger').show().delay(3000).fadeOut();
 				}
 			})
+
 		});
 
 
 		//Agregar o editar
-		$('body').on('click', '.fa-save',function(event){
+		$('body').on('click', '.fa-save', function (event) {
 
-			var tipo     = $(this).parent().data('tipo');
-			var id       = $(this).parent().data('id');
-			var datos    = 'accion=guardar&tipo=' + tipo;
-			var boton    = $(this);
+			var tipo = $(this).parent().data('tipo');
+			var id = $(this).parent().data('id');
+			var datos = 'accion=guardar&tipo=' + tipo;
+			var boton = $(this);
 			var elemnttr = $(this).closest('tr');
 
-			if(id !== undefined){
+			if (id !== undefined) {
 				datos += '&id=' + id;
-			}else{
+			} else {
 				datos += '&id='
 			}
 
@@ -768,7 +802,7 @@ de inserción para los nuevos registros. -->
 				case 'grupos':
 
 					//Grupos
-					elemnttr.find('input').each(function( index ) {
+					elemnttr.find('input').each(function (index) {
 						var inpe = elemnttr.find('input')[index];
 						var name = $(inpe).attr('name');
 						var valu = $(inpe).val();
@@ -780,14 +814,14 @@ de inserción para los nuevos registros. -->
 				case 'permisos':
 
 					//Permisos
-					elemnttr.find('input').each(function( index ) {
+					elemnttr.find('input').each(function (index) {
 						var inpe = elemnttr.find('input')[index];
 						var name = $(inpe).attr('name');
 						var valu = $(inpe).val();
 						datos += '&' + name + '=' + valu;
 					});
 
-					elemnttr.find('select').each(function( index ) {
+					elemnttr.find('select').each(function (index) {
 						var inpe = elemnttr.find('select')[index];
 						var name = $(inpe).attr('name');
 						var valu = $(inpe).val();
@@ -799,8 +833,18 @@ de inserción para los nuevos registros. -->
 
 				case 'usuarios':
 					//Usuarios
-					$(this).closest('tr').find('input').each(function( index ) {
-						var nombre= $(this).val();
+					elemnttr.find('input').each(function (index) {
+						var inpe = elemnttr.find('input')[index];
+						var name = $(inpe).attr('name');
+						var valu = $(inpe).val();
+						datos += '&' + name + '=' + valu;
+					});
+
+					elemnttr.find('select').each(function (index) {
+						var inpe = elemnttr.find('select')[index];
+						var name = $(inpe).attr('name');
+						var valu = $(inpe).val();
+						datos += '&' + name + '=' + valu;
 					});
 
 					break;
@@ -808,19 +852,19 @@ de inserción para los nuevos registros. -->
 
 				case 'membresias':
 					//Membresias
-					$(this).closest('tr').find('input').each(function( index ) {
-						var nombre= $(this).val();
+					$(this).closest('tr').find('input').each(function (index) {
+						var nombre = $(this).val();
 					});
 					break;
 			}
 
-			$.post( "ajaxPermisos.php", datos).done(function( data ) {
-				if(data['estado'] == 1){
-					boton.closest('td').find('a').each(function( index ) {
-						$(this).attr("data-id",data['valor']);
+			$.post("ajaxPermisos.php", datos).done(function (data) {
+				if (data['estado'] == 1) {
+					boton.closest('td').find('a').each(function (index) {
+						$(this).attr("data-id", data['valor']);
 					});
 					$('.label-success').show().delay(3000).fadeOut();
-				}else{
+				} else {
 					$('.label-danger').show().delay(3000).fadeOut();
 				}
 			});

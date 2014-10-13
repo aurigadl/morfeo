@@ -59,12 +59,21 @@ switch ($_POST['accion']){
                     $resultado = array('estado' => 0, 'valor' => '');
                 }
                 break;
+
+            case 'usuarios':
+                if($roles->borrarPermiso($id)){
+                    $resultado = array('estado' => 1, 'valor' => $roles->id);
+                }else{
+                    $resultado = array('estado' => 0, 'valor' => '');
+                }
+                break;
         }
         break;
 
     // Guardar registros...........................................
     case 'guardar':
-        $id          = $_POST['id'];
+
+        $id = $_POST['id'];
 
         switch($_POST['tipo']){
 
@@ -86,6 +95,20 @@ switch ($_POST['accion']){
                 $grupo       = $_POST['grupo'];
 
                 if($roles->creaEditaPermiso($nombre, $descripcion, $dependencia, $crud, $grupo, $id)){
+                    $resultado = array('estado' => 1, 'valor' => $roles->id);
+                }else{
+                    $resultado = array('estado' => 0, 'valor' => '');
+                }
+                break;
+
+            case 'usuarios':
+
+                $nombres     = $_POST['nombres'];
+                $apellidos   = $_POST['apellidos'];
+                $contrasena  = $_POST['contrasena'];
+                $correo      = $_POST['correo'];
+
+                if($roles->creaEditaUsuario($nombres, $apellidos, $contrasena, $correo, $id)){
                     $resultado = array('estado' => 1, 'valor' => $roles->id);
                 }else{
                     $resultado = array('estado' => 0, 'valor' => '');

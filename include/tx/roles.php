@@ -136,4 +136,55 @@ class Roles {
             return true;
         }
     }
+
+
+    /**
+     * Crear y Editar Usuarios
+     * @param  string nombre del usuario
+     * @return bool
+     */
+
+    public function creaEditaUsuario($nombres, $apellidos, $contrasena, $correo, $id){
+        if($id){
+            $nextval    = $id;
+        }else{
+            $sql_sel_id = "SELECT max(id) AS ID FROM autu_usuarios";
+            $sql_sel    = $this->db->conn->query($sql_sel_id);
+            $nextval    = $sql_sel->fields["ID"] + 1;
+        }
+
+        $record = array();
+        $record['id']         = $nextval;
+        $record['nombres']    = $nombres;
+        $record['apellidos']  = $apellidos;
+        $record['correo']     = $correo;
+        $record['contrasena'] = $contrasena;
+
+        $insertSQL = $this->db->conn->Replace("autu_usuarios",$record,'id',$autoquote = true);
+        if(empty($insertSQL)){
+            return false;
+        }else{
+            $this->id = $nextval;
+            return true;
+        }
+    }
+
+    /**
+     * Borrar Permiso
+     * @param  integer id del permiso
+     * @return bool
+     */
+    public function borrarUsuario($id){
+        $sql_sel_id = "delete from autu_usuarios where id = $id";
+        $sql_sel    = $this->db->conn->query($sql_sel_id);
+
+        if(!$sql_sel->EOF){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+
 }

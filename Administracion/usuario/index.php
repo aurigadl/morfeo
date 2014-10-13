@@ -84,10 +84,10 @@ while (!$grup->EOF) {
 //Usuarios
 $sql_usua = "     SELECT
                       id,
-                      primer_nombre,
-                      segundo_nombre,
-                      user_email,
-                      user_password
+                      nombres,
+                      apellidos,
+                      correo,
+                      contrasena
                   FROM
                       autu_usuarios";
 
@@ -113,11 +113,10 @@ while (!$depe->EOF) {
 }
 
 //Membresias
-$sql_memb = "
+/*$sql_memb = "
               SELECT
                 am.id,
-                ag.nombre,
-                au.primer_nombre
+                ag.nombres
 
               FROM 	autm_membresias am,
                 autg_grupos ag,
@@ -132,7 +131,7 @@ $memb     = $db->conn->query($sql_memb);
 while (!$memb->EOF) {
     $membresias[] = $memb->fields;
     $memb->MoveNext();
-}
+}*/
 
 $smarty->assign("permisos"     , $permisos);
 $smarty->assign("crud"         , $crud);
