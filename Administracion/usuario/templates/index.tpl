@@ -1,4 +1,4 @@
-<-debug->
+<-{debug}->
 <-{assign var="gruposHtml" value='
 		<tr>
 
@@ -237,7 +237,11 @@
 
 				<!-- widget content -->
 				<div class="widget-body no-padding">
-					<div id="permisosMessage"  class="widget-body-toolbar"></div>
+
+					<div class="widget-body-toolbar text-center">
+						<span class="label label-success"> Guardado </span>
+						<span class="label label-danger"> Error </span>
+					</div>
 
 					<table id="dt_basic2" class="table table-striped table-bordered table-hover smart-form"
 					       width="100%">
@@ -324,9 +328,7 @@
 												<-{$i.NOMBRE}->
 											</option>
 											<-{/if}->
-
 											<-{/foreach}->
-
 										</select> <i></i>
 									</label>
 								</td>
@@ -573,24 +575,23 @@ de inserción para los nuevos registros. -->
 			   class="button-icon">
 				<i class="fa fa-save "></i>
 			</a>
-
 		</td>
 
 		<td class="hasinput">
 			<label class="input">
-				<input type="text" name="nombre" value="<-{$item.NOMBRE}->">
+				<input type="text" name="nombre" value="">
 			</label>
 		</td>
 
 		<td class="hasinput">
 			<label name="" class="input">
-				<input type="text" name="descripcion" value="<-{$item.DESCRIPCION}->">
+				<input type="text" name="descripcion" value="">
 			</label>
 		</td>
 
 		<td class="hasinput">
 			<label class="select select-multiple">
-				<select class="custom-scrollselectpicker" multiple>
+				<select class="custom-scrollselectpicker" multiple name="dependencia">
 					<option value="">-- Seleccione una Opción --</option>
 					<-{foreach item=i from=$dependencias}->
 						<option value="<-{$i.DEPE_CODI}->">
@@ -603,7 +604,7 @@ de inserción para los nuevos registros. -->
 
 		<td class="hasinput">
 			<label class="select">
-				<select class="input-sm">
+				<select class="input-sm" name="crud">
 					<option value="">-- Seleccione una Opción --</option>
 					<-{foreach item=i from=$crud}->
 					<option value="<-{$i.ID}->">
@@ -616,21 +617,13 @@ de inserción para los nuevos registros. -->
 
 		<td class="hasinput">
 			<label class="select">
-				<select class="input-sm">
+				<select class="input-sm" name="grupo">
 					<option value="">-- Seleccione una Opción --</option>
 					<-{foreach item=i from=$grupos}->
-					<-{if $item.AUTG_ID eq $i.ID}->
-					<option value="<-{$i.ID}->" selected>
-						<-{$i.NOMBRE}->
-					</option>
-					<-{else}->
 					<option value="<-{$i.ID}->">
 						<-{$i.NOMBRE}->
 					</option>
-					<-{/if}->
-
 					<-{/foreach}->
-
 				</select> <i></i>
 			</label>
 		</td>
@@ -710,7 +703,7 @@ de inserción para los nuevos registros. -->
 				case 'bdt_basic2':
 					//Plantillas y clonar elementos Permisos
 					var plaPerm = $('#plantillaPermisos').clone();
-					$('#bdt_basic2').prepend(($(plaPerm).html());
+					$('#bdt_basic2').prepend($(plaPerm).html());
 					break;
 
 				case 'bdt_basic3':
@@ -738,43 +731,13 @@ de inserción para los nuevos registros. -->
 			var datos = 'accion=borrar&tipo=' + tipo + '&id=' + id;
 			var boton = $(this);
 
-			switch (tipo) {
-
-				case 'grupos':
-					//Grupos
-					if(id == undefined){
-						$($(this).closest('tr')).remove();
-						return;
-					}
-
-					break;
-
-				case 'permisos':
-					//Permisos
-
-					$(this).closest('tr').find('input').each(function( index ) {
-						var nombre= $(this).val();
-					});
-
-					break;
-
-				case 'usuarios':
-					//Usuarios
-					$(this).closest('tr').find('input').each(function( index ) {
-						var nombre= $(this).val();
-					});
-					break;
-
-				case 'membresias':
-					//Membresias
-					$(this).closest('tr').find('input').each(function( index ) {
-						var nombre= $(this).val();
-					});
-					break;
+			if(id == undefined){
+				$($(this).closest('tr')).remove();
+				return;
 			}
 
 
-			$.post( "ajaxPermisos.php", datos).done(function( data ) {
+			$.post( "ajaxPermisos.php", datos).done(function( data ){
 				if(data['estado'] == 1){
 					$($(boton).closest('tr')).remove();
 					$('.label-success').show().delay(3000).fadeOut();
@@ -782,7 +745,6 @@ de inserción para los nuevos registros. -->
 					$('.label-danger').show().delay(3000).fadeOut();
 				}
 			})
-
 		});
 
 

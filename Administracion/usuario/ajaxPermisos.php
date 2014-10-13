@@ -51,6 +51,14 @@ switch ($_POST['accion']){
                     $resultado = array('estado' => 0, 'valor' => '');
                 }
                 break;
+
+            case 'permisos':
+                if($roles->borrarPermiso($id)){
+                    $resultado = array('estado' => 1, 'valor' => $roles->id);
+                }else{
+                    $resultado = array('estado' => 0, 'valor' => '');
+                }
+                break;
         }
         break;
 
