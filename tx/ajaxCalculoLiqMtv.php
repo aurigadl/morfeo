@@ -57,7 +57,8 @@
   $isql="select * From predial2014_20140819 WHERE CHIP=$ultimoChip";
   $lala=$db->conn->query($isql);
   if ($rtaMove == 1 && $lala->fields["CHIP"]) {
-    $chipsListado=$lala->fields["CHIP"].'<br>';
+    $_SESSION['chipsListado'].=$lala->fields["CHIP"].'<br>';
+    $chipsListado=$_SESSION['chipsListado'];
     $valorObligacionF = "$ " . number_format($valorObligacion,2,",",".");
     $valM2TF = number_format($valM2T,2,",",".");
     $valorReferenciaF = number_format($valorReferencia,2,",",".");
