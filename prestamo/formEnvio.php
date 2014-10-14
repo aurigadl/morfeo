@@ -172,12 +172,11 @@ $db = new ConnectionHandler($ruta_raiz);
             $dat=date("Y-m-d");
 	        if ($fechaVencimiento > $dat){
 			   $encabezado.="&fechaVencimiento=".tourl($fechaVencimiento)."&"; 
-
-			} else {
+			     } else {
 			   echo "<script> alert('La fecha de vencimiento no puede ser menor o igual que la actual'); </script>"; 
 			   $nover   = 1;
-               $enviar  = 0;
-			}
+         $enviar  = 0;
+			       }
   	     }
          /*// Validaci�n de la contrase�a
 	     $flds_CONTRASENA=strip($_POST["s_CONTRASENA"]);
@@ -301,13 +300,7 @@ $db = new ConnectionHandler($ruta_raiz);
 		    </td>
 			</tr>
 
-      <tr bgcolor="White" id="fecha">
-      <td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Contraseña del usuario:</td>   
-            <td align="left">
-                <input id="passrwduser" type="password"  autocomplete="off"  placeholder="" name="paswrduser">
-                 <input type="button" class="btn btn-primary" value="Comprobar" onclick="compararpassword();">
-         </td>
-      </tr>
+
 	<script>
 		// Oculta o hace visible el campo de la fecha de vencimiento dependiendo del estado seleccionado por el usuario
 		function ver() {
@@ -318,6 +311,15 @@ $db = new ConnectionHandler($ruta_raiz);
 			ver();
 	</script>					  					  
 <? }
+?> 
+      <tr bgcolor="White" id="psduserw">
+      <td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Contraseña del usuario:</td>   
+            <td align="left">
+                <input id="passrwduser" type="password"  autocomplete="off"  placeholder="" name="paswrduser">
+                 <input type="button" class="btn btn-primary" value="Comprobar" onclick="compararpassword();">
+         </td>
+      </tr>
+<?php
    if ($verClave==1) {  ?>					  
 			<tr bgcolor="White">
 			<td width="100" align="right"><small>Contrase&ntilde;a<br><?=$usua_codi?></small></td>
@@ -377,11 +379,13 @@ $db = new ConnectionHandler($ruta_raiz);
 		</form></td>
 	</tr>
 	</table>
+  <script type="text/javascript" src="jquerycript.js"></script>
  <script>
 
  /**/
     $(document).ready(function() {
       $("#REALIZAR").hide();
+      $("#passrwduser").prop('disabled', false);
     }); 
  		// START AND FINISH DATE
 		$('#startdate').datepicker({
@@ -408,6 +412,7 @@ $db = new ConnectionHandler($ruta_raiz);
        document.rta.rta_<?=$v?>.checked=valor;
 <? } ?>
     } 
+
     // Verifica que el navegador soporte las funciones de Javascript 
     function setSel(start,end){
        document.rta.observa.focus();	
@@ -460,27 +465,30 @@ $db = new ConnectionHandler($ruta_raiz);
 
 
       function compararpassword() {
-          var passhtml = $("#passrwduser").val();
-          var passphp = $("#use_paswor_dmd5").html();
+         // var passhtml = md5($("#passrwduser").val());
+        var passhtml = $("#passrwduser").val();
+        var passphp = $("#use_paswor_dmd5").html();
 
-          passhtml.toString();
+        var strMD5 = $().crypt({ method: "md5", source: passhtml });
+        var strMD5 = strMD5.substring(1,27);
+
+        //console.log(passphp);
+        //console.log(strMD5);
+
+         // passhtml.toString();
           passphp.toString();
 
-   if (passhtml==passphp){
+   if (strMD5==passphp){
     $("#REALIZAR").show();
+    $("#passrwduser").css("border", "1px solid green");
+    $("#passrwduser").prop('disabled', true);
+    $("#passrwduser").val("");
   }else{
     //alert ('la contraseña es incorrecta');
   $("#passrwduser").css("border", "1px solid red");
   $("#passrwduser").val("");
   }
-          //alert(passhtml);
-          //alert(passphp);
-        //if($("#passrwduser").val() == ){        alert ("son_iguales");        };
-
-//          $("#passrwduser").val();
-  //        $("#use_paswor_dmd5").html();
-          
-        }
+  }
 
   </script>
  </body>

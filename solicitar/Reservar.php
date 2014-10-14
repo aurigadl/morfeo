@@ -216,7 +216,8 @@ function PRESTAMO_action($sAction) {
                   tosql($fldPRES_REQUERIMIENTO,"Number"). 
               ")";
       // Execute SQL statement  
-      if($db->conn->query($sSQL)) { echo "actualizo regitro"; exit; }
+      if($db->conn->query($sSQL)) { #echo "actualizo regitro"; exit; 
+    }
 	  else{ echo "<script> alert(\" El registro no pudo ser realizado\"); </script>";	}
    }
    

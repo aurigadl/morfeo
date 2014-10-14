@@ -586,10 +586,16 @@ class Usuario {
                   and p.id_cont   = s.id_cont
                   and d.id_pais   = s.id_pais
                   and d.id_cont   = s.id_cont
-                ORDER BY s.SGD_CIU_NOMBRE, s.SGD_CIU_APELL1, s.SGD_CIU_APELL2
-                LIMIT 24";
+                ORDER BY s.SGD_CIU_NOMBRE, s.SGD_CIU_APELL1, s.SGD_CIU_APELL2";
 
-                break;
+
+switch ($db->driver)
+ {case 'mssql': $isql= $isql."  LIMIT 24"; break;
+  case 'oracle': $isql= $isql."  ROWNUM<=24"; break;
+  case 'oci8':   $isql= $isql."  ROWNUM<=24"; break;
+  case 'postgres': $isql= $isql."  LIMIT 24"; break;}
+
+             break;
 
             // Empresas ....................................................................
             case 2:
@@ -650,9 +656,12 @@ class Usuario {
                   and p.id_cont   = s.id_cont
                   and d.id_pais   = s.id_pais
                   and d.id_cont   = s.id_cont
-                  ORDER  BY sgd_oem_oempresa
-                LIMIT 24
-              ";
+                  ORDER  BY sgd_oem_oempresa ";
+  switch ($db->driver)
+ {case 'mssql': $isql= $isql."  LIMIT 24"; break;
+  case 'oracle': $isql= $isql."  ROWNUM<=24"; break;
+  case 'oci8':   $isql= $isql."  ROWNUM<=24"; break;
+  case 'postgres': $isql= $isql."  LIMIT 24"; break;}
 
                 break;
 
@@ -715,8 +724,13 @@ class Usuario {
                   and dp.depe_codi = s.depe_codi
                   and p.id_pais    = s.id_pais
                   and p.id_cont    = s.id_cont
-                ORDER  BY usua_nomb
-                LIMIT 24";
+                ORDER  BY usua_nomb ";
+
+  switch ($db->driver)
+ {case 'mssql': $isql= $isql."  LIMIT 24"; break;
+  case 'oracle': $isql= $isql."  ROWNUM<=24"; break;
+  case 'oci8':   $isql= $isql."  ROWNUM<=24"; break;
+  case 'postgres': $isql= $isql."  LIMIT 24"; break;}
 
                 break;
         }

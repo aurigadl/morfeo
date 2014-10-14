@@ -21,6 +21,7 @@ $sqlOrderPRES_FECH_DEVO=$db->conn->SQLDate("YmdHis","P.PRES_FECH_DEVO");
   $sSelect2="    
   U.USUA_NOMB as NOMBRE,
   U.USUA_PASW as PASWORDMD5,
+  U.ID as IDUSER,
   D.DEPE_NOMB as DEPE_USUA,".
   $sqlOrderPRES_FECH_PEDI.",".
   $sqlOrderPRES_FECH_PRES.",".
