@@ -14,6 +14,12 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 $ruta_raiz = "..";
 include "$ruta_raiz/conn.php";
+$tipoAnexo[1] = "Certificado de Tradición y Libertad."; 
+$tipoAnexo[2] = "Certificado Catastral vigente";
+$tipoAnexo[3] = "Certificado de Existencia y Representación <br> (En caso de ser Persona juridica el titular de la licencia) ";
+$tipoAnexo[4] = "Cédula de Ciudadanía del Titular de la licencia (En caso de ser persona natural el titular de la licencia)";
+$tipoAnexo[5] = "Certificacii&oacute;n de la Curadur&iacute;a Urbana en donde se indiquen las &aacute;reas del proyecto, el tipo de proyecto y se establezca el &aacute;rea de la provisi&oacute;n de VIS o VIP<br> y/o la licencia urban&iacute;stica, donde esta relacionada el &aacute;rea  de la provisi&oacute;n de VIS o VIP";
+$tipoAnexo[6] = "Poder (en caso de ser autorizado a realizar tramites ante Metrovivienda).";
 ?>
 <html>
 <header>
@@ -315,128 +321,36 @@ echo $depselect;
 <i class="fa-fw fa fa-info"></i>
 <strong>Documentos Requeridos para la liquidacion!</strong> Por favor adjunte los documentos de la lista.
 </div>
-Certificado de Tradición y Libertad.
-<label class="label"><div class="form-group smart-form" id=""></label>
+<?php
+for($i=1; $i<=6; $i++){
 
-<?php
-$norandom = "file1";
-echo("
-	<div $addAttr id='$norandom'>A&ntilde;adir Archivos  <input  type='HIDDEN' value='' id='inp_$norandom'  /> 
-	");
-$scriptJS .= "
-	var uploaderId = '$norandom';
-$('#$norandom').uploadFile({
-	url:'./server.php?tx=2',
-		fileName:'fileFormDinamic',
-		multiple:false,
-		dragDrop: false,
-		showFileCounter: false,
-		onSuccess:function(files,data,xhr){
-			$('#inp_$norandom').val(JSON.parse(data)[0]);
-			// alert ('Subido Ok'+ files + 'data' + data + ' xhr '+ xhr);
-			$('#nFile1').val('files');
-}
-});
-";
-echo "</div>";
 ?>
-<label class="label">Certificado Catastral vigente</label>
+<div class="form-group smart-form" id=""><label class="label"><?=$tipoAnexo[$i];?></label>
 <?php
-$norandom = "file2";
-echo("<div  id='$norandom'>A&ntilde;adir Archivos</div>
-	<input class='input input-file'  type='HIDDEN' value='' id='inp_$norandom'  />");
-$scriptJS .= "
-	var uploaderId = '$norandom';
-$('#$norandom').uploadFile({
-	url:'./server.php?tx=2',
-		fileName:'fileFormDinamic',
-		multiple:false,
-		dragDrop: false,
-		showFileCounter: false,                                        
-		onSuccess:function(files,data,xhr){
-			$('#inp_$norandom').val(JSON.parse(data)[0]);
-}
-});
-";
+  $norandom = "file$i";
+  echo("<div id='$norandom'>A&ntilde;adir Archivo  <input  type='hidden' value='' id='inp_$norandom'  /> 
+  </div>");
+  $scriptJS .= "
+  var uploaderId = '$norandom';
+  $('#$norandom').uploadFile({
+    url:'./server.php?tx=2',
+    fileName:'fileFormDinamic',
+    multiple:false,
+    dragDrop: false,
+    showFileCounter: false,
+    onSuccess:function(files,data,xhr){
+    $('#inp_$norandom').val(JSON.parse(data)[0]);
+    $('#nFile$i').val('files');
+  }
+  });
+  ";
+  echo "</div>";
+ }
 ?>
-<label class="label">Certificado de Existencia y Representación <br> (En caso de ser Persona juridica el titular de la licencia)</label>
-<?php
-$norandom = "file3";
-echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
-	<input  type='HIDDEN' value='' id='inp_$norandom'  />");
-$scriptJS .= "
-	var uploaderId = '$norandom';
-$('#$norandom').uploadFile({
-	url:'./server.php?tx=2',
-		fileName:'fileFormDinamic',
-		multiple:false,
-		delete:true,
-		dragDrop: false,
-		showFileCounter: false,                                        
-		onSuccess:function(files,data,xhr){
-			$('#inp_$norandom').val(JSON.parse(data)[0]);
-}
-});
-";
-?>
-<label class="label">Cédula de Ciudadanía del Titular de la licencia (En caso de ser persona natural el titular de la licencia)</label>
-<?php
-$norandom = "file4";
-echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
-	<input  type='HIDDEN' value='' id='inp_$norandom'  />");
-$scriptJS .= "
-	var uploaderId = '$norandom';
-$('#$norandom').uploadFile({
-	url:'./server.php?tx=2',
-		fileName:'fileFormDinamic',
-		multiple:false,
-		dragDrop: false,
-		showFileCounter: false,                                        
-		onSuccess:function(files,data,xhr){
-			$('#inp_$norandom').val(JSON.parse(data)[0]);
-}
-});
-";
-?>
-<label class="label">Certificacii&oacute;n de la Curadur&iacute;a Urbana en donde se indiquen las &aacute;reas del proyecto, el tipo de proyecto y se establezca el &aacute;rea de la provisi&oacute;n de VIS o VIP<br> y/o la licencia urban&iacute;stica, donde esta relacionada el &aacute;rea  de la provisi&oacute;n de VIS o VIP</label>
-<?php
-$norandom = "file5";
-echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
-	<input  type='HIDDEN' value='' id='inp_$norandom'  />");
-$scriptJS .= "
-	var uploaderId = '$norandom';
-$('#$norandom').uploadFile({
-	url:'./server.php?tx=2',
-		fileName:'fileFormDinamic',
-		multiple:false,
-		dragDrop: false,
-		showFileCounter: false,                                        
-		onSuccess:function(files,data,xhr){
-			$('#inp_$norandom').val(JSON.parse(data)[0]);
-}
-});
-";
-?>
-<label class="label">        Poder (en caso de ser autorizado a realizar tramites ante Metrovivienda).</label>   
-<?php
-$norandom = "file6";
-echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
-	<input  type='HIDDEN' value='' id='inp_$norandom'  />");
-$scriptJS .= "
-	var uploaderId = '$norandom';
-$('#$norandom').uploadFile({
-	url:'./server.php?tx=2',
-		fileName:'fileFormDinamic',
-		multiple:false,
-		dragDrop: false,
-		showFileCounter: false,                                        
-		onSuccess:function(files,data,xhr){
-			$('#inp_$norandom').val(JSON.parse(data)[0]);
-}
-});
-";
-?>
-</div>
+<script>
+<?=$scriptJS?>
+</script>
+  
 <!--										<div class="alert alert-warning fade in">
 <button class="close" data-dismiss="alert"> × </button>
 <i class="fa-fw fa fa-warning"></i>
@@ -725,8 +639,10 @@ var pagefunction = function() {
 };
 // end pagefunction
 // Load bootstrap wizard dependency then run pagefunction
-pagefunction();
-<?=$scriptJS?>
+
+
+// pagefunction();
+
 // Muestra las imagenes de los radicados
 function funlinkArchivo(numrad, rutaRaiz){
 	var nombreventana = "linkVistArch";
@@ -735,6 +651,10 @@ function funlinkArchivo(numrad, rutaRaiz){
 	//setTimeout(nombreventana.close, 70);
 	//return;
 }
+
+
+
 </script>
+
 </body>
 </HTML>
