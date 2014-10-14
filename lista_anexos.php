@@ -22,11 +22,11 @@ $sqlFechaAnexo = $db->conn->SQLDate("Y-m-D H:i:s A","anex_fech_anex");
 $sqlSubstDesc =  $db->conn->substr."(anex_desc, 0, 100)";
 //include_once("include/query/busqueda/busquedaPiloto1.php");
 // Modificado SGD 06-Septiembre-2007
-#$maxRows = $db->limit();
+#$maxRows = $db->limit(); 
 				$db->limit(24);
-                $limitMsql = $this->db->limitMsql;
-                $limitOci8 = $this->db->limitOci8;
-                $limitPsql = $this->db->limitPsql;
+                $limitMsql = $db->limitMsql;
+                $limitOci8 = $db->limitOci8;
+                $limitPsql = $db->limitPsql;
 $isql = "select $limitMsql a.anex_codigo AS DOCU
             ,at.anex_tipo_ext AS EXT
 			,a.anex_tamano AS TAMA
