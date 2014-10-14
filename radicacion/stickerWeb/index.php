@@ -33,7 +33,7 @@ if('NO DEFINIDO' != $tpdoc_nombreTRD ){
 }
 
 $entidad_corto=$_SESSION['entidad'];
-$entidad_corto="CRA";
+//$entidad_corto="CRA";
 $noRad = $_REQUEST['nurad'];
 $noRadBarras='<font face="Free 3 of 9">'."*$noRad*".'</font>';
 $dirPlantilla=$ruta_raiz.'/conf/stickers/'.$entidad_corto.'.php';

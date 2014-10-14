@@ -14,7 +14,7 @@
   $valA1       = $_POST["valA1"];
   $nombreProyecto =$_POST["nombreProyecto"];
   $urbanizadorP = $_POST["urbanizadorP"];
-  $repLegal=$_POST["repLegal"];
+  $pRep=$_POST["pRep"];
 
   $db = new ConnectionHandler($ruta_raiz);
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -26,15 +26,15 @@
   //  changeFolder( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$tomarNivel,$observa)
 
   if(trim( $_SESSION["chips"])) {
-    $isql = "SELECT * FROM predial2014_20140819 WHERE CHIP in (". $_SESSION["chips"]."'0') order by CAST(VAL_M2_T AS NUMERIC) DESC";
-    //echo $isql;
+    //$isql = "SELECT * FROM predial2014_20140819 WHERE CHIP in (". $_SESSION["chips"]."'0') order by CAST(VAL_M2_T AS NUMERIC) DESC";
+    $isql = "SELECT * FROM (SELECT DISTINCT CHIP, VAL_M2_T, A_TER_CAT, DIR_REAL, DIR_CORR, FMI FROM predial2014_20140819 WHERE CHIP in (". $_SESSION["chips"]."'0')) a order by CAST(VAL_M2_T AS NUMERIC) DESC";
     $rs = $db->conn->query($isql);
     if($rs->fields["CHIP"]){
       $chipB = $rs->fields["CHIP"];
       $chipMax = $chipB;
       $valM2T = $rs->fields["VAL_M2_T"];
+      $valM2TMax = number_format($valM2T,2,",",".");
       $areaTerreno = $rs->fields["A_TER_CAT"];
-      $nombrePropietario = $rs->fields["NOM_PRO"];
       $direccionPredio = $rs->fields["DIR_REAL"];
       $direccionCorr = $rs->fields["DIR_CORR"];
       $pFMI = $rs->fields["FMI"];
@@ -65,7 +65,7 @@
     $textoFinal .= " <tr><td>Direci&oacute;n</td><td>$direccionPredio  </td></tr>";
     $textoFinal .= " <tr><td>CHIP</td><td>$chip  </td></tr>";
     $textoFinal .= " <tr id=urbanizadorP><td>Urbanizador / Constructor / Patrimonio Aut&oacute;nomo</td><td>$urbanizadorP  </td></tr>";
-    $textoFinal .= "<tr id=repLegalP><td>Representante Legal</td><td> $repLegal</td></tr>";
+    $textoFinal .= "<tr id=repLegalP><td>Representante Legal</td><td> $pRep</td></tr>";
     $textoFinal .= "<tr><td>Area obligaci&oacute;n VIP (A1) </td><td> $valA1 m<sup>2</sup> </Td></tr>";
     $textoFinal .= "<tr><td>Area a trasladar</td><td>$valorA2F m<sup>2</sup></Td></tr>";
     $textoFinal .= "<tr><td>Valor estimado de la Obligaci&oacute;n por traslado VIP/VIS </td><td>$valorObligacionF </Td></tr>";
@@ -78,8 +78,7 @@
       $chipB = $rs->fields["CHIP"];
       $valM2T = $rs->fields["VAL_M2_T"];
       $valM2TF = number_format($valM2T,2,",",".");
-      $areaTerreno = $rs->fields["A_TER_CAT"];
-      $nombrePropietario = $rs->fields["NOM_PRO"];
+      $pAreaB+=$areaTerreno = $rs->fields["A_TER_CAT"];
       $direccionPredio = $rs->fields["DIR_REAL"];
       $direccionCorr = $rs->fields["DIR_CORR"];
       $pFMI = $rs->fields["FMI"];
@@ -94,12 +93,12 @@
       pConstructoraI = $('#pConstructora').val();
       pRepI = $('#pRep').val();
       $('#valorO').val('$valorObligacionF');  
-      $('#valM2T').val('$valM2TF');
+      $('#valM2T').val('$valM2TMax');
       $('#valRef').val('$valorReferenciaF');
       $('#valorA2').val('$valorA2F');
       $('#pDir').val('$direccionPredio');
       //$('#pRep').val('$nombrePropietario');
-      $('#pAreaB').val('$areaTerreno');
+      $('#pAreaB').val('$pAreaB');
       $('#chips').html('$tablaChips');
       $('#pFMI').val('$pFMI');
       $('#valorCatastralPromedio').val('$valorCatastralPromedioF');
@@ -118,8 +117,6 @@
               <i class='fa-fw fa fa-times'></i>
               <strong>CHIP $chip</strong>
                No se ha encontrado en la Base de datos.  Por favor verifiquelo.
-              </div>
-              
-              ";
+              </div>";
   }
 ?>
