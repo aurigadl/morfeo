@@ -206,23 +206,23 @@ $_SESSION['numExpedienteSelected'] = null;
 
                     </div>
 
-                <table id="dt_basic" class="table table-striped table-hover smart-form">
+                <table id="dt_basic" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%">
                   <thead>
                     <tr>
-                      <th  width=20>
+                      <th  style="width: 15px;">
                           <label class="checkbox">
                             <input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll">
                             <i></i>
                           </label>
                       </th>
-                      <th>Radicado</th>
-                      <th>Fecha Radicado</th>
-                      <th>Asunto</th>
-                      <th>Remitente / Destinatario</th>
-                      <th>Enviado Por</th>
-                      <th>Referencia</th>
-                      <th>Tipo Documento</th>
-                      <th>Dias Restantes</th>
+                      <th style="width: 40px;">Radicado</th>
+                      <th style="width: 40px;">Fecha Radicado</th>
+                      <th style="width: 40px;">Asunto</th>
+                      <th style="width: 60px;">Remitente / Destinatario</th>
+                      <th style="width: 60px;">Enviado Por</th>
+                      <th style="width: 50px;">Referencia</th>
+                      <th style="width: 50px;">Tipo Documento</th>
+                      <th style="width: 20px;">Dias Restantes</th>
 
                     </tr>
                   </thead>
@@ -277,9 +277,9 @@ $_SESSION['numExpedienteSelected'] = null;
                       <td class="inbox-data-from"> <div><small><a href="<?=$linkVerRadicado?>" target="mainFrame"><?=$fechaRadicado?></a></small></div></td>
                       <td class="inbox-data-from"> <div><span><small><?=$asuntoRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$remitenteRadicado?></small> </div> </td>
-                      <td class="inbox-data-from"> <div> <small><?=$enviadoPor?></small> </div> </td>
-                      <td class="inbox-data-from"> <div><span><small><?=$refRadicado?></small></span> </div> </td>
-                      <td class="inbox-data-from"> <div> <small><?=$tipoDocumentoRadicado?></small> </div> </td>
+                      <td > <div> <small><?=$enviadoPor?></small> </div> </td>
+                      <td > <div><span><small><?=$refRadicado?></small></span> </div> </td>
+                      <td > <div> <small><?=$tipoDocumentoRadicado?></small> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$diasRadicado?></small> </div> </td>
 
                     </tr>

@@ -326,13 +326,12 @@ for($i=1; $i<=6; $i++){
 
 ?>
 <div class="form-group smart-form" id=""><label class="label"><?=$tipoAnexo[$i];?></label>
-
 <?php
   $norandom = "file$i";
   echo("<div id='$norandom'>A&ntilde;adir Archivo  <input  type='hidden' value='' id='inp_$norandom'  /> 
-    </div>");
+  </div>");
   $scriptJS .= "
-    var uploaderId = '$norandom';
+  var uploaderId = '$norandom';
   $('#$norandom').uploadFile({
     url:'./server.php?tx=2',
     fileName:'fileFormDinamic',
@@ -419,9 +418,6 @@ tras la verificación de los soportes del traslado de la obligación urbanístic
 <!-- end widget grid -->
 <script type="text/javascript">
 var chip=0;
-
-
-
 function radicarDocumento(){
 	radData = $('#resultado').html();
 	sEmail = $("#email").val();
