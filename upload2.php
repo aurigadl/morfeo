@@ -138,6 +138,7 @@ $lnr         = 11+$ln;
                          ,'$expAnexo')";
             $nuevo_archivo = false;
             $subir_archivo = true;
+            echo "<pre> $isql </pre>"; exit;
          }else{
           $nuevo_archivo = false;
           $subir_archivo = ($_FILES['userfile1']['size'])? "   anex_nomb_archivo  ='1$archivo'
@@ -164,7 +165,7 @@ $lnr         = 11+$ln;
         $_POST['nuevo_archivo'] = $nuevo_archivo;
         $_POST['codigo']        = $codigo;
          $bien = $db->conn->query($isql);
-
+       
         //Si actualizo BD correctamente 
          if ($bien){
              $respUpdate="OK";

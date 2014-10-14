@@ -492,7 +492,8 @@ function calcularLiquidacion(chipVal){
 	nombreProyecto = $("#pNombre").val();
 	urbanizadorP = $("#pConstructora").val();
 	repLegal = $("#pRep").val();
-	$.post("../tx/ajaxCalculoLiqMtv.php", {"chip":chip,"valA1":valA1,"repLegal":repLegal,"urbanizadorP":urbanizadorP,"nombreProyecto":nombreProyecto}).done(
+	pRep = $("#pRep").val();
+	$.post("../tx/ajaxCalculoLiqMtv.php", {"chip":chip,"valA1":valA1,"pRep":pRep,"repLegal":repLegal,"urbanizadorP":urbanizadorP,"nombreProyecto":nombreProyecto}).done(
 		function( data ) {
 			$('#res').html(data);
 		}

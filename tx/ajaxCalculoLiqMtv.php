@@ -15,6 +15,7 @@
   $nombreProyecto =$_POST["nombreProyecto"];
   $urbanizadorP = $_POST["urbanizadorP"];
   $pRep=$_POST["pRep"];
+  $repLegal=$_POST["repLegal"];
 
   $db = new ConnectionHandler($ruta_raiz);
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -56,6 +57,10 @@
   $isql="select * From predial2014_20140819 WHERE CHIP=$ultimoChip";
   $lala=$db->conn->query($isql);
   if ($rtaMove == 1 && $lala->fields["CHIP"]) {
+    $_SESSION['chipsListado'].=$lala->fields["CHIP"].',';
+    $chipsListado=explode(',',$_SESSION['chipsListado']);
+    $chipsListado=array_unique($chipsListado);
+    $chipsListado=implode('<br>',$chipsListado);
     $valorObligacionF = "$ " . number_format($valorObligacion,2,",",".");
     $valM2TF = number_format($valM2T,2,",",".");
     $valorReferenciaF = number_format($valorReferencia,2,",",".");
@@ -63,9 +68,9 @@
     $valorA2F = number_format($valorA2,2,",",".");
     $textoFinal = " <table width=\"70%\" border=1><tr id=nombreProyecto><td>Nombre del proyecto</td><td> $nombreProyecto </td></tr>";
     $textoFinal .= " <tr><td>Direci&oacute;n</td><td>$direccionPredio  </td></tr>";
-    $textoFinal .= " <tr><td>CHIP</td><td>$chip  </td></tr>";
+    $textoFinal .= " <tr><td>CHIP</td><td>$chipsListado  </td></tr>";
     $textoFinal .= " <tr id=urbanizadorP><td>Urbanizador / Constructor / Patrimonio Aut&oacute;nomo</td><td>$urbanizadorP  </td></tr>";
-    $textoFinal .= "<tr id=repLegalP><td>Representante Legal</td><td> $pRep</td></tr>";
+    $textoFinal .= "<tr id=repLegalP><td>Representante Legal</td><td> $repLegal</td></tr>";
     $textoFinal .= "<tr><td>Area obligaci&oacute;n VIP (A1) </td><td> $valA1 m<sup>2</sup> </Td></tr>";
     $textoFinal .= "<tr><td>Area a trasladar</td><td>$valorA2F m<sup>2</sup></Td></tr>";
     $textoFinal .= "<tr><td>Valor estimado de la Obligaci&oacute;n por traslado VIP/VIS </td><td>$valorObligacionF </Td></tr>";

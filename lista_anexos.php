@@ -22,8 +22,12 @@ $sqlFechaAnexo = $db->conn->SQLDate("Y-m-D H:i:s A","anex_fech_anex");
 $sqlSubstDesc =  $db->conn->substr."(anex_desc, 0, 100)";
 //include_once("include/query/busqueda/busquedaPiloto1.php");
 // Modificado SGD 06-Septiembre-2007
-$maxRows = $db->limit();
-$isql = "select a.anex_codigo AS DOCU
+#$maxRows = $db->limit(); 
+				$db->limit(24);
+                $limitMsql = $db->limitMsql;
+                $limitOci8 = $db->limitOci8;
+                $limitPsql = $db->limitPsql;
+$isql = "select $limitMsql a.anex_codigo AS DOCU
             ,at.anex_tipo_ext AS EXT
 			,a.anex_tamano AS TAMA
 			,a.anex_solo_lect AS RO
@@ -54,8 +58,8 @@ $isql = "select a.anex_codigo AS DOCU
  AND a.sgd_dir_tipo=d.sgd_dir_tipo $maxRows 1) destino
 		from anexos a, anexos_tipo at ,usuario u
       where anex_radi_nume=$verrad and a.anex_tipo=at.anex_tipo_codi
-		   and a.anex_creador=u.usua_login and a.anex_borrado='N'
-	   order by a.ANEX_FECH_ANEX,sgd_dir_tipo,a.anex_radi_nume,a.radi_nume_salida";
+		   and a.anex_creador=u.usua_login and a.anex_borrado='N' $limitOci8
+	   order by a.ANEX_FECH_ANEX,sgd_dir_tipo,a.anex_radi_nume,a.radi_nume_salida $limitPsql";
 ?>
 <table WIDTH="100%" align="center" id="tableDocument" class="table table-striped table-hover" >
     <thead>
