@@ -22,6 +22,9 @@ var $entidad_largo;
 var $entidad_tel;
 var $entidad_dir;
 var $querySql;
+var $limitPsql;
+var $limitOci8;
+var $limitMsql;
 /* Metodo constructor */
 function ConnectionHandler($ruta_raiz){
 	if (!defined('ADODB_ASSOC_CASE')) define('ADODB_ASSOC_CASE',1);
@@ -74,11 +77,14 @@ function sysdate()
 }
 
 //  Retorna la fecha actual segun la BD del driver;
-function limit()
+function limit($numRows)
 {
-  if($this->driver == "postgres")  return " limit ";
-  if($this->driver == "oci8")  return " and  ROWNUM <= ";
-  if($this->driver == "mssql")  return "GETDATE()";
+  $this->limitOci8 = "";
+  $this->limitMsql = "";
+  $this->limitPsql = "";  
+  if($this->driver == "postgres")  $this->limitPsql = "limit $numRows";
+  if($this->driver == "oci8")  $this->limitPsql = " ROWNUM <= $numRows";
+  if($this->driver == "mssql") $this->limitMsql = " top $numRows ";
 }
 
 

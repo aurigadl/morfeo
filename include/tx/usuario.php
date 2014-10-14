@@ -726,11 +726,11 @@ switch ($db->driver)
                   and p.id_cont    = s.id_cont
                 ORDER  BY usua_nomb ";
 
-  switch ($db->driver)
- {case 'mssql': $isql= $isql."  LIMIT 24"; break;
-  case 'oracle': $isql= $isql."  ROWNUM<=24"; break;
-  case 'oci8':   $isql= $isql."  ROWNUM<=24"; break;
-  case 'postgres': $isql= $isql."  LIMIT 24"; break;}
+          switch ($db->driver)
+         {case 'mssql': $isql= $isql."  LIMIT 24"; break;
+          case 'oracle': $isql= $isql."  ROWNUM<=24"; break;
+          case 'oci8':   $isql= $isql."  ROWNUM<=24"; break;
+          case 'postgres': $isql= $isql."  LIMIT 24"; break;}
 
                 break;
         }
