@@ -164,7 +164,7 @@ $lnr         = 11+$ln;
         $_POST['nuevo_archivo'] = $nuevo_archivo;
         $_POST['codigo']        = $codigo;
          $bien = $db->conn->query($isql);
-
+        $db->conn->debug=true;
         //Si actualizo BD correctamente 
          if ($bien){
              $respUpdate="OK";
