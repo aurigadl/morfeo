@@ -75,6 +75,10 @@ unset($frm);
 						?>
 						<a  onClick="reportePredios(&quot;<?=$numExpediente?>&quot;,&quot;<?=$listPredios?>&quot;,&quot;<?=$vars?>&quot;,'modeloPredial');">Reporte Inventario de Predios </a>
 					</li>
+					<? if (!empty($numExpediente)){?><li>
+            				    <a href="javascript:void(0);" onClick="window.open ('expediente/stickerExp/index.php?numExp=<?=$numExpediente?>','sticker<?=$nurad?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');" class="btn btn-link">Sticker Expediente</a>
+					</li><?}?>
+
 					
 
 					<?
