@@ -21,6 +21,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#require '/var/www/html/orfeocore/config.php';
 
 class Usuario {
     /*** Attributes:
@@ -32,6 +33,7 @@ class Usuario {
 
     function __construct($db){
         $this->db=$db;
+# $midriver=$this->db->driver;
     }
 
 
@@ -555,8 +557,11 @@ class Usuario {
                     $sub    = " UPPER(SGD_CIU_CODIGO)   LIKE '%$codi%'";
                     $where .= (empty($where))? $sub : ' and '. strtoupper($sub);
                 }
+    $concatApell = $this->db->conn->Concat('s.SGD_CIU_APELL1',"' '",'s.SGD_CIU_APELL2');
 
-                $isql = "SELECT
+    $midriver=$this->db->driver;
+                $this->db->limit(24);
+    $isql = "SELECT $this->db->limitMsql
                    s.SGD_CIU_CODIGO    as codigo
                   ,s.SGD_CIU_NOMBRE    as nombre
                   ,s.SGD_CIU_DIRECCION as direccion
@@ -571,7 +576,7 @@ class Usuario {
                   ,m.MUNI_CODI         as muni_codigo
                   ,0                   as tipo
                   ,s.TDID_CODI         as tdid_codi
-                  ,CONCAT(s.SGD_CIU_APELL1,' ', s.SGD_CIU_APELL2) as apellido
+                 ,$concatApell as apellido
                 FROM
                    SGD_CIU_CIUDADANO s
                   ,DEPARTAMENTO d
@@ -585,15 +590,13 @@ class Usuario {
                   and p.id_pais   = s.id_pais
                   and p.id_cont   = s.id_cont
                   and d.id_pais   = s.id_pais
-                  and d.id_cont   = s.id_cont
-                ORDER BY s.SGD_CIU_NOMBRE, s.SGD_CIU_APELL1, s.SGD_CIU_APELL2";
+      and d.id_cont   = s.id_cont
+                  
+      $this->db->limitOci8
+                 ORDER BY s.SGD_CIU_NOMBRE, s.SGD_CIU_APELL1, s.SGD_CIU_APELL2
+     $this->db->limitPsql";
 
 
-switch ($db->driver)
- {case 'mssql': $isql= $isql."  LIMIT 24"; break;
-  case 'oracle': $isql= $isql."  ROWNUM<=24"; break;
-  case 'oci8':   $isql= $isql."  ROWNUM<=24"; break;
-  case 'postgres': $isql= $isql."  LIMIT 24"; break;}
 
              break;
 
@@ -726,15 +729,15 @@ switch ($db->driver)
                   and p.id_cont    = s.id_cont
                 ORDER  BY usua_nomb ";
 
-          switch ($db->driver)
-         {case 'mssql': $isql= $isql."  LIMIT 24"; break;
-          case 'oracle': $isql= $isql."  ROWNUM<=24"; break;
-          case 'oci8':   $isql= $isql."  ROWNUM<=24"; break;
-          case 'postgres': $isql= $isql."  LIMIT 24"; break;}
+/*  switch ($db->driver)
+ {case 'mssql': $isql= $isql."  LIMIT 24"; break;
+  case 'oracle': $isql= $isql."  ROWNUM<=24"; break;
+  case 'oci8':   $isql= $isql."  ROWNUM<=24"; break;
+  case 'postgres': $isql= $isql."  LIMIT 24"; break;}*/
 
                 break;
         }
-
+$this->db->conn->debug=true;
         $rs = $this->db->query($isql);
 
         while(!$rs->EOF){
