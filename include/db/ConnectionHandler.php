@@ -83,7 +83,7 @@ function limit($numRows)
   $this->limitMsql = "";
   $this->limitPsql = "";   
   if($this->driver == "postgres")  $this->limitPsql = "limit $numRows";
-  if($this->driver == "oci8")  $this->limitPsql = " ROWNUM <= $numRows";
+  if($this->driver == "oci8")  $this->limitOci8 = " ROWNUM <= $numRows";
   if($this->driver == "mssql") $this->limitMsql = " top $numRows ";
 }
 
