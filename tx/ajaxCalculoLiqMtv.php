@@ -60,7 +60,8 @@
     $_SESSION['chipsListado'].=$lala->fields["CHIP"].',';
     $chipsListado=explode(',',$_SESSION['chipsListado']);
     $chipsListado=array_unique($chipsListado);
-    $chipsListado=implode('<br>',$chipsListado);
+    $chipsListado=implode('<hr style="border-top:1px solid black">',$chipsListado);
+    $chipsListado=substr($chipsListado,0,-39);
     $valorObligacionF = "$ " . number_format($valorObligacion,2,",",".");
     $valM2TF = number_format($valM2T,2,",",".");
     $valorReferenciaF = number_format($valorReferencia,2,",",".");
