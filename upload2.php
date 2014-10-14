@@ -48,7 +48,7 @@ $lnr         = 11+$ln;
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
     $anex       =  new Anexo($db);
     $anexTip    =  new Anex_tipo($db);
-    $db->conn->debug = true;
+    //$db->conn->debug = true;
     if (!$aplinteg)
         $aplinteg='null';
     if (!$tpradic)
