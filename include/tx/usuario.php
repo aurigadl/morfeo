@@ -559,7 +559,7 @@ class Usuario {
                 }
     $concatApell = $this->db->conn->Concat('s.SGD_CIU_APELL1',"' '",'s.SGD_CIU_APELL2');
 
-    $midriver=$this->db->driver;
+                #LLAMO UNA FUNCIÓN CONNECCIÓN HANDLER LLAMADA LIMIT LA CUAL ME DEVUELVE LA ESTRUCTURA CORRECTA
                 $this->db->limit(24);
                 $limitMsql = $this->db->limitMsql;
                 $limitOci8 = $this->db->limitOci8;
@@ -593,7 +593,7 @@ class Usuario {
                   and p.id_pais   = s.id_pais
                   and p.id_cont   = s.id_cont
                   and d.id_pais   = s.id_pais
-      and d.id_cont   = s.id_cont
+                  and d.id_cont   = s.id_cont
                   
       $limitOci8
                  ORDER BY s.SGD_CIU_NOMBRE, s.SGD_CIU_APELL1, s.SGD_CIU_APELL2
