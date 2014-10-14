@@ -1,9 +1,14 @@
 <?php
 $coltp3Esp = '"'.$tip3Nombre[3][2].'"';
+        #LLAMO UNA FUNCIÓN CONNECCIÓN HANDLER LLAMADA LIMIT LA CUAL ME DEVUELVE LA ESTRUCTURA CORRECTA
+$db->limit(1000);
+$limitMsql = $db->limitMsql;
+$limitOci8 = $db->limitOci8;
+$limitPsql = $db->limitPsql;
 switch($db->driver)
 	{
 	case 'mssql':
-	$isql = 'select
+	$isql = 'select '. $limitMsql .'
 			convert(char(20), b.RADI_NUME_RADI) "IDT_Numero Radicado"
 			,b.RADI_PATH as "HID_RADI_PATH"
 			,'.$sqlFecha.' as "DAT_Fecha Radicado"
@@ -84,8 +89,11 @@ switch($db->driver)
 		$whereUsuario.$whereFiltro.'
 		'.$whereCarpeta.'
 		'.$sqlAgendado.'
+		'.$limitOci8 .'
 	  order by '.$order .' ' .$orderTipo
-	  . ' ';
+	  . ' ' . $limitPsql . ' ' ;
+	//$db->conn->debug = true;
 	break;
+	
 	}
 ?>
