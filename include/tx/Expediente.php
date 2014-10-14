@@ -872,8 +872,14 @@ class Expediente {
      * Modificador:
      */
     function getDatosParamExp($numExp, $depeCodi){
+
+         $this->db->limit(10);
+         $limitMsql = $this->db->limitMsql;
+         $limitOci8 = $this->db->limitOci8;
+         $limitPsql = $this->db->limitPsql;
+
         $depeExp = substr($numExp, 4, 3);
-        $q_datosParametro = "SELECT CASE WHEN PAREXP.SGD_PAREXP_ORDEN = 1 THEN SEXP.SGD_SEXP_PAREXP1
+        $q_datosParametro = "SELECT  $limitMsql CASE WHEN PAREXP.SGD_PAREXP_ORDEN = 1 THEN SEXP.SGD_SEXP_PAREXP1
          WHEN PAREXP.SGD_PAREXP_ORDEN = 2 THEN SEXP.SGD_SEXP_PAREXP2
          WHEN PAREXP.SGD_PAREXP_ORDEN = 3 THEN SEXP.SGD_SEXP_PAREXP3
          WHEN PAREXP.SGD_PAREXP_ORDEN = 4 THEN SEXP.SGD_SEXP_PAREXP4
@@ -888,10 +894,10 @@ class Expediente {
          FROM SGD_SEXP_SECEXPEDIENTES SEXP,
          SGD_PAREXP_PARAMEXPEDIENTE PAREXP
          WHERE SEXP.SGD_EXP_NUMERO = '$numExp'
-         AND parexp.DEPE_CODI = '$depeExp'
-         ORDER BY SEXP.SGD_SEXP_FECH desc LIMIT 10";
+         AND parexp.DEPE_CODI = '$depeExp' $limitOci8
+         ORDER BY SEXP.SGD_SEXP_FECH desc $limitPsql";
          #$db->conn->debug=true; 
-         #echo "<pre>$q_datosParametro</pre>"; exit;
+         echo "<pre>$q_datosParametro</pre>"; exit;
          $rs_datosParametro = $this->db->conn->query($q_datosParametro);
 
         $p = 0;
