@@ -9,6 +9,9 @@
 					<a href="#" onClick="excluirExpediente();">Excluir de...</a>
 				</li>
 				<li>
+					<a href="#">Sticker Expediente<?=$numExpediente?></a>
+				</li>
+				<li>
 					<a href="#" onClick="verTipoExpediente('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Crear Nuevo Expediente</a>
 				</li>
 				<li>

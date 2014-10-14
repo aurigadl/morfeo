@@ -36,7 +36,7 @@ $entidad_corto=$_SESSION['entidad'];
 //$entidad_corto="CRA";
 $noRad = $_REQUEST['nurad'];
 $noRadBarras='<font face="Free 3 of 9">'."*$noRad*".'</font>';
-$dirPlantilla=$ruta_raiz.'/conf/stickers/'.$entidad_corto.'.php';
+$dirPlantilla=$ruta_raiz.'/conf/stickers/radicados/'.$entidad_corto.'.php';
 $dirLogo=$ruta_raiz.'/img/'.$entidad_corto.'.jpg';
 include ($dirPlantilla);
 ?>
