@@ -561,7 +561,10 @@ class Usuario {
 
     $midriver=$this->db->driver;
                 $this->db->limit(24);
-    $isql = "SELECT $this->db->limitMsql
+                $limitMsql = $this->db->limitMsql;
+                $limitOci8 = $this->db->limitOci8;
+                $limitPsql = $this->db->limitPsql;
+    $isql = "SELECT $limitMsql
                    s.SGD_CIU_CODIGO    as codigo
                   ,s.SGD_CIU_NOMBRE    as nombre
                   ,s.SGD_CIU_DIRECCION as direccion
@@ -592,9 +595,9 @@ class Usuario {
                   and d.id_pais   = s.id_pais
       and d.id_cont   = s.id_cont
                   
-      $this->db->limitOci8
+      $limitOci8
                  ORDER BY s.SGD_CIU_NOMBRE, s.SGD_CIU_APELL1, s.SGD_CIU_APELL2
-     $this->db->limitPsql";
+     $limitPsql";
 
 
 
