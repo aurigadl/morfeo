@@ -897,7 +897,7 @@ class Expediente {
          AND parexp.DEPE_CODI = '$depeExp' $limitOci8
          ORDER BY SEXP.SGD_SEXP_FECH desc $limitPsql";
          #$db->conn->debug=true; 
-         #echo "<pre>$q_datosParametro</pre>"; exit;
+         echo "<pre>$q_datosParametro</pre>"; exit;
          $rs_datosParametro = $this->db->conn->query($q_datosParametro);
 
         $p = 0;
