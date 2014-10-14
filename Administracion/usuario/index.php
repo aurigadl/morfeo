@@ -113,25 +113,19 @@ while (!$depe->EOF) {
 }
 
 //Membresias
-/*$sql_memb = "
-              SELECT
-                am.id,
-                ag.nombres
-
-              FROM 	autm_membresias am,
-                autg_grupos ag,
-                autu_usuarios au
-
-              WHERE
-                am.autg_id = ag.id and
-                am.autu_id = au.id";
+$sql_memb = "SELECT
+                id,
+                autg_id,
+                autu_id
+		      FROM
+		        autm_membresias";
 
 $memb     = $db->conn->query($sql_memb);
 
 while (!$memb->EOF) {
     $membresias[] = $memb->fields;
     $memb->MoveNext();
-}*/
+}
 
 $smarty->assign("permisos"     , $permisos);
 $smarty->assign("crud"         , $crud);

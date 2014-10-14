@@ -61,7 +61,7 @@ switch ($_POST['accion']){
                 break;
 
             case 'usuarios':
-                if($roles->borrarPermiso($id)){
+                if($roles->borrarUsuario($id)){
                     $resultado = array('estado' => 1, 'valor' => $roles->id);
                 }else{
                     $resultado = array('estado' => 0, 'valor' => '');
@@ -116,6 +116,16 @@ switch ($_POST['accion']){
                 break;
         }
 
+    // Guardar registros...........................................
+    case 'buscarUsuariosDelGrupo':
+        $grupo  = $_POST['grupos'];
+
+        if($roles->buscarUsuariosGrupo($grupo)){
+            $resultado = array('estado' => 1, 'valor' => $roles->users);
+        }else{
+            $resultado = array('estado' => 0, 'valor' => '');
+        }
+        break;
 }
 
 echo json_encode($resultado);

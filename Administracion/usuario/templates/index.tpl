@@ -1,4 +1,3 @@
-<-debug->
 <-{assign var="gruposHtml" value='
 		<tr>
 
@@ -426,8 +425,7 @@
 
 </div>
 <!-- WIDGET END -->
-</div>
-</div>
+</div> </div>
 
 <div>
 	<h4>Usuarios</h4>
@@ -545,18 +543,57 @@
 
 					<table id="dt_basic4" class="table table-striped table-bordered table-hover smart-form"
 					       width="100%">
+
 						<thead>
-						<tr>
-							<th style="width: 35px;">
-								<a href="javascript:void(0);" id="xdt_basic4" class="btn btn-sm"><i
-											class="fa fa-plus"></i>
-								</a>
-							</th>
-							<th>Grupo</th>
-							<th>Usuario</th>
-						</tr>
+							<tr>
+								<th style="width: 35px;">
+									<a href="javascript:void(0);" id="xdt_basic4" class="btn btn-sm"><i
+												class="fa fa-plus"></i>
+									</a>
+								</th>
+								<th>Grupo</th>
+								<th>Usuario</th>
+							</tr>
 						</thead>
-						<tbody id="bdt_basic4"></tbody>
+
+						<tbody id="bdt_basic4">
+							<tr>
+								<td class="toogletd">
+
+									<a href="javascript:void(0);" data-tipo="membresias" data-id=""
+									   class="button-icon">
+										<i class="fa fa-save "></i>
+									</a>
+
+								</td>
+
+								<td class="hasinput">
+									<label class="select select-multiple">
+										<select data-tipo="membresias"  id="grupo_membresias" name="grupo"
+										        class="custom-scroll">
+											<option value="">-- Seleccione una Opción --</option>
+											<-{foreach item=i from=$grupos}->
+												<option value="<-{$i.ID}->"> <-{$i.NOMBRE}-> </option>
+											<-{/foreach}->
+										</select>
+									</label>
+								</td>
+
+								<td class="hasinput">
+									<label class="select select-multiple">
+										<select data-tipo="membresias" id="usuarios_membresias" name="usuarios"
+										        multiple="" class="custom-scroll">
+											<option value="">-- Seleccione una Opción --</option>
+											<-{foreach item=i from=$usuarios}->
+												<option value="<-{$i.ID}->"> <-{$i.NOMBRES}-> </option>
+											<-{/foreach}->
+										</select>
+									</label>
+								</td>
+
+							</tr>
+
+						</tbody>
 					</table>
 
 				</div>
@@ -718,7 +755,7 @@ de inserción para los nuevos registros. -->
 			collapsible: true,
 			animate: 300,
 			header: "h4",
-			active: 2
+			active: 3
 		})
 
 		$('.label-success').hide();
@@ -868,8 +905,24 @@ de inserción para los nuevos registros. -->
 					$('.label-danger').show().delay(3000).fadeOut();
 				}
 			});
-
 		})
+
+
+		$( "#grupo_membresias" ).change(function () {
+			var tipo  = $(this).data('tipo');
+			var datos = 'accion=buscarUsuariosDelGrupo&' + $(this).attr('name') + '=' + $(this).val();
+
+			$.post("ajaxPermisos.php", datos).done(function (data) {
+				if (data['estado'] == 1) {
+					$(data['valor']).each(function (index) {
+						$('#usuarios_membresias option[value=' + data['valor'][index] + ']').attr('selected', true);
+					});
+				}else{
+					alert('error error se daño este negocio ;p ');
+				}
+			});
+		});
+
 
 	})(jQuery);
 </script>

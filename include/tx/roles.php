@@ -27,8 +27,9 @@ class Roles {
      * Clase que maneja los usuarios
      */
 
-    var $db;
-    var $id;
+    var $db;                //Conexion a la base de datos
+    var $id;                //Retorno del id del registro
+    var $users = array();   //Usuarios que pertenecen a un grupo
 
     function __construct($db){
         $this->db=$db;
@@ -185,6 +186,24 @@ class Roles {
         }
     }
 
+    /**
+     * Buscar usuarios del grupo
+     * @param  integer id del grupo
+     * @return bool
+     */
+    public function buscarUsuariosGrupo($grupo){
+        $sql_usu_id = "SELECT autu_id FROM autm_membresias where autg_id = $grupo";
+        $sql_usu    = $this->db->conn->query($sql_usu_id);
 
+        if(!$sql_usu->EOF){
+            return false;
+        }else{
+            while (!$sql_usu->EOF){
+                $this->$users = $sql_usu->fields;
+                $sql_usu->MoveNext();
+            }
+            return true;
+        }
+    }
 
 }
