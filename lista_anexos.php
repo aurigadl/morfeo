@@ -23,10 +23,15 @@ $sqlSubstDesc =  $db->conn->substr."(anex_desc, 0, 100)";
 //include_once("include/query/busqueda/busquedaPiloto1.php");
 // Modificado SGD 06-Septiembre-2007
 #$maxRows = $db->limit(); 
-				$db->limit(24);
+		$db->limit(24);
                 $limitMsql = $db->limitMsql;
                 $limitOci8 = $db->limitOci8;
                 $limitPsql = $db->limitPsql;
+
+                $db->limit(1);
+                $limit2Oci8 = $db->limitOci8;
+                $limit2Psql = $db->limitPsql;
+
 $isql = "select $limitMsql a.anex_codigo AS DOCU
             ,at.anex_tipo_ext AS EXT
 			,a.anex_tamano AS TAMA
@@ -46,20 +51,20 @@ $isql = "select $limitMsql a.anex_codigo AS DOCU
 			,a.SGD_TPR_CODIGO
 			,a.SGD_TRAD_CODIGO
 			,a.ANEX_TIPO
-			,CASE WHEN a.ANEX_FECH_ANEX IS NULL THEN (SELECT a2.ANEX_FECH_ANEX FROM ANEXOS A2 WHERE A2.RADI_NUME_SALIDA=A.RADI_NUME_SALIDA AND A2.ANEX_FECH_ANEX IS NOT NULL)
-            ELSE a.ANEX_FECH_ANEX
-       END AANEX_FECH_ANEX
+			,a.ANEX_FECH_ANEX AANEX_FECH_ANEX
 			,a.ANEX_FECH_ANEX
 			,a.ANEX_RADI_NUME
 			,$sqlFechaDocto FECDOC
 			,$sqlFechaAnexo FEANEX
 			,a.ANEX_TIPO NUMEXTDOC
 			,(SELECT d.sgd_dir_nomremdes from sgd_dir_drecciones d where (d.sgd_anex_codigo=a.anex_codigo  or d.radi_nume_radi=a.radi_nume_salida)
- AND a.sgd_dir_tipo=d.sgd_dir_tipo $maxRows 1) destino
+ AND a.sgd_dir_tipo=d.sgd_dir_tipo $limit2Oci8 $limit2Psql) destino
 		from anexos a, anexos_tipo at ,usuario u
       where anex_radi_nume=$verrad and a.anex_tipo=at.anex_tipo_codi
 		   and a.anex_creador=u.usua_login and a.anex_borrado='N' $limitOci8
 	   order by a.ANEX_FECH_ANEX,sgd_dir_tipo,a.anex_radi_nume,a.radi_nume_salida $limitPsql";
+
+// case eliminado. No se entiende para qu se realiza. 
 ?>
 <table WIDTH="100%" align="center" id="tableDocument" class="table table-striped table-hover" >
     <thead>
