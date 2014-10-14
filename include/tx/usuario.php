@@ -740,7 +740,7 @@ class Usuario {
 
                 break;
         }
-$this->db->conn->debug=true;
+#$this->db->conn->debug=true;
         $rs = $this->db->query($isql);
 
         while(!$rs->EOF){
