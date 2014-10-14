@@ -7,7 +7,7 @@
 * @license  GNU AFFERO GENERAL PUBLIC LICENSE
 * @copyright
 
-SIIM2 Models are the data definition of SIIM2 Information System
+OrfeoGPL Models are the data definition of OrfeoGPL Information System
 Copyright (C) 2013 Infometrika Ltda.
 
 This program is free software: you can redistribute it and/or modify
@@ -295,7 +295,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <title> ..:: <?=$entidad?> ::.</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="SIIM2">
+        <meta name="description" content="<?=$entidad?>">
         <link rel="shortcut icon" href="./img/favicon.png" onClick="this.reload();">
         <!-- Bootstrap core CSS -->
         <link href="./estilos/bootstrap.min.css" rel="stylesheet">
@@ -325,7 +325,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand"  onclick="recapagi()" href="#">siim</a>
+              <a class="navbar-brand"  onclick="recapagi()" href="#"><?=$entidad?></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
