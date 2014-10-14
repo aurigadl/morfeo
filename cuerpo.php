@@ -206,10 +206,10 @@ $_SESSION['numExpedienteSelected'] = null;
 
                     </div>
 
-                <table id="dt_basic" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%">
+                <table id="dt_basic" class="table table-striped table-bordered table-hover dataTable no-footer smart-form" width="100%">
                   <thead>
                     <tr>
-                      <th  style="width: 15px;">
+                      <th  style="width: 20px;">
                           <label class="checkbox">
                             <input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll">
                             <i></i>
