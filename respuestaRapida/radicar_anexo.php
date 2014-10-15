@@ -16,6 +16,7 @@
   $hist    = new Historico($db);
   $Tx      = new Tx($db);
   
+  $db->conn->debug=true;
   $anexo   = $_POST['anexo'];
   
   $archivo_txt    = $anexo . '.txt';
