@@ -48,7 +48,6 @@ $lnr         = 11+$ln;
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
     $anex       =  new Anexo($db);
     $anexTip    =  new Anex_tipo($db);
-    #$db->conn->debug = true;
     if (!$aplinteg)
         $aplinteg='null';
     if (!$tpradic)
@@ -138,7 +137,6 @@ $lnr         = 11+$ln;
                          ,'$expAnexo')";
             $nuevo_archivo = false;
             $subir_archivo = true;
-          #  echo "<pre> $isql </pre>"; exit;
          }else{
           $nuevo_archivo = false;
           $subir_archivo = ($_FILES['userfile1']['size'])? "   anex_nomb_archivo  ='1$archivo'
