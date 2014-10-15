@@ -1,4 +1,7 @@
 <?php
+
+  echo "radico_re"; exit;
+
   define ('ENVIO_EMAIL', '1');
   define ('COLOMBIA',     170);
   
