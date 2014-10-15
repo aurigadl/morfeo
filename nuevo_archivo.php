@@ -665,8 +665,8 @@ if( $rs_exp->RecordCount() == 0 ){
       <table width="100%" class="table table-bordered">
       <tr align="center" >
         <td width="203"  ><small>Documento</small></td>
-        <td   ><small>Nombre</small></td>
-        <td  ><small>Dirigido a</small></td>
+        <td ><small>Nombre</small></td>
+        <td ><small>Dirigido a</small></td>
         <td  width="103" colspan='2'><small>Direccion</small></td>
         <td  width="68"><small>Email</small></td>
         <td  width="68" colspan="2"><small>Otros</small></td>
@@ -688,16 +688,16 @@ if( $rs_exp->RecordCount() == 0 ){
           <input type="text" name="seg_apel_us1" value='' size="3" class="tex_area">
         </TD>
         <TD width="140" align="center"  colspan='2'>
-          <input type=text name="otro_us7" value='' class=tex_area   size=20 maxlength="45">
+          <input type="text" name="otro_us7" value='' class="tex_area"   size=20 maxlength="45">
         </TD>
         <TD align="center" >
-          <input type=text name=direccion_us1 value='' class=tex_area  size=6>
+          <input type="text" name=direccion_us1 value='' class="tex_area"  size=6>
         </TD>
         <TD width="68" align="center">
-          <input type=text name=mail_us1 value='' class="tex_area" size="11">
+          <input type="text" name=mail_us1 value='' class="tex_area" size="11">
         </TD>
         <TD width="68" align="center" colspan="2">
-          <input type=text name="otro_us1" value='' class=tex_area" size="11">
+          <input type="text" name="otro_us1" value='' class="tex_area" size="11">
         </TD>
       </tr>
       <tr>
