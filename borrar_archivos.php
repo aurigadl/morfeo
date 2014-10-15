@@ -100,10 +100,13 @@ function actualizar(){
 </body>
 <script type="text/javascript">
   $(document).ready(function() {
-      $('body').on("click", '#cerraranexar',function(){
+      /*$('body').on("click", '#cerraranexar',function(){
           window.opener.$.fn.cargarPagina("./lista_anexos.php","tabs-c"); window.close();
           window.close();
-      });
+      });*/
+	  $( "#cerraranexar" ).click(function() {
+		  alert( "Handler for .click() called." );
+	});
   });
 </script>
 </html>  
