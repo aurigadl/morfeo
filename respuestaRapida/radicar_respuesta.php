@@ -129,7 +129,7 @@
 
   $depCreadora    = substr($numRadicadoPadre, 4, $digitosDependencia);
   
-  echo $ruta3  = "/$radano/$depCreadora/docs/".$ruta; exit;
+  $ruta3  = "/$radano/$depCreadora/docs/".$ruta;
 
 // CREACION DEL RADICADO RESPUESTA
   //Para crear el numero de radicado se realiza el siguiente procedimiento
