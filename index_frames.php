@@ -325,7 +325,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand"  onclick="recapagi()" href="#"><?=$entidad?></a>
+              <a class="navbar-brand"  onclick="recapagi()" href="#" alt="<?=$entidad_largo?>" title="<?=$entidad_largo?>"><?=$entidad?></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

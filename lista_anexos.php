@@ -393,7 +393,6 @@ Anexar Archivo</a>
 			return;
 	}
 
-<?php /* ?>	
 function borrarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
 			if (confirm('Estas seguro de borrar este archivo anexo ?')){
 					contadorVentanas=contadorVentanas+1;
@@ -405,7 +404,7 @@ function borrarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
 			}
 			return;
 	}
-<?php */ ?>
+
 	function radicarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado,tpradic,aplinteg,numextdoc){
 			var title1   = "Transaccion exitosa";
 			var radinum;
