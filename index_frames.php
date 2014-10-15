@@ -7,7 +7,7 @@
 * @license  GNU AFFERO GENERAL PUBLIC LICENSE
 * @copyright
 
-SIIM2 Models are the data definition of SIIM2 Information System
+OrfeoGPL Models are the data definition of OrfeoGPL Information System
 Copyright (C) 2013 Infometrika Ltda.
 
 This program is free software: you can redistribute it and/or modify
@@ -295,7 +295,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <title> ..:: <?=$entidad?> ::.</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="SIIM2">
+        <meta name="description" content="<?=$entidad?>">
         <link rel="shortcut icon" href="./img/favicon.png" onClick="this.reload();">
         <!-- Bootstrap core CSS -->
         <link href="./estilos/bootstrap.min.css" rel="stylesheet">
@@ -325,7 +325,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand"  onclick="recapagi()" href="#">siim</a>
+              <a class="navbar-brand"  onclick="recapagi()" href="#"><?=$entidad?></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -360,9 +360,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <li><a href="radicacion/formRadEnvios.php?<?=$phpsession ?>&<? echo "fechah=$fechah&usr=".md5($dep)."&primera=1&ent=1"; ?>" target='mainFrame' class="menu_princ">Envios</a></li>
                       <?php }
                       
-                      if($_SESSION["usua_perm_modifica"] >=1) { ?>
-                      <li><a href="radicacion/edtradicado.php?<?=$phpsession ?>&fechah=<?=$fechah?>&primera=1&ent=2" target='mainFrame' class="menu_princ">Modificaci&oacute;n</a></li>
-                      <?php }
 
                       if($_SESSION["usua_perm_intergapps"]==1 ) { ?>
                       <li><a href="aplintegra/cuerpoApLIntegradas.php?<?=$phpsession?>&<?php echo "fechaf=$fechah&carpeta=8&nomcarpeta=Aplicaciones integradas&orderTipo=desc&orderNo=3"; ?>" target='mainFrame' class="menu_princ">Aplicaciones integradas</a></li>
@@ -375,53 +372,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <li><a href="envios/cuerpoMarcaEnviar.php?<?=$phpsession?>&<?php echo "fechaf=$fechah&usua_perm_impresion=$usua_perm_impresion&carpeta=8&nomcarpeta=Documentos Para Impresion&orderTipo=desc&orderNo=3"; ?>" target='mainFrame' class="menu_princ">Por Enviar</a></li>
                       <?php }
 
-                      if ($_SESSION["usua_perm_anu"]==3 or $_SESSION["usua_perm_anu"]==1){?>
-                        <li><a href="anulacion/cuerpo_anulacion.php?<?=$phpsession?>&tpAnulacion=1&<? echo "fechah=$fechah"; ?>" target='mainFrame' class="menu_princ">Anulaci&oacute;n</a></li>
-                      <?php }
-
-                      if ($_SESSION["usua_perm_trd"]==1) { ?>
-                      <li class="dropdown-submenu">
-                        <a href="#" onclick="return false;">Clasificaci&oacute;n Documental</a>
-                        <ul class="dropdown-menu">
-                          <li><a href='./trd/admin_series.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Series </a></li>
-                          <li><a href='./trd/admin_subseries.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Subseries </a></li>
-                          <li><a href='./trd/cuerpoMatriTRD.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Matriz Relaci&oacute;n </a></li>
-                          <li><a href='./trd/admin_tipodoc.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Tipos Documentales </a></li>
-                          <li><a href='./trd/procModTrdArea.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Modificacion TRD Area </a></li>
-                          <li><a href='./trd/informe_trd.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Listado Tablas de Retencion Documental </a></li>
-                        </ul>
-                      </li>
-                      <?php }
-
-                        if($_SESSION["usua_admin_archivo"]>=1) {
-                          $isql = "select count(1) as CONTADOR
-                                from SGD_EXP_EXPEDIENTE
-                                where
-                                sgd_exp_estado=0 ";
-                            $rs=$db->conn->Execute($isql);
-                            $num_exp = $rs->fields["CONTADOR"];
-                        ?>
-                        <li><a href='./expediente/cuerpo_exp.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Archivo (<?=$num_exp?>)</a></li>
-                      <?php }
-                        if($_SESSION["usua_admin_archivo"]>=2) {
-                        ?>
-                        <li><a href='archivo/archivo.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Administracion Archivo</a></li>
-                      <?php }
-                      if ($_SESSION["usua_perm_prestamo"]==1) { ?>
-                      <li class="dropdown-submenu">
-                        <a href="#" onclick="return false;">Prestamo</a>
-                        <ul class="dropdown-menu">
-                          <li><a href="./prestamo/prestamo.php?opcionMenu=1" target='mainFrame'>Prestamo de documentos</a></li>
-                          <li><a href="./prestamo/prestamo.php?opcionMenu=2" target='mainFrame'>Devolucion de documentos</a></li>
-                          <li><a href="./prestamo/prestamo.php?opcionMenu=0" target='mainFrame'>Generacion de reportes</a></li>
-                          <li><a href="./prestamo/prestamo.php?opcionMenu=3" target='mainFrame'>Cancelar solicitudes</a></li>
-                        </ul>
-                      </li>
-                      <?php }
-                      if($_SESSION["usua_perm_dev"]==1) { ?>
-                      <li> <a href='devolucion/cuerpoDevCorreo.php?<?=$phpsession?>&krd=<?=$krd?>&<?php echo "fechaf=$fechah&carpeta=8&devolucion=2&estado_sal=4&nomcarpeta=Documentos Para Impresion&orno=1&adodb_next_page=1"; ?>' target='mainFrame' class="menu_princ" >Dev Correo</span></a></li>
-                      <?php }?>
-
+                      ?>
 
                     </ul>
                   </li>
@@ -453,7 +404,70 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                       </li>
                                   </ul>
                               </li>
+                              <li class="dropdown-submenu">
+                                  <a href="#" onclick="return false;">Gestion Documental</a>
+                                  <ul class="dropdown-menu">
+                                  <?php if($_SESSION["usua_perm_modifica"] >=1) { ?>
+                                    <li><a href="radicacion/edtradicado.php?<?=$phpsession ?>&fechah=<?=$fechah?>&primera=1&ent=2" target='mainFrame' class="menu_princ">Modificaci&oacute;n</a></li>
+                                    <?php }
+                                    if ($_SESSION["usua_perm_prestamo"]==1) { ?>
+                                      <li class="dropdown-submenu">
+                                        <a href="#" onclick="return false;">Prestamo</a>
+                                        <ul class="dropdown-menu">
+                                          <li><a href="./prestamo/prestamo.php?opcionMenu=1" target='mainFrame'>Prestamo de documentos</a></li>
+                                          <li><a href="./prestamo/prestamo.php?opcionMenu=2" target='mainFrame'>Devolucion de documentos</a></li>
+                                          <li><a href="./prestamo/prestamo.php?opcionMenu=0" target='mainFrame'>Generacion de reportes</a></li>
+                                          <li><a href="./prestamo/prestamo.php?opcionMenu=3" target='mainFrame'>Cancelar solicitudes</a></li>
+                                        </ul>
+                                  <?php }                                 
+                                if ($_SESSION["usua_perm_anu"]==3 or $_SESSION["usua_perm_anu"]==1){?>
+                                  <li><a href="anulacion/cuerpo_anulacion.php?<?=$phpsession?>&tpAnulacion=1&<? echo "fechah=$fechah"; ?>" target='mainFrame' class="menu_princ">Anulaci&oacute;n</a></li>
+                                <?php }     
+                      if ($_SESSION["usua_perm_trd"]==1) { ?>
+                      <li class="dropdown-submenu">
+                        <a href="#" onclick="return false;">Clasificaci&oacute;n Documental</a>
+                        <ul class="dropdown-menu">
+                          <li><a href='./trd/admin_series.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Series </a></li>
+                          <li><a href='./trd/admin_subseries.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Subseries </a></li>
+                          <li><a href='./trd/cuerpoMatriTRD.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Matriz Relaci&oacute;n </a></li>
+                          <li><a href='./trd/admin_tipodoc.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Tipos Documentales </a></li>
+                          <li><a href='./trd/procModTrdArea.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Modificacion TRD Area </a></li>
+                          <li><a href='./trd/informe_trd.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Listado Tablas de Retencion Documental </a></li>
+                        </ul>
+                      </li>
+                      <?php } 
+                      
+                      if($_SESSION["usua_admin_archivo"]>=1) {
+                          $isql = "select count(1) as CONTADOR
+                                from SGD_EXP_EXPEDIENTE
+                                where
+                                sgd_exp_estado=0 ";
+                            $rs=$db->conn->Execute($isql);
+                            $num_exp = $rs->fields["CONTADOR"];
+                        ?>
+                        <li><a href='./expediente/cuerpo_exp.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Archivo (<?=$num_exp?>)</a></li>
+                      <?php } 
+                      if($_SESSION["usua_admin_archivo"]>=2) {
+                        ?>
+                        <li><a href='archivo/archivo.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Administracion Archivo F&iacute;sico</a></li>
+                      <?php } 
+                      if($_SESSION["usua_perm_dev"]==1) { ?>
+                      <li> <a href='devolucion/cuerpoDevCorreo.php?<?=$phpsession?>&krd=<?=$krd?>&<?php echo "fechaf=$fechah&carpeta=8&devolucion=2&estado_sal=4&nomcarpeta=Documentos Para Impresion&orno=1&adodb_next_page=1"; ?>' target='mainFrame' class="menu_princ" >Dev Correo</span></a></li>
+                      <?php }?>
+                      
+                              <li>
+                                  <a href="./Administracion/tbasicas/adm_tarifas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
+                                      Tarifas
+                                  </a>
+                              </li>
+                      
+                                      
+                                      </li>
+                                      
+                                  </ul>
+                                  
 
+                              </li>
                               <li>
                                   <a href="./Administracion/tbasicas/adm_dependencias.php?<?=$sendSession?>" class="vinculos" target="mainFrame">
                                       Dependencias
@@ -508,11 +522,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                   </a>
                               </li>
 
-                              <li>
-                                  <a href="./Administracion/tbasicas/adm_tarifas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
-                                      Tarifas
-                                  </a>
-                              </li>
+ 
 
                               <li>
                                   <a href="./Administracion/tbasicas/adm_plantillas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>

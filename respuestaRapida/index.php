@@ -322,8 +322,9 @@ $permPlnatill[]   = array("nombre" => "Personales"  , "codigo" => 1);
                       PLAN_TIPO
                     FROM
                       SGD_PLAN_PLANTILLAS";
-//$db->conn->debug=true;
+#echo "<pre> $sql21</pre>";    
 $plant = $db->conn->Execute($sql21);
+#$db->conn->debug=true;
 
 while(!$plant->EOF){
 
