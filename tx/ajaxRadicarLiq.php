@@ -31,7 +31,7 @@ session_start();
   $anexo = new Anexo ($db);
   $carpetaPersonal = ($dato == 11)? 1 : 0;
   
-  $carpetaDestino = substr($codCarpeta,2,5);
+  $carpetaDestino = substr($codCarpeta,1,5);
   
   //  changeFolder( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$tomarNivel,$observa)
   $dependencia =900;
