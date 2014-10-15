@@ -69,6 +69,7 @@ if ($secur) {
    <head>
       <title>Informaci&oacute;n de Anexos</title>
       <link rel="stylesheet" href="estilos/orfeo.css">
+      <script type="text/javascript" src="<?=$ruta_raiz?>/js/jquery.min.js"></script>
    </head>
 <script language="javascript">
 function actualizar(){

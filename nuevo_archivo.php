@@ -123,6 +123,7 @@ if (!empty($codigo)){
 <head>
 <title>Informaci&oacute;n de Anexos</title>
 	<meta charset="utf-8">
+  
 	<link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
 	<!-- Bootstrap core CSS -->
 	<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
