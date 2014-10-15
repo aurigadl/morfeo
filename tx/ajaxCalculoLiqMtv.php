@@ -110,7 +110,7 @@
       $('#valorCatastralPromedio').val('$valorCatastralPromedioF');
       $('#chip').val('');
       $('#chip').attr('placeholder', '$chipMax');
-      $('#pChip').val('$chip');
+      $('#pChip').val('$chipMax');
       $('#resultado').html('$textoFinal');
       $('#areaTerreno').html('(Area del terreno  $areaTerreno m<sup>2</sup>)')
       $('#pNombreI').text(pNombreI);
