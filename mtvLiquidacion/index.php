@@ -695,9 +695,9 @@ var pagefunction = function() {
 		$('#bootstrap-wizard-1').bootstrapWizard({
 			'tabClass' : 'form-wizard',
 				'onNext' : function(tab, navigation, index) {
-                    if($(tab).data('target') != '#step3'){
-                        if(form.valid() == false) return false;
-                    };
+                    			if($(tab).data('target') != '#step3'){
+                        			if(form.valid() == false) return false;
+                    			};
 				},
 				'onTabClick' : function(tab, navigation, index) {
 					return true;

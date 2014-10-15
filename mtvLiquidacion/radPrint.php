@@ -91,7 +91,7 @@ del traslado de la obligación urbanística.
 <br><br>
 <small>
 <p style='font-size: 10;'>
-<b>Documentos Ajuntos a esta solicitud.</b><br>
+<b>Documentos Adjuntos a esta solicitud.</b><br>
  $files
 
 </small>
