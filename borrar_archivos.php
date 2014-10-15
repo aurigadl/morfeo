@@ -93,6 +93,17 @@ function actualizar(){
 <p>
 <?=$mensaje?>
 </p>
-<input type='button' class="botones" value='cerrar' onclick='opener.regresar();window.close();'>
+<!--<input type='button' class="botones" value='cerrar' onclick='opener.regresar();window.close();'>-->
+<?php
+    echo "<input type='button' id='cerraranexar' class='btn btn-default' value='Cerrar'>";
+?>
 </body>
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('body').on("click", '#cerraranexar',function(){
+          window.opener.$.fn.cargarPagina("./lista_anexos.php","tabs-c"); window.close();
+          window.close();
+      });
+  });
+</script>
 </html>  
