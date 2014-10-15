@@ -102,6 +102,7 @@ function actualizar(){
   $(document).ready(function() {
       $('body').on("click", '#cerraranexar',function(){
           window.opener.$.fn.cargarPagina("./lista_anexos.php","tabs-c"); window.close();
+          window.close();
       });
   });
 </script>
