@@ -206,4 +206,47 @@ class Roles {
         }
     }
 
+
+    /**
+     * Modificar Membresia
+     * @param  integer id del grupo
+     * @return array id's usuarios
+     */
+    public function modificarMembresia($grupo,$usuario,$estado){
+
+        if(emtpy($estado)){
+            $sql_sel_id = "delete from autu_usuarios where autg_id = $grupo, autu_id = $usuario";
+            $sql_sel    = $this->db->conn->query($sql_sel_id);
+
+            if(!$sql_sel->EOF){
+                return false;
+            }else{
+                return true;
+            }
+        }else{
+
+            if($id){
+                $nextval    = $id;
+            }else{
+                $sql_sel_id = "SELECT max(id) AS ID FROM autm_membresias";
+                $sql_sel    = $this->db->conn->query($sql_sel_id);
+                $nextval    = $sql_sel->fields["ID"] + 1;
+            }
+
+            $record = array();
+            $record['id']       = $nextval;
+            $record['autg_id']  = $grupo;
+            $record['autu_id']  = $usuario;
+
+            $insertSQL = $this->db->conn->Replace("autm_membresias",$record,'autg_id, autu_id',$autoquote = true);
+
+            if(empty($insertSQL)){
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+    }
+
 }

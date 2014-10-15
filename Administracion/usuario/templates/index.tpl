@@ -28,42 +28,6 @@
 		</tr>
 '}->
 
-<-{assign var="membresiasHtml" value='
-	<tr>
-
-		<td class="toogletd">
-			<a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title=""
-			   data-placement="Borrar" data-original-title="Collapse">
-				<i class="fa fa-minus "></i>
-			</a>
-			<a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title=""
-			   data-placement="Guardar" data-original-title="Collapse">
-				<i class="fa fa-save "></i>
-			</a>
-		</td>
-
-		<td class="toogletd">
-			<label class="select">
-				<select class="select">
-					<option>Secretaria</option>
-					<option>Contadores</option>
-					<option>Archivistas</option>
-				</select>
-			</label>
-		</td>
-
-		<td class="toogletd">
-			<label class="select">
-				<select class="select">
-					<option>Carlos Antonio Romero Incapie</option>
-					<option>Teresa Melo Armadillo</option>
-				</select>
-			</label>
-		</td>
-
-	</tr>
-'}->
-
 
 <-{assign var="usuariosHtml" value='
 	<tr>
@@ -539,19 +503,15 @@
 
 				<!-- widget content -->
 				<div class="widget-body no-padding">
-					<div id="membresiaMessage" class="widget-body-toolbar"></div>
 
-					<table id="dt_basic4" class="table table-striped table-bordered table-hover smart-form"
+					<table class="table table-striped table-bordered table-hover smart-form"
 					       width="100%">
 
 						<thead>
 							<tr>
-								<th style="width: 35px;">
-									<a href="javascript:void(0);" id="xdt_basic4" class="btn btn-sm"><i
-												class="fa fa-plus"></i>
-									</a>
+								<th>
+									Grupo
 								</th>
-								<th>Grupo</th>
 								<th>Usuario</th>
 							</tr>
 						</thead>
@@ -559,15 +519,6 @@
 						<tbody id="bdt_basic4">
 							<tr>
 								<td class="toogletd">
-
-									<a href="javascript:void(0);" data-tipo="membresias" data-id=""
-									   class="button-icon">
-										<i class="fa fa-save "></i>
-									</a>
-
-								</td>
-
-								<td class="hasinput">
 									<label class="select select-multiple">
 										<select data-tipo="membresias"  id="grupo_membresias" name="grupo"
 										        class="custom-scroll">
@@ -580,15 +531,12 @@
 								</td>
 
 								<td class="hasinput">
-									<label class="select select-multiple">
-										<select data-tipo="membresias" id="usuarios_membresias" name="usuarios"
-										        multiple="" class="custom-scroll">
-											<option value="">-- Seleccione una Opción --</option>
-											<-{foreach item=i from=$usuarios}->
-												<option value="<-{$i.ID}->"> <-{$i.NOMBRES}-> </option>
-											<-{/foreach}->
-										</select>
+									<-{foreach item=i from=$usuarios}->
+									<label class="checkbox">
+										<input data-tipo="membresias"  type="checkbox" value="<-{$i.ID}->">
+										<i></i><-{$i.NOMBRES}->
 									</label>
+									<-{/foreach}->
 								</td>
 
 							</tr>
@@ -710,15 +658,6 @@ de inserción para los nuevos registros. -->
 	<-{$usuariosHtml}->
 </script>
 
-
-<!-- Plantilla para la creación de los Usuarios.
-Elemento necesario para duplicar los campos
-de inserción para los nuevos registros. -->
-<script id="plantillaMembresias" type="text/html">
-	<-{$membresiasHtml}->
-</script>
-
-
 <script type="text/javascript">
 	(function ($) {
 		// DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -737,7 +676,7 @@ de inserción para los nuevos registros. -->
 		}
 
 		function runDataTables() {
-			$('#dt_basic, #dt_basic2, #dt_basic3, #dt_basic4').dataTable();
+			$('#dt_basic, #dt_basic2, #dt_basic3').dataTable();
 		}
 
 		/*
@@ -907,7 +846,7 @@ de inserción para los nuevos registros. -->
 			});
 		})
 
-
+		//Selector multiple para las membresias Grupos
 		$( "#grupo_membresias" ).change(function () {
 			var tipo  = $(this).data('tipo');
 			var datos = 'accion=buscarUsuariosDelGrupo&' + $(this).attr('name') + '=' + $(this).val();
@@ -923,6 +862,25 @@ de inserción para los nuevos registros. -->
 			});
 		});
 
+		//Selector multiple para las Membresias Usuarios
+		$( "input:checkbox" ).change(function () {
+			var tipo   = $(this).data('tipo');
+			var grupo  = $('#grupo_membresias').val();
+			var idusua = $(this).val();
+			var esusua = $(this).is(':checked');
+			var datos  = 'accion=guardarUsuariosDelGrupo&usuario='
+						+ idusua + '&estado='  + esusua + '&grupo=' + grupo;
+
+			$.post("ajaxPermisos.php", datos).done(function (data) {
+				if (data['estado'] == 1) {
+					$(data['valor']).each(function (index) {
+						$('#usuarios_membresias option[value=' + data['valor'][index] + ']').attr('selected', true);
+					});
+				}else{
+					alert('error error se daño este negocio ;p ');
+				}
+			});
+		});
 
 	})(jQuery);
 </script>

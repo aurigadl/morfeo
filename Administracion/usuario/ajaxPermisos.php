@@ -116,12 +116,25 @@ switch ($_POST['accion']){
                 break;
         }
 
-    // Guardar registros...........................................
+    // Buscar registros de los usuairos del grupo para realizar las memebresias.............
     case 'buscarUsuariosDelGrupo':
         $grupo  = $_POST['grupos'];
 
         if($roles->buscarUsuariosGrupo($grupo)){
             $resultado = array('estado' => 1, 'valor' => $roles->users);
+        }else{
+            $resultado = array('estado' => 0, 'valor' => '');
+        }
+        break;
+
+    // Guardar registros cuando el usuario seleccione un usuario en un grupo................
+    case 'grabarUsuariosDelGrupo':
+        $usuario  = $_POST['usuario'];
+        $estado   = $_POST['estado'];
+        $grupo    = $_POST['grupo'];
+
+        if($roles->modificarMembresia($grupo,$usuario,$estado)){
+            $resultado = array('estado' => 1, 'valor' => '');
         }else{
             $resultado = array('estado' => 0, 'valor' => '');
         }
