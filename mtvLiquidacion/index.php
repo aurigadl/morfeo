@@ -14,12 +14,6 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 $ruta_raiz = "..";
 include "$ruta_raiz/conn.php";
-$tipoAnexo[1] = "Certificado de Tradición y Libertad."; 
-$tipoAnexo[2] = "Certificado Catastral vigente";
-$tipoAnexo[3] = "Certificado de Existencia y Representación <br> (En caso de ser Persona juridica el titular de la licencia) ";
-$tipoAnexo[4] = "Cédula de Ciudadanía del Titular de la licencia (En caso de ser persona natural el titular de la licencia)";
-$tipoAnexo[5] = "Certificacii&oacute;n de la Curadur&iacute;a Urbana en donde se indiquen las &aacute;reas del proyecto, el tipo de proyecto y se establezca el &aacute;rea de la provisi&oacute;n de VIS o VIP<br> y/o la licencia urban&iacute;stica, donde esta relacionada el &aacute;rea  de la provisi&oacute;n de VIS o VIP";
-$tipoAnexo[6] = "Poder (en caso de ser autorizado a realizar tramites ante Metrovivienda).";
 ?>
 <html>
 <header>
@@ -321,36 +315,128 @@ echo $depselect;
 <i class="fa-fw fa fa-info"></i>
 <strong>Documentos Requeridos para la liquidacion!</strong> Por favor adjunte los documentos de la lista.
 </div>
-<?php
-for($i=1; $i<=6; $i++){
+Certificado de Tradición y Libertad.
+<label class="label"><div class="form-group smart-form" id=""></label>
 
-?>
-<div class="form-group smart-form" id=""><label class="label"><?=$tipoAnexo[$i];?></label>
 <?php
-  $norandom = "file$i";
-  echo("<div id='$norandom'>A&ntilde;adir Archivo  <input  type='hidden' value='' id='inp_$norandom'  /> 
-  </div>");
-  $scriptJS .= "
-  var uploaderId = '$norandom';
-  $('#$norandom').uploadFile({
-    url:'./server.php?tx=2',
-    fileName:'fileFormDinamic',
-    multiple:false,
-    dragDrop: false,
-    showFileCounter: false,
-    onSuccess:function(files,data,xhr){
-    $('#inp_$norandom').val(JSON.parse(data)[0]);
-    $('#nFile$i').val('files');
-  }
-  });
-  ";
-  echo "</div>";
- }
+$norandom = "file1";
+echo("
+	<div $addAttr id='$norandom'>A&ntilde;adir Archivos  <input  type='HIDDEN' value='' id='inp_$norandom'  /> 
+	");
+$scriptJS .= "
+	var uploaderId = '$norandom';
+$('#$norandom').uploadFile({
+	url:'./server.php?tx=2',
+		fileName:'fileFormDinamic',
+		multiple:false,
+		dragDrop: false,
+		showFileCounter: false,
+		onSuccess:function(files,data,xhr){
+			$('#inp_$norandom').val(JSON.parse(data)[0]);
+			// alert ('Subido Ok'+ files + 'data' + data + ' xhr '+ xhr);
+			$('#nFile1').val('files');
+}
+});
+";
+echo "</div>";
 ?>
-<script>
-<?=$scriptJS?>
-</script>
-  
+<label class="label">Certificado Catastral vigente</label>
+<?php
+$norandom = "file2";
+echo("<div  id='$norandom'>A&ntilde;adir Archivos</div>
+	<input class='input input-file'  type='HIDDEN' value='' id='inp_$norandom'  />");
+$scriptJS .= "
+	var uploaderId = '$norandom';
+$('#$norandom').uploadFile({
+	url:'./server.php?tx=2',
+		fileName:'fileFormDinamic',
+		multiple:false,
+		dragDrop: false,
+		showFileCounter: false,                                        
+		onSuccess:function(files,data,xhr){
+			$('#inp_$norandom').val(JSON.parse(data)[0]);
+}
+});
+";
+?>
+<label class="label">Certificado de Existencia y Representación <br> (En caso de ser Persona juridica el titular de la licencia)</label>
+<?php
+$norandom = "file3";
+echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
+	<input  type='HIDDEN' value='' id='inp_$norandom'  />");
+$scriptJS .= "
+	var uploaderId = '$norandom';
+$('#$norandom').uploadFile({
+	url:'./server.php?tx=2',
+		fileName:'fileFormDinamic',
+		multiple:false,
+		delete:true,
+		dragDrop: false,
+		showFileCounter: false,                                        
+		onSuccess:function(files,data,xhr){
+			$('#inp_$norandom').val(JSON.parse(data)[0]);
+}
+});
+";
+?>
+<label class="label">Cédula de Ciudadanía del Titular de la licencia (En caso de ser persona natural el titular de la licencia)</label>
+<?php
+$norandom = "file4";
+echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
+	<input  type='HIDDEN' value='' id='inp_$norandom'  />");
+$scriptJS .= "
+	var uploaderId = '$norandom';
+$('#$norandom').uploadFile({
+	url:'./server.php?tx=2',
+		fileName:'fileFormDinamic',
+		multiple:false,
+		dragDrop: false,
+		showFileCounter: false,                                        
+		onSuccess:function(files,data,xhr){
+			$('#inp_$norandom').val(JSON.parse(data)[0]);
+}
+});
+";
+?>
+<label class="label">Certificacii&oacute;n de la Curadur&iacute;a Urbana en donde se indiquen las &aacute;reas del proyecto, el tipo de proyecto y se establezca el &aacute;rea de la provisi&oacute;n de VIS o VIP<br> y/o la licencia urban&iacute;stica, donde esta relacionada el &aacute;rea  de la provisi&oacute;n de VIS o VIP</label>
+<?php
+$norandom = "file5";
+echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
+	<input  type='HIDDEN' value='' id='inp_$norandom'  />");
+$scriptJS .= "
+	var uploaderId = '$norandom';
+$('#$norandom').uploadFile({
+	url:'./server.php?tx=2',
+		fileName:'fileFormDinamic',
+		multiple:false,
+		dragDrop: false,
+		showFileCounter: false,                                        
+		onSuccess:function(files,data,xhr){
+			$('#inp_$norandom').val(JSON.parse(data)[0]);
+}
+});
+";
+?>
+<label class="label">        Poder (en caso de ser autorizado a realizar tramites ante Metrovivienda).</label>   
+<?php
+$norandom = "file6";
+echo("<div $addAttr id='$norandom'>A&ntilde;adir Archivos</div>
+	<input  type='HIDDEN' value='' id='inp_$norandom'  />");
+$scriptJS .= "
+	var uploaderId = '$norandom';
+$('#$norandom').uploadFile({
+	url:'./server.php?tx=2',
+		fileName:'fileFormDinamic',
+		multiple:false,
+		dragDrop: false,
+		showFileCounter: false,                                        
+		onSuccess:function(files,data,xhr){
+			$('#inp_$norandom').val(JSON.parse(data)[0]);
+}
+});
+";
+?>
+</div>
 <!--										<div class="alert alert-warning fade in">
 <button class="close" data-dismiss="alert"> × </button>
 <i class="fa-fw fa fa-warning"></i>
@@ -492,8 +578,7 @@ function calcularLiquidacion(chipVal){
 	nombreProyecto = $("#pNombre").val();
 	urbanizadorP = $("#pConstructora").val();
 	repLegal = $("#pRep").val();
-	pRep = $("#pRep").val();
-	$.post("../tx/ajaxCalculoLiqMtv.php", {"chip":chip,"valA1":valA1,"pRep":pRep,"repLegal":repLegal,"urbanizadorP":urbanizadorP,"nombreProyecto":nombreProyecto}).done(
+	$.post("../tx/ajaxCalculoLiqMtv.php", {"chip":chip,"valA1":valA1,"repLegal":repLegal,"urbanizadorP":urbanizadorP,"nombreProyecto":nombreProyecto}).done(
 		function( data ) {
 			$('#res').html(data);
 		}
@@ -511,117 +596,116 @@ function getArrayMuni(){
 		}
 	);
 }
+
+var form = $("#wizard-1");
+
+form.validate({
+    rules : {
+        valA1 : {
+            required : true
+        },
+        email : {
+            required : true,
+            email : true
+        },
+        fname : {
+            required : true
+        },
+        lname : {
+            required : true
+        },
+        country : {
+            required : true
+        },
+        city : {
+            required : true
+        },
+        address : {
+            required : true,
+            minlength : 4
+        },
+        wphone : {
+            required : false,
+            digits : true,
+            minlength : 7,
+            maxlength : 10
+        },
+        pNombre : {
+            required : true
+        },
+        pConstructora : {
+            required : true
+        },
+        pRep : {
+            required : true
+        },
+        pLic1 : {
+            required : true
+        },
+        pAreaU : {
+            required : true
+        }
+
+    },
+    messages : {
+        valA1 : "Ingrese el &Aacute;rea de obligaci&oacute;n",
+        email : "Su  email debera tener un formato como name@domain.com",
+        fname : "Especifique su Nombre",
+        lname : "Especifique su Apellido",
+        email : {
+            required : "Se requiere su  email",
+            email : "El email debe de tener un formato como: name@domain.com"
+        },
+        address : {
+            required : "Este campo es requerido"
+        },
+        wphone : {
+            digits: "S&oacute;lo se admiten n&uacute;meros",
+            minlength : "Ingrese m&iacute;nimo 7 n&uacute;meros",
+            maxlength: "Ingrese m&aacute;ximo 10 n&uacute;meros"
+        },
+        pNombre : "Por favor ingrese el nombre del proyecto",
+        pConstructora : "Por favor ingrese el nombre de la constructora",
+        pRep : "Por favor ingrese el nombre del representante legal",
+        pLic1 : "Por favor ingrese Licencia/Expediente",
+        pAreaU : "Por favor ingrese &Aacute;rea &Uacute;til"
+    },
+    highlight : function(element) {
+        $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+    },
+    unhighlight : function(element) {
+        $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+    },
+    errorElement : 'span',
+    errorClass : 'help-block',
+    errorPlacement : function(error, element) {
+        if (element.parent('.input-group').length) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
+        }
+    }
+}).focusInvalid();
+
 var pagefunction = function() {
 	// load bootstrap wizard
 	loadScript("<?=$ruta_raiz?>/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js", runBootstrapWizard);
 	//Bootstrap Wizard Validations
 	function runBootstrapWizard() {
-		var $validator = $("#wizard-1").validate({
-			rules : {
-				valA1 : {
-					required : true
-				},
-				email : {
-					required : true,
-						email : true 
-				},
-				fname : {
-					required : true
-				},
-				lname : {
-					required : true
-				},
-				country : {
-					required : true
-				},
-				city : {
-					required : true
-				},
-				address : {
-					required : true,
-						minlength : 4
-				},
-				wphone : {
-					required : false,
-						digits : true,
-						minlength : 7,
-						maxlength : 10
-				},
-				pNombre : {
-					required : true
-				},
-				pConstructora : {
-					required : true
-				},
-				pRep : {
-					required : true
-				},
-				pLic1 : {
-					required : true
-				},
-				pAreaU : {
-					required : true
-				},
-				
-			},
-			messages : {
-				valA1 : "Ingrese el &Aacute;rea de obligaci&oacute;n",
-					email : "Su  email debera tener un formato como name@domain.com",
-					fname : "Especifique su Nombre",
-					lname : "Especifique su Apellido",
-					email : {
-						required : "Se requiere su  email",
-							email : "El email debe de tener un formato como: name@domain.com"
-					},
-					address : {
-						required : "Este campo es requerido"
-					},
-					wphone : {
-						digits: "S&oacute;lo se admiten n&uacute;meros",
-							minlength : "Ingrese m&iacute;nimo 7 n&uacute;meros",
-							maxlength: "Ingrese m&aacute;ximo 10 n&uacute;meros"
-					},
-					pNombre : "Por favor ingrese el nombre del proyecto",
-					pConstructora : "Por favor ingrese el nombre de la constructora",
-					pRep : "Por favor ingrese el nombre del representante legal",
-					pLic1 : "Por favor ingrese Licencia/Expediente",
-					pAreaU : "Por favor ingrese &Aacute;rea &Uacute;til",
-			},
-			highlight : function(element) {
-				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-			},
-				unhighlight : function(element) {
-					$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-				},
-					errorElement : 'span',
-					errorClass : 'help-block',
-					errorPlacement : function(error, element) {
-						if (element.parent('.input-group').length) {
-							error.insertAfter(element.parent());
-						} else {
-							error.insertAfter(element);
-						}
-					}
-		});
 		$('#bootstrap-wizard-1').bootstrapWizard({
 			'tabClass' : 'form-wizard',
 				'onNext' : function(tab, navigation, index) {
-					var $valid = $("#wizard-1").valid();
-					if (!$valid) {
-						$validator.focusInvalid();
-						return false;
-					} else {
-						$('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass('complete');
-						$('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');
-					}
+                    if($(tab).data('target') != '#step3'){
+                        if(form.valid() == false) return false;
+                    };
 				},
 				'onTabClick' : function(tab, navigation, index) {
 					return true;
-				}	
+				}
 		});
 	};
 	// load fuelux wizard
-	loadScript("<?=$ruta_raiz?>/js/plugin/fuelux/wizard/wizard.min.js", fueluxWizard);
+	loadScript("<?=$ruta_raiz?>/js/plugin/fuelux/wizard/wizard.js", fueluxWizard);
 	function fueluxWizard() {
 		var wizard = $('.wizard').wizard();
 		wizard.on('finished', function(e, data) {
@@ -639,10 +723,11 @@ var pagefunction = function() {
 };
 // end pagefunction
 // Load bootstrap wizard dependency then run pagefunction
+pagefunction();
 
-
-// pagefunction();
-
+(function(){
+    <?=$scriptJS?>
+}());
 // Muestra las imagenes de los radicados
 function funlinkArchivo(numrad, rutaRaiz){
 	var nombreventana = "linkVistArch";
@@ -651,10 +736,6 @@ function funlinkArchivo(numrad, rutaRaiz){
 	//setTimeout(nombreventana.close, 70);
 	//return;
 }
-
-
-
 </script>
-
 </body>
 </HTML>
