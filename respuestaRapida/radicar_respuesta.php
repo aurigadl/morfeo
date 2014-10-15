@@ -22,9 +22,7 @@
 
 
 
-echo "<br>includes correctos<br>";
- 
-#  echo $barcode;
+ #echo $barcode;
  # exit;
 
   $db      = new ConnectionHandler($ruta_raiz);
@@ -607,7 +605,7 @@ $pdf->Ln(2);
 
 // Right alignment
 $style['position'] = 'R';
-$pdf->write1DBarcode($nurad, 'C128A', '', '', '', 15, 0.4, $style, 'N');
+#$pdf->write1DBarcode($nurad, 'C128A', '', '', '', 15, 0.4, $style, 'N');
 
 #$pdf->write1DBarcode($nurad, 'C128', '', '', '50', 18, 0.4, $style, '');
 
