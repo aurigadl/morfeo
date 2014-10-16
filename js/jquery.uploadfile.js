@@ -86,7 +86,8 @@
             if ($.fn.ajaxForm) {
 
                 if (s.dragDrop) {
-                    var dragDrop = $('<div class="ajax-upload-dragdrop" style="vertical-align:top;"></div>');
+                    var fileName = s.fileName.replace("[]", "");
+                    var dragDrop = $('<div id="'+fileName+'" class="ajax-upload-dragdrop" style="vertical-align:top;"></div>');
                     $(obj).before(dragDrop);
                     $(dragDrop).append(uploadLabel);
                     $(dragDrop).append($(s.dragDropStr));
