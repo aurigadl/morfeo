@@ -1,4 +1,5 @@
 <?php
+
   require_once($ruta_raiz."/config.php");
   require_once($ruta_raiz."/include/db/ConnectionHandler.php");
   include_once($ruta_raiz."/class_control/AplIntegrada.php");
@@ -16,6 +17,7 @@
   $hist    = new Historico($db);
   $Tx      = new Tx($db);
   
+
   $anexo   = $_POST['anexo'];
   
   $archivo_txt    = $anexo . '.txt';

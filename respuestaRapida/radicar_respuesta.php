@@ -1,4 +1,6 @@
 <?php
+
+
   define ('ENVIO_EMAIL', '1');
   define ('COLOMBIA',     170);
   
@@ -20,9 +22,7 @@
 
 
 
-
- 
-#  echo $barcode;
+ #echo $barcode;
  # exit;
 
   $db      = new ConnectionHandler($ruta_raiz);

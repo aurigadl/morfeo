@@ -247,7 +247,7 @@ if($_SESSION["enviarMailMovimientos"]==1){
                 include "$ruta_raiz/include/mail/mailInformar.php";
             }
         }else{
-            $depsel8 = split('-',$_POST['usCodSelect']);
+            $depsel8 = explode('-',$_POST['usCodSelect']);
             $usuaCodiMail = $depsel8[1];
             $depeCodiMail = $depsel8[0];
             include "$ruta_raiz/include/mail/mailInformar.php";

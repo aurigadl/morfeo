@@ -69,6 +69,7 @@ if ($secur) {
    <head>
       <title>Informaci&oacute;n de Anexos</title>
       <link rel="stylesheet" href="estilos/orfeo.css">
+      <script type="text/javascript" src="<?=$ruta_raiz?>/js/jquery.min.js"></script>
    </head>
 <script language="javascript">
 function actualizar(){
@@ -100,13 +101,9 @@ function actualizar(){
 </body>
 <script type="text/javascript">
   $(document).ready(function() {
-      /*$('body').on("click", '#cerraranexar',function(){
+ 	  $( "#cerraranexar" ).click(function() {
           window.opener.$.fn.cargarPagina("./lista_anexos.php","tabs-c"); window.close();
-          window.close();
-      });*/
-	  $( "#cerraranexar" ).click(function() {
-		  alert( "Handler for .click() called." );
-	});
+          window.close();});
   });
 </script>
 </html>  
