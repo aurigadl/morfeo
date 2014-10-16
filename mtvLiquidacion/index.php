@@ -344,6 +344,8 @@ for($i=1; $i<=6; $i++){
 		showFileCounter: false,
 		onSuccess:function(files,data,xhr){
 			$norandom = true;
+			$('#inp_$norandom').val(JSON.parse(data)[0]);
+			$('#nFile$i').val('files');
 		        document.getElementById('$norandom').style.display = 'none';
 		},
 		deleteCallback: function(data,pd){
