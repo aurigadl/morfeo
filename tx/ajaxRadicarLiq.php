@@ -101,7 +101,7 @@ session_start();
    $fileNew = $numeroRadicado . "_". str_pad($countAnexos , 5 , "0", STR_PAD_LEFT) .".".$ext;
    $pathNew = $pathAnexos . "" . $fileNew;
    $vSha1 = sha1_file("../bodega/tmp/$nFile");
-   $files .= $countAnexos.") ".substr($nFile,7,40)." - <b>".$tipoAnexo[$i]."</b> ($vSha1)</br>";
+   $files .= $countAnexos.") ".substr($nFile,6,40)." - <b>".$tipoAnexo[$i]."</b> ($vSha1)</br>";
    $anexo->anex_radi_nume = $numeroRadicado;
    
    $anexo->anex_creador= "'ADMON'";

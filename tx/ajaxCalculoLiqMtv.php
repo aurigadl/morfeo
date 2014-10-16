@@ -118,11 +118,20 @@
     </script>
     ";
   } else {
-    echo "<div class='alert alert-danger fade in'>
-              <button class='close' data-dismiss='alert'> × </button>
-              <i class='fa-fw fa fa-times'></i>
-              <strong>CHIP $chip</strong>
-               No se ha encontrado en la Base de datos.  Por favor verifiquelo.
-              </div>";
+	  if ($chip=='0'){
+		    echo "<div class='alert alert-danger fade in'>
+	              <button class='close' data-dismiss='alert'> × </button>
+	              <i class='fa-fw fa fa-times'></i>
+	              Por favor ingrese un Chip. 
+		      </div>";
+   
+	  }else{
+		    echo "<div class='alert alert-danger fade in'>
+		              <button class='close' data-dismiss='alert'> × </button>
+		              <i class='fa-fw fa fa-times'></i>
+		              <strong>CHIP $chip</strong>
+		               No se ha encontrado en la Base de datos.  Por favor verifiquelo.
+		              </div>";
+	  }
   }
 ?>
