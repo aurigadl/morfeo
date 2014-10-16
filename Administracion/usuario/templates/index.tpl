@@ -533,7 +533,8 @@
 								<td class="hasinput">
 									<-{foreach item=i from=$usuarios}->
 									<label class="checkbox">
-										<input data-tipo="membresias"  type="checkbox" value="<-{$i.ID}->">
+										<input data-tipo="membresias"  type="checkbox"
+										       name="<-{$i.ID}->" value="<-{$i.ID}->">
 										<i></i><-{$i.NOMBRES}->
 									</label>
 									<-{/foreach}->
@@ -851,13 +852,19 @@ de inserción para los nuevos registros. -->
 			var tipo  = $(this).data('tipo');
 			var datos = 'accion=buscarUsuariosDelGrupo&' + $(this).attr('name') + '=' + $(this).val();
 
+			$(':checkbox').each(
+					function(index, value){
+						$(value).attr('checked', false);
+					});
+
+
 			$.post("ajaxPermisos.php", datos).done(function (data) {
 				if (data['estado'] == 1) {
-					$(data['valor']).each(function (index) {
-						$('#usuarios_membresias option[value=' + data['valor'][index] + ']').attr('selected', true);
-					});
-				}else{
-					alert('error error se daño este negocio ;p ');
+					if(data['valor'].length > 0){
+						$(data['valor']).each(function (index, value) {
+							$("input[name='" + value +"']").prop('checked', true);
+						});
+					}
 				}
 			});
 		});
@@ -868,7 +875,7 @@ de inserción para los nuevos registros. -->
 			var grupo  = $('#grupo_membresias').val();
 			var idusua = $(this).val();
 			var esusua = $(this).is(':checked');
-			var datos  = 'accion=guardarUsuariosDelGrupo&usuario='
+			var datos  = 'accion=grabarUsuariosDelGrupo&usuario='
 						+ idusua + '&estado='  + esusua + '&grupo=' + grupo;
 
 			$.post("ajaxPermisos.php", datos).done(function (data) {
@@ -876,8 +883,6 @@ de inserción para los nuevos registros. -->
 					$(data['valor']).each(function (index) {
 						$('#usuarios_membresias option[value=' + data['valor'][index] + ']').attr('selected', true);
 					});
-				}else{
-					alert('error error se daño este negocio ;p ');
 				}
 			});
 		});

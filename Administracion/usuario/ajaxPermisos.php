@@ -87,7 +87,9 @@ switch ($_POST['accion']){
                 }
                 break;
 
+
             case 'permisos':
+
                 $nombre      = $_POST['nombre'];
                 $descripcion = $_POST['descripcion'];
                 $dependencia = $_POST['dependencia'];
@@ -100,6 +102,7 @@ switch ($_POST['accion']){
                     $resultado = array('estado' => 0, 'valor' => '');
                 }
                 break;
+
 
             case 'usuarios':
 
@@ -116,9 +119,10 @@ switch ($_POST['accion']){
                 break;
         }
 
+
     // Buscar registros de los usuairos del grupo para realizar las memebresias.............
     case 'buscarUsuariosDelGrupo':
-        $grupo  = $_POST['grupos'];
+        $grupo  = $_POST['grupo'];
 
         if($roles->buscarUsuariosGrupo($grupo)){
             $resultado = array('estado' => 1, 'valor' => $roles->users);
@@ -126,6 +130,8 @@ switch ($_POST['accion']){
             $resultado = array('estado' => 0, 'valor' => '');
         }
         break;
+
+
 
     // Guardar registros cuando el usuario seleccione un usuario en un grupo................
     case 'grabarUsuariosDelGrupo':

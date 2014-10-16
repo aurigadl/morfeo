@@ -33,7 +33,7 @@ class Roles {
 
     function __construct($db){
         $this->db=$db;
-        $this->db->conn->debug=true;
+        //$this->db->conn->debug=true;
     }
 
 
@@ -196,13 +196,13 @@ class Roles {
         $sql_usu    = $this->db->conn->query($sql_usu_id);
 
         if(!$sql_usu->EOF){
-            return false;
-        }else{
-            while (!$sql_usu->EOF){
-                $this->$users = $sql_usu->fields;
+            while (!$sql_usu->EOF) {
+                $this->users[] = $sql_usu->fields['AUTU_ID'];
                 $sql_usu->MoveNext();
             }
             return true;
+        }else{
+            return false;
         }
     }
 
@@ -213,25 +213,11 @@ class Roles {
      * @return array id's usuarios
      */
     public function modificarMembresia($grupo,$usuario,$estado){
+        if(filter_var($estado, FILTER_VALIDATE_BOOLEAN)){
 
-        if(emtpy($estado)){
-            $sql_sel_id = "delete from autu_usuarios where autg_id = $grupo, autu_id = $usuario";
+            $sql_sel_id = "SELECT max(id) AS ID FROM autm_membresias";
             $sql_sel    = $this->db->conn->query($sql_sel_id);
-
-            if(!$sql_sel->EOF){
-                return false;
-            }else{
-                return true;
-            }
-        }else{
-
-            if($id){
-                $nextval    = $id;
-            }else{
-                $sql_sel_id = "SELECT max(id) AS ID FROM autm_membresias";
-                $sql_sel    = $this->db->conn->query($sql_sel_id);
-                $nextval    = $sql_sel->fields["ID"] + 1;
-            }
+            $nextval    = $sql_sel->fields["ID"] + 1;
 
             $record = array();
             $record['id']       = $nextval;
@@ -240,7 +226,16 @@ class Roles {
 
             $insertSQL = $this->db->conn->Replace("autm_membresias",$record,'autg_id, autu_id',$autoquote = true);
 
-            if(empty($insertSQL)){
+            if(!$insertSQL->EOF){
+                return false;
+            }else{
+                return true;
+            }
+        }else{
+            $sql_sel_id = "delete from autm_membresias where autg_id = $grupo and autu_id = $usuario";
+            $sql_sel    = $this->db->conn->query($sql_sel_id);
+
+            if(empty($sql_sel)){
                 return false;
             }else{
                 return true;
