@@ -334,18 +334,18 @@ for($i=1; $i<=6; $i++){
 		var uploaderId = '$norandom';
 		$('#$norandom').uploadFile({
 		url:'./server.php?tx=2',
-		fileName:'$norandom',
+		fileName: 'fileFormDinamic',
 		done:false,
 		showDelete: true,
 		multiple:false,
+		id: '$norandom',
 		showAbort:false,
 		showDone:false,
 		dragDrop: true,
 		showFileCounter: false,
 		onSuccess:function(files,data,xhr){
-			$norandom = true;
 			$('#inp_$norandom').val(JSON.parse(data)[0]);
-			$('#nFile$i').val('files');
+			$norandom = true;
 		        document.getElementById('$norandom').style.display = 'none';
 		},
 		deleteCallback: function(data,pd){

@@ -33,6 +33,7 @@
             dragDrop: true,
             autoSubmit: true,
             showCancel: true,
+            id: 'aa',
             showAbort: true,
             showDone: true,
             showDelete:false,
@@ -87,7 +88,7 @@
 
                 if (s.dragDrop) {
                     var fileName = s.fileName.replace("[]", "");
-                    var dragDrop = $('<div id="'+fileName+'" class="ajax-upload-dragdrop" style="vertical-align:top;"></div>');
+                    var dragDrop = $('<div id="'+s.id+'" class="ajax-upload-dragdrop" style="vertical-align:top;"></div>');
                     $(obj).before(dragDrop);
                     $(dragDrop).append(uploadLabel);
                     $(dragDrop).append($(s.dragDropStr));
