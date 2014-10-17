@@ -39,22 +39,19 @@ if ($_POST['plantillas']) {
   $contenido = $_POST["contplant"];
   $fecha     = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
 
-  $sql21 = "
-    INSERT INTO
-    SGD_PLAN_PLANTILLAS(
-      plan_plantilla,
-      plan_nombre,
-      plan_fecha,
-      depe_codi,
-      usua_codi,
-      plan_tipo)
-    VALUES (
-      '$contenido',
-      '$nombre',
-       $fecha,
-      '$dep_code',
-      '$usu_code',
-      '$nivel')";
+#Creo la consulta dependiendo del driver.
+switch ($db->driver)
+ {case 'mssql':   break;
+  case 'oracle':  break;
+  case 'oci8': $sql21 = " INSERT INTO  SGD_PLAN_PLANTILLAS(ID, plan_plantilla, plan_nombre, plan_fecha, depe_codi, usua_codi, plan_tipo)
+  VALUES (SEC_SGD_PLAN_PLANTILLAS.NEXTVAL,'$contenido','$nombre', $fecha,'$dep_code','$usu_code','$nivel')"; break;
+   case 'postgres': $sql21 = " INSERT INTO  SGD_PLAN_PLANTILLAS(  plan_plantilla, plan_nombre, plan_fecha, depe_codi, usua_codi, plan_tipo)
+  VALUES ('$contenido','$nombre',$fecha,'$dep_code','$usu_code','$nivel')"; break;
+  }
+
+
+
+
   $rsg   = $db->conn->Execute($sql21);
 }
 
