@@ -84,6 +84,18 @@
 
 <article class="col-sm-12 col-md-12 col-lg-12">
 
+<div class="alert alert-success fade in">
+	<button class="close" data-dismiss="alert"> × </button>
+	<i class="fa-fw fa fa-check"></i>
+	<strong>Guardado</strong>
+</div>
+
+<div class="alert alert-danger fade in">
+	<button class="close" data-dismiss="alert"> × </button>
+	<i class="fa-fw fa fa-times"></i>
+	<strong>Error!</strong>
+</div>
+
 <div id="accordion">
 
 <div>
@@ -104,11 +116,7 @@
 
 				<!-- widget content -->
 				<div class="widget-body no-padding">
-					<div class="widget-body-toolbar text-center">
-						<span class="label label-success"> Guardado </span>
-						<span class="label label-danger"> Error </span>
-					</div>
-
+					<div class="widget-body-toolbar"></div>
 					<table id="dt_basic" class="table table-striped table-bordered table-hover smart-form" width="100%">
 						<thead>
 						<tr>
@@ -169,7 +177,7 @@
 
 <div>
 
-<h4>Permisos</h4>
+	<h4>Permisos</h4>
 
 <div class="padding-10">
 <!-- Widget ID (each widget will need unique ID)-->
@@ -186,12 +194,7 @@
 
 <!-- widget content -->
 <div class="widget-body no-padding">
-
-	<div class="widget-body-toolbar text-center">
-		<span class="label label-success"> Guardado </span>
-		<span class="label label-danger"> Error </span>
-	</div>
-
+	<div class="widget-body-toolbar"></div>
 	<table id="dt_basic2" class="table table-striped table-bordered table-hover smart-form"
 	       width="100%">
 		<thead>
@@ -409,7 +412,7 @@
 
 				<!-- widget content -->
 				<div class="widget-body no-padding">
-					<div id="usuariosMessage" class="widget-body-toolbar"></div>
+					<div class="widget-body-toolbar"></div>
 
 					<table id="dt_basic3" class="table table-striped table-bordered table-hover smart-form"
 					       width="100%">
@@ -503,7 +506,6 @@
 
 				<!-- widget content -->
 				<div class="widget-body no-padding">
-
 					<table class="table table-striped table-bordered table-hover smart-form"
 					       width="100%">
 
@@ -659,6 +661,7 @@ de inserción para los nuevos registros. -->
 	<-{$usuariosHtml}->
 </script>
 
+
 <script type="text/javascript">
 	(function ($) {
 		// DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -680,6 +683,19 @@ de inserción para los nuevos registros. -->
 			$('#dt_basic, #dt_basic2, #dt_basic3').dataTable();
 		}
 
+		//Validacion de los campos del formulario
+		function validarCampos(datos){
+			var res = datos.split('&');
+			$.each(res, function(index, value) {
+				var dato = value.split('=')[1];
+
+				if((dato == "" || dato.length == 0 || dato == undefined) && value.split('=')[1]){
+					$('.alert-danger').show().delay(3000).fadeOut();
+					return false;
+				}
+			});
+		}
+
 		/*
 		 * ACCORDION
 		 * jquery accordion
@@ -698,8 +714,8 @@ de inserción para los nuevos registros. -->
 			active: 3
 		})
 
-		$('.label-success').hide();
-		$('.label-danger').hide();
+		$('.alert-success').hide();
+		$('.alert-danger').hide();
 
 		//agregar elementos
 		$('#xdt_basic2, #xdt_basic, #xdt_basic3, #xdt_basic4').click(function (event) {
@@ -742,6 +758,11 @@ de inserción para los nuevos registros. -->
 			var datos = 'accion=borrar&tipo=' + tipo + '&id=' + id;
 			var boton = $(this);
 
+			//Valida si existe algun campo en blanco
+			if(!validarCampos(datos)){
+				return false;
+			}
+
 			if (id == undefined) {
 				$($(this).closest('tr')).remove();
 				return;
@@ -750,9 +771,9 @@ de inserción para los nuevos registros. -->
 			$.post("ajaxPermisos.php", datos).done(function (data) {
 				if (data['estado'] == 1) {
 					$($(boton).closest('tr')).remove();
-					$('.label-success').show().delay(3000).fadeOut();
+					$('.alert-success').show().delay(3000).fadeOut();
 				} else {
-					$('.label-danger').show().delay(3000).fadeOut();
+					$('.alert-danger').show().delay(3000).fadeOut();
 				}
 			})
 
@@ -762,11 +783,16 @@ de inserción para los nuevos registros. -->
 		//Agregar o editar
 		$('body').on('click', '.fa-save', function (event) {
 
-			var tipo = $(this).parent().data('tipo');
-			var id = $(this).parent().data('id');
-			var datos = 'accion=guardar&tipo=' + tipo;
-			var boton = $(this);
+			var tipo     = $(this).parent().data('tipo');
+			var id       = $(this).parent().data('id');
+			var datos    = 'accion=guardar&tipo=' + tipo;
+			var boton    = $(this);
 			var elemnttr = $(this).closest('tr');
+
+			//Valida si existe algun campo en blanco
+			if(!validarCampos(datos)){
+				return false;
+			}
 
 			if (id !== undefined) {
 				datos += '&id=' + id;
@@ -840,23 +866,23 @@ de inserción para los nuevos registros. -->
 					boton.closest('td').find('a').each(function (index) {
 						$(this).attr("data-id", data['valor']);
 					});
-					$('.label-success').show().delay(3000).fadeOut();
+					$('.alert-success').show().delay(3000).fadeOut();
 				} else {
-					$('.label-danger').show().delay(3000).fadeOut();
+					$('.alert-danger').show().delay(3000).fadeOut();
 				}
 			});
 		})
+
 
 		//Selector multiple para las membresias Grupos
 		$( "#grupo_membresias" ).change(function () {
 			var tipo  = $(this).data('tipo');
 			var datos = 'accion=buscarUsuariosDelGrupo&' + $(this).attr('name') + '=' + $(this).val();
 
-			$(':checkbox').each(
-					function(index, value){
-						$(value).attr('checked', false);
-					});
-
+			//Valida si existe algun campo en blanco
+			if(!validarCampos(datos)){
+				return false;
+			}
 
 			$.post("ajaxPermisos.php", datos).done(function (data) {
 				if (data['estado'] == 1) {
@@ -868,6 +894,7 @@ de inserción para los nuevos registros. -->
 				}
 			});
 		});
+
 
 		//Selector multiple para las Membresias Usuarios
 		$( "input:checkbox" ).change(function () {

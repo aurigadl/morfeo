@@ -196,7 +196,7 @@ class Roles {
         $sql_usu    = $this->db->conn->query($sql_usu_id);
 
         if(!$sql_usu->EOF){
-            while (!$sql_usu->EOF) {
+            while (!$sql_usu->EOF && $sql_usu!=false) {
                 $this->users[] = $sql_usu->fields['AUTU_ID'];
                 $sql_usu->MoveNext();
             }

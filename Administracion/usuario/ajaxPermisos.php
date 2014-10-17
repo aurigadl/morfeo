@@ -36,9 +36,12 @@ $roles    = new Roles($db);
 header('Content-Type: application/json');
 
 switch ($_POST['accion']){
+
     /**************************************
      * ********** Edición de grupos ********
      * ************************************/
+
+    // Borrar registros de las distintas acciones..........................................
     case 'borrar':
         $id = $_POST['id'];
 
@@ -70,6 +73,7 @@ switch ($_POST['accion']){
         }
         break;
 
+
     // Guardar registros...........................................
     case 'guardar':
 
@@ -89,7 +93,6 @@ switch ($_POST['accion']){
 
 
             case 'permisos':
-
                 $nombre      = $_POST['nombre'];
                 $descripcion = $_POST['descripcion'];
                 $dependencia = $_POST['dependencia'];
@@ -105,7 +108,6 @@ switch ($_POST['accion']){
 
 
             case 'usuarios':
-
                 $nombres     = $_POST['nombres'];
                 $apellidos   = $_POST['apellidos'];
                 $contrasena  = $_POST['contrasena'];
@@ -118,19 +120,17 @@ switch ($_POST['accion']){
                 }
                 break;
         }
-
+        break;
 
     // Buscar registros de los usuairos del grupo para realizar las memebresias.............
     case 'buscarUsuariosDelGrupo':
         $grupo  = $_POST['grupo'];
-
         if($roles->buscarUsuariosGrupo($grupo)){
             $resultado = array('estado' => 1, 'valor' => $roles->users);
         }else{
             $resultado = array('estado' => 0, 'valor' => '');
         }
         break;
-
 
 
     // Guardar registros cuando el usuario seleccione un usuario en un grupo................
@@ -145,6 +145,7 @@ switch ($_POST['accion']){
             $resultado = array('estado' => 0, 'valor' => '');
         }
         break;
+
 }
 
 echo json_encode($resultado);
