@@ -34,7 +34,7 @@
   
   // Es necesario liberar la variable ya que este se utilizara mas adelante como clase
   unset($anexo);
-
+$db->conn->debug=true;
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
   $anexTip->anex_tipo_codigo(7);
   $sqlFechaHoy      = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
@@ -187,7 +187,7 @@
   $ruta1     = $primerno . "/" . $segundono . "/docs/";
   $adjuntos  = 'bodega/'.$ruta1;
 
-  $nextval   = $db->nextId("sec_dir_direcciones");
+  $nextval   = $db->nextId("sec_dir_drecciones");
   //se buscan los datos del radicado padre y se
   //insertaran en los del radicado hijo
 
@@ -230,7 +230,8 @@
                               1,
                               $nextval,
                               '$dir_nombre')";
-  
+# echo "<pre>$isql</pre>"; exit;
+ 
   $dignatario       = $dir_nombre;
   $rsg              = $db->conn->Execute($isql);
 
