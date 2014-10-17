@@ -317,7 +317,7 @@ class Radicacion
 
    function insertDireccion($radiNumeRadi, $dirTipo,$tipoAccion){
       if($tipoAccion==0) {
-       $nextval = $this->db->conn->nextId("sec_dir_direcciones");
+       $nextval = $this->db->conn->nextId("sec_dir_drecciones"); 
        $this->dirCodigo = $nextval;
       }
       //$this->db->conn->debug = true;
