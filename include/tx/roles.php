@@ -27,14 +27,181 @@ class Roles {
      * Clase que maneja los usuarios
      */
 
-    var $db;                //Conexion a la base de datos
-    var $id;                //Retorno del id del registro
-    var $users = array();   //Usuarios que pertenecen a un grupo
+    var $db;              //Conexion a la base de datos
+    var $id;
+    var $users;
+    var $permisos;
+    var $opciones;
+    var $grupos;
+    var $usuarios;
+    var $dependencias;
+
 
     function __construct($db){
         $this->db=$db;
         //$this->db->conn->debug=true;
     }
+
+    /**
+     * retornar Permisos
+     * @return bool
+     */
+    public function retornarPermisos(){
+        $sql_perm = " SELECT
+                          id,
+                          autg_id,
+                          nombre,
+                          dependencia,
+                          crud,
+                          descripcion
+                      FROM
+                          autp_permisos";
+
+        $perm     = $this->db->conn->query($sql_perm);
+
+        if(!$perm->EOF){
+            return false;
+        }
+
+        while (!$perm->EOF) {
+            $this->permisos[] = array('ID' => $perm->fields['ID'],
+            'AUTG_ID'     => $perm->fields['AUTG_ID'],
+            'NOMBRE'      => $perm->fields['NOMBRE'],
+            'DEPENDENCIA' => explode(',', $perm->fields['DEPENDENCIA']),
+            'CRUD'        => $perm->fields['CRUD'],
+            'DESCRIPCION' => $perm->fields['DESCRIPCION']);
+
+            $perm->MoveNext();
+        }
+
+        return true;
+    }
+
+
+    /**
+     * retornar Opciones
+     * @return array de opciones
+     */
+    public function retornarOpcionesPermisos(){
+        return array(  array('ID' => 1, 'NOMBRE' => 'Leer'),
+                       array('ID' => 2, 'NOMBRE' => 'Editar'),
+                       array('ID' => 3, 'NOMBRE' => 'Crear y Borrar')
+                    );
+    }
+
+
+    /**
+     * Retorna Grupos
+     * @return bool, carga variable de grupos
+     */
+    public function retornarGrupos(){
+        $sql_grup = " SELECT
+                          id,
+                          nombre,
+                          descripcion
+                      FROM
+                          autg_grupos";
+
+        $grup = $this->db->conn->query($sql_grup);
+
+        if(!$grup->EOF){
+            return false;
+        }
+
+        while (!$grup->EOF) {
+            $this->$grupos[] = $grup->fields;
+            $grup->MoveNext();
+        }
+
+        return true;
+
+    }
+
+
+
+    /**
+     * Retorna usuarios
+     * @return bool, carga variable de usuarios
+     */
+    public function retornarUsuarios($usuario=false){
+        $sql_usua = " SELECT
+                          id,
+                          nombres,
+                          apellidos,
+                          correo,
+                          contrasena,
+                          usuario
+                      FROM
+                          autu_usuarios";
+
+        $usua = $this->db->conn->query($sql_usua);
+
+        if(!$usua->EOF){
+            return false;
+        }
+
+        while (!$usua->EOF) {
+            $this->usuarios[] = $usua->fields;
+            $usua->MoveNext();
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Retorna Dependencias
+     * @return bool, carga variable de Dependencias
+     */
+    public function retornarDependencias(){
+        $sql_depe = " SELECT
+                        depe_nomb,
+                        depe_codi
+                      FROM
+                        dependencia";
+
+        $depe = $this->db->conn->query($sql_depe);
+
+        if(!$usua->EOF){
+            return false;
+        }
+
+        while (!$depe->EOF) {
+            $this->dependencias[] = $depe->fields;
+            $depe->MoveNext();
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Retorna Membresias
+     * @return bool, carga variable de membresias
+     */
+    public function retornarMembresias(){
+        $sql_memb = "SELECT
+                        id,
+                        autg_id,
+                        autu_id
+                      FROM
+                        autm_membresias";
+
+        $memb     = $db->conn->query($sql_memb);
+
+        if(!$memb->EOF){
+            return false;
+        }
+
+        while (!$memb->EOF) {
+            $membresias[] = $memb->fields;
+            $memb->MoveNext();
+        }
+
+        return true;
+
+    }
+
 
 
     /**
@@ -44,7 +211,6 @@ class Roles {
      * @param  integer id del grupo
      * @return bool
     */
-
     public function creaEditaGrupo($nombre, $descripcion, $id){
         if($id){
             $nextval    = $id;
@@ -67,6 +233,9 @@ class Roles {
             return true;
         }
     }
+
+
+
 
     /**
      * Borrar Grupo
@@ -145,7 +314,7 @@ class Roles {
      * @return bool
      */
 
-    public function creaEditaUsuario($nombres, $apellidos, $contrasena, $correo, $id){
+    public function creaEditaUsuario($usuario, $nombres, $apellidos, $contrasena, $correo, $id){
         if($id){
             $nextval    = $id;
         }else{
@@ -159,6 +328,7 @@ class Roles {
         $record['nombres']    = $nombres;
         $record['apellidos']  = $apellidos;
         $record['correo']     = $correo;
+        $record['usuario']    = $usuario;
         $record['contrasena'] = $contrasena;
 
         $insertSQL = $this->db->conn->Replace("autu_usuarios",$record,'id',$autoquote = true);
@@ -168,6 +338,7 @@ class Roles {
             $this->id = $nextval;
             return true;
         }
+
     }
 
     /**
@@ -243,5 +414,16 @@ class Roles {
         }
 
     }
+
+
+    /**
+     * Crear y Editar Usuarios
+     * @param  string nombre del usuario
+     * @return bool, cargar variable de permisos del usuario
+     */
+
+    public function traerPermisos($usuario, $password){
+    }
+
 
 }

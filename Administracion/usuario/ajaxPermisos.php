@@ -112,8 +112,9 @@ switch ($_POST['accion']){
                 $apellidos   = $_POST['apellidos'];
                 $contrasena  = $_POST['contrasena'];
                 $correo      = $_POST['correo'];
+                $usuario     = $_POST['usuario'];
 
-                if($roles->creaEditaUsuario($nombres, $apellidos, $contrasena, $correo, $id)){
+                if($roles->creaEditaUsuario($usuario, $nombres, $apellidos, $contrasena, $correo, $id)){
                     $resultado = array('estado' => 1, 'valor' => $roles->id);
                 }else{
                     $resultado = array('estado' => 0, 'valor' => '');

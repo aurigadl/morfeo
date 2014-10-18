@@ -45,7 +45,19 @@
 
 		<td class="hasinput">
 			<label class="input">
+				<input type="text" name="usuario" value="">
+			</label>
+		</td>
+
+		<td class="hasinput">
+			<label class="input">
 				<input type="text" name="nombres" value="">
+			</label>
+		</td>
+
+		<td class="hasinput">
+			<label class="input">
+				<input type="text" name="usuario" value="">
 			</label>
 		</td>
 
@@ -422,6 +434,7 @@
 								<a href="javascript:void(0);" id="xdt_basic3" class="btn btn-sm"><i
 											class="fa fa-plus"></i></a>
 							</th>
+							<th>Usuario</th>
 							<th>Nombres</th>
 							<th>Apellidos</th>
 							<th>Contraseña</th>
@@ -441,11 +454,17 @@
 											<i class="fa fa-minus"></i>
 										</a>
 
-										<a href="javascript:void(0);" data-tipo="usuarios" data-id="<-{$item.ID}->"
+										<a href="javascript:void(0);" data-tipo="usuario" data-id="<-{$item.ID}->"
 										   class="button-icon">
 											<i class="fa fa-save "></i>
 										</a>
 
+									</td>
+
+									<td class="hasinput">
+										<label class="input">
+											<input type="text" name="usuario" value="<-{$item.USUARIO}->">
+										</label>
 									</td>
 
 									<td class="hasinput">

@@ -29,103 +29,37 @@ $smarty->cache_dir    = './cache/';
 $smarty->left_delimiter  = '<-{';
 $smarty->right_delimiter = '}->';
 
-$db = new ConnectionHandler($ruta_raiz);
+$db    = new ConnectionHandler($ruta_raiz);
+$roles = new Roles($db);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 //$db->conn->debug = true;
 
-//Permisos
-$sql_perm = " SELECT
-                  id,
-                  autg_id,
-                  nombre,
-                  dependencia,
-                  crud,
-                  descripcion
-              FROM
-                  autp_permisos";
 
-$perm     = $db->conn->query($sql_perm);
+//Traemos los permisos
+if($roles->retornarPermisos()){
+    $permisos = $roles->$permisos;
+}
 
-while (!$perm->EOF) {
+//Traemos las opciones sobre los permisos
+$crud = $roles->retornarOpcionesPermisos();
 
-    $permisos[] = array('ID'          => $perm->fields['ID'],
-                        'AUTG_ID'     => $perm->fields['AUTG_ID'],
-                        'NOMBRE'      => $perm->fields['NOMBRE'],
-                        'DEPENDENCIA' => explode(',', $perm->fields['DEPENDENCIA']),
-                        'CRUD'        => $perm->fields['CRUD'],
-                        'DESCRIPCION' => $perm->fields['DESCRIPCION']);
+//Traemos los grupos
+if($roles->retornarGrupos()){
+    $grupos = $roles->$grupos;
+}
 
-    $perm->MoveNext();
+//Traemos los Usuarios
+if($roles->retornarUsuarios()){
+    $grupos = $roles->$usuarios;
+}
+
+//Traemos los Dependencias
+if($roles->retornarDependencias()){
+    $usuarios = $roles->$dependencias;
 }
 
 
 
-//Crud
-$crud   = array( array('ID' => 1, 'NOMBRE' => 'Leer'),
-                 array('ID' => 2, 'NOMBRE' => 'Editar'),
-                 array('ID' => 3, 'NOMBRE' => 'Crear y Borrar')
-);
-
-//Grupos
-$sql_grup = "     SELECT
-                      id,
-                      nombre,
-                      descripcion
-                  FROM
-                      autg_grupos";
-
-$grup     = $db->conn->query($sql_grup);
-
-while (!$grup->EOF) {
-    $grupos[] = $grup->fields;
-    $grup->MoveNext();
-}
-
-//Usuarios
-$sql_usua = "     SELECT
-                      id,
-                      nombres,
-                      apellidos,
-                      correo,
-                      contrasena
-                  FROM
-                      autu_usuarios";
-
-$usua     = $db->conn->query($sql_usua);
-
-while (!$usua->EOF) {
-    $usuarios[] = $usua->fields;
-    $usua->MoveNext();
-}
-
-//Dependencias
-$sql_depe = " SELECT
-                depe_nomb,
-                depe_codi
-              FROM
-                dependencia";
-
-$depe     = $db->conn->query($sql_depe);
-
-while (!$depe->EOF) {
-    $dependencias[] = $depe->fields;
-    $depe->MoveNext();
-}
-
-//Membresias
-$sql_memb = "SELECT
-                id,
-                autg_id,
-                autu_id
-		      FROM
-		        autm_membresias";
-
-$memb     = $db->conn->query($sql_memb);
-
-while (!$memb->EOF) {
-    $membresias[] = $memb->fields;
-    $memb->MoveNext();
-}
 
 $smarty->assign("permisos"     , $permisos);
 $smarty->assign("crud"         , $crud);
