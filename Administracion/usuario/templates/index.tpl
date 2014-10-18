@@ -51,13 +51,13 @@
 
 		<td class="hasinput">
 			<label class="input">
-				<input type="text" name="nombres" value="">
+				<input type="text" name="contrasena" value="">
 			</label>
 		</td>
 
 		<td class="hasinput">
 			<label class="input">
-				<input type="text" name="usuario" value="">
+				<input type="text" name="nombres" value="">
 			</label>
 		</td>
 
@@ -67,11 +67,6 @@
 			</label>
 		</td>
 
-		<td class="hasinput">
-			<label class="input">
-				<input type="text" name="contrasena" value="">
-			</label>
-		</td>
 
 		<td class="hasinput">
 			<label class="input">
@@ -435,9 +430,9 @@
 											class="fa fa-plus"></i></a>
 							</th>
 							<th>Usuario</th>
+							<th>Contraseña</th>
 							<th>Nombres</th>
 							<th>Apellidos</th>
-							<th>Contraseña</th>
 							<th>Correo</th>
 						</tr>
 						</thead>
@@ -469,6 +464,12 @@
 
 									<td class="hasinput">
 										<label class="input">
+											<input type="text" name="contrasena" value="<-{$item.CONTRASENA}->">
+										</label>
+									</td>
+
+									<td class="hasinput">
+										<label class="input">
 											<input type="text" name="nombres" value="<-{$item.NOMBRES}->">
 										</label>
 									</td>
@@ -479,11 +480,6 @@
 										</label>
 									</td>
 
-									<td class="hasinput">
-										<label class="input">
-											<input type="text" name="contrasena" value="<-{$item.CONTRASENA}->">
-										</label>
-									</td>
 
 									<td class="hasinput">
 										<label class="input">
@@ -706,13 +702,15 @@ de inserción para los nuevos registros. -->
 		function validarCampos(datos){
 			var res = datos.split('&');
 			$.each(res, function(index, value) {
+
 				var dato = value.split('=')[1];
 
-				if((dato == "" || dato.length == 0 || dato == undefined) && value.split('=')[1]){
+				if((dato == "" || dato.length == 0 || dato == undefined) && (value.split('=')[0] != 'id')){
 					$('.alert-danger').show().delay(3000).fadeOut();
 					return false;
 				}
 			});
+			return true;
 		}
 
 		/*
@@ -758,11 +756,6 @@ de inserción para los nuevos registros. -->
 					$('#bdt_basic3').prepend($(plaUsua).html());
 					break;
 
-				case 'bdt_basic4':
-					//Plantillas y clonar elementos Membresias
-					var plaMemb = $('#plantillaMembresias').clone();
-					$('#bdt_basic4').prepend($(plaMemb).html());
-					break;
 			}
 
 			event.stopPropagation();
@@ -808,10 +801,6 @@ de inserción para los nuevos registros. -->
 			var boton    = $(this);
 			var elemnttr = $(this).closest('tr');
 
-			//Valida si existe algun campo en blanco
-			if(!validarCampos(datos)){
-				return false;
-			}
 
 			if (id !== undefined) {
 				datos += '&id=' + id;
@@ -878,6 +867,11 @@ de inserción para los nuevos registros. -->
 						var nombre = $(this).val();
 					});
 					break;
+			}
+
+			//Valida si existe algun campo en blanco
+			if(!validarCampos(datos)){
+				return false;
 			}
 
 			$.post("ajaxPermisos.php", datos).done(function (data) {

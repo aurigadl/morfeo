@@ -16,8 +16,9 @@ $dependencia  = $_SESSION["dependencia"];
 $usua_doc     = $_SESSION["usua_doc"];
 $codusuario   = $_SESSION["codusuario"];
 
-include_once ('./libs/Smarty.class.php');
-include_once ($ruta_raiz."/include/db/ConnectionHandler.php");
+include_once("./libs/Smarty.class.php");
+include_once("$ruta_raiz/include/db/ConnectionHandler.php");
+include_once("$ruta_raiz/include/tx/roles.php");
 
 $smarty = new Smarty;
 
@@ -37,7 +38,7 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
 //Traemos los permisos
 if($roles->retornarPermisos()){
-    $permisos = $roles->$permisos;
+    $permisos = $roles->permisos;
 }
 
 //Traemos las opciones sobre los permisos
@@ -45,21 +46,18 @@ $crud = $roles->retornarOpcionesPermisos();
 
 //Traemos los grupos
 if($roles->retornarGrupos()){
-    $grupos = $roles->$grupos;
+    $grupos = $roles->grupos;
 }
 
 //Traemos los Usuarios
 if($roles->retornarUsuarios()){
-    $grupos = $roles->$usuarios;
+    $grupos = $roles->usuarios;
 }
 
 //Traemos los Dependencias
 if($roles->retornarDependencias()){
-    $usuarios = $roles->$dependencias;
+    $usuarios = $roles->dependencias;
 }
-
-
-
 
 $smarty->assign("permisos"     , $permisos);
 $smarty->assign("crud"         , $crud);

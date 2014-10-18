@@ -104,12 +104,12 @@ class Roles {
 
         $grup = $this->db->conn->query($sql_grup);
 
-        if(!$grup->EOF){
+        if($grup->EOF){
             return false;
         }
 
         while (!$grup->EOF) {
-            $this->$grupos[] = $grup->fields;
+            $this->grupos[] = $grup->fields;
             $grup->MoveNext();
         }
 
@@ -121,9 +121,11 @@ class Roles {
 
     /**
      * Retorna usuarios
+     * @param  string nombre del usuario a retornar
      * @return bool, carga variable de usuarios
      */
     public function retornarUsuarios($usuario=false){
+
         $sql_usua = " SELECT
                           id,
                           nombres,
@@ -134,15 +136,28 @@ class Roles {
                       FROM
                           autu_usuarios";
 
-        $usua = $this->db->conn->query($sql_usua);
+        if(empty($usuario)){
+            $usua = $this->db->conn->query($sql_usua);
 
-        if(!$usua->EOF){
-            return false;
-        }
+            if(!$usua->EOF){
+                return false;
+            }
 
-        while (!$usua->EOF) {
-            $this->usuarios[] = $usua->fields;
-            $usua->MoveNext();
+            while (!$usua->EOF) {
+                $this->usuarios[] = $usua->fields;
+                $usua->MoveNext();
+            }
+
+        }else{
+            $sql_usua .= "where usuario = $usuario";
+
+            $usua = $this->db->conn->query($sql_usua);
+
+            if(!$usua->EOF){
+                return false;
+            }
+
+            $this->usuarios = $usua->fields;
         }
 
         return true;
@@ -162,7 +177,7 @@ class Roles {
 
         $depe = $this->db->conn->query($sql_depe);
 
-        if(!$usua->EOF){
+        if(!$depe->EOF){
             return false;
         }
 
@@ -187,7 +202,7 @@ class Roles {
                       FROM
                         autm_membresias";
 
-        $memb     = $db->conn->query($sql_memb);
+        $memb = $this->db->conn->query($sql_memb);
 
         if(!$memb->EOF){
             return false;
@@ -199,7 +214,6 @@ class Roles {
         }
 
         return true;
-
     }
 
 
@@ -332,6 +346,7 @@ class Roles {
         $record['contrasena'] = $contrasena;
 
         $insertSQL = $this->db->conn->Replace("autu_usuarios",$record,'id',$autoquote = true);
+
         if(empty($insertSQL)){
             return false;
         }else{
@@ -423,7 +438,9 @@ class Roles {
      */
 
     public function traerPermisos($usuario, $password){
+        if($this->retornarUsuarios($usuario)){
+            $this->usuarios['password'];
+        };
     }
-
 
 }

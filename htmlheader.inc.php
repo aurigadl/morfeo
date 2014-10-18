@@ -71,6 +71,7 @@ echo <<<EOF
       <script type="text/javascript" src="$ruta_raiz/js/plugin/fuelux/wizard/wizard.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/bootstrap.js"></script>
+      <script type="text/javascript" src="$ruta_raiz/js/jquery.form.js"></script>
 
       <script src="$ruta_raiz/js/jsplumb/lib/jquery.ui.touch-punch.min.js"></script>
 		<!-- /DEP -->
