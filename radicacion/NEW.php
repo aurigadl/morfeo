@@ -539,7 +539,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <label class="input">
                       <input name="ane" id="ane" type="text" size="70"  value="<?=$ane?>">
                   </label>
-
+                  <?php if ($_SESSION["varEstaenfisico"] == 1){ ?>
+                   <label class="label">
+                      Fisico en archivo
+                  </label>
+                      <input name="fienar" id="fienar" type="checkbox"  value="<?=$fienar?>">
+                  <?php } ?>
                   <label class="label">
                       Dependencia
                   </label>
