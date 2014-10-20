@@ -34,7 +34,7 @@
   
   // Es necesario liberar la variable ya que este se utilizara mas adelante como clase
   unset($anexo);
-$db->conn->debug=true;
+#$db->conn->debug=true;
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
   $anexTip->anex_tipo_codigo(7);
   $sqlFechaHoy      = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
@@ -423,8 +423,10 @@ $bien = $db->conn->Execute($isql);
 
 // Si actualizo BD correctamente
 if (!$bien) {
+
   $errores .= empty($errores)? "&error=7" : '-7';
 } else {
+
   $ruta   = $codigo . '.pdf';
   $actualizar_anexo = "UPDATE ANEXOS
                           SET ANEX_NOMB_ARCHIVO = '$ruta'
