@@ -462,6 +462,9 @@ ini_set("display_errors",1);
             	$_SESSION["autentica_por_LDAP"]    = $autenticaPorLDAP;
             	$_SESSION["usuaPermRadFax"]        = $usuaPermRadFax;
             	$_SESSION["usuaPermRadEmail"]      = $usuaPermRadEmail;
+                $_SESSION["varEstaenfisico"]      =  $varEstaenfisico;
+
+                
 
             	if (!isset($XAJAX_PATH)){
             	    $XAJAX_PATH = "";
