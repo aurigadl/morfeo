@@ -27,14 +27,17 @@ class Roles {
      * Clase que maneja los usuarios
      */
 
-    var $db;              //Conexion a la base de datos
+    var $db; //Conexion a la base de datos
     var $id;
     var $users;
     var $permisos;
     var $opciones;
     var $grupos;
+    var $usuario;
     var $usuarios;
     var $dependencias;
+    var $membresias;
+    var $permisosUsuario;
 
 
     function __construct($db){
@@ -59,7 +62,7 @@ class Roles {
 
         $perm     = $this->db->conn->query($sql_perm);
 
-        if(!$perm->EOF){
+        if($perm->EOF){
             return false;
         }
 
@@ -132,32 +135,34 @@ class Roles {
                           apellidos,
                           correo,
                           contrasena,
-                          usuario
+                          usuario,
+                          estado
                       FROM
-                          autu_usuarios";
+                          autu_usuarios ";
 
         if(empty($usuario)){
             $usua = $this->db->conn->query($sql_usua);
 
-            if(!$usua->EOF){
+            if($usua->EOF){
                 return false;
             }
 
             while (!$usua->EOF) {
+                //Todo requiere conversor para el password
                 $this->usuarios[] = $usua->fields;
                 $usua->MoveNext();
             }
 
         }else{
-            $sql_usua .= "where usuario = $usuario";
-
+            $usuario = strtoupper($usuario);
+            $sql_usua .= " where estado like '$usuario' ";
             $usua = $this->db->conn->query($sql_usua);
 
-            if(!$usua->EOF){
+            if($usua->EOF){
                 return false;
             }
 
-            $this->usuarios = $usua->fields;
+            $this->usuario = $usua->fields;
         }
 
         return true;
@@ -177,7 +182,7 @@ class Roles {
 
         $depe = $this->db->conn->query($sql_depe);
 
-        if(!$depe->EOF){
+        if($depe->EOF){
             return false;
         }
 
@@ -204,12 +209,12 @@ class Roles {
 
         $memb = $this->db->conn->query($sql_memb);
 
-        if(!$memb->EOF){
+        if($memb->EOF){
             return false;
         }
 
         while (!$memb->EOF) {
-            $membresias[] = $memb->fields;
+            $this->membresias[] = $memb->fields;
             $memb->MoveNext();
         }
 
@@ -328,7 +333,7 @@ class Roles {
      * @return bool
      */
 
-    public function creaEditaUsuario($usuario, $nombres, $apellidos, $contrasena, $correo, $id){
+    public function creaEditaUsuario($usuario, $nombres, $apellidos, $contrasena, $correo, $estado, $id){
         if($id){
             $nextval    = $id;
         }else{
@@ -336,13 +341,14 @@ class Roles {
             $sql_sel    = $this->db->conn->query($sql_sel_id);
             $nextval    = $sql_sel->fields["ID"] + 1;
         }
-
+        //Todo metodos para salvar correctamente las credenciales del usuario
         $record = array();
         $record['id']         = $nextval;
         $record['nombres']    = $nombres;
         $record['apellidos']  = $apellidos;
         $record['correo']     = $correo;
         $record['usuario']    = $usuario;
+        $record['estado']     = $estado;
         $record['contrasena'] = $contrasena;
 
         $insertSQL = $this->db->conn->Replace("autu_usuarios",$record,'id',$autoquote = true);
@@ -432,15 +438,44 @@ class Roles {
 
 
     /**
-     * Crear y Editar Usuarios
+     * Valida el usuario y retorna los permisos
      * @param  string nombre del usuario
      * @return bool, cargar variable de permisos del usuario
      */
 
     public function traerPermisos($usuario, $password){
         if($this->retornarUsuarios($usuario)){
-            $this->usuarios['password'];
+            $clave = $this->usuario['CONTRASENA'];
+            $id    = $this->usuario['ID'];
+            //Todo se debe agregar las validaciones y encriptacion correspondiente
+            //para tener el metodo seguro de ingreso
+            if($clave ==  $password){
+                $sql_perm = "SELECT
+                                autp.nombre,
+                                autp.dependencia,
+                                autp.crud,
+                                autp.descripcion
+                             FROM
+                                 autp_permisos autp inner join  autg_grupos  autg on autg.id = autp.autg_id
+                                 inner join autm_membresias autm on autg.id = autm.autg_id
+                                 and autm.autu_id = $id";
+
+                $sql = $this->db->conn->query($sql_perm);
+
+                if(!$sql->EOF){
+                    while (!$sql->EOF && $sql!=false){
+                        $this->permisosUsuario = $sql->fields;
+                        $sql->MoveNext();
+                    }
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
         };
     }
+
 
 }

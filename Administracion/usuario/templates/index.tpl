@@ -1,3 +1,5 @@
+<-{debug}->
+
 <-{assign var="gruposHtml" value='
 		<tr>
 
@@ -45,7 +47,7 @@
 
 		<td class="hasinput">
 			<label class="input">
-				<input type="text" name="usuario" value="">
+				<input type="text" name="usuarios" value="">
 			</label>
 		</td>
 
@@ -71,6 +73,16 @@
 		<td class="hasinput">
 			<label class="input">
 				<input type="text" name="correo" value="">
+			</label>
+		</td>
+
+		<td class="hasinput">
+			<label class="select">
+				<select class="custom-scrollselectpicker" name="estado">
+					<option value="">-- Seleccione una Opción --</option>
+					<option value="0"> Inactivo </option>
+					<option value="1"> Activo </option>
+				</select> <i></i>
 			</label>
 		</td>
 
@@ -434,6 +446,7 @@
 							<th>Nombres</th>
 							<th>Apellidos</th>
 							<th>Correo</th>
+							<th>Estado</th>
 						</tr>
 						</thead>
 						<tbody id="bdt_basic3">
@@ -449,7 +462,7 @@
 											<i class="fa fa-minus"></i>
 										</a>
 
-										<a href="javascript:void(0);" data-tipo="usuario" data-id="<-{$item.ID}->"
+										<a href="javascript:void(0);" data-tipo="usuarios" data-id="<-{$item.ID}->"
 										   class="button-icon">
 											<i class="fa fa-save "></i>
 										</a>
@@ -458,7 +471,7 @@
 
 									<td class="hasinput">
 										<label class="input">
-											<input type="text" name="usuario" value="<-{$item.USUARIO}->">
+											<input type="text" name="usuarios" value="<-{$item.USUARIO}->">
 										</label>
 									</td>
 
@@ -484,6 +497,25 @@
 									<td class="hasinput">
 										<label class="input">
 											<input type="text" name="correo" value="<-{$item.CORREO}->">
+										</label>
+									</td>
+
+									<td class="hasinput">
+										<label class="select">
+											<select class="custom-scrollselectpicker" name="estado">
+												<option value="">-- Seleccione una Opción --</option>
+												<option value="<-{$i.ESTADO}->"
+													<-{if $item.ESTADO eq 0}->
+												        selected
+													<-{/if}-> > Inactivo
+												</option>
+
+												<option value="<-{$i.ESTADO}->"
+													<-{if $item.ESTADO eq 1}->
+												        selected
+													<-{/if}->> Activo
+												</option>
+											</select> <i></i>
 										</label>
 									</td>
 								</tr>

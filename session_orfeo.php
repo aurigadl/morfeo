@@ -22,14 +22,17 @@
  */
 	include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 	include_once "$ruta_raiz/config.php";
+    include_once("$ruta_raiz/include/tx/roles.php");
+
 	//contiene función que verifica usuario y Password en LDAP
 	include("$ruta_raiz/autenticaMail.php");
 	if(!$krd) $krd = $_REQUEST["krd"];
 
-
-	$db = new ConnectionHandler("$ruta_raiz");
+	$db    = new ConnectionHandler("$ruta_raiz");
+    $roles = new Roles($db);
 	$db->conn->SetFetchMode(ADODB_FETCH_NUM);
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+
 	if (!defined('ADODB_ASSOC_CASE'))define('ADODB_ASSOC_CASE', 1);
 	$krd        = strtoupper($krd);
 	$fechah     = date("Ymd") . "_". time("hms");
@@ -41,12 +44,14 @@
 	$numerop    =
 	$numeroh    = 0;
 	$ValidacionKrd  = "";
+
 	$queryDep       = " SELECT
 						DEPE_CODI AS DEPE_CODI
 				FROM
 						usuario
 				WHERE
 						USUA_LOGIN ='$krd'";
+
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$rs             = $db->conn->Execute($queryDep);
 	$dependencia    = $rs->fields['DEPE_CODI'];
@@ -80,9 +85,9 @@
         $queryTRad          .= ",a.USUA_PRAD_TP$numTp";
         $queryDepeRad       .= ",b.DEPE_RAD_TP$numTp";
         $queryTip3          .= ",a.SGD_TPR_TP$numTp";
-        $tpNumRad[$iTpRad]  =$numTp;
-        $tpDescRad[$iTpRad] =$descTp;
-        $tpImgRad[$iTpRad]  =$imgTp;
+        $tpNumRad[$iTpRad]   = $numTp;
+        $tpDescRad[$iTpRad]  = $descTp;
+        $tpImgRad[$iTpRad]   = $imgTp;
         $iTpRad++;
 
         $rs->MoveNext();
@@ -173,22 +178,32 @@
                 usuario a,
                 DEPENDENCIA b
 		      WHERE
-                USUA_LOGIN          = '$krd'
-                and  a.depe_codi    = b.depe_codi $queryRec";
+                USUA_LOGIN       = '$krd'
+                and  a.depe_codi = b.depe_codi";
 
     $comentarioDev  = ' Busca Permisos de Usuarios ...';
     $rs             = $db->conn->Execute($query);
 
     //Si no se autentica por LDAP segun los permisos de DB
     if (!$autenticaPorLDAP){
+
     	//Verificamos que la consulta en DB haya sido
         //exitosa con el password digitado
-    	if(trim($rs->fields["USUA_LOGIN"])==$krd){
-    		$validacionUsuario = '';
-    	}else{
-    		$mensajeError         = "USUARIO O CONTRASE&Ntilde;A INCORRECTOS";
-    		$validacionUsuario    = 'No Pasa Validacion Base de Datos';
-    	}
+    	//if(trim($rs->fields["USUA_LOGIN"])==$krd){
+    	//	$validacionUsuario = '';
+    	//}else{
+    	//	$mensajeError         = "USUARIO O CONTRASE&Ntilde;A INCORRECTOS";
+    	//	$validacionUsuario    = 'No Pasa Validacion Base de Datos';
+    	//}
+
+        if($roles->traerPermisos($krd,$drd)){
+            $validacionUsuario = '';
+        }else{
+            $mensajeError         = "USUARIO O CONTRASE&Ntilde;A INCORRECTOS";
+            $validacionUsuario    = 'No Pasa Validacion Base de Datos';
+
+        }
+
     }else{
          //El usuario tiene Validacion por LDAP
     	$correoUsuario     = $rs->fields['USUA_EMAIL'];
@@ -209,6 +224,7 @@
     if ( !$validacionUsuario  ){
     	$perm_radi_salida_tp = 0;
     	if (!isset($tpDependencias)) $tpDependencias = "";
+
     	foreach ($tpNumRad as $key => $valueTp){
     	    $campo                = "DEPE_RAD_TP$valueTp";
     	    $campoPer             = "USUA_PRAD_TP$valueTp";
@@ -221,8 +237,7 @@
     	}
 
     	if ($krd){
-        	if (trim($rs->fields["USUA_ESTA"])==1){
-
+        	if (count($rs->fields) > 0){
         		$fechah               = date("dmy") . "_" . time("hms");
         		$dependencia          = $rs->fields["DEPE_CODI"];
         		$dependencianomb      = $rs->fields["DEPE_NOMB"];

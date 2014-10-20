@@ -35,28 +35,35 @@ $roles = new Roles($db);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 //$db->conn->debug = true;
 
-
 //Traemos los permisos
 if($roles->retornarPermisos()){
     $permisos = $roles->permisos;
 }
 
+
 //Traemos las opciones sobre los permisos
 $crud = $roles->retornarOpcionesPermisos();
+
 
 //Traemos los grupos
 if($roles->retornarGrupos()){
     $grupos = $roles->grupos;
 }
 
+
 //Traemos los Usuarios
 if($roles->retornarUsuarios()){
-    $grupos = $roles->usuarios;
+    $usuarios = $roles->usuarios;
 }
 
 //Traemos los Dependencias
 if($roles->retornarDependencias()){
-    $usuarios = $roles->dependencias;
+    $dependencias = $roles->dependencias;
+}
+
+//Traemos las Membresias
+if($roles->retornarMembresias()){
+    $membresias = $roles->membresias;
 }
 
 $smarty->assign("permisos"     , $permisos);
