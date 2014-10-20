@@ -253,6 +253,7 @@
         		$nombusuario          = $rs->fields["USUA_NOMB"];
         		$contraxx             = $rs->fields["USUA_PASW"];
         		$depe_nomb            = $rs->fields["DEPE_NOMB"];
+
         		$crea_plantilla       = isset($rs->fields["USUA_ADM_PLANTILLA"])?$rs->fields["USUA_ADM_PLANTILLA"]:"";
         		$usua_admin_archivo   = $rs->fields["USUA_ADMIN_ARCHIVO"];
         		$usua_perm_trd        = $rs->fields["USUA_PERM_TRD"];

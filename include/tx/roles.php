@@ -155,7 +155,7 @@ class Roles {
 
         }else{
             $usuario = strtoupper($usuario);
-            $sql_usua .= " where estado like '$usuario' ";
+            $sql_usua .= " where estado like '1'  and usuario like '$usuario'";
             $usua = $this->db->conn->query($sql_usua);
 
             if($usua->EOF){
