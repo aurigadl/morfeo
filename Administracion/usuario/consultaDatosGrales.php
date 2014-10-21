@@ -123,7 +123,7 @@ function envio_datos()
 
 		if ($valRadio) {
 			$usuSelec = $valRadio;
-			$usuario_mat = split("-",$usuSelec,2);
+			$usuario_mat = explode("-",$usuSelec,2);
 			$usuDocSel = $usuario_mat[0];
 			$usuLoginSel = $usuario_mat[1];
 
