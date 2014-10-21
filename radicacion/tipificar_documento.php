@@ -146,7 +146,7 @@ $nurad       = $_GET["nurad"];
 if($seriesVistaTodos!=1){
         $sql.="  AND  DEPE_CODI =  '$coddepe'";
 }
-echo "NO discriminañ...";
+#echo "NO discriminañ...";
 	$rs=$db->conn->query($sql);
 	$radiNumero = $rs->fields["RADI_NUME_RADI"];
 

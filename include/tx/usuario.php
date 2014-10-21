@@ -224,7 +224,7 @@ class Usuario {
 
         //agregar usuario al radicado
         if(empty($idInRadicado)){
-            $nextval = $this->db->nextId("sgd_dir_direcciones");
+            $nextval = $this->db->nextId("sec_dir_drecciones");
             if ($nextval==-1){
                 $this->result[] = array( "error"  => 'No se encontr&oacute; la secuencia para grabar el usuario seleccionado');
                 return false;

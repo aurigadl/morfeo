@@ -2,7 +2,7 @@
 class Radicacion
 {
    /*** Attributes: ***/
-	 /**
+   /**
    * Clase que maneja los Historicos de los documentos
    *
    * @param int Dependencia Dependencia de Territorial que Anula
@@ -10,60 +10,60 @@ class Radicacion
    * @access public
    */
 
-	var $db;
-	var $tipRad;
-	var $radiTipoDeri;
-	var $nivelRad;
-	var $radiCuentai;
-	var $eespCodi;
-	var $mrecCodi;
-	var $radiFechOfic;
-	var $radiNumeDeri;
-	var $tdidCodi;
-	var $descAnex;
-	var $radiNumeHoja;
-	var $radigplis;
-	var $raAsun;
-	var $radiDepeRadi;
-	var $radiUsuaActu;
-	var $radiDepeActu;
-	var $carpCodi;
-	var $carpPer;
-	var $radiNumeRadi;
-	var $trteCodi;
-	var $radiNumeIden;
-	var $radiFechRadi;
-	var $sgd_apli_codi;
-	var $tdocCodi;
+  var $db;
+  var $tipRad;
+  var $radiTipoDeri;
+  var $nivelRad;
+  var $radiCuentai;
+  var $eespCodi;
+  var $mrecCodi;
+  var $radiFechOfic;
+  var $radiNumeDeri;
+  var $tdidCodi;
+  var $descAnex;
+  var $radiNumeHoja;
+  var $radigplis;
+  var $raAsun;
+  var $radiDepeRadi;
+  var $radiUsuaActu;
+  var $radiDepeActu;
+  var $carpCodi;
+  var $carpPer;
+  var $radiNumeRadi;
+  var $trteCodi;
+  var $radiNumeIden;
+  var $radiFechRadi;
+  var $sgd_apli_codi;
+  var $tdocCodi;
 
-  var	$nofolios;
-  var	$noanexos;
-  var	$guia;
+  var $nofolios;
+  var $noanexos;
+  var $guia;
 
-	var $estaCodi;
-	var $radigplth;
-	var $nguia;
-	var $tsopt;
-	var $urgnt;
-	var $dptcn;
+  var $estaCodi;
+  var $radigplth;
+  var $nguia;
+  var $tsopt;
+  var $urgnt;
+  var $dptcn;
 
-	/*
-	 * Código de verificación para consultar radicado vía consultaWeb
-	 * @author Sebastian Ortiz GPLV3+ Ministerio de la Protección Social 2012
-	 */
+  /*
+   * Código de verificación para consultar radicado vía consultaWeb
+   * @author Sebastian Ortiz GPLV3+ Ministerio de la Protección Social 2012
+   */
 
-	var $codigoverificacion;
+  var $codigoverificacion;
 
-	/**
-	  *  VARIABLES DEL USUARIO ACTUAL
-		*/
-	var $dependencia;
-	var $usuaDoc;
-	var $usuaLogin;
-	var $usuaCodi;
-	var $codiNivel=1;
-	var $noDigitosRad;
-	var $noDigitosDep=3;
+  /**
+    *  VARIABLES DEL USUARIO ACTUAL
+    */
+  var $dependencia;
+  var $usuaDoc;
+  var $usuaLogin;
+  var $usuaCodi;
+  var $codiNivel=1;
+  var $noDigitosRad;
+  var $noDigitosDep=3;
 
     function Radicacion($db){
         /**
@@ -89,130 +89,137 @@ class Radicacion
 
 
     function newRadicado($tpRad, $tpDepeRad){
-	/** FUNCION QUE INSERTA UN RADICADO NUEVO
-	* Busca el Nivel de Base de datos.
-	* */
-		$whereNivel = "";
+  /** FUNCION QUE INSERTA UN RADICADO NUEVO
+  * Busca el Nivel de Base de datos.
+  * */
+    $whereNivel = "";
 
         $sql = "SELECT CODI_NIVEL FROM USUARIO WHERE USUA_CODI = ".$this->radiUsuaActu." AND DEPE_CODI=".$this->radiDepeActu;
-		# Busca el usuairo Origen para luego traer sus datos.
-		//return "2011 $sql";
+    # Busca el usuairo Origen para luego traer sus datos.
+    //return "2011 $sql";
 
-		$rs = $this->db->conn->Execute($sql); # Ejecuta la busqueda
-		$usNivel = $rs->fields["CODI_NIVEL"];
-		# Busca el usuairo Origen para luego traer sus datos.
+    $rs = $this->db->conn->Execute($sql); # Ejecuta la busqueda
+    $usNivel = $rs->fields["CODI_NIVEL"];
+    # Busca el usuairo Origen para luego traer sus datos.
 
-		$SecName = "SECR_TP$tpRad"."_".$tpDepeRad;
+    $SecName = "SECR_TP$tpRad"."_".$tpDepeRad;
 
-		$secNew=$this->db->conn->nextId($SecName);
+    $secNew=$this->db->conn->nextId($SecName);
 
-		if($secNew==0){
-			$this->db->conn->RollbackTrans();
-			$secNew=$this->db->conn->nextId($SecName);
-			if($secNew==0) die("<hr><b><font color=red><center>Error no genero un Numero de Secuencia<br>SQL: $secNew</center></font></b><hr>");
-		}
-		$newRadicado = date("Y") . str_pad($this->dependencia,$this->noDigitosDep,"0",STR_PAD_LEFT) . str_pad($secNew,$this->noDigitosRad,"0", STR_PAD_LEFT) . $tpRad;
+    if($secNew==0){
+      $this->db->conn->RollbackTrans();
+      $secNew=$this->db->conn->nextId($SecName);
+      if($secNew==0) die("<hr><b><font color=red><center>Error no genero un Numero de Secuencia<br>SQL: $secNew</center></font></b><hr>");
+    }
+    $newRadicado = date("Y") . str_pad($this->dependencia,$this->noDigitosDep,"0",STR_PAD_LEFT) . str_pad($secNew,$this->noDigitosRad,"0", STR_PAD_LEFT) . $tpRad;
 
-		if(!$this->radiTipoDeri){
-		    $recordR["radi_tipo_deri"]= "0";
-		}else{
-			$recordR["radi_tipo_deri"]= $this->radiTipoDeri;
-		}
+    if(!$this->radiTipoDeri){
+        $recordR["radi_tipo_deri"]= "0";
+    }else{
+      $recordR["radi_tipo_deri"]= $this->radiTipoDeri;
+    }
 
-		if(!$this->carpCodi) $this->carpCodi = 0;
-		if(!$this->carpPer)  $this->carpPer = 0;
-		if(!$this->radiNumeDeri) $this->radiNumeDeri = 0;
-		if(!$this->nivelRad) $this->nivelRad=0;
-		if(!$this->mrecCodi) $this->mrecCodi=0;
+    if(!$this->carpCodi) $this->carpCodi = 0;
+    if(!$this->carpPer)  $this->carpPer = 0;
+    if(!$this->radiNumeDeri) $this->radiNumeDeri = 0;
+    if(!$this->nivelRad) $this->nivelRad=0;
+    if(!$this->mrecCodi) $this->mrecCodi=0;
     if(!$this->idPais) $this->idPais=170;
 
-		$recordR["SGD_SPUB_CODIGO"] = $this->nivelRad;
-		$this->radiCuentai          = "'".str_replace("'"," ",$this->radiCuentai)."'";
-		$recordR["RADI_CUENTAI"]    = $this->radiCuentai;
-		$recordR["EESP_CODI"]       = $this->eespCodi?$this->eespCodi:0;
-		$recordR["MREC_CODI"]       = $this->mrecCodi;
+    $recordR["SGD_SPUB_CODIGO"] = $this->nivelRad;
+    $this->radiCuentai          = "'".str_replace("'"," ",$this->radiCuentai)."'";
+    $recordR["RADI_CUENTAI"]    = $this->radiCuentai;
+    $recordR["EESP_CODI"]       = $this->eespCodi?$this->eespCodi:0;
+    $recordR["MREC_CODI"]       = $this->mrecCodi;
 
         $fechofic = $this->radiFechOfic;
 
         if(!empty($fechofic)){
             switch ($this->db->driver){
                 case 'postgres':
-                    $recordR["radi_fech_ofic"]=	"'".$fechofic."'";
+                    $recordR["radi_fech_ofic"]= "'".$fechofic."'";
                     break;
                 default:
-                    $recordR["radi_fech_ofic"]=	$this->db->conn->DBDate($this->radiFechOfic);
+                    $recordR["radi_fech_ofic"]= $this->db->conn->DBDate($this->radiFechOfic);
             }
         }
 
-		$recordR["RADI_NUME_DERI"]  = $this->radiNumeDeri;
-		$recordR["RADI_USUA_RADI"]  = $this->usuaCodi;
-		if(trim($this->radigplis)) $recordR["RADI_PAIS"]       = "'".$this->radigplis."'";
-		$this->raAsun = str_replace("'"," ",$this->raAsun);
-		$recordR["RA_ASUN"]         = "'".$this->raAsun."'";
- 		$this->descAnex = str_replace("'"," ",$this->descAnex);
-		$recordR["radi_desc_anex"]  = "'".$this->descAnex."'";
-		$recordR["RADI_DEPE_RADI"]  = $this->radiDepeRadi;
-		$recordR["RADI_USUA_ACTU"]  = $this->radiUsuaActu;
-		$recordR["carp_codi"]       = $this->carpCodi;
-		$recordR["CARP_PER"]        = $this->carpPer;
-		$recordR["RADI_NUME_RADI"]  = $newRadicado;
-		$recordR["RADI_FECH_RADI"]  = $this->db->conn->OffsetDate(0,$this->db->conn->sysTimeStamp);
-		$recordR["RADI_DEPE_ACTU"]  = $this->radiDepeActu;
-		$recordR["TDOC_CODI"]       = $this->tdocCodi;
+    $recordR["RADI_NUME_DERI"]  = $this->radiNumeDeri;
+    $recordR["RADI_USUA_RADI"]  = $this->usuaCodi;
+    if(trim($this->radigplis)) $recordR["RADI_PAIS"]       = "'".$this->radigplis."'";
+    $this->raAsun = str_replace("'"," ",$this->raAsun);
+    $recordR["RA_ASUN"]         = "'".$this->raAsun."'";
+    $this->descAnex = str_replace("'"," ",$this->descAnex);
+    $recordR["radi_desc_anex"]  = "'".$this->descAnex."'";
+    $recordR["RADI_DEPE_RADI"]  = $this->radiDepeRadi;
+    $recordR["RADI_USUA_ACTU"]  = $this->radiUsuaActu;
+    $recordR["carp_codi"]       = $this->carpCodi;
+    $recordR["CARP_PER"]        = $this->carpPer;
+    $recordR["RADI_NUME_RADI"]  = $newRadicado;
+    $recordR["RADI_FECH_RADI"]  = $this->db->conn->OffsetDate(0,$this->db->conn->sysTimeStamp);
+    $recordR["RADI_DEPE_ACTU"]  = $this->radiDepeActu;
+    $recordR["TDOC_CODI"]       = $this->tdocCodi;
     $recordR["ID_PAIS"]       = $this->idPais;
     $recordR["RADI_NUME_GUIA"]  = "'$this->guia'";
-		if(!empty($this->nofolios)){
-			      $recordR["RADI_NUME_FOLIO"] = $this->nofolios;
-		  }
+    if(!empty($this->nofolios)){
+            $recordR["RADI_NUME_FOLIO"] = $this->nofolios;
+      }
 
-		  if(!empty($this->noanexos)){
-			      $recordR["RADI_NUME_ANEXO"] = $this->noanexos;
-		  }
+      if(!empty($this->noanexos)){
+            $recordR["RADI_NUME_ANEXO"] = $this->noanexos;
+      }
 
-		$recordR["depe_codi"]       = $this->dependencia;
-		$recordR["sgd_trad_codigo"] = $tpRad;
+    $recordR["depe_codi"]       = $this->dependencia;
+    $recordR["sgd_trad_codigo"] = $tpRad;
 
-		if(!$usNivel) $usNivel=1;
-		$recordR["CODI_NIVEL"]=$usNivel;
-		if($this->radigplth)  $recordR["RADI_PATH"] = "'".$this->radiPath."'";
-		
-		/*
-		 * Codigo de verificación
-		 */
-		$recordR["SGD_RAD_CODIGOVERIFICACION"] = "'" . substr(sha1(microtime()), 0 , 5) . "'";
+    if(!$usNivel) $usNivel=1;
+    $recordR["CODI_NIVEL"]=$usNivel;
+    if($this->radigplth)  $recordR["RADI_PATH"] = "'".$this->radiPath."'";
+    
+    /*
+     * Codigo de verificación
+     */
+    $recordR["SGD_RAD_CODIGOVERIFICACION"] = "'" . substr(sha1(microtime()), 0 , 5) . "'";
     $this->codigoverificacion = str_replace("'","",$recordR["SGD_RAD_CODIGOVERIFICACION"]); 
+
+
+    //Si el numero el radicado esta en fisico
+    if ($_SESSION["varEstaenfisico"] == 1){ 
+    $recordR["esta_fisico"] = $this->esta_fisico;
+    } 
+
     $whereNivel = "";
+    //$this->db->conn->debug = true;
+    $insertSQL = $this->db->insert("RADICADO", $recordR, "false");
 
-		$insertSQL = $this->db->insert("RADICADO", $recordR, "false");
+    //return "2011 $SecName  --> $secNew --> $newRadicado ->" ;
+    // $insertSQL = $this->db->conn->Replace("RADICADO", $recordR, "RADI_NUME_RADI", false);
 
-		//return "2011 $SecName  --> $secNew --> $newRadicado ->" ;
-		// $insertSQL = $this->db->conn->Replace("RADICADO", $recordR, "RADI_NUME_RADI", false);
-
-		if(!$insertSQL)
-		{
-			echo "<hr><b><font color=red>Error no se inserto sobre radicado<br>SQL: ".$this->db->querySql."</font></b><hr>";
-		}
-		//$this->db->conn->CommitTrans();
-		return $newRadicado;
+    if(!$insertSQL)
+    {
+      echo "<hr><b><font color=red>Error no se inserto sobre radicado<br>SQL: ".$this->db->querySql."</font></b><hr>";
+    }
+    //$this->db->conn->CommitTrans();
+    return $newRadicado;
   }
 
 
   function updateRadicado($radicado, $radgplthUpdate = null){
-		if(trim($this->radiCuentai)) $recordR["radi_cuentai"]    = "'$this->radiCuentai'";
-		$recordR["eesp_codi"]       = empty($this->eespCodi)? 0 : $this->eespCodi ;
-		if(trim($this->mrecCodi))$recordR["mrec_codi"]       = $this->mrecCodi;
-		if(trim($this->db->conn->DBDate($this->radiFechOfic)))$recordR["radi_fech_ofic"]  = $this->db->conn->DBDate($this->radiFechOfic);
-		if(trim($this->radigplis)) $recordR["radi_pais"]       = "'".$this->radigplis."'";
-		if(trim($this->raAsun))$recordR["ra_asun"]         = "'".$this->raAsun."'";
-		if(trim($this->descAnex)) $recordR["radi_desc_anex"]  = "'".$this->descAnex."'";
-		$recordR["radi_nume_radi"]  = $radicado;
-		// $recordR["SGD_APLI_CODI"]   = $this->sgd_apli_codi;
+    if(trim($this->radiCuentai)) $recordR["radi_cuentai"]    = "'$this->radiCuentai'";
+    $recordR["eesp_codi"]       = empty($this->eespCodi)? 0 : $this->eespCodi ;
+    if(trim($this->mrecCodi))$recordR["mrec_codi"]       = $this->mrecCodi;
+    if(trim($this->db->conn->DBDate($this->radiFechOfic)))$recordR["radi_fech_ofic"]  = $this->db->conn->DBDate($this->radiFechOfic);
+    if(trim($this->radigplis)) $recordR["radi_pais"]       = "'".$this->radigplis."'";
+    if(trim($this->raAsun))$recordR["ra_asun"]         = "'".$this->raAsun."'";
+    if(trim($this->descAnex)) $recordR["radi_desc_anex"]  = "'".$this->descAnex."'";
+    $recordR["radi_nume_radi"]  = $radicado;
+    // $recordR["SGD_APLI_CODI"]   = $this->sgd_apli_codi;
 
     if(!empty($this->nofolios)){
-		  $recordR["RADI_NUME_FOLIO"] = $this->nofolios;
+      $recordR["RADI_NUME_FOLIO"] = $this->nofolios;
     }
 
-	$recordR["TDOC_CODI"] = $this->tdocCodi;
+  $recordR["TDOC_CODI"] = $this->tdocCodi;
 
     if(!empty($this->noanexos)){
       $recordR["RADI_NUME_ANEXO"] = $this->noanexos;
@@ -229,7 +236,11 @@ class Radicacion
             $recordR["radi_path"] = "'" . $radgplthUpdate . "'";
         }
     }
-    
+    //Si el numero el radicado esta en fisico
+    if ($_SESSION["varEstaenfisico"] == 1){ 
+    $recordR["esta_fisico"] = $this->esta_fisico;
+     } 
+
     if($this->radiPath) $recordR["radi_path"] = "'" . $this->radiPath . "'";
     //$this->db->conn->debug = true;
     $insertSQL = $this->db->conn->Replace("RADICADO", $recordR, "radi_nume_radi", false);
@@ -251,18 +262,18 @@ class Radicacion
     */
   function getRadImpresos($radicado)
   {
-	$sqlImp = "SELECT A.RADI_NUME_SALIDA
+  $sqlImp = "SELECT A.RADI_NUME_SALIDA
                    FROM ANEXOS A, RADICADO R
                    WHERE A.ANEX_RADI_NUME=R.RADI_NUME_RADI
                    AND ( A.ANEX_ESTADO=3 OR A.ANEX_ESTADO=4 )
                    AND R.RADI_NUME_RADI = ".$radicado;
     // print $sqlImp;
-	$rsImp = $this->db->conn->query( $sqlImp );
+  $rsImp = $this->db->conn->query( $sqlImp );
 
-	if ( $rsImp->EOF )
+  if ( $rsImp->EOF )
         {
-	   $arrAnexos[0] = 0;
-	}
+     $arrAnexos[0] = 0;
+  }
            else
            {
              $e = 0;
@@ -272,8 +283,8 @@ class Radicacion
                 $e++;
                 $rsImp->MoveNext();
              }
-	  }
-	return $arrAnexos;
+    }
+  return $arrAnexos;
   }
 
 
@@ -317,7 +328,7 @@ class Radicacion
 
    function insertDireccion($radiNumeRadi, $dirTipo,$tipoAccion){
       if($tipoAccion==0) {
-       $nextval = $this->db->conn->nextId("sec_dir_direcciones");
+       $nextval = $this->db->conn->nextId("sec_dir_drecciones"); 
        $this->dirCodigo = $nextval;
       }
       //$this->db->conn->debug = true;
@@ -345,27 +356,27 @@ class Radicacion
 
       $ADODB_COUNTRECS = true;
       //$insertSQL = $this->db->insert("SGD_DIR_DRECCIONES", $record, "true");
-	  if($tipoAccion==0){
+    if($tipoAccion==0){
       $insertSQL = $this->db->conn->Replace("SGD_DIR_DRECCIONES",
                                                 $record,
                                                 array('RADI_NUME_RADI','SGD_DIR_TIPO'),
                                                 $autoquote = true);
-												$insertSQL = "ddddddddd ddccccwww ";
-	  }else{
-	  	$recordWhere['RADI_NUME_RADI'] = $radiNumeRadi;
-		$recordWhere['SGD_DIR_TIPO']   = $dirTipo;
-		$insertSQL = $this->db->update("SGD_DIR_DRECCIONES",
+                        $insertSQL = "ddddddddd ddccccwww ";
+    }else{
+      $recordWhere['RADI_NUME_RADI'] = $radiNumeRadi;
+    $recordWhere['SGD_DIR_TIPO']   = $dirTipo;
+    $insertSQL = $this->db->update("SGD_DIR_DRECCIONES",
                                                 $record,
                                                 $recordWhere);
-	  }
+    }
 
       if(!$insertSQL) {
-			  $this->errorNewRadicado .= "<hr><b><font color=red>Error no se inserto sobre sgd_dir_drecciones<br>SQL:". $this->db->querySql .">> $insertSQL </font></b><hr>";
-			  $insertSQL =-1;
-		  }else{
-			  $this->errorNewRadicado .= "<hr><b><font color=green>0: Ok </font></b><hr>";
-			  $insertSQL =1;
-		  }
+        $this->errorNewRadicado .= "<hr><b><font color=red>Error no se inserto sobre sgd_dir_drecciones<br>SQL:". $this->db->querySql .">> $insertSQL </font></b><hr>";
+        $insertSQL =-1;
+      }else{
+        $this->errorNewRadicado .= "<hr><b><font color=green>0: Ok </font></b><hr>";
+        $insertSQL =1;
+      }
 
       return $insertSQL;
     }
