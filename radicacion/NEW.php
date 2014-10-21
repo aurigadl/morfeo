@@ -141,22 +141,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               WHERE
                 A.RADI_NUME_RADI = $nurad";
 
-	  $rs    = $db->conn->query($query);
+    $rs    = $db->conn->query($query);
 
-	  if(!$rs->EOF){
+    if(!$rs->EOF){
           $asu             = $rs->fields["RA_ASUN"];
-		  $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
-		  $ane             = $rs->fields["RADI_DESC_ANEX"];
-		  $cuentai         = $rs->fields["RADI_CUENTAI"];
-		  $tdoc            = $rs->fields["TDOC_CODI"];
-		  $med             = $rs->fields["MREC_CODI"];
-		  $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
-		  $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
+      $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
+      $ane             = $rs->fields["RADI_DESC_ANEX"];
+      $cuentai         = $rs->fields["RADI_CUENTAI"];
+      $tdoc            = $rs->fields["TDOC_CODI"];
+      $med             = $rs->fields["MREC_CODI"];
+      $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
+      $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
           $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
-		  $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
+      $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
           $guia            = $rs->fields["RADI_NUME_GUIA"];
           $numFolio        = $rs->fields["RADI_NUME_FOLIO"];
           $numAnexo        = $rs->fields["RADI_NUME_ANEXO"];
+          $esta_fisico     = $rs->fields["ESTA_FISICO"];
       }
 
       $date1 = date_create($radi_fecha);
@@ -165,7 +166,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       list($adate1, $mdate1, $ddate1) = explode( '-', substr($fecha_gen_doc,0,10));
       $fecha_gen_doc = "$ddate1-$mdate1-$adate1";
 
-	  $ent = substr($nurad,-1);
+    $ent = substr($nurad,-1);
 
       //Filtro por el tipo de usuario
       $result = $usuario->usuarioPorRadicado($nurad);
@@ -543,7 +544,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                    <label class="label">
                       Fisico en archivo
                   </label>
-                      <input name="fienar" id="fienar" type="checkbox"  value="<?=$fienar?>">
+                       <input name="esta_fisico" id="esta_fisico" type="checkbox" <?php if ($esta_fisico==1){echo " checked";} ?> >
                   <?php } ?>
                   <label class="label">
                       Dependencia
@@ -979,7 +980,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         //Fecha del radicado
         var fechaActual = new Date();
-        var	fecha_doc   = $('#fecha_gen_doc').val();
+        var fecha_doc   = $('#fecha_gen_doc').val();
         var dias_doc    = fecha_doc.substring(0,2);
         var mes_doc     = fecha_doc.substring(3,5);
         var ano_doc     = fecha_doc.substring(6,10);
