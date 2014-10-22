@@ -127,18 +127,17 @@ class Roles {
      * @param  string nombre del usuario a retornar
      * @return bool, carga variable de usuarios
      */
-    public function retornarUsuarios($usuario=false){
+    public function retornarUsuarios($usuario=false, $password=false){
 
         $sql_usua = " SELECT
                           id,
-                          nombres,
-                          apellidos,
-                          correo,
-                          contrasena,
-                          usuario,
-                          estado
+                          usua_nomb  as nombres,
+                          usua_email as correo,
+                          usua_pasw  as contrasena,
+                          usua_login as usuario,
+                          usua_esta  as estado
                       FROM
-                          autu_usuarios ";
+                          usuario";
 
         if(empty($usuario)){
             $usua = $this->db->conn->query($sql_usua);
@@ -152,10 +151,15 @@ class Roles {
                 $this->usuarios[] = $usua->fields;
                 $usua->MoveNext();
             }
-
         }else{
             $usuario = strtoupper($usuario);
-            $sql_usua .= " where estado like '1'  and usuario like '$usuario'";
+            $sql_usua .= " where usua_esta like '1' and usua_login like '$usuario' ";
+
+            if($password){
+                $sql_usua  .= " AND (USUA_PASW ='".SUBSTR(md5($drd),1,26)."' or a.USUA_NUEVO='0')";
+
+            }
+
             $usua = $this->db->conn->query($sql_usua);
 
             if($usua->EOF){
@@ -163,6 +167,7 @@ class Roles {
             }
 
             $this->usuario = $usua->fields;
+
         }
 
         return true;
@@ -337,21 +342,21 @@ class Roles {
         if($id){
             $nextval    = $id;
         }else{
-            $sql_sel_id = "SELECT max(id) AS ID FROM autu_usuarios";
+            $sql_sel_id = "SELECT max(id) AS ID FROM usuario";
             $sql_sel    = $this->db->conn->query($sql_sel_id);
             $nextval    = $sql_sel->fields["ID"] + 1;
         }
         //Todo metodos para salvar correctamente las credenciales del usuario
         $record = array();
-        $record['id']         = $nextval;
-        $record['nombres']    = $nombres;
-        $record['apellidos']  = $apellidos;
-        $record['correo']     = $correo;
-        $record['usuario']    = $usuario;
-        $record['estado']     = $estado;
-        $record['contrasena'] = $contrasena;
 
-        $insertSQL = $this->db->conn->Replace("autu_usuarios",$record,'id',$autoquote = true);
+        $record['id']         = $nextval;
+        $record['usua_nomb']  = $nombres;
+        $record['usua_email'] = $correo;
+        $record['usua_login'] = $usuario;
+        $record['usua_esta']  = $estado;
+        $record['usua_pasw']  = $contrasena;
+
+        $insertSQL = $this->db->conn->Replace("usuario",$record,'id',$autoquote = true);
 
         if(empty($insertSQL)){
             return false;
@@ -361,6 +366,7 @@ class Roles {
         }
 
     }
+
 
     /**
      * Borrar Permiso
@@ -444,13 +450,58 @@ class Roles {
      */
 
     public function traerPermisos($usuario, $password){
-        if($this->retornarUsuarios($usuario)){
-            $clave = $this->usuario['CONTRASENA'];
+        if($this->retornarUsuarios($usuario, $password)){
             $id    = $this->usuario['ID'];
             //Todo se debe agregar las validaciones y encriptacion correspondiente
             //para tener el metodo seguro de ingreso
-            if($clave ==  $password){
-                $sql_perm = "SELECT
+            $sql_perm = "SELECT
+                            autp.nombre,
+                            autp.dependencia,
+                            autp.crud,
+                            autp.descripcion
+                         FROM
+                             autp_permisos autp inner join  autg_grupos  autg on autg.id = autp.autg_id
+                             inner join autm_membresias autm on autg.id = autm.autg_id
+                             and autm.autu_id = $id";
+
+            $sql = $this->db->conn->query($sql_perm);
+
+            if(!$sql->EOF){
+                while (!$sql->EOF && $sql!=false){
+                    $this->permisosUsuario = $sql->fields;
+                    $sql->MoveNext();
+                }
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+                return false;
+        }
+    }
+
+
+    /**
+     * Migrar usuarios actuales a la tabla de roles
+     */
+
+    public function migrarUsuarios(){
+
+        $sal_usua = "SELECT
+                        id,
+                        usua_nomb,
+                        usua_email,
+                        usua_login,
+                        usua_esta
+        FROM usuario order by id";
+        $sql      = $this->db->conn->query($sal_usua);
+
+        while (!$sql->EOF && $sql!=false){
+            $this->permisosUsuario = $sql->fields;
+            $sql->MoveNext();
+        }
+
+        $sql_perm = "SELECT
                                 autp.nombre,
                                 autp.dependencia,
                                 autp.crud,
@@ -460,22 +511,9 @@ class Roles {
                                  inner join autm_membresias autm on autg.id = autm.autg_id
                                  and autm.autu_id = $id";
 
-                $sql = $this->db->conn->query($sql_perm);
+        $sql = $this->db->conn->query($sql_perm);
 
-                if(!$sql->EOF){
-                    while (!$sql->EOF && $sql!=false){
-                        $this->permisosUsuario = $sql->fields;
-                        $sql->MoveNext();
-                    }
-                    return true;
-                }else{
-                    return false;
-                }
-            }else{
-                return false;
-            }
-        };
+
     }
-
 
 }
