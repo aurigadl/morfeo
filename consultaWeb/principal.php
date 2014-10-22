@@ -60,7 +60,7 @@ preview = window.open(URL , "preview", windowprops);
   <tr>
     <td class="titulos2" ALIGN=CENTER >
 			<FONT SIZE=2>INFORMACION DEL DOCUMENTO CON NUMERO DE RADICADO <?=$verrad?>
- <a href='<?=$ruta_raiz?>/bodega/<?=$radi_path?>'></FONT><FONT SIZE=1>(Ver Imagen del documento)</a></FONT>
+ <a onclick="funlinkArchivo('<?=$_GET['idRadicado']?>','../');" style="cursor:pointer" ></FONT><FONT SIZE=1>(Ver Imagen del documento)</a></FONT><br>
 		</td>
 	</tr>
 </table>
@@ -485,4 +485,15 @@ else
 </table>
 </CENTER>
 </body>
+<script>
+    // Muestra las imagenes de los radicados
+    function funlinkArchivo(numrad, rutaRaiz){
+        var nombreventana = "linkVistArch";
+        var url           = rutaRaiz + "/linkArchivo.php?<? echo session_name()."=".session_id()?>"+"&numrad="+numrad;
+        var ventana       = window.open(url,nombreventana,'scrollbars=1,height=50,width=250');
+        //setTimeout(nombreventana.close, 70);
+        return;
+    }
+
+</script>
 </html>
