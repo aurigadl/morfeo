@@ -433,11 +433,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Administraci&oacute;n <b class="caret"></b></a>
                           <ul class="dropdown-menu">
                               <li>
-                                  <a href="./Administracion/usuario/index.php">Usuarios y Perfiles</a>
+                                  <a href="./Administracion/usuario/index.php?<?=$sendSession?>"  class="vinculos"
+                                     target="mainFrame">Usuarios y Perfiles</a>
                               </li>
 
                               <li>
-                                  <a href="./Administracion/tbasicas/adm_dependencias.php?<?=$sendSession?>" class="vinculos" target="mainFrame">
+                                  <a href="./Administracion/tbasicas/adm_dependencias.php?<?=$sendSession?>"
+                                     class="vinculos" target="mainFrame">
                                       Dependencias
                                   </a>
                               </li>

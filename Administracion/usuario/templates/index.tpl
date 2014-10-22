@@ -1,5 +1,3 @@
-<-{debug}->
-
 <-{assign var="gruposHtml" value='
 		<tr>
 
@@ -100,8 +98,51 @@
 </head>
 
 <body>
+<br>
 
 <article class="col-sm-12 col-md-12 col-lg-12">
+
+
+
+<div class="row">
+		<div class="well">
+			<button class="close" data-dismiss="alert">
+				×
+			</button>
+			<h1 class="semi-bold"> Administración de usuarios y permisos"</h1>
+
+			<p>
+				El siguiente panel nos muestra las distintas opciones para realizar las relaciones entre usuarios y
+				permisos mediante la utilización de roles.
+			</p>
+
+			<p>
+				Un rol de seguridad es una función del trabajo que identifica las tareas que puede realizar el
+				usuario y los recursos a los que tiene acceso. Todas las autorizaciones en se realizan en estos roles.
+				La navegación de la interfaz web se filtra en función del rol de seguridad asignado del usuario.
+			</p>
+
+			<p>
+				Los roles de seguridad son una función del control de accesos que siempre está habilitada.
+				Se debe asignar un usuario a un rol de seguridad con el permiso básico para iniciar la sesión.
+			</p>
+
+			<p>
+				Los administradores del sistema tienen acceso a toda la interfaz web. Configuran las nuevas
+				cuentas de usuario y pueden asignar controles de accesos en el perfil de cuenta de usuario.
+				La información de cuenta de cada usuario debe incluir información de contacto, un nombre de
+				usuario y contraseña, un grupo de acceso predeterminado y un rol de seguridad asignado.
+			</p>
+
+			<p>
+				Además de asignar roles de seguridad a un usuario determinado, también se le puede establecer
+				como superusuario. Un superusuario es alguien que no tiene ningún control de accesos y que
+				puede ver todos los recursos y realizar acciones en cualquier elemento del modelo de datos.
+			</p>
+
+		</div>
+</div>
+
 
 <div class="alert alert-success fade in">
 	<button class="close" data-dismiss="alert"> × </button>
@@ -115,12 +156,38 @@
 	<strong>Error!</strong>
 </div>
 
+
 <div id="accordion">
 
 <div>
-	<h4>Grupos</h4>
+	<h4><strong>Grupos</strong></h4>
 
 	<div class="padding-10">
+
+		<div class="row">
+			<div class="col-sm-12">
+
+				<div class="well">
+					<button class="close" data-dismiss="alert">
+						×
+					</button>
+					<p>
+						Puede crear y asignar roles de seguridad en función del área de responsabilidad o la
+						autoridad de aprobación de cambios  en el sistema. Tiene una  asignación de roles flexibles.
+						Cada  rol de seguridad proporciona acceso a un conjunto de
+						recursos específico. Puede asignar el rol de administrador del sistema a un usuario para
+						proporcionar acceso a todos los recursos, o asignar uno o varios roles de seguridad en
+						función de la responsabilidad del trabajo.  Estos roles de seguridad,
+						que se pueden personalizar, representan un conjunto de permisos básicos.
+					</p>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
 		<!-- Widget ID (each widget will need unique ID)-->
 		<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
 			<header></header>
@@ -196,7 +263,7 @@
 
 <div>
 
-	<h4>Permisos</h4>
+	<h4><strong>Permisos</strong></h4>
 
 <div class="padding-10">
 <!-- Widget ID (each widget will need unique ID)-->
@@ -414,7 +481,7 @@
 </div> </div>
 
 <div>
-	<h4>Usuarios</h4>
+	<h4><strong>Usuarios</strong></h4>
 
 	<div class="padding-10">
 		<!-- Widget ID (each widget will need unique ID)-->
@@ -536,7 +603,7 @@
 </div>
 
 <div>
-	<h4>Membresia</h4>
+	<h4><strong>Membresia</strong></h4>
 
 	<div class="padding-10">
 		<!-- Widget ID (each widget will need unique ID)-->
@@ -761,8 +828,9 @@ de inserción para los nuevos registros. -->
 			collapsible: true,
 			animate: 300,
 			header: "h4",
-			active: 3
-		})
+			icons: { "header": "fa fa-plus", "activeHeader": "fa fa-minus"},
+			active: 0
+		});
 
 		$('.alert-success').hide();
 		$('.alert-danger').hide();
