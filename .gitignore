@@ -4,6 +4,7 @@ config.php
 conf/configPHPMailer.php
 img/login_background.jpeg
 respuestaRapida/templates_c/*
+Administracion/usuario/templates_c/*.php
 .idea
 .svn
 .tcpdf/cache/*
