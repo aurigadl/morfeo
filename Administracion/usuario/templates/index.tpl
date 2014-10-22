@@ -580,6 +580,7 @@
 								</td>
 
 								<td class="hasinput">
+									<div id="limitheight">
 									<-{foreach item=i from=$usuarios}->
 									<label class="checkbox">
 										<input data-tipo="membresias"  type="checkbox"
@@ -587,6 +588,7 @@
 										<i></i><-{$i.NOMBRES}->
 									</label>
 									<-{/foreach}->
+									</div>
 								</td>
 
 							</tr>
@@ -682,19 +684,18 @@ de inserción para los nuevos registros. -->
 		</td>
 
 		<td class="hasinput">
-			<label class="select">
-				<select class="input-sm" name="grupo">
-					<option value="">-- Seleccione una Opción --</option>
-
-										<-{foreach item=i from=$grupos}->
-
-					<option value="<-{$i.ID}->">
-						<-{$i.NOMBRE}->
-					</option>
-
-										<-{/foreach}->
-									</select> <i></i>
-			</label>
+			<div id="limitheight">
+				<label class="select">
+					<select class="input-sm" name="grupo">
+						<option value="">-- Seleccione una Opción --</option>
+						<-{foreach item=i from=$grupos}->
+						<option value="<-{$i.ID}->">
+							<-{$i.NOMBRE}->
+						</option>
+						<-{/foreach}->
+					</select> <i></i>
+				</label>
+			</div>
 		</td>
 
 	</tr>
