@@ -34,7 +34,7 @@
   
   // Es necesario liberar la variable ya que este se utilizara mas adelante como clase
   unset($anexo);
-$db->conn->debug=true;
+#$db->conn->debug=true;
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
   $anexTip->anex_tipo_codigo(7);
   $sqlFechaHoy      = $db->conn->OffsetDate(0, $db->conn->sysTimeStamp);
@@ -260,7 +260,7 @@ $db->conn->debug=true;
                             $usua_actu,
                             $coddepe,
                             $usua_actu,
-                            "",
+                            "Nomensaje",
                             2);
 
   //Agregar un nuevo evento en el historico para que
@@ -423,8 +423,10 @@ $bien = $db->conn->Execute($isql);
 
 // Si actualizo BD correctamente
 if (!$bien) {
+
   $errores .= empty($errores)? "&error=7" : '-7';
 } else {
+
   $ruta   = $codigo . '.pdf';
   $actualizar_anexo = "UPDATE ANEXOS
                           SET ANEX_NOMB_ARCHIVO = '$ruta'
@@ -466,7 +468,7 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
 
 #echo "------->>>>".$nurad; exit;
 
-#require_once($ruta_raiz."/respuestaRapida/gencodebar/html/BCGcode128.php");
+require_once($ruta_raiz."/respuestaRapida/gencodebar/html/BCGcode128.php");
 
 /* EN ESTA PARTE CREO EL CODIGO DE BARRAS MEDIANTE DE FUENTES
  $barcodeobj = new TCPDFBarcode($nurad, 'C128');
@@ -481,17 +483,18 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
  $barcode3 = $barcodeobj->getBarcodeHTML(1, 40, 'black'); 
  #echo $barcode3; 
  #echo "------------";
+ */
  $barcodeobj4 = new TCPDFBarcode($nurad, 'C128');
  $barcode4 = $barcodeobj->getBarcodeHTML(2, 40, 'black'); 
- #echo $barcode4;
+ /* #echo $barcode4;
  #exit;
  #echo "--".gettype($barcode4);
  #exit;
-*/
+
  $barcode4 = "
 
 
- ";
+ ";*/
 // Remplazar datos en el documento
 $respuesta = str_replace('*F_RAD_S*', $fecharad, $respuesta);
 $respuesta = str_replace('*RAD_S*', $barcode4, $respuesta);
@@ -564,7 +567,8 @@ $pdf->SetTitle($SetTitle);
 $pdf->SetSubject($SetSubject);
 $pdf->SetKeywords($SetKeywords);
 
-#$pdf->addTTFfont($ruta_raiz.'/tcpdf/code128.ttf', '', '', 32);//TrueTypeUnicode
+//Agrego la Fuente para el CODIGO DE BARRASS
+$pdf->addTTFfont($ruta_raiz.'/tcpdf/code128.ttf', '', '', 32);//TrueTypeUnicode
 #$pdf->SetFont('code128', '', 20, '', true) ;
 
 // set default header data
@@ -604,14 +608,9 @@ $pdf->AddPage();
 
 $pdf->Ln(2);
 
-// Right alignment
-$style['position'] = 'R';
-$pdf->write1DBarcode($nurad, 'C128A', '', '', '', 15, 0.4, $style, 'N');
-
-#$pdf->write1DBarcode($nurad, 'C128', '', '', '50', 18, 0.4, $style, '');
-
-#$pdf->setXY(93,272); 
-#$pdf->write1DBarcode("074001726000003006652985", 'C39', '', '', 90, 10, 0.4, '', 'N'); 
+//RADICACIÓN CON LA FUNCIÓN TCPDF
+#$style['position'] = 'R';
+#$pdf->write1DBarcode($nurad, 'C128A', '', '', '', 15, 0.4, $style, 'N');
 
 
 // output the HTML content

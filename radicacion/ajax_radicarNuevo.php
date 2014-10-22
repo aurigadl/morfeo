@@ -73,6 +73,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $nurad         = $_POST['nurad'];
 
 
+ //Si el numero el radicado esta en fisico
+ if ($_SESSION["varEstaenfisico"] == 1){ 
+  if (isset($_POST["esta_fisico"])){
+  $esta_fisico = 1; 
+  }else{
+  $esta_fisico = 0;  
+  }  
+ } 
+
+
   /**************************************************/
   /*********** RADICAR DOCUMENTO  *******************/
   /**************************************************/
@@ -120,6 +130,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $rad->carPer       = $carp_per;
   $rad->trteCodi     = $tip_rem;
   $rad->raAsun       = substr(htmlspecialchars(stripcslashes($asu)),0,349);
+
+   //Si el numero el radicado esta en fisico
+ if ($_SESSION["varEstaenfisico"] == 1){ 
+  $rad->esta_fisico = $esta_fisico;
+ } 
+
 
   if(strlen(trim($aplintegra)) == 0){
     $aplintegra = "0";

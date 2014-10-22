@@ -25,6 +25,8 @@ ini_set("display_errors",1);
 	include_once "$ruta_raiz/config.php";
 	//contiene función que verifica usuario y Password en LDAP
 	include("$ruta_raiz/autenticaMail.php");
+         $path_raiz = realpath ( dirname ( __FILE__ ) );
+	include_once $path_raiz."/include/utils/Utils.php"; 
 	if(!$krd) $krd = $_REQUEST["krd"];
 
 
@@ -201,8 +203,10 @@ ini_set("display_errors",1);
     	   $mensajeError = "EL USUARIO NO TIENE CORREO ELECTR&Oacute;NICO REGISTRADO";
     	}else{
     	   //Tiene correo, luego lo verificamos por LDAP
-    	   $validacionUsuario    = checkMailuser( $correoUsuario, $drd, $ruta_raiz );
-    	   $mensajeError         = $validacionUsuario;
+    	   //$validacionUsuario    = checkMailuser( $correoUsuario, $drd, $ruta_raiz );
+    	   //Tiene correo, luego lo verificamos por LDAP
+    	   $validacionUsuario    = Utils::checkldapuser($krd, $drd);
+	   $mensajeError         = $validacionUsuario;
     	   
     	}
     }
@@ -462,6 +466,9 @@ ini_set("display_errors",1);
             	$_SESSION["autentica_por_LDAP"]    = $autenticaPorLDAP;
             	$_SESSION["usuaPermRadFax"]        = $usuaPermRadFax;
             	$_SESSION["usuaPermRadEmail"]      = $usuaPermRadEmail;
+                $_SESSION["varEstaenfisico"]      =  $varEstaenfisico;
+
+                
 
             	if (!isset($XAJAX_PATH)){
             	    $XAJAX_PATH = "";

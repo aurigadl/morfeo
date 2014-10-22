@@ -629,7 +629,7 @@ var pagefunction = function() {
 				};
 				},
 				'onTabClick' : function(tab, navigation, index) {
-					return true;
+					return false;
 				}
 		});
 	};
