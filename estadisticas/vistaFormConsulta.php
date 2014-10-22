@@ -483,7 +483,7 @@ function noPermiso(){
                       <td width="30%" class="titulos2">Desde fecha (aaaa/mm/dd) </td>
                       <td class="listado2">
                         <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                          <input type="text" name="fecha_ini1" id="startdate1" placeholder="Fecha de busqueda final" value="<?=$fecha_ini?>">
+                          <input type="text" name="fecha_ini" id="startdate1" placeholder="Fecha de busqueda final" value="<?=$fecha_ini?>">
                         </label>
                     </td>
                     </tr>
@@ -491,7 +491,7 @@ function noPermiso(){
                       <td width="30%" class="titulos2">Hasta  fecha (aaaa/mm/dd) </td>
                       <td class="listado2">
                         <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                          <input type="text" name="fecha_fin1" id="finishdate1" placeholder="Fecha de busqueda final" value="<?=$fecha_fin?>">
+                          <input type="text" name="fecha_fin" id="finishdate1" placeholder="Fecha de busqueda final" value="<?=$fecha_fin?>">
                         </label>
                     </tr>
                       <?
