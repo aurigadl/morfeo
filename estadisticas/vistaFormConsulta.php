@@ -442,7 +442,7 @@ function noPermiso(){
                             if($tipoDocumento=='9997'){
                               $datoss= " selected ";
                             }
-                            if($tipoEstadistica==6)
+                            if($tipoEstadistica==6 || $tipoEstadistica==1)
                             {
                               if($tipoDocumento=='9998'){
                                                   $datoss= " selected ";

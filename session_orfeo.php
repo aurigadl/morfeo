@@ -23,19 +23,17 @@ ini_set("display_errors",1);
  */
 	include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 	include_once "$ruta_raiz/config.php";
-    include_once("$ruta_raiz/include/tx/roles.php");
-
 	//contiene función que verifica usuario y Password en LDAP
 	include("$ruta_raiz/autenticaMail.php");
          $path_raiz = realpath ( dirname ( __FILE__ ) );
-	include_once $path_raiz."/include/utils/Utils.php";
+	//include_once $path_raiz."/include/utils/Utils.php"; 
 	if(!$krd) $krd = $_REQUEST["krd"];
 
-	$db    = new ConnectionHandler("$ruta_raiz");
-  $roles = new Roles($db);
+
+	$db = new ConnectionHandler("$ruta_raiz");
+	//$db->conn->debug = true;
 	$db->conn->SetFetchMode(ADODB_FETCH_NUM);
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-
 	if (!defined('ADODB_ASSOC_CASE'))define('ADODB_ASSOC_CASE', 1);
 	$krd        = strtoupper($krd);
 	$fechah     = date("Ymd") . "_". time("hms");
@@ -47,15 +45,24 @@ ini_set("display_errors",1);
 	$numerop    =
 	$numeroh    = 0;
 	$ValidacionKrd  = "";
-
+	$queryDep       = " SELECT
+						DEPE_CODI AS DEPE_CODI
+				FROM
+						usuario
+				WHERE
+						USUA_LOGIN ='$krd'";
+	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+	$rs             = $db->conn->Execute($queryDep);
+	$dependencia    = $rs->fields['DEPE_CODI'];
 	$query          = " SELECT
-	    					a.SGD_TRAD_CODIGO AS \"SGD_TRAD_CODIGO\",
+										a.SGD_TRAD_CODIGO AS \"SGD_TRAD_CODIGO\",
 							a.SGD_TRAD_DESCR,
 							a.SGD_TRAD_ICONO AS SGD_TRAD_ICONO
-						FROM
-							SGD_TRAD_TIPORAD a
+								FROM
+										SGD_TRAD_TIPORAD a
 						order by a.SGD_TRAD_CODIGO";
 
+    $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
     $rs             = $db->conn->Execute($query);
     $varQuery       = $query;
     $comentarioDev  = ' Busca todos los tipos de Radicado Existentes ';
@@ -77,9 +84,9 @@ ini_set("display_errors",1);
         $queryTRad          .= ",a.USUA_PRAD_TP$numTp";
         $queryDepeRad       .= ",b.DEPE_RAD_TP$numTp";
         $queryTip3          .= ",a.SGD_TPR_TP$numTp";
-        $tpNumRad[$iTpRad]   = $numTp;
-        $tpDescRad[$iTpRad]  = $descTp;
-        $tpImgRad[$iTpRad]   = $imgTp;
+        $tpNumRad[$iTpRad]  =$numTp;
+        $tpDescRad[$iTpRad] =$descTp;
+        $tpImgRad[$iTpRad]  =$imgTp;
         $iTpRad++;
 
         $rs->MoveNext();
@@ -156,11 +163,59 @@ ini_set("display_errors",1);
         $swSessSegura   = 1;
     }
 
+    //Modificado idrd para tomar los valores de permisos de empresas y parques
+    //No anadir parques que ya esta incluido en el a.*  jlosada
 
-    if ($roles->traerPermisos($krd,$drd)){
+    $query = "SELECT
+                a.*,
+                b.DEPE_NOMB,
+                b.DEPE_CODI_TERRITORIAL,
+                b.DEPE_CODI_PADRE
+                $queryTRad
+                $queryDepeRad
+		      FROM
+                usuario a,
+                DEPENDENCIA b
+		      WHERE
+                USUA_LOGIN          = '$krd'
+                and  a.depe_codi    = b.depe_codi $queryRec";
+
+    $comentarioDev  = ' Busca Permisos de Usuarios ...';
+    $rs             = $db->conn->Execute($query);
+
+    //Si no se autentica por LDAP segun los permisos de DB
+    if (!$autenticaPorLDAP){
+    	//Verificamos que la consulta en DB haya sido
+        //exitosa con el password digitado
+    	if(trim($rs->fields["USUA_LOGIN"])==$krd){
+    		$validacionUsuario = '';
+    	}else{
+    		$mensajeError         = "USUARIO O CONTRASE&Ntilde;A INCORRECTOS";
+    		$validacionUsuario    = 'No Pasa Validacion Base de Datos';
+    	}
+    }else{
+         //El usuario tiene Validacion por LDAP
+    	$correoUsuario     = $rs->fields['USUA_EMAIL'];
+    	//Verificamos que tenga correo en la DB, si no tiene no se puede validar por LDAP
+    	if ( $correoUsuario == '' ){
+    	   //No tiene correo, entonces error LDAP
+    	   $validacionUsuario = 'No Tiene Correo';
+    	   $mensajeError = "EL USUARIO NO TIENE CORREO ELECTR&Oacute;NICO REGISTRADO";
+    	}else{
+    	   //Tiene correo, luego lo verificamos por LDAP
+    	   //$validacionUsuario    = checkMailuser( $correoUsuario, $drd, $ruta_raiz );
+    	   //Tiene correo, luego lo verificamos por LDAP
+    	   //$validacionUsuario    = Utils::checkldapuser($krd, $drd);
+		$validacionUsuario = checkMailuser( $correoUsuario, $drd, $ruta_raiz );
+	    $mensajeError         = $validacionUsuario;
+    	   
+    	}
+    }
+    
+    // die ("Fin".$validacionUsuario);
+    if ( !$validacionUsuario  ){
     	$perm_radi_salida_tp = 0;
     	if (!isset($tpDependencias)) $tpDependencias = "";
-
     	foreach ($tpNumRad as $key => $valueTp){
     	    $campo                = "DEPE_RAD_TP$valueTp";
     	    $campoPer             = "USUA_PRAD_TP$valueTp";
@@ -173,24 +228,8 @@ ini_set("display_errors",1);
     	}
 
     	if ($krd){
+        	if (trim($rs->fields["USUA_ESTA"])==1){
 
-            $query = "SELECT
-                a.*,
-                b.DEPE_NOMB,
-                b.DEPE_CODI_TERRITORIAL,
-                b.DEPE_CODI_PADRE
-                $queryTRad
-                $queryDepeRad
-		      FROM
-                usuario a,
-                DEPENDENCIA b
-		      WHERE
-                USUA_LOGIN       = '$krd'
-                and  a.depe_codi = b.depe_codi";
-
-            $comentarioDev  = ' Busca Permisos de Usuarios ...';
-            $rs             = $db->conn->Execute($query);
-        	if (count($rs->fields) > 0){
         		$fechah               = date("dmy") . "_" . time("hms");
         		$dependencia          = $rs->fields["DEPE_CODI"];
         		$dependencianomb      = $rs->fields["DEPE_NOMB"];
@@ -206,10 +245,9 @@ ini_set("display_errors",1);
         		$nombusuario          = $rs->fields["USUA_NOMB"];
         		$contraxx             = $rs->fields["USUA_PASW"];
         		$depe_nomb            = $rs->fields["DEPE_NOMB"];
-
-        		$crea_plantilla        = isset($rs->fields["USUA_ADM_PLANTILLA"])?$rs->fields["USUA_ADM_PLANTILLA"]:"";
-        		$usua_admin_archivo    = $rs->fields["USUA_ADMIN_ARCHIVO"];
-        		$usua_perm_trd         = $rs->fields["USUA_PERM_TRD"];
+        		$crea_plantilla       = isset($rs->fields["USUA_ADM_PLANTILLA"])?$rs->fields["USUA_ADM_PLANTILLA"]:"";
+        		$usua_admin_archivo   = $rs->fields["USUA_ADMIN_ARCHIVO"];
+        		$usua_perm_trd        = $rs->fields["USUA_PERM_TRD"];
         		$usua_perm_estadistica = $rs->fields["SGD_PERM_ESTADISTICA"];
         		$usua_perm_archi       = $rs->fields["USUA_ADMIN_ARCHIVO"];
         		$usua_admin_sistema    = $rs->fields["USUA_ADMIN_SISTEMA"];
@@ -246,8 +284,8 @@ ini_set("display_errors",1);
 
                 //Traemos el campo que indica si el usuario puede
                 //utilizar el administrador de flujos o no
-        		$usua_perm_adminflujos    = $rs->fields["USUA_PERM_ADMINFLUJOS"];
 
+        		$usua_perm_adminflujos    = $rs->fields["USUA_PERM_ADMINFLUJOS"];
         		$mostrar_opc_envio        = 0;
         		$nivelus                  = $rs->fields["CODI_NIVEL"];
 
@@ -305,13 +343,21 @@ ini_set("display_errors",1);
             	if ($rsIntegra && !$rsIntegra->EOF)
             		$usua_perm_intergapps=1;
 
+            	// Fin Consulta de carpetas
+
+            	/**	Creada por HLP.
+            	 * Query para construir $cod_local. La cual contiene
+            	 * ID_CONTinente+ID_PAIS+id_dpto+id_mncpio.
+            	 * Si $cod_local=0, significa que NO hay un municipio
+            	 * como local. ORFEO DEBE TENER localidad.
+        		*/
 
             	$ADODB_COUNTRECS = true;
 
             	$isql = "SELECT
                             d.ID_CONT,
                 			d.ID_PAIS,
-                			d.DPTO_CODI,
+                			d.DPTO_CODI, 
                 			d.MUNI_CODI,
                 			m.MUNI_NOMB
                 		FROM
@@ -423,7 +469,7 @@ ini_set("display_errors",1);
             	$_SESSION["usuaPermRadEmail"]      = $usuaPermRadEmail;
                 $_SESSION["varEstaenfisico"]      =  $varEstaenfisico;
 
-
+                
 
             	if (!isset($XAJAX_PATH)){
             	    $XAJAX_PATH = "";
@@ -484,16 +530,14 @@ ini_set("display_errors",1);
                               favor consulte con el administrador del sistema";
             }
         }else{
-
-            $validacionUsuario    = 'No Pasa Validacion Base de Datos';
-
             if($recOrfeo=="loginWeb"){
               $mensajeError = "Usuario o contrase&ntilde;a incorrectos";
               $ValidacionKrd="Errado ....";
         		  if($recOrfeo=="Seguridad") die (include "$ruta_raiz/cerrar_session.php");
             }
         }
-    }else{
+    }
+    else{
     	if($recOrfeo=="loginWeb"){
         $mensajeError = "USUARIO O PASSWORD INCORRECTOS \n INTENTE DE NUEVO";
     	}else{
