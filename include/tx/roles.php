@@ -156,8 +156,7 @@ class Roles {
             $sql_usua .= " where usua_esta like '1' and usua_login like '$usuario' ";
 
             if($password){
-                $sql_usua  .= " AND (USUA_PASW ='".SUBSTR(md5($drd),1,26)."' or a.USUA_NUEVO='0')";
-
+                $sql_usua  .= " AND (USUA_PASW ='".SUBSTR(md5($password),1,26)."' or USUA_NUEVO='0')";
             }
 
             $usua = $this->db->conn->query($sql_usua);
@@ -471,12 +470,10 @@ class Roles {
                     $this->permisosUsuario = $sql->fields;
                     $sql->MoveNext();
                 }
-                return true;
-            }else{
-                return false;
             }
+            return true;
         }else{
-                return false;
+            return false;
         }
     }
 

@@ -45,22 +45,12 @@
 	$numeroh    = 0;
 	$ValidacionKrd  = "";
 
-	$queryDep       = " SELECT
-						DEPE_CODI AS DEPE_CODI
-				FROM
-						usuario
-				WHERE
-						USUA_LOGIN ='$krd'";
-
-	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-	$rs             = $db->conn->Execute($queryDep);
-	$dependencia    = $rs->fields['DEPE_CODI'];
 	$query          = " SELECT
-										a.SGD_TRAD_CODIGO AS \"SGD_TRAD_CODIGO\",
+	    					a.SGD_TRAD_CODIGO AS \"SGD_TRAD_CODIGO\",
 							a.SGD_TRAD_DESCR,
 							a.SGD_TRAD_ICONO AS SGD_TRAD_ICONO
-								FROM
-										SGD_TRAD_TIPORAD a
+						FROM
+							SGD_TRAD_TIPORAD a
 						order by a.SGD_TRAD_CODIGO";
 
     $rs             = $db->conn->Execute($query);
@@ -497,8 +487,7 @@
         		  if($recOrfeo=="Seguridad") die (include "$ruta_raiz/cerrar_session.php");
             }
         }
-    }
-    else{
+    }else{
     	if($recOrfeo=="loginWeb"){
         $mensajeError = "USUARIO O PASSWORD INCORRECTOS \n INTENTE DE NUEVO";
     	}else{
