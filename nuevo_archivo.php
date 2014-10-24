@@ -726,7 +726,7 @@ if( $rs_exp->RecordCount() == 0 ){
     <tr align="center">
           <td align="center" colspan="2" >
           <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $tamano_archivo; ?>">
-						   <input name="userfile1" type="file" onChange="escogio_archivo();" id="userfile" value="valor" class="btn btn-primary">
+						   <input name="userfile1" type="file" onChange="escogio_archivo();" id="userfile" value="valor">
 						<small>Archivo debe ser menor a <?php echo $maximo_tamano; ?>Mb.</small>
 						<p><small class="btn btn-success"><?=$mensaje?></small></p>
 						<p><small class="btn btn-success"><?=$mostrar_mensaje?></small></p>
