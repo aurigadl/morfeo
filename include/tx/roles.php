@@ -42,7 +42,7 @@ class Roles {
 
     function __construct($db){
         $this->db=$db;
-        //$this->db->conn->debug=true;
+        $this->db->conn->debug=true;
     }
 
     /**
@@ -52,9 +52,7 @@ class Roles {
     public function retornarPermisos(){
         $sql_perm = " SELECT
                           id,
-                          autg_id,
                           nombre,
-                          dependencia,
                           crud,
                           descripcion
                       FROM
@@ -66,16 +64,34 @@ class Roles {
             return false;
         }
 
-        while (!$perm->EOF) {
-            $this->permisos[] = array('ID' => $perm->fields['ID'],
-            'AUTG_ID'     => $perm->fields['AUTG_ID'],
+        while(!$perm->EOF){
+
+            $idperm = $perm->fields['ID'];
+
+            $sql_perm_grup = " SELECT
+                                  autg_id
+                               FROM
+                                  autr_restric_grupo
+                               where
+                                  autg_id = '$idperm'";
+
+            $perm_grup     = $this->db->conn->query($sql_perm_grup);
+
+            while(!$perm_grup->EOF){
+                $grupPer[] = $perm_grup->fields['NOMBRE'];
+                $perm_grup->MoveNext();
+            }
+
+            $this->permisos[] = array(
+            'ID'          => $idperm,
             'NOMBRE'      => $perm->fields['NOMBRE'],
-            'DEPENDENCIA' => explode(',', $perm->fields['DEPENDENCIA']),
             'CRUD'        => $perm->fields['CRUD'],
+            'AUTG_ID'     => $grupPer,
             'DESCRIPCION' => $perm->fields['DESCRIPCION']);
 
             $perm->MoveNext();
         }
+
 
         return true;
     }
@@ -288,7 +304,7 @@ class Roles {
      * @return bool
      */
 
-    public function creaEditaPermiso($nombre, $descripcion, $dependencia, $crud, $grupo, $id){
+    public function creaEditaPermiso($nombre, $descripcion, $crud, $grupo, $id){
         if($id){
             $nextval    = $id;
         }else{
@@ -301,15 +317,31 @@ class Roles {
         $record['id']          = $nextval;
         $record['nombre']      = $nombre;
         $record['descripcion'] = $descripcion;
-        $record['dependencia'] = $dependencia;
         $record['crud']        = $crud;
-        $record['autg_id']     = $grupo;
 
         $insertSQL = $this->db->conn->Replace("autp_permisos",$record,'id',$autoquote = true);
         if(empty($insertSQL)){
             return false;
         }else{
             $this->id = $nextval;
+            foreach (explode(",",$grupo) as $value) {
+                $sql_sel_id = "SELECT max(id) AS ID FROM autr_restric_grupo";
+                $sql_sel    = $this->db->conn->query($sql_sel_id);
+                $valnext    = $sql_sel->fields["ID"] + 1;
+
+                $registro            = array();
+                $registro['id']      = $valnext;
+                $registro['autg_id'] = $value;
+                $registro['autp_id'] = $nextval;
+
+
+                $insertSQL = $this->db->conn->Replace("autr_restric_grupo",$registro,'autg_id, autg_id',
+                    $autoquote = true);
+
+                if(empty($insertSQL)){
+                    return false;
+                }
+            }
             return true;
         }
     }

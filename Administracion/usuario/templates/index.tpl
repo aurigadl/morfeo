@@ -291,7 +291,6 @@
 			</th>
 			<th>Nombre</th>
 			<th>Descripci&oacute;n</th>
-			<th>Dependencias</th>
 			<th>Crud</th>
 			<th>Grupo</th>
 		</tr>
@@ -327,19 +326,6 @@
 				</td>
 
 				<td class="hasinput">
-					<label class="select select-multiple">
-						<select class="custom-scrollselectpicker" name="dependencia" multiple>
-							<option value="">-- Seleccione una Opción --</option>
-							<-{foreach item=i from=$dependencias}->
-								<option value="<-{$i.DEPE_CODI}->">
-									<-{$i.DEPE_NOMB}->
-								</option>
-							<-{/foreach}->
-						</select> <i></i>
-					</label>
-				</td>
-
-				<td class="hasinput">
 					<label class="select">
 						<select class="input-sm" name="crud">
 							<option value="">-- Seleccione una Opción --</option>
@@ -353,8 +339,8 @@
 				</td>
 
 				<td class="hasinput">
-					<label class="select">
-						<select class="input-sm" name="grupo">
+					<label class="select select-multiple">
+						<select class="custom-scroll" multiple name="grupo">
 							<option value="">-- Seleccione una Opción --</option>
 							<-{foreach item=i from=$grupos}->
 								<-{if $item.AUTG_ID eq $i.ID}->
@@ -403,27 +389,6 @@
 						</label>
 					</td>
 
-					<td class="hasinput">
-						<label class="select select-multiple">
-							<select class="custom-scroll" multiple name="dependencia">
-								<option value="">-- Seleccione una Opción --</option>
-								<-{foreach item=i from=$dependencias}->
-									<-{foreach item=j from=$item.DEPENDENCIA}->
-										<-{if $j eq $i.DEPE_CODI}->
-											<option value="<-{$i.DEPE_CODI}->" selected>
-												<-{$i.DEPE_NOMB}->
-											</option>
-											{break}
-										<-{else}->
-											<option value="<-{$i.DEPE_CODI}->">
-												<-{$i.DEPE_NOMB}->
-											</option>
-										<-{/if}->
-									<-{/foreach}->
-								<-{/foreach}->
-							</select> <i></i>
-						</label>
-					</td>
 
 					<td class="hasinput">
 						<label class="select">
@@ -445,8 +410,8 @@
 					</td>
 
 					<td class="hasinput">
-						<label class="select">
-							<select class="input-sm" name="grupo">
+						<label class="select select-multiple">
+							<select class="custom-scroll" multiple name="grupo">
 								<option value="">-- Seleccione una Opción --</option>
 								<-{foreach item=i from=$grupos}->
 									<-{if $item.AUTG_ID eq $i.ID}->
@@ -459,7 +424,6 @@
 										</option>
 									<-{/if}->
 								<-{/foreach}->
-
 							</select> <i></i>
 						</label>
 					</td>
@@ -719,41 +683,22 @@ de inserción para los nuevos registros. -->
 		</td>
 
 		<td class="hasinput">
-			<label class="select select-multiple">
-				<select class="custom-scrollselectpicker" multiple name="dependencia">
-					<option value="">-- Seleccione una Opción --</option>
-
-										<-{foreach item=i from=$dependencias}->
-
-					<option value="<-{$i.DEPE_CODI}->">
-							<-{$i.DEPE_NOMB}->
-						</option>
-
-										<-{/foreach}->
-									</select> <i></i>
-			</label>
-		</td>
-
-		<td class="hasinput">
 			<label class="select">
 				<select class="input-sm" name="crud">
 					<option value="">-- Seleccione una Opción --</option>
-
-										<-{foreach item=i from=$crud}->
-
-					<option value="<-{$i.ID}->">
-						<-{$i.NOMBRE}->
-					</option>
-
-										<-{/foreach}->
-									</select> <i></i>
+					<-{foreach item=i from=$crud}->
+						<option value="<-{$i.ID}->">
+							<-{$i.NOMBRE}->
+						</option>
+					<-{/foreach}->
+				</select> <i></i>
 			</label>
 		</td>
 
 		<td class="hasinput">
 			<div id="limitheight">
-				<label class="select">
-					<select class="input-sm" name="grupo">
+				<label class="select select-multiple">
+					<select class="custom-scroll"  multiple name="grupo">
 						<option value="">-- Seleccione una Opción --</option>
 						<-{foreach item=i from=$grupos}->
 						<option value="<-{$i.ID}->">
@@ -829,7 +774,7 @@ de inserción para los nuevos registros. -->
 			animate: 300,
 			header: "h4",
 			icons: { "header": "fa fa-plus", "activeHeader": "fa fa-minus"},
-			active: 0
+			active: 1
 		});
 
 		$('.alert-success').hide();

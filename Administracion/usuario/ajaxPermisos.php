@@ -95,11 +95,10 @@ switch ($_POST['accion']){
             case 'permisos':
                 $nombre      = $_POST['nombre'];
                 $descripcion = $_POST['descripcion'];
-                $dependencia = $_POST['dependencia'];
                 $crud        = $_POST['crud'];
                 $grupo       = $_POST['grupo'];
 
-                if($roles->creaEditaPermiso($nombre, $descripcion, $dependencia, $crud, $grupo, $id)){
+                if($roles->creaEditaPermiso($nombre, $descripcion, $crud, $grupo, $id)){
                     $resultado = array('estado' => 1, 'valor' => $roles->id);
                 }else{
                     $resultado = array('estado' => 0, 'valor' => '');
