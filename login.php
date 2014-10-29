@@ -26,9 +26,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $drd = false;
   $krd = false;
+
   if (isset($_POST["krd"])){
       $krd = $_POST["krd"];
   }
+
   if (isset($_POST["drd"])){
       $drd = $_POST["drd"];
   }

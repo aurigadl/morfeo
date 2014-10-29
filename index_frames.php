@@ -384,25 +384,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Administraci&oacute;n <b class="caret"></b></a>
                           <ul class="dropdown-menu">
-                              <li class="dropdown-submenu">
-                                  <a href="#" onclick="return false;">Usuarios y Perfiles</a>
-                                  <ul class="dropdown-menu">
-                                      <li>
-                                          <a href='./Administracion/usuario/crear.php?<?=$sendSession?>&usModo=1' class="vinculos" target='mainFrame'>
-                                              Crear Usuario
-                                          </a>
-                                      </li>
-                                      <li>
-                                          <a href='./Administracion/usuario/cuerpoEdicion.php?<?=$sendSession?>&usModo=2' class="vinculos" target='mainFrame'>
-                                              Editar Usuario
-                                          </a>
-                                      </li>
-                                      <li>
-                                          <a href='./Administracion/usuario/cuerpoConsulta.php?<?=$sendSession?>' class="vinculos" target='mainFrame'>
-                                              Consultar Usuario
-                                          </a>
-                                      </li>
-                                  </ul>
+                              <li>
+                                  <a href="./Administracion/usuario/index.php?<?=$sendSession?>"  class="vinculos"
+                                     target="mainFrame">Usuarios y Perfiles</a>
                               </li>
                               <li class="dropdown-submenu">
                                   <a href="#" onclick="return false;">Gestion Documental</a>
@@ -469,7 +453,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                               </li>
                               <li>
-                                  <a href="./Administracion/tbasicas/adm_dependencias.php?<?=$sendSession?>" class="vinculos" target="mainFrame">
+                                  <a href="./Administracion/tbasicas/adm_dependencias.php?<?=$sendSession?>"
+                                     class="vinculos" target="mainFrame">
                                       Dependencias
                                   </a>
                               </li>
