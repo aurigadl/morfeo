@@ -42,7 +42,7 @@ class Roles {
 
     function __construct($db){
         $this->db=$db;
-        $this->db->conn->debug=true;
+        //$this->db->conn->debug=true;
     }
 
     /**
@@ -73,12 +73,12 @@ class Roles {
                                FROM
                                   autr_restric_grupo
                                where
-                                  autg_id = '$idperm'";
+                                  autp_id = '$idperm'";
 
             $perm_grup     = $this->db->conn->query($sql_perm_grup);
 
             while(!$perm_grup->EOF){
-                $grupPer[] = $perm_grup->fields['NOMBRE'];
+                $grupPer[] = $perm_grup->fields['AUTG_ID'];
                 $perm_grup->MoveNext();
             }
 
@@ -324,6 +324,10 @@ class Roles {
             return false;
         }else{
             $this->id = $nextval;
+
+            $del_sql = "delete from autr_restric_grupo where autp_id = '$nextval'";
+            $this->db->conn->query($del_sql);
+
             foreach (explode(",",$grupo) as $value) {
                 $sql_sel_id = "SELECT max(id) AS ID FROM autr_restric_grupo";
                 $sql_sel    = $this->db->conn->query($sql_sel_id);

@@ -160,7 +160,7 @@
 <div id="accordion">
 
 <div>
-	<h4><strong>Grupos</strong></h4>
+	<h4><strong>Perfiles</strong></h4>
 
 	<div class="padding-10">
 
@@ -263,7 +263,7 @@
 
 <div>
 
-	<h4><strong>Permisos</strong></h4>
+<h4><strong>Permisos</strong></h4>
 
 <div class="padding-10">
 <!-- Widget ID (each widget will need unique ID)-->
@@ -411,19 +411,22 @@
 
 					<td class="hasinput">
 						<label class="select select-multiple">
+
 							<select class="custom-scroll" multiple name="grupo">
 								<option value="">-- Seleccione una Opción --</option>
+
 								<-{foreach item=i from=$grupos}->
-									<-{if $item.AUTG_ID eq $i.ID}->
-										<option value="<-{$i.ID}->" selected>
-											<-{$i.NOMBRE}->
-										</option>
-									<-{else}->
-										<option value="<-{$i.ID}->">
-											<-{$i.NOMBRE}->
-										</option>
-									<-{/if}->
+									<option value="<-{$i.ID}->"
+										<-{foreach item=j from=$item.AUTG_ID}->
+											<-{if $j eq $i.ID}->
+												selected
+												<-{php}->break;<-{/php}->
+											<-{/if}->
+										<-{/foreach}->>
+										<-{$i.NOMBRE}->
+									</option>
 								<-{/foreach}->
+
 							</select> <i></i>
 						</label>
 					</td>
