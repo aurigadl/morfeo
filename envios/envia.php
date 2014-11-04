@@ -147,7 +147,7 @@ $isql = "SELECT a.SGD_DIR_TIPO, ".	$RADI_NUME_SALIDA." as RADI_NUME_SALIDA, ".$r
 		" AND anex_estado=3 AND a.sgd_dir_tipo <> 7 ".$comb_salida .
 		"ORDER BY a.SGD_DIR_TIPO ";
 
-$db->conn->BeginTrans();
+//$db->conn->BeginTrans();
 
 $rsEnviar        = $db->query($isql);
 
@@ -361,7 +361,7 @@ $db->conn->CompleteTrans();
 include_once "../config.php";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db1 = new ConnectionHandler("$ruta_raiz");
-$db1->conn->BeginTrans();
+//$db1->conn->BeginTrans();
 //	HLP. Creamos el query que trae los valores para envios nacionales o internacionales.
 switch ($masiva)
 {	case 1:

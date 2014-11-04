@@ -127,13 +127,11 @@ class Expediente {
         $query = "select e.SGD_EXP_NUMERO,e.SGD_EXP_ESTADO,$radi_nume_radi AS RADI_NUME_RADI
 				from SGD_EXP_EXPEDIENTE e
 				where e.RADI_NUME_RADI = $radicado
-                AND SGD_EXP_ESTADO <> 2";
-        $rs = $this->db->conn->query($query);
-        if ($rs->EOF) {
-            //echo 'No tiene un Numero de expediente<br>';
-            $this->num_expediente = 0;
-        } else {
-            $iE = 1;
+				AND SGD_EXP_ESTADO <> 2";
+	//$this->db->conn->debug = true;
+	$rs = $this->db->conn->query($query);
+	if ($rs) {
+		$iE = 1;
             while (!$rs->EOF) {
                 if ($iE == 1) {
                     $this->num_expediente = $rs->fields['SGD_EXP_NUMERO'];
@@ -144,7 +142,9 @@ class Expediente {
                 $iE++;
                 $rs->MoveNext();
             }
-        }
+	}else{
+		$this->num_expediente = 0;
+	}
         //$this->num_expediente = $num_expediente;   RP
         return $this->num_expediente;
     }
