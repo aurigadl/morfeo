@@ -964,11 +964,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
    //Radicar documento nuevo
    $('body').on("click", '.radicarNuevo, #modificaRad',function(){
-        $('#alertmessage').empty();
+
+        $('.radicarNuevo').prop('disabled', true);
+        $('#modificaRad').prop('disabled', true);
         var acction   = $(this).attr("id");
         var pass      = true;
         var idsession = '<?=$idsession?>';
         /* Realizar validaciones antes de enviar el radicado*/
+
+        $('#alertmessage').empty();
+        //Inactivamos el boton para que no envie mas solicitudes
+        $( ".radicarNuevo"  ).each(function(index,value){$(value).bind('click', false);})
 
         //Folios y Anexos
         if(/[A-Za-z]+$/.test($("#nofolios").val()) ||
@@ -1093,11 +1099,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             mostrarAlert({type : 'danger', message : 'Error de conexion al servidor'})
           })
 
-          $( "#modificaRad" ).prop( "disabled", false );
-
-
+          $("#modificaRad").prop( "disabled", false  );
+          $('.radicarNuevo').prop('disabled', false);
 
         };
+
+        $( ".radicarNuevo"  ).each(function(index,value){$(value).unbind('click', false);})
   });
 
   </script>

@@ -16,6 +16,7 @@ $tpNumRad           = $_SESSION["tpNumRad"];
 $tpPerRad           = $_SESSION["tpPerRad"];
 $tpDescRad          = $_SESSION["tpDescRad"];
 $usuaPermExpediente = $_SESSION["usuaPermExpediente"];
+$usuaPermModificar  = $_SESSION["usua_perm_modifica"];
 $nomcarpeta=$_GET["nomcarpeta"];
 $verradicado = $_GET['verrad'];
 // Modificado Infom�trika 22-Julio-2009
@@ -154,7 +155,7 @@ function ver_temas(){
   ?><small>
 	DOCUMENTO N.
 	<?
-	if ($mostrar_opc_envio==0 and $carpeta!=8 and !$agendado and $verradPermisos=="Full"){
+	if ($mostrar_opc_envio==0 and $carpeta!=8 and !$agendado and !empty($usuaPermModificar)){
 		$ent=substr($verrad, -1);
         echo "<a title='Click para modificar el Documento' href='./radicacion/NEW.php?nurad=$verrad&Buscar=BuscarDocModUS&".session_name()."=".session_id()."&Submit3=ModificarDocumentos&Buscar1=BuscarOrfeo78956jkgf' notborder >$verrad</a>";
 	}else echo $verrad;
