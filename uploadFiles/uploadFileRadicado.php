@@ -1,10 +1,10 @@
 <?php
 session_start();
 /**
-  * Se añadio compatibilidad con variables globales en Off
-  * @autor Jairo Losada 2009-05
-  * @licencia GNU/GPL V 3
-  */
+ * Se añadio compatibilidad con variables globales en Off
+ * @autor Jairo Losada 2009-05
+ * @licencia GNU/GPL V 3
+ */
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $usua_doc = $_SESSION["usua_doc"];
@@ -14,19 +14,19 @@ $tip3desc = $_SESSION["tip3desc"];
 $tip3img =$_SESSION["tip3img"];
 
 if (isset($_GET["carpeta"]))
-    $nomcarpeta = $_GET["carpeta"];
+	$nomcarpeta = $_GET["carpeta"];
 else
-    $nomcarpeta = "";
+	$nomcarpeta = "";
 
 if (isset($_GET["tipo_carpt"]))
-    $tipo_carpt = $_GET["tipo_carpt"];
+	$tipo_carpt = $_GET["tipo_carpt"];
 else
-    $tipo_carpt = "";
+	$tipo_carpt = "";
 
 if (isset($_GET["adodb_next_page"]))
-    $adodb_next_page = $_GET["adodb_next_page"];
+	$adodb_next_page = $_GET["adodb_next_page"];
 else
-    $adodb_next_page = "";
+	$adodb_next_page = "";
 
 if(isset($_GET["dep_sel"])) $dep_sel=$_GET["dep_sel"];
 if(isset($_GET["btn_accion"])) $btn_accion=$_GET["btn_accion"];
@@ -48,41 +48,24 @@ $verrad = "";
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 <!-- Adicionado Carlos Barrero SES 02/10/09-->
 <script>
-	function borrad(ruta)
-		{
-			if(document.formulario.valRadio.checked==false)
-				{
-					alert('Seleccione un radicado.');
-					return false;
-				}
-			else
-				{
-					if(confirm("Esta seguro de borrar la imágen del radicado "+formulario.valRadio.value+" ?"))
-						window.location=ruta+document.formulario.valRadio.value;
-					else
-						return false;
-				}
-		}
+function borrad(ruta)
+{
+	if(document.formulario.valRadio.checked==false)
+	{
+		alert('Seleccione un radicado.');
+		return false;
+	}
+	else
+	{
+		if(confirm("Esta seguro de borrar la imágen del radicado "+formulario.valRadio.value+" ?"))
+			window.location=ruta+document.formulario.valRadio.value;
+		else
+			return false;
+	}
+}
 </script>
 </head>
 <BODY>
-<FORM ACTION="<?=$_SERVER['PHPSELF']?>?<?=session_name()?>=<?=session_id()?>" method="POST">
-    <div class="col-sm-12">
-      <!-- widget grid -->
-      <h2></h2>
-      <section id="widget-grid">
-        <!-- row -->
-        <div class="row">
-          <!-- NEW WIDGET START -->
-          <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
-
-              <!-- widget div-->
-              <div>
-                <!-- widget content -->
-                <div class="widget-body no-padding">
-                  <div class="table-responsive">
 <?
 $varBuscada = "RADI_NUME_RADI";
 include "$ruta_raiz/envios/paEncabeza.php";
@@ -91,6 +74,31 @@ $encabezado = "".session_name()."=".session_id()."&depeBuscada=$depeBuscada&filt
 $linkPagina = "$PHP_SELF?$encabezado&orderTipo=$orderTipo&orderNo=$orderNo";
 $encabezado = "".session_name()."=".session_id()."&adodb_next_page=1&depeBuscada=$depeBuscada&filtroSelect=$filtroSelect&tpAnulacion=$tpAnulacion&carpeta=$carpeta&tipo_carp=$tipo_carp&nomcarpeta=$nomcarpeta&agendado=$agendado&orderTipo=$orderTipo&orderNo=";
 ?>
+
+<FORM ACTION="<?=$_SERVER['PHPSELF']?>?<?=session_name()?>=<?=session_id()?>" method="POST">
+    <div class="col-sm-12">
+      <!-- widget grid -->
+      <section id="widget-grid">
+	<!-- row -->
+	<div class="row">
+	  <!-- NEW WIDGET START -->
+	  <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	    <!-- Widget ID (each widget will need unique ID)-->
+	    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
+
+	      <!-- widget div-->
+	      <div>
+		<!-- widget content -->
+		<div class="widget-body no-padding">
+		  <div class="table-responsive">
+	      </div>
+	      </div>
+	    </div>
+	  </div>
+	</article>
+      </div>
+    </section>
+  </div>
 </FORM>
 <!--
 Modificación Carlos Barrero -SES- permite borrar imagen vinculadas
@@ -98,7 +106,7 @@ Modificación Carlos Barrero -SES- permite borrar imagen vinculadas
 -->
 <FORM ACTION="formUpload.php?krd=<?=$krd?>&<?=session_name()?>=<?=session_id()?>" method="POST" name="formulario">
 <center><input type="submit" value="Asociar Imagen del Radicado" name=asocImgRad class="botones_largo">
-  <input type="button" value="Borrar Imagen del Radicado" name=borraImgRad class="botones_largo" onClick="return borrad('borraPath.php?krd=<?=$krd?>&<?=session_name()?>=<?=session_id()?>&numrad=');">
+  <input type="button" value="Borrar Imagen del Radicado" name=borraImgRad class="botones_largo" onClick="return borrad('borraPath.php?krd=<?=$krd?>&<?=session_name()?>=<?=session_id()?>&numrad=');"></center>
 
 <!--
 <center><input type="submit" value="Asociar Imagen del Radicado" name=asocImgRad class="botones_largo"></center>
@@ -129,14 +137,6 @@ if($Buscar AND $busq_radicados_tmp)
 	}
 }
 ?>
-              </div>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-  </div>
 </FORM>
 </BODY>
 </HTML>

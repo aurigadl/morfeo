@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+ini_set("display_errors",1);
+
     $ruta_raiz = "."; 
     if (!$_SESSION['dependencia'])
         header ("Location: $ruta_raiz/cerrar_session.php");

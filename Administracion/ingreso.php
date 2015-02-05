@@ -22,9 +22,11 @@
 /* Colocar desde esta linea las Modificaciones Realizadas Luego de la Version 3.5    */
 /*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
 /*************************************************************************************/
+?>
+<?
 	$ruta_raiz = "..";
 	session_start();
-	if(!$dependencia or !$tpDepeRad) include "$ruta_raiz/rec_session.php";
+	if(!$dependencia or !$tpDepeRad) include "$ruta_raiz/rec_session.php";	
 	$phpsession = session_name()."=".session_id();
 ?>
 <html>

@@ -61,7 +61,7 @@
                 // ORDER BY $sidx $sord";
                 $SQL = "SELECT $fieldsView FROM $tableSearch WHERE $fieldSearch like '$searchTerm' $andWhere LIMIT 40";
             }
-            //$db->conn->debug = true;
+            $db->conn->debug = true;
             $result = $db->conn->query($SQL) or die("Couldn t execute query.");
 
             $response->page = $page;

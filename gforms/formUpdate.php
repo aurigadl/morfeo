@@ -15,6 +15,7 @@
   $form->getForm($codeForm);
   $form->dataSave = $data;
   $result = $form->putFormRegister();
-  //$result = $form->getCreateTable();
+  //$result = "<!--".  $form->getCreateTable() ." -->";
+  //echo $form->getCreateTable();
   echo $result;
 ?>
