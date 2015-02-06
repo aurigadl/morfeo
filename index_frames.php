@@ -135,7 +135,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   }
 
   // Se realiza la cuenta de radicados en Visto Bueno VoBo
-  if ($numdata == 11) {                                                                                                                                 
+  if ($numdata == 11) {
     if ($codusuario == 1) {
       $isql = "select count(*) as CONTADOR
                     from radicado
@@ -153,7 +153,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     (radi_usua_actu = $codusuario and radi_depe_actu=$dependencia))";
     }
   } else {
-    $isql   = "select count(*) as CONTADOR                                                                                                              
+    $isql   = "select count(*) as CONTADOR
                   from radicado
                   where carp_per = 0 and
                   carp_codi = 11 and
@@ -161,7 +161,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   radi_usua_actu = $codusuario";
     $addadm = "&adm=0";
   }
-  
+
   // Cuenta los numero de radicados por visto bueno
   $data       = "Documenos para Visto Bueno";
   $rs         = $db->conn->query($isql);
@@ -286,7 +286,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   //Estadisticas
   $link22      = $enlace22."&fechah=$fechah\"";
   $link22show  = "<li><a tabindex=\"-1\" $link22 target=\"mainFrame\"> Estadisticas </a></li>";
-  
+
   $tiene_acceso_admin = in_array($krd, $usuarios_admin);
 ?>
 <html lang="es">
@@ -342,11 +342,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Acciones <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                      
+
                       <li>
                         <a href='ReportesR/indexReportes.php' alt='Generar planilla de distribucion y entrega'  target='mainFrame' class="menu_princ">Planilla Reasignados</a></li>
 
-                      <?php if($_SESSION["usua_perm_adminflujos"]==1){ ?>
+                       <?php if ($_SESSION["usua_perm_anu"]==3 or $_SESSION["usua_perm_anu"]==1){?>
+                       <li>
+                        <a href="anulacion/cuerpo_anulacion.php?<?=$phpsession?>&tpAnulacion=1&<? echo "fechah=$fechah";?>" target='mainFrame' class="menu_princ">Anulaci&oacute;n</a>
+                        </li>
+                       <?php }
+
+                      if($_SESSION["usua_perm_adminflujos"]==1){ ?>
                       <li class="dropdown-submenu">
                         <a href="#" onclick="return false;">Editor Flujos</a>
                         <ul class="dropdown-menu">
@@ -355,11 +361,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </ul>
                       </li>
                       <?php }
-                     
+
                      if($_SESSION["usua_perm_envios"]>=1) { ?>
                       <li><a href="radicacion/formRadEnvios.php?<?=$phpsession ?>&<? echo "fechah=$fechah&usr=".md5($dep)."&primera=1&ent=1"; ?>" target='mainFrame' class="menu_princ">Envios</a></li>
                       <?php }
-                      
+
 
                       if($_SESSION["usua_perm_intergapps"]==1 ) { ?>
                       <li><a href="aplintegra/cuerpoApLIntegradas.php?<?=$phpsession?>&<?php echo "fechaf=$fechah&carpeta=8&nomcarpeta=Aplicaciones integradas&orderTipo=desc&orderNo=3"; ?>" target='mainFrame' class="menu_princ">Aplicaciones integradas</a></li>
@@ -419,10 +425,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                           <li><a href="./prestamo/prestamo.php?opcionMenu=0" target='mainFrame'>Generacion de reportes</a></li>
                                           <li><a href="./prestamo/prestamo.php?opcionMenu=3" target='mainFrame'>Cancelar solicitudes</a></li>
                                         </ul>
-                                  <?php }                                 
-                                if ($_SESSION["usua_perm_anu"]==3 or $_SESSION["usua_perm_anu"]==1){?>
-                                  <li><a href="anulacion/cuerpo_anulacion.php?<?=$phpsession?>&tpAnulacion=1&<? echo "fechah=$fechah"; ?>" target='mainFrame' class="menu_princ">Anulaci&oacute;n</a></li>
-                                <?php }     
+                                  <?php }
                       if ($_SESSION["usua_perm_trd"]==1) { ?>
                       <li class="dropdown-submenu">
                         <a href="#" onclick="return false;">Clasificaci&oacute;n Documental</a>
@@ -435,8 +438,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                           <li><a href='./trd/informe_trd.php?<?=$phpsession ?>&krd=<?=$krd?>&krd=<?=$krd?>&<? echo "fechah=$fechah"; ?>' class="vinculos" target='mainFrame'>Listado Tablas de Retencion Documental </a></li>
                         </ul>
                       </li>
-                      <?php } 
-                      
+                      <?php }
+
                       if($_SESSION["usua_admin_archivo"]>=1) {
                           $isql = "select count(1) as CONTADOR
                                 from SGD_EXP_EXPEDIENTE
@@ -446,26 +449,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             $num_exp = $rs->fields["CONTADOR"];
                         ?>
                         <li><a href='./expediente/cuerpo_exp.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Archivo (<?=$num_exp?>)</a></li>
-                      <?php } 
+                      <?php }
                       if($_SESSION["usua_admin_archivo"]>=2) {
                         ?>
                         <li><a href='archivo/archivo.php?<?=$phpsession?>&fechaf=<?=$fechah?>&carpeta=8&nomcarpeta=Expedientes&orno=1&adodb_next_page=1' target='mainFrame'>Administracion Archivo F&iacute;sico</a></li>
-                      <?php } 
+                      <?php }
                       if($_SESSION["usua_perm_dev"]==1) { ?>
                       <li> <a href='devolucion/cuerpoDevCorreo.php?<?=$phpsession?>&krd=<?=$krd?>&<?php echo "fechaf=$fechah&carpeta=8&devolucion=2&estado_sal=4&nomcarpeta=Documentos Para Impresion&orno=1&adodb_next_page=1"; ?>' target='mainFrame' class="menu_princ" >Dev Correo</span></a></li>
                       <?php }?>
-                      
+
                               <li>
                                   <a href="./Administracion/tbasicas/adm_tarifas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
                                       Tarifas
                                   </a>
                               </li>
-                      
-                                      
+
+
                                       </li>
-                                      
+
                                   </ul>
-                                  
+
 
                               </li>
                               <li>
@@ -522,7 +525,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                   </a>
                               </li>
 
- 
+
 
                               <li>
                                   <a href="./Administracion/tbasicas/adm_plantillas.php?<?=$sendSession?>" class="vinculos" target='mainFrame'>
