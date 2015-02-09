@@ -314,49 +314,35 @@ if ($aceptarAnular and $actaNo) {
 
         define(FPDF_FONTPATH, '../fpdf/font/');
         $radAnulados = join(",", $radAnularE);
-        $radicadosPdf = "
-        <table cellspacing='0' style=\"width: 100%; border: solid 1px black; background: #E7E7E7; text-align: center;
-         font-size: 10pt;\">
-            <tbody>
-            <tr>
-                <th style=\"width: 30%\">Radicado</th>
-                <th style=\"width: 70%\">Observación Solicitante</th>
-            </tr>
-        </tbody></table>";
+            $radicadosPdf = "<br><table border='1'><tbody><tr><td width='200' height='30' bgcolor='#D0D0FF'><b>Radicado</b></td><td width='500' height='30' bgcolor='#D0D0FF'><b>Observación Solicitante </b></td></tr></tbody></table>";
 
         foreach ($radAnularE as $id => $noRadicado) {
-            $radicadosPdf .= "
-            <table cellspacing=\"0\" style=\"width: 100%; border: solid 1px black; background: #F7F7F7; text-align:
-            center; font-size: 10pt;\">
-              <tbody><tr>
-                <td style=\"width: 30%; text-align: left\">" . $radAnularE[$id]. "</td>
-                <td style=\"width: 70%; text-align: left\">" . $radObservaE[$id] . "</td>
-              </tr> </tbody>
-            </table>";
+            $radicadosPdf .="<table border='1'><tbody><tr><td width='200' height='30'>" . $radAnularE[$id]."</td><td width='500' height='30'>" . $radObservaE[$id] . "</td></tr></tbody></table>";
         }
 
         $anoActual = date("Y");
         $ruta_raiz = "..";
-        include("$ruta_raiz/fpdf/html2pdf.php");
+        include("$ruta_raiz/fpdf/fpdf.php");
+        require("$ruta_raiz/fpdf/html_table.php");
 
         $fecha = date("d-m-Y");
         $fecha_hoy_corto = date("d-m-Y");
         include "$ruta_raiz/class_control/class_gen.php";
-        $b = new CLASS_GEN();
         $date = date("m/d/Y");
+        $b    = new CLASS_GEN();
         $fecha_hoy = $b->traducefecha($date);
         $html = <<<EOD
               <br>
               <br>
               <br>
-              <br><b>ACTA DE ANULACIÓN  No.  $actaNo</b>
+              <br><b>ACTA DE ANULACIÓN  No. $actaNo</b>
               <br>
               <br>
               <br><b>NUMEROS DE RADICACIÓN DE CORRESPONDENCIA ENVIADA AÑO $anoActual</b>
               <br>
               <br><b>CENTRO DE DOCUMENTACIÓN</b>
               <br>
-              <br><span style="text-align:justify;">En cumplimiento a lo establecido en el Acuerdo No.060 del 30 de  octubre de 2001 expedido por el Archivo General de la Nación, en el cual se establecen pautas para la   administración de las comunicaciones oficiales en las entidades públicas y privadas que cumplen  funciones públicas, y con base especialmente en el parpágrafo del Articulo Quinto,  el cual establece que: Cuando existan errores en la radicación y se anulen los números,  se  debe dejar  constancia por escrito, con la respectiva justificación y firma del  Jefe de la unidad  de  correspondencia. </span>  <br><p>El    Coordinador   de    Gestión   Documental   y    Correspondencia de $entidad_largo procede a anular los siguientes números de  radicación de  $TituloActam que no fueron tramitados por las dependencias radicadoras:</span>
+              <br><span >En cumplimiento a lo establecido en el Acuerdo No.060 del 30 de  octubre de 2001 expedido por el Archivo General de la Nación, en el cual se establecen pautas para la   administración de las comunicaciones oficiales en las entidades públicas y privadas que cumplen  funciones públicas, y con base especialmente en el parpágrafo del Articulo Quinto,  el cual establece que: Cuando existan errores en la radicación y se anulen los números,  se  debe dejar  constancia por escrito, con la respectiva justificación y firma del  Jefe de la unidad  de  correspondencia. </span>  <br><p>El    Coordinador   de    Gestión   Documental   y    Correspondencia de $entidad_largo procede a anular los siguientes números de  radicación de  $TituloActam que no fueron tramitados por las dependencias radicadoras:</span>
               <br>
               <br> 1.- Números de radicación de $TituloActam a anular:
               <br> $radicadosPdf
@@ -375,11 +361,8 @@ EOD;
 
 
         $pdf = new PDF();
-        $pdf->Open();
-        $pdf->SetCreator("HTML2PDF");
         $pdf->SetTitle("Acta de Anulacion de Radicados");
         $pdf->SetSubject("Anulacion radicados");
-        $pdf->SetAuthor("Correspondencia");
         $pdf->SetFont('Arial', '', 11);
         $pdf->SetMargins(15,15,15,15);
         $pdf->AddPage();
