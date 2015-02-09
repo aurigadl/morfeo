@@ -593,6 +593,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
       var ALLDATA;
       var INCREMENTAL1 = 0;
+      var EJECUCION = false;
+
       // DO NOT REMOVE : GLOBAL FUNCTIONS!
       pageSetUp();
 
@@ -942,7 +944,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           );
         }
       });
-    });
 
    //Mostrar validacion del formulario
    function mostrarAlert(objAlert) {
@@ -963,18 +964,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
    }
 
    //Radicar documento nuevo
-   $('body').on("click", '.radicarNuevo, #modificaRad',function(){
-
-        $('.radicarNuevo').prop('disabled', true);
-        $('#modificaRad').prop('disabled', true);
+   $('body').on("click", '.radicarNuevo, #modificaRad', EJECUCION ,function(){
         var acction   = $(this).attr("id");
         var pass      = true;
         var idsession = '<?=$idsession?>';
+
         /* Realizar validaciones antes de enviar el radicado*/
 
         $('#alertmessage').empty();
-        //Inactivamos el boton para que no envie mas solicitudes
-        $( ".radicarNuevo"  ).each(function(index,value){$(value).bind('click', false);})
 
         //Folios y Anexos
         if(/[A-Za-z]+$/.test($("#nofolios").val()) ||
@@ -994,7 +991,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         var fecha       = new Date(ano_doc,mes_doc-1, dias_doc);
         var tiempoRestante = fechaActual.getTime() - fecha.getTime();
         var dias = Math.floor(tiempoRestante / (1000 * 60 * 60 * 24));
-
 
 
         if (dias >960 && dias < 1500){
@@ -1048,9 +1044,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           pass = false;
         }
 
-        if(pass){
+        if(pass && !EJECUCION){
           //Dejar alertas en blanco
           borrarAlert();
+          EJECUCION = true;
           var datos    = $("form").serialize();
           var radicado = '';
 
@@ -1062,7 +1059,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             datos = datos + "&modificar=true";
           }
 
-          $( "#modificaRad" ).prop( "disabled", true );
 
           var jqxhr = $.post( "./ajax_radicarNuevo.php", datos ,function(data) {
             for(var k in data) {
@@ -1099,14 +1095,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             mostrarAlert({type : 'danger', message : 'Error de conexion al servidor'})
           })
 
-          $("#modificaRad").prop( "disabled", false  );
-          $('.radicarNuevo').prop('disabled', false);
-
+          EJECUCION = false;
         };
 
-        $( ".radicarNuevo"  ).each(function(index,value){$(value).unbind('click', false);})
   });
 
+    });
   </script>
 </body>
 </html>
