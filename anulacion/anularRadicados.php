@@ -249,7 +249,9 @@ if ($aceptarAnular and $actaNo) {
         $sqlD = "select depe_nomb,depe_codi from dependencia
                   where depe_codi_territorial = $depe_codi_territorial
                   order by depe_codi";
+
         $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+
         $rsD = $db->conn->Execute($sqlD);
         while (!$rsD->EOF) {
             $depcod = $rsD->fields["DEPE_CODI"];
@@ -260,6 +262,7 @@ if ($aceptarAnular and $actaNo) {
     } else {
         $lista_depcod = $depeBuscada;
     }
+
     $where_depe = " and (depe_codi) in ($lista_depcod )";
     //*fin inclusion
     /*
@@ -311,17 +314,28 @@ if ($aceptarAnular and $actaNo) {
 
         define(FPDF_FONTPATH, '../fpdf/font/');
         $radAnulados = join(",", $radAnularE);
-        $radicadosPdf = "<table>
-                            <tr>
-                                <td>Radicado</td>
-                                <td>Observación Solicitante</td>
-                            </tr>";
-        foreach ($radAnularE as $id => $noRadicado) {
-            $radicadosPdf .= "<tr><td> " . $radAnularE[$id]. " </td><td> " . $radObservaE[$id] . " </td></tr>";
-        }
-        $anoActual = date("Y");
-        $radicadosPdf .= "</table>";
+        $radicadosPdf = "
+        <table cellspacing='0' style=\"width: 100%; border: solid 1px black; background: #E7E7E7; text-align: center;
+         font-size: 10pt;\">
+            <tbody>
+            <tr>
+                <th style=\"width: 30%\">Radicado</th>
+                <th style=\"width: 70%\">Observación Solicitante</th>
+            </tr>
+        </tbody></table>";
 
+        foreach ($radAnularE as $id => $noRadicado) {
+            $radicadosPdf .= "
+            <table cellspacing=\"0\" style=\"width: 100%; border: solid 1px black; background: #F7F7F7; text-align:
+            center; font-size: 10pt;\">
+              <tbody><tr>
+                <td style=\"width: 30%; text-align: left\">" . $radAnularE[$id]. "</td>
+                <td style=\"width: 70%; text-align: left\">" . $radObservaE[$id] . "</td>
+              </tr> </tbody>
+            </table>";
+        }
+
+        $anoActual = date("Y");
         $ruta_raiz = "..";
         include("$ruta_raiz/fpdf/html2pdf.php");
 
@@ -343,10 +357,11 @@ if ($aceptarAnular and $actaNo) {
               <br><b>CENTRO DE DOCUMENTACIÓN</b>
               <br>
               <br><span style="text-align:justify;">En cumplimiento a lo establecido en el Acuerdo No.060 del 30 de  octubre de 2001 expedido por el Archivo General de la Nación, en el cual se establecen pautas para la   administración de las comunicaciones oficiales en las entidades públicas y privadas que cumplen  funciones públicas, y con base especialmente en el parpágrafo del Articulo Quinto,  el cual establece que: Cuando existan errores en la radicación y se anulen los números,  se  debe dejar  constancia por escrito, con la respectiva justificación y firma del  Jefe de la unidad  de  correspondencia. </span>  <br><p>El    Coordinador   de    Gestión   Documental   y    Correspondencia de $entidad_largo procede a anular los siguientes números de  radicación de  $TituloActam que no fueron tramitados por las dependencias radicadoras:</span>
-              <br> <br> 1.- Números de radicación de $TituloActam a anular:<br> $radicadosPdf
               <br>
-
-              <br>2.- Se deja copia de la presente acta en el archivo central de la Entidad para el trámite
+              <br> 1.- Números de radicación de $TituloActam a anular:
+              <br> $radicadosPdf
+              <br>
+              <br> 2.- Se deja copia de la presente acta en el archivo central de la Entidad para el trámite
                   respectivo de la organización física de los archivos.
               <br>
               <br>Se firma la presente el $fecha_hoy.
