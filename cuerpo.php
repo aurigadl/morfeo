@@ -229,14 +229,15 @@ $_SESSION['numExpedienteSelected'] = null;
                   <tbody>
                   <?php
                     include "$ruta_raiz/include/query/queryCuerpo.php";
-			//$db->conn->debug = true;
-			  $rs = $db->conn->Execute($isql);
+
+			      //$db->conn->debug = true;
+			      $rs = $db->conn->Execute($isql);
                       
                   while(!$rs->EOF){
 
                     $numeroRadicado        = $rs->fields["HID_RADI_NUME_RADI"];
                     $fechaRadicado         = $rs->fields["HID_RADI_FECH_RADI"];
-                    $refRadicado        = $rs->fields["REFERENCIA"];
+                    $refRadicado           = $rs->fields["REFERENCIA"];
                     $asuntoRadicado        = $rs->fields["ASUNTO"];
                     $remitenteRadicado     = $rs->fields["REMITENTE"];
                     $tipoDocumentoRadicado = $rs->fields["TIPO DOCUMENTO"];
@@ -244,19 +245,26 @@ $_SESSION['numExpedienteSelected'] = null;
                     $enviadoPor            = $rs->fields["ENVIADO POR"];
                     $radiPath              = $rs->fields["HID_RADI_PATH"];
                     $radiLeido             = $rs->fields["HID_RADI_LEIDO"];
+                    $radianulado           = $rs->fields["HID_EANU_CODIGO"];
 
                     $linkVerRadicado = "./verradicado.php?verrad=$numeroRadicado&".session_name()."=".session_id()."&nomcarpeta=$nomcarpeta#tabs-a";
                     $linkImagen = "$ruta_raiz/bodega/$radiPath";
 
                     unset($leido);
                     if(!$radiLeido){
-                      $leido = "class=\"unread\"";
+                      $leido = " unread ";
                     }
-                  ?>
-                    <tr <?=$leido?>>
 
-                      <td class="inbox-table-icon sorting_1" >
-                        <div  >
+                    unset($colorAnulado);
+                    if($radianulado){
+                        $colorAnulado = " text-danger ";
+                    }
+
+
+                  ?>
+                    <tr class="<?=$leido?>  <?=$colorAnulado?>">
+                      <td class="inbox-table-icon sorting_1 ">
+                        <div>
                           <label class="checkbox">
                             <input id="<?=$numeroRadicado?>" name="checkValue[<?=$numeroRadicado?>]" value="CHKANULAR" type="checkbox">
                             <i></i>

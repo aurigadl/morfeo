@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //Modificado Idrd 29-abr-2008 descomentariar session-start
 session_start();
 $ruta_raiz = "..";
-$krd=$krd;
+
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 require_once("$ruta_raiz/class_control/AplExternaError.php");
 require_once("$ruta_raiz/class_control/ControlAplIntegrada.php");
@@ -142,7 +142,7 @@ function Anular(tipoAnulacion)
 	return;
 	}
 
-	if (document.formAnulados.observa.value.length<249)
+	if (document.formAnulados.observa.value.length>249)
 	{
 	alert ("Comentario supera los 250 caracteres.");
 	return;
