@@ -102,7 +102,7 @@ $ruta_raiz             = "..";
     
 	$db        = new ConnectionHandler("$ruta_raiz");
 	$Anulacion = new Anulacion($db);
-	$observa   = "Solicitud Anulacion.$observa";
+	$observa   = "Solicitud Anulacion. $observa";
 
 	/* Sentencia para consultar en sancionados el estado en que se encuentra el radicado
 	 * A = Anulado, V = Vigente, B = Estado temporal 

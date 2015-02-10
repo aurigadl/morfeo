@@ -44,7 +44,7 @@ if ($generar_informe or $aceptarAnular) {
     $fecha_fin = mktime(23, 59, 59, substr($fecha_fin, 5, 2), substr($fecha_fin, 8, 2), substr($fecha_fin, 0, 4));
 
     $query = "select $radi_nume_radi as radi_nume_radi, r.radi_fech_radi, r.ra_asun, r.radi_usua_actu,
-        r.radi_depe_actu, r.radi_usu_ante, c.depe_nomb, b.sgd_anu_sol_fech, " . $db->conn->substr . "(b.sgd_anu_desc, 21,62) as sgd_anu_desc
+        r.radi_depe_actu, r.radi_usu_ante, c.depe_nomb, b.sgd_anu_sol_fech, b.sgd_anu_desc as sgd_anu_desc
         from radicado r, sgd_anu_anulados b, dependencia c";
     $fecha_mes = substr($fecha_ini, 0, 7);
 
@@ -314,10 +314,11 @@ if ($aceptarAnular and $actaNo) {
 
         define(FPDF_FONTPATH, '../fpdf/font/');
         $radAnulados = join(",", $radAnularE);
-            $radicadosPdf = "<br><table border='1'><tbody><tr><td width='200' height='30' bgcolor='#D0D0FF'><b>Radicado</b></td><td width='500' height='30' bgcolor='#D0D0FF'><b>Observación Solicitante </b></td></tr></tbody></table>";
 
         foreach ($radAnularE as $id => $noRadicado) {
-            $radicadosPdf .="<table border='1'><tbody><tr><td width='200' height='30'>" . $radAnularE[$id]."</td><td width='500' height='30'>" . $radObservaE[$id] . "</td></tr></tbody></table>";
+            $norad = $radAnularE[$id];
+            $txrad = $radObservaE[$id];
+            $radicadosPdf .= "<br><tr><td width='700' bgcolor='#D0D0FF'><b>Radicado No.  $norad</b></td></tr><span bgcolor='#D0D0'>$txrad</span>";
         }
 
         $anoActual = date("Y");

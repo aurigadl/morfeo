@@ -31,15 +31,13 @@ class Anulacion{
     } // end of member function consultaAnulados
 
     /**
-     * 
-     *
      * @db Cursor de la base de datos que etamos trabajando.
      * @param int dependencia Dependencia que pide la anulacion del documento. 
      * @param int usuadoc Documento de identificación del usuario que pide la anulación 
      * @return void
      * @access public
      */
-    function solAnulacion($radicados,  $dependencia,  $usuadoc, $comentario, $codUsuario,$systemDate){
+    function solAnulacion($radicados,  $dependencia,  $usuadoc, $comentario, $codUsuario, $systemDate){
 
         //Arreglo que almacena los nombres de columna
         #==========================
@@ -57,21 +55,22 @@ class Anulacion{
             # Observa que el nombre de los campos pueden ser mayusculas o minusculas
 
             $record['SGD_EANU_CODIGO'] = "1";
-
             # Mandar como parametro el recordset y el arreglo conteniendo los datos a actualizar
             # a la funcion GetUpdateSQL. Esta procesara los datos y regresara el enunciado sql del
             # update necesario con clausula WHERE correcta.
             # Si no se modificaron los datos no regresa nada.
             $updateSQL = $this->db->conn->GetUpdateSQL($rs, $record, true);
             $this->db->conn->Execute($updateSQL); # Actualiza el registro en la base de datos
+
             # Si no se modificaron los datos no regresa nada.
             $updateSQL = $this->db->conn->GetUpdateSQL($rs, $record, true);
             $this->db->conn->Execute($updateSQL); # Actualiza el registro en la base de datos
-            // Falta crear secuencia para Anulacion ??
-            // Modificado Infom�trika 18-Septiembre-2009
-            // Se debe crear la secuencia sgd_anu_id
-            //$anuId = 1;
+
             $anuId = $this->db->conn->GenID( "sgd_anu_id" );
+
+            //Campo del comentario en base de datos no puede superar mas de 249 caracteres
+            $comentario = substr($comentario, 0, 249);
+
             # Insertamos en la tabla sgd_anu_anulados los registros que entran en solicitud.
             $sql = "insert into sgd_anu_anulados (RADI_NUME_RADI, SGD_EANU_CODI, SGD_ANU_SOL_FECH, DEPE_CODI  , USUA_DOC, SGD_ANU_DESC ,USUA_CODI,SGD_ANU_ID)
                 values ($noRadicado   ,1 , $systemDate ,

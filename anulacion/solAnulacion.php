@@ -141,6 +141,13 @@ function Anular(tipoAnulacion)
 	alert ("Por favor escriba un comentario.");
 	return;
 	}
+
+	if (document.formAnulados.observa.value.length<249)
+	{
+	alert ("Comentario supera los 250 caracteres.");
+	return;
+	}
+
 	for(i=4;i<document.formAnulados.elements.length;i++)
 	{
 			if(document.formAnulados.elements[i].checked==1)
