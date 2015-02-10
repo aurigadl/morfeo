@@ -256,7 +256,7 @@ $_SESSION['numExpedienteSelected'] = null;
                     }
 
                     unset($colorAnulado);
-                    if($radianulado){
+                    if($radianulado == 2){
                         $colorAnulado = " text-danger ";
                     }
 
