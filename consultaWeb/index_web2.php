@@ -72,7 +72,7 @@ if(isset($numeroRadicado) && isset($codigoverificacion) && isset($captcha)){
 
 <title>..:: <?=$entidad?>  ::..</title>
 <!-- Bootstrap core CSS -->
-<link href="../estilos/bootstrap.css" rel="stylesheet">
+<link href="../estilos/bootstrap.min.css" rel="stylesheet">
 
 <!-- CSS -->
 <link rel="stylesheet" href="css/structure2.css" type="text/css" />

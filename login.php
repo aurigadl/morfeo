@@ -80,7 +80,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   <title>..:: <?=$entidad?> fwCaliope  ::..</title>
     <!-- Bootstrap core CSS -->
-    <link href="./estilos/bootstrap.css" rel="stylesheet">
+    <link href="./estilos/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="./estilos/login.css" rel="stylesheet">

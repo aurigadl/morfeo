@@ -47,7 +47,6 @@ $str = <<<EOF
       <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/demo.css">
       <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/siim_temp.css">
       <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/uploadfile.css">
-      <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/js/jqgrid/resources/css/smoothness/jquery.ui.combogrid.css"/>
 
 	  <script type="text/javascript" src="$ruta_raiz/js/jquery.min.js"></script>
       <script type="text/javascript" src="$ruta_raiz/js/jsplumb/lib/jquery-1.9.0.js"></script>
