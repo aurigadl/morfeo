@@ -23,16 +23,12 @@ if ($_POST["codeForm"])
 if ($_GET["codeForm"])
     $codeForm = $_GET["codeForm"];
 
-if ($_GET["noExpediente"])
-    $noExpediente = $_GET["$noExpediente"];
-
-
-
-
 define('ADODB_ASSOC_CASE', 1);
 include "$ruta_raiz/conn.php";
 include "$ruta_raiz/gforms/genForm.class.php";
-//$db->conn->debug = true;
+
+$db->conn->debug = false;
+
 $form = new genForm($db);
 $form->getForm($codeForm);
 $fields = $form->getFormFields();
@@ -51,24 +47,8 @@ $scriptJs = "";
 
 <!-- Widget ID (each widget will need unique ID)-->
 <div class="jarviswidget" id="wid-id-2" data-widget-colorbutton="false" data-widget-editbutton="false">
-<!-- widget options:
-	usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-	
-	data-widget-colorbutton="false"	
-	data-widget-editbutton="false"
-	data-widget-togglebutton="false"
-	data-widget-deletebutton="false"
-	data-widget-fullscreenbutton="false"
-	data-widget-custombutton="false"
-	data-widget-collapsed="true" 
-	data-widget-sortable="false"
-	
--->
 <header>
-    <span class="widget-icon"> <i class="fa fa-check txt-color-green"></i> </span>
-
     <h2><?= $nameForm ?> </h2>
-
 </header>
 <!-- widget edit box -->
 <div class="jarviswidget-editbox">
@@ -116,16 +96,33 @@ $fieldPkSave = $field["FIELD_PKSAVE"];
 $fieldDefault = $field["FIELD_DEFAULT"];
 $fieldRowspan = $field["FIELD_ROWSPAN"];
 $fieldParams = $field["FIELD_PARAMS"];
+
+//Datos a pasar al formulario pasados por
+//variables de envio $_get $_post $_session
 $fieldVarsparam = $field["FIELD_VARSPARAM"];
 $fieldVars = $field["FIELD_VARS"];
+
 if ($orderOld != $fieldOrder) {
     if ($orderOld) {
         echo "</tr>";
     }
     echo "<tr>";
 }
-$valueVar = "";
-$addValue = "";
+
+unset($valueVar,$addValue);
+
+/*
+ * Busca las variables configuradas desde datos externos
+ * GET, POST, SESION
+ *
+ *   Si el valor configurado es 0: explora los metodos  $POST_,$_GET $_SESSION
+ *   dejando con prioridad el orden anterior.
+ *
+ *   Si el valor configurado es 1: trae los datos de $_GET
+ *   Si el valor configurado es 2: trae los datos de $_POST
+ *   Si el valor configurado es 3: trae los datos de $_SESSION
+*/
+
 if ($fieldVars == 0 && trim($fieldVarsparam)) {
     if ($_SESSION[$fieldVarsparam])
         $valueVar = $_SESSION[$fieldVarsparam];
@@ -143,24 +140,30 @@ if ($fieldVars == 0 && trim($fieldVarsparam)) {
     if ($_SESSION[$fieldVarsparam])
         $valueVar = $_SESSION[$fieldVarsparam];
 }
-if ($valueVar)
+
+if ($valueVar){
     $addValue = " value='$valueVar' ";
+}
+
 $arrPkSearch = preg_split("/[\s||]+/", $fieldPkSearch);
+
 foreach ($arrPkSearch as $value) {
     list($val1, $val2, $val3) = preg_split("/[\s->]+/", $value);
 }
 
 $orderOld = $fieldOrder;
+
 if (!trim($fieldLabel))
     $fieldLabel = $fieldName;
 if ($i = 1)
     IF ($fieldColspan)
         $addColspan = " colspan=$fieldColspan "; else $addColspan = "";
-IF ($fieldRowspan)
+if ($fieldRowspan)
     $addRowspan = " rowspan=$fieldRowspan "; else $addRowspan = "";
 if ($fieldMask)
     $tFieldMask = ' data-mask="' . $fieldMask . '" data-mask-placeholder= "-" ';
 $addAttr = " fieldSave='$fieldSave'  tableSave='$tableSave' fieldPk='$fieldPk' ";
+
 if (trim($fieldClass == "datefield")) {
     $scriptJS .= '
 					$(\'#' . $fieldName . '\').datepicker({
@@ -170,7 +173,6 @@ if (trim($fieldClass == "datefield")) {
 							onSelect: function (selectedDate) {
 												}
 					});';
-
     $i++;
 }
 ?>
@@ -188,22 +190,25 @@ if (trim($fieldClass == "datefield")) {
 <?php if ($fieldTypeCode == 1 || $fieldTypeCode == 2) { ?><input <?= $addAttr ?> type="<?= $feildType ?>"
                                                                                  placeholder="<?= $fieldDesc ?>"
                                                                                  name="<?= $fieldName ?>"
-                                                                                 id="<?= $fieldName ?>"   <?= $tFieldMask ?> <?= $addValue ?> > <?php } ?>
+                                                                                 id="<?= strtolower($fieldName)  ?>"   <?= $tFieldMask ?> <?= $addValue ?> > <?php } ?>
 <?php if ($fieldTypeCode == 3) { ?><textarea <?= $addAttr ?> fieldSave="<?= $fieldSave ?>"
                                                              placeholder="<?= $fieldDesc ?>" rows="3"
                                                              name="<?= $fieldName ?>"
-                                                             id="<?= $fieldName ?>"  ><?= $valueVar ?></textarea><?php } ?>
-<?php if ($fieldTypeCode == 4) { ?><input <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= $fieldName ?>"
+                                                             id="<?= strtolower($fieldName) ?>"  ><?= $valueVar
+    ?></textarea><?php } ?>
+<?php if ($fieldTypeCode == 4) { ?><input <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= strtolower ($fieldName) ?>"
                                                           class="datepicker" type="text" data-dateformat="yy-mm-dd"
                                                           placeholder="Select a date"
                                                           name="<?= $fieldName ?>"><?php } ?>
-<?php if ($fieldTypeCode == 5) { ?><label id="<?= $fieldLabel ?>" class="label"><?= $fieldDesc ?></label> <?php } ?>
+
+<?php if ($fieldTypeCode == 5) { ?><label id="<?= strtolower($fieldLabel) ?>" class="label"><?= $fieldDesc ?></label>
+<?php } ?>
 <?php if ($fieldTypeCode == 7) {
     if ($fieldParams) {
         $datosSelect = explode('||', $fieldParams);
     }
     ?>
-    <select <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= $fieldName ?>" name="<?= $fieldName ?>">
+    <select <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= strtolower($fieldName) ?>" name="<?= $fieldName ?>">
         <?php
         foreach ($datosSelect as $key => $value) {
             $datoss = "";
@@ -229,7 +234,7 @@ if (trim($fieldClass == "datefield")) {
         $rsSel = $db->conn->query($fieldSql);
     }
     ?>
-    <select <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= $fieldName ?>" name="<?= $fieldName ?>">
+    <select <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= strtolower($fieldName) ?>" name="<?= $fieldName ?>">
         <?php
         while (!$rsSel->EOF and $rsSel) {
             if (trim($sel) == "*" && !$valueVar)
@@ -253,7 +258,8 @@ if (trim($fieldClass == "datefield")) {
 <?php if ($fieldTypeCode == 9) {
     ?>
     <div>
-        <div style="float:left"><input size="30" id="<?= $fieldName ?>" <?= $addAttr ?> <?= $addValue ?>  /></div>
+        <div style="float:left"><input size="30" id="<?= strtolower($fieldName) ?>" <?= $addAttr ?> <?= $addValue ?>
+                /></div>
         <br/>&nbsp;<br/>
 
         <div id="switcher" style="float:right"></div>
@@ -481,7 +487,6 @@ if ($fieldTypeCode == 15) {
     ?>
     <div><a heref='#' onClick="cargarLink<?= $fieldName ?>('<?= $fieldLink ?>','');"> <?= $fieldDesc ?></a></div>
     <?
-    // $scriptJS .= " alert(vars);";
     $scriptJS .= "
           window.open(pagina+vars,target,vars);  }";
 }
@@ -505,12 +510,13 @@ if ($fieldTypeCode == 15) {
 
 </BODY>
 <script type="text/javascript">
+
  function saveForm(){
   // $($('[tablesave]')[1]).attr('id')
   var arrF = new Array();
   var arrJ = new Array();
   var arrJson = "";
-  
+
   $($('[tablesave]')).each(function( index ) {
     fieldId = $($('[tablesave]')[index]).attr('id');
     arrF[index] = new Array(5);
@@ -518,7 +524,7 @@ if ($fieldTypeCode == 15) {
     arrF[index]['fieldSave'] =  $($('[fieldsave]')[index]).attr('fieldsave');
     arrF[index]['fieldPk'] =    $($('[fieldpk]')[index]).attr('fieldpk');
     arrF[index]['fieldValue'] = $($('[tablesave]')[index]).val();
-    
+
     var item = {
         "tableSave":arrF[index]['tableSave'],
         "fieldSave":arrF[index]['fieldSave'],
@@ -534,7 +540,7 @@ if ($fieldTypeCode == 15) {
 		// alert(JSON.stringify(arrJ));
  }
 
- 
+
  function cargarPagina(pagina,nombreDiv){
   $.post( pagina,{verradicado:"<?= $verradicado ?>",verradPermisos:"<?= $verradPermisos ?>
     ",permRespuesta:"<?= $permRespuesta ?>"}, function( data ) {
@@ -543,8 +549,7 @@ if ($fieldTypeCode == 15) {
 }
 
 function cargarLink(pagina,target,vars){
- 
- window.open(pagina,target,vars);
+    window.open(pagina,target,vars);
 }
  <?= $scriptJS ?>
 
