@@ -27,8 +27,9 @@
   //  changeFolder( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$tomarNivel,$observa)
 
   if(trim( $_SESSION["chips"])) {
+	//  $db->conn->debug = true;
     //$isql = "SELECT * FROM predial2014_20140819 WHERE CHIP in (". $_SESSION["chips"]."'0') order by CAST(VAL_M2_T AS NUMERIC) DESC";
-    $isql = "SELECT * FROM (SELECT DISTINCT CHIP, VAL_M2_T, A_TER_CAT, DIR_REAL, DIR_CORR, FMI FROM predial2014_20140819 WHERE CHIP in (". $_SESSION["chips"]."'0')) a order by CAST(VAL_M2_T AS NUMERIC) DESC";
+    $isql = "SELECT * FROM (SELECT DISTINCT CHIP, VAL_M2_T, A_TER_CAT, DIR_REAL, DIR_CORR, FMI FROM habitat_predios WHERE CHIP in (". $_SESSION["chips"]."'0')) a order by CAST(VAL_M2_T AS NUMERIC) DESC";
     $rs = $db->conn->query($isql);
     if($rs->fields["CHIP"]){
       $chipB = $rs->fields["CHIP"];
@@ -54,7 +55,7 @@
   }
   $chipss=explode(',',$_SESSION['chips']);
   $ultimoChip=$chipss[count($chipss)-2];
-  $isql="select * From predial2014_20140819 WHERE CHIP=$ultimoChip";
+  $isql="select * From habitat_predios WHERE CHIP=$ultimoChip";
   $lala=$db->conn->query($isql);
   if ($rtaMove == 1 && $lala->fields["CHIP"]) {
     $_SESSION['chipsListado'].=$lala->fields["CHIP"].',';

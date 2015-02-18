@@ -408,8 +408,9 @@ La generación de este radicado es temporal, si desea radicar su solicitud acér
 </li> 
 </ul><br>
 <div class="text-alert"><span class="input-group-addon alert-success">
-* En todo caso el valor definitivo será adoptado mediante resolución motivada 
-tras la verificación de los soportes del traslado de la obligación urbanística.</span></div> 
+<b>*  En todo caso el valor definitivo será adoptado mediante resolución motivada tras la verificación de los soportes del traslado de la obligación urbanística.</b>
+<!-- *  En todo caso el valor definitivo será adoptado mediante resolución motivada 
+tras la verificación de los soportes del traslado de la obligación urbanística. --></span></div> 
 </div>
 </div>
 </div>

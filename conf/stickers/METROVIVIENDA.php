@@ -18,7 +18,7 @@ body {
 }
 
 span{
-    font-size:   15px;
+    font-size:   12px;
     line-height: 15px;
     clear:       both;
 }
@@ -32,9 +32,9 @@ td{
 </style>
 </head>
 <body topmargin="5" leftmargin="0"  onload="window.print()">
-    <table width="250px" cellpadding="0" cellspacing="0">
+    <table width="500x" cellpadding="0" cellspacing="0">
         <tr>
-            <td  align=left width="300px">
+            <td  align=left width="500px">
               <?=$entidad_corto?>
                <!-- <center>
                <p><span><b><h3><?=$entidad_largo?></h3><b></span></p>
