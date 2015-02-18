@@ -117,29 +117,37 @@ $scriptJS .= "
         var keydata  = objtrans.keydata;
         var idsearch = $(this).data('idvalue');
         var objShow  = tabdata[idsearch];
+        var valida   = false;
 
-        for (index = 0; index < keydata.length; ++index) {
+        if(idsearch !== undefined){
+            for (index = 0; index < keydata.length; ++index) {
 
-            //Nombre de la columna de la tabla que es a su vez un campo
-            //del formulario
-            var localkey = keydata[index];
+                //Nombre de la columna de la tabla que es a su vez un campo
+                //del formulario
+                var localkey = keydata[index];
 
-            //Si el campo es el id remplazamos el identificador en un campo hidden
-            //para poder actulizar el registro una vez se envien los datos
-            if(localkey == 'id'){
-                $('#paramAjax' ).val(objShow[localkey]);
-            }
+                //Si el campo es el id remplazamos el identificador en un campo hidden
+                //para poder actulizar el registro una vez se envien los datos
+                if(localkey == 'id'){
+                    $('#paramAjax' ).val(objShow[localkey]);
+                    $('#paramAjax' ).attr('tablesave', '$tableSearch');
+                    $('#paramAjax' ).attr('fieldpk'  , 1);
+                    $('#paramAjax' ).attr('fieldsave', 'id');
+                    valida = true;
+                }
 
-            //Validamos si existe el elemento por medio de su id
-            //con esta información se busca el elemento y se modifica
-            //su valor en los elementos existentes del formulario
-            if( $('#'+localkey).length !== 0){
-                //Si el campo es un Input
-                if($('#'+ localkey).is('input')){
-                    $('#'+ localkey).val(objShow[localkey]);
+                //Validamos si existe el elemento por medio de su id
+                //con esta información se busca el elemento y se modifica
+                //su valor en los elementos existentes del formulario
+                if( $('#'+localkey).length !== 0){
+                    //Si el campo es un Input
+                    if($('#'+ localkey).is('input')){
+                        $('#'+ localkey).val(objShow[localkey]);
+                    }
                 }
             }
         }
+
     });
 ";
 

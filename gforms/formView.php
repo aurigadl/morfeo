@@ -64,6 +64,12 @@ $scriptJs = "";
 <!-- Success states for elements -->
 <form class="smart-form">
 <header><?= $descForm ?></header>
+
+<footer>
+    <button class="btn btn-primary" type="button" onCLick="saveForm();" id=grabar> Grabar</button>
+    <button class="btn btn-default" onclick="cleanForm()" type="button">Limpiar</button>
+</footer>
+
 <input type=hidden id=paramAjax>
 <fieldset>
 <table class="table table-bordered">
@@ -71,7 +77,7 @@ $scriptJs = "";
 $arrFieldsSave = array();
 $i = 1;
 foreach ($fields as $fieldCode => $field){
-$fieldName = $field["FIELD_NAME"];
+$fieldName =  strtolower($field["FIELD_NAME"]);
 $fieldPk = $field["FIELD_PK"];
 $fieldDesc = $field["FIELD_DESC"];
 $fieldType = $field["FIELD_TYPE"];
@@ -178,7 +184,7 @@ if (trim($fieldClass == "datefield")) {
 ?>
 
 <td  <?= $addColspan ?> >
-<label> <?= $fieldLabel ?></label>
+<label> <?= ucwords($fieldLabel) ?></label>
 <? if ($fieldTypeCode != 12) { ?><label class="<?= $fieldClass ?>"> <? } ?>
 <div class="input-group col-lg-12">
 
@@ -190,25 +196,25 @@ if (trim($fieldClass == "datefield")) {
 <?php if ($fieldTypeCode == 1 || $fieldTypeCode == 2) { ?><input <?= $addAttr ?> type="<?= $feildType ?>"
                                                                                  placeholder="<?= $fieldDesc ?>"
                                                                                  name="<?= $fieldName ?>"
-                                                                                 id="<?= strtolower($fieldName)  ?>"   <?= $tFieldMask ?> <?= $addValue ?> > <?php } ?>
+                                                                                 id="<?= $fieldName?>"   <?= $tFieldMask ?> <?= $addValue ?> > <?php } ?>
 <?php if ($fieldTypeCode == 3) { ?><textarea <?= $addAttr ?> fieldSave="<?= $fieldSave ?>"
                                                              placeholder="<?= $fieldDesc ?>" rows="3"
                                                              name="<?= $fieldName ?>"
-                                                             id="<?= strtolower($fieldName) ?>"  ><?= $valueVar
+                                                             id="<?= $fieldName ?>"  ><?= $valueVar
     ?></textarea><?php } ?>
-<?php if ($fieldTypeCode == 4) { ?><input <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= strtolower ($fieldName) ?>"
+<?php if ($fieldTypeCode == 4) { ?><input <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= $fieldName ?>"
                                                           class="datepicker" type="text" data-dateformat="yy-mm-dd"
                                                           placeholder="Select a date"
                                                           name="<?= $fieldName ?>"><?php } ?>
 
-<?php if ($fieldTypeCode == 5) { ?><label id="<?= strtolower($fieldLabel) ?>" class="label"><?= $fieldDesc ?></label>
+<?php if ($fieldTypeCode == 5) { ?><label id="<?= $fieldLabel ?>" class="label"><?= $fieldDesc ?></label>
 <?php } ?>
 <?php if ($fieldTypeCode == 7) {
     if ($fieldParams) {
         $datosSelect = explode('||', $fieldParams);
     }
     ?>
-    <select <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= strtolower($fieldName) ?>" name="<?= $fieldName ?>">
+    <select <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= $fieldName ?>" name="<?= $fieldName ?>">
         <?php
         foreach ($datosSelect as $key => $value) {
             $datoss = "";
@@ -234,7 +240,7 @@ if (trim($fieldClass == "datefield")) {
         $rsSel = $db->conn->query($fieldSql);
     }
     ?>
-    <select <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= strtolower($fieldName) ?>" name="<?= $fieldName ?>">
+    <select <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= $fieldName ?>" name="<?= $fieldName ?>">
         <?php
         while (!$rsSel->EOF and $rsSel) {
             if (trim($sel) == "*" && !$valueVar)
@@ -258,7 +264,7 @@ if (trim($fieldClass == "datefield")) {
 <?php if ($fieldTypeCode == 9) {
     ?>
     <div>
-        <div style="float:left"><input size="30" id="<?= strtolower($fieldName) ?>" <?= $addAttr ?> <?= $addValue ?>
+        <div style="float:left"><input size="30" id="<?= $fieldName ?>" <?= $addAttr ?> <?= $addValue ?>
                 /></div>
         <br/>&nbsp;<br/>
 
@@ -293,9 +299,7 @@ if (trim($fieldClass == "datefield")) {
     }
 
 
-    $scriptJS .= '
-					 jQuery(document).ready(function(){
-					      
+    $scriptJS .= ' jQuery(document).ready(function(){
 								$( "#' . $fieldName . '" ).combogrid({
 								url: "server.php?tx=1&tableSearch=' . $tablePkSearch . '&fieldSearch=' . $fieldPkSearch1 . '&fieldsView=' . $fieldsView . '",
 								debug:true,
@@ -308,10 +312,10 @@ if (trim($fieldClass == "datefield")) {
 								}
 							});
 						});
+
 					 function cargarParametros(){
-					  val = $( "#' . $val2 . '" ).val();
-					  param = "' . $val1 . '="+val;
-					  $( "#paramAjax" ).val(param);
+                         val = $( "#' . $val2 . '" ).val();
+                         param = "' . $val1 . '="+val;
 					 }
 						';
 } else {
@@ -499,10 +503,12 @@ if ($fieldTypeCode == 15) {
 </td>
 </table>
 </fieldset>
+
 <footer>
     <button class="btn btn-primary" type="button" onCLick="saveForm();" id=grabar> Grabar</button>
-    <button class="btn btn-default" onclick="" type="button"> Cancelar</button>
+    <button class="btn btn-default" onclick="cleanForm()" type="button">Limpiar</button>
 </footer>
+
 </form>
 </div>
 </div>
@@ -512,7 +518,6 @@ if ($fieldTypeCode == 15) {
 <script type="text/javascript">
 
  function saveForm(){
-  // $($('[tablesave]')[1]).attr('id')
   var arrF = new Array();
   var arrJ = new Array();
   var arrJson = "";
@@ -520,10 +525,10 @@ if ($fieldTypeCode == 15) {
   $($('[tablesave]')).each(function( index ) {
     fieldId = $($('[tablesave]')[index]).attr('id');
     arrF[index] = new Array(5);
-    arrF[index]['tableSave'] =  $($('[tablesave]')[index]).attr('tablesave');
-    arrF[index]['fieldSave'] =  $($('[fieldsave]')[index]).attr('fieldsave');
-    arrF[index]['fieldPk'] =    $($('[fieldpk]')[index]).attr('fieldpk');
-    arrF[index]['fieldValue'] = $($('[tablesave]')[index]).val();
+    arrF[index]['tableSave']  =  $($('[tablesave]')[index]).attr('tablesave');
+    arrF[index]['fieldSave']  =  $($('[fieldsave]')[index]).attr('fieldsave');
+    arrF[index]['fieldPk']    =  $($('[fieldpk]')[index]).attr('fieldpk');
+    arrF[index]['fieldValue'] =  $($('[tablesave]')[index]).val();
 
     var item = {
         "tableSave":arrF[index]['tableSave'],
@@ -535,13 +540,30 @@ if ($fieldTypeCode == 15) {
 		});
 		pagina = "formUpdate.php";
 		$.post( pagina,{data:arrJ}, function( data ) {
-    $('#resultadoFrm').html(data);
-  });
+            $('#resultadoFrm').html(data);
+
+            function my_function(){
+                window.location = location.href;
+            }
+
+            setInterval("my_function();",5000);
+        });
 		// alert(JSON.stringify(arrJ));
  }
 
+function cleanForm(){
+    $( '#paramAjax' ).removeAttr('value');
+    $( '#paramAjax' ).removeAttr('tablesave');
+    $( '#paramAjax' ).removeAttr('fieldpk'  );
+    $( '#paramAjax' ).removeAttr('fieldsave');
 
- function cargarPagina(pagina,nombreDiv){
+  $($('[tablesave]')).each(function( index ) {
+    $($('[tablesave]')[index]).val('');
+  });
+}
+
+
+function cargarPagina(pagina,nombreDiv){
   $.post( pagina,{verradicado:"<?= $verradicado ?>",verradPermisos:"<?= $verradPermisos ?>
     ",permRespuesta:"<?= $permRespuesta ?>"}, function( data ) {
   $('#'+ nombreDiv).html(data);

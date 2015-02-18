@@ -176,38 +176,43 @@ class genForm {
 
     function putFormRegister() {
         $data = $this->dataSave;
-        $db = $this->db;
-        //var_dump($data);
+        $db   = $this->db;
+
         foreach ($data as $key => $campo) {
-            $script .= "" . $campo["fieldSave"] . " varchar ,\n";
-            $fieldName = $campo["fieldSave"];
-            $fieldValue = $campo["fieldValue"];
-            $fieldPk = $campo["fieldPk"];
-            $table = $campo["tableSave"];
+            $script     .= $campo["fieldSave"] . " varchar ,\n";
+            $fieldName   = strtolower($campo["fieldSave"]);
+            $fieldValue  = $campo["fieldValue"];
+            $fieldPk     = $campo["fieldPk"];
+            $table       = $campo["tableSave"];
             $record[$fieldName] = $fieldValue;
-            if ($fieldPk == 1)
+
+            if ($fieldName == 'id'){
                 $recordPk[] = $fieldName;
+            }elseif($fieldPk == 1){
+                $recordPk[] = $fieldName;
+            }
 
         }
+
         $db->conn->debug = true;
-        echo "<!--";
         $insert = $db->conn->Replace($table, $record, $recordPk, $autoquote = true);
-        echo "-->";
-        $db->conn->debug = false;
-        if ($insert)
+
+
+        if ($insert){
             echo '<div class="alert alert-block alert-success">
 					<a class="close" href="#" data-dismiss="alert">×</a>
 					<h4 class="alert-heading">
 					<p> Se Grabaron los Datos Correctamente ! </p>
 					</div>';
-        else        echo '<div class="alert alert-danger fade in">
+        } else {
+            echo '<div class="alert alert-danger fade in">
 					<button class="close" data-dismiss="alert"> × </button>
 					<i class="fa-fw fa fa-times"></i>
 					<strong>Error!</strong>
 					Al realizar la transaccion.
 					</div>';
+        }
         //$db->conn->Execute($insertSQL);
-
     }
 
     function getCreateTable() {
