@@ -98,7 +98,52 @@ $scriptJS .= " $('#idtableformview').dataTable({
                             'previous': 'Anterior'
                         }
     }
-});";
+});
+
+ $('#idtableformview_filter')
+ .prepend('<a  id=\"csvdown\" class=\"btn btn-default btn-xs\"><i class=\"fa fa-download\"></i> csv </a>')
+
+ // This must be a hyperlink
+ $('body').on('click','#csvdown', function (event) {
+    var tableCon   = $('#idtableformview');
+    var rowCons    = tableCon.find('tr');
+    var d          = new Date(); // for now
+
+    // Temporary delimiter characters unlikely to be typed by keyboard
+    // This is to avoid accidentally splitting the actual contents
+    var tmpColDelim = String.fromCharCode(11); // vertical tab character
+    var tmpRowDelim = String.fromCharCode(0); // null character
+
+    // actual delimiter characters for CSV format
+    var colDelim = ',';
+    var rowDelim = '\\n';
+
+
+    // Grab text from table into CSV formatted string
+    csv = rowCons.map(function (i, row) {
+          var rowCon = $(row),
+          colsCon = rowCon.find('td,th');
+          return colsCon.map(function (j, col) {
+                  var colCon = $(col),
+                  text = colCon.text();
+                  return text.replace('\"', '\"\"'); // escape double quotes
+                  }).get().join(tmpColDelim);
+          }).get().join(tmpRowDelim)
+          .split(tmpRowDelim).join(rowDelim)
+          .split(tmpColDelim).join(colDelim),
+         // Data URI
+
+        csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+    datetext = d.toTimeString().split(' ')[0].replace(/:/g, '');
+
+    $(this).attr({
+      'download': datetext + 'tempFile.csv',
+          'href': csvData,
+        'target': '_blank'
+    });
+ });
+ ";
 
 $scriptJS .= "
     //objeto para transferir datos al evento del click
@@ -130,9 +175,9 @@ $scriptJS .= "
                 //para poder actulizar el registro una vez se envien los datos
                 if(localkey == 'id'){
                     $('#paramAjax' ).val(objShow[localkey]);
-                    $('#paramAjax' ).attr('tablesave', '$tableSearch');
-                    $('#paramAjax' ).attr('fieldpk'  , 1);
-                    $('#paramAjax' ).attr('fieldsave', 'id');
+                    $('#paramAjax' ).attr({'tablesave':'$tableSearch',
+                                           'fieldpk'  : 1,
+                                           'fieldsave': 'id'});
                     valida = true;
                 }
 
