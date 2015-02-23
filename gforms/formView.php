@@ -10,6 +10,9 @@
     ?>
     <script type="text/javascript" src="<?= $ruta_raiz ?>/js/plugin/datatables/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery.ui.combogrid.css">
+
 </HEAD>
 <BODY>
 
@@ -115,7 +118,6 @@ if ($orderOld != $fieldOrder) {
     echo "<tr>";
 }
 
-unset($valueVar,$addValue);
 
 /*
  * Busca las variables configuradas desde datos externos
@@ -129,9 +131,11 @@ unset($valueVar,$addValue);
  *   Si el valor configurado es 3: trae los datos de $_SESSION
 */
 
+unset($valueVar,$addValue);
 if ($fieldVars == 0 && trim($fieldVarsparam)) {
     if ($_SESSION[$fieldVarsparam])
         $valueVar = $_SESSION[$fieldVarsparam];
+
     if ($_GET[$fieldVarsparam])
         $valueVar = $_GET[$fieldVarsparam];
     if ($_POST[$fieldVarsparam])
@@ -154,6 +158,12 @@ if ($valueVar){
 $arrPkSearch = preg_split("/[\s||]+/", $fieldPkSearch);
 
 foreach ($arrPkSearch as $value) {
+
+    //Se utilizan la estructura BARMANPRE->BarManPre y
+    //en ocasiones  BARMANPRE->BarManPre->345
+    //El primer parametro es el campo de la base de datos el segundo
+    //el el campo del formulario y el tercero puede ser el valor por
+    //defecto
     list($val1, $val2, $val3) = preg_split("/[\s->]+/", $value);
 }
 
@@ -166,8 +176,6 @@ if ($i = 1)
         $addColspan = " colspan=$fieldColspan "; else $addColspan = "";
 if ($fieldRowspan)
     $addRowspan = " rowspan=$fieldRowspan "; else $addRowspan = "";
-if ($fieldMask)
-    $tFieldMask = ' data-mask="' . $fieldMask . '" data-mask-placeholder= "-" ';
 $addAttr = " fieldSave='$fieldSave'  tableSave='$tableSave' fieldPk='$fieldPk' ";
 
 if (trim($fieldClass == "datefield")) {
@@ -234,7 +242,6 @@ if (trim($fieldClass == "datefield")) {
 
 <?php if ($fieldTypeCode == 8) {
     if ($fieldSql) {
-        //$db->conn->debug = true;
         $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
         $db->conn->SetFetchMode(ADODB_FETCH_NUM);
         $rsSel = $db->conn->query($fieldSql);
@@ -261,8 +268,7 @@ if (trim($fieldClass == "datefield")) {
 <?php
 } ?>
 
-<?php if ($fieldTypeCode == 9) {
-    ?>
+<?php if ($fieldTypeCode == 9) { ?>
     <div>
         <div style="float:left"><input size="30" id="<?= $fieldName ?>" <?= $addAttr ?> <?= $addValue ?>
                 /></div>
@@ -294,16 +300,14 @@ if (trim($fieldClass == "datefield")) {
         }
         $fieldsView .= "$field";
         $fieldsViewObject .= '{"columnName":"' . $field . '","width":"30","label":"' . $field . '"}';
-        $fieldsInsertValueId .= '$( "#' . $fieldId . '" ).val( ui.item.' . $field . ' );';
+        $fieldsInsertValueId .= '$( "#' . strtolower($fieldId) . '" ).val( ui.item.' . $field . ' );';
         $i++;
     }
 
-
     $scriptJS .= ' jQuery(document).ready(function(){
 								$( "#' . $fieldName . '" ).combogrid({
-								url: "server.php?tx=1&tableSearch=' . $tablePkSearch . '&fieldSearch=' . $fieldPkSearch1 . '&fieldsView=' . $fieldsView . '",
-								debug:true,
-								//replaceNull: true,
+								url: "server.php?tx=1&tableSearch=' . $tablePkSearch . '&fieldSearch=' .  $fieldPkSearch1 . '&fieldsView=' . $fieldsView . '",
+								minLength : 4,
 								colModel: [' . $fieldsViewObject . '],
 								select: function( event, ui ) {
 								  cargarParametros(),
@@ -316,10 +320,8 @@ if (trim($fieldClass == "datefield")) {
 					 function cargarParametros(){
                          val = $( "#' . $val2 . '" ).val();
                          param = "' . $val1 . '="+val;
-					 }
-						';
-} else {
-    ?>
+					 } ';
+} else { ?>
     <?php
     if ($fieldTypeCode == 4) {
         ?>
@@ -402,7 +404,13 @@ if ($fieldTypeCode == 11) {
                                     });
                                 ";
 }
-
+/*
+ * Generacion de tabla.
+ * Esta tabla se genera desde php y se le da el formato con javascript el cual
+ * genera los eventos de ordenamiento y filtro.
+ * La tabla se genera mediante los campos tablapksearch, muestra los campos numerados
+ * en params y se permite hacer el filtro por datos enviados desde get post o sesion.
+ * */
 if ($fieldTypeCode == 12) {
     define('ADODB_ASSOC_CASE', 1);
     $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
@@ -437,11 +445,8 @@ if ($fieldTypeCode == 12) {
             $i++;
         }
     }
-    $nameGrid = $fieldName;
-    $fieldSql = $fieldSql;
-    $fieldSearch = $fieldPkSearch;
-    $tableSearch = $tablePkSearch;
-    if (trim($tableSearch)) {
+
+    if (trim($tablePkSearch)){
         include "$ruta_raiz/gforms/grid.php";
     } else {
         echo "No hay tabla para realizar busqueda";
