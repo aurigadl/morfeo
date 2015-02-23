@@ -1,7 +1,7 @@
 <?php
 //session_start();
 //ini_set("display_errors",1);
-
+if (!$ruta_raiz)
     $ruta_raiz = "..";
 if (!$db) {
     include_once("$ruta_raiz/conn.php");
@@ -13,24 +13,16 @@ if ($fieldsView) {
     $fieldsView = mb_strtoupper($fieldsView);
 }
 
-
-
-if (isset($tablePkSearch)) {
+if (isset($tableSearch)) {
 
     if (!trim($fieldParams)) {
         $fieldsView = " * ";
     }
 
-    //Filtro generado si existe de variables get post session
-    if(!empty($fieldPkSearch) && !empty($valueVar)){
-        $filtertable = " where $fieldPkSearch = '$valueVar' ";
-    }
-
     $fieldSql = "SELECT
                     $fieldsView
                  FROM
-                    $tablePkSearch
-                    $filtertable
+                    $tableSearch
                  ORDER BY 1";
 }
 
@@ -183,7 +175,7 @@ $scriptJS .= "
                 //para poder actulizar el registro una vez se envien los datos
                 if(localkey == 'id'){
                     $('#paramAjax' ).val(objShow[localkey]);
-                    $('#paramAjax' ).attr({'tablesave':'$tablePkSearch',
+                    $('#paramAjax' ).attr({'tablesave':'$tableSearch',
                                            'fieldpk'  : 1,
                                            'fieldsave': 'id'});
                     valida = true;
