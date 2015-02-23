@@ -1,8 +1,10 @@
 <?php
-
 session_start();
-if (!$ruta_raiz)
+
+if (!$ruta_raiz){
     $ruta_raiz = "..";
+}
+
 include "$ruta_raiz/conn.php";
 
 $page = $_GET['page']; // get the requested page
@@ -34,7 +36,12 @@ switch ($tx) {
             $fieldView = " * ";
 
         // connect to the database
-        $result = $db->conn->query("SELECT COUNT(*) count FROM $tableSearch WHERE $fieldSearch like '$searchTerm' $paramSearch");
+        $db->conn->debug = false;
+
+        $result = $db->conn->query("SELECT COUNT(1) count
+                                    FROM $tableSearch
+                                    WHERE $fieldSearch like '$searchTerm' $paramSearch");
+
         $count = $resutl->fields['COUNT'];
 
         if ($count > 0) {
@@ -63,7 +70,6 @@ switch ($tx) {
             // ORDER BY $sidx $sord";
             $SQL = "SELECT $fieldsView FROM $tableSearch WHERE $fieldSearch like '$searchTerm' $andWhere LIMIT 40";
         }
-        $db->conn->debug = false;
         $result = $db->conn->query($SQL) or die("Couldn t execute query.");
 
         $response->page = $page;
@@ -113,6 +119,7 @@ switch ($tx) {
             echo json_encode($ret);
             die();
         }
+
         break;
 
 }

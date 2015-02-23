@@ -10,6 +10,9 @@
     ?>
     <script type="text/javascript" src="<?= $ruta_raiz ?>/js/plugin/datatables/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery.ui.combogrid.css">
+
 </HEAD>
 <BODY>
 
@@ -154,6 +157,12 @@ if ($valueVar){
 $arrPkSearch = preg_split("/[\s||]+/", $fieldPkSearch);
 
 foreach ($arrPkSearch as $value) {
+
+    //Se utilizan la estructura BARMANPRE->BarManPre y
+    //en ocasiones  BARMANPRE->BarManPre->345
+    //El primer parametro es el campo de la base de datos el segundo
+    //el el campo del formulario y el tercero puede ser el valor por
+    //defecto
     list($val1, $val2, $val3) = preg_split("/[\s->]+/", $value);
 }
 
@@ -166,8 +175,6 @@ if ($i = 1)
         $addColspan = " colspan=$fieldColspan "; else $addColspan = "";
 if ($fieldRowspan)
     $addRowspan = " rowspan=$fieldRowspan "; else $addRowspan = "";
-if ($fieldMask)
-    $tFieldMask = ' data-mask="' . $fieldMask . '" data-mask-placeholder= "-" ';
 $addAttr = " fieldSave='$fieldSave'  tableSave='$tableSave' fieldPk='$fieldPk' ";
 
 if (trim($fieldClass == "datefield")) {
@@ -261,8 +268,7 @@ if (trim($fieldClass == "datefield")) {
 <?php
 } ?>
 
-<?php if ($fieldTypeCode == 9) {
-    ?>
+<?php if ($fieldTypeCode == 9) { ?>
     <div>
         <div style="float:left"><input size="30" id="<?= $fieldName ?>" <?= $addAttr ?> <?= $addValue ?>
                 /></div>
@@ -294,16 +300,14 @@ if (trim($fieldClass == "datefield")) {
         }
         $fieldsView .= "$field";
         $fieldsViewObject .= '{"columnName":"' . $field . '","width":"30","label":"' . $field . '"}';
-        $fieldsInsertValueId .= '$( "#' . $fieldId . '" ).val( ui.item.' . $field . ' );';
+        $fieldsInsertValueId .= '$( "#' . strtolower($fieldId) . '" ).val( ui.item.' . $field . ' );';
         $i++;
     }
 
-
     $scriptJS .= ' jQuery(document).ready(function(){
 								$( "#' . $fieldName . '" ).combogrid({
-								url: "server.php?tx=1&tableSearch=' . $tablePkSearch . '&fieldSearch=' . $fieldPkSearch1 . '&fieldsView=' . $fieldsView . '",
-								debug:true,
-								//replaceNull: true,
+								url: "server.php?tx=1&tableSearch=' . $tablePkSearch . '&fieldSearch=' .  $fieldPkSearch1 . '&fieldsView=' . $fieldsView . '",
+								minLength : 4,
 								colModel: [' . $fieldsViewObject . '],
 								select: function( event, ui ) {
 								  cargarParametros(),
@@ -316,10 +320,8 @@ if (trim($fieldClass == "datefield")) {
 					 function cargarParametros(){
                          val = $( "#' . $val2 . '" ).val();
                          param = "' . $val1 . '="+val;
-					 }
-						';
-} else {
-    ?>
+					 } ';
+} else { ?>
     <?php
     if ($fieldTypeCode == 4) {
         ?>
