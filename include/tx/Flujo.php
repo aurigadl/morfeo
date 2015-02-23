@@ -153,6 +153,7 @@ class Flujo{
 			   rus.sgd_frol_codigo=fra.sgd_frol_codigo
 			   and fars.SGD_FARS_CODIGO=fra.SGD_FARS_CODIGO
    			   and rus.usua_doc='".$this->usuaDoc."'";
+
 		$query = "SELECT * 
 					FROM SGD_FEXP_FLUJOEXPEDIENTES 
 					WHERE SGD_FEXP_CODIGO=$nodo";// and SGD_PEXP_CODIGO=$tProc";

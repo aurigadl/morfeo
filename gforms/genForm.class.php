@@ -94,7 +94,6 @@ class genForm {
 		    f.FRM_CODE=" . $codeForm
             . " AND f.frmt_code=ft.frmt_code
             ORDER BY f.FRMF_ORDER,f.FRMF_COLUMN ";
-        //$this->db->conn->debug = true;
         $rs = $this->db->conn->query($sql);
 
         $fields = array();
@@ -194,7 +193,6 @@ class genForm {
 
         }
 
-        $db->conn->debug = true;
         $insert = $db->conn->Replace($table, $record, $recordPk, $autoquote = true);
 
 

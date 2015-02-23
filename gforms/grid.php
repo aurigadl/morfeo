@@ -203,5 +203,3 @@ $scriptJS .= "
 
     });
 ";
-
-//echo "<script>".$scriptJS."</script>";

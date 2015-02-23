@@ -30,8 +30,6 @@ define('ADODB_ASSOC_CASE', 1);
 include "$ruta_raiz/conn.php";
 include "$ruta_raiz/gforms/genForm.class.php";
 
-$db->conn->debug = false;
-
 $form = new genForm($db);
 $form->getForm($codeForm);
 $fields = $form->getFormFields();
@@ -152,7 +150,7 @@ if ($fieldVars == 0 && trim($fieldVarsparam)) {
 }
 
 if ($valueVar){
-    $addValue = " value='$valueVar' ";
+    $addValue = " readonly='readonly' value='$valueVar' ";
 }
 
 $arrPkSearch = preg_split("/[\s||]+/", $fieldPkSearch);
@@ -208,8 +206,7 @@ if (trim($fieldClass == "datefield")) {
 <?php if ($fieldTypeCode == 3) { ?><textarea <?= $addAttr ?> fieldSave="<?= $fieldSave ?>"
                                                              placeholder="<?= $fieldDesc ?>" rows="3"
                                                              name="<?= $fieldName ?>"
-                                                             id="<?= $fieldName ?>"  ><?= $valueVar
-    ?></textarea><?php } ?>
+                                                             id="<?= $fieldName ?>"  ><?= $valueVar ?></textarea><?php } ?>
 <?php if ($fieldTypeCode == 4) { ?><input <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= $fieldName ?>"
                                                           class="datepicker" type="text" data-dateformat="yy-mm-dd"
                                                           placeholder="Select a date"
@@ -563,7 +560,14 @@ function cleanForm(){
     $( '#paramAjax' ).removeAttr('fieldsave');
 
   $($('[tablesave]')).each(function( index ) {
-    $($('[tablesave]')[index]).val('');
+    var elemtovali = $($('[tablesave]')[index]);
+    var attr = elemtovali.attr('readonly');
+
+    // For some browsers, `attr` is undefined; for others,
+    // attr is false Check for both.
+    if (typeof attr === typeof undefined || attr === false) {
+        $($('[tablesave]')[index]).val('');
+    }
   });
 }
 
