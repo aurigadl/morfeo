@@ -118,7 +118,6 @@ if ($orderOld != $fieldOrder) {
     echo "<tr>";
 }
 
-unset($valueVar,$addValue);
 
 /*
  * Busca las variables configuradas desde datos externos
@@ -132,9 +131,11 @@ unset($valueVar,$addValue);
  *   Si el valor configurado es 3: trae los datos de $_SESSION
 */
 
+unset($valueVar,$addValue);
 if ($fieldVars == 0 && trim($fieldVarsparam)) {
     if ($_SESSION[$fieldVarsparam])
         $valueVar = $_SESSION[$fieldVarsparam];
+
     if ($_GET[$fieldVarsparam])
         $valueVar = $_GET[$fieldVarsparam];
     if ($_POST[$fieldVarsparam])
@@ -241,7 +242,6 @@ if (trim($fieldClass == "datefield")) {
 
 <?php if ($fieldTypeCode == 8) {
     if ($fieldSql) {
-        //$db->conn->debug = true;
         $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
         $db->conn->SetFetchMode(ADODB_FETCH_NUM);
         $rsSel = $db->conn->query($fieldSql);
@@ -404,7 +404,13 @@ if ($fieldTypeCode == 11) {
                                     });
                                 ";
 }
-
+/*
+ * Generacion de tabla.
+ * Esta tabla se genera desde php y se le da el formato con javascript el cual
+ * genera los eventos de ordenamiento y filtro.
+ * La tabla se genera mediante los campos tablapksearch, muestra los campos numerados
+ * en params y se permite hacer el filtro por datos enviados desde get post o sesion.
+ * */
 if ($fieldTypeCode == 12) {
     define('ADODB_ASSOC_CASE', 1);
     $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
@@ -439,11 +445,8 @@ if ($fieldTypeCode == 12) {
             $i++;
         }
     }
-    $nameGrid = $fieldName;
-    $fieldSql = $fieldSql;
-    $fieldSearch = $fieldPkSearch;
-    $tableSearch = $tablePkSearch;
-    if (trim($tableSearch)) {
+
+    if (trim($tablePkSearch)){
         include "$ruta_raiz/gforms/grid.php";
     } else {
         echo "No hay tabla para realizar busqueda";
