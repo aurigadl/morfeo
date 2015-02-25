@@ -27,6 +27,7 @@ class genForm {
     function genForm($db) {
         // Constructor de la clase
         $this->db = $db;
+        $this->db->conn->debug = false;
     }
 
     /** Metodo que permite iniciar la clase del formularios
@@ -180,7 +181,7 @@ class genForm {
         foreach ($data as $key => $campo) {
             $script     .= $campo["fieldSave"] . " varchar ,\n";
             $fieldName   = strtolower($campo["fieldSave"]);
-            $fieldValue  = $campo["fieldValue"];
+            $fieldValue  = "'".$campo["fieldValue"]."'";
             $fieldPk     = $campo["fieldPk"];
             $table       = $campo["tableSave"];
             $record[$fieldName] = $fieldValue;

@@ -31,6 +31,7 @@ include "$ruta_raiz/conn.php";
 include "$ruta_raiz/gforms/genForm.class.php";
 
 $form = new genForm($db);
+$db->conn->debug = false;
 $form->getForm($codeForm);
 $fields = $form->getFormFields();
 
