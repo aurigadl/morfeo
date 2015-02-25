@@ -121,7 +121,7 @@ data-widget-sortable="false"
 </div>
 <div class="col-sm-6">
 <div class="input-group"><label class="col-md-2 control-label"></label></div>
-<div><span class="input-group-addon">PROMEDIO VALOR CATASTRAL <?>$anoactual?> m<sup>2</sup> </span>
+<div><span class="input-group-addon">PROMEDIO VALOR CATASTRAL <?=$anoactual?> m<sup>2</sup> </span>
 <input class="form-control input-lg" placeholder="Valor de Referencia catastral /m²" disabled type="text" name="valorCatastralPromedio" id="valorCatastralPromedio">
 </div>
 </div>   
