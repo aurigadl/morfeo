@@ -20,6 +20,7 @@ $tipoAnexo[3] = "Certificado de Existencia y Representación <br> (En caso de se
 $tipoAnexo[4] = "Cédula de Ciudadanía del Titular de la licencia (En caso de ser persona natural el titular de la licencia)";
 $tipoAnexo[5] = "Certificacii&oacute;n de la Curadur&iacute;a Urbana en donde se indiquen las &aacute;reas del proyecto, el tipo de proyecto y se establezca el &aacute;rea de la provisi&oacute;n de VIS o VIP<br> y/o la licencia urban&iacute;stica, donde esta relacionada el &aacute;rea  de la provisi&oacute;n de VIS o VIP";
 $tipoAnexo[6] = "Poder (en caso de ser autorizado a realizar tramites ante Metrovivienda).";
+$anoactual = date("Y");
 ?>
 <html>
 <header>
@@ -114,13 +115,13 @@ data-widget-sortable="false"
 <div class="row">
 <div class="col-sm-6">
 <div class="input-group"><label class="col-md-2 control-label"></label></div><div>
-<span class="input-group-addon" >VALOR CATASTRAL DEL m<sup>2</sup> EN EL PREDIO 2014 </span>
+<span class="input-group-addon" >VALOR CATASTRAL DEL m<sup>2</sup> EN EL PREDIO <?=$anoactual?> </span>
 <input class="form-control input-lg" placeholder="" disabled type="text" name="valM2T" id="valM2T" >
 </div>
 </div>
 <div class="col-sm-6">
 <div class="input-group"><label class="col-md-2 control-label"></label></div>
-<div><span class="input-group-addon">PROMEDIO VALOR CATASTRAL 2014 m<sup>2</sup> </span>
+<div><span class="input-group-addon">PROMEDIO VALOR CATASTRAL <?>$anoactual?> m<sup>2</sup> </span>
 <input class="form-control input-lg" placeholder="Valor de Referencia catastral /m²" disabled type="text" name="valorCatastralPromedio" id="valorCatastralPromedio">
 </div>
 </div>   
