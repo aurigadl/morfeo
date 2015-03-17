@@ -757,7 +757,6 @@ body.nooverflow {
 .smart-form *, .smart-form *:after, .smart-form *:before {
     box-sizing: content-box;
     margin: 0;
-    padding: 0;
 }
 .smart-form .btn {
     box-sizing: border-box;

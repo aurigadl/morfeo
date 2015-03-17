@@ -762,20 +762,19 @@ switch ($codTx)
 		if ($codTx=="9" || $codTx=="8")
 		{
 			$scriptCargarUsuarios = " onClick=".'"'."remote.getUsuarios('usuariosInformar',document.getElementById('coddepeinf').value,0)".'";';
-			?>
-			<tr >
-				<td  colspan=4>
-				<? if($varTramiteConjunto==1){  ?>
-				<input type=checkbox name=chkConjunto Value="Si" id="chkConjunto" >
-				<span class="info">Tramite Conjunto  </span>
-	    <? }else{    ?>
-					<input type="checkbox" name="chkConjunto" id="chkConjunto" disabled >
-     <? }  ?>
-	    </td>
-	    </tr>
-			<tr >
-			<td ><font face="Verdana" size="1"><b>
-			Informar   A:</td><td >
+			if($varTramiteConjunto==1){  ?>
+        <tr>
+          <td  colspan=4>
+            <input type=checkbox name=chkConjunto Value="Si" id="chkConjunto" >
+            <span class="info">Tramite Conjunto  </span>
+          </td>
+        </tr>
+	    <? }else{ ?>
+					<input type='hidden' name="chkConjunto" id="chkConjunto" disabled >
+     <? } ?>
+			<tr>
+        <td ><font face="Verdana" size="1"><b>
+        Informar   A:</td><td >
 					<label class='select select-multiple'>
                 <?php
 			$query ="SELECT DEPE_NOMB, DEPE_CODI
