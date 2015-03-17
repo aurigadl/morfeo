@@ -11,7 +11,7 @@ require_once 'HTML/AJAX/Action.php';
  *                          -> Modificacion para DNP 10/2009  Tomada de Version Original
  *                          de Correlibre.org y OrfeoGPL.org
  *                          Basada en Ejemplo de la Libreria HTML_AJAX
- *         
+ *
  * @Copyright GNU/GPL v3
  * @param object $db Objeto conexion a la base de Datos de Orfeo
  *
@@ -31,15 +31,15 @@ class usuarios{
 	 * la raiz
 	 * @var strig $ruta_raiz Esta variable indica en que sitio se encuenta la Raiz de Orfeo, es Una ruta relativa ... que muestra cuantos directorios debe devolverse para encontrar la raiz
 	 * @access private
-	 */	
+	 */
 	var $ruta_raiz;
 
 	/*
 	 * Variable en el cual se almacenan la dependencia y Usuario
 	 * @var strig $ruta_raiz Esta variable indica en que sitio se encuenta la Raiz de Orfeo, es Una ruta relativa ... que muestra cuantos directorios debe devolverse para encontrar la raiz
 	 * @access private
-	 */		
-	
+	 */
+
 	var $depeCodi;
 	var $usuaCodi;
     var $usuaDoc;
@@ -52,21 +52,21 @@ class usuarios{
 	 * @autor Jairo Losada -  2009 - DNP
 	 * @Copyright GNU/GPL v3
 	 * @param object $db Objeto conexion a la base de Datos de Orfeo
-	 * 
+	 *
 	  */
 
 
 	function usuarios($db,$ruta_raiz){
 		$this->db = $db;
-		$this->ruta_raiz = $ruta_raiz; 
+		$this->ruta_raiz = $ruta_raiz;
 	}
 	/*
 	 * Metodo que Carga la Variable $ruta_raiz
 	 * @param var $ruta_raiz Esta variable indica en que sitio se encuenta la Raiz de Orfeo, es Una ruta relativa ... que muestra cuantos directorios debe devolverse para encontrar la raiz
 	 * @access public
 	 * @return string Retorna la Rua raiz de Orfeo
-	 */	
-	
+	 */
+
 	function updateClassName() {
 		$response = new HTML_AJAX_Action();
 
@@ -115,52 +115,55 @@ class usuarios{
 			$rsUs->moveNext();
 		}
 		if(!$cadenaX){
-		  $cadenaX = ' document.getElementById("'.$idObjetoHtml.'").options[0] = new Option(" -- No hay Usuarios --","0");';	
+		  $cadenaX = ' document.getElementById("'.$idObjetoHtml.'").options[0] = new Option(" -- No hay Usuarios --","0");';
 		}
-		  $cadena = $cadena . $cadenaX;	
+		  $cadena = $cadena . $cadenaX;
 		  if(!$indexSelected) $indexSelected = "0";
 		  $cadena .= ' document.getElementById("'.$idObjetoHtml.'").options['.$indexSelected.'].selected = true;';
-	
+
 		//echo "alert(' $cadena ')";
 		$response->insertScript($cadena);
-		
+
 		return $response;
 	}
-    function informarUsuario($idObjetoHtml,$radicado,$loginOrigen,$depeCodiOrigen,$usuaCodiOrigen,$depeCodiDestino,$usuaCodiDestino,$observacion,$txInformar,$txReasignar,$infConjunto=false,$usuaDocOrigen=null) {
-	  
+    function informarUsuario($idObjetoHtml,$radicado,$loginOrigen,$depeCodiOrigen,$usuaCodiOrigen,$depeCodiDestino,$usuaCodiDestino,$observacion,$txInformar,$txReasignar,$infConjunto=false,$usuaDocOrigen=null, $sendEmail=false) {
+
     $response = new HTML_AJAX_Action();
-    $iSql = "select * from usuario where depe_codi=$depeCodiDestino and usua_esta='1'"; 
+    $iSql = "select * from usuario where depe_codi=$depeCodiDestino and usua_esta='1'";
     //return "$iSql   $depeCodiOrigen   $usuaCodiOrigen";
-    $this->depeCodi = $depeCodiOrigen;
-    $this->usuaCodi = $usuaCodiOrigen;
+    $this->depeCodi   = $depeCodiMail = $depeCodiOrigen;
+    $this->usuaCodi   = $usuaCodiMail = $usuaCodiOrigen;
+    $radicadosSelText = $radicado;
+
+    include "$ruta_raiz/include/mail/mailInformar.php";
     //$this->db->conn->debug = true;
     $rsUs = $this->db->conn->Execute($iSql);
     $radicados = array_filter(explode(",", $radicado));
     //$var1 = "--> $idObjetoHtml+$radicados+$depeCodiOrigen+$usuaCodiOrigen+$depeCodiDestino+$usuaCodiDestino+{$observacion}";
-	
+
     $ruta_raiz = $this->ruta_raiz;
     include "$ruta_raiz/include/tx/Tx.php";
-  //return var_dump($radicados);  
+  //return var_dump($radicados);
 	$tx = new Tx($this->db);
-	
+
 	if($txInformar){
 	  if($infConjunto==true)  $infConjunto=1; else $infConjunto=0;
 	  $rta = $tx->informar($radicados,$loginOrigen,$depeCodiDestino,$depeCodiOrigen,$usuaCodiDestino,$usuaCodiOrigen,$observacion ,'',"..",$infConjunto);
-	  
+
 	}
 	$cadena = $this->listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen);
 	//return "$cadena";
 	$response->insertScript($cadena);
 	return $response;
-	
+
 }
 /**
  * Metodo Devuelve Lista de Informados de Un Radicado
  *
- * 
+ *
  * @param string $radicado Numero de Radicado o Registro al cual se le buscaran los Usuarios Informados
  * @return string Retorna la cadena con la tabla de los informados.
- * 
+ *
  **/
 function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
 {
@@ -178,10 +181,10 @@ function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
 		order by info_fech desc";
 		//echo "$iSql";
 	$rsUs = $this->db->conn->Execute($iSql);
-	
+
 	$cadena .= "seleccion = document.getElementById('$idObjetoHtml'); ";
 	$cadena .= "valor = ".'"<small>SE HA INFORMADO A:</small><TABLE class='."'".'table table-striped table-bordered'."'".' width=100%>';
-	while (!$rsUs->EOF) 
+	while (!$rsUs->EOF)
 	{
 	 $infoDesc = htmlentities(strtoupper(trim($rsUs->fields["INFO_DESC"])));
 	 $depeCodiBorrar = trim($rsUs->fields["DEPE_CODI"]);
@@ -230,15 +233,15 @@ function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
 	$cadena .= " seleccion.innerHTML=valor;";
        // echo $cadena;
 	return $cadena;
-	
+
 }
 /**
  * Metodo Devuelve Lista de Derivados de Un Radicado
  *
- * 
+ *
  * @param string $radicado Numero de Radicado o Registro al cual se le buscaran los Usuarios Informados
  * @return string Retorna la cadena con la tabla de los informados.
- * 
+ *
  **/
 function listaDerivados($radicado,$idObjetoHtml)
 {
@@ -254,10 +257,10 @@ function listaDerivados($radicado,$idObjetoHtml)
 		AND rg.radi_nume_radi=$radicado
 		order by rg.fechainicio desc";
 	$rsUs = $this->db->conn->Execute($iSql);
-	
+
 	$cadena = "seleccion = document.getElementById('$idObjetoHtml'); ";
 	$cadena .= "valor = ".'"SE HA DERIVADO A:<HR><TABLE class=borde_tab width=85%>';
-	while (!$rsUs->EOF) 
+	while (!$rsUs->EOF)
 	{
 	 $infoDesc = $rsUs->fields["INFO_DESC"];
 	 $depeCodiBorrar = $rsUs->fields["DEPE_CODI"];
@@ -274,18 +277,18 @@ function listaDerivados($radicado,$idObjetoHtml)
 	$cadena .= '</TABLE>";  ';
 	$cadena .= " seleccion.innerHTML=valor;";
 	return $cadena;
-	
+
 }
 function borrarInformado($idObjetoHtml,$radicado,$depeCodi,$usuaCodi,$depeCodiBorrar,$usuaCodiBorrar,$observacion) {
 	$response = new HTML_AJAX_Action();
 	$iSql = "select USUA_DOC from usuario where depe_codi=$depeCodi and usua_codi=$usuaCodi ";
 	$rsUs = $this->db->conn->Execute($iSql);
-	$usuaDoc = $rsUs->fields["USUA_DOC"];	
+	$usuaDoc = $rsUs->fields["USUA_DOC"];
 	$radicados[]=$usuaDoc."-".$radicado;
 	$this->depeCodi = $depeCodi;
-	$this->usuaCodi = $usuaCodi;	
+	$this->usuaCodi = $usuaCodi;
 	$ruta_raiz = $this->ruta_raiz;
-	
+
 	include "$ruta_raiz/include/tx/Tx.php";
 	$tx = new Tx($this->db);
 	$loginOrigen = "";
@@ -297,12 +300,12 @@ function borrarInformado($idObjetoHtml,$radicado,$depeCodi,$usuaCodi,$depeCodiBo
 /**
  * Metodo que borrar Derivados de Un Radicado
  *
- * 
+ *
  * @param string $radicado Numero de Radicado o Registro al cual se le buscaran los Usuarios Informados
  * @return string Retorna la cadena con la tabla de los informados.
  * @autor Jairo Losada 2009 - Correlibre.org
- *        Modificado en DNP 2010 
- * 
+ *        Modificado en DNP 2010
+ *
  **/
 function borrarDerivado($idObjetoHtml,$radicado,$depeCodi,$usuaCodi,$depeCodiBorrar,$usuaCodiBorrar,$idDerivado,$observacion) {
 	$response = new HTML_AJAX_Action();
@@ -310,9 +313,9 @@ function borrarDerivado($idObjetoHtml,$radicado,$depeCodi,$usuaCodi,$depeCodiBor
 	$rsUs = $this->db->conn->Execute($iSql);
 	$radicados[]=$depeCodiBorrar."-".$radicado;
 	$radicados[]=$radicado;
-	
+
 	$this->depeCodi = $depeCodi;
-	$this->usuaCodi = $usuaCodi;	
+	$this->usuaCodi = $usuaCodi;
 	$ruta_raiz = $this->ruta_raiz;
 	//$depeCodi = $this->depeCodi;
 	//$usuaCodi = $this->usuaCodi;
@@ -320,7 +323,7 @@ function borrarDerivado($idObjetoHtml,$radicado,$depeCodi,$usuaCodi,$depeCodiBor
 	$ruta_raiz = $this->ruta_raiz;
 	$this->db->conn->Execute($isql);
 	include "$ruta_raiz/include/tx/Tx.php";
-	
+
 	$tx = new Tx($this->db);
 	$radicados[0] = $radicado;
 	$rrr = $tx->insertarHistorico($radicados,
