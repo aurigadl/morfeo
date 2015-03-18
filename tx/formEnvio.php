@@ -16,7 +16,7 @@ $mensaje_error = false;
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 if (!isset($db))	$db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
+$db->conn->debug = false;
 require_once("$ruta_raiz/class_control/Dependencia.php");
 
 $objDep = new Dependencia($db);
@@ -791,7 +791,7 @@ switch ($codTx)
         <td align=center width="36%">
         <label class='select select-multiple'>
 	 <select name="usuariosInformar" id="usuariosInformar" size="5" width=450
-    onclick="remote.informarUsuario('usuariosInformados','<?=$radicadosTx?>','<?=$krd?>','<?=$dependencia?>','<?=$codusuario ?>',document.getElementById('coddepeinf').value,document.getElementById('usuariosInformar').value,<?=$observaInf?> , 1, 0,  document.getElementById('chkConjunto').checked,'<?=$usua_doc?>') ; " 
+    onclick="remote.informarUsuario('usuariosInformados','<?=$radicadosTx?>','<?=$krd?>','<?=$dependencia?>','<?=$codusuario ?>',document.getElementById('coddepeinf').value,document.getElementById('usuariosInformar').value,<?=$observaInf?> , 1, 0,  document.getElementById('chkConjunto').checked,'<?=$usua_doc?>', true);" 
      class="custom-scroll"   align="LEFT" >
      </label>
    </select>

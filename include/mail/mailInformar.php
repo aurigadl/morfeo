@@ -1,4 +1,5 @@
 <?
+$db->conn->debug = false;
 require_once($ruta_raiz.'/include/PHPMailer_v5.1/class.phpmailer.php');
 $query = "select u.USUA_EMAIL
                 from usuario u
@@ -32,7 +33,7 @@ $mail = new PHPMailer(true); // the true param means it will throw exceptions on
 $mail->IsSMTP(); // telling the class to use SMTP
 try {
 $mail->Host       = $hostPHPMailer; // SMTP server
-$mail->SMTPDebug  = $debugPHPMailer;                     // enables SMTP debug information (for testing) 2 debuger
+$mail->SMTPDebug  = 2 ;//$debugPHPMailer;                     // enables SMTP debug information (for testing) 2 debuger
 $mail->SMTPAuth   = true;
 //$mail->SMTPSecure = "tls";                  // enable SMTP authentication
 $mail->Host       = $hostPHPMailer; // sets the SMTP server
@@ -42,7 +43,7 @@ $mail->Password   = $passwdPHPMailer;        // SMTP account password
 //  $mail->AddReplyTo('name@yourdomain.com', 'First Last');
 $mail->AddAddress($mailDestino, "$mailDestino");
 $mail->SetFrom($admPHPMailer, $admPHPMailer);
-//$mail->AddReplyTo('sgdorfeo@correlibre.org', 'sgdorfeo');
+//$mail->AddReplyTo('aurigadl@gmail.com', 'sgdorfeo');
   $mensaje = file_get_contents($ruta_raiz."/conf/MailRadicado.html");
 
   $asuntoMail =  $asuntoMailRadicado;

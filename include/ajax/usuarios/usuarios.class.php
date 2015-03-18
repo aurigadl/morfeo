@@ -131,12 +131,16 @@ class usuarios{
     $response = new HTML_AJAX_Action();
     $iSql = "select * from usuario where depe_codi=$depeCodiDestino and usua_esta='1'";
     //return "$iSql   $depeCodiOrigen   $usuaCodiOrigen";
-    $this->depeCodi   = $depeCodiMail = $depeCodiOrigen;
-    $this->usuaCodi   = $usuaCodiMail = $usuaCodiOrigen;
-    $radicadosSelText = $radicado;
+    $this->depeCodi = $depeCodiOrigen;
+    $this->usuaCodi = $usuaCodiOrigen;
+    if($sendEmail){
+        $depeCodiMail = $depeCodiOrigen;
+        $usuaCodiMail = $usuaCodiOrigen;
+        $radicadosSelText = $radicado;
+    	include "$ruta_raiz/include/mail/mailInformar.php";
+    }
 
-    include "$ruta_raiz/include/mail/mailInformar.php";
-    //$this->db->conn->debug = true;
+    $this->db->conn->debug = false;
     $rsUs = $this->db->conn->Execute($iSql);
     $radicados = array_filter(explode(",", $radicado));
     //$var1 = "--> $idObjetoHtml+$radicados+$depeCodiOrigen+$usuaCodiOrigen+$depeCodiDestino+$usuaCodiDestino+{$observacion}";
