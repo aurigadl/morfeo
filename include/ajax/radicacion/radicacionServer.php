@@ -1,5 +1,5 @@
 <?php
- // include the server class
+// include the server class
 include("../../../config.php");
 include 'HTML/AJAX/Server.php';
 /**
@@ -29,30 +29,29 @@ class radicacionServer extends HTML_AJAX_Server {
 	var $initMethods = false;
 	//Conexion a Base de datos de Orfeo
 	var $db;
-  var $ruta_raiz;
+	var $ruta_raiz = "../../..";
 	// init method for the testHaa class, includes needed files an registers it for ajax, directly passes in methods to register to specify case in php4
 	function initRadicacion() {
-    $ruta_raiz = "../../..";
-    //echo "alert('Entro a initRadicacion".$this->db."');";
+		//echo "alert('Entro a initRadicacion".$this->db."');";
 		include './radicacion.class.php';
 		$this->registerClass(new radicacionAjax($this->db,$this->ruta_raiz),'radicacionAjax',array('newRadicadoAjax','insertDireccionAjax','insertVarsDireccionAjax'));
-  
+
 	}
 	function conexion($db,$ruta_raiz)
 	{
-	  $this->db = $db;
-    $this->ruta_raiz = $ruta_raiz;
+		$this->db = $db;
+		$this->ruta_raiz = $ruta_raiz;
 	}	
 }
 
 // create an instance of our test server
 
-  include_once ("../../../include/db/ConnectionHandler.php");
-  $ruta_raiz = "../../..";
-  $db = new ConnectionHandler($ruta_raiz);
-  $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-  //error_reporting(7);
-  
+include_once ("../../../include/db/ConnectionHandler.php");
+$ruta_raiz = "../../..";
+$db = new ConnectionHandler($ruta_raiz);
+$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+//error_reporting(7);
+
 $server = new radicacionServer();
 $server->conexion($db,$ruta_raiz);
 $server->initRadicacion();

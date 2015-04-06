@@ -42,7 +42,7 @@ class usuarios{
 
 	var $depeCodi;
 	var $usuaCodi;
-    var $usuaDoc;
+    	var $usuaDoc;
 	/*
 	 * Metodo constructor de la Clase
 	 *
@@ -69,9 +69,7 @@ class usuarios{
 
 	function updateClassName() {
 		$response = new HTML_AJAX_Action();
-
 		$response->assignAttr('test','className','test');
-
 		return $response;
 	}
 
@@ -106,10 +104,10 @@ class usuarios{
 		$cadenaX = "";
 		while (!$rsUs->EOF)
 		{
-			$usuaCodi = htmlentities($rsUs->fields["USUA_CODI"]);
+			$usuaCodi    = htmlentities($rsUs->fields["USUA_CODI"]);
 			$usuaRolCodi = $rsUs->fields["SGD_ROL_CODIGO"];
-			$usuaNomb =  ucwords(($rsUs->fields["USUA_NOMB"]));
-			$cadenaX .= ' document.getElementById("'.$idObjetoHtml.'").options['.$j.'] = new Option("'.$usuaNomb.'","'.$usuaCodi.'");';
+			$usuaNomb    = ucwords(($rsUs->fields["USUA_NOMB"]));
+			$cadenaX    .= ' document.getElementById("'.$idObjetoHtml.'").options['.$j.'] = new Option("'.$usuaNomb.'","'.$usuaCodi.'");';
 			if($usuaCodi==1 || $usuaRolCodi==2) $indexSelected = $j;
 			$j++;
 			$rsUs->moveNext();
@@ -128,27 +126,28 @@ class usuarios{
 	}
     function informarUsuario($idObjetoHtml,$radicado,$loginOrigen,$depeCodiOrigen,$usuaCodiOrigen,$depeCodiDestino,$usuaCodiDestino,$observacion,$txInformar,$txReasignar,$infConjunto=false,$usuaDocOrigen=null, $sendEmail=false) {
 
-    $response = new HTML_AJAX_Action();
-    $iSql = "select * from usuario where depe_codi=$depeCodiDestino and usua_esta='1'";
+    $ruta_raiz = $this->ruta_raiz;
+    $db        = $this->db;
+    include "$ruta_raiz/include/tx/Tx.php";
+    $response  = new HTML_AJAX_Action();
+    $iSql      = "select * from usuario where depe_codi=$depeCodiDestino and usua_esta='1'";
     //return "$iSql   $depeCodiOrigen   $usuaCodiOrigen";
     $this->depeCodi = $depeCodiOrigen;
     $this->usuaCodi = $usuaCodiOrigen;
     if($sendEmail){
-        $depeCodiMail = $depeCodiOrigen;
-        $usuaCodiMail = $usuaCodiOrigen;
+	$codTx        = 8;
+        $depeCodiMail = $depeCodiDestino;
+        $usuaCodiMail = $usuaCodiDestino;
         $radicadosSelText = $radicado;
-    	include "$ruta_raiz/include/mail/mailInformar.php";
+    	require("$ruta_raiz/include/mail/mailInformar.php");
+	ob_end_clean();
     }
 
     $this->db->conn->debug = false;
     $rsUs = $this->db->conn->Execute($iSql);
     $radicados = array_filter(explode(",", $radicado));
-    //$var1 = "--> $idObjetoHtml+$radicados+$depeCodiOrigen+$usuaCodiOrigen+$depeCodiDestino+$usuaCodiDestino+{$observacion}";
 
-    $ruta_raiz = $this->ruta_raiz;
-    include "$ruta_raiz/include/tx/Tx.php";
-  //return var_dump($radicados);
-	$tx = new Tx($this->db);
+    $tx = new Tx($this->db);
 
 	if($txInformar){
 	  if($infConjunto==true)  $infConjunto=1; else $infConjunto=0;
@@ -156,7 +155,8 @@ class usuarios{
 
 	}
 	$cadena = $this->listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen);
-	//return "$cadena";
+
+	// some statement that removes all printedx echoed items
 	$response->insertScript($cadena);
 	return $response;
 
@@ -179,12 +179,12 @@ function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
 		where
 		dep.depe_codi=inf.DEPE_CODI
 		AND inf.usua_doc = us.usua_doc
-		AND radi_nume_radi in ($radicado 0)
+		AND radi_nume_radi in ($radicado)
 		AND info_conjunto =0
 		AND USUA_DOC_ORIGEN = '$usuaDocOrigen'
 		order by info_fech desc";
 		//echo "$iSql";
-	$rsUs = $this->db->conn->Execute($iSql);
+	$rsUs = $this->db->conn->query($iSql);
 
 	$cadena .= "seleccion = document.getElementById('$idObjetoHtml'); ";
 	$cadena .= "valor = ".'"<small>SE HA INFORMADO A:</small><TABLE class='."'".'table table-striped table-bordered'."'".' width=100%>';
@@ -210,11 +210,11 @@ function listaInformados($radicado,$idObjetoHtml,$usuaDocOrigen)
                 where
                 dep.depe_codi=inf.DEPE_CODI
                 AND inf.usua_doc = us.usua_doc
-                AND radi_nume_radi in ($radicado 0)
+                AND radi_nume_radi in ($radicado)
 		AND info_conjunto>=1
 		AND USUA_DOC_ORIGEN = '$usuaDocOrigen'
                 order by info_fech desc";
-        $rsUs = $this->db->conn->Execute($iSql);
+        $rsUs = $this->db->conn->query($iSql);
         //$cadena .= "<small >TRAMITE EN CONJUNTO:</small><TABLE class=table-bordered width=100%>";
         while (!$rsUs->EOF)
         {
