@@ -147,7 +147,7 @@ Descripci&oacute;n Anexos</b></small></td><td><small> <?=$radi_desc_anex ?></sma
 	<?
 		if($verradPermisos == "Full" or $datoVer=="985") {
 	?>
-		<input type=button name=mosrtar_tipo_doc2 value='...' class="btn btn-primary btn-xs" onClick="ver_tipodocuTRD(<?=$codserie?>,<?=$tsub?>);">
+		<input type="button" title="Asigne una TRD a su documento."  name=mosrtar_tipo_doc2 value='...' class="btn btn-primary btn-xs" onClick="ver_tipodocuTRD(<?=$codserie?>,<?=$tsub?>);">
 	</small></td>
       <?
 	  if ($verradPermisos == "Full"  or $datoVer=="985" ) {

@@ -283,6 +283,9 @@ if ($radicar_documento) {
     $tipo_docto = $anex->get_sgd_tpr_codigo();
     if (!$tipo_docto) $tipo_docto = 0;
 
+//ESTE INCLUDE PERMITE PASAR HERENCIA A UN ANEXO
+ include 'datos_rad_padre.php';
+
     if ($sec and $vp == "n") {
         if ($generar_numero != "no" and $radicar_a == "si") {
             if (!$tpradic) {
@@ -296,7 +299,7 @@ if ($radicar_documento) {
             $rad->mrecCodi = 1;
             $rad->radiFechOfic = $sqlFechaHoy;
             $rad->radiNumeDeri = trim($verrad);
-            $rad->descAnex = $desc_anexos;
+            $rad->descAnex = $asunto;
             $rad->radiPais = "$pais";
             $rad->raAsun = $asunto;
 
