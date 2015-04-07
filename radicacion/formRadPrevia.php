@@ -142,7 +142,7 @@ function solonumeros(){
    <?}?>
    </fieldset>
    <footer>
-       <input type="submit" name="Submit" onClick="solonumeros();" value="buscar" onSelect="solonumeros();" class="btn btn-primary">
-       <a class="btn btn-success" href='./NEW.php?<?=session_name()."=".trim(session_id())?>&dependencia=<?=$dependencia?>&ent=<?=$ent?>'>Nuevo</a>
+       <input type="submit" name="Submit" onClick="solonumeros();" title="Digite un dato para realizar una búsqueda previa" value="Buscar" onSelect="solonumeros();" class="btn btn-primary">
+       <a class="btn btn-success" title="Seleccione Nuevo si su comunicación no se relaciona con otra comunicación existente" href='./NEW.php?<?=session_name()."=".trim(session_id())?>&dependencia=<?=$dependencia?>&ent=<?=$ent?>'>Nuevo</a>
    </footer>
    <input type='hidden' name='pnom' value='<?=$pnomb ?>'>

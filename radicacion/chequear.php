@@ -148,6 +148,10 @@ if(!$fecha_fin) $fecha_fin = $fecha_busq;
 <head>
 <?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
 <?php include_once("$ruta_raiz/js/funtionImage.php")?>
+<link rel="stylesheet" href="../tooltips/jquery-ui.css">
+<script src="../tooltips/jquery-ui.js"></script> 
+<link rel="stylesheet" href="../tooltips/tool.css">
+<script src="../tooltips/tool.js"></script>
 </head>
 
 <body topmargin="0" bgcolor="#FFFFFF">
@@ -513,7 +517,7 @@ if($primera!=1 and $Submit=="buscar" and ($buscar_por_cuentai or $buscar_por_rad
 	if($Submit)
 	{
 		?>
-			<center><table class="table table-bordered table-striped" ></table><table class="table table-bordered table-striped" width="100%"><tr><td class="titulosError"><center>¡Debe digitar un Dato para realizar la b&uacute;squeda! </center></td></tr></table></center>
+			<center><table class="table table-bordered table-striped" ></table><table class="table table-bordered table-striped" width="100%"><tr><td class="titulosError"><center><font color = "red">¡Debe digitar un Dato para realizar la b&uacute;squeda!</font></center></td></tr></table></center>
 			<?
 			$nobuscar = "No Buscar";
 	}
