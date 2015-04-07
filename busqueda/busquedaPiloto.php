@@ -204,6 +204,7 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 //-------------------------------
   $flds_RADI_NUME_RADI = $_GET["s_RADI_NUME_RADI"];
   $flds_DOCTO = $_GET["s_DOCTO"];
+  $flds_CUENTAINTERNA = $_GET["s_CUENTAINTERNA"];
   $flds_RADI_NOMB = $_GET["s_RADI_NOMB"];
   $flds_ciudadano = $_GET["s_ciudadano"];
   if($flds_ciudadano) $checkCIU = "checked";
@@ -316,6 +317,18 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
                         </td>
                       </tr>
 
+                      <!--
+                      /**
+                      * Busqueda por cuenta interna
+                      */
+                      -->
+                      <tr>
+                          <td class="titulos5">Cuenta Interna</td>
+                          <td class="listado5">
+                              <input class="tex_area" type="text" name="s_CUENTAINTERNA" maxlength="" value="<?=tohtml
+                              ($flds_CUENTAINTERNA) ?>" size="" >
+                          </td>
+                      </tr>
                       <tr>
                         <td class="titulos5">
                           <INPUT  type="radio" NAME="s_solo_nomb" value="All" CHECKED
@@ -651,13 +664,13 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=2&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Fecha Radicacion</a></td>
                       <? } ?>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=3&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Asunto</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=23&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Dignatario</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=4 &FormCIUDADANO_Sorted=<?=$form_sorting?>&">Cuenta Interna</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=4&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Tipo de Documento</a></td>
-                <td class="titulos5"><font class="ColumnFONT">Tipo</td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=5&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Numero de Hojas</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=6&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Direccion contacto</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=7&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Telefono contacto</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=8&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Mail Contacto</a></td>
-                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=23&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Dignatario</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=9&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Nombre </a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=14&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Documento</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=15&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Usuario Actual</a></td>
@@ -676,11 +689,18 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
               $ps_desde_RADI_FECH_RADI = mktime(0,0,0,$_GET["s_desde_mes"],$_GET["s_desde_dia"],$_GET["s_desde_ano"]);
               $ps_hasta_RADI_FECH_RADI = mktime(23,59,59,$_GET["s_hasta_mes"],$_GET["s_hasta_dia"],$_GET["s_hasta_ano"]);
 
+
+
+
+
               if(strlen($ps_desde_RADI_FECH_RADI) && strlen($ps_hasta_RADI_FECH_RADI)){
                 $HasParam = true;
+                if($sWhere != ""){
+                    $sWhere .= " and ";
+                }
                 $sWhere = $sWhere . $db->conn->SQLDate('Y-m-d','r.radi_fech_radi')." >= ".$db->conn->DBDate($ps_desde_RADI_FECH_RADI) ;
                 //$sWhere = $sWhere . "r.radi_fech_radi>=".$db->conn->DBTimeStamp($ps_desde_RADI_FECH_RADI) ; //by HLP.
-                $sWhere .= " and ";
+		$sWhere .= " and ";
                 $sWhere = $sWhere . $db->conn->SQLDate('Y-m-d','r.radi_fech_radi')." <= ".$db->conn->DBDate($ps_hasta_RADI_FECH_RADI) ;
                 //$sWhere = $sWhere . "r.radi_fech_radi<=".$db->conn->DBTimeStamp($ps_hasta_RADI_FECH_RADI); //by HLP.
               }
@@ -700,21 +720,35 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
               }
 
             /* Se recibe el nmero del radicado para busqueda */
-              $ps_RADI_NUME_RADI = $_GET["s_RADI_NUME_RADI"];
-              if(!$ps_RADI_NUME_RADI) $ps_RADI_NUME_RADI="2";
-              $ps_DOCTO =  $_GET["s_DOCTO"];
+              $ps_RADI_NUME_RADI =  $_GET["s_RADI_NUME_RADI"];
+              $ps_DOCTO          =  $_GET["s_DOCTO"];
+              $ps_CUENTAINTERNA  =  $_GET["s_CUENTAINTERNA"];
+
               if(strlen($ps_RADI_NUME_RADI)){
-                if($sWhere != "")
-                  $sWhere .= " and ";
+                if($sWhere != ""){
+                    $sWhere .= " and ";
+                }
                 $HasParam = true;
-                $sWhere = $sWhere . "cast(r.radi_nume_radi as varchar(15)) like " . tosql("%".trim($ps_RADI_NUME_RADI) ."%", "Text");
+                $sWhere   = $sWhere . "cast(r.radi_nume_radi as varchar(15)) like " . tosql("%".trim
+                        ($ps_RADI_NUME_RADI) ."%", "Text");
               }
 
               if(strlen($ps_DOCTO)){
-                if($sWhere != "")
-                  $sWhere .= " and ";
+                if($sWhere != ""){
+                    $sWhere .= " and ";
+                }
                 $HasParam = true;
                 $sWhere = $sWhere . " dir.SGD_DIR_DOC = '$ps_DOCTO' " ;
+              }
+
+              //Busqueda realizada por este parametro cuenta interna
+              if(strlen($ps_CUENTAINTERNA)){
+                  $HasParam = true;
+                  if($sWhere != ""){
+                      $sWhere .= " and ";
+                  }
+                  $ps_CUENTAINTERNA = strtoupper($ps_CUENTAINTERNA);
+                  $sWhere .= $sWhere." UPPER(".$db->conn->Concat("r.radi_cuentai").") LIKE '%".$ps_CUENTAINTERNA."%' ";
               }
 
               /**
@@ -815,11 +849,6 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
             if ($yaentro == true ) $sWhere .= " and (";
 
             $sWhere .= "UPPER(".$db->conn->Concat("r.ra_asun") . ") LIKE '%".$ps_RADI_NOMB."%' ";
-            //$sWhere .= "UPPER(".$db->conn->Concat("r.radi_cuentai") . ") LIKE '%".$ps_RADI_NOMB."%' ";
-            //$sWhere .= "UPPER(".$db->conn->Concat("dir.sgd_dir_telefono") . ") LIKE '%".$ps_RADI_NOMB."%' ";
-            //$sWhere .= "UPPER(".$db->conn->Concat("dir.sgd_dir_direccion") . ") LIKE '%".$ps_RADI_NOMB."%' ";
-            //$sWhere .= "UPPER(".$db->conn->Concat("r.radi_nume_guia") . ") LIKE '%".$ps_RADI_NOMB."%' ";
-              $tok = strtok(" ");
             if ($yaentro == true ) $sWhere .= ")";
 
               $yaentro=true;
@@ -859,7 +888,6 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
                 $tok = strtok($ps_RADI_NOMB," ");
                 if ($yaentro == true ) $sWhere .= " AND (";
                   $sWhere .= "UPPER(".$db->conn->Concat("r.ra_asun","r.radi_cuentai","dir.sgd_dir_telefono","dir.sgd_dir_direccion").") LIKE '%".$ps_RADI_NOMB."%' ";
-              echo " kkkk $ps_RADI_NOMB";
               $tok = strtok(" ");
               if ($yaentro == true ) $sWhere .= ")";
               $yaentro=true;
@@ -877,6 +905,7 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
                   $radi_nume_radi." AS RADI_NUME_RADI,".
                       $db->conn->SQLDate('Y-m-d H:i:s','R.RADI_FECH_RADI')." AS RADI_FECH_RADI,
                   r.RA_ASUN,
+                  r.radi_cuentai,
                   td.sgd_tpr_descrip, ".
                   $redondeo." as diasr,
                   r.RADI_NUME_HOJA,
@@ -917,6 +946,7 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
             $sSQL .= " WHERE dir.sgd_dir_tipo = 1 AND dir.RADI_NUME_RADI=r.RADI_NUME_RADI AND r.TDOC_CODI=td.SGD_TPR_CODIGO";
             //-------------------------------
             // Assemble full SQL statement
+            // Este es la consulta final
             //-------------------------------
             $sSQL .= $sWhere . $whereTrd . $sOrder;
             //-------------------------------
@@ -1029,7 +1059,7 @@ while((!$rs->EOF && $rs)  && $iCounter < $iRecordsPerPage)
   $fldMAIL_C = $rs->fields['SGD_DIR_MAIL'];
   $fldNOMBRE = $rs->fields['SGD_DIR_NOMREMDES'];
   $fldCEDULA = $rs->fields['SGD_DIR_DOC'];
-  //$fldUSUA_ACTU = $rs->fields['NOMB_ACTU") . " - (" . $rs->fields['LOGIN_ACTU").")";
+  $fldCUENTAINTERNA = $rs->fields['RADI_CUENTAI'];
   $aRADI_DEPE_ACTU   = $rs->fields['RADI_DEPE_ACTU'];
   $aRADI_USUA_ACTU   = $rs->fields['RADI_USUA_ACTU'];
   $fldUSUA_ANTE      = $rs->fields['RADI_USU_ANTE'];
@@ -1191,8 +1221,13 @@ if($i==1){
 
     <td class="leidos">
     <?= $fldASUNTO ?>&nbsp;</td>
+
     <td class="leidos">
-    <?= tohtml($fldTIPO_DOC) ?>&nbsp;</td>
+    <?= tohtml($fldDIGNATARIO) ?>&nbsp;</td>
+
+    <td class="leidos">
+      <?= tohtml($fldCUENTAINTERNA) ?>&nbsp;</td>
+
     <td class="leidos">
     <?=$tipoRegDesc; ?>&nbsp;</td>
     <td class="leidos">
@@ -1203,8 +1238,6 @@ if($i==1){
     <?= tohtml($fldTELEFONO_C) ?>&nbsp;</td>
     <td class="leidos">
     <?= tohtml($fldMAIL_C) ?>&nbsp;</td>
-    <td class="leidos">
-    <?= tohtml($fldDIGNATARIO) ?>&nbsp;</td>
     <td class="leidos">
     <?= $fldNOMBRE ?>&nbsp;</td>
     <td class="leidos">
@@ -1498,6 +1531,7 @@ function buscar_prueba($nivelus, $tpRemDes, $whereFlds){
     }
 
     $where=(strlen($ps_DOCTO))?" AND  DIR.SGD_DIR_DOC = '$ps_DOCTO' ":$where;
+    $where=(strlen($ps_CUENTAINTERNA))?" AND  DIR.SGD_DIR_DOC = '$ps_$ps_CUENTAINTERNA' ":$where;
     if(strlen( $ps_SGD_EXP_SUBEXPEDIENTE ) != 0 )
     {
         $min="INNER JOIN SGD_EXP_EXPEDIENTE MINEXP ON R.RADI_NUME_RADI=MINEXP.RADI_NUME_RADI";
@@ -1537,7 +1571,7 @@ function buscar_prueba($nivelus, $tpRemDes, $whereFlds){
     //-------------------------------
     // Build base SQL statement
     //-------------------------------
-    include("{$ruta_raiz}/include/query/busqueda/busquedaPiloto1.php");
+    include("$ruta_raiz/include/query/busqueda/busquedaPiloto1.php");
     require_once("{$ruta_raiz}/include/myPaginador.inc.php");
 
     $titulos=array("#","1#RADICADO","3#FECHA RADICACION","2#EXPEDIENTE","4#ASUNTO","14#TIPO DE DIOCUMENTO","21#TIPO","7#NO DE HOJAS","15#DIRECCION CONTACTO","18#TELEFONO CONTACTO","16#MAIL CONTACTO ","20#DIGNATARIO","17#NOMBRE","19#DOCUMENTO","22#USUARIO ACTUAL","10#DEPENDENCIA ACTUAL","23#USUARIO ANTERIOR","11#PAIS","13#DIAS RESTANTES");
