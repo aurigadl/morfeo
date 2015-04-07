@@ -265,12 +265,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             "$opcMenu",
                             false,
                             "",
-                            "class='ecajasfecha'");
+                            "title='Seleccione el tipo documental' class='ecajasfecha'");
 ?>
 
 <html>
 <head>
   <?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
+<link rel="stylesheet" href="../tooltips/jquery-ui.css">
+<script src="../tooltips/jquery-1.10.2.js"></script>
+<script src="../tooltips/jquery-ui.js"></script>
+<link rel="stylesheet" href="../tooltips/tool.css">
+<script src="../tooltips/tool.js"></script>
 </head>
 
 <body>
@@ -304,7 +309,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               Referencia
             </label>
             <label class="input">
-              <input id="cuentai" name="cuentai" type="text"  maxlength="20" value='<?= $cuentai; ?>' >
+              <input id="cuentai" title="Coloque aquí un número de referencia de su comunicación" name="cuentai" type="text"  maxlength="20" value='<?= $cuentai; ?>' >
             </label>
           </section>
 
@@ -313,7 +318,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Gu&iacute;a
               </label>
               <label class="input">
-                <input type=text name='guia' id='guia' value='<?=$guia?>' size=35>
+                <input type=text name='guia'title="Por favor Digíte el numero de guia"  id='guia' value='<?=$guia?>' size=35>
               </label>
           </section>
 
@@ -371,7 +376,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <label class"label"> Buscar usuario radicador </label>
                       <section id="formsearch" class="form-inline smart-form">
                         <section class="col col-1">
-                            <a id="idnuevo" href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i> Nuevo </a>
+                            <a id="idnuevo" title="Agrege un nuevo Usuario"  href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i> Nuevo </a>
                         </section>
 
                         <section  class="col col-2">
