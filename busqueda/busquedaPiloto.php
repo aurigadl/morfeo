@@ -689,6 +689,10 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
               $ps_desde_RADI_FECH_RADI = mktime(0,0,0,$_GET["s_desde_mes"],$_GET["s_desde_dia"],$_GET["s_desde_ano"]);
               $ps_hasta_RADI_FECH_RADI = mktime(23,59,59,$_GET["s_hasta_mes"],$_GET["s_hasta_dia"],$_GET["s_hasta_ano"]);
 
+
+
+
+
               if(strlen($ps_desde_RADI_FECH_RADI) && strlen($ps_hasta_RADI_FECH_RADI)){
                 $HasParam = true;
                 if($sWhere != ""){
@@ -696,6 +700,7 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
                 }
                 $sWhere = $sWhere . $db->conn->SQLDate('Y-m-d','r.radi_fech_radi')." >= ".$db->conn->DBDate($ps_desde_RADI_FECH_RADI) ;
                 //$sWhere = $sWhere . "r.radi_fech_radi>=".$db->conn->DBTimeStamp($ps_desde_RADI_FECH_RADI) ; //by HLP.
+		$sWhere .= " and ";
                 $sWhere = $sWhere . $db->conn->SQLDate('Y-m-d','r.radi_fech_radi')." <= ".$db->conn->DBDate($ps_hasta_RADI_FECH_RADI) ;
                 //$sWhere = $sWhere . "r.radi_fech_radi<=".$db->conn->DBTimeStamp($ps_hasta_RADI_FECH_RADI); //by HLP.
               }
