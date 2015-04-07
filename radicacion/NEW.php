@@ -272,7 +272,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <head>
   <?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
 <link rel="stylesheet" href="../tooltips/jquery-ui.css">
-<script src="../tooltips/jquery-1.10.2.js"></script>
+ <!-- Al colocar esto hace confilcto <script src="../tooltips/jquery-1.10.2.js"></script>-->
 <script src="../tooltips/jquery-ui.js"></script>
 <link rel="stylesheet" href="../tooltips/tool.css">
 <script src="../tooltips/tool.js"></script>
