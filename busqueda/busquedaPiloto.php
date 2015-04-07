@@ -664,14 +664,13 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=2&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Fecha Radicacion</a></td>
                       <? } ?>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=3&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Asunto</a></td>
+                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=23&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Dignatario</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=4 &FormCIUDADANO_Sorted=<?=$form_sorting?>&">Cuenta Interna</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=4&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Tipo de Documento</a></td>
-                <td class="titulos5"><font class="ColumnFONT">Tipo</td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=5&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Numero de Hojas</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=6&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Direccion contacto</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=7&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Telefono contacto</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=8&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Mail Contacto</a></td>
-                <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=23&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Dignatario</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=9&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Nombre </a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=14&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Documento</a></td>
                 <td class="titulos5"><a class="vinculos" href="<?=$sFileName?>?<?=$form_params?>FormCIUDADANO_Sorting=15&FormCIUDADANO_Sorted=<?=$form_sorting?>&">Usuario Actual</a></td>
@@ -1217,9 +1216,11 @@ if($i==1){
     <?= $fldASUNTO ?>&nbsp;</td>
 
     <td class="leidos">
-      <?= tohtml($fldCUENTAINTERNA) ?>&nbsp;</td>
+    <?= tohtml($fldDIGNATARIO) ?>&nbsp;</td>
+
     <td class="leidos">
-    <?= tohtml($fldTIPO_DOC) ?>&nbsp;</td>
+      <?= tohtml($fldCUENTAINTERNA) ?>&nbsp;</td>
+
     <td class="leidos">
     <?=$tipoRegDesc; ?>&nbsp;</td>
     <td class="leidos">
@@ -1230,8 +1231,6 @@ if($i==1){
     <?= tohtml($fldTELEFONO_C) ?>&nbsp;</td>
     <td class="leidos">
     <?= tohtml($fldMAIL_C) ?>&nbsp;</td>
-    <td class="leidos">
-    <?= tohtml($fldDIGNATARIO) ?>&nbsp;</td>
     <td class="leidos">
     <?= $fldNOMBRE ?>&nbsp;</td>
     <td class="leidos">
