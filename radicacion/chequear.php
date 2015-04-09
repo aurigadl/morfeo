@@ -40,7 +40,7 @@ $tpNumRad    = $_SESSION["tpNumRad"];
 $tpPerRad    = $_SESSION["tpPerRad"];
 $tpDescRad   = $_SESSION["tpDescRad"];
 $tpDepeRad   = $_SESSION["tpDepeRad"];
-
+$radMail     = $_GET["radMail"];
 $tip3Nombre=$_SESSION["tip3Nombre"];
 $nombreTp1 = $tip3Nombre[1][$ent];
 $nombreTp2 = $tip3Nombre[2][$ent];
@@ -146,7 +146,7 @@ if(!$fecha_fin) $fecha_fin = $fecha_busq;
 ?>
 <html>
 <head>
-<?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
+<?php if (!isset($radMail)) include_once("$ruta_raiz/htmlheader.inc.php") ?>
 <?php include_once("$ruta_raiz/js/funtionImage.php")?>
 <link rel="stylesheet" href="../tooltips/jquery-ui.css">
 <script src="../tooltips/jquery-ui.js"></script> 
@@ -185,9 +185,22 @@ where SGD_TRAD_CODIGO=$ent";
 
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $rs=$db->conn->query($query);
+$db->conn->debug=true;
 $tRadicacionDesc = " - " .strtoupper($rs->fields["SGD_TRAD_DESCR"]);
 $datos_enviar = session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah&faxPath=$faxPath";
 ?>
+<!-- Función que comprueba que exista un dato seleccionado si se buscó -->
+<script type="text/javascript">
+function ValidarSeleccionado()
+{
+ if($("input[name^='radicadopadre']").is(':checked')) {  
+    document.form1.submit();
+ } else {  
+    alert("Seleccione un radicado del listado");  
+ } 
+}
+</script>
+
 <form action='NEW.php?<?=session_name()."=".trim(session_id())?>&dependencia=<?=$dependencia?>&faxPath=<?=$faxPath?>' class="smart-form" method="post" name="form1">
 <fieldset>
 <input type='hidden' name='<?=session_name()?>' value='<?=session_id()?>'>
@@ -202,13 +215,13 @@ $datos_enviar = session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah&
 		<p> Selecciona, una opci&oacute;n para copiar los datos y crear un anexo apartir de uno anterior ó crea uno nuevo.  </p>
 		<br />
 		<section class="col col-4">
-		<input class="btn btn-success btn-sm" name="rad1" type=submit value="Nuevo (Copia Datos)">
+		<input class="btn btn-success btn-sm" title="Seleccione esta opción cuando el tema a tratar sea nuevo." name="rad1" type=button onclick="ValidarSeleccionado()" value="Nuevo (Copia Datos)">
 		</section>
 		<section class="col col-4">
-		<input class="btn btn-success btn-sm" name="rad0" type=submit value="Como Anexo">
+		<input class="btn btn-success btn-sm" title="Seleccione esta opción cuando responda a un radicado existente y que no esté en su bandeja." name="rad0" type=button onclick="ValidarSeleccionado()"  value="Como Anexo">
 		</section>
 		<section class="col col-4">
-		<input class="btn btn-success btn-sm" name="rad2" type=submit value="Asociado">
+		<input class="btn btn-success btn-sm" title="Seleccione esta opción cuando el tema a tratar sea un alcance a un radicado existente" name="rad2" type=button onclick="ValidarSeleccionado()"  value="Asociado">
 		</section>
 		</div>
 		</div>
@@ -262,8 +275,10 @@ if(($buscar_por_doc) or trim($nombres))
 
 $dato=2;
 echo "</table>";
-if($primera!=1 and $Submit=="buscar" and ($buscar_por_cuentai or $buscar_por_radicado or $buscar_por_nombres or $buscar_por_doc or $buscar_por_dep_rad or $buscar_por_exp )) {
-
+ $estoybuscando = 0;
+if($primera!=1 and $Submit=="Buscar" and 
+ ($buscar_por_cuentai or $buscar_por_radicado or $buscar_por_nombres or $buscar_por_doc or $buscar_por_dep_rad or $buscar_por_exp )) {
+ $estoybuscando = 1; 
 	$db = new ConnectionHandler("..");
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$sqlFecha = $db->conn->SQLDate("d-m-Y H:i","a.RADI_FECH_RADI");
@@ -317,6 +332,9 @@ if($primera!=1 and $Submit=="buscar" and ($buscar_por_cuentai or $buscar_por_rad
 		$whereTrd .= "4";
 	}
 	$whereTrd = "";
+
+
+
 	include "$ruta_raiz/include/query/queryChequear.php";
 	$query = $query1;
 	$rsCheck=$db->query($query);
@@ -504,20 +522,20 @@ if($primera!=1 and $Submit=="buscar" and ($buscar_por_cuentai or $buscar_por_rad
 			$radicado_anterior=$nume_radi;
 			$rsCheck->MoveNext();
 		}
-		if ($cent == 0 and $tpBuscarSel=="ok"){
+		
+		if ($cent == 0 ){
 			?>
-				<tr>
-				<td align='center' colspan='7' CLASS=titulosError>&nbsp;
-			LO SENTIMOS NO HAY REGISTROS</font></td>
-				</tr>
-				<?
+<center><table class="table table-bordered table-striped" ></table><table class="table table-bordered table-striped" width="100%"><tr><td class="titulosError"><center><font color="red">¡    No se encontraron resultados!.</font> </center></td></tr></table></center>
+			<? exit;
 		}
 	}
 }else {
+
 	if($Submit)
 	{
+
 		?>
-			<center><table class="table table-bordered table-striped" ></table><table class="table table-bordered table-striped" width="100%"><tr><td class="titulosError"><center><font color = "red">¡Debe digitar un Dato para realizar la b&uacute;squeda!</font></center></td></tr></table></center>
+			<center><table class="table table-bordered table-striped" ></table><table class="table table-bordered table-striped" width="100%"><tr><td class="titulosError"><center><font color="red">¡Debe digitar un Dato para realizar la b&uacute;squeda!</font> </center></td></tr></table></center>
 			<?
 			$nobuscar = "No Buscar";
 	}

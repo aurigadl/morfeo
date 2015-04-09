@@ -280,6 +280,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <body>
 
+<div style="padding-top:5px;padding-left:25px"><h4>* Campos Obligatorios</h4></div>
 <form  method="post" name="formulario" id="formulario">
 
   <input type=hidden name='ent' value='<?=$ent?>'>
@@ -318,7 +319,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Gu&iacute;a
               </label>
               <label class="input">
-                <input type=text name='guia'title="Por favor Digíte el numero de guia"  id='guia' value='<?=$guia?>' size=35>
+		<input type=text name='guia'title="Si tiene un número de guía digítelo."  id='guia' value='<?=$guia?>' size=35>
               </label>
           </section>
 
@@ -373,17 +374,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <!-- widget content -->
                   <div class="col col-12">
 
-                      <label class"label"> Buscar usuario radicador </label>
+                      <label class"label"> * Tipo de Remitente Destinatario <br> &nbsp; Buscar usuario radicador </label>
                       <section id="formsearch" class="form-inline smart-form">
                         <section class="col col-1">
-                            <a id="idnuevo" title="Agrege un nuevo Usuario"  href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i> Nuevo </a>
+			    <a id="idnuevo" title="Sólo si su destinatario no se encuentra en la búsqueda ingrese uno nuevo."  href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i> Nuevo </a>
                         </section>
 
                         <section  class="col col-2">
                           <label class="select">
                             <select id="tipo_usuario" class="form-control input-sm">
                               <option value='0' <?php echo $ciudadano_select?> >Ciudadano </option>
-                              <option value='2' <?php echo $entidad_selected?> >Entidad </option>
+				<?php  if(!$_SESSION['entidad']=="METROVIVIENDA"){ ?>
+				<option value='2' <?php echo $entidad_selected?> >Entidad </option>
+				<? } ?>	    
                               <option value='6' <?php echo $usuario_selected?> >Usuario SIIM2</option>
                             </select>
                           </label>
@@ -392,7 +395,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <section class="col col-2">
                           <label class="input">
                             <i class="icon-prepend fa fa-search"></i>
-                            <input type=text id='documento_us' class="required alphanumeric" placeholder="Documento">
+                            <input type=text id='documento_us' class="required alphanumeric" placeholder="* Documento">
                           </label>
                         </section>
 
@@ -515,7 +518,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <section class="smart-form">
               <section>
                 <label class="label">
-                  Asunto
+                  * Asunto
                 </label>
                 <label class="textarea">
                   <textarea id="asu" name="asu" cols="70"  rows="4" ><?=$asu?></textarea>
@@ -529,21 +532,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <label class="label">
                       No. Folios
                   </label>
-                  <label class="input">
-                      <input name="nofolios" id="nofolios" type="text" size="10"  value="<?=$numFolio?>">
+		  <label class="input">
+			<input name="nofolios" id="nofolios" type="text" size="10" onkeypress="return justNumbers(event);" maxlength="3" value="<?=$numFolio?>">
                   </label>
 
                   <label class="label">
                       No. Anexos
                   </label>
-                  <label class="input">
-                      <input name="noanexos" id="noanexos" type="text" size="10" value="<?=$numAnexo?>">
+		  <label class="input">
+			 <input name="noanexos" id="noanexos" type="text" size="10" onkeypress="return justNumbers(event);" maxlength="2"  value="<?=$numAnexo?>">
                   </label>
                   <label class="label">
                       Descripci&oacute;n Anexos
                   </label>
                   <label class="input">
-                      <input name="ane" id="ane" type="text" size="70"  value="<?=$ane?>">
+                      <input name="ane" id="ane" type="text" size="70"  maxlength="200" value="<?=$ane?>">
                   </label>
                   <?php if ($_SESSION["varEstaenfisico"] == 1){ ?>
                    <label class="label">
@@ -552,7 +555,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                        <input name="esta_fisico" id="esta_fisico" type="checkbox" <?php if ($esta_fisico==1){echo " checked";} ?> >
                   <?php } ?>
                   <label class="label">
-                      Dependencia
+                      *Dependencia
                   </label>
                   <label class="select">
                       <?=$depselect?>
@@ -593,7 +596,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </label>
 
   <script type="text/javascript">
-
+function justNumbers(e)
+{
+ var keynum = window.event ? window.event.keyCode : e.which;
+ if ((keynum == 8) || (keynum == 46))
+ return true;
+ return /\d/.test(String.fromCharCode(keynum));
+}
     $(document).ready(function() {
 
       var ALLDATA;
