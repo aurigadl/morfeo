@@ -4,7 +4,7 @@
 
 
        
-      // Titulo del formulario de búsqueda segun la opcion seleccionada
+      // Titulo del formulario de bï¿½squeda segun la opcion seleccionada
 
       $sFormTitle[0]="GENERACION DE REPORTES - PRESTAMO DE DOCUMENTOS FISICOS";
       $sFormTitle[1]="BUSQUEDA - DOCUMENTOS SOLICITADOS PARA PRESTAR";
@@ -14,12 +14,18 @@
 
 
 
-      // Oculta o hace visibles los criterios de búsqueda según la opcion seleccionada
+      // Oculta o hace visibles los criterios de bï¿½squeda segï¿½n la opcion seleccionada
 
       for ($i=0; $i<9; $i++) {
          for ($j=0; $j<5; $j++) { $tipoBusqueda[$i][$j]=""; }
       }
+
       $tipoBusqueda[0][8]="none"; //reporte
+      $tipoBusqueda[0][4]="none";
+      $tipoBusqueda[0][5]="none";
+      $tipoBusqueda[0][6]="none";
+      $tipoBusqueda[0][7]="none";
+
       $tipoBusqueda[1][4]="none"; //prestamo
       $tipoBusqueda[1][5]="none";
       $tipoBusqueda[1][6]="none";

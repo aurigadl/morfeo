@@ -64,6 +64,11 @@ include("common.php");
 $sFileName  = "prestamo.php";
 // Variables de control
 $opcionMenu = strip($_POST["opcionMenu"]); //opción seleccionada del menu
+
+if(empty($opcionMenu)){
+    $opcionMenu = 0;
+}
+
 $pageAnt    = strip($_POST["sFileName"]);
 
 ?>
@@ -116,6 +121,9 @@ function Search_Show() {
     global $ruta_raiz;
     $sFileName = $_POST["sFileName"];
     $opcionMenu = $_POST["opcionMenu"];
+    if(empty($opcionMenu)){
+        $opcionMenu = 0;
+    }
     // Valores
     $fechaFinal = $_POST["fechaFinal"];
     $fechaInicial = $_POST["fechaInicial"];
@@ -188,19 +196,19 @@ function Search_Show() {
         <input type="hidden" name="FormPedidos_Page" value="1">
         <input type="hidden" name="FormStarPage" value="1">
         <input type="hidden" name="FormSiguiente" value="0">
-        <script>
-            //Inicializa el formulario
-            function limpiar() {
-                document.busqueda.action = "menu_prestamo.php";
-                document.busqueda.submit();
-            }
-            //Presenta los usuarios segun la dependencia seleccionada
-            var codUsuaSel = "<?=$flds_USUA_NOMB?>";
-        </script>
         <!--Calendario-->
         <script language="JavaScript" src="<?= $ruta_raiz ?>/js/spiffyCal/spiffyCal_v2_1.js"></script>
         <script language="javascript">
             $(document).ready(function() {
+
+                //Inicializa el formulario
+                function limpiar() {
+                    document.busqueda.action = "menu_prestamo.php";
+                    document.busqueda.submit();
+                }
+                //Presenta los usuarios segun la dependencia seleccionada
+                var codUsuaSel = "<?=$flds_USUA_NOMB?>";
+
                 setRutaRaiz('<?=$ruta_raiz?>');
                 //Datepicker muestra fecha
                 $('#fechaInicial').datepicker({
@@ -215,10 +223,35 @@ function Search_Show() {
                         $('#date').datepicker('option', 'maxDate', selectedDate);
                     }
                 });
+
+                $('#buscarPres').click(function(event){
+
+                    var pass = false;
+
+                    $('#tabledataform').find("input[name^='s']").each(function(index, value){
+                        if($(value).val().length > 0){
+                            pass = true;
+                        }
+                    });
+
+                    if($("select[name='s_USUA_NOMB']").val() !== ""){
+                        pass = true;
+                    }
+
+                    if($("select[name='s_DEPE_NOMB']").val() !== ""){
+                        pass = true;
+                    }
+
+                    if(!pass){
+                        alert('No hay parametros de busqueda');
+                        return false
+                    }
+
+                })
             });
         </script>
 
-        <table class='table table-bordered'>
+        <table class='table table-bordered' id="tabledataform">
             <!--<tr>
                 <td  colspan="2"><a name="Search"><? /*=$sFormTitle[$opcionMenu]; */ ?> </a></td>
             </tr>-->
@@ -260,7 +293,9 @@ function Search_Show() {
                                 }
                             } ?>
                         </select></td>
-                </label></tr>
+                </label>
+            </tr>
+
             <tr id="b3" style="display:<?= $tipoBusqueda[$opcionMenu][3]; ?>">
                 <td><p align="left">Usuario</p></td>
                 <td><label class="select"><select name="s_USUA_NOMB" class=select>
@@ -404,7 +439,7 @@ function Search_Show() {
                     } else {
                         ?>
                      <footer> <input type="hidden" class="btn btn-primary" name="genearreporte" value="noGenerar">
-                        <input type="submit" class="btn btn-primary" name="buscarPres" value="Buscar"></footer>
+                        <input type="submit" class="btn btn-primary" id="buscarPres" name="buscarPres" value="Buscar"></footer>
                     <?
                     }?>
 
@@ -435,6 +470,10 @@ function Pedidos_Show() {
 
     $sFileName = $_POST["sFileName"];
     $opcionMenu = empty($_POST["opcionMenu"]) ? $_GET["opcionMenu"] : $_POST["opcionMenu"];
+
+    if(empty($opcionMenu)){
+        $opcionMenu = 0;
+    }
     // Valores
     $fechaFinal = $_POST["fechaFinal"];
     $fechaInicial = $_POST["fechaInicial"];
@@ -452,6 +491,9 @@ function Pedidos_Show() {
     $ps_minuto_limite = strip($_POST["s_minuto_limite"]);
     $ps_meridiano = strip($_POST["s_meridiano"]);
     $ps_PRES_REQUERIMIENTO = strip($_POST["s_PRES_REQUERIMIENTO"]);
+
+
+
     if (strlen($pageAnt) == 0) {
         include_once $ruta_raiz . "/include/query/prestamo/builtSQL1.inc";
         include_once $ruta_raiz . "/include/query/prestamo/builtSQL2.inc";
