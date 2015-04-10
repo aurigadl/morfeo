@@ -11,6 +11,12 @@ if (!$_SESSION['dependencia'])
  $usua_doc    = $_SESSION["usua_doc"];
  $codusuario  = $_SESSION["codusuario"];
 
+//Archivo Requiere Expediente
+ if ($_SESSION['entidad']=='METROVIVIENDA'){$archivado_requiere_exp = true; }
+
+//Reasignar Requiere Expediente
+ if ($_SESSION['entidad']=='CRA'){$reasigna_requiere_exp = true; }
+
 $ruta_raiz = "..";
 $mensaje_error = false;
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
@@ -110,8 +116,23 @@ if($checkValue)
 				 	* Se crea condicion de obligatoriedad clasificacion TRD  and ($dependencia!=100 and $codusuario != 1)
 				 	*/
 					if ((($codTx == 9 or $codTx == 12)  and $codusuario != 1) or $codTx == 16 or $codTx == 13)
-					{	include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-					    $db = new ConnectionHandler("$ruta_raiz");
+					{
+					 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
+					 $db = new ConnectionHandler("$ruta_raiz");
+						$aux_tiene_exp = false; 
+						if ($reasigna_requiere_exp==true and $codTx == 9 ){
+							$isqlExp = "select SGD_EXP_NUMERO as NumExpediente from SGD_EXP_EXPEDIENTE  where RADI_NUME_RADI = '$record_id'";
+							$rsExp = $db->conn->Execute($isqlExp);
+							if ( $rsExp && !$rsExp->EOF )
+							{
+								$expNumero = $rsExp->fields[0];
+								if ( $expNumero !='' || $expNumero != null ){$aux_tiene_exp = true;}
+								$rsExp->MoveNext();
+							}
+						}else{$aux_tiene_exp = true;}
+   					 if ($aux_tiene_exp){
+//					    include_once "$ruta_raiz/include/db/ConnectionHandler.php";
+//					    $db = new ConnectionHandler("$ruta_raiz");
 
 					    include_once("../include/query/busqueda/busquedaPiloto1.php");
 						/*
@@ -133,6 +154,10 @@ if($checkValue)
 							break;
 						}
 						$pasaFiltro="Si";
+					}else{
+						$setFiltroSinEXP = "No se permite reasignar";
+						$pasaFiltro="No";
+					}
 					if($codTx == 12){
 				            $isqlw="select b.RADI_USU_ANTE as RADI_USU_ANTE  from radicado  b, usuario u where b.radi_nume_radi = ".$record_id." AND b.RADI_USU_ANTE=u.USUA_LOGIN and  u.usua_esta=0";
 					    $UsuIn  = $db->conn->query($isqlw);										 					
@@ -185,7 +210,6 @@ if($checkValue)
 					 * Se verifica si el radicado se encuentra o no en un expediente,
 					 * si es negativa la verificacion, ese radicado no se puede archivar
 					 */
-	
 					if ( $codTx == 13 && $archivado_requiere_exp )
 					{
 					    include_once "$ruta_raiz/include/db/ConnectionHandler.php";
