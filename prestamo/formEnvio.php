@@ -242,8 +242,8 @@ $db = new ConnectionHandler($ruta_raiz);
 	<tr>
 		<td width=100%>
 			<form action='<?=$ruta_raiz?>/solicitar/Reservar.php?<?=$encabezado?>' method=post name="rta" class="smart-form" >
-			<input type="hidden"  value='<?=$krd?>' name="krd">
-            <input type="hidden"  value='0' name="process">
+			<input type="hidden" value='<?=$krd?>' name="krd">
+            <input type="hidden" value='0' name="process">
 			<input type="hidden" value=" " name="radicado">  	 
 			<input type="hidden" value="<?=$cantRegistros?>" name="prestado">  	 								
 			<input type="hidden" value="<?=$sFileName?>" name="sFileName">  				 								
@@ -422,7 +422,7 @@ $db = new ConnectionHandler($ruta_raiz);
           t.focus();
      }else{ alert('Su browser no soporta las funciones Javascript de esta pagina.'); }
     } 	
-    // Verifica el m�ximo n�mero de caracteres permitido 
+    // Verifica el maximo numero de caracteres permitido
     function valMaxChars(maxchars) {
       document.rta.observa.focus();		
       if(document.rta.observa.value.length > maxchars) {
@@ -431,7 +431,7 @@ $db = new ConnectionHandler($ruta_raiz);
          return false; 
 	  }
       else { return true; }
-    } 
+    }
 	// Valida los campos antes de enviar el formulario 
     function okTx() {
        valCheck = $( "input:checked" ).length - 1;

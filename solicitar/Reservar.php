@@ -159,44 +159,44 @@ $depe_nomb = $_SESSION["depe_nomb"];
 //                 acciones realiadas (solicitar,prestar,etc.)
 //-------------------------------
 function PRESTAMO_action($sAction) {
-   global $db;
-   global $krd; //usuario actual
-   global $dependencia; //dependencia del usuario actual    
+    global $db;
+    global $krd; //usuario actual
+    global $dependencia; //dependencia del usuario actual
 
-   // Modificado Infometrika 14-Julio-2009
-   // Se mantiene la funcion get_param().
-   //$fldradicado=$_GET["radicado"];
-   $fldradicado=get_param("radicado");
-   $fldexpediente=$GLOBALS["numExpediente"];
-   $krd = $_SESSION["krd"];
-   $dependencia = $_SESSION["dependencia"];
+    // Modificado Infometrika 14-Julio-2009
+    // Se mantiene la funcion get_param().
+    //$fldradicado=$_GET["radicado"];
+    $fldradicado=get_param("radicado");
+    $fldexpediente=$GLOBALS["numExpediente"];
+    $krd = $_SESSION["krd"];
+    $dependencia = $_SESSION["dependencia"];
     //if(!$fldradicado) $fldradicado=$_POST["radicado"];
-   // Regresa al menu del radicado  
-   if ($sAction=="cancelar") {
-      echo ".."; // dejar esto para que el navegador deje hacer el submit
-      echo "<form name=Atras action='../verradicado.php?&verrad=$fldradicado' method=post class='smart-form'> </form>";
-      echo "<script>document.Atras.submit();</script>";
-   
-   
-   // Registro de una nueva solicitud
-   }elseif ($sAction=="insert") {         
-      // Modificado 14-Julio-2009
-      // Se mantiene la funcion get_param().
-      //$fldPRES_REQUERIMIENTO = $_POST["s_PRES_REQUERIMIENTO"];
-      $fldPRES_REQUERIMIENTO = get_param("s_PRES_REQUERIMIENTO");
-      $fldPRES_FECH_PEDI = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
-	  // Obtiene la ubicacion fisica de los documentos	  
-      $fldPRES_DEPE_ARCH=substr($fldradicado,4,3);	
-      // $fldPRES_DEPE_ARCH=;	
-      $query="SELECT UBIC_DEPE_ARCH FROM UBICACION_FISICA WHERE UBIC_DEPE_RADI=".$fldPRES_DEPE_ARCH; 
-      $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-      $rs = $db->conn->query($query);
-	      if(!$rs->EOF){ 
-        	   	$fldPRES_DEPE_ARCH = $rs->fields['UBIC_DEPE_ARCH']; 
-	      }
-	  // Genera PRES_ID
-	  $sec=$db->conn->nextId('SEC_PRESTAMO');
-      $sSQL = "insert into PRESTAMO(
+    // Regresa al menu del radicado
+    if ($sAction=="cancelar") {
+        echo ".."; // dejar esto para que el navegador deje hacer el submit
+        echo "<form name=Atras action='../verradicado.php?&verrad=$fldradicado' method=post class='smart-form'> </form>";
+        echo "<script>document.Atras.submit();</script>";
+
+
+        // Registro de una nueva solicitud
+    }elseif ($sAction=="insert") {
+        // Modificado 14-Julio-2009
+        // Se mantiene la funcion get_param().
+        //$fldPRES_REQUERIMIENTO = $_POST["s_PRES_REQUERIMIENTO"];
+        $fldPRES_REQUERIMIENTO = get_param("s_PRES_REQUERIMIENTO");
+        $fldPRES_FECH_PEDI = $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
+        // Obtiene la ubicacion fisica de los documentos
+        $fldPRES_DEPE_ARCH=substr($fldradicado,4,3);
+        // $fldPRES_DEPE_ARCH=;
+        $query="SELECT UBIC_DEPE_ARCH FROM UBICACION_FISICA WHERE UBIC_DEPE_RADI=".$fldPRES_DEPE_ARCH;
+        $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+        $rs = $db->conn->query($query);
+        if(!$rs->EOF){
+            $fldPRES_DEPE_ARCH = $rs->fields['UBIC_DEPE_ARCH'];
+        }
+        // Genera PRES_ID
+        $sec=$db->conn->nextId('SEC_PRESTAMO');
+        $sSQL = "insert into PRESTAMO(
                   PRES_ID,
                   RADI_NUME_RADI,
 		   	      USUA_LOGIN_ACTU,
@@ -205,81 +205,99 @@ function PRESTAMO_action($sAction) {
                   PRES_DEPE_ARCH,
                   PRES_ESTADO,
                   PRES_REQUERIMIENTO)
-               values (". 
-                  tosql($sec,"Number")."," . 
-                  tosql($fldradicado,"Text")."," .
-                  tosql($krd,"Text")."," . 
-            		  tosql($dependencia,"Number")."," .
-            		  $fldPRES_FECH_PEDI."," . 
-                  tosql($dependencia,"Number").", 
-                  1," . 
-                  tosql($fldPRES_REQUERIMIENTO,"Number"). 
-              ")";
-      // Execute SQL statement  
-      if($db->conn->query($sSQL)) { #echo "actualizo regitro"; exit; 
+               values (".
+            tosql($sec,"Number")."," .
+            tosql($fldradicado,"Text")."," .
+            tosql($krd,"Text")."," .
+            tosql($dependencia,"Number")."," .
+            $fldPRES_FECH_PEDI."," .
+            tosql($dependencia,"Number").",
+                  1," .
+            tosql($fldPRES_REQUERIMIENTO,"Number").
+            ")";
+        // Execute SQL statement
+        if($db->conn->query($sSQL)) {
+            // Cuando se crea el registro de prestamo enviamos una alerta a los usuarios
+            // para notificarlos sobre la accion.
+            // El include requiere las siguientes variables
+            $query="SELECT UBIC_DEPE_ARCH FROM UBICACION_FISICA WHERE UBIC_DEPE_RADI=".$fldPRES_DEPE_ARCH;
+            $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+            $rs = $db->conn->query($query);
+            if(!$rs->EOF){
+                $codTx               = 10;
+                $usuaCodiMail        = $usua_doc;
+                $depeCodiMail        = $dependencia;
+                $radicadosSelText    = $fldradicado;
+                $asuntoMailPrestamo; = "Se realizo el prestamo de un documento ($fldradicado)";
+                include "$ruta_raiz/include/mail/mailInformar.php";
+            }
+        }else{
+            echo "<script> alert(\" El registro no pudo ser realizado\"); </script>";
+        }
     }
-	  else{ echo "<script> alert(\" El registro no pudo ser realizado\"); </script>";	}
-   }
-   
-   // Cancelacion, prestamo o devolucion de un documento
-   elseif ($sAction=="prestamo" || $sAction=="prestamoIndefinido" || $sAction=="delete" || $sAction=="devolucion") {    
-      // Inicializa parametros para SQL
-	  $fldPRES_FECH=$db->conn->OffsetDate(0,$db->conn->sysTimeStamp);	  
-      // Modificado Infometrika 14-Julio-2009
-      // Se mantiene la funcion get_param() y se mantiene el nombre de la variable $fldPRES_ID de la versi�n original del m�dulo.
-      //$sfldPRES_ID=$_POST["s_PRES_ID"];
-      $fldPRES_ID=get_param("s_PRES_ID");
-	// Modificado Infometrika 14-Julio-2009
-	// Se mantiene el nombre de la variable $fldPRES_ID dentro de tosql() de la version original del modulo.
-	  //$sfldPRES_ID=str_replace("'","","".tosql($sfldPRES_ID,"Text"));  // identifiador de los registros	         
-	  $sfldPRES_ID=str_replace("'","","".tosql($fldPRES_ID,"Text"));  // identifiador de los registros
-	  $estadoOld="=1"; 
-	  // Prestamo  
-	  if($sAction=="prestamoIndefinido" || $sAction=="prestamo"){
-		 // Modificado Infometrika 14-Julio-2009
-		 // Se mantiene la funcion get_param().
-		 //$fldDESC=tosql($_GET["observa"],"Text");	 	  
-		 $fldDESC=tosql(get_param("observa"),"Text");
-		 $setFecha="PRES_FECH_PRES=".$fldPRES_FECH.", PRES_DESC=".$fldDESC.", USUA_LOGIN_PRES='".$krd."' ";	  
-         $nombTx="Prestar Documento";		 		 
-	     if($sAction=="prestamoIndefinido"){
-	        $estadoNew=5; 
-		    $titError="El registro del pr&eacute;stamo indefinido no pudo ser realizado";		 
-	     }
-	     else{ 
-	        $estadoNew=2; 	 
-            $fechaVencimiento=$_GET["fechaVencimiento"];
-            $sqlFechaVenc=$db->conn->DBDate($fechaVencimiento);			
-  		    $setFecha.=",PRES_FECH_VENC=".$sqlFechaVenc." ";
-		    $titError="El registro del pr&eacute;stamo no pudo ser realizado";		 		 
-   	     }
-	  }
-	  // Cancelacion de solicitud
-	  elseif($sAction=="delete") { 
-	     $estadoNew=4;  		 
-		 $setFecha="PRES_FECH_CANC=".$fldPRES_FECH.", USUA_LOGIN_CANC='".$krd."'";
-         $nombTx="Cancelar Solicitud de Pr&eacute;stamo"; 
-	  }	  
-	  // Devolucion	  
-	  elseif($sAction=="devolucion") { 
-	     $estadoNew=3;  		 
-		 // Modificado Infometrika 14-Julio-2009
-		 // Se mantiene la funcion get_param().
-		 //$fldDESC=tosql($_GET["observa"],"Text");
-		 $fldDESC=tosql(get_param("observa"),"Text");
-		 $setFecha="PRES_FECH_DEVO=".$fldPRES_FECH.", DEV_DESC=".$fldDESC.", USUA_LOGIN_RX='".$krd."' ";
-         $nombTx="Devolver Documento"; 
-		 $titError="El registro de la devolucion no pudo ser realizado";
-		 $estadoOld="in (2,5)";	  	  		 	  	  		 
-	  }	  	  
-      $fecha=date("d-m-Y  h:i A");	  
-      // Create SQL statement
-      $sSQL = "update PRESTAMO set ".$setFecha.",PRES_ESTADO=".$estadoNew." 
-		 where PRES_ID in (".$sfldPRES_ID.") and PRES_ESTADO ".$estadoOld;			   
-      // Execute SQL statement 
-if($db->conn->query($sSQL)){ verMensaje($nombTx,$fecha);	}
-	  else{ echo "<script> alert(".$titError."); </script>"; 	}
-   }   
+
+    // Cancelacion, prestamo o devolucion de un documento
+    elseif ($sAction=="prestamo" || $sAction=="prestamoIndefinido" || $sAction=="delete" || $sAction=="devolucion") {
+        // Inicializa parametros para SQL
+        $fldPRES_FECH=$db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
+        // Modificado Infometrika 14-Julio-2009
+        // Se mantiene la funcion get_param() y se mantiene el nombre de la variable $fldPRES_ID de la versi�n original del m�dulo.
+        //$sfldPRES_ID=$_POST["s_PRES_ID"];
+        $fldPRES_ID=get_param("s_PRES_ID");
+        // Modificado Infometrika 14-Julio-2009
+        // Se mantiene el nombre de la variable $fldPRES_ID dentro de tosql() de la version original del modulo.
+        //$sfldPRES_ID=str_replace("'","","".tosql($sfldPRES_ID,"Text"));  // identifiador de los registros
+        $sfldPRES_ID=str_replace("'","","".tosql($fldPRES_ID,"Text"));  // identifiador de los registros
+        $estadoOld="=1";
+        // Prestamo
+        if($sAction=="prestamoIndefinido" || $sAction=="prestamo"){
+            // Modificado Infometrika 14-Julio-2009
+            // Se mantiene la funcion get_param().
+            //$fldDESC=tosql($_GET["observa"],"Text");
+            $fldDESC=tosql(get_param("observa"),"Text");
+            $setFecha="PRES_FECH_PRES=".$fldPRES_FECH.", PRES_DESC=".$fldDESC.", USUA_LOGIN_PRES='".$krd."' ";
+            $nombTx="Prestar Documento";
+            if($sAction=="prestamoIndefinido"){
+                $estadoNew=5;
+                $titError="El registro del pr&eacute;stamo indefinido no pudo ser realizado";
+            }
+            else{
+                $estadoNew=2;
+                $fechaVencimiento=$_GET["fechaVencimiento"];
+                $sqlFechaVenc=$db->conn->DBDate($fechaVencimiento);
+                $setFecha.=",PRES_FECH_VENC=".$sqlFechaVenc." ";
+                $titError="El registro del pr&eacute;stamo no pudo ser realizado";
+            }
+        }
+        // Cancelacion de solicitud
+        elseif($sAction=="delete") {
+            $estadoNew=4;
+            $setFecha="PRES_FECH_CANC=".$fldPRES_FECH.", USUA_LOGIN_CANC='".$krd."'";
+            $nombTx="Cancelar Solicitud de Pr&eacute;stamo";
+        }
+        // Devolucion
+        elseif($sAction=="devolucion") {
+            $estadoNew=3;
+            // Modificado Infometrika 14-Julio-2009
+            // Se mantiene la funcion get_param().
+            //$fldDESC=tosql($_GET["observa"],"Text");
+            $fldDESC=tosql(get_param("observa"),"Text");
+            $setFecha="PRES_FECH_DEVO=".$fldPRES_FECH.", DEV_DESC=".$fldDESC.", USUA_LOGIN_RX='".$krd."' ";
+            $nombTx="Devolver Documento";
+            $titError="El registro de la devolucion no pudo ser realizado";
+            $estadoOld="in (2,5)";
+        }
+        $fecha=date("d-m-Y  h:i A");
+        // Create SQL statement
+        $sSQL = "update PRESTAMO set ".$setFecha.",PRES_ESTADO=".$estadoNew."
+		 where PRES_ID in (".$sfldPRES_ID.") and PRES_ESTADO ".$estadoOld;
+        // Execute SQL statement
+        if($db->conn->query($sSQL)){
+            verMensaje($nombTx,$fecha);
+        }else{
+            echo "<script> alert(".$titError."); </script>";
+        }
+    }
 }
 //-------------------------------
 
@@ -436,8 +454,6 @@ function PRESTAMO_show() {
    global $db;
    global $sFileName;   
    global $sPRESTAMOErr;
-   // Modificado Infometrika 14-Julio-2009
-   // Se mantiene la funcion get_param().
    //$fldradicado=$_GET["radicado"];
    $fldradicado=get_param("radicado");
    $fldexpediente=$GLOBALS["numExpediente"];
