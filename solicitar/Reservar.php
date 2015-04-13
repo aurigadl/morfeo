@@ -229,6 +229,8 @@ function PRESTAMO_action($sAction) {
             $radicadosSelText    = $fldradicado;
             $asuntoMailPrestamo  = "Se realizo el prestamo de un documento ($fldradicado)";
             include "$ruta_raiz/include/mail/mailInformar.php";
+            // some statement that removes all printed/echoed items
+            ob_end_clean();
         }else{
             echo "<script> alert(\" El registro no pudo ser realizado\"); </script>";
         }
@@ -291,7 +293,6 @@ function PRESTAMO_action($sAction) {
 		 where PRES_ID in (".$sfldPRES_ID.") and PRES_ESTADO ".$estadoOld;
         // Execute SQL statement
         if($db->conn->query($sSQL)){
-            verMensaje($nombTx,$fecha);
             $codTx               = 10;
             $usuaCodiMail        = $codusuario ;
             $depeCodiMail        = $dependencia;
@@ -300,6 +301,7 @@ function PRESTAMO_action($sAction) {
             include "$ruta_raiz/include/mail/mailInformar.php";
             // some statement that removes all printed/echoed items
             ob_end_clean();
+            verMensaje($nombTx,$fecha);
         }else{
             echo "<script> alert(".$titError."); </script>";
         }
