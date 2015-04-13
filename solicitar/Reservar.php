@@ -298,6 +298,8 @@ function PRESTAMO_action($sAction) {
             $radicadosSelText    = $fldradicado;
             $asuntoMailPrestamo  = "Se realizo el prestamo de un documento ($fldradicado)";
             include "$ruta_raiz/include/mail/mailInformar.php";
+            // some statement that removes all printed/echoed items
+            ob_end_clean();
         }else{
             echo "<script> alert(".$titError."); </script>";
         }
