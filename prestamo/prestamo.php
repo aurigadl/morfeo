@@ -86,23 +86,42 @@ $pageAnt    = strip($_POST["sFileName"]);
     <link rel="stylesheet" type="text/css" href="<?= $ruta_raiz ?>/js/spiffyCal/spiffyCal_v2_1.css">
 </head>
 <body class="PageBODY">
-<div align="center">
-    <table>
-        <tr>
-            <td valign="top"><?php Search_Show(); ?></td>
-        </tr>
-    </table>
+        <!-- row -->
+            <br>
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header></header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table width="100%">
+                                <tr>
+                                    <td valign="top"><?php Search_Show(); ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </article>
 
     <?php if (isset($_POST['genearreporte'])){ ?>
-        <table>
-            <tr>
-                <td valign="top">
-                 <?php  Pedidos_Show(); ?>
-                </td>
-            </tr>
-        </table>
+        <row>
+
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <table width="100%" class="table table-striped table-bordered table-hover dataTable no-footer smart-form">
+                <tr>
+                    <td valign="top">
+                     <?php  Pedidos_Show(); ?>
+                    </td>
+                </tr>
+            </table>
+                </article>
+        </row>
     <?php } ?>
-</div>
+
 </body>
 </html>
 <?php
@@ -182,23 +201,23 @@ function Search_Show() {
     // Form display
     ?>
     <form method="post" action="prestamo.php" name="busqueda" class="smart-form">
-        <!-- de sesion !-->
-        <input type="hidden" value=" " name="radicado">
-        <input type="hidden" value="" name="s_sql">
-        <!-- control de visualizacion !-->
-        <input type="hidden" name="opcionMenu" value="<?= $opcionMenu ?>">
-        <input type="hidden" name="sFileName" value="">
-        <!-- orden de presentaci�n del resultado !-->
-        <input type="hidden" name="FormPedidos_Sorting" value="1">
-        <input type="hidden" name="FormPedidos_Sorted" value="0">
-        <input type="hidden" name="s_Direction" value=" DESC ">
-        <!-- control de paginacion !-->
-        <input type="hidden" name="FormPedidos_Page" value="1">
-        <input type="hidden" name="FormStarPage" value="1">
-        <input type="hidden" name="FormSiguiente" value="0">
-        <!--Calendario-->
-        <script language="JavaScript" src="<?= $ruta_raiz ?>/js/spiffyCal/spiffyCal_v2_1.js"></script>
-        <script language="javascript">
+    <!-- de sesion !-->
+    <input type="hidden" value=" " name="radicado">
+    <input type="hidden" value="" name="s_sql">
+    <!-- control de visualizacion !-->
+    <input type="hidden" name="opcionMenu" value="<?= $opcionMenu ?>">
+    <input type="hidden" name="sFileName" value="">
+    <!-- orden de presentaci�n del resultado !-->
+    <input type="hidden" name="FormPedidos_Sorting" value="1">
+    <input type="hidden" name="FormPedidos_Sorted" value="0">
+    <input type="hidden" name="s_Direction" value=" DESC ">
+    <!-- control de paginacion !-->
+    <input type="hidden" name="FormPedidos_Page" value="1">
+    <input type="hidden" name="FormStarPage" value="1">
+    <input type="hidden" name="FormSiguiente" value="0">
+    <!--Calendario-->
+    <script language="JavaScript" src="<?= $ruta_raiz ?>/js/spiffyCal/spiffyCal_v2_1.js"></script>
+    <script language="javascript">
             $(document).ready(function() {
 
                 //Inicializa el formulario
@@ -207,9 +226,9 @@ function Search_Show() {
                     document.busqueda.submit();
                 }
                 //Presenta los usuarios segun la dependencia seleccionada
-                var codUsuaSel = "<?=$flds_USUA_NOMB?>";
+                var codUsuaSel = "<?= $flds_USUA_NOMB ?>";
 
-                setRutaRaiz('<?=$ruta_raiz?>');
+                setRutaRaiz('<?= $ruta_raiz ?>');
                 //Datepicker muestra fecha
                 $('#fechaInicial').datepicker({
                     dateFormat : 'yy-mm-dd',
@@ -249,204 +268,213 @@ function Search_Show() {
 
                 })
             });
-        </script>
 
-        <table class='table table-bordered' id="tabledataform">
-            <!--<tr>
-                <td  colspan="2"><a name="Search"><? /*=$sFormTitle[$opcionMenu]; */ ?> </a></td>
-            </tr>-->
-            <?php /* */ ?>
-            <tr id="b0" style="display:<?= $tipoBusqueda[$opcionMenu][0]; ?>">
-                <td><p align="left">Radicado</p></td>
-                <td><label class="input"><input type="text" name="s_RADI_NUME_RADI" maxlength="15"
-                                                value="<?= $flds_RADI_NUME_RADI; ?>" size="25"></label></td>
-            </tr>
+    </script>
 
-            <tr id="b0" style="display:<?= $tipoBusqueda[$opcionMenu][0]; ?>">
-                <td><p align="left">Expediente</p></td>
-                <td><label class="input"><input type="text" name="s_numeroExpediente" maxlength="22"
-                                                value="<?= $flds_numeroExpediente; ?>" size="25"></label></td>
-            </tr>
+    <table class='table table-striped  table-hover dataTable no-footer smart-form'
+           id="tabledataform">
+    <!--<tr>
+                                                                                                                            <td  colspan="2"><a name="Search"><? /*=$sFormTitle[$opcionMenu]; */ ?> </a></td>
+                                                                                                                            </tr>-->
+    <?php /* */ ?>
+    <tr id="b0" style="display:<?= $tipoBusqueda[$opcionMenu][0]; ?>">
+        <td><p align="left">Radicado</p></td>
+        <td><label class="input"><input type="text" name="s_RADI_NUME_RADI" maxlength="15"
+                                        value="<?= $flds_RADI_NUME_RADI; ?>" size="25"></label>
+        </td>
+    </tr>
 
-            <tr id="b1" style="display:<?= $tipoBusqueda[$opcionMenu][1]; ?>">
-                <td><p align="left">Login de Usuario</p></td>
-                <td><label class="input"><input type="text" name="s_USUA_LOGIN" maxlength="15"
-                                                value="<?= $flds_USUA_LOGIN; ?>" size="25"></label></td>
-            </tr>
+    <tr id="b0" style="display:<?= $tipoBusqueda[$opcionMenu][0]; ?>">
+        <td><p align="left">Expediente</p></td>
+        <td><label class="input"><input type="text" name="s_numeroExpediente" maxlength="22"
+                                        value="<?= $flds_numeroExpediente; ?>"
+                                        size="25"></label></td>
+    </tr>
 
-            <tr id="b2" style="display:<?= $tipoBusqueda[$opcionMenu][2]; ?>">
-                <td><p align="left">Dependencia</p></td>
-                <td><label class="select"><select name="s_DEPE_NOMB" class="select"
-                                                  onChange=" document.busqueda.s_sql.value='no'; document.busqueda.submit(); ">
-                            <option value="">- TODAS LAS DEPENDENCIAS -</option>
-                            <?
-                            $lookup_s = db_fill_array("select DEPE_CODI,DEPE_NOMB from DEPENDENCIA order by 2");
-                            if (is_array($lookup_s)) {
-                                reset($lookup_s);
-                                while (list($key, $value) = each($lookup_s)) {
-                                    if ($key == $flds_DEPE_NOMB) {
-                                        $option = "SELECTED";
-                                    } else {
-                                        $option = "";
-                                    }
-                                    echo "<option $option value=\"$key\">" . strtoupper($value) . "</option>";
-                                }
-                            } ?>
-                        </select></td>
-                </label>
-            </tr>
+    <tr id="b1" style="display:<?= $tipoBusqueda[$opcionMenu][1]; ?>">
+        <td><p align="left">Login de Usuario</p></td>
+        <td><label class="input"><input type="text" name="s_USUA_LOGIN" maxlength="15"
+                                        value="<?= $flds_USUA_LOGIN; ?>" size="25"></label></td>
+    </tr>
 
-            <tr id="b3" style="display:<?= $tipoBusqueda[$opcionMenu][3]; ?>">
-                <td><p align="left">Usuario</p></td>
-                <td><label class="select"><select name="s_USUA_NOMB" class=select>
-                            <option value="">- TODOS LOS USUARIOS -</option>
-                            <?                  $validUsuaActiv = "";
-                            // Compatibilidad con PostgreSQL 8.3
-                            // Cambio USUA_ESTA=1 por USUA_ESTA='1' para listar los usuarios activos.
-                            if ($opcionMenu == 1) {
-                                $validUsuaActiv = " USUA_ESTA='1' ";
-                            } ELSE {
-                                $validUsuaActiv = " USUA_LOGIN IS NOT NULL ";
-                            } //Verifica que el usuario se encuentre activo para hacer el prEstamo
-                            if ($flds_DEPE_NOMB != "")
-                                $tmp = " AND DEPE_CODI= " . $flds_DEPE_NOMB; else $tmp = "";
-                            $lookup_s = db_fill_array("select USUA_LOGIN,USUA_NOMB from USUARIO where  " . $validUsuaActiv . $tmp);
-
-                            if (is_array($lookup_s)) {
-                                reset($lookup_s);
-                                while (list($key, $value) = each($lookup_s)) {
-                                    if ($key == $flds_USUA_NOMB) {
-                                        $option = "SELECTED";
-                                    } else {
-                                        $option = "";
-                                    }
-                                    echo "<option $option value=\"$key\">" . strtoupper($value) . "</option>";
-                                }
-                            } ?>
-                        </select></label></td>
-            </tr>
-            <?php /**/ ?>
-            <tr id="b4" style="display:<?= $tipoBusqueda[$opcionMenu][4]; ?>">
-                <td><p align="left">Requerimiento</p></td>
-                <td><label class=select><select name="s_PRES_REQUERIMIENTO" class=select>
-                            <option value="">- TODOS LOS TIPOS -</option>
-                            <?                               $lookup_s = db_fill_array("select PARAM_CODI,PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_REQUERIMIENTO' order by PARAM_VALOR desc");
-                            if (is_array($lookup_s)) {
-                                reset($lookup_s);
-                                while (list($key, $value) = each($lookup_s)) {
-                                    if ($key == $flds_PRES_REQUERIMIENTO)
-                                        $option = "<option SELECTED value=\"$key\">" . strtoupper($value) . "</option>";
-                                    else
-                                        $option = "<option value=\"$key\">" . strtoupper($value) . "</option>";
-                                    echo $option;
-                                }
-                            }    ?>
-                        </select></label></td>
-            </tr>
-            <tr id="b5" style="display:<?= $tipoBusqueda[$opcionMenu][5]; ?>">
-                <td><p align="left">Estado</p></td>
-                <td><label class=select><select name="s_PRES_ESTADO" class=select>
-                            <option value="">- TODOS LOS ESTADOS -</option>
-                            <?                               $lookup_s = db_fill_array("select PARAM_CODI,PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' order by PARAM_VALOR");
-                            if (is_array($lookup_s)) {
-                                reset($lookup_s);
-                                while (list($key, $value) = each($lookup_s)) {
-                                    if ($key == $flds_PRES_ESTADO) {
-                                        $option = "SELECTED";
-                                    } else {
-                                        $option = "";
-                                    }
-                                    echo "<option $option value=\"$key\">" . strtoupper($value) . "</option>";
-                                }
-                            }
-                            if ($flds_PRES_ESTADO == -1) {
+    <tr id="b2" style="display:<?= $tipoBusqueda[$opcionMenu][2]; ?>">
+        <td><p align="left">Dependencia</p></td>
+        <td><label class="select"><select name="s_DEPE_NOMB" class="select"
+                                          onChange=" document.busqueda.s_sql.value='no'; document.busqueda.submit(); ">
+                    <option value="">- TODAS LAS DEPENDENCIAS -</option>
+                    <?
+                    $lookup_s = db_fill_array("select DEPE_CODI,DEPE_NOMB from DEPENDENCIA order by 2");
+                    if (is_array($lookup_s)) {
+                        reset($lookup_s);
+                        while (list($key, $value) = each($lookup_s)) {
+                            if ($key == $flds_DEPE_NOMB) {
                                 $option = "SELECTED";
                             } else {
                                 $option = "";
                             }
-                            echo "<option $option value=\"-1\">VENCIDO</option>"; ?>
-                        </select></label></td>
-            </tr>
-            <tr id="b6" style="display:<?= $tipoBusqueda[$opcionMenu][6]; ?>">
-                <td><p align="left">Fecha inicial<br>&nbsp;&nbsp;(aaaa-mm-dd)</p></td>
-                <td>
-                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" id="fechaInicial" name="fechaInicial" placeholder="Fecah inicial"
-                               value="<?=$fechaInicial?>">
-                    </label>
-                </td>
-            </tr>
-            <tr id="b7" style="display:<?= $tipoBusqueda[$opcionMenu][7]; ?>">
-                <td><p align="left">Fecha final<br>&nbsp;&nbsp;(aaaa-mm-dd)</p></td>
-                <td>
-                    <label class="input"> <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" id="fechaFinal" name="fechaFinal" placeholder="fecha Final"
-                               value="<?=$fechaFinal?>">
-                    </label>
-                </td>
-            </tr>
-            <tr id="b8" style="display:<?= $tipoBusqueda[$opcionMenu][8]; ?>">
-                <td><p align="left">Hora l&iacute;mite<br>&nbsp;&nbsp;(hh:mm m)</p></td>
-                <td><select name="s_hora_limite" class=select>
-                        <?                               for ($i = 1; $i <= 12; $i++) {
-                            if ($i <= 9) {
-                                $h = "0" . $i;
-                            } else {
-                                $h = "" . $i;
-                            }
-                            $seleccion = "";
-                            if ($h == $v_hora_limite) {
-                                $seleccion = "SELECTED";
-                            }     ?>
-                            <option <?= $seleccion; ?> value="<?= $h; ?>"><?= $h; ?></option>
-                        <? } ?>
-                    </select>&nbsp;:&nbsp;
-                    <select name="s_minuto_limite" class=select>
-                        <?  for ($i = 0; $i <= 59; $i++) {
-                            if ($i <= 9) {
-                                $h = "0" . $i;
-                            } else {
-                                $h = "" . $i;
-                            }
-                            $seleccion = "";
-                            if ($h == $v_minuto_limite) {
-                                $seleccion = "SELECTED";
-                            }     ?>
-                            <option <?= $seleccion; ?> value="<?= $h; ?>"> <?= $h; ?></option>
-                        <? } ?>
-                    </select>&nbsp;:&nbsp;
-                    <select name="s_meridiano" class=select>
-                        <? if ($v_meridiano == "AM") { ?>
-                            <option value="AM" selected>am</option>
-                            <option value="PM">pm</option>
-                        <?
-                        } else {
-                            ?>
-                            <option value="AM">am</option>
-                            <option value="PM" selected>pm</option>
-                        <? } ?>
-                    </select>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <? if ($opcionMenu == 0 || $opcionMenu == 4) { ?>
-                        <footer>
-                            <input type="reset" class='btn btn-default' value="Limpiar"
-                                   onClick="javascript: limpiar();">
-                            <input type="submit" class="btn btn-primary" name="genearreporte" value="Generar">
-                        </footer>
-                    <?
-                    } else {
-                        ?>
-                     <footer> <input type="hidden" class="btn btn-primary" name="genearreporte" value="noGenerar">
-                        <input type="submit" class="btn btn-primary" id="buscarPres" name="buscarPres" value="Buscar"></footer>
-                    <?
-                    }?>
+                            echo "<option $option value=\"$key\">" . strtoupper($value) . "</option>";
+                        }
+                    } ?>
+                </select></td>
+        </label>
+    </tr>
 
-                </td>
-            </tr>
-        </table>
+    <tr id="b3" style="display:<?= $tipoBusqueda[$opcionMenu][3]; ?>">
+        <td><p align="left">Usuario</p></td>
+        <td><label class="select"><select name="s_USUA_NOMB" class=select>
+                    <option value="">- TODOS LOS USUARIOS -</option>
+                    <?                  $validUsuaActiv = "";
+                    // Compatibilidad con PostgreSQL 8.3
+                    // Cambio USUA_ESTA=1 por USUA_ESTA='1' para listar los usuarios activos.
+                    if ($opcionMenu == 1) {
+                        $validUsuaActiv = " USUA_ESTA='1' ";
+                    } ELSE {
+                        $validUsuaActiv = " USUA_LOGIN IS NOT NULL ";
+                    } //Verifica que el usuario se encuentre activo para hacer el prEstamo
+                    if ($flds_DEPE_NOMB != "")
+                        $tmp = " AND DEPE_CODI= " . $flds_DEPE_NOMB; else $tmp = "";
+                    $lookup_s = db_fill_array("select USUA_LOGIN,USUA_NOMB from USUARIO where  " . $validUsuaActiv . $tmp);
+
+                    if (is_array($lookup_s)) {
+                        reset($lookup_s);
+                        while (list($key, $value) = each($lookup_s)) {
+                            if ($key == $flds_USUA_NOMB) {
+                                $option = "SELECTED";
+                            } else {
+                                $option = "";
+                            }
+                            echo "<option $option value=\"$key\">" . strtoupper($value) . "</option>";
+                        }
+                    } ?>
+                </select></label></td>
+    </tr>
+    <?php /**/ ?>
+    <tr id="b4" style="display:<?= $tipoBusqueda[$opcionMenu][4]; ?>">
+        <td><p align="left">Requerimiento</p></td>
+        <td><label class=select><select name="s_PRES_REQUERIMIENTO" class=select>
+                    <option value="">- TODOS LOS TIPOS -</option>
+                    <?                               $lookup_s = db_fill_array("select PARAM_CODI,PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_REQUERIMIENTO' order by PARAM_VALOR desc");
+                    if (is_array($lookup_s)) {
+                        reset($lookup_s);
+                        while (list($key, $value) = each($lookup_s)) {
+                            if ($key == $flds_PRES_REQUERIMIENTO)
+                                $option = "<option SELECTED value=\"$key\">" . strtoupper($value) . "</option>";
+                            else
+                                $option = "<option value=\"$key\">" . strtoupper($value) . "</option>";
+                            echo $option;
+                        }
+                    }    ?>
+                </select></label></td>
+    </tr>
+    <tr id="b5" style="display:<?= $tipoBusqueda[$opcionMenu][5]; ?>">
+        <td><p align="left">Estado</p></td>
+        <td><label class=select><select name="s_PRES_ESTADO" class=select>
+                    <option value="">- TODOS LOS ESTADOS -</option>
+                    <?                               $lookup_s = db_fill_array("select PARAM_CODI,PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' order by PARAM_VALOR");
+                    if (is_array($lookup_s)) {
+                        reset($lookup_s);
+                        while (list($key, $value) = each($lookup_s)) {
+                            if ($key == $flds_PRES_ESTADO) {
+                                $option = "SELECTED";
+                            } else {
+                                $option = "";
+                            }
+                            echo "<option $option value=\"$key\">" . strtoupper($value) . "</option>";
+                        }
+                    }
+                    if ($flds_PRES_ESTADO == -1) {
+                        $option = "SELECTED";
+                    } else {
+                        $option = "";
+                    }
+                    echo "<option $option value=\"-1\">VENCIDO</option>"; ?>
+                </select></label></td>
+    </tr>
+    <tr id="b6" style="display:<?= $tipoBusqueda[$opcionMenu][6]; ?>">
+        <td><p align="left">Fecha inicial<br>&nbsp;&nbsp;(aaaa-mm-dd)</p></td>
+        <td>
+            <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                <input type="text" id="fechaInicial" name="fechaInicial"
+                       placeholder="Fecah inicial"
+                       value="<?= $fechaInicial ?>">
+            </label>
+        </td>
+    </tr>
+    <tr id="b7" style="display:<?= $tipoBusqueda[$opcionMenu][7]; ?>">
+        <td><p align="left">Fecha final<br>&nbsp;&nbsp;(aaaa-mm-dd)</p></td>
+        <td>
+            <label class="input"> <i class="icon-append fa fa-calendar"></i>
+                <input type="text" id="fechaFinal" name="fechaFinal" placeholder="fecha Final"
+                       value="<?= $fechaFinal ?>">
+            </label>
+        </td>
+    </tr>
+    <tr id="b8" style="display:<?= $tipoBusqueda[$opcionMenu][8]; ?>">
+        <td><p align="left">Hora l&iacute;mite<br>&nbsp;&nbsp;(hh:mm m)</p></td>
+        <td><select name="s_hora_limite" class=select>
+                <?                               for ($i = 1; $i <= 12; $i++) {
+                    if ($i <= 9) {
+                        $h = "0" . $i;
+                    } else {
+                        $h = "" . $i;
+                    }
+                    $seleccion = "";
+                    if ($h == $v_hora_limite) {
+                        $seleccion = "SELECTED";
+                    }     ?>
+                    <option <?= $seleccion; ?> value="<?= $h; ?>"><?= $h; ?></option>
+                <? } ?>
+            </select>&nbsp;:&nbsp;
+            <select name="s_minuto_limite" class=select>
+                <?  for ($i = 0; $i <= 59; $i++) {
+                    if ($i <= 9) {
+                        $h = "0" . $i;
+                    } else {
+                        $h = "" . $i;
+                    }
+                    $seleccion = "";
+                    if ($h == $v_minuto_limite) {
+                        $seleccion = "SELECTED";
+                    }     ?>
+                    <option <?= $seleccion; ?> value="<?= $h; ?>"> <?= $h; ?></option>
+                <? } ?>
+            </select>&nbsp;:&nbsp;
+            <select name="s_meridiano" class=select>
+                <? if ($v_meridiano == "AM") { ?>
+                    <option value="AM" selected>am</option>
+                    <option value="PM">pm</option>
+                <?
+                } else {
+                    ?>
+                    <option value="AM">am</option>
+                    <option value="PM" selected>pm</option>
+                <? } ?>
+            </select>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <? if ($opcionMenu == 0 || $opcionMenu == 4) { ?>
+                <footer>
+                    <input type="reset" class='btn btn-default' value="Limpiar"
+                           onClick="javascript: limpiar();">
+                    <input type="submit" class="btn btn-primary" name="genearreporte"
+                           value="Generar">
+                </footer>
+            <?
+            } else {
+                ?>
+                <footer><input type="hidden" class="btn btn-primary" name="genearreporte"
+                               value="noGenerar">
+                    <input type="submit" class="btn btn-primary" id="buscarPres"
+                           name="buscarPres" value="Buscar"></footer>
+            <?
+            }?>
+
+        </td>
+    </tr>
+    </table>
     </form>
+
 
 <?
 } //end function
@@ -549,10 +577,12 @@ function Pedidos_Show() {
             <input type="hidden" name="FormPedidos_Sorting" value="<?= $iSort ?>">
             <input type="hidden" name="FormPedidos_Sorted" value="<?= $iSorted ?>">
             <input type="hidden" name="s_Direction" value="<?= $sDirection ?>">
-            <table class='table table-bordered' width="100%">
-                <tr>
-                    <td colspan="<?= $numCol ?>"><a name="Search"><?= $tituloRespuesta[$opcionMenu] ?></a></td>
+            <table class='table table-striped table-bordered table-hover dataTable no-footer smart-form'>
+                <thead>
+                <tr role="row">
+                    <th colspan="<?= $numCol ?>"><a name="Search"><?= $tituloRespuesta[$opcionMenu] ?></a></th>
                 </tr>
+                </thead>
                 <?PHP // Titulos de las columnas
                 include_once "inicializarTabla.inc";
 
@@ -672,7 +702,7 @@ function Pedidos_Show() {
                     $rs->MoveNext();
                 }
                 $iCounter--;
-                // Inicializa p�ginas visualizables
+                // Inicializa paginas visualizables
                 $iNumberOfPages = 10;
                 // Inicializa cantidad de p�ginas
                 $iHasPages = intval($iCounter / $iRecordsPerPage);
@@ -735,8 +765,8 @@ function Pedidos_Show() {
                     <? if ($opcionMenu == 1) { ?>
                 <tr align="center">
                     <td colspan="11" align="center">
-                        <input type="button" class="botones" value="Prestar" onclick="enviar();">
-                        <input type="button" class="botones" value="Cancelar" title="Regresa al menú de préstamo y control de documentos" onclick="javascript:regresar();"></center>
+                        <input type="button" class="btn btn-primary" value="Prestar" onclick="enviar();">
+                        <input type="button" class="btn btn-primary" value="Cancelar" title="Regresa al menú de préstamo y control de documentos" onclick="javascript:regresar();"></center>
                     </td>       
                 </tr>
             </table>

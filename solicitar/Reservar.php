@@ -34,7 +34,6 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 define('ADODB_ASSOC_CASE', 1);
 $krd = $_SESSION["krd"]; 
 $dependencia = $_SESSION["dependencia"];
-$usua_doc = $_SESSION["usua_doc"];
 $codusuario = $_SESSION["codusuario"];
 $tip3Nombre=$_SESSION["tip3Nombre"];
 $tip3desc = $_SESSION["tip3desc"];
@@ -104,7 +103,6 @@ function verMensaje($nombTx,$fecha) {
    global $depe_nomb;
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
-$usua_doc = $_SESSION["usua_doc"];
 $codusuario = $_SESSION["codusuario"];
 $usua_nomb = $_SESSION["usua_nomb"]; 
 $depe_nomb = $_SESSION["depe_nomb"];
@@ -162,6 +160,11 @@ function PRESTAMO_action($sAction) {
     global $db;
     global $krd; //usuario actual
     global $dependencia; //dependencia del usuario actual
+    $ruta_raiz = "..";
+
+    $krd         = $_SESSION["krd"];
+    $dependencia = $_SESSION["dependencia"];
+    $codusuario = $_SESSION["codusuario"];
 
     // Modificado Infometrika 14-Julio-2009
     // Se mantiene la funcion get_param().
@@ -220,17 +223,12 @@ function PRESTAMO_action($sAction) {
             // Cuando se crea el registro de prestamo enviamos una alerta a los usuarios
             // para notificarlos sobre la accion.
             // El include requiere las siguientes variables
-            $query="SELECT UBIC_DEPE_ARCH FROM UBICACION_FISICA WHERE UBIC_DEPE_RADI=".$fldPRES_DEPE_ARCH;
-            $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-            $rs = $db->conn->query($query);
-            if(!$rs->EOF){
-                $codTx               = 10;
-                $usuaCodiMail        = $usua_doc;
-                $depeCodiMail        = $dependencia;
-                $radicadosSelText    = $fldradicado;
-                $asuntoMailPrestamo; = "Se realizo el prestamo de un documento ($fldradicado)";
-                include "$ruta_raiz/include/mail/mailInformar.php";
-            }
+            $codTx               = 10;
+            $usuaCodiMail        = $codusuario ;
+            $depeCodiMail        = $dependencia;
+            $radicadosSelText    = $fldradicado;
+            $asuntoMailPrestamo  = "Se realizo el prestamo de un documento ($fldradicado)";
+            include "$ruta_raiz/include/mail/mailInformar.php";
         }else{
             echo "<script> alert(\" El registro no pudo ser realizado\"); </script>";
         }
@@ -294,6 +292,12 @@ function PRESTAMO_action($sAction) {
         // Execute SQL statement
         if($db->conn->query($sSQL)){
             verMensaje($nombTx,$fecha);
+            $codTx               = 10;
+            $usuaCodiMail        = $codusuario ;
+            $depeCodiMail        = $dependencia;
+            $radicadosSelText    = $fldradicado;
+            $asuntoMailPrestamo  = "Se realizo el prestamo de un documento ($fldradicado)";
+            include "$ruta_raiz/include/mail/mailInformar.php";
         }else{
             echo "<script> alert(".$titError."); </script>";
         }
@@ -372,21 +376,23 @@ function ESTADO_PRESTAMO_show() {
                      <input type="hidden"  value='<?=$krd?>' name="krd">
                      <input type="hidden" value="cancelar" name="FormAction">
                      <input type="hidden" value="" name="s_PRES_ID">					 					 		 
-                     <input type="hidden" value="<?=$fldradicado?>" name="radicado">  
+                     <input type="hidden" value="<?=$fldradicado?>" name="radicado">
+                      <div class="col-xs-12">
+                          <h1 class="page-title txt-color-blueDark"><i class="glyphicon glyphicon-inbox"></i>
+                              Reserva de documentos</span>
+                          </h1>
+                      </div>
                      <table class='table table-bordered'>
-                        <tr>
-                           <td  colspan="8">Estado de Reservas <font class="menu_princ"><?=$fldradicado?></font></td>
-                        </tr>
                         <tr  align="center" valign="middle">
-                           <th><a href=''><font >Radicado</font></a></th>		 
-                           <th><a href=''><font >Expediente</font></a></th>		 
-                           <th><a href=''><font >Login</font></a></th>		 
-                           <th><a href=''><font >Dependencia</font></a></th>		 
-                           <th><a href=''><font >Fecha<br>Solicitud</font></a></th>		 
-                           <th><a href=''><font >Fecha<br>Vencimiento</font></a></th>		 
-                           <th><a href=''><font >Requerimiento</font></a></th>		 						
-                           <th><a href=''><font >Estado</font></a></th>		 
-                           <th><a href=''><font >Accion</font></a></th>		 
+                           <th><a href=''>Radicado</a></th>
+                           <th><a href=''>Expediente</a></th>
+                           <th><a href=''>Login</a></th>
+                           <th><a href=''>Dependencia</a></th>
+                           <th><a href=''>Fecha<br>Solicitud</a></th>
+                           <th><a href=''>Fecha<br>Vencimiento</a></th>
+                           <th><a href=''>Requerimiento</a></th>
+                           <th><a href=''>Estado</a></th>
+                           <th><a href=''>Accion</a></th>
                         </tr>    
 <?    
          $iCounter = 0;
@@ -430,7 +436,7 @@ function ESTADO_PRESTAMO_show() {
 <?       } ?>
                         <tr  align="center">
                            
-                           <td  colspan="8" align="center"><footer><input type="submit" class='btn btn-default' value="Regresar">
+                           <td  colspan="9" align="center"><footer><input type="submit" class='btn btn-default' value="Regresar">
                            </footer>
                            </td>
                         </tr>	  
