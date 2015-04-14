@@ -57,6 +57,12 @@ try {
 		$asuntoMail =  $asuntoMailReasignado;
 	}
 
+	if($codTx==10){
+		$linkImagenes = $linkImagenesTmp;
+		$mensaje = file_get_contents($ruta_raiz."/conf/MailPrestamo.html");
+		$asuntoMail =  $asuntoMailReasignado;
+	}
+
 	$mail->Subject = "$entidad: $asuntoMail"; 
 	$mail->AltBody = 'Para ver correctamente el mensaje, por favor use un visor de mail compatible con HTML!'; // optional - MsgHTML will create an alternate automatically
 	$mensaje = str_replace("*RAD_S*", $radicadosSelText, $mensaje);
