@@ -32,7 +32,7 @@ foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 
 define('ADODB_ASSOC_CASE', 1);
-$krd = $_SESSION["krd"]; 
+$krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $codusuario = $_SESSION["codusuario"];
 $tip3Nombre=$_SESSION["tip3Nombre"];
@@ -45,12 +45,12 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
 /*********************************************************************************
  *       Filename: Reservar.php
- *       Modificado: 
+ *       Modificado:
  *          1/3/2006  IIAC  Facilita la interfaz para que el usuario cancele o
- *                          solicite un documento fisico y realiza las 
- *                          actualizaciones relacionadas con el modulo de 
+ *                          solicite un documento fisico y realiza las
+ *                          actualizaciones relacionadas con el modulo de
  *                          prestamos en la base de datos.
- *********************************************************************************/ 
+ *********************************************************************************/
 // Reservar CustomIncludes begin
    include "common.php";
 // Save Page and File Name available into variables
@@ -60,8 +60,8 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
    // Se mantiene la funcion get_param().
    //$sAction = $_POST["FormAction"];
    $sAction = get_param("FormAction");
-   $sPRESTAMOErr=""; //Mensaje de error      
-   PRESTAMO_action($sAction); //insert, cancel, update   
+   $sPRESTAMOErr=""; //Mensaje de error
+   PRESTAMO_action($sAction); //insert, cancel, update
 
 
 $_GLOBAL["numExpediente"] = $_GET["numExpediente"];
@@ -94,24 +94,24 @@ $_GLOBAL["numExpediente"] = $_GET["numExpediente"];
 
 //===============================
 // verMensaje($nombTx,$fecha) begin
-//                            Presenta el mensaje con el resumen de la accion 
+//                            Presenta el mensaje con el resumen de la accion
 //                            ejecutada: cancelacion, prestamo, devolucion, etc.
 //-------------------------------
-function verMensaje($nombTx,$fecha) {    
-   global $sPRESTAMOErr; 
+function verMensaje($nombTx,$fecha) {
+   global $sPRESTAMOErr;
    global $usua_nomb;
    global $depe_nomb;
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $codusuario = $_SESSION["codusuario"];
-$usua_nomb = $_SESSION["usua_nomb"]; 
+$usua_nomb = $_SESSION["usua_nomb"];
 $depe_nomb = $_SESSION["depe_nomb"];
    // Modificado Infometrika 14-Julio-2009
    // Se mantiene la funcion get_param().
    //$nomRad=$_GET["radicado"];
    $nomRad=get_param("radicado");
-   //if (!$nomRad) $nomRad=$_POST["radicado"];  
-   if(strlen($nomRad)>17) { $nomRad=str_replace(",","<br>",$nomRad); }        
+   //if (!$nomRad) $nomRad=$_POST["radicado"];
+   if(strlen($nomRad)>17) { $nomRad=str_replace(",","<br>",$nomRad); }
    $sPRESTAMOErr="no presentar";  //para que solo se haga visible esta funcion ?>
 		<table  class="table table-bordered" id=tb_general align="left">
 				<tr>
@@ -132,11 +132,11 @@ $depe_nomb = $_SESSION["depe_nomb"];
 				<tr>
 				<td align="right"  >FECHA:</td>
 					<td  width="65%"  class="listado2_no_identa"><?=$fecha?></td>
-				</tr>	  
+				</tr>
 				<tr>
 				<td align="right"  >FECHA VENCIMIENTO:</td>
 					<td  width="65%"  class="listado2_no_identa"><?=$_GET["fechaVencimiento"]?></td>
-				</tr>	              
+				</tr>
 				<tr>
 				<td align="right"  >USUARIO ORIGEN:</td>
 					<td  width="65%"  class="listado2_no_identa"><?=$usua_nomb?></td>
@@ -144,7 +144,7 @@ $depe_nomb = $_SESSION["depe_nomb"];
 				<tr>
 				<td align="right"  >DEPENDENCIA ORIGEN:</td>
 					<td  width="65%"  class="listado2_no_identa"><?=$depe_nomb?></td>
-				</tr>	
+				</tr>
 		</table>
 <?
 }
@@ -153,7 +153,7 @@ $depe_nomb = $_SESSION["depe_nomb"];
 
 //===============================
 // PRESTAMO_action begin
-//                 Actualiza la base de datos con las 
+//                 Actualiza la base de datos con las
 //                 acciones realiadas (solicitar,prestar,etc.)
 //-------------------------------
 function PRESTAMO_action($sAction) {
@@ -318,10 +318,10 @@ function PRESTAMO_action($sAction) {
 //-------------------------------
 function ESTADO_PRESTAMO_show() {
    global $db;
-   global $sFileName;   
-   global $sPRESTAMOErr;    
+   global $sFileName;
+   global $sPRESTAMOErr;
    // Modificado Infometrika 14-Julio-2009
-   // Se mantiene la funcion get_param(). 
+   // Se mantiene la funcion get_param().
    //$fldradicado=$_GET["radicado"];
    $fldradicado=get_param("radicado");
    $fldexpediente=$GLOBALS["numExpediente"];
@@ -335,13 +335,13 @@ function ESTADO_PRESTAMO_show() {
     */
    include_once("../include/query/busqueda/busquedaPiloto1.php");
    if ($sPRESTAMOErr=="") {
-      // Build SQL statement   
-	  $sqlPRES_FECH_PEDI=$db->conn->SQLDate("Y-m-d H:i A","r.PRES_FECH_PEDI"); 
-	  $sqlPRES_FECH_CANC=$db->conn->SQLDate("Y-m-d H:i A","r.PRES_FECH_CANC"); 
-	  $sqlPRES_FECH_DEVO=$db->conn->SQLDate("Y-m-d H:i A","r.PRES_FECH_DEVO"); 
-	  $sqlPRES_FECH_PRES=$db->conn->SQLDate("Y-m-d H:i A","r.PRES_FECH_PRES"); 
-	  $sqlPRES_FECH_VENC=$db->conn->SQLDate("Y-m-d H:i A","r.PRES_FECH_VENC"); 	  
-	  $sSQL="select 
+      // Build SQL statement
+	  $sqlPRES_FECH_PEDI=$db->conn->SQLDate("Y-m-d H:i A","r.PRES_FECH_PEDI");
+	  $sqlPRES_FECH_CANC=$db->conn->SQLDate("Y-m-d H:i A","r.PRES_FECH_CANC");
+	  $sqlPRES_FECH_DEVO=$db->conn->SQLDate("Y-m-d H:i A","r.PRES_FECH_DEVO");
+	  $sqlPRES_FECH_PRES=$db->conn->SQLDate("Y-m-d H:i A","r.PRES_FECH_PRES");
+	  $sqlPRES_FECH_VENC=$db->conn->SQLDate("Y-m-d H:i A","r.PRES_FECH_VENC");
+	  $sSQL="select
                 r.PRES_ID as PRESTAMO_ID,
                 $radi_nume_radi as RADICADO,
                 r.USUA_LOGIN_ACTU as LOGIN,
@@ -354,34 +354,34 @@ function ESTADO_PRESTAMO_show() {
                 G.PARAM_VALOR as REQUERIMIENTO,
                 E.PARAM_VALOR as ESTADO,
 				r.PRES_ESTADO as ID_ESTADO
-             from 
+             from
 	      	     PRESTAMO r, DEPENDENCIA D, SGD_PARAMETRO E, SGD_PARAMETRO G
-             where 
-		        r.RADI_NUME_RADI=$fldradicado and 
-                r.PRES_ESTADO in (1,2,5) and 
-			    D.DEPE_CODI=R.DEPE_CODI and 
-   			    E.PARAM_NOMB='PRESTAMO_ESTADO' and 
-			    E.PARAM_CODI=R.PRES_ESTADO and 
+             where
+		        r.RADI_NUME_RADI=$fldradicado and
+                r.PRES_ESTADO in (1,2,5) and
+			    D.DEPE_CODI=R.DEPE_CODI and
+   			    E.PARAM_NOMB='PRESTAMO_ESTADO' and
+			    E.PARAM_CODI=R.PRES_ESTADO and
 			    G.PARAM_NOMB='PRESTAMO_REQUERIMIENTO' and G.PARAM_CODI=r.PRES_REQUERIMIENTO";
-      // Execute SQL statement	    
+      // Execute SQL statement
       $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
       $rs=$db->query($sSQL);
       // Process empty recordset
-      if($rs && !$rs->EOF) { ?>   
+      if($rs && !$rs->EOF) { ?>
                   <script>
-                     /*Adecua el formulario para que se cancele la solicitud*/					 
+                     /*Adecua el formulario para que se cancele la solicitud*/
                      function cancelar(i) {
-                        document.Prestados.FormAction.value="delete";						
-                        document.Prestados.s_PRES_ID.value=i;												
+                        document.Prestados.FormAction.value="delete";
+                        document.Prestados.s_PRES_ID.value=i;
                	        document.Prestados.submit();
                      }
-                  </script>					    
+                  </script>
                   <form method="POST" action="<?=$sFileName ?>" name="Prestados" class='smart-form'>
                      <input type="hidden"  value='<?=$krd?>' name="krd">
                      <input type="hidden" value="cancelar" name="FormAction">
-                     <input type="hidden" value="" name="s_PRES_ID">					 					 		 
+                     <input type="hidden" value="" name="s_PRES_ID">
                      <input type="hidden" value="<?=$fldradicado?>" name="radicado">
-                      <div class="col-xs-12">
+                      <div>
                           <h1 class="page-title txt-color-blueDark"><i class="glyphicon glyphicon-inbox"></i>
                               Reserva de documentos</span>
                           </h1>
@@ -397,13 +397,13 @@ function ESTADO_PRESTAMO_show() {
                            <th><a href=''>Requerimiento</a></th>
                            <th><a href=''>Estado</a></th>
                            <th><a href=''>Accion</a></th>
-                        </tr>    
-<?    
+                        </tr>
+<?
          $iCounter = 0;
          // Display result
          while($rs && !$rs->EOF) {
-             $iCounter++;		 
-             // Create field variables based on database fields		  
+             $iCounter++;
+             // Create field variables based on database fields
              $fldPRES_ID=       $rs->fields["PRESTAMO_ID"];
              $fldRADICADO=      $rs->fields["RADICADO"];
              $fldEXPEDIENTE=    $rs->fields["SGD_EXP_NUMERO"];
@@ -413,42 +413,42 @@ function ESTADO_PRESTAMO_show() {
              $fldPRES_FECH_VENC=$rs->fields["F_VENCIMIENTO"];
              $fldPRES_FECH_CANC=$rs->fields["F_CANCELACION"];
              $fldPRES_FECH_PRES=$rs->fields["F_PRESTAMO"];
-             $fldPRES_FECH_DEV= $rs->fields["F_DEVOLUCION"];		  		  		  
+             $fldPRES_FECH_DEV= $rs->fields["F_DEVOLUCION"];
              $fldPRES_REQUERIMIENTO=$rs->fields["REQUERIMIENTO"];
              $fldPRES_ESTADO=   $rs->fields["ESTADO"];
 			 $fldID_ESTADO=     $rs->fields["ID_ESTADO"];
     		 $accion="";
-		     if (strcasecmp($krd,$fldLOGIN)==0 && $fldID_ESTADO==1) { 
+		     if (strcasecmp($krd,$fldLOGIN)==0 && $fldID_ESTADO==1) {
 		        $accion="<a href=\"javascript: cancelar($fldPRES_ID); \">Cancelar Solicitud</a>";
 		     }
-             $rs->MoveNext();    
+             $rs->MoveNext();
              // Indica el estilo de la fila
              if($iCounter%2==0){ $tipoListado="class=\"listado2\""; }
              else              { $tipoListado="class=\"listado1\""; }
-             // HTML prestamo show begin	  ?>	
+             // HTML prestamo show begin	  ?>
                         <tr <? echo $tipoListado; ?> align="center">
-                           <td class="leidos"><?= tohtml($fldRADICADO); ?></td>	 
-                           <td class="leidos"><?= tohtml($fldEXPEDIENTE); ?></td>	 
-                           <td class="leidos"><?= tohtml($fldLOGIN); ?></td>	 
-                           <td class="leidos"><?= tohtml($fldDEPENDENCIA); ?></td>	 
-                           <td class="leidos"><?= tohtml($fldPRES_FECH_PEDI); ?></td>	 
-                           <td class="leidos"><?= tohtml($fldPRES_FECH_VENC); ?></td>	 
-                           <td class="leidos"><?= tohtml($fldPRES_REQUERIMIENTO); ?></td>	 						
-                           <td class="leidos"><?= tohtml($fldPRES_ESTADO); ?></td>	 
-                           <td class="leidos"><?=$accion?></td>	 
-                        </tr>  			
+                           <td class="leidos"><?= tohtml($fldRADICADO); ?></td>
+                           <td class="leidos"><?= tohtml($fldEXPEDIENTE); ?></td>
+                           <td class="leidos"><?= tohtml($fldLOGIN); ?></td>
+                           <td class="leidos"><?= tohtml($fldDEPENDENCIA); ?></td>
+                           <td class="leidos"><?= tohtml($fldPRES_FECH_PEDI); ?></td>
+                           <td class="leidos"><?= tohtml($fldPRES_FECH_VENC); ?></td>
+                           <td class="leidos"><?= tohtml($fldPRES_REQUERIMIENTO); ?></td>
+                           <td class="leidos"><?= tohtml($fldPRES_ESTADO); ?></td>
+                           <td class="leidos"><?=$accion?></td>
+                        </tr>
 <?       } ?>
                         <tr  align="center">
-                           
+
                            <td  colspan="9" align="center"><footer><input type="submit" class='btn btn-default' value="Regresar">
                            </footer>
                            </td>
-                        </tr>	  
-                     </table>					 
+                        </tr>
+                     </table>
 					 <br>
-                  </form>  				   
-<?    }   
-   }     
+                  </form>
+<?    }
+   }
 }
 //-------------------------------
 
@@ -456,13 +456,13 @@ function ESTADO_PRESTAMO_show() {
 
 //===============================
 // PRESTAMO_SHOW begin
-//               Presenta el formulario para que 
-//               el usuario haga la solicitud de los 
+//               Presenta el formulario para que
+//               el usuario haga la solicitud de los
 //               fisicos.
 //-------------------------------
 function PRESTAMO_show() {
    global $db;
-   global $sFileName;   
+   global $sFileName;
    global $sPRESTAMOErr;
    //$fldradicado=$_GET["radicado"];
    $fldradicado=get_param("radicado");
@@ -474,75 +474,75 @@ function PRESTAMO_show() {
    // Modificado Infometrika 14-Julio-2009
    // Esta operacion se realiza en el script solicitar/common.php, funcion get_param().
    /*
-   $fldradicado=$_GET["radicado"]; 
-   if (!$fldradicado) $fldradicado=$_POST["radicado"];  
+   $fldradicado=$_GET["radicado"];
+   if (!$fldradicado) $fldradicado=$_POST["radicado"];
    */
-   $historicos=999; 
+   $historicos=999;
 
    if ($sPRESTAMOErr=="") {
-      // SQL que verifica la existencia de anexos para el radicado   
-      $sSQL1 = "select 
-                   R.RADI_DESC_ANEX as ANEXO, 
-		   R.RADI_DEPE_ACTU as DEPE_RADICADO, 
-		   U.USUA_LOGIN as USUARIO_RADICADO, 
+      // SQL que verifica la existencia de anexos para el radicado
+      $sSQL1 = "select
+                   R.RADI_DESC_ANEX as ANEXO,
+		   R.RADI_DEPE_ACTU as DEPE_RADICADO,
+		   U.USUA_LOGIN as USUARIO_RADICADO,
 		   R.DEPE_CODI as DEPE_CODI_RADICADO
-      			from 
-			       RADICADO R, 
-				   USUARIO U 
-			    where 
-			       R.RADI_NUME_RADI=$fldradicado and 
-			       U.USUA_CODI=R.RADI_USUA_ACTU and 
+      			from
+			       RADICADO R,
+				   USUARIO U
+			    where
+			       R.RADI_NUME_RADI=$fldradicado and
+			       U.USUA_CODI=R.RADI_USUA_ACTU and
 				   U.DEPE_CODI=R.RADI_DEPE_ACTU";
-      //$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);   
-      $rs1 = $db->conn->query($sSQL1);         
+      //$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+      $rs1 = $db->conn->query($sSQL1);
       // Inicializacion de la variable que indica si el usuario puede o no hacer solicitudes
-      if(!$rs1->EOF) { 
+      if(!$rs1->EOF) {
          $fldANEXO=$rs1->fields["ANEXO"]; //campo que indica la existencia de anexos para el radicado
-      	 $fldUSUARIO_RADICADO=$rs1->fields["USUARIO_RADICADO"];   
-	 $fldDEPE_RADICADO=$rs1->fields["DEPE_RADICADO"]; 
-	 $fldDEPE_CODI_RADICADO=$rs1->fields["DEPE_CODI_RADICADO"];  
+      	 $fldUSUARIO_RADICADO=$rs1->fields["USUARIO_RADICADO"];
+	 $fldDEPE_RADICADO=$rs1->fields["DEPE_RADICADO"];
+	 $fldDEPE_CODI_RADICADO=$rs1->fields["DEPE_CODI_RADICADO"];
       	 if ($fldDEPE_RADICADO!=$historicos && $fldUSUARIO_RADICADO!=$krd) {
 	        $sPRESTAMOErr=" solo puede ser solicitado y prestado al usuario $fldUSUARIO_RADICADO";
 	     }
       }
       // SQL con los tipos de requerimientos que se pueden realizar
-      $sSQL = "select 
+      $sSQL = "select
                   P.PRES_REQUERIMIENTO as REQUERIMIENTO
-               from 
+               from
 			      PRESTAMO P
-               where 
-			      P.RADI_NUME_RADI=$fldradicado and 
+               where
+			      P.RADI_NUME_RADI=$fldradicado and
                   P.PRES_ESTADO in (1,2,5) ";
      // $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
       $rs=$db->query($sSQL);
-      //$db->conn->SetFetchMode(ADODB_FETCH_NUM);  	  
+      //$db->conn->SetFetchMode(ADODB_FETCH_NUM);
       $iCounter = 0;
       while($rs && !$rs->EOF) {
          $i[$iCounter]=$rs->fields["REQUERIMIENTO"];
-         $iCounter++;		  
+         $iCounter++;
          $rs->MoveNext();
       }
-      $reqPrestados = 0;   
+      $reqPrestados = 0;
       for ($j=0; $j<$iCounter; $j++){ $reqPrestados=$reqPrestados+$i[$j]; }
       $sqlReq="";
       if ($iCounter==0) {
-         if (strlen(trim($fldANEXO))==0){ 
-           $sqlReq=" =1 "; 
-           if($GLOBALS["numExpediente"]) $sqlReq=" in (1,4) "; 
+         if (strlen(trim($fldANEXO))==0){
+           $sqlReq=" =1 ";
+           if($GLOBALS["numExpediente"]) $sqlReq=" in (1,4) ";
            }
-	     else                           { 
-	          $sqlReq=" in (1,2,3) "; 
-	         if($GLOBALS["numExpediente"]) $sqlReq=" in (1,2,3,4) "; 
+	     else                           {
+	          $sqlReq=" in (1,2,3) ";
+	         if($GLOBALS["numExpediente"]) $sqlReq=" in (1,2,3,4) ";
 	     }
       }
-	
+
       else if ($iCounter==1 && $reqPrestados<3 && $reqPrestados>0){
-         if (strlen(trim($fldANEXO))!=0){ $sqlReq=" =".(3-$reqPrestados); }   
+         if (strlen(trim($fldANEXO))!=0){ $sqlReq=" =".(3-$reqPrestados); }
       }
 //$sqlReq = "aaaa";
       if (strlen($sqlReq)!=0) {
-         $sqlReq="select PARAM_CODI,PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_REQUERIMIENTO' and PARAM_CODI".$sqlReq." order by PARAM_VALOR ";   
-	     // Show form field 			 
+         $sqlReq="select PARAM_CODI,PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_REQUERIMIENTO' and PARAM_CODI".$sqlReq." order by PARAM_VALOR ";
+	     // Show form field
 ?>
                <script>
                   /*Adecua el formulario para que la pagina regrese a la anterior*/
@@ -553,30 +553,30 @@ function PRESTAMO_show() {
                </script>
                <form method="POST" action="<?=$sFileName ?>" name="Prestamo" class=smart-form>
                   <input type="hidden" value="insert" name="FormAction">
-                  <input type="hidden" value="<?=$dependencia?>" name="dependencia">			                    				  				  
-                  <input type="hidden" value="<?=$GLOBALS["numExpediente"]?>" name="numExpediente">	
+                  <input type="hidden" value="<?=$dependencia?>" name="dependencia">
+                  <input type="hidden" value="<?=$GLOBALS["numExpediente"]?>" name="numExpediente">
 		  <input type="hidden" name="radicado" value="<?= tohtml($fldradicado) ?>">
 <?    // Usuario que no puede solicitar
-         if ($sPRESTAMOErr!="") { 
+         if ($sPRESTAMOErr!="") {
             $lookup_s = db_fill_array($sqlReq);
-            $s="";		 
+            $s="";
             if(is_array($lookup_s))  {
-               reset($lookup_s);		 
-               while(list($key,$value)=each($lookup_s)){ 
+               reset($lookup_s);
+               while(list($key,$value)=each($lookup_s)){
 	              $s=ucfirst(strtolower($value));
-		          if ($key==3) { 	     
-			         $sPRESTAMOErr=" solo pueden ser solicitados y prestados al usuario $fldUSUARIO_RADICADO<br><br>"; 
+		          if ($key==3) {
+			         $sPRESTAMOErr=" solo pueden ser solicitados y prestados al usuario $fldUSUARIO_RADICADO<br><br>";
 			         break; }
-     		   }			
+     		   }
 		    }
 		    $sPRESTAMOErr="El ".$s.$sPRESTAMOErr;
 ?>
                   <p align="center"><font class="titulosError2"><?=$sPRESTAMOErr?></font><br>
 				  <input type="submit" class="botones" value="Regresar" onClick="javascript: regresar();"></p>
                </form>
-<?       
-         }	 
-	     else { ?>  
+<?
+         }
+	     else { ?>
                   <table class='table table-bordered' align="center">
                      <tr>
                         <th  colspan="2"><center><?=$sFormTitle?></center></th>
@@ -594,7 +594,7 @@ function PRESTAMO_show() {
 	            	    <td class='listado2'><?=$dependencia?></td>
   	                 </tr>
 	                 <tr>
-	  	                <td class='titulos2'>Fecha Pedido</td>						
+	  	                <td class='titulos2'>Fecha Pedido</td>
 		                <td class='listado2'><?=Date("d-m-Y")?></td>
 	                </tr>
 	                <tr>
@@ -602,29 +602,29 @@ function PRESTAMO_show() {
 		                <td class='listado2'>Solicitar</td>
                      </tr>
                      <tr>
-	                    <td class='titulos2'>Requiere</td>	
+	                    <td class='titulos2'>Requiere</td>
                         <td class="listado5"><label class=select>
                         <select name="s_PRES_REQUERIMIENTO" class=select>
 <?                               $lookup_s = db_fill_array($sqlReq);
                                  if(is_array($lookup_s))  {
                                     reset($lookup_s);
                                     while(list($key,$value)=each($lookup_s))
-                                    { 
+                                    {
                                     	echo "<option value=\"$key\">".ucfirst(strtolower($value))."</option>"; }
-                                 	}		    ?>							 
+                                 	}		    ?>
 						                     </select></label></td>
                      </tr>
                      <tr>
-	                    <td class='titulos2'>Expediente</td>	
+	                    <td class='titulos2'>Expediente</td>
                         <td class="listado5">
                           <?=$GLOBALS["numExpediente"];?>
 												</td>
-                     </tr>                     
+                     </tr>
 	                 <tr>
                         <td colspan=2><footer><input type="submit" class="btn btn-primary" value="Solicitar" align=left>&nbsp;&nbsp;
 	            	                         <input type="submit" class='btn btn-default' value="Regresar" onClick="javascript: regresar();"></footer></td>
 	                 </tr>
-                  </table>	  
+                  </table>
                </form> <?
 	     }
 	  }
