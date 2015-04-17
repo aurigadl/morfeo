@@ -231,7 +231,7 @@ $_SESSION['numExpedienteSelected'] = null;
                     <tr>
                       <th  width=20>
                           <label class="checkbox">
-                            <input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll"> 
+                            <input type="checkbox" onclick="markAll();" value="checkAll" name="checkAll" id="checkAll">
                             <i></i>
                           </label>
                       </th>
@@ -263,7 +263,11 @@ $_SESSION['numExpedienteSelected'] = null;
                     $radiLeido             = $rs->fields["HID_RADI_LEIDO"];
 
                     $linkVerRadicado = "./verradicado.php?verrad=$numeroRadicado&".session_name()."=".session_id()."&nomcarpeta=$nomcarpeta#tabs-a";
-                    $linkImagen = "$ruta_raiz/bodega/$radiPath";
+
+                    if(!empty($radiPath)){
+                      $linkImagen = "$ruta_raiz/bodega/$radiPath";
+                    }
+
 
                     unset($leido);
                     if(!$radiLeido){
@@ -276,12 +280,27 @@ $_SESSION['numExpedienteSelected'] = null;
                         <div  >
                           <label class="checkbox">
                             <input id="<?=$numeroRadicado?>" onChange="clickTx();" name="checkValue[<?=$numeroRadicado?>]" value="CHKANULAR" type="checkbox">
-                            <i></i> 
+                            <i></i>
                           </label>
                         </div>
                       </td>
-
-                      <td class="inbox-data-from"> <div><small> <a onClick="window.open('<?=$linkImagen?>','imgCaliope<?=date("ymdhis")?>','width=500,height=400');" href='#'> <?=$numeroRadicado?></a></small> </div></td>
+                      <?
+                        if(empty($radiPath)){
+                            echo "<td class=\"inbox-data-from\">
+                                  <div><small>
+                                      $numeroRadicado
+                                  </small></div>
+                                </td>";
+                        }else{
+                            echo "<td class=\"inbox-data-from\">
+                                    <div><small>
+                                      <a onClick=\"window.open('$linkImagen','imgCaliope','width=500,height=400');\" href='#'>
+                                        $numeroRadicado
+                                      </a>
+                                    </small></div>
+                                 </td>";
+                        }
+                      ?>
                       <td class="inbox-data-from"> <div><small><a href='<?=$linkVerRadicado?>' target="mainFrame"><?=$fechaRadicado?></a></small></div></td>
                       <td class="inbox-data-from"> <div><span><small><?=$asuntoRadicado?></small></span> </div> </td>
                       <td class="inbox-data-from"> <div> <small><?=$remitenteRadicado?></small> </div> </td>
