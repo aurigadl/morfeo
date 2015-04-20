@@ -30,6 +30,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   define('MEMORANDO', 3);
   define('SIIM2_RECEPCION', 10);
 
+  //VARIABLE INCREMENTAL PARA CONTROLAR LOS CAMPOS DE LOS USUARIOS
+  unset($_SESSION['INCREMENTAL1']);
+  $_SESSION['INCREMENTAL1']=0;
+
   $ruta_raiz = "..";
   if (!$_SESSION['dependencia'])
       header ("Location: $ruta_raiz/cerrar_session.php");
@@ -40,6 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   /**  Fin variables de session de Radicacion de Mail. **/
   include_once("$ruta_raiz/include/db/ConnectionHandler.php");
   include_once("$ruta_raiz/include/tx/usuario.php");
+  include_once("$ruta_raiz/config.php");
 
   $db              = new ConnectionHandler("$ruta_raiz");
   $usuario         = new Usuario($db);
@@ -47,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $showtable       = 'hide';
   $hidetable       = '';
   $modificar       = 'hide';
-
+  $radMail	   = $_GET["radMail"];
   $ddate           = date('d');
   $mdate           = date('m');
   $adate           = date('Y');
@@ -62,6 +67,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   //como el sticker
   $idsession       = session_id(); //valor necesario para crear enlaces
 
+
+//CONFIGURACIONES ESPECIFICAS PARA METRO VIVIENDA
+ if($_SESSION['entidad']=="METROVIVIENDA"){ 
+	$_TIPO_INFORMADO = 1;
+	$_enable_1 = false;
+	$_enable_2 = false;
+	$_name_2 = "Empresas";
+	$_name_6 = "Usuario SIIM2";
+
+	//el tipo documental solo lo muestra si es un radicado de Entrada
+	if ( $ent == 2 ){
+	$_show_type_doc = true;
+	}else{
+	$_show_type_doc = false;
+	}
+}
+
+//CONFIGURACIONES ESPECIFICAS PARA CRA
+if($_SESSION['entidad']=="CRA"){
+	$_TIPO_INFORMADO = 2;
+        $_enable_1 = true;
+	$_enable_2 = true;
+	$_name_2 = "Otras Empresas"; 
+	$_name_6 = "Usuario";
+	$_show_type_doc = true;
+} 
 
   //Mostrar el tipo de radicacion que se esta realizando
   $selTipoRad = "select
@@ -124,7 +155,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       $result = $usuario->usuarioPorRadicado($radicadopadre);
 
       if($result){
-          $showUsers = $usuario->resRadicadoHtml();
+          $showUsers = $usuario->resRadicadoHtml(true);
           $hidetable = '';
           $modificar = 'hide';
           $showtable = '';
@@ -143,17 +174,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     $rs    = $db->conn->query($query);
 
-    if(!$rs->EOF){
+      if(!$rs->EOF){
           $asu             = $rs->fields["RA_ASUN"];
-      $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
-      $ane             = $rs->fields["RADI_DESC_ANEX"];
-      $cuentai         = $rs->fields["RADI_CUENTAI"];
-      $tdoc            = $rs->fields["TDOC_CODI"];
-      $med             = $rs->fields["MREC_CODI"];
-      $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
-      $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
+          $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
+          $ane             = $rs->fields["RADI_DESC_ANEX"];
+          $cuentai         = $rs->fields["RADI_CUENTAI"];
+          $tdoc            = $rs->fields["TDOC_CODI"];
+          $med             = $rs->fields["MREC_CODI"];
+          $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
+          $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
           $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
-      $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
+          $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
           $guia            = $rs->fields["RADI_NUME_GUIA"];
           $numFolio        = $rs->fields["RADI_NUME_FOLIO"];
           $numAnexo        = $rs->fields["RADI_NUME_ANEXO"];
@@ -210,26 +241,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $rs = $db->conn->query($query);
 
-  $depselect = $rs->GetMenu2("coddepe",
-    $coddepe,
-    "0:-- Seleccione una Dependencia --",
-    false,
-    false,
-    "class='select'");
+if($_TIPO_INFORMADO==1){
+ $depselect = $rs->GetMenu2("coddepe", $coddepe, "0:-- Seleccione una Dependencia --",false,false,"class='select'");
+}else if ($_TIPO_INFORMADO==2){
+ $depselect = $rs->GetMenu2("coddepe", $coddepe, false,false, "class='select'");
+}
 
     $queryData  = "SELECT ".
                     $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
                 FROM
-                DEPENDENCIA d";
+                DEPENDENCIA d 
+		where depe_estado = 1 ";
 
     $rs = $db->conn->query($queryData);
 
-    $depselectInf = $rs->GetMenu2 ("coddepe",
-        $coddepe,
-        "0:-- Seleccione una Dependencia --",
-        false,
-        false,
-        "class='form-control custom-scroll' id='informar'");
+if($_TIPO_INFORMADO==1){
+ $depselectInf = $rs->GetMenu2 ("coddepe",$coddepe,"0:-- Seleccione una Dependencia --",false, false, "class='form-control custom-scroll' id='informar'");
+}else if ($_TIPO_INFORMADO==2){
+ $depselectInf = $rs->GetMenu2 ("coddepe",$coddepe,"",false,false,"class='form-control custom-scroll' multiple='multiple' id='informar' style='height: 15%;' ");
+}
+
 
   $query    = "SELECT
                 MREC_DESC, MREC_CODI
@@ -384,10 +415,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                           <label class="select">
                             <select id="tipo_usuario" class="form-control input-sm">
                               <option value='0' <?php echo $ciudadano_select?> >Ciudadano </option>
-				<?php  if(!$_SESSION['entidad']=="METROVIVIENDA"){ ?>
-				<option value='2' <?php echo $entidad_selected?> >Entidad </option>
-				<? } ?>	    
-                              <option value='6' <?php echo $usuario_selected?> >Usuario SIIM2</option>
+				<?php if ($_enable_1 == true){ ?> <option value='1' <?php echo $esp_select?> >ESP </option> <?php } ?>
+				<?php if ($_enable_2 == true){ ?> <option value='2' <?php echo $entidad_selected?> > <?=$_name_2?> </option><?php } ?>
+                              <option value='6' <?php echo $usuario_selected?> ><?=$_name_6?></option>
                             </select>
                           </label>
                         </section>
@@ -471,7 +501,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                       <?=$depselectInf?>
                   </label>
                 </section>
-
+<?php if($_TIPO_INFORMADO==1){ ?>
                 <section>
                     <label class="label">
                         Usuario
@@ -485,7 +515,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </label>
                     </label>
                 </section>
-
+<?php } ?>
                 <section class="smart-form">
 
                     <label class="label">
@@ -554,19 +584,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   </label>
                        <input name="esta_fisico" id="esta_fisico" type="checkbox" <?php if ($esta_fisico==1){echo " checked";} ?> >
                   <?php } ?>
+
+		<? if ($entidad=="CRA"){?>
+		<label class="label">
+			Nivel de Seguridad: 
+			<div>
+			  <label>
+			    <input type="radio" name="nivelSeguridad" id="publico" value="0" checked>
+				Público.
+			  </label>
+			</div>
+			<div>
+			  <label>
+			    <input type="radio" name="nivelSeguridad" id="confidencial" value="1">
+				Confidencial.
+			  </label>
+			</div>
+
+		</label>
+		<?}?>
                   <label class="label">
                       *Dependencia
                   </label>
                   <label class="select">
                       <?=$depselect?>
                   </label>
-
+		<?php if ($_show_type_doc == true) { ?>
                   <label class="label">
                       Tipo Documental
-                  </label>
+		  </label>
                   <label class="select">
                       <?=$tipoDoc?>
-                  </label>
+		  </label>
+		<?php } ?>
               </section>
           </section>
         </div>
@@ -655,12 +705,19 @@ function justNumbers(e)
     $("body").on("click", '#informar', function(){
 
         var values = $(this).val();
-
+<?php if($_TIPO_INFORMADO==1){ ?>
         $.post( "./ajax_buscarUsuario.php", {searchUserInDep : values }).done(
             function( data ) {
                 $('#informarUsuario').html(data[0]);
             }
         );
+<?php }else if ($_TIPO_INFORMADO==2){?>
+        $.post( "./ajax_buscarUsuario.php", {MsearchUserInDep : values }).done(
+            function( data ) {
+		  $('#showusers').html(data[0]);
+            }
+        );
+<?php } ?>
     });
 
 
@@ -669,7 +726,7 @@ function justNumbers(e)
      * Selecciona los usuarios y los muestra para informar con
      * el radicado seleccionado.
      */
-
+<?php if($_TIPO_INFORMADO==1){ ?>
     $("body").on("change", '#informarUsuario', function(){
         $('#informarUsuario :selected').each(function(i, selected){
             var newUser = $('.userinfo').last().clone();
@@ -683,13 +740,18 @@ function justNumbers(e)
             $('#showusers').append(newUser);
         });
     });
-
+<?php } ?>
     $("body").on("click", '#accioninfousua', function(){
         var text = [];
+<?php if($_TIPO_INFORMADO==1){ ?>
         $('#showusers').find('input').each(function(index, value){
             text.push($(value).val());
         });
-
+<?php }else if ($_TIPO_INFORMADO==2){ ?>
+        $('#showusers').find('input:checked').each(function(index, value){
+            text.push($(value).val());
+        });
+<?php } ?>
         var nurad = $('input[name="nurad"]').val();
 
         $.post("./ajax_informarUsuario.php", {addUser : text, radicado: nurad}).done(
@@ -710,13 +772,13 @@ function justNumbers(e)
             $(value).addClass('hide');
         });
     });
-
+<?php if($_TIPO_INFORMADO==1){ ?>
     $("body").on("change", '.informarusuarios',function(){
         var content = $(this).val();
         $('#showusers').append("<label class='radio'><input type='radio' name='radio-inline' checked=''><i></i>" +
                         content + "</label>" );
     });
-
+<?php } ?>
 
     /**
      * Permite crear un nuevo usurio mostrando los campos vacios y
@@ -751,6 +813,7 @@ function justNumbers(e)
         );
 
         INCREMENTAL1++;
+
     });
 
 
@@ -902,6 +965,7 @@ function justNumbers(e)
           var telef  = data[i].TELEF;
           var email  = (data[i].EMAIL)? data[i].EMAIL.toLowerCase() : '';
           var cedula = data[i].CEDULA;
+	  var direccion = data[i].DIRECCION;
 
           var div    = $('<div/>')
                 .addClass('well well-sm')
@@ -913,7 +977,8 @@ function justNumbers(e)
                     + '</div>'
                     + '<div class="showdot176" ><b>'   + nombre +' '+ apell + '</b></div>'
                     + '<div class="showdot176">'       + telef      + '</div>'
-                    + '<div class="showdot176">'       + email      + '</div>')
+                    + '<div class="showdot176">'       + email      + '</div>'
+		+ '<div class="showdot176">'       + direccion      + '</div>' )
                 .attr('name', 'cod_' + i)
                 .on("click", function(){
                   var codUser = $(this).attr('name').substring(4);
@@ -1032,6 +1097,17 @@ function justNumbers(e)
           mostrarAlert({type : 'danger', message : 'Asunto no es mayor de ' + min + ' Caracteres. '});
           pass = false;
         };
+
+	//DIRECCION Ò EMAIL EN UN USUARIO NUEVO	
+	var inc = 0;
+	$("tr[name='item_usuario']").each(function(){
+
+	if(($("#id_dir_"+inc).val()=='') && ($("#id_ema_"+inc).val()=='')) {
+	   mostrarAlert({type : 'danger', message : 'El destinatario No. ' + (inc+1) + ' Le falta Direccion o Correo electronico '});
+           pass = false;
+	}
+	inc++;
+	 });
 
         /*
         if(!/^[0-9A-Za-z áéíóúÁÉÍÓÚÑñ\&\#\.\*\>\@\<\_\,\;\:\°\-\%\(\)]+$/.test(asu) && asu.length > 0){
