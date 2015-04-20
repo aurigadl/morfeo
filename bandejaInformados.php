@@ -294,7 +294,7 @@ $_SESSION['numExpedienteSelected'] = null;
                         }else{
                             echo "<td class=\"inbox-data-from\">
                                     <div><small>
-                                      <a onClick=\"window.open('$linkImagen','imgCaliope','width=500,height=400');\" href='#'>
+                                      <a onClick=\"window.open('$linkImagen','imgCaliope','width=500,height=400');\" target=\"_blank\">
                                         $numeroRadicado
                                       </a>
                                     </small></div>
