@@ -616,6 +616,8 @@ if($_TIPO_INFORMADO==1){
                   <label class="select">
                       <?=$tipoDoc?>
 		  </label>
+		<?php }else{ ?>
+		<input type="hidden" value="0" name="tdoc">
 		<?php } ?>
               </section>
           </section>
