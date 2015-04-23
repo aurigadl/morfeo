@@ -31,10 +31,14 @@ td{
 
 </style>
 </head>
+<?php 
+$dirLogo = "../../img/logometro.jpg";
+?>
 <body topmargin="5" leftmargin="0"  onload="window.print()">
-    <table width="450px" cellpadding="0" cellspacing="0">
-        <tr>
-            <td  align=left width="450px">
+    <table  cellpadding="0" cellspacing="0">
+	<tr>
+	    <td  width="30%" style="padding-right:10px;padding-top:10px" ><img src="<?=$dirLogo?>" alt="<?=$entidad_corto?>"  height="55" width="82"></td>
+            <td  width="70%" align=left>
               <?=$entidad_corto?>
                <!-- <center>
                <p><span><b><h3><?=$entidad_largo?></h3><b></span></p>
