@@ -424,11 +424,13 @@ if ($radicar_documento) {
 
         if ($ent == 1) $rad_salida = $nurad;
         // Update Anexos
-        $archUpdateFinal = basename($archUpdate);
-        $isql = "update ANEXOS set RADI_NUME_SALIDA=$rad_salida,
+	$archUpdateFinal = basename($archUpdate);
+	
+	$isql = "update ANEXOS set RADI_NUME_SALIDA=$rad_salida,
 			      ANEX_SOLO_LECT = 'S',
 			      ANEX_RADI_FECH = $sqlFechaHoy,
 			      ANEX_ESTADO = 2,
+			      anex_desc = '$asunto',
 			      ANEX_NOMB_ARCHIVO = '$archUpdateFinal',
 			      ANEX_TIPO='$numextdoc',
 			      SGD_DEVE_CODIGO = null
