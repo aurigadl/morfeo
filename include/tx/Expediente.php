@@ -202,14 +202,17 @@ class Expediente {
                         $expArr[$numExpediente][$iRr]["ASUNTO_RADICADO"] = $asuntoRadicado;
                         $expArr[$numExpediente][$iRr]["PATH_RADICADO"] = $pathRadicado;
 
+			//$this->db->conn->debug = true;
+
                         $query = "select a.ANEX_RADI_NUME,a.ANEX_DESC, a.radi_nume_salida, a.anex_numero, t.SGD_TPR_DESCRIP
-						                 ,a.ANEX_NOMB_ARCHIVO
-													from anexos a, SGD_TPR_TPDCUMENTO t
-											where a.anex_radi_nume='" . $numRadicado . "'
-												and a.sgd_tpr_codigo=t.sgd_tpr_codigo";
+					 ,a.ANEX_NOMB_ARCHIVO
+				    from anexos a LEFT JOIN  SGD_TPR_TPDCUMENTO t
+                                       on ( a.sgd_tpr_codigo=t.sgd_tpr_codigo   )
+				where a.anex_radi_nume='" . $numRadicado . "'
+				ORDER BY a.anex_fech_anex";
                         $rsAnex = $this->db->conn->query($query);
 
-
+			//$this->db->conn->debug = false;
                         $arrAnexos = array();
                         $iA = 0;
 
@@ -220,7 +223,8 @@ class Expediente {
                             $arrAnexos[$iA]["ANEX_NUMERO"] = $rsAnex->fields['ANEX_NUMERO'];
                             $arrAnexos[$iA]["ANEX_PATH"] = $rsAnex->fields['ANEX_NOMB_ARCHIVO'];
                             $expArr[$numExpediente][$iRr]["ANEXOS"] = $arrAnexos;
-                            $rsAnex->MoveNext();
+			    $rsAnex->MoveNext();
+			    $iA++;
                         }
 
                         $querySE = "select exp.SGD_EXP_NUMERO, sexp.sgd_sexp_PAREXP1, sexp.sgd_sexp_PAREXP2
