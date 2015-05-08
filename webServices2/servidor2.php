@@ -1,7 +1,9 @@
 <?php 
 $searchText = $_POST["searchText"];
+$radicados = $_POST["radicados"];
 if(!$searchText) $searchText = $_GET["searchText"];
-function getRadsExpediente($numeroExpediente="", $searchText=""){
+if(!$radicados) $radicados = $_GET["radicados"];
+function getRadsExpediente($numeroExpediente="", $searchText="",$radicados=""){
   $ruta_raiz = "..";
   include ($ruta_raiz."/config.php");
   include_once($ruta_raiz."/include/db/ConnectionHandler.php");
@@ -15,7 +17,11 @@ function getRadsExpediente($numeroExpediente="", $searchText=""){
   if($searchText && $pos>=5 ){
     $searchText = substr($searchText, 0,$pos);
   }
-  //$db->conn->debug = true;
+  $filtroRads = "";
+  if($radicados) {
+    $filtroRads = " and r.radi_nume_radi not in ($radicados 0)";
+  }
+  #$db->conn->debug = true;
   
   //Aqui busco la informacion necesaria del usuario para la creacion de expedientes
   //$db->conn->debug = true;
@@ -26,11 +32,22 @@ function getRadsExpediente($numeroExpediente="", $searchText=""){
             ,sexp.sgd_sexp_parexp4
 	    ,r.tdoc_codi
 	    ,r.radi_path
+	    ,'<a href=&#34;http://200.69.119.84/siim32/bodega/'||r.radi_path||'&#34;>Imagen</a>' radi_path2
 	    ,tpr.sgd_tpr_descrip
-           from sgd_sexp_secexpedientes sexp, sgd_exp_expediente exp , radicado r
+           from sgd_dir_drecciones dir, sgd_sexp_secexpedientes sexp, sgd_exp_expediente exp , radicado r
  left outer join sgd_tpr_tpdcumento tpr on (r.tdoc_codi=tpr.sgd_tpr_codigo)
-           where  sexp.sgd_exp_numero=exp.sgd_exp_numero AND exp.radi_nume_radi=r.radi_nume_radi and 
-             upper(sexp.sgd_sexp_parexp2) = upper ('".$searchText."')";
+ where  
+ r.radi_nume_radi = dir.radi_nume_radi and 
+ sexp.sgd_exp_numero=exp.sgd_exp_numero AND exp.radi_nume_radi=r.radi_nume_radi and 
+	   (upper(sexp.sgd_sexp_parexp2) = upper ('".$searchText."')
+	   or
+	   upper(sexp.sgd_sexp_parexp1) = upper ('".$searchText."')
+	   or
+	   upper(sexp.sgd_sexp_parexp3) = upper ('".$searchText."')
+           or
+   	   dir.sgd_dir_doc like '%".$searchText."%')
+	   $filtroRads
+	   ";
   
   //return $sql;
   $rs = $db->conn->query($sql);
@@ -52,7 +69,7 @@ function getRadsExpediente($numeroExpediente="", $searchText=""){
 }
 
 if($searchText){
-  $res = getRadsExpediente("",$searchText);
+  $res = getRadsExpediente("",$searchText,$radicados);
   
   //var_dump( $res);
   echo json_encode($res);
