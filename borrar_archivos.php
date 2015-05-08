@@ -54,7 +54,8 @@ if ($secur) {
 	$anexBorrado = array();
 	$anexBorrado[] = $numrad;
 	
-	$observa = "Se Elimina Anexo Digitalizado con Codigo: $anexo. Eliminado por: $nombreUsuario.";
+	//$observa = "Se Elimina Anexo Digitalizado con Codigo: $anexo. Eliminado por: $nombreUsuario.";
+	$observa = "Anexo Borrado No. $anexo.";
 	$codTx = 31; //Código correspondiente a la eliminación de anexos
 	$hist->insertarHistorico($anexBorrado,  $dependencia , $codusuario, $dependencia, $codusuario, $observa, $codTx);
      $mensaje="<span class='info'>Archivo eliminado<span><br> ";

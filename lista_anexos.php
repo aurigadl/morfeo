@@ -372,8 +372,21 @@ Anexar Archivo</a>
   </tr>
 </table>
 <? }?>
+<br><br>
+<button type="button" id="clickme"  class="btn btn-danger">Mostrar Anexos borrados</button>
+
+<div id="wrap_delete" style="display: none">
+<?php
+       //PERMISO PARA MIRAR LOS BORRADOS	
+include "$ruta_raiz/lista_anexos_borrados.php";
+?>
+</div>
 
 <script language="javascript">
+
+$( "#clickme" ).click(function() {
+	$( "#wrap_delete" ).toggle( "slow" );
+});
 
 	var swradics  = 0;
 	var radicando = 0;
@@ -579,7 +592,7 @@ function borrarArchivo(anexo,linkarch,radicar_a,procesoNumeracionFechado){
 						$codusua = $rsDepR->fields['RADI_USUA_ACTU'];
 						$ind_ProcAnex="S";
 			?>
-			window.open("./radicacion/tipificar_documento.php?<?=session_name()."=".session_id()?>&krd=<?=$krd?>&nurad="+anexo+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie+"&texp=<?=$texp?>","Tipificacion_Documento_Anexos","height=500,width=750,scrollbars=yes");
+			window.open("./radicacion/tipificar_documento.php?<?=session_name()."=".session_id()?>&krd=<?=$krd?>&nurad="+anexo+"&ar="+anexo+"&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&tsub="+tsub+"&codserie="+codserie+"&texp=<?=$texp?>","Tipificacion_Documento_Anexos","height=500,width=750,scrollbars=yes");
 	}
 
 	function noPermiso(){

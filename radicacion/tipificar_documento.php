@@ -39,6 +39,11 @@ $usua_doc    = $_SESSION["usua_doc"];
 $codusuario  = $_SESSION["codusuario"];
 $seriesVistaTodos = $_SESSION["seriesVistaTodos"];
 $nurad       = $_GET["nurad"];
+$ar       = intval ($_GET["ar"]);
+
+//Si la tipificacion llega de los anexos
+if($ar > 0){$es_anexo = true;}else{$es_anexo=false;}
+
 
 	if($nurad)
 	{
@@ -197,8 +202,23 @@ if($seriesVistaTodos!=1){
 	    		$i++;
 				$rsH->MoveNext();
 			}
-            $observa = "*TRD*$codserie/$tsub (Asigancion tipo documental.)";
-			$Historico->insertarHistorico($codiRegH, $dependencia, $codusuario, $dependencia, $codusuario, $observa, 32); 
+
+			$observa = "*TRD*$codserie/$tsub (Asigancion tipo documental.)"; 
+			$_Tx_id = 32;
+
+			if($es_anexo==true){
+			$nrobs = $codiRegH[0];	
+			$_Tx_id = 95;
+			$observa = "*TRD*$codserie/$tsub (Anexo Tipificado No. $nrobs)";
+
+			//TRAIGO EL RADICADO PADRE
+			$_isql ="select radi_nume_deri from radicado where radi_nume_radi = $nrobs";
+			$_rsisql =$db->conn->query($_isql);
+			$codiRegH[0] = $_rsisql->fields['RADI_NUME_DERI']; 
+			}
+
+
+			$Historico->insertarHistorico($codiRegH, $dependencia, $codusuario, $dependencia, $codusuario, $observa,$_Tx_id); 
 		  	/*
 		  	*Actualiza el campo tdoc_codi de la tabla Radicados
 		  	*/
@@ -233,7 +253,7 @@ function regresar(){
 <input type='hidden' name='codiTRDModi'         value='<?=$codiTRDModi?>'> 
 <input type='hidden' name='codiTREDli'          value='<?=$codiTREDli?>'> 
 <input type='hidden' name='ind_ProcAnex'        value='<?=$ind_ProcAnex?>'> 
-
+<input type='hidden' name='ar'        		value='<?=$ar?>'> 
 
     <table width=70% align="center" class="table table-bordered">
 	  <tr align="center" >

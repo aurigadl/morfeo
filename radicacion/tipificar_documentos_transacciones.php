@@ -66,13 +66,28 @@ if ($borrar)
 		}
 		$TRD = $codiTRDEli;
 		include "$ruta_raiz/radicacion/detalle_clasificacionTRD.php";
-	    	$observa = "*Eliminado TRD*".$deta_serie."/".$deta_subserie."/".$deta_tipodocu;
+
+		$nrobs = $codiRegE[0];  
 		
-		$Historico = new Historico($db);		  
-  		  //$radiModi = $Historico->insertarHistorico($codiRegE, $coddepe, $codusua, $coddepe, $codusua, $observa, 33); 
-		$radiModi = $Historico->insertarHistorico($codiRegE, $dependencia, $codusuario, $dependencia, $codusuario, $observa, 33); 
+		//TRAIGO EL RADICADO PADRE
+		$_isql ="select radi_nume_deri from radicado where radi_nume_radi = $nrobs";
+		$_rsisql =$db->conn->query($_isql);
+		$Rad_padre = intval($_rsisql->fields['RADI_NUME_DERI']);
+
+		if($Rad_padre > 0){
+		$_Tx_id = 98;
+		$observa = "*Eliminado TRD Anexo *".$deta_serie."/".$deta_subserie."/".$deta_tipodocu ." - ".$nrobs;
+		$codiRegE[0]=$Rad_padre;
+		}else{
+		$_Tx_id = 33;
+	    	$observa = "*Eliminado TRD*".$deta_serie."/".$deta_subserie."/".$deta_tipodocu;
+		}	
+
+		$Historico = new Historico($db);		 
+
+		$radiModi = $Historico->insertarHistorico($codiRegE, $dependencia, $codusuario, $dependencia, $codusuario, $observa, $_Tx_id); 
 		$radicados = $trd->eliminarTRD($nurad,$coddepe,$usua_doc,$codusua,$codiTRDEli);
-		$mensaje="Archivo eliminado<br> ";
+		$mensaje="TRD eliminada<br> ";
  	}
   /*
   * Proceso de modificaci�n de una clasificaci�n TRD

@@ -570,7 +570,7 @@ if($_TIPO_INFORMADO==1){
                       No. Anexos
                   </label>
 		  <label class="input">
-			 <input name="noanexos" id="noanexos" type="text" size="10" onkeypress="return justNumbers(event);" maxlength="2"  value="<?=$numAnexo?>">
+			 <input name="noanexos" id="noanexos" type="text" size="10" onkeypress="return justNumbers(event);" maxlength="5"  value="<?=$numAnexo?>">
                   </label>
                   <label class="label">
                       Descripci&oacute;n Anexos
@@ -650,8 +650,8 @@ if($_TIPO_INFORMADO==1){
   <script type="text/javascript">
 function justNumbers(e)
 {
- var keynum = window.event ? window.event.keyCode : e.which;
- if ((keynum == 8) || (keynum == 46))
+	var keynum = window.event ? window.event.keyCode : e.which;
+ if ((keynum == 8) || (keynum == 46) || (keynum == 0))
  return true;
  return /\d/.test(String.fromCharCode(keynum));
 }

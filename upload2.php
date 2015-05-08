@@ -43,8 +43,11 @@ $lnr         = 11+$ln;
     include_once("$ruta_raiz/class_control/anexo.php");
     include_once("$ruta_raiz/class_control/anex_tipo.php");
 
+	//incluimos ruta para las transacciones.
+    include("$ruta_raiz/include/tx/Tx.php"); 	
     if (!$db)	$db = new ConnectionHandler($ruta_raiz);
-    
+
+    $hist      = new Historico($db);
     $sqlFechaHoy= $db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
     $anex       =  new Anexo($db);
     $anexTip    =  new Anex_tipo($db);
@@ -135,8 +138,12 @@ $lnr         = 11+$ln;
                          ,$aplinteg    
                          ,$tpradic
                          ,'$expAnexo')";
-            $nuevo_archivo = false;
-            $subir_archivo = true;
+	    $nuevo_archivo = false;
+	    $subir_archivo = true;
+
+	    //Personalizo el codigo de transaccion y el comentario
+	    $TX_CODIGO = 91;
+	    $TX_COMENTARIO = "Archivo Anexo No. $codigo ";
          }else{
           $nuevo_archivo = false;
           $subir_archivo = ($_FILES['userfile1']['size'])? "   anex_nomb_archivo  ='1$archivo'
@@ -156,7 +163,11 @@ $lnr         = 11+$ln;
                     , SGD_TRAD_CODIGO = $tpradic
                     , SGD_APLI_CODI = $aplinteg  
                 where 
-                    anex_codigo= '$codigo'";
+		anex_codigo= '$codigo'";
+
+	    //Personalizo el codigo de transaccion y el comentario
+	    $TX_CODIGO = 92;
+	    $TX_COMENTARIO = "Modificación del anexo No.$codigo ";
          }
          
         $_POST['subir_archivo'] = $subir_archivo;
@@ -176,8 +187,16 @@ $lnr         = 11+$ln;
                  
                  //Si intento anexar archivo y Subio correctamente
                  if ($bien2){
-                    $resp1 = "OK";
-                    //$db->conn->CommitTrans();
+//                    $resp1 = "OK";
+		    //$db->conn->CommitTrans();
+		 //SE EJECUTO BIEN LA CONSULTA Y SUBIO CORRECTAMENTE EL ARCHIVO, SEA MODIFICADO O NUEVO
+
+		/*CONTROL DE VERSIONES - TRAZABILIDAD  */
+		 /*Insertar en el historico cuando se inserta un anexo como nuevo*/
+		 //		echo  $numrad." / ".$dependencia ." / ". $codusuario." /  0 /  0 / ".$TX_COMENTARIO." / ".$TX_CODIGO ; exit;
+		 $_numrad[0]=$numrad;		
+		 $hist->insertarHistorico( $_numrad, $dependencia , $codusuario, $dependencia, $codusuario,$TX_COMENTARIO,$TX_CODIGO);
+
                  }else{ 
                      $resp1="ERROR";
                    //  $db->conn->RollbackTrans();

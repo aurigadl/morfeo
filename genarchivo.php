@@ -38,6 +38,9 @@ require_once("$ruta_raiz/class_control/ControlAplIntegrada.php");
 require_once("$ruta_raiz/include/tx/Expediente.php");
 require_once("$ruta_raiz/include/tx/Historico.php");
 
+
+$hist = new Historico($db);
+
 header('Content-Type: application/json');
 
 
@@ -292,7 +295,6 @@ if ($radicar_documento) {
                 $tpradic = 'null';
             }
             $rad = new Radicacion($db);
-            $hist = new Historico($db);
             $rad->radiTipoDeri = 0;
             $rad->radiCuentai = "''";
             $rad->eespCodi = $espcodi;
@@ -336,6 +338,20 @@ if ($radicar_documento) {
 
             // Se genera el numero de radicado del anexo
             $noRad = $rad->newRadicado($tpradic, $tpDepeRad[$tpradic]);
+
+	    //Personalizo el codigo de transaccion y el comentario
+	    $TX_CODIGO = 96;
+	    $TX_COMENTARIO = "Radicación Anexo No .$anexo";
+	    
+	    /*CONTROL DE VERSIONES - TRAZABILIDAD  */
+	    /*Insertar en el historico cuando se inserta un anexo como nuevo*/
+	    $_numrad[0]=$numrad;
+	    $hist->insertarHistorico( $_numrad, $dependencia , $codusuario, $dependencia, $codusuario,$TX_COMENTARIO,$TX_CODIGO);
+
+  		//le incluyo a la tabla sgd_dir_drecciones el radicado con sus dignatarios
+		include 'dignatario_radicado_anexo.php';
+
+            if(substr($noRad,0,1)==0) saveMessage('error', 'No se genero el radicado. '.$noRad.'');
 
             // Se instancia un objeto para el radicado generado y obtener la fecha real de radicacion
             $radGenerado = new Radicado($db);
@@ -417,7 +433,18 @@ if ($radicar_documento) {
                 saveMessage('error', 'No se ha podido Actualizar el Radicado.');
                 die(json_encode($answer));
             } else {
-                $archUpdate = $linkarchivo_grabar;
+		    $archUpdate = $linkarchivo_grabar;
+
+	    //Personalizo el codigo de transaccion y el comentario
+	    $TX_CODIGO = 97;
+	    $TX_COMENTARIO = "Regenera Radicado Anexo No .$anexo";
+	    
+	    /*CONTROL DE VERSIONES - TRAZABILIDAD  */
+	    /*Insertar en el historico cuando se inserta un anexo como nuevo*/
+
+	    $_numrad[0]=$numrad;
+	    $hist->insertarHistorico( $_numrad, $dependencia , $codusuario, $dependencia, $codusuario,$TX_COMENTARIO,$TX_CODIGO);
+
             }
         }
 
