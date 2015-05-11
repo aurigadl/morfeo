@@ -51,9 +51,9 @@ $dirLogo = "../../img/logometro.jpg";
                 <p><span><b> Del: <?=substr($radi_fech_radi,0,16). " "?> </b></span></p>
                 <p><span><b> Rem: <?=substr($remite,0,20); ?> </b></span></p>
                 <p><span><b> <?=$process?> </b></span></p>
-                <!--<p><span  align="left"><b>
-                    Folios: <?=$radi_nume_folio?> &nbsp;&nbsp; Anexos: <?=$radi_nume_anexo?> &nbsp;&nbsp; Copias: <?=$copias?>   </b>
-                </span></p>
+                <p><span  align="left"><b>
+                    Folios: <?=$radi_nume_folio?> &nbsp;&nbsp; Anexos: <?=$radi_nume_anexo?> &nbsp; </b>
+		    </span></p> <!-- Copias: <?=$copias?>
 
                 <span  align="left"><b>
                     <?=substr($radi_fech_radi,0,16). " "?>  &nbsp;&nbsp; C&oacute;d veri: <?=$sgd_rad_codigoverificacion?> </b>

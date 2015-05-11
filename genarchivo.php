@@ -437,7 +437,7 @@ if ($radicar_documento) {
 
 	    //Personalizo el codigo de transaccion y el comentario
 	    $TX_CODIGO = 97;
-	    $TX_COMENTARIO = "Regenera Radicado Anexo No .$anexo";
+	    $TX_COMENTARIO = "Anexo Combinado No .$anexo";
 	    
 	    /*CONTROL DE VERSIONES - TRAZABILIDAD  */
 	    /*Insertar en el historico cuando se inserta un anexo como nuevo*/
