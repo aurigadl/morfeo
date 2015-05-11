@@ -3,6 +3,8 @@
 <head>
 <title>Sticker web</title>
 <link rel="stylesheet" href="estilo_imprimir.css" TYPE="text/css" MEDIA="print">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<?php header("Content-Type: text/html; charset=utf-8");?>
 <style type="text/css">
 
 body {

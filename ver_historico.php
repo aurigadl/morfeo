@@ -54,6 +54,7 @@ ini_set("display_errors",1);
 			,a.USUA_DOC
 			,a.HIST_OBSE
 			,a.SGD_TTR_CODIGO
+			,a.HIST_DOC_DEST
 			from hist_eventos a
 		 where
 			a.radi_nume_radi =$verrad
@@ -82,6 +83,7 @@ ini_set("display_errors",1);
 		$depe_codi = $rs->fields["DEPE_CODI"];
 		$codTransac = $rs->fields["SGD_TTR_CODIGO"];
 		$descTransaccion = $rs->fields["SGD_TTR_DESCRIP"];
+		$histDoctDest=$rs->fields["HIST_DOC_DEST"];
 		if(!$codTransac) $codTransac = "0";
 		$trans->Transaccion_codigo($codTransac);
 		$objUs->usuarioDocto($usua_doc_hist);
