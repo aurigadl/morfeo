@@ -457,7 +457,6 @@ if ($radicar_documento) {
 			      ANEX_SOLO_LECT = 'S',
 			      ANEX_RADI_FECH = $sqlFechaHoy,
 			      ANEX_ESTADO = 2,
-			      anex_desc = '$asunto',
 			      ANEX_NOMB_ARCHIVO = '$archUpdateFinal',
 			      ANEX_TIPO='$numextdoc',
 			      SGD_DEVE_CODIGO = null

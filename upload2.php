@@ -193,7 +193,7 @@ $lnr         = 11+$ln;
 
 		/*CONTROL DE VERSIONES - TRAZABILIDAD  */
 		 /*Insertar en el historico cuando se inserta un anexo como nuevo*/
-		 //		echo  $numrad." / ".$dependencia ." / ". $codusuario." /  0 /  0 / ".$TX_COMENTARIO." / ".$TX_CODIGO ; exit;
+		// 		echo  $numrad." / ".$dependencia ." / ". $codusuario." /  0 /  0 / ".$TX_COMENTARIO." / ".$TX_CODIGO ; exit;
 		 $_numrad[0]=$numrad;		
 		 $hist->insertarHistorico( $_numrad, $dependencia , $codusuario, $dependencia, $codusuario,$TX_COMENTARIO,$TX_CODIGO);
 

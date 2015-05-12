@@ -236,6 +236,11 @@ if (!empty($codigo)){
   }
   $(document).ready(function() {
 
+ $( "#b_asunto" ).click(function() {
+         var text = $( "#asunto_padre" ).val();
+         $( "#descr" ).val( text );
+  });
+
       $("#actualizar").on("click", function(e){
           if (!validarGenerico()){
               return;
@@ -250,7 +255,11 @@ if (!empty($codigo)){
 <body class="smart-form">
 <div>
 <form enctype="multipart/form-data" method="POST" name="formulario" id="formulario" action='upload2.php?<?=$variables?>' >
+<?php
+      /*ESTE INCLUDE PERMITE PASAR HERENCIA A UN ANEXO*/
+include 'datos_rad_padre.php'; ?>
 
+<input type="hidden" name="asunto_padre" id="asunto_padre" value="<?=$asunto?>">
 <input type="hidden" name="subir_archivo" value="<?=$subir_archivo?>"> 
 <input type="hidden" name="nuevo_archivo" value="<?=$nuevo_archivo?>"> 
 <?php
@@ -428,7 +437,7 @@ if (strlen(trim($swDischekRad)) > 0){
   </tr>
 
   <tr>
-    <td  ><small>Asunto </small></td>
+  <td  ><button name="button" type="button" class="btn btn-success" id="b_asunto" <?=$codigo?>> Asunto </button></td>
     <td  valign="top" >
       <textarea name="descr" cols="60" rows="1" class="text" id="descr"><?=$descr?></textarea>
     </td>
