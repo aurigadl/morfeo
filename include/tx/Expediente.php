@@ -150,7 +150,8 @@ class Expediente {
     }
 
     function consultaExp($radicado) {
-        switch ($this->db->driver) {
+        $this->db->conn->debug = false;
+        switch ($this->db->driver){
             case 'mssql':
                 $radi_nume_radi = "convert(varchar(14), e.radi_nume_radi)";
                 break;
@@ -160,31 +161,55 @@ class Expediente {
         }
 
 
-        $query = "select e.SGD_EXP_NUMERO,e.SGD_EXP_ESTADO,$radi_nume_radi AS RADI_NUME_RADI
-				from SGD_EXP_EXPEDIENTE e, SGD_SEXP_SECEXPEDIENTES sexp
-				where e.RADI_NUME_RADI = $radicado AND e.sgd_exp_numero=sexp.sgd_exp_numero
-                AND SGD_EXP_ESTADO <> 2";
+        $query = "SELECT
+                    e.SGD_EXP_NUMERO,
+                    e.SGD_EXP_ESTADO,
+                    sexp.SGD_SEXP_PRESTAMO,
+                    $radi_nume_radi AS RADI_NUME_RADI
+                  FROM
+                    SGD_EXP_EXPEDIENTE e,
+                    SGD_SEXP_SECEXPEDIENTES sexp
+                  WHERE
+                    e.RADI_NUME_RADI = $radicado AND
+                    e.sgd_exp_numero=sexp.sgd_exp_numero AND
+                    SGD_EXP_ESTADO <> 2";
+
         $rs = $this->db->conn->query($query);
         if ($rs)
             $this->num_expediente = $rs->fields['SGD_EXP_NUMERO'];
-
         if ($rs->EOF) {
-            //echo 'No tiene un Numero de expediente<br>';
             $this->num_expediente = 0;
         } else {
             $iE = 1;
             $expArr = array();
+
             while (!$rs->EOF) {
+
+
                 if ($iE == 1) {
-                    $this->num_expediente = $rs->fields['SGD_EXP_NUMERO'];
+                    $this->num_expediente    = $rs->fields['SGD_EXP_NUMERO'];
                     $this->estado_expediente = $rs->fields['SGD_EXP_ESTADO'];
                 }
+
                 $numExpediente = $rs->fields['SGD_EXP_NUMERO'];
-                $query = "select exp.RADI_NUME_RADI,r.RA_ASUN, to_char(r.RADI_FECH_RADI, 'YYYY-MM-DD hh:mi:SS') RADI_FECH_RADI, t.SGD_TPR_DESCRIP, r.RADI_PATH
-			                 from sgd_exp_expediente exp, radicado r, SGD_TPR_TPDCUMENTO t
-			             where exp.sgd_exp_numero='" . $numExpediente . "'
-			               and exp.radi_nume_radi = r.radi_nume_radi
-			               and r.tdoc_codi=t.sgd_tpr_codigo  AND exp.sgd_exp_estado <>2 ";
+
+                $expArr[$numExpediente]["PRESTAMO"] = $rs->fields['SGD_SEXP_PRESTAMO'];
+
+                $query = "select
+                              exp.RADI_NUME_RADI,
+                              r.RA_ASUN,
+                              to_char(r.RADI_FECH_RADI, 'YYYY-MM-DD hh:mi:SS') RADI_FECH_RADI,
+                              t.SGD_TPR_DESCRIP,
+                              r.RADI_PATH
+                          from
+                              sgd_exp_expediente exp,
+                              radicado r,
+                              SGD_TPR_TPDCUMENTO t
+                          where
+                                  exp.sgd_exp_numero='" . $numExpediente . "'
+                              and exp.radi_nume_radi = r.radi_nume_radi
+                              and r.tdoc_codi=t.sgd_tpr_codigo  AND exp.sgd_exp_estado <>2 ";
+
                 $rsRad = $this->db->conn->query($query);
 
                 $iRr = 0;
@@ -195,14 +220,14 @@ class Expediente {
                         $tipoDRadicado  = $rsRad->fields['SGD_TPR_DESCRIP'];
                         $asuntoRadicado = $rsRad->fields['RA_ASUN'];
                         $pathRadicado   = $rsRad->fields['RADI_PATH'];
+                        $prestamosexp   = $rsRad->fields['SGD_EXP_NUMERO'];
 
-                        $expArr[$numExpediente][$iRr]["NUM_RADICADO"] = $numRadicado;
-                        $expArr[$numExpediente][$iRr]["FECHA_RADICADO"] = $fechaRadicado;
-                        $expArr[$numExpediente][$iRr]["TIPO_DRADICADO"] = $tipoDRadicado;
+                        $expArr[$numExpediente][$iRr]["NUM_RADICADO"]    = $numRadicado;
+                        $expArr[$numExpediente][$iRr]["FECHA_RADICADO"]  = $fechaRadicado;
+                        $expArr[$numExpediente][$iRr]["TIPO_DRADICADO"]  = $tipoDRadicado;
                         $expArr[$numExpediente][$iRr]["ASUNTO_RADICADO"] = $asuntoRadicado;
-                        $expArr[$numExpediente][$iRr]["PATH_RADICADO"] = $pathRadicado;
+                        $expArr[$numExpediente][$iRr]["PATH_RADICADO"]   = $pathRadicado;
 
-			//$this->db->conn->debug = true;
 
                         $query = "select a.ANEX_RADI_NUME,a.ANEX_DESC, a.radi_nume_salida, a.anex_numero, t.SGD_TPR_DESCRIP
 					 ,a.ANEX_NOMB_ARCHIVO
@@ -212,7 +237,6 @@ class Expediente {
 				ORDER BY a.anex_fech_anex";
                         $rsAnex = $this->db->conn->query($query);
 
-			//$this->db->conn->debug = false;
                         $arrAnexos = array();
                         $iA = 0;
 
@@ -404,7 +428,7 @@ class Expediente {
 			WHERE
 			SGD_EXP_NUMERO='$numExpediente'
 			";
-     
+
     $dependencia = $depe_codi;
         if ($expOld == "false") {
            #echo "--><pre>$query</pre>";
@@ -419,11 +443,11 @@ class Expediente {
             }
             $consecutivoExp = substr("00000" . $secExp, -5);
             $numeroExpediente = $anoExp . $dependencia . $trdExp . $consecutivoExp;
-          /*  echo "-->".$anoExp."<br>"; 
-            echo "-->".$dependencia."<br>"; 
-            echo "-->".$trdExp."<br>"; 
-            echo "-->".$consecutivoExp."<br>"; 
-            echo "--".$numeroExpediente."<br>"; 
+          /*  echo "-->".$anoExp."<br>";
+            echo "-->".$dependencia."<br>";
+            echo "-->".$trdExp."<br>";
+            echo "-->".$consecutivoExp."<br>";
+            echo "--".$numeroExpediente."<br>";
 
             echo "--".$rs->fields["SGD_EXP_NUMERO"]; exit;*/
         } else {
@@ -444,7 +468,7 @@ class Expediente {
                 $codiPROC = "0";
             if (!$secExp)
                 $secExp = 1;
-#echo "<pre>$query</pre>"; exit; 
+#echo "<pre>$query</pre>"; exit;
             $query = "insert into SGD_SEXP_SECEXPEDIENTES(SGD_EXP_NUMERO   ,SGD_SEXP_FECH      ,DEPE_CODI   ,USUA_DOC   ,SGD_FEXP_CODIGO,SGD_SRD_CODIGO,SGD_SBRD_CODIGO,SGD_SEXP_SECUENCIA, SGD_SEXP_ANO, USUA_DOC_RESPONSABLE, SGD_PEXP_CODIGO";
             if ($campoParametro != "") {
                 $query .= ", $campoParametro";
@@ -456,7 +480,7 @@ class Expediente {
             }
             $query .= " )";
 #echo $campoParametro; exit; 2014900029900002E
-#echo "<pre>$query</pre>"; exit; 
+#echo "<pre>$query</pre>"; exit;
             if (!$rs = $this->db->conn->Execute($query)) {
                 //echo '<br>Lo siento no pudo agregar el expediente<br>';
                 echo "No se ha podido insertar el Expediente";
@@ -900,7 +924,7 @@ class Expediente {
          WHERE SEXP.SGD_EXP_NUMERO = '$numExp'
          AND parexp.DEPE_CODI = '$depeExp' $limitOci8
          ORDER BY SEXP.SGD_SEXP_FECH desc $limitPsql";
-         #$db->conn->debug=true; 
+         #$db->conn->debug=true;
          #echo "<pre>$q_datosParametro</pre>"; exit;
          $rs_datosParametro = $this->db->conn->query($q_datosParametro);
 

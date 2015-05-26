@@ -24,7 +24,7 @@ if($_POST['saveEtiq']){
     return $expediente->editDatosParamExp($noExp, $_POST[$matches[0][0]]);
     die;
     #Despues de editado un expediente.
-    
+
 }
 
 ?>
@@ -99,7 +99,7 @@ if($_POST['saveEtiq']){
 
         window.open("./flujo/modFlujoExp.php?codigoFldExp=" + codigoFldExp + "&krd=<?=$krd?>&numeroExpediente=" + numeroExpediente + "&numRad=<?=$verrad?>&texp=" + texp + "&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>", "TexpE<?=$fechaH?>", opcVentana);
     }
-    <?php /* */ ?> 
+    <?php /* */ ?>
     function Responsable(numeroExpediente) {
          frm = document.form2;
         <?php
@@ -194,6 +194,12 @@ if($_POST['saveEtiq']){
     function excluirExpediente() {
         window.open("./expediente/excluirExpediente.php?sessid=<?=session_id()?>&nurad=<?=$verrad?>&krd=<?=$krd?>&ind_ProcAnex=<?=$ind_ProcAnex?>", "HistExp<?=$fechaH?>", "height=400,width=730,scrollbars=yes");
     }
+
+
+    function solicitarExpediente(){
+        window.open("./solicitar/reservarExpediente.php?sessid=<?=session_id()?>>", "HistExp<?=$fechaH?>", "height=400,width=730,scrollbars=yes");
+    }
+
     // Incluir Anexos y Asociados a un Expediente.
     function incluirDocumentosExp() {
         var strRadSeleccionados = "";
@@ -260,7 +266,7 @@ if (!$menu_ver) {
 $fechah = date("dmy_h_m_s") . " " . time("h_m_s");
 $check = 1;
 $numeroa = 0;
-$numero = 0;
+$numero  = 0;
 $numeros = 0;
 $numerot = 0;
 $numerop = 0;
@@ -274,8 +280,9 @@ $verLinkArch = new verLinkArchivo($db);
 include_once("$ruta_raiz/include/tx/Expediente.php");
 $expediente = new Expediente($db);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-if ($verrad)
+if ($verrad){
     $exp = $expediente->consultaExp($verrad);
+}
 $arrExpedientes = $expediente->expedientes;
 ?>
 
@@ -286,8 +293,7 @@ $arrExpedientes = $expediente->expedientes;
         <ul class="nav nav-tabs tabs-left" id="demo-pill-nav" height="100%">
             <?php
             $iExp = 1;
-
-            foreach ($arrExpedientes as $numExpediente => $datosExp) {
+            foreach ($arrExpedientes as $numExpediente => $datosExp){
                 if ($iExp == 1)
                     $datoss = " active "; else  $datoss = " ";
                 ?>
@@ -299,8 +305,8 @@ $arrExpedientes = $expediente->expedientes;
                 $iExp++;
             }
             ?>
-
         </ul>
+
         <div class="tab-content" align=left>
             <?
             $iExp = 1;
@@ -311,8 +317,7 @@ $arrExpedientes = $expediente->expedientes;
                     ?>
                     <div class="tab-pane <?= $datoss ?>" id="tab-<?= $numExpediente ?>">
                         <?
-                        $num_expediente = $numExpedente;
-                        $numeroExpediente = $numExpediente;
+                        $numeroExpediente = $num_expediente = $numExpedente;
                         $texp = 0;
                         include "lista_expediente.php";
                         ?>
@@ -332,7 +337,6 @@ $arrExpedientes = $expediente->expedientes;
                                     <small>Expediente</small>
                                     <b class="caret"></b> </a>
                                 <ul class="dropdown-menu">
-
                                     <li>
                                         <a href="#" onClick="insertarExpediente();">Incluir en...</a>
                                     </li>

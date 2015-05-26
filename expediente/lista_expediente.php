@@ -4,31 +4,41 @@
 ?>
 </div>
 <input type="hidden" name="menu_ver_tmp" value=4>
-<input type="hidden" name="menu_ver" value=4>
+<input type="hidden" name="menu_ver"     value=4>
 <?
 unset($frm);
+
 if ($verrad)
     $expediente->expedienteArchivado($verrad, $numExpediente);
-$isqlDepR = "SELECT USUA_DOC_RESPONSABLE, SGD_EXP_PRIVADO,SGD_SEXP_PAREXP1,SGD_SEXP_PAREXP2
-			FROM SGD_SEXP_SECEXPEDIENTES
-			WHERE SGD_EXP_NUMERO = '$numExpediente' ORDER BY SGD_SEXP_FECH DESC ";
-$rsDepR = $db->conn->Execute($isqlDepR);
-$nivelExp = $rsDepR->fields['SGD_EXP_PRIVADO'];
-$docRes = $rsDepR->fields['USUA_DOC_RESPONSABLE'];
-$param1 = substr($rsDepR->fields['SGD_SEXP_PAREXP1'], 0, 30);
-$param1 = $param1 . ' ' . substr($rsDepR->fields['SGD_SEXP_PAREXP2'], 0, 50);
-$isqlDepR = "SELECT USUA_NOMB from USUARIO WHERE USUA_DOC = '$docRes'";
-$rsDepR = $db->conn->Execute($isqlDepR);
+
+$isqlDepR = "SELECT
+              USUA_DOC_RESPONSABLE,
+              SGD_EXP_PRIVADO,
+              SGD_SEXP_PAREXP1,
+              SGD_SEXP_PAREXP2
+            FROM
+              SGD_SEXP_SECEXPEDIENTES
+            WHERE
+              SGD_EXP_NUMERO = '$numExpediente' ORDER BY SGD_SEXP_FECH DESC ";
+
+$rsDepR      = $db->conn->Execute($isqlDepR);
+$nivelExp    = $rsDepR->fields['SGD_EXP_PRIVADO'];
+$docRes      = $rsDepR->fields['USUA_DOC_RESPONSABLE'];
+$param1      = substr($rsDepR->fields['SGD_SEXP_PAREXP1'], 0, 30);
+$param1      = $param1 . ' ' . substr($rsDepR->fields['SGD_SEXP_PAREXP2'], 0, 50);
+$isqlDepR    = "SELECT USUA_NOMB from USUARIO WHERE USUA_DOC = '$docRes'";
+$rsDepR      = $db->conn->Execute($isqlDepR);
 $responsable = $rsDepR->fields['USUA_NOMB'];
-$isql = "SELECT USUA_PERM_EXPEDIENTE from USUARIO WHERE USUA_LOGIN = '$krd'";
-$rs = $db->conn->Execute($isql);
-$krdperm = $rs->fields['USUA_PERM_EXPEDIENTE'];
-$sqlb = "select sgd_exp_archivo from sgd_exp_expediente
+$isql        = "SELECT USUA_PERM_EXPEDIENTE from USUARIO WHERE USUA_LOGIN = '$krd'";
+$rs          = $db->conn->Execute($isql);
+$krdperm     = $rs->fields['USUA_PERM_EXPEDIENTE'];
+$sqlb        = "select sgd_exp_archivo from sgd_exp_expediente
                 where sgd_exp_numero like '$num_expediente'";
 
-$rsb = $db->conn->Execute($sqlb);
-$arch = $rsb->fields['SGD_EXP_ARCHIVO'];
+$rsb     = $db->conn->Execute($sqlb);
+$arch    = $rsb->fields['SGD_EXP_ARCHIVO'];
 $mostrar = true;
+
 if (!$tsub)
     $tsub = "0";
 if (!$tdoc)
@@ -49,12 +59,17 @@ if ($usuaPermExpediente) {
 				<ul class="dropdown-menu">
                     <?
                     if ($usuaPermExpediente || !$numExpediente) {
+                          $_SESSION['dataPresExpediente'] =$datosExp;
+                          $_SESSION['dataPresExpediente']['expediente'] = $numExpediente;
                         ?>
                         <li>
                             <a onClick="insertarExpediente();">Incluir en...</a>
                         </li>
                         <li>
                             <a onClick="excluirExpediente();">Excluir de...</a>
+                        </li>
+                        <li>
+                            <a onClick="solicitarExpediente();">Soliticar prestamo...</a>
                         </li>
                         <li>
                             <a onClick="verTipoExpediente('<?= $numExpediente ?>',<?= $codserie ?>,<?= $tsub ?>,<?= $tdoc ?>,'MODIFICAR');">Crear
@@ -171,7 +186,6 @@ if ($usuaPermExpediente) {
 			  </font><hr>';
         }
     }
-    // echo "<hr>jjjjj  $usuaPermExpediente $num_expediente aa $carpeta";
     // if ($carpeta==8) {
     if ($carpeta == 99998) {
         //<input type="button"0. name="UPDATE_EXP" value="ACTUALIZAR EXPEDIENTE" class="botones_mediano" onClick="Start('buscar_usuario.php?busq_salida=',1024,400);">
@@ -197,6 +211,7 @@ if ($usuaPermExpediente) {
     if (!$codigoFldExp)
         $codigoFldExp = "0";
     $num_expediente = $numExpediente;
+
     if ($numExpediente != ""){
     if ($expIncluido != "") {
         $arrTRDExp = $expediente->getTRDExp($expIncluido, "", "", "");
@@ -392,15 +407,11 @@ if ($descPExpediente) {
 </tr>
 <tr>
     <td colspan="2">
-        <?php
-        }
-        ?>
+        <?php } ?>
         <table width="100%" align=left colspacing=0 cellspacing=0>
             <tr>
                 <td>
-                    <?
-                    include "$ruta_raiz/expediente/expedienteTree.php";
-                    ?>
+                    <?  include "$ruta_raiz/expediente/expedienteTree.php"; ?>
                 </td>
             </tr>
         </table>
