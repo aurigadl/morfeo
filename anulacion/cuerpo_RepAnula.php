@@ -23,19 +23,19 @@ if (!$dependencia and !$depe_codi_territorial)include "../rec_session.php";
 
 if (!$dep_sel) $dep_sel = $dependencia;
 $depeBuscada =$dep_sel; 
-
+ $ruta_raiz = "..";
 ?>
 <html>
 <head>
 <title>Orfeo -- Reporte Anulacion de Radicados</title>
 <link rel="stylesheet" href="../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 <?php include_once "$ruta_raiz/js/funtionImage.php"; ?>
 </head>
 <body bgcolor="#FFFFFF" topmargin="0" onLoad="window_onload();">
 <div id="spiffycalendar" class="text"></div>
 <link rel="stylesheet" type="text/css" href="js/spiffyCal/spiffyCal_v2_1.css">
 <?
- $ruta_raiz = "..";
  include_once "$ruta_raiz/include/db/ConnectionHandler.php";
  $db = new ConnectionHandler("$ruta_raiz");	 
  if(!$dep_sel) $dep_sel = $dependencia;
