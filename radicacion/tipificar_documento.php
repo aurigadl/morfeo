@@ -443,7 +443,9 @@ return;
 </span>
 </body>
 <br><br><br><br>
-<center><span><p><h4>  <strong> NOTA:</strong> La Clasificación Documental es importante para la organización de los documentos físicos. Por tanto, asegúrese de asignar la TRD de acuerdo a sus funciones en la entidad.  </h4> </p></span></center>
+<center><span><p><h4>  <strong> NOTA:</strong> 
+La Clasificación Documental es importante para la organización de los documentos físicos. Por tanto, asegúrese de asignar la TRD de acuerdo a las funciones de su dependencia.
+ </h4> </p></span></center>
 </html>
 <?php
   if ($cerrar) {
