@@ -69,7 +69,7 @@ if ($usuaPermExpediente) {
                             <a onClick="excluirExpediente();">Excluir de...</a>
                         </li>
                         <li>
-                            <a onClick="solicitarExpediente();">Soliticar prestamo...</a>
+                            <a onClick="solicitarExpediente();">Solicitar prestamo...</a>
                         </li>
                         <li>
                             <a onClick="verTipoExpediente('<?= $numExpediente ?>',<?= $codserie ?>,<?= $tsub ?>,<?= $tdoc ?>,'MODIFICAR');">Crear

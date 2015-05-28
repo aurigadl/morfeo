@@ -1,7 +1,7 @@
 <?php
 #echo "hello"; exit;
 /**
- * @author Jairo Losada   <jlosada@gmail.com>
+ * @author Jairo Losada   
  * @author Cesar Gonzalez <aurigadl@gmail.com>
  * @license  GNU AFFERO GENERAL PUBLIC LICENSE
  * @copyright
@@ -49,6 +49,7 @@ $ruta_raiz    = "..";
 $verrad = "";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
+$db->conn->debug = true;
 
 if (!$tipo_archivo)
     $tipo_archivo = 0; //Para la consulta a archivados
@@ -567,7 +568,7 @@ function Pedidos_Show() {
 
         // HTML column prestamo headers
         ?>
-        <form method="post" action="prestamo.php" name="rta">
+        <form method="post" action="prestamo.php" id="form1" name="rta">
             <input type="hidden" value='<?= $krd ?>' name="krd">
             <input type="hidden" value=" " name="radicado">
             <input type="hidden" value="" name="prestado">
@@ -619,7 +620,6 @@ function Pedidos_Show() {
 
                   /* */ if ($fldARCH != 'SI') {
                         $encabARCH = session_name() . "=" . session_id() . "&buscar_exp=" . tourl($fldEXP) . "&krd=$krd&tipo_archivo=&nomcarpeta=";
-                        $antfldARCH .= "<a href='" . $ruta_raiz . "/expediente/datos_expediente.php?" . $encabARCH . "&num_expediente=" . tourl($fldEXP) . "&nurad=" . tourl($antfldRADICADO) . "' class='vinculos'>" . $fldARCH . "</a>";
                     }
 
                     $y++;
@@ -636,20 +636,13 @@ function Pedidos_Show() {
                     var cantRegPorPagina =<?=$cantRegPorPagina-1?>;
                     // Marca todas las casillas si la del titulo es marcada
                     function seleccionarRta() {
-                        for (i = 1; i < document.rta.elements.length; i++) {
-                            if (document.rta.elements[i].type == "checkbox")
-                                if (document.rta.rta_.checked == 0) {
-                                    document.rta.elements[i].checked = 1;
-                                    document.rta.rta_.checked = 1;
-                                } else {
-                                    document.rta.elements[i].checked = 0;
-                                    document.rta.rta_.checked = 0;
-                                }
-                        }
-                        valor = document.rta.rta_.checked;
-                        <?       for ($j=0; $j<$cantRegPorPagina; $j++) { ?>
-                        document.rta.rta_<?=$j?>.checked = valor;
-                        <?       } ?>
+                      if(document.rta.rta_.checked) {
+                        for(i=2;i<document.rta.elements.length;i++)
+                          document.rta.elements[i].checked=1;
+                      } else {
+                        for(i=2;i<document.rta.elements.length;i++)
+                          document.rta.elements[i].checked=0;
+                      }
                     }
 
                     // Valida y envia el formulario

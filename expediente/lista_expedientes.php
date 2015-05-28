@@ -197,7 +197,11 @@ if($_POST['saveEtiq']){
 
 
     function solicitarExpediente(){
-        window.open("./solicitar/reservarExpediente.php?sessid=<?=session_id()?>>", "HistExp<?=$fechaH?>", "height=400,width=730,scrollbars=yes");
+        var passacce = confirm("Se realizará el préstamo de los documentos del expedientes, está seguro?");
+
+        if(passacce == true){
+          window.open("./solicitar/reservarExpediente.php?sessid=<?=session_id()?>>", "HistExp<?=$fechaH?>", "height=400,width=730,scrollbars=yes");
+        }
     }
 
     // Incluir Anexos y Asociados a un Expediente.

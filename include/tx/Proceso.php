@@ -128,7 +128,7 @@ var $estiloExito = "class=titulos>";
 			$idEtapa = $rs->fields['IDACTUAL'] + 1;
 		$orden = $this->etapa->getOrden();
 		$codProc = $this->etapa->getCodigoProceso();
-		//El procesamiento es un poquito diferente cuanto viene desde la creacion grafica del esquema del flujo
+		//El procesamiento es  diferente cuanto viene desde la creacion grafica del esquema del flujo
 		if($this->etapa->getGrafico() != null){
 			
 			$query = "INSERT INTO sgd_fexp_flujoexpedientes (  sgd_fexp_codigo, sgd_pexp_codigo, ";

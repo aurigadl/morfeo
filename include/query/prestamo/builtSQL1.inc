@@ -78,13 +78,8 @@ $sqlOrderPRES_FECH_DEVO=$db->conn->SQLDate("YmdHis","P.PRES_FECH_DEVO");
                 ES.PARAM_NOMB='PRESTAMO_ESTADO' and
                 RE.PARAM_CODI=P.PRES_REQUERIMIENTO and
                 RE.PARAM_NOMB='PRESTAMO_REQUERIMIENTO' and
-                DA.DEPE_CODI=P.PRES_DEPE_ARCH and ";
-
-    if($opcionMenu == 1) {
-        $sWhere .= "P.PRES_ESTADO = 1 and";
-    }else{
-        $sWhere .= "P.PRES_ESTADO < 3 and P.PRES_ESTADO > 1 and";
-    }
+                DA.DEPE_CODI=P.PRES_DEPE_ARCH and
+                P.PRES_ESTADO = 1 and";
 
   if(!$ps_numeroExpediente){
     $sWhere .= " P.RADI_NUME_RADI=R.RADI_NUME_RADI  ";

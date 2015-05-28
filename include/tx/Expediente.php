@@ -593,6 +593,37 @@ class Expediente {
 
     }
 
+
+    /**
+     * PRESTA O REVERSA EL PRESTAMO DE UN EXPEDIENTE
+     *
+     * @param string  $num_expediente
+     * @param array   $radicado //Radicados a prestar que pertenecen al expediente
+     * @param string  $usuario  //Login del usuario que hace la acción
+     * @param boolean $estado   //Prestado true
+     */
+    function cancPrestarExpediente($numExpediente,$radicados,$login) {
+      $fldPRES_FECH = $this->db->conn->OffsetDate(0, $this->db->conn->sysTimeStamp);
+      $setFecha     = "PRES_FECH_CANC=".$fldPRES_FECH.", USUA_LOGIN_CANC='".$login."'";
+      $radijoin     = implode(",",$radicados);
+
+      $sSQL     = "UPDATE
+                    PRESTAMO    SET  ".$setFecha.",
+                    PRES_ESTADO = 4
+                  WHERE RADI_NUME_RADI IN ($radijoin)";
+
+      $rs = $this->db->conn->query($sSQL);
+
+      $sSqlChan = " UPDATE
+                      SGD_SEXP_SECEXPEDIENTES
+                      SET SGD_SEXP_PRESTAMO = FALSE
+                    WHERE
+                      SGD_EXP_NUMERO LIKE '$expediente'";
+
+      $rs = $this->db->conn->query($sSqlChan);
+    }
+
+
     /**
      * Modifica un Numero de radicado en un Expediete
      * Modifica un expediente y aÃ±ade un numero de radicado a este. Ademas inserta en el historico

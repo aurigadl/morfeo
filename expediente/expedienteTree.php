@@ -7,9 +7,6 @@
 	<li>
     <span class="alert-success">
       <i class="fa fa-folder-open"></i> <?=$numExpediente?>
-      <? if($datosExp['PRESTAMO'] != 'f'){
-        echo "<span class=\"badge\"><i class=\"fa fa-lock\"></i> - Prestado</span>";
-      }?>
     </span>
 		<ul>
 <?
