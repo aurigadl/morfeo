@@ -45,7 +45,7 @@ $db     = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $trdExp = new Expediente($db);
 $hist   = new Historico($db);
-$db->conn->debug = true;
+$db->conn->debug = false;
 //====================================
 // Cancelar solicitud
 // Esta solicitud es enviada por ajax
@@ -94,7 +94,6 @@ while(array_key_exists ($noExp,$dataExpRadi)){
 $_SESSION['dataPresExpediente']['radicados'] = $radiprestar;
 
 $observacion = "Prestamos del expediente";
-$hist->insertarHistoricoExp($expediente,$radiprestar,$dependencia,$codusuario,$observacion, 91,1);
 foreach ($radiprestar as $fldradicado) {
   // Obtiene la ubicacion fisica de los documentos
   $fldPRES_DEPE_ARCH=substr($fldradicado,4,3);
@@ -158,6 +157,7 @@ foreach ($radiprestar as $fldradicado) {
       tosql($valSolPrest,"Number").
       ")";
 
+      $hist->insertarHistoricoExp($expediente,$radiprestar,$dependencia,$codusuario,$observacion, 91,1);
     // Execute SQL statement
     $rs = $db->query($sSQL);
 
