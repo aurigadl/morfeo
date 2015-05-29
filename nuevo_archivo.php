@@ -1,5 +1,7 @@
 <?php
 session_start();
+$verrad = $_GET['radi'];
+$is_edit = trim($_GET['tpradic']);
 
 /*error_reporting(E_ALL);
 ini_set('display_errors',1);*/
@@ -62,6 +64,7 @@ if ($rs->EOF){
     $rs=$db->conn->Execute($isql);
 }
 
+
 if ($resp1=="OK"){
     $mensaje = ($subir_archivo)? "<span class=info>Archivo anexado correctamente</span></br>" :
                                 "Anexo Modificado Correctamente<br>No se anex&oacute; ning&uacute;n archivo</br>";
@@ -117,6 +120,9 @@ if (!empty($codigo)){
     }
 }
 
+//compruebo que si es entrada siempre saque una salida
+$tip_rest = substr($verrad,-1);if ($tip_rest == 2){$inptpradic = 1 ;}else{$inptpradic =$tip_rest;}
+
 ?>
 
 <html>
@@ -143,9 +149,10 @@ if (!empty($codigo)){
   }
 
   function continuar_grabar(){
+    var tpradicu = document.forms['formulario']['tpradic'].value;
     document.formulario.tpradic.disabled=false;
-    document.formulario.action=document.formulario.action+"&cc=GrabarDestinatario&" + datasend;
-    document.formulario.submit();
+    document.formulario.action=document.formulario.action+"&cc=GrabarDestinatario&"+"tpradicu="+tpradicu+"&"+ datasend;
+  document.formulario.submit();
   }
 
   function mostrarNombre(nombreCapa){
@@ -166,10 +173,17 @@ if (!empty($codigo)){
   }
 
   function doc_radicado(){
-      if (document.formulario.radicado_salida.checked){
+	  var inptpradic = '<?php echo $inptpradic; ?>';
+	  if (document.formulario.radicado_salida.checked){
           document.formulario.tpradic.disabled=false;
+	  document.forms['formulario']['tpradic'].value = 'inptpradic';
+	  var objeto2 = document.forms['formulario']['tpradic'].value;
+	  if (objeto2 == ''){
+		document.forms['formulario']['tpradic'].value = 'null';
+	  }
       }else{
           document.formulario.tpradic.disabled=true;
+	  document.forms['formulario']['tpradic'].value = 'null';
       }
   }
 
@@ -236,12 +250,14 @@ if (!empty($codigo)){
   }
   $(document).ready(function() {
 
- $( "#b_asunto" ).click(function() {
-         var text = $( "#asunto_padre" ).val();
-         $( "#descr" ).val( text );
-  });
+     $( "#b_asunto" ).click(function() {
+	      var text = $( "#asunto_padre" ).val();
+	      $( "#descr" ).val( text );
+      });
+      
 
       $("#actualizar").on("click", function(e){
+	$("input[name^='_tpradicu']").val($("select[name^='tpradic']").val());
           if (!validarGenerico()){
               return;
           }
@@ -255,11 +271,13 @@ if (!empty($codigo)){
 <body class="smart-form">
 <div>
 <form enctype="multipart/form-data" method="POST" name="formulario" id="formulario" action='upload2.php?<?=$variables?>' >
-<?php
-      /*ESTE INCLUDE PERMITE PASAR HERENCIA A UN ANEXO*/
+
+<?php //ESTE INCLUDE PERMITE PASAR HERENCIA A UN ANEXO
 include 'datos_rad_padre.php'; ?>
 
 <input type="hidden" name="asunto_padre" id="asunto_padre" value="<?=$asunto?>">
+<input type="hidden" name="_tpradicu" value="">
+<input type="hidden" name="_tpradicu" value="">
 <input type="hidden" name="subir_archivo" value="<?=$subir_archivo?>"> 
 <input type="hidden" name="nuevo_archivo" value="<?=$nuevo_archivo?>"> 
 <?php
@@ -296,6 +314,7 @@ if ($codigo){
     $docunivel        = ($rs->fields["CODI_NIVEL"]);
     $sololect         = ($rs->fields["ANEX_SOLO_LECT"]=="S");
     $remitente        = $rs->fields["SGD_DIR_TIPO"].'remitenteee';
+    $num_remitente = $rs->fields["SGD_DIR_TIPO"];
     $extension        = $rs->fields["ANEX_TIPO_EXT"].'PP';
     $radicado_salida  = $rs->fields["ANEX_SALIDA"];
     $anex_estado      = $rs->fields["ANEX_ESTADO"];
@@ -307,7 +326,7 @@ if ($codigo){
     // SGD_DIR_TIPO  = 7 es otro reminte
 
     if(!empty($remitente)){
-        $radicado_rem = $remitente;
+        $radicado_rem = $num_remitente;
     }
 
   }
@@ -374,8 +393,7 @@ if ($remitente==7)  $datoss4=" checked  ";
 else  $datoss4 = "";
 
 if($us_1 or $us_2 or $us_3){
-  echo "<input type='checkbox' class='select' name='radicado_salida' $anexsalida value='1' onClick='doc_radicado();' id='radicado_salida'>
-        <small>  Este documento ser&aacute; radicado</small>";
+  echo "<div id ='poder_radicar'><input type='checkbox' class='select' name='radicado_salida' $anexsalida value='1' onClick='doc_radicado();' id='radicado_salida'><small>  Este documento ser&aacute; radicado</small></div>";
 }else{ ?>
   <small>Este documento no puede ser radicado ya que faltan datos.<br>
   (Para envio son obligatorios Nombre, Direccion, Departamento,
@@ -399,22 +417,26 @@ $sel            = "";
 
 if(!$tpradic) $tpradic=$ent;
 
+//Si el radicado es una entrada, SIEMPRE se radica una salida, no deben aparecer mas opciones.
+$tip_rest = substr($verrad,-1);if ($tip_rest == 2){$tpradic = 1 ;}else{$tpradic = $tip_rest;}
+?><script>var aux_puede_r=0;</script><?php
 foreach ($tpNumRad as $key => $valueTp){
 
     if(strcmp(trim($tpradic),trim($valueTp))==0){
-        $sel="selected";
+	if ($is_edit >=1){$sel="selected";}else{$sel="";}
         $comboIntSwSel=1;
     }
-
-    if($valueTp != 9 and $valueTp != 2){
         //Si se definio prioridad en algun tipo de radicacion
         $valueDesc = $tpDescRad[$key];
+	if ($tpPerRad[$valueTp]>2){
+
+        if ($is_edit == $valueTp ){$sel="selected";}else{$sel="";}
+	?><script>var aux_puede_r=aux_puede_r+1;</script><?php
         $comboRadOps =$comboRadOps . "<option value='".$valueTp."' $sel>".$valueDesc."</option>";
         $sel="";
-    }
-
 }
 
+}
 $comboRad = $comboRad.$comboRadSelecc.$comboRadOps."</select></label>";
 
 ?>
@@ -428,7 +450,8 @@ if ($ent==1){
 if (strlen(trim($swDischekRad)) > 0){
   echo ("<script>document.formulario.tpradic.disabled=true;</script>");
 }
-
+//habilitar o deshabilitar select dependiento si es una edicion o no
+if ($is_edit >= 1){echo ("<script>document.formulario.tpradic.disabled=false;</script>");}else{echo ("<script>document.formulario.tpradic.disabled=true;</script>");}
 ?>
     </td>
     </tr>
@@ -437,7 +460,8 @@ if (strlen(trim($swDischekRad)) > 0){
   </tr>
 
   <tr>
-  <td  ><button name="button" type="button" class="btn btn-success" id="b_asunto" <?=$codigo?>> Asunto </button></td>
+  <td  ><button name="button" type="button" class="btn btn-success" id="b_asunto" <?=$codigo?>> Asunto </button>
+ </td>
     <td  valign="top" >
       <textarea name="descr" cols="60" rows="1" class="text" id="descr"><?=$descr?></textarea>
     </td>
@@ -494,6 +518,7 @@ if( $rs_exp->RecordCount() == 0 ){
     <td  valign="top" colspan="2"  ><small>
     <input type="radio"   name="radicado_rem" value=1  id="rusuario" <?=$datoss1?> '
     <?php
+	$arrayusuario = $arrayusuario."-"."1";
       if($radicado_rem==1){echo " checked ";}
     ?> '>
     <?=$tip3Nombre[1][$ent]?>
@@ -549,7 +574,6 @@ if( $rs_exp->RecordCount() == 0 ){
           }
 
           $i_copias = 0; //Cuantos copias se han añadido
-
           include_once "$ruta_raiz/include/query/queryNuevo_archivo.php";
           $isql = $query1;
           $rs=$db->conn->Execute($isql);
@@ -632,8 +656,13 @@ if( $rs_exp->RecordCount() == 0 ){
               ?>
 
               <tr>
-                    <input type="hidden"   name="radicado_rem" value=<?=$sgd_dir_tipo?>  id="rusuario"
-                    '<?php  if($radicado_rem==$sgd_dir_tipo){echo " checked ";}?>'>
+		 <td  align="center"  colspan="1" >
+		   <small>
+		       <input type="radio"   name="radicado_rem" value=<?=$sgd_dir_tipo?>  id="rusuario"
+			'<?php  if($radicado_rem==$sgd_dir_tipo){echo " checked ";}?>'>
+		   </small>
+		 </td>
+                  
                 <td width='100%' align="center"  colspan="2" >
                   <small>
                       <?=$nombre_otros?>
@@ -649,6 +678,7 @@ if( $rs_exp->RecordCount() == 0 ){
               </tr>
 
               <?php
+	      $arrayusuario = $arrayusuario."-".$sgd_dir_tipo;
               $rs->MoveNext();
           }
           echo "    </table>
@@ -658,6 +688,8 @@ if( $rs_exp->RecordCount() == 0 ){
         <input name="usuar" type="hidden" id="usuar" value="<?php echo $usuar ?>">
         <input name="predi" type="hidden" id="predi" value="<?php echo $predi ?>">
         <input name="empre" type="hidden" id="empre" value="<?php echo $empre ?>">
+
+	<input type="hidden" name="arrayusuario" value="<?=$arrayusuario?>" >
 
         <?php
         if($tipo==999999){
@@ -738,7 +770,7 @@ if( $rs_exp->RecordCount() == 0 ){
 						   <input name="userfile1" type="file" onChange="escogio_archivo();" id="userfile" value="valor">
 						<small>Archivo debe ser menor a <?php echo $maximo_tamano; ?>Mb.</small>
 						<p><small class="btn btn-success"><?=$mensaje?></small></p>
-						<p><small class="btn btn-success"><?=$mostrar_mensaje?></small></p>
+<!--						<p><small class="btn btn-success"><?=$mostrar_mensaje?></small></p> -->
           </td>
     </tr>
 
@@ -764,7 +796,15 @@ if( $rs_exp->RecordCount() == 0 ){
 </body>
 
 <script type="text/javascript">
-  $(document).ready(function() {
+  $(document).ready(function() 	{
+
+	  //Ocultar la opcion si no tiene ningun permiso para radicar
+	  if(parseInt(aux_puede_r) >= 1){
+  		  $( "#poder_radicar" ).show();
+	  }else{
+		  $( "#poder_radicar" ).hide();
+	  }
+
       $('body').on("click", '#cerraranexar',function(){
           window.opener.$.fn.cargarPagina("./lista_anexos.php","tabs-c"); window.close();
       });
