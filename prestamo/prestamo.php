@@ -49,7 +49,6 @@ $ruta_raiz    = "..";
 $verrad = "";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
-$db->conn->debug = false;
 
 if (!$tipo_archivo)
     $tipo_archivo = 0; //Para la consulta a archivados
@@ -524,9 +523,9 @@ function Pedidos_Show() {
 
 
     if (strlen($pageAnt) == 0) {
-        include_once $ruta_raiz . "/include/query/prestamo/builtSQL1.inc";
-        include_once $ruta_raiz . "/include/query/prestamo/builtSQL2.inc";
-        include_once $ruta_raiz . "/include/query/prestamo/builtSQL3.inc";
+        include_once("$ruta_raiz/include/query/prestamo/builtSQL1.inc");
+        include_once("$ruta_raiz/include/query/prestamo/builtSQL2.inc");
+        include_once("$ruta_raiz/include/query/prestamo/builtSQL3.inc");
         $iSort = strip(get_param("FormPedidos_Sorting"));
         if (!$iSort)
             $iSort = 20;
@@ -543,7 +542,7 @@ function Pedidos_Show() {
         }
         $sOrder = " order by " . $iSort . $sDirection . ",PRESTAMO_ID limit 1000";
         include_once "inicializarRTA.inc";
-        #echo "<pre>".$sSQL."</pre>"; exit;
+
         $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
         $rs = $db->query($sSQL . $sOrder);
         $db->conn->SetFetchMode(ADODB_FETCH_NUM);
@@ -554,11 +553,11 @@ function Pedidos_Show() {
             <?          return;
         }
         // Build parameters for order
-    /*  */ $form_params_search = "s_RADI_NUME_RADI=" . tourl($ps_RADI_NUME_RADI) . "&s_USUA_LOGIN=" . tourl($ps_USUA_LOGIN) .
-            "&s_DEPE_NOMB=" . tourl($ps_DEPE_NOMB) . "&s_USUA_NOMB=" . tourl($ps_USUA_NOMB) . "&s_PRES_REQUERIMIENTO=" .
-            tourl($ps_PRES_REQUERIMIENTO) . "&s_PRES_ESTADO=" . tourl($ps_PRES_ESTADO) . "&fechaInicial=" .
-            tourl($fechaInicial) . "&fechaFinal=" . tourl($fechaFinal) . "&s_hora_limite=" . tourl($ps_hora_limite) .
-            "&s_minuto_limite=" . tourl($ps_minuto_limite) . "&s_meridiano=" . tourl($ps_meridiano); 
+        $form_params_search = "s_RADI_NUME_RADI=" . tourl($ps_RADI_NUME_RADI) . "&s_USUA_LOGIN=" . tourl($ps_USUA_LOGIN) .
+        "&s_DEPE_NOMB=" . tourl($ps_DEPE_NOMB) . "&s_USUA_NOMB=" . tourl($ps_USUA_NOMB) . "&s_PRES_REQUERIMIENTO=" .
+        tourl($ps_PRES_REQUERIMIENTO) . "&s_PRES_ESTADO=" . tourl($ps_PRES_ESTADO) . "&fechaInicial=" .
+        tourl($fechaInicial) . "&fechaFinal=" . tourl($fechaFinal) . "&s_hora_limite=" . tourl($ps_hora_limite) .
+        "&s_minuto_limite=" . tourl($ps_minuto_limite) . "&s_meridiano=" . tourl($ps_meridiano); 
 
  
 /**/
