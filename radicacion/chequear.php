@@ -450,7 +450,7 @@ if($primera!=1 and $Submit=="Buscar" and
 			if(trim($imagenf)==""){
 				$dato="No Disp";
 			}elseif($valImg == "SI"){
-				$dato="<b><a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$nume_radi','$ruta_raiz');\"> Ver Imagen </a>";
+				$dato="<b><a class=\"vinculos\" style=\"cursor:pointer;\"  target=\"_blank\" onclick=\"funlinkArchivo('$nume_radi','$ruta_raiz');\"> Ver Imagen </a>";
 				//$dato="<a href='../bodega$imagenf' target='otraventana'> Ver Imagen</a>";
 			}else{
 				$dato="No tiene permiso para acceder a la imagen";
