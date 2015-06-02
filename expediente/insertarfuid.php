@@ -66,17 +66,77 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 include_once "$ruta_raiz/include/tx/Historico.php";
 include_once("$ruta_raiz/class_control/TipoDocumental.php");
 include_once "$ruta_raiz/include/tx/Expediente.php";
+
+
 $trd = new TipoDocumental($db);
 $encabezadol = "$PHP_SELF?" . session_name() . "=" . session_id() . "&opcionExp=$opcionExp&numeroExpediente=$numeroExpediente&nurad=$nurad&coddepe=$coddepe&codusua=$codusua&depende=$depende&ent=$ent&tdoc=$tdoc&codiTRDModi=$codiTRDModi&codiTRDEli=$codiTRDEli&codserie=$codserie&tsub=$tsub&ind_ProcAnex=$ind_ProcAnex";
+
+//Compruebo si los datos llegan por POST
+if (isset($_POST['coduc'])) {
 
 $coduc = $_POST['coduc'];
 $fecha_inicio = $_POST['fecha_inicio'];
 $fecha_final = $_POST['fecha_final'];
-$num_folios = $_POST['num_folios'];
+$folio_ini = $_POST['folio_ini'];
+$folio_fin = $_POST['folio_fin'];
 $observaciones = $_POST['observaciones'];
 $num_caja = $_POST['num_caja'];
 $num_carpeta = $_POST['num_carpeta'];
 $ubicacion = $_POST['ubicacion']; 
+
+foreach ($_POST as $elementos => $valor) {
+   if (strncmp($elementos, 'parExp_', 7) == 0) {
+      $indice = ( int )substr($elementos, 7);
+      $arrParametro[$indice] = $valor;
+    }
+}
+
+}else{
+	//Cargo los datos si existen
+
+	//comprobar si es actualizar o insertar uno nuevo.
+	$isql = "select nume_exp,codigo_trd,serie,subserie,proceso,fecha_ini,fecha_fin,cons_id,folio_ini,folio_fin,observaciones,num_caja,num_carpeta,ubicacion,descriptor from sgd_exp_fuid where nume_exp = '$numeroExpediente';"; 
+	
+	$rs = $db->conn->Execute($isql);
+	$nume_exp = $rs->fields['NUME_EXP'];
+	
+	if ($nume_exp != ''){
+	//si tiene datos los traigo. si no, los dejo default.
+	$codigotrd = $rs->fields['CODIGO_TRD'];
+	$codserie = $rs->fields['SERIE'];
+	$tsub = $rs->fields['SUBSERIE'];
+	$codProc = $rs->fields['PROCESO'];
+	$fecha_inicio = $rs->fields['FECHA_INI'];
+	$fecha_final = $rs->fields['FECHA_FIN'];
+	$coduc = $rs->fields['CONS_ID'];
+	$folio_ini = $rs->fields['FOLIO_INI'];
+	$folio_fin = $rs->fields['FOLIO_FIN'];
+	$observaciones = $rs->fields['OBSERVACIONES'];
+	$num_caja = $rs->fields['NUM_CAJA'];
+	$num_carpeta = $rs->fields['NUM_CARPETA'];
+	$ubicacion = $rs->fields['UBICACION'];
+	}
+	$numExpediente = substr($numeroExpediente, 0, -1);
+	$numExpediente = $numExpediente."F";
+
+	/*Compruebo si existe un registro */
+	$isql = "select SGD_EXP_NUMERO,SGD_SEXP_PAREXP1, SGD_SEXP_PAREXP2, SGD_SEXP_PAREXP3, SGD_SEXP_PAREXP4, SGD_SEXP_PAREXP5, SGD_SEXP_PAREXP6, SGD_SEXP_PAREXP7, SGD_SEXP_PAREXP8, SGD_SEXP_PAREXP9 from SGD_SEXP_SECEXPEDIENTES where SGD_EXP_NUMERO = '$numExpediente';";
+	$rs = $db->conn->Execute($isql);
+	$SGD_EXP_NUMERO = $rs->fields['SGD_EXP_NUMERO'];
+	if ($SGD_EXP_NUMERO != ''){
+		$_POST['parExp_1'] = $arrParametro[1] = $rs->fields['SGD_SEXP_PAREXP1'];
+		$_POST['parExp_2'] = $arrParametro[2] = $rs->fields['SGD_SEXP_PAREXP2'];
+		$_POST['parExp_3'] = $arrParametro[3] = $rs->fields['SGD_SEXP_PAREXP3'];
+		$_POST['parExp_4'] = $arrParametro[4] = $rs->fields['SGD_SEXP_PAREXP4'];
+		$_POST['parExp_5'] = $arrParametro[5] = $rs->fields['SGD_SEXP_PAREXP5'];
+		$_POST['parExp_6'] = $arrParametro[6] = $rs->fields['SGD_SEXP_PAREXP6'];
+		$_POST['parExp_7'] = $arrParametro[7] = $rs->fields['SGD_SEXP_PAREXP7'];
+		$_POST['parExp_8'] = $arrParametro[8] = $rs->fields['SGD_SEXP_PAREXP8'];
+		$_POST['parExp_9'] = $arrParametro[9] = $rs->fields['SGD_SEXP_PAREXP9'];
+	}
+
+}
+
 
 ?>
 
@@ -104,32 +164,183 @@ $ubicacion = $_POST['ubicacion'];
 <form method="post" action="<?= $encabezadol ?>" name="TipoDocu" class="smart-form">
 <? /* * Adicion nuevo Registro */
 if ($Actualizar && $tsub != 0 && $codserie != 0) {
-/*
-	echo "<br> codi-->".$_POST['codigotrd'];
-	echo "<br> cods-->".$_POST['codserie'];
-	echo "<br> tsub-->".$_POST['tsub'];
-	echo "<br> codP-->".$_POST['codProc'];	
-	echo "<br> fech-->".$_POST['fecha_inicio'];
-	echo "<br> fech-->".$_POST['fecha_final'];
-	echo "<br> num_-->".$_POST['num_folios'];
-	echo "<br> obse-->".$_POST['observaciones'];
-	echo "<br> num_-->".$_POST['num_caja'];
-	echo "<br> num_-->".$_POST['num_carpeta'];
-	echo "<br> ubic-->".$_POST['ubicacion']; 
- */
+
 	$codigotrd = $_POST['codigotrd'];
 	$codserie = $_POST['codserie'];
 	$tsub = $_POST['tsub'];
 	$codProc = $_POST['codProc'];
 	$fecha_inicio = $_POST['fecha_inicio'];
 	$fecha_final = $_POST['fecha_final'];
-	$num_folios = $_POST['num_folios'];
+	$coduc = $_POST['coduc'];
+	$folio_ini = $_POST['folio_ini'];
+	$folio_fin = $_POST['folio_fin'];
 	$observaciones = $_POST['observaciones'];
 	$num_caja = $_POST['num_caja'];
 	$num_carpeta = $_POST['num_carpeta'];
 	$ubicacion = $_POST['ubicacion']; 
 
-exit;
+	//VALIDACIONES.
+//Evitar que llegen datos vacios.
+if($folio_ini==""){$folio_ini=0;}
+if($folio_fin==""){$folio_fin=0;}
+if($num_caja==""){$num_caja=0;}
+if($num_carpeta==""){$num_carpeta=0;}
+if($coduc==""){$coduc=0;}
+
+
+
+	//comprobar si es actualizar o insertar uno nuevo.
+	$isql = "select nume_exp from sgd_exp_fuid where nume_exp = '$numeroExpediente';";  
+
+	$rs = $db->conn->Execute($isql);
+	$nume_exp = $rs->fields['NUME_EXP'];
+
+if ($nume_exp == ''){
+//Insertamos
+ 	$isql = "INSERT INTO sgd_exp_fuid (
+		nume_exp, 
+		codigo_trd, 
+		serie, 
+		subserie, 
+		proceso, 
+		fecha_ini, 
+		fecha_fin, 
+		cons_id, 
+		folio_ini, 
+		folio_fin, 
+		observaciones, 
+		num_caja, 
+		num_carpeta, 
+		ubicacion, 
+		descriptor,
+		tdoc_codi)
+	VALUES (
+		'".$numeroExpediente."', 
+		'".$codigotrd ."', 
+		".$codserie .", 
+		".$tsub .", 
+		".$codProc .", 
+		'".$fecha_inicio ."', 
+		'".$fecha_final ."', 
+		".$coduc .",
+		".$folio_ini .", 
+		".$folio_fin .", 
+		'".$observaciones ."', 
+		".$num_caja .", 
+		".$num_carpeta .", 
+		'".$ubicacion ."',
+		0,
+		".$codProc ."
+	);";
+	$tipoTx = 101;
+	$observa = "Insertar al FUID";
+	
+}else{
+//Editamos
+ 	$isql = "
+		UPDATE sgd_exp_fuid SET 
+		codigo_trd = '".$codigotrd ."',
+		serie = ".$codserie .",
+		subserie = ".$tsub .",
+		proceso = ".$codProc .",
+		fecha_ini = '".$fecha_inicio ."',
+		fecha_fin = '".$fecha_final ."',
+		cons_id = ".$coduc .",
+		folio_ini = ".$folio_ini .",
+		folio_fin = ".$folio_fin .",
+		observaciones = '".$observaciones ."',
+		num_caja = ".$num_caja .",
+		num_carpeta = ".$num_carpeta .",
+		ubicacion = '".$ubicacion ."',
+		tdoc_codi = ".$codProc ."
+		WHERE 
+		nume_exp = '$numeroExpediente';";
+	$tipoTx = 102;
+	$observa = "Actualizar el FUID";
+}	
+
+//ejecuto 
+//echo "<pre>$isql</pre>"; exit;
+//$db->conn->debug = true; 
+$rs = $db->conn->Execute($isql);
+//$rs = true;
+if ($rs){
+	$MSG_response =  " Registro Actualizado Correctamente";
+	$MSG_style ="color:green";
+
+	include_once "$ruta_raiz/include/tx/Historico.php";
+	$radicados[] = $nurad;
+	$Historico = new Historico($db);
+	$h =	$Historico->insertarHistoricoExp($numeroExpediente, $radicados, $dependencia, $codusuario, $observa, $tipoTx, 0);
+
+	//Recrro los datos para construir el sql
+if (is_array($arrParametro)) {
+   foreach ($arrParametro as $orden => $datoParametro) {
+          $coma = ", ";
+   if ($p == count($arrParametro)) {
+	  $coma = "";
+	      }
+	  $campoParametro .= "SGD_SEXP_PAREXP" . $orden . $coma;
+	  $valorParametro .= "'" . $datoParametro . "'" . $coma;
+	  $campoParametroU .= "SGD_SEXP_PAREXP" . $orden . " = '" . $datoParametro ."'".$coma;
+	  $p++;
+	  }
+	}
+	
+	$campoParametro = trim($campoParametro,", ");
+	$valorParametro = trim($valorParametro,", ");
+	$campoParametroU = trim($campoParametroU,", ");
+
+	$numExpediente = substr($numeroExpediente, 0, -1);
+	$numExpediente = $numExpediente."F";
+	$fecha_hoy = Date("Y-m-d");	
+	$sqlFechaHoy = $db->conn->DBDate($fecha_hoy);
+	$depe_codi = $dependencia;
+	$secExp = 1 ;
+	$anoExp = substr($numExpediente, 0, 4);
+	$usuaDocExp = $usua_doc ;
+	$codiPROC = 0;
+
+	/*Compruebo si existe un registro */
+	$isql = "select SGD_EXP_NUMERO from SGD_SEXP_SECEXPEDIENTES where SGD_EXP_NUMERO = '$numExpediente';";
+	$rs = $db->conn->Execute($isql);
+	$SGD_EXP_NUMERO = $rs->fields['SGD_EXP_NUMERO'];
+
+	if ($SGD_EXP_NUMERO == ''){
+		$_query = "select id from SGD_SEXP_SECEXPEDIENTES order by id desc limit 1";
+		$_rs = $db->conn->Execute($_query);
+		$nextval = $_rs->fields['ID']+1; 
+
+/////////////////CONSTRUYO EL SQL  PARA INSERTAR EN EL SECEXPEDIENTE ///////////////
+	$query = "insert into SGD_SEXP_SECEXPEDIENTES(SGD_EXP_NUMERO,SGD_SEXP_FECH,DEPE_CODI,USUA_DOC,SGD_FEXP_CODIGO,SGD_SRD_CODIGO,SGD_SBRD_CODIGO,SGD_SEXP_SECUENCIA, SGD_SEXP_ANO, USUA_DOC_RESPONSABLE, SGD_PEXP_CODIGO,ID";
+	if ($campoParametro != "") {    $query .= ", $campoParametro";}
+	$query .= " )";
+	$query .= " VALUES ('$numExpediente'," . $sqlFechaHoy . " ,'$depe_codi','$usua_doc',0,$codiSRD,$codiSBRD ,'$secExp' ,$anoExp, $usuaDocExp, $codiPROC,$nextval";
+	if ($valorParametro != "") {  $query .= " , $valorParametro"; } 
+	$query .= " )";
+//////////FIN DEL SQL PARA INSERTAR EN SECEXPEDIENTE ////////////////////////
+	
+	}else{
+	$query = "update SGD_SEXP_SECEXPEDIENTES set ".$campoParametroU." where SGD_EXP_NUMERO = '$numExpediente';"; 
+	}
+
+//	echo $query; exit;
+//	$db->conn->debug = true;
+	$rsf = $db->conn->Execute($query);
+	
+	if($rsf){
+		//Si se insertó correctamente, intenta
+	$MSG_response .=  "/ OK ";
+	$MSG_style ="color:green";
+	}else{
+	$MSG_response =  " Ocurrio un error en sexcexpediente";
+	$MSG_style ="color:red";
+	}
+
+}else{
+	$MSG_response =  " No se pudo actualizar el registro "; 
+	$MSG_style ="color:red";
+}
 
 } ?>
 
@@ -243,8 +454,10 @@ exit;
                             order by detalle
                             ";
                                         $rsSub = $db->conn->Execute($querySub);
-                                        include "$ruta_raiz/include/tx/ComentarioTx.php";
-                                        print $rsSub->GetMenu2("tsub", $tsub, "0:-- Seleccione --", false, "", "onChange='submit()' class='select'");
+					include "$ruta_raiz/include/tx/ComentarioTx.php";
+					
+					print $rsSub->GetMenu2("tsub", $tsub, "0:-- Seleccione --", false, "", "onChange='submit()' class='select'");
+
                                         if (!$codiSRD) {
                                             $codiSRD = $codserie;
                                             $codiSBRD = $tsub;
@@ -255,8 +468,8 @@ exit;
                           WHERE
                             SGD_SRD_CODIGO=$codiSRD
                             AND SGD_SBRD_CODIGO=$codiSBRD ";
-
-                                        $rs = $db->conn->Execute($queryPEXP);
+					
+					$rs = $db->conn->Execute($queryPEXP);
                                         $texp = $rs->fields["SGD_PEXP_CODIGO"];
                                         ?><i></i>
                                     </label>
@@ -272,8 +485,8 @@ exit;
                                     <?
                                     $comentarioDev = "Muestra los procesos segun la combinacion Serie-Subserie";
                                     include "$ruta_raiz/include/tx/ComentarioTx.php";
-
-                                    print $rs->GetMenu2("codProc", $codProc, "0:-- Seleccione --", false, "", "class='select'");
+				    
+				    print $rs->GetMenu2("codProc", $codProc, "0:-- Seleccione --", false, "", "onChange='submit()' class='select'");
 
                                     $rs->MoveFirst();
                                     while (!$rs->EOF) {
@@ -281,16 +494,17 @@ exit;
                                         $rs->MoveNext();
                                     }
 
-                                    // Si se selecciono Serie-Subserie-Proceso
+				    // Si se selecciono Serie-Subserie-Proceso
                                     if ($codProc != "" && $codProc != 0 && $codserie != "" && $codserie != 0 && $tsub != "" && $tsub != 0) {
                                         // Termino del proceso seleccionado
                                         $queryPEXP = "select SGD_PEXP_TERMINOS";
                                         $queryPEXP .= " FROM SGD_PEXP_PROCEXPEDIENTES";
                                         $queryPEXP .= " WHERE SGD_PEXP_CODIGO  = " . $codProc;
 
-                                        $rs = $db->conn->Execute($queryPEXP);
+                                        //$rs = $db->conn->Execute($queryPEXP);
 
-                                        $expTerminos = $rs->fields["SGD_PEXP_TERMINOS"];
+					//$expTerminos = $rs->fields["SGD_PEXP_TERMINOS"];
+ 					$expTerminos = "";	
                                         if ($expTerminos != "") {
                                             $expDesc = "<small> $expTerminos Dias Calendario de Termino Total </small>";
                                         }
@@ -307,11 +521,11 @@ exit;
                   <div>
                       <table class="table table-bordered table-striped" style="width:850;" align=center>
 
-			<?php ?>
-<td align="center" colspan=4 >
+			<?php  ?>
+<td align="center" colspan=6 >
 			<button type="button" class="btn btn-success btn-xs" id ="OcultarMostrarCampos" >Mostrar/Ocultar Descriptores</button>
 </td>
-<?php
+<?php 
                           $sqlParExp = "SELECT SGD_PAREXP_ETIQUETA, SGD_PAREXP_ORDEN,";
                           $sqlParExp .= " SGD_PAREXP_EDITABLE";
                           $sqlParExp .= " FROM SGD_PAREXP_PARAMEXPEDIENTE PE";
@@ -324,7 +538,7 @@ exit;
                             $auxiliar_formulario = 0;
                           while (!$rsParExp->EOF) { ?>
                               <tr align="center" <?php if($auxiliar_formulario>=0){echo 'class = "my_toogle" style = "display:none" ';} ?> >
-                                  <td align="left" colspan=1>
+                                  <td align="left" colspan=2>
                                       <SMALL>
                                           <?php
 
@@ -351,7 +565,7 @@ exit;
 
                                       </SMALL>
                                   </td>
-                                  <td align="left" colspan=2>
+                                  <td align="left" colspan=5>
                                       <?
                                       $parExpOrden = $rsParExp->fields['SGD_PAREXP_ORDEN'];
                                       $nombreInput = "parExp_" . $rsParExp->fields['SGD_PAREXP_ORDEN'];
@@ -380,7 +594,7 @@ exit;
                              <td>
                                  <small>Fecha Inicial</small>
                              </td>
-                             <td align="left" colspan="3" >
+                             <td align="left" colspan="5" >
 				 <small>
 				 <input type="text" name ="fecha_inicio" id="fecha_inicio" value="<?=$fecha_inicio?>" ><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                                  </small>
@@ -391,7 +605,7 @@ exit;
                              <td>
                                  <small>Fecha Final</small>
                              </td>
-                             <td align="left" colspan="3" >
+                             <td align="left" colspan="5" >
                                  <small>
 				 <input type="text" name ="fecha_final" id="fecha_final" value="<?=$fecha_final?>" ><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                                  </small>
@@ -414,11 +628,19 @@ exit;
                                   <i></i>
                               </td>
                               <td>
-                                  <small>Folios</small>
+                                  <small>Folio Inicial</small>
                               </td>
 			      <td>
 				<small>
-				<input type="text" size="5" name="num_folios" onkeypress="return justNumbers(event);" maxlength="3" value="<?=$num_folios?>" >
+				<input type="text" size="5" name="folio_ini" onkeypress="return justNumbers(event);" maxlength="3" value="<?=$folio_ini?>" >
+				</small>		
+                              </td>
+                              <td>
+                                  <small>Folio Final</small>
+                              </td>
+			      <td>
+				<small>
+				<input type="text" size="5" name="folio_fin" onkeypress="return justNumbers(event);" maxlength="3" value="<?=$folio_fin?>" >
 				</small>		
                               </td>
 			  </tr>
@@ -427,7 +649,7 @@ exit;
                              <td>
                                  <small>Observaciones</small>
                              </td>
-                             <td align="left" colspan="3" >
+                             <td align="left" colspan="5" >
                                  <small>
 				 <textarea class="form-control" rows="3" name ="observaciones"><?=$observaciones?></textarea>
                                  </small>
@@ -457,14 +679,14 @@ exit;
                              <td>
                                  <small>Ubicación</small>
                              </td>
-                             <td align="left" colspan="3" >
+                             <td align="left" colspan="6" >
                                  <small>
 				 <textarea class="form-control" rows="3" name="ubicacion"><?=$ubicacion?></textarea>
                                  </small>
                              </td>
 			 </tr>
           <tr>
-             <td colspan="4">
+             <td colspan="6">
                  <center>
                      <input name="crear" type="submit" class="btn btn-success" id="inserta" value="Grabar / Actualizar" >
                  </center>
@@ -529,6 +751,13 @@ exit;
             </td>
         </tr>
         <tr>
+            <td width="750">
+		<center>
+		 <?php if($MSG_response != ""){ ?>
+		 <center class="style1" style="<?=$MSG_style?>" ><?=$MSG_response?></center>	
+		 <?php } ?>
+                </center>
+            </td>
             <td width="750">
                 <center>
                     <input name="cerrar" type="button" class="btn btn-primary btn-xs" id="envia22"
