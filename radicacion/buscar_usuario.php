@@ -66,7 +66,7 @@ function verif_data()
 	return true;
 }
 function pasar_datos(fecha)
-{
+{ 
 <?php
 	($busq_salida==true)? $i_registros=1 : $i_registros=3;
 	$i_registros=3;
@@ -197,6 +197,10 @@ function pasar(indice,tipo_us)
 		document.getElementById('codep_us4').value = codigo_dpto[indice];
 		cambia(formu1,'muni_us4','codep_us4');
 		document.getElementById('muni_us4').value = codigo_muni[indice];
+		//$('#tabla_resultado').hide();
+		//location.href = '#_cerrar';
+		setTimeout(function(){ $('html, body').animate({ scrollTop: $(document).height() }, 1); }, 90);
+		return;
 		";
 
 	/** Modificado Supersolidaria 01-Nov-2006
@@ -284,21 +288,12 @@ if(!$formulario)
                           <?
                           if($tbusqueda==0){$datos = "selected";$tbusqueda=0;}else{$datos= "";}
                           ?>
-                        <option value=0 <?=$datos ?>>USUARIO</option>
-                          <?
-                          if($tbusqueda==1){$datos = "selected";$tbusqueda=1;}else{$datos= "";}
-                            if (strlen($nombreTp3) > 0) echo "<option value=1 $datos>$nombreTp3</option>";
-
-                          if($tbusqueda==2){$datos = "selected";$tbusqueda=2;}else{$datos= "";}
-                          ?>
-
-                                  <option value=2 <=$datos >EMPRESAS</option>
-                          <? if($tbusqueda==6){$datos = " selected ";$tbusqueda=6;}else{$datos= "";}?>
-                        <option value=6 <?=$datos ?>>FUNCIONARIO</option>
+                        <option value=0 <?=$datos ?>>CIUDADANO</option>
+                        <option value=6 <?=$datos ?>>USUARIO SIIM2</option>
                       </select>
                     </td>
                     <td width="20%" rowspan="2" align="center" class="titulos5" >
-                      <input type=submit name=buscar value='BUSCAR' class="botones">
+                      <input type=submit name=buscar value='BUSCAR' class="btn btn-primary" >
                     </td>
                   </tr>
                   <tr>
@@ -322,7 +317,7 @@ if(!$formulario)
                     </td></tr>
                   </table>
 
-                  <table class="table table-bordered table-striped">
+                  <table class="table table-bordered table-striped" id = "tabla_resultado" >
                       <!--DWLayoutTable-->
                     <tr class="grisCCCCCC" align="center">
                       <td width="10%" CLASS="titulos5" >DOCUMENTO</td>
@@ -979,7 +974,7 @@ break;
                       </td>
                   </tr>
                   </table>
-                  <center><input type='button' value='Cerrar' class="botones_largo" onclick='window.close()'></center>
+                  <center><input type='button' value='Cerrar' id= '_cerrar' class="botones_largo" onclick='window.close()'></center>
               </div>
             </div>
           </div>

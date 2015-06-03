@@ -32,7 +32,7 @@ if (!is_null($muni_us1))
 			{
 				$idcont1 = $tmp_idcont;
 				$idpais1 = $muni_tmp1[0];
-				$dpto_tmp1 = $muni_tmp1[1];
+				$dpto_tmp1 = $muni_tmp1[1]; 
 				$muni_tmp1 = $muni_tmp1[2];
 			}break;
 		case 2:
@@ -264,7 +264,7 @@ if($documento_us1 and $cc)
 	$sgd_esp_codigo='null';
 	$sgd_fun_codigo='null';
 
-	echo "--$sgd_emp_us1--";
+//	echo "--$sgd_emp_us1--";
 	  if($tipo_emp_us1==0){
 		$sgd_ciu_codigo=$documento_us1;
 		$sgdTrd = "1";
@@ -303,6 +303,8 @@ if($documento_us1 and $cc)
   $num_anexos = $num_anexos+1;
   $str_num_anexos = substr("00".$num_anexos,-2);
   $sgd_dir_tipo = "7".$str_num_anexos;
+  if($idcont1==""){$idcont1=1;}
+  if($dpto_tmp1==""){$dpto_tmp1=11;}
   if(!$grbNombresUs1) $grbNombresUs1 = $nombre_us1 . " ". $prim_apel_us1 ." ".$seg_apel_us1;
 	$isql = "insert into SGD_DIR_DRECCIONES (SGD_TRD_CODIGO, SGD_DIR_NOMREMDES, SGD_DIR_DOC, MUNI_CODI, DPTO_CODI,
 			id_pais, id_cont, SGD_DOC_FUN, SGD_OEM_CODIGO, SGD_CIU_CODIGO, SGD_ESP_CODI, RADI_NUME_RADI, SGD_SEC_CODIGO,
@@ -312,8 +314,10 @@ if($documento_us1 and $cc)
 						'".trim($telefono_us1)."', '$mail_us1', $sgd_dir_tipo, $nextval, '$codigo', '$otro_us7' )";
   $dir_codigo_new = $nextval;
   $nextval++;
+//  echo $isql; exit;
+//  $db->conn->debug=true;
   $rsg=$conexion->query($isql);
-
+//exit;
 	if (!$rsg)
 	{
 		//$conexion->conn->RollbackTrans();

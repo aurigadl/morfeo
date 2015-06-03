@@ -428,7 +428,7 @@ foreach ($tpNumRad as $key => $valueTp){
     }
         //Si se definio prioridad en algun tipo de radicacion
         $valueDesc = $tpDescRad[$key];
-	if ($tpPerRad[$valueTp]>2){
+	if ($tpPerRad[$valueTp]>=2){
 
         if ($is_edit == $valueTp ){$sel="selected";}else{$sel="";}
 	?><script>var aux_puede_r=aux_puede_r+1;</script><?php
@@ -743,14 +743,19 @@ if( $rs_exp->RecordCount() == 0 ){
         </TD>
       </tr>
       <tr>
+	<tr>
+		<div class="alert alert-success" role="alert">
+		<strong>NOTA:</strong> Si su documento tiene otros destinatarios diligencie los siguientes campos.
+		</div>
+	</tr>
         <td colspan="7"  align="center">
           <center>
 
       <font size="1" class="etextomenu">
       <small>Otro Destinatario <?  $busq_salida="true"; ?></small>
       </font>
-        <input type="button" name="Button" value="BUSCAR" class="botones" onClick="Start('<?=$ruta_raiz?>/radicacion/buscar_usuario.php?ent=<?=$ent?>&busq_salida=<?=$busq_salida?>&nombreTp3=<?=$nombreTp3?>&krd=<?=$krd?>',1024,500);">
-      <input type="button" name="cc" value="Grabar Destinatario" class="botones_mediano"  onClick="continuar_grabar()" ><small>
+        <input type="button" name="Button" value="BUSCAR" class="btn btn-primary" onClick="Start('<?=$ruta_raiz?>/radicacion/buscar_usuario.php?ent=<?=$ent?>&busq_salida=<?=$busq_salida?>&nombreTp3=<?=$nombreTp3?>&krd=<?=$krd?>',1024,500);">
+      <input type="button" name="cc" value="Grabar Destinatario" class="btn btn-warning"  onClick="continuar_grabar()" ><small>
       <br/><?=$grabar?></small>
         </center>
         </td>
