@@ -47,8 +47,8 @@ $dirLogo = "../../img/logometro.jpg";
                 </center> -->
                 <!--<span><center><img src="barcode_img.php?num=<?php /*echo($nurad) */?>&type=Code39&imgtype=png" width="200px"><center><span>
                 <p><span><b>Destino: <?/*=substr($dependenciaDestino,0,20)*/?><p><span><b> -->
-		<p><span><b> Radicado: <?=$nurad?>&nbsp;&nbsp;Folios: <?=$radi_nume_folio?> &nbsp;&nbsp; Anexos: <?=$radi_nume_anexo?> &nbsp; </b></span></p>
-                <p><span><b> Del: <?=substr($radi_fech_radi,0,16). " "?> </b></span></p>
+		<p><span><b> Radicado: <?=$nurad?> </b></span></p>
+		<p><span><b> Del: <?=substr($radi_fech_radi,0,16). " "?> &nbsp;&nbsp;Folios: <?=$radi_nume_folio?> &nbsp; Anexos: <?=$radi_nume_anexo?></b></span></p>
                 <p><span><b> Rem: <?=substr($remite,0,20); ?> </b></span></p>
                 <p><span><b> <?=$process?> </b></span></p>
 <!--		<p><span  align="left">
