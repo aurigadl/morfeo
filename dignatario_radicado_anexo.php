@@ -13,16 +13,19 @@
  $nextval = $db->nextId("sec_dir_drecciones");
  
  $rs_sgd_oem_codigo = intval ($rs_->fields['SGD_OEM_CODIGO']);
+ $rs_sgd_ciu_codigo = intval($rs_->fields['SGD_CIU_CODIGO']);
+ $rs_sgd_doc_fun = intval($rs_->fields['SGD_DOC_FUN']);
+
 
  $record['SGD_OEM_CODIGO'] = $rs_sgd_oem_codigo;
- $record['SGD_CIU_CODIGO'] = $rs_->fields['SGD_CIU_CODIGO'];
+ $record['SGD_CIU_CODIGO'] = $rs_sgd_ciu_codigo;
  $record['MUNI_CODI'] = $rs_->fields['MUNI_CODI'];
  $record['DPTO_CODI'] = $rs_->fields['DPTO_CODI'];
  $record['SGD_DIR_DIRECCION'] = $rs_->fields['SGD_DIR_DIRECCION'];
  $record['SGD_DIR_TELEFONO'] = $rs_->fields['SGD_DIR_TELEFONO'];
  $record['SGD_DIR_MAIL'] = $rs_->fields['SGD_DIR_MAIL'];
  $record['SGD_DIR_NOMBRE'] = $rs_->fields['SGD_DIR_NOMBRE'];
- $record['SGD_DOC_FUN'] = $rs_->fields['SGD_DOC_FUN'];
+ $record['SGD_DOC_FUN'] = $rs_sgd_doc_fun;
  $record['SGD_DIR_NOMREMDES'] = $rs_->fields['SGD_DIR_NOMREMDES'];
  $record['SGD_TRD_CODIGO'] = $rs_->fields['SGD_TRD_CODIGO'];
  $record['SGD_DIR_DOC'] = $rs_->fields['SGD_DIR_DOC'];
@@ -31,6 +34,8 @@
  $record['SGD_DIR_TIPO'] = $rs_->fields['SGD_DIR_TIPO'];
  $record['SGD_DIR_CODIGO']    = $nextval;
  $record['RADI_NUME_RADI']    = $noRad;
+
+// $db->conn->debug = true;
 
      $insertSQL = $db->conn->Replace("SGD_DIR_DRECCIONES",
      $record,
@@ -41,7 +46,7 @@
 	    // $this->result =  array( "state"  => true, "value" => $nextval);
      //return true;
      }else{
-	 echo "no se pudo insertar el destinatario"; 
+	 echo "no se pudo insertar el destinatario / dignatario_radicado_anexo.php"; 
 	 exit;
 	     //$this->db->log_error ("666-- $nurad ","No se pudo agrear usuario al radicado", $record,1);
 	     //$this->result = array( "error"  => 'No se puedo agregar usuario al radicado');
