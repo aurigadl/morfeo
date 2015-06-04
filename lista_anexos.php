@@ -286,7 +286,8 @@ if(trim($linkarchivo))
   //*********************************************
 
   $permitir_radicar = $tpradic != 2;
-    
+  
+  if (intval($tpradic) != 0) {
   if ($permitir_radicar and $es_extension){
       if (!$rs->fields["RADI_NUME_SALIDA"]){
         if((($num_archivos>=2 and substr($verrad,-1)!=2) or (substr($verrad,-1) == 2 or (substr($verrad,-1) == 9) or $num_archivos>=2 ))){
@@ -311,6 +312,7 @@ if(trim($linkarchivo))
         }
     }
   }
+ }
 	  if($rs->fields["RADI_NUME_SALIDA"]) {$radicado="true";}
 		?>
 		</small></td>
