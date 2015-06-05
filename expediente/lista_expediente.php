@@ -1,5 +1,7 @@
 <div>
-    <?php // include "./proceso/workFlowParcial.php"; ?>
+    <?php // include "./proceso/workFlowParcial.php"; 
+    $_SESSION['_aux_edit'] = 0;
+?>
 </div>
 <input type="hidden" name="menu_ver_tmp" value=4>
 <input type="hidden" name="menu_ver" value=4>
@@ -413,8 +415,11 @@ $( "#grabadorapidoexpediente" ).hide();
         var datos = $("input[name^='etique_" + complement + "']").serialize() + "&saveEtiq=1";
         $.post( "./expediente/lista_expedientes.php", datos, function( data ) {
             $( ".result" ).html( data );
-        });
+	});
+	setTimeout(function(){ parent.frames.location.reload();top.location.reload(); }, 90);
+//	parent.frames.location.reload();top.location.reload();
     })
+	    
 
 $( "#grabadorapidoexpediente" ).click(function() {
 	/*location.reload();*/
