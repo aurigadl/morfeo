@@ -92,6 +92,9 @@ if ($usuaPermExpediente) {
                                class="btn btn-link">Sticker Expediente</a>
                             </li><? } ?>
 
+                        <li>
+                            <a onClick="verFormularioFUID('<?= $numExpediente ?>',<?= $codserie ?>,<?= $tsub ?>,<?= $tdoc ?>,'MODIFICAR');">Fromulario FUID</a>
+                        </li>
 
 
                     <?

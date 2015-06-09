@@ -187,7 +187,7 @@ $lnr         = 11+$ln;
                  
                  //Si intento anexar archivo y Subio correctamente
                  if ($bien2){
-//                    $resp1 = "OK";
+                    $resp1 = "OK";
 		    //$db->conn->CommitTrans();
 		 //SE EJECUTO BIEN LA CONSULTA Y SUBIO CORRECTAMENTE EL ARCHIVO, SEA MODIFICADO O NUEVO
 
