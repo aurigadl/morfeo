@@ -47,7 +47,10 @@ $ADODB_COUNTRECS = false;
 <html>
 <head>
 <title></title>
-<link rel="stylesheet" href="../estilos/orfeo.css"><script type="text/javascript">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+<!--<link rel="stylesheet" href="../estilos/orfeo.css">-->
+
+<script type="text/javascript">
 function regresar(){   	
 	document.adm_tipodoc.submit();
 }
@@ -55,11 +58,13 @@ function regresar(){
 </head>
 <body bgcolor="#FFFFFF">
  <div id="spiffycalendar" class="text"></div>
+ <br>
 <table class=borde_tab width='100%' cellspacing="1"><tr><td class=titulos2><center>TIPOS DOCUMENTALES</center></td></tr></table>
+<br>
 <table><tr><td></td></tr></table>
 
 <form method="post" action="<?=$encabezadol?>" name="adm_tipodoc"> 
-<table width="80%" class="borde_tab" cellspacing="1" border="1" align="center">
+<table width="80%"  cellspacing="1" border="0" align="center">
 <? if($_POST['actua_tdoc'])
   {
 ?>
@@ -109,10 +114,10 @@ function regresar(){
 </tr>
 <tr>
 	<td height="26" colspan="5" valign="top" class='titulos2' align="center">
-	<input type=submit name=buscar_dcto Value='Buscar' class=botones >
-	<input type=submit name=insertar_tdoc Value='Insertar' class=botones >
-	<input type=submit name=actua_tdoc Value='Modificar' class=botones >
-	<input type="reset"  name=aceptar class=botones id=envia22  value='Cancelar'>
+	<input type=submit name=buscar_dcto Value='Buscar' class="btn btn-primary"  >
+	<input type=submit name=insertar_tdoc Value='Insertar' class="btn btn-success"  >
+	<input type=submit name=actua_tdoc Value='Modificar' class="btn btn-info"  >
+	<input type="reset"  name=aceptar  id=envia22  value='Cancelar' class="btn btn-danger" >
 </td>
 </tr>
 </table>

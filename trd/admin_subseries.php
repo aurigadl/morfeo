@@ -28,7 +28,8 @@ $date_result = date("Y-m-d", mktime(($date_r["hours"]+0),($date_r["minutes"]+0),
 	?>
 <html>
 <head>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+<!--<link rel="stylesheet" href="../estilos/orfeo.css">-->
 </head>
 <body bgcolor="#FFFFFF">
  <div id="spiffycalendar" class="text"></div>
@@ -38,8 +39,10 @@ $date_result = date("Y-m-d", mktime(($date_r["hours"]+0),($date_r["minutes"]+0),
     var dateAvailable  = new ctlSpiffyCalendarBox("dateAvailable", "adm_subserie", "fecha_busq","btnDate1","<?=$fecha_busq?>",scBTNMODE_CUSTOMBLUE);
 	var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "adm_subserie", "fecha_busq2","btnDate2","<?=$fecha_busq2?>",scBTNMODE_CUSTOMBLUE);
 //--></script>
-<form name="adm_subserie" id='adm_subserie' method='post'  action='admin_subseries.php?<?=session_name()."=".session_id()."&krd=$krd&tiem_ac=$tiem_ac&tiem_ag=$tiem_ag&fecha_busq=$fecha_busq&fecha_busq2=$fecha_busq2&codserie=$codserie&tsub=$tsub&detasub=$detasub&asu=$asu"?>'>      
+<form name="adm_subserie" id='adm_subserie' method='post'  action='admin_subseries.php?<?=session_name()."=".session_id()."&krd=$krd&tiem_ac=$tiem_ac&tiem_ag=$tiem_ag&fecha_busq=$fecha_busq&fecha_busq2=$fecha_busq2&codserie=$codserie&tsub=$tsub&detasub=$detasub&asu=$asu"?>'>     
+<br>
 <table class=borde_tab width='100%' cellspacing="5"><tr><td class=titulos2><center>SUBSERIES DOCUMENTALES</center></td></tr></table>
+<br>
 <table><tr><td></td></tr></table>
 <center>
 <TABLE width="550" class="borde_tab" cellspacing="5">       
@@ -153,11 +156,11 @@ if($_POST['actua_subserie'])
 	</tr>
  <tr>
        <td height="26" colspan="4" valign="top" class='titulos2'> 
-	   <center>
-	   <input type=submit name=buscar_subserie Value='Buscar' class=botones >
-	  <input type=submit name=insertar_subserie Value='Insertar' class=botones >
-	  <input type=submit name=actua_subserie Value='Modificar' class=botones >
-      <input type="reset"  name=aceptar class=botones id=envia22  value='Cancelar'>
+	   <center><br>
+	   <input type=submit name=buscar_subserie Value='Buscar' class="btn btn-primary">
+	  <input type=submit name=insertar_subserie Value='Insertar' class="btn btn-success">
+	  <input type=submit name=actua_subserie Value='Modificar' class="btn btn-info" >
+      <input type="reset"  name=aceptar id=envia22  value='Cancelar' class="btn btn-danger">
  </td>
     </tr>
   </table>

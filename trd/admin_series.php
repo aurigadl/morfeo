@@ -31,7 +31,8 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&nurad=$nurad&fecha
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+<!--<link rel="stylesheet" href="../estilos/orfeo.css">-->
 <script>
 function regresar(){   	
 	document.adm_serie.submit();
@@ -73,7 +74,7 @@ function val_datos()
 	var dateAvailable2 = new ctlSpiffyCalendarBox("dateAvailable2", "adm_serie", "fecha_busq2","btnDate1","<?=$fecha_busq2?>",scBTNMODE_CUSTOMBLUE);
 //-->
 </script>
-<table class=borde_tab width='100%' cellspacing="5"><tr><td class=titulos2><center>SERIES DOCUMENTALES</center></td></tr></table>
+<table class="table table-striped"  width='100%' cellspacing="5"><tr><td class=titulos2><center>SERIES DOCUMENTALES</center></td></tr></table>
 <form method="post" action="<?=$encabezadol?>" name="adm_serie"> 
 <center>
 <TABLE width="550" class="borde_tab" cellspacing="5">       
@@ -108,10 +109,10 @@ function val_datos()
 <tr>
 	<td height="26" colspan="3" valign="top" class='titulos2'>
 		<center>
-		<input type=submit name=buscar_serie Value='Buscar' class=botones >
-		<input type=submit name=insertar_serie Value='Insertar' class=botones onclick="return val_datos();" >
-		<input type=submit name=actua_serie Value='Modificar' class=botones onclick="return val_datos();" >
-		<input type="reset"  name=aceptar class=botones id=envia22  value='Cancelar'>
+		<input type=submit name=buscar_serie Value='Buscar' class="btn btn-primary" >
+		<input type=submit name=insertar_serie Value='Insertar' class="btn btn-success" onclick="return val_datos();" >
+		<input type=submit name=actua_serie Value='Modificar' class="btn btn-info" onclick="return val_datos();" >
+		<input type="reset"  name=aceptar class="btn btn-danger" id=envia22  value='Cancelar'>
 		</center>
 	</td>
 </tr>

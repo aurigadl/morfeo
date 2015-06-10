@@ -42,27 +42,35 @@ $ruta_raiz = "..";
 if (!$_SESSION['dependencia'] and !$_SESSION['depe_codi_territorial'])	include "../rec_session.php";
 $entidad = $_SESSION["entidad"];
 $indiTRD = $_SESSION["indiTRD"];
-echo "indicador " . $indiTRD;
+#echo "indicador " . $indiTRD;
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-$db = new ConnectionHandler("$ruta_raiz");	
+$db = new ConnectionHandler("$ruta_raiz");
+//$db->conn->debug=true;
 if (!defined('ADODB_FETCH_ASSOC'))	define('ADODB_FETCH_ASSOC',2);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 ?>
 <head>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+<!--<link rel="stylesheet" href="../estilos/orfeo.css">-->
 </head>
 <BODY>
 <div id="spiffycalendar" class="text"></div>
 <link rel="stylesheet" type="text/css" href="../js/spiffyCal/spiffyCal_v2_1.css">
+<br>
 <TABLE width="100%" class='borde_tab' cellspacing="5">
 <TR><TD height="30" valign="middle"   class='titulos5' align="center">INFORME TABLAS DE RETENCION DOCUMENTAL</td></tr>
 </table>
+<br>
 <table><tr><td></td></tr></table>
 <form name="inf_trd"  action='../trd/informe_trd.php?<?=session_name()."=".session_id()."&krd=$krd&fecha_h=$fechah"?>' method=post>
 <TABLE width="550" class='borde_tab' align="center">
   <!--DWLayoutTable-->
+  <tr>
+  <TD height="26" class='titulos5'>Dependencia</TD>
+  </tr>
+
   <TR>
-    <TD height="26" class='titulos5'>Dependencia</TD>
+    
     <TD valign="top">
 	<?
 	error_reporting(7);
@@ -77,8 +85,10 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
   </TR>
   <tr>
     <td height="26" colspan="2" valign="top" class='titulos5'> <center>
-		<input type=SUBMIT name=generar_informe value=' Generar Informe pdf' class=botones_mediano>
-		<input type=SUBMIT name=generar_archicsv value=' Generar Archivo CSV' class=botones_mediano>
+	<br>
+		<input type=SUBMIT name=generar_informe value=' Generar Informe' class="btn btn-primary">
+	</br>	
+<!--		<input type=SUBMIT name=generar_archicsv value=' Generar Archivo CSV' class=botones_mediano>-->
     </center>
 		</td>
 	</tr>
@@ -120,15 +130,15 @@ if($_POST['generar_informe'])
 	$ruta_raiz = "..";
 	error_reporting(7);
 	$rs = $db->query($query_t);
-echo "<hr>---<hr>";
+	echo "<hr><br><hr>";
 ?>
-<table class='borde_tab'>
+<table class="table table-hover" >
 <?
 $nSRD_ant = "";
 $nSBRD_ant = "";
 $openTR = "";
 ?>
-<tr class=titulos5>
+<tr class=titulos>
 <td colspan="3" align="center">Codigo</td>
 <td align="center" rowspan="2">Series Y Tipos Documentales</td>
 <td colspan="2" align="center">Retencion<br> A&#241;os</td>
@@ -167,7 +177,7 @@ $openTR = "";
 				{
 					echo "$colFinales";
 				}
-			  echo "<tr class=listado5><td><font size=2 face='Arial'>$depTDR</font></td>
+			 echo "<tr class=listado5><td><font size=2 face='Arial'>$depTDR</font></td>
 			  <td>&nbsp;<font size=2 face='Arial'>$cSRD</font></td>
 			  <td>&nbsp;</td><td colspan=11><font size=2 face='Arial'>$pSRD</font></td>";
 				echo "</tr><tr>";
@@ -177,7 +187,7 @@ $openTR = "";
 			if($nSBRD==$nSBRD_ant)
 			{
 				 $pSBRD="&nbsp;&nbsp;&nbsp;- <font size=2 face='Arial'>$nTDoc</font><br>"; 
-				 echo "<font size=2 face='Arial'>$pSBRD</font>";
+			#	 echo "<font size=2 face='Arial'>$pSBRD</font>";
 			}else
 			{
 				if($openTR=="Si")

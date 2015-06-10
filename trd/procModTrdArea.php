@@ -22,7 +22,8 @@ $codusuario = $_SESSION["codusuario"];
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+<!--<link rel="stylesheet" href="../estilos/orfeo.css">-->
 </head>
 
 <body bgcolor="#FFFFFF" topmargin="0" >
@@ -88,7 +89,9 @@ $codusuario = $_SESSION["codusuario"];
 		  }
    }
  ?>
+ <br>
  <table class=borde_tab width='100%' cellspacing="5"><tr><td class=titulos2><center>MODIFICACION RELACION TRD</center></td></tr></table>
+ <br>
  <table><tr><td></td></tr></table>
  <center>
 
@@ -182,8 +185,9 @@ $codusuario = $_SESSION["codusuario"];
  <tr>
        <td height="26" colspan="4" valign="top" class='titulos2'> 
 	   <center>
-	  <input type=submit name=activar_trda value='Activar' class=botones_funcion >
-	  <input type=submit name=desactivar_trda value='Desactivar' class=botones_funcion > 
+	   <br>
+	  <input type=submit name=activar_trda value='Activar' class="btn btn-primary"  >
+	  <input type=submit name=desactivar_trda value='Desactivar' class="btn btn-danger"  > 
       </td>
     </tr>
   </table>

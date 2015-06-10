@@ -21,7 +21,8 @@
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+<!--<link rel="stylesheet" href="../estilos/orfeo.css">-->
 </head>
 
 <body bgcolor="#FFFFFF" topmargin="0" >
@@ -53,9 +54,11 @@
 	}
 		
 ?>
+
   <form name=formEnviar action='../trd/cuerpoMatriTRD.php?<?=session_name()."=".session_id() ?>?estado_sal=<?=$estado_sal?>&estado_sal_max=<?=$estado_sal_max?>&pagina_sig=<?=$pagina_sig?>&dep_sel=<?=$dep_sel?>&nomcarpeta=<?=$nomcarpeta?>&orderNo=<?=$orderNo?>' method=post>
- 
+<br> 
  <table class=borde_tab width='100%' cellspacing="5"><tr><td class=titulos2><center>MATRIZ TRD</center></td></tr></table>
+ <br>
  <table><tr><td></td></tr></table>
  <center>
 
@@ -160,8 +163,8 @@
  <tr>
        <td height="26" colspan="4" valign="top" class='titulos2'> 
 	   <center>
-	  <input type=submit name=actu_mtrd value='Actualizar' class=botones_funcion >
-       <input name="aceptar" type="button"  class="botones_funcion" id="envia22"  onClick="window.close();" value="Cancelar"> 
+	  <input type=submit name=actu_mtrd value='Actualizar' class="btn btn-info" >
+       <input name="aceptar" type="button"  class="btn btn-danger" id="envia22"  onClick="window.close();" value="Cancelar"> 
       </td>
     </tr>
   </table>
