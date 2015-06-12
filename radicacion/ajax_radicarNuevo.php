@@ -47,8 +47,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $dependencia   = $_SESSION["dependencia"];
   $codusuario    = $_SESSION["codusuario"];
-
+  $usua_doc      = $_SESSION["usua_doc"];
   $tpDepeRad     = $_SESSION["tpDepeRad"];
+  $adate=date('Y');
 
   $tpRadicado    = empty($_POST['radicado_tipo'])? 0 : $_POST['radicado_tipo'];
   $cuentai       = $_POST['cuentai'];
@@ -219,6 +220,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         list($consecutivo, $sgdTrd, $id_sgd_dir_dre , $id_table) = explode('_', $valor);
 
+//OBTENEMOS EL CONTINENTE DINAMICAMENTE
+$_id_pais = $_POST[$valor."_".pais_codigo];
+$query_ = "select p.id_cont from sgd_def_paises p  where id_pais = $_id_pais";
+$rs = $db->conn->query($query_);
+while(!$rs->EOF){
+ $id_continente    = $rs->fields["ID_CONT"];
+ $rs->MoveNext();
+ }
         $usuarios[$clave] = array(
             "cedula"         => $_POST[$valor."_".cedula],
             "nombre"         => $_POST[$valor."_".nombre],
@@ -233,7 +242,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             "dpto_tmp"       => $_POST[$valor."_".dep_codigo],
             "pais"           => $_POST[$valor."_".pais],
             "pais_tmp"       => $_POST[$valor."_".pais_codigo],
-            "cont_tmp"       => $clave + 1,
+            "cont_tmp"       => $id_continente,
             "tdid_codi"      => $_POST[$valor."_".tdid_codi],
             "sgdTrd"         => $sgdTrd,
             "id_sgd_dir_dre" => $id_sgd_dir_dre,

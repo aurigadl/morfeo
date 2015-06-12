@@ -61,8 +61,9 @@ class Usuario {
 
                 $record = array();
                 $record['sgd_ciu_codigo']     = $nextval;
-                $record['sgd_ciu_nombre']     = $datos['nombre'];
-                $record['sgd_ciu_apell1']     = $datos['apellido'];
+                $record['sgd_ciu_nombre']     = trim($datos['nombre']);
+				if(strlen($datos['apellido'])>=49){$datos['apellido']= substr($datos['apellido'],0,49);}
+                $record['sgd_ciu_apell1']     = trim($datos['apellido']);
                 $record['sgd_ciu_direccion']  = $datos['direccion'];
                 $record['sgd_ciu_telefono']   = $datos['telef'];
                 $record['sgd_ciu_email']      = $datos['email'];
@@ -73,6 +74,8 @@ class Usuario {
                 $record['id_cont']            = $datos['cont_tmp'];
                 $record['id_pais']            = $datos['pais_tmp'];
 
+		//$this->db->conn->debug= true;
+
                 $insertSQL = $this->db->conn->Replace("sgd_ciu_ciudadano",$record,'sgd_ciu_codigo',$autoquote = true);
 
                 //Regresa 0 si falla, 1 si efectuo el update y 2 si no se
@@ -80,8 +83,10 @@ class Usuario {
                 if($insertSQL){
                     $this->result = $nextval;
                     return true;
-                }
-
+		}else{
+			echo "NO inserto destinatario"; exit;
+		}
+		
                 break;
 
             // Empresas ....................................................................
@@ -239,19 +244,29 @@ class Usuario {
         $record['MUNI_CODI']         = $user['muni_tmp'];
         $record['DPTO_CODI']         = $user['dpto_tmp'];
         $record['ID_PAIS']           = $user['pais_tmp'];
-        $record['ID_CONT']           = 1;
+        $record['ID_CONT']           = $user['cont_tmp'];
         $record['SGD_TRD_CODIGO']    = $user['sgdTrd']; // Tipo de documento
 
         $record['SGD_DIR_DIRECCION'] = $user['direccion'];
         $record['SGD_DIR_TELEFONO']  = $user['telef'];
         $record['SGD_DIR_MAIL']      = $user['email'];
-        $record['SGD_DIR_TIPO']      = $user['cont_tmp'];
-        $record['SGD_DIR_CODIGO']    = $nextval; // Identificador unico
-        $record['SGD_DIR_NOMBRE']    = $user['nombre'].' '.$user['apellido'];
+        //$record['SGD_DIR_TIPO']      = $user['cont_tmp'];
+        $record['SGD_DIR_TIPO']      = 1; //Este es el tipo de direcciones, uno es primera vez.
+	$record['SGD_DIR_CODIGO']    = $nextval; // Identificador unico
 
+	$sgd_dir_nombre_var = $user['nombre'].' '.$user['apellido']; 
+	if(strlen($sgd_dir_nombre_var)>=149){$sgd_dir_nombre_var= substr($sgd_dir_nombre_var,0,149);}
+
+        $record['SGD_DIR_NOMBRE']    = trim($sgd_dir_nombre_var);
         if($user['dignatario']){
-            $record['SGD_DIR_NOMREMDES'] = $user['dignatario'];
-        }
+		$sgd_dir_nombre_var = $user['dignatario']; 
+		if(strlen($sgd_dir_nombre_var)>=999){$sgd_dir_nombre_var= substr($sgd_dir_nombre_var,0,999);}
+            $record['SGD_DIR_NOMREMDES'] = $sgd_dir_nombre_var;
+        }else{
+		$sgd_dir_nombre_var = $user['nombre'].' '.$user['apellido']; 
+		if(strlen($sgd_dir_nombre_var)>=999){$sgd_dir_nombre_var= substr($sgd_dir_nombre_var,0,999);}
+  	    $record['SGD_DIR_NOMREMDES'] =  $sgd_dir_nombre_var;
+	}
 
         $record['SGD_DIR_DOC']       = empty($user['cedula'])?  '0' : $user['cedula'];
 
@@ -275,16 +290,17 @@ class Usuario {
                 $record['SGD_DOC_FUN']       = $coduser;
                 break;
         }
-
-        $insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
+	
+	$insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
         $record,
-        'SGD_DIR_CODIGO',
+        'SGD_DIR_CODIGO, RADI_NUME_RADI',
         $autoquote = true);
 
-        if(!empty($insertSQL)){
+	if(!empty($insertSQL)){
             $this->result =  array( "state"  => true, "value" => $nextval);
             return true;
-        }else{
+	}else{
+ 	     echo "No se puedo agregar usuario al radicado en SGD_DIR_DRECCIONES"; exit;
             $this->result = array( "error"  => 'No se puedo agregar usuario al radicado');
             return false;
         }
@@ -350,7 +366,8 @@ class Usuario {
                     break;
             }
 
-            if(empty($codigo)){
+            //if(empty($codigo)){
+            if(empty($codigo) || $nuevo){
                 $codigo = 'XX';
             }
 
