@@ -1,4 +1,5 @@
 <?php    
+
 /** CONSUTLA 001 
   * Estadiscas por usuario
   * @autor JAIRO H LOSADA Correlibre.org
@@ -47,6 +48,14 @@ if(!empty($depeUs)){
     $condicionE   = "AND b.USUA_CODI = $codUs $condicionDep ";
 }
 
+if ($_GET['codserie']>0){
+	$condicion_serie = " AND f.serie =".$_GET['codserie'];
+}
+if ($_GET['tsub']>0){
+	$condicion_subserie = " AND f.subserie =".$_GET['tsub'];
+}
+
+
 $ascdesc = " DESC ";
 switch($db->driver)
 {
@@ -58,7 +67,15 @@ switch($db->driver)
 		FROM SGD_EXP_FUID f 
 		INNER JOIN SGD_SEXP_SECEXPEDIENTES s ON f.nume_exp = s.sgd_exp_numero   
 		LEFT OUTER JOIN SGD_TPR_TPDCUMENTO t ON f.TDOC_CODI = t.SGD_TPR_CODIGO
-		WHERE ".$db->conn->SQLDate('Y/m/d', 'f.fecha_ini')." BETWEEN '$fecha_ini' AND '$fecha_fin' 
+		WHERE 
+		((
+			".$db->conn->SQLDate('Y/m/d', 'f.fecha_ini')." BETWEEN '$fecha_ini' AND '$fecha_fin' 
+		) 
+		AND (
+			".$db->conn->SQLDate('Y/m/d', 'f.fecha_fin')." < '$fecha_fin' 
+		))
+		$condicion_serie  
+		$condicion_subserie  
 		GROUP BY f.nume_exp,t.SGD_TPR_DESCRIP ORDER BY $orno $ascdesc 
 		";
                 
@@ -67,116 +84,55 @@ switch($db->driver)
          * muestre la direccion remitente/destinatario
          * Junio 14 2012
 	 	*/
-		$queryEDetalle = "SELECT DISTINCT $radi_nume_radi as RADICADO
-			,r.RADI_FECH_RADI as FECHA_RADICADO
-			,t.SGD_TPR_DESCRIP as TIPO_DE_DOCUMENTO
-			,r.RA_ASUN as ASUNTO 
-			,r.RADI_DESC_ANEX 
-			,r.RADI_NUME_HOJA 
-			,b.usua_nomb as Usuario
-			,r.RADI_PATH as HID_RADI_PATH {$seguridad}
-			, dir.SGD_DIR_NOMREMDES as REMITENTE
-			,df.DEPE_NOMB as DEPE_NOMB
-			,da.DEPE_NOMB as DEPE_NOMB_ACTUAL
-			,r.RADI_USU_ANTE
-			,ua.usua_nomb AS USUA_NOMB_ACTUAL
-			FROM dependencia df,dependencia da,USUARIO ua, RADICADO r
-			INNER JOIN USUARIO b ON r.radi_usua_radi=b.usua_CODI AND r.depe_codi=b.depe_codi
-			LEFT OUTER JOIN SGD_TPR_TPDCUMENTO t ON r.tdoc_codi=t.SGD_TPR_CODIGO 
-			LEFT OUTER JOIN SGD_DIR_DRECCIONES dir ON r.radi_nume_radi = dir.radi_nume_radi	
-                        and dir.sgd_dir_tipo = '1'
-			WHERE 
-			r.radi_depe_actu=da.depe_codi AND
-			r.radi_depe_actu=ua.depe_codi AND
-			r.radi_usua_actu=ua.usua_codi AND
-			r.RADI_DEPE_RADI=df.DEPE_CODI AND	
-            ".$db->conn->SQLDate('Y/m/d', 'r.radi_fech_radi')." BETWEEN '$fecha_ini' AND '$fecha_fin'  
-            $whereTipoRadicado $whereTipoDocumento ";
-		$orderE = "	ORDER BY $orno $ascdesc";
+	$queryETodosDetalle = "
+		SELECT 
+		ROW_NUMBER() OVER(ORDER BY $orno $ascdesc ) AS Order, 
+		f.codigo_trd as CODIGO_TRD, 
+		t.SGD_TPR_DESCRIP as TIPO_DOCUMENTO, 
+		f.nume_exp as EXPEDIENTE, 
+		TO_CHAR(f.fecha_ini,'YYYY/MM/DD') as fecha_inicial, 
+		TO_CHAR(f.fecha_fin,'YYYY/MM/DD') as fecha_final,
+		c.UCONS_NOMB as TIPO_CONSERVACION, 
+		f.folio_ini as FOLIO_INICIAL,
+		f.folio_fin as FOLIO_FINAL, 
+		'Por Definir' as SOPORTE,
+		f.observaciones as OBSERVACIONES,
+		f.num_caja as NUMERO_CAJA,
+		f.num_carpeta as NUMERO_CARPETA, 
+		f.num_estante as No_Estante, 
+		f.num_fila as No_Fila,
+		f.num_columna as No_Columna,
+		f.num_bandeja as No_Bandeja
+		FROM SGD_EXP_FUID f 
+		INNER JOIN SGD_SEXP_SECEXPEDIENTES s ON f.nume_exp = s.sgd_exp_numero  
+		LEFT OUTER JOIN SGD_UNIDAD_CONSERVACION c ON f.cons_id = c.ucons_id  
+		LEFT OUTER JOIN SGD_TPR_TPDCUMENTO t ON f.TDOC_CODI = t.SGD_TPR_CODIGO
+		WHERE 
+		((
+			".$db->conn->SQLDate('Y/m/d', 'f.fecha_ini')." BETWEEN '$fecha_ini' AND '$fecha_fin' 
+		) 
+		AND (
+			".$db->conn->SQLDate('Y/m/d', 'f.fecha_fin')." < '$fecha_fin' 
+		))
+		$condicion_serie  
+		$condicion_subserie  
+		GROUP BY f.nume_exp,c.UCONS_NOMB,t.SGD_TPR_DESCRIP 
+		ORDER BY $orno $ascdesc  
+		";
 
-		$queryETodosDetalle = $queryEDetalle . $whereDependencia . $orderE;
-		$queryEDetalle .= $condicionE . $orderE;
-
+	//echo $queryEDetalle; exit;
+		
 //        echo "<pre>$queryE</pre>"; exit;         
 	}break;
 	case 'oracle':
 	case 'oci8':
 	case 'oci805':
 	case 'ocipo':
-	{
-		if($tipoDocumentos=='9999')
-		{
-			$queryE = 
-			"SELECT b.USUA_NOMB USUARIO, 
-				count(1) RADICADOS, 
-				MIN(USUA_CODI) HID_COD_USUARIO, 
-				MIN(depe_codi) HID_DEPE_USUA
-			FROM RADICADO r, USUARIO b, sgd_dir_drecciones dir
-			WHERE 
-				r.radi_nume_radi=dir.radi_nume_radi and
-				r.radi_usua_radi=b.usua_CODI 
-				AND r.depe_codi=b.depe_codi
-				$whereDependencia
-				AND TO_CHAR(r.radi_fech_radi,'yyyy/mm/dd') BETWEEN '$fecha_ini'  AND '$fecha_fin' 
-				$whereActivos
-			$whereTipoRadicado 
-			GROUP BY b.USUA_NOMB
-			ORDER BY $orno $ascdesc";
-		}
-		else
-		{
-			$queryE = "
-		    SELECT b.USUA_NOMB USUARIO
-				, t.SGD_TPR_DESCRIP TIPO_DOCUMENTO
-				, count(1) RADICADOS
-				, MIN(USUA_CODI) HID_COD_USUARIO
-				, MIN(SGD_TPR_CODIGO) HID_TPR_CODIGO
-				, MIN(depe_codi) HID_DEPE_USUA
-			FROM RADICADO r, USUARIO b, SGD_TPR_TPDCUMENTO t
-			WHERE 
-				r.radi_usua_radi=b.usua_CODI 
-				AND r.tdoc_codi=t.SGD_TPR_CODIGO (+)
-				AND r.depe_codi=b.depe_codi
-				$whereDependencia 
-				AND TO_CHAR(r.radi_fech_radi,'yyyy/mm/dd') BETWEEN '$fecha_ini'  AND '$fecha_fin' 
-				$whereActivos
-			$whereTipoRadicado 
-			GROUP BY b.USUA_NOMB,t.SGD_TPR_DESCRIP
-			ORDER BY $orno $ascdesc";
-		}
- 		/** CONSULTA PARA VER DETALLES 
-	 	*/
-		$queryEDetalle = "SELECT DISTINCT r.RADI_NUME_RADI RADICADO
-			,r.RADI_FECH_RADI FECHA_RADICADO
-			,t.SGD_TPR_DESCRIP 	TIPO_DE_DOCUMENTO
-			,r.RA_ASUN ASUNTO
-			,r.RADI_DESC_ANEX ANEXOS
-			,r.RADI_NUME_HOJA N_HOJAS
-			,b.usua_nomb USUARIO
-			,r.RADI_PATH HID_RADI_PATH
-			,dir.sgd_dir_nomremdes REMITENTE 
-			FROM RADICADO r, 
-				USUARIO b, 
-				SGD_TPR_TPDCUMENTO t,
-				sgd_dir_drecciones dir
-		WHERE 
-			r.radi_nume_radi = dir.radi_nume_radi 
-			and r.radi_usua_radi=b.usua_CODI 
-			AND r.tdoc_codi=t.SGD_TPR_CODIGO 
-			AND r.depe_codi=b.depe_codi
-			AND TO_CHAR(r.radi_fech_radi,'yyyy/mm/dd') BETWEEN '$fecha_ini' AND '$fecha_fin'
-		$whereTipoRadicado $whereTipoDocumento";
-		$orderE = "	ORDER BY $orno $ascdesc";			
-
-		/** CONSULTA PARA VER TODOS LOS DETALLES 
-	 	*/ 
-		$queryETodosDetalle = $queryEDetalle . $condicionDep . $orderE;
-		$queryEDetalle .= $condicionE . $orderE;
-                
+	{           
 	}break;
 }
 if(isset($_GET['genDetalle'])&& $_GET['denDetalle']=1){
-	$titulos=array("#","1#RADICADO","2#FECHA RADICADO","3#TIPO DOCUMENTO","4#ASUNTO","5#NO HOJAS","6#USUARIO","7#REMITENTE","8#DEPENDENCIA_INICIAL","9#DEPENDENCIA_ACTUAL","10#USUARIO ACTUAL","11#USUARIO ANTERIOR");
+	$titulos=array("1#ORDEN","2#CODIGO TRD","3#NOMBRE DE LA SERIE, SUBSERIE O ASUNTO","4#DESCRIPTORES","5#FECHA INICIAL","6#FECHA FINAL","7#UNIDAD DE CONSERVACION","8#FOLIO INICIAL","9#FOLIO FINAL","10#SOPORTE","11#OBSERVACIONES","12#NUMERO CAJA","13#NUMERO CARPETA","14#NUMERO ESTANTE","15#NUMERO FILA","16#NUMERO COLUMNA","17#NUMERO BANDEJA");
 }
 else 		
 	$titulos=array("#","1#Expediente","2#Proceso");
@@ -195,9 +151,6 @@ function pintarEstadistica($fila,$indice,$numColumna)
 		break;
 	case 2:
 		$salida = $fila['TIPO_DOCUMENTO'];
-/*	$datosEnvioDetalle="tipoEstadistica=".$_GET['tipoEstadistica']."&amp;genDetalle=1&amp;dependencia_busq=".$_GET['dependencia_busq']."&amp;usua_doc=$usua_doc&amp;fecha_ini=".$_GET['fecha_ini']."&amp;fecha_fin=".$_GET['fecha_fin']."&amp;tipoRadicado=".$_GET['tipoRadicado']."&amp;tipoDocumentos=".$GLOBALS['tipoDocumentos']."&amp;codUs=".$fila['HID_COD_USUARIO']."&amp;depeUs=".$fila['HID_DEPE_USUA'];
-	$datosEnvioDetalle=(isset($_GET['usActivos']))?$datosEnvioDetalle."&amp;usActivos=".$_GET['usActivos']:$datosEnvioDetalle;
-	$salida="<a href=\"genEstadistica.php?{$datosEnvioDetalle}&amp;krd={$krd}\"  target=\"detallesSec\" >".$fila['RADICADOS']."</a>";*/
 	break;
 	default: $salida=false;
 	break;
@@ -215,56 +168,55 @@ function pintarEstadisticaDetalle($fila,$indice,$numColumna)
 	switch ($numColumna)
 	{
 	case 0:
-		$salida=$indice;
+		$salida="<center class=\"leidos\">".$fila['ORDER']."</center>";		
 		break;
 	case 1:
-		 if(!is_null($fila['HID_RADI_PATH']) && $fila['HID_RADI_PATH'] != '')
-                  {
-                    $radi = $fila['RADICADO'];
-                    $resulVali = $verLinkArchivo->valPermisoRadi($radi);
-                    $valImg = $resulVali['verImg'];
-                     if($valImg == "SI")
-                       $salida="<center><a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$radi','$ruta_raiz');\">".$fila['RADICADO']."</a></center>";
-                     else
-		        $salida="<center><a class=vinculos href=javascript:noPermiso()>".$fila['RADICADO']."</a></center>";
-                   } else   
-                       $salida="<center class=\"leidos\">{$numRadicado}</center>";
+		$salida="<center class=\"leidos\">".$fila['CODIGO_TRD']."</center>";		
 	         break;
 	case 2:
-		 $radi = $fila['RADICADO'];
-                 $resulVali = $verLinkArchivo->valPermisoRadi($radi);
-                 $valImg = $resulVali['verImg'];
-		 if($valImg == "SI")
-		   $salida="<a class=\"vinculos\" href=\"{$ruta_raiz}verradicado.php?verrad=".$fila['RADICADO']."&amp;".session_name()."=".session_id()."&amp;krd=".$_GET['krd']."&amp;carpeta=8&amp;nomcarpeta=Busquedas&amp;tipo_carp=0 \" >".$fila['FECHA_RADICADO']."</a>";
-		 else 
-                   $salida="<a class=vinculos href=javascript:noPermiso()>".$fila['FECHA_RADICADO']."</a>";
+		$salida="<center class=\"leidos\">".$fila['TIPO_DOCUMENTO']."</center>";		
 	        break;
 	case 3:
-		$salida="<center class=\"leidos\">".$fila['TIPO_DE_DOCUMENTO']."</center>";		
+		$salida="<center class=\"leidos\">".$fila['EXPEDIENTE']."</center>";		
 		break;
 	case 4:
-		$salida="<center class=\"leidos\">".$fila['ASUNTO']."</center>";
+		$salida="<center class=\"leidos\">".$fila['FECHA_INICIAL']."</center>";
 		break;
 	case 5:
-		$salida="<center class=\"leidos\">".$fila['N_HOJAS']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['FECHA_FINAL']."</center>";			
 		break;	
 	case 6:
-		$salida="<center class=\"leidos\">".$fila['USUARIO']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['TIPO_CONSERVACION']."</center>";			
 		break;	
 	case 7:
-		$salida="<center class=\"leidos\">".$fila['REMITENTE']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['FOLIO_INICIAL']."</center>";			
 		break;
 	case 8:
-		$salida="<center class=\"leidos\">".$fila['DEPE_NOMB']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['FOLIO_FINAL']."</center>";			
 		break;		
 	case 9:
-		$salida="<center class=\"leidos\">".$fila['DEPE_NOMB_ACTUAL']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['SOPORTE']."</center>";			
 		break;
 	case 10:
-		$salida="<center class=\"leidos\">".$fila['USUA_NOMB_ACTUAL']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['OBSERVACIONES']."</center>";			
 		break;
 	case 11:
-		$salida="<center class=\"leidos\">".$fila['RADI_USU_ANTE']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['NUMERO_CAJA']."</center>";			
+		break;
+	case 12:
+		$salida="<center class=\"leidos\">".$fila['NUMERO_CARPETA']."</center>";			
+		break;
+	case 13:
+		$salida="<center class=\"leidos\">".$fila['NO_ESTANTE']."</center>";			
+		break;
+	case 14:
+		$salida="<center class=\"leidos\">".$fila['NO_FILA']."</center>";			
+		break;
+	case 15:
+		$salida="<center class=\"leidos\">".$fila['NO_COLUMNA']."</center>";			
+		break;
+	case 16:
+		$salida="<center class=\"leidos\">".$fila['NO_BANDEJA']."</center>";			
 		break;
 	}
 	return $salida;
