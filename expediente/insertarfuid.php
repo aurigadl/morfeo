@@ -82,7 +82,10 @@ $folio_fin = $_POST['folio_fin'];
 $observaciones = $_POST['observaciones'];
 $num_caja = $_POST['num_caja'];
 $num_carpeta = $_POST['num_carpeta'];
-$ubicacion = $_POST['ubicacion']; 
+$num_estante = $_POST['num_estante'];
+$num_fila = $_POST['num_fila'];
+$num_columna = $_POST['num_columna'];
+$num_bandeja = $_POST['num_bandeja'];
 
 foreach ($_POST as $elementos => $valor) {
    if (strncmp($elementos, 'parExp_', 7) == 0) {
@@ -95,7 +98,7 @@ foreach ($_POST as $elementos => $valor) {
 	//Cargo los datos si existen
 
 	//comprobar si es actualizar o insertar uno nuevo.
-	$isql = "select nume_exp,codigo_trd,serie,subserie,proceso,fecha_ini,fecha_fin,cons_id,folio_ini,folio_fin,observaciones,num_caja,num_carpeta,ubicacion,descriptor from sgd_exp_fuid where nume_exp = '$numeroExpediente';"; 
+	$isql = "select nume_exp,codigo_trd,serie,subserie,proceso,fecha_ini,fecha_fin,cons_id,folio_ini,folio_fin,observaciones,num_caja,num_carpeta,num_estante,num_fila,num_columna,num_bandeja, descriptor from sgd_exp_fuid where nume_exp = '$numeroExpediente';"; 
 	
 	$rs = $db->conn->Execute($isql);
 	$nume_exp = $rs->fields['NUME_EXP'];
@@ -114,10 +117,14 @@ foreach ($_POST as $elementos => $valor) {
 	$observaciones = $rs->fields['OBSERVACIONES'];
 	$num_caja = $rs->fields['NUM_CAJA'];
 	$num_carpeta = $rs->fields['NUM_CARPETA'];
-	$ubicacion = $rs->fields['UBICACION'];
+	$num_estante = $rs->fields['NUM_ESTANTE'];
+	$num_fila = $rs->fields['NUM_FILA'];
+	$num_columna = $rs->fields['NUM_COLUMNA'];
+	$num_bandeja = $rs->fields['NUM_BANDEJA'];
 	}
-	$numExpediente = substr($numeroExpediente, 0, -1);
-	$numExpediente = $numExpediente."F";
+	$numExpediente = $numeroExpediente; 
+	/* $numExpediente = substr($numeroExpediente, 0, -1);
+	$numExpediente = $numExpediente."F"; */
 
 	/*Compruebo si existe un registro */
 	$isql = "select SGD_EXP_NUMERO,SGD_SEXP_PAREXP1, SGD_SEXP_PAREXP2, SGD_SEXP_PAREXP3, SGD_SEXP_PAREXP4, SGD_SEXP_PAREXP5, SGD_SEXP_PAREXP6, SGD_SEXP_PAREXP7, SGD_SEXP_PAREXP8, SGD_SEXP_PAREXP9 from SGD_SEXP_SECEXPEDIENTES where SGD_EXP_NUMERO = '$numExpediente';";
@@ -143,8 +150,14 @@ foreach ($_POST as $elementos => $valor) {
 <html>
 
 <head>
+
+
     <title>..:: Expediente ::..</title>
     <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
+<link rel="stylesheet" href="../tooltips/jquery-ui.css">
+<script src="../tooltips/jquery-ui.js"></script> 
+<link rel="stylesheet" href="../tooltips/tool.css">
+<script src="../tooltips/tool.js"></script>
     <script>
         function regresar() {
             document.TipoDocu.submit();
@@ -166,7 +179,7 @@ foreach ($_POST as $elementos => $valor) {
 if ($Actualizar && $tsub != 0 && $codserie != 0) {
 
 	$codigotrd = $_POST['codigotrd'];
-	$codserie = $_POST['codserie'];
+	$codserie = $_POST['codserie']; 
 	$tsub = $_POST['tsub'];
 	$codProc = $_POST['codProc'];
 	$fecha_inicio = $_POST['fecha_inicio'];
@@ -177,7 +190,11 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
 	$observaciones = $_POST['observaciones'];
 	$num_caja = $_POST['num_caja'];
 	$num_carpeta = $_POST['num_carpeta'];
-	$ubicacion = $_POST['ubicacion']; 
+	$num_estante = $_POST['num_estante'];
+	$num_fila = $_POST['num_fila'];
+	$num_columna = $_POST['num_columna'];
+	$num_bandeja = $_POST['num_bandeja'];
+
 
 	//VALIDACIONES.
 //Evitar que llegen datos vacios.
@@ -186,10 +203,14 @@ if($folio_fin==""){$folio_fin=0;}
 if($num_caja==""){$num_caja=0;}
 if($num_carpeta==""){$num_carpeta=0;}
 if($coduc==""){$coduc=0;}
+if($codProc==""){$codProc=0;}
+if($num_estante==""){$num_estante=0;}
+if($num_fila==""){$num_fila=0;}
+if($num_columna==""){$num_columna=0;}
+if($num_bandeja==""){$num_bandeja=0;}
 
 
-
-	//comprobar si es actualizar o insertar uno nuevo.
+//comprobar si es actualizar o insertar uno nuevo.
 	$isql = "select nume_exp from sgd_exp_fuid where nume_exp = '$numeroExpediente';";  
 
 	$rs = $db->conn->Execute($isql);
@@ -211,8 +232,11 @@ if ($nume_exp == ''){
 		observaciones, 
 		num_caja, 
 		num_carpeta, 
-		ubicacion, 
 		descriptor,
+		num_estante, 
+		num_fila,
+		num_columna,
+		num_bandeja,
 		tdoc_codi)
 	VALUES (
 		'".$numeroExpediente."', 
@@ -228,8 +252,11 @@ if ($nume_exp == ''){
 		'".$observaciones ."', 
 		".$num_caja .", 
 		".$num_carpeta .", 
-		'".$ubicacion ."',
 		0,
+		".$num_estante .",
+		".$num_fila .",
+		".$num_columna .",
+		".$num_bandeja .",
 		".$codProc ."
 	);";
 	$tipoTx = 101;
@@ -251,7 +278,10 @@ if ($nume_exp == ''){
 		observaciones = '".$observaciones ."',
 		num_caja = ".$num_caja .",
 		num_carpeta = ".$num_carpeta .",
-		ubicacion = '".$ubicacion ."',
+		num_estante =  ".$num_estante .",
+		num_fila = ".$num_fila .",
+		num_columna = ".$num_columna .",
+		num_bandeja = ".$num_bandeja .",
 		tdoc_codi = ".$codProc ."
 		WHERE 
 		nume_exp = '$numeroExpediente';";
@@ -291,8 +321,9 @@ if (is_array($arrParametro)) {
 	$valorParametro = trim($valorParametro,", ");
 	$campoParametroU = trim($campoParametroU,", ");
 
-	$numExpediente = substr($numeroExpediente, 0, -1);
-	$numExpediente = $numExpediente."F";
+	//$numExpediente = substr($numeroExpediente, 0, -1);
+	//$numExpediente = $numExpediente."F";
+	$numExpediente = $numeroExpediente;
 	$fecha_hoy = Date("Y-m-d");	
 	$sqlFechaHoy = $db->conn->DBDate($fecha_hoy);
 	$depe_codi = $dependencia;
@@ -424,13 +455,14 @@ if (is_array($arrParametro)) {
                             where
                             (cast(m.depe_codi as varchar(" . $digitosDependencia . ")) = '$dependenciaExp' or cast(m.depe_codi_aplica as varchar(" . $digitosDependencia . ")) like '%$dependenciaExp%' or cast(m.depe_codi as varchar(" . $digitosDependencia . "))='$depDireccion')
                               and s.sgd_srd_codigo = m.sgd_srd_codigo
-                              and " . $db->sysdate() . " between s.sgd_srd_fechini and s.sgd_srd_fechfin
+			      and " . $db->sysdate() . " between s.sgd_srd_fechini and s.sgd_srd_fechfin
+			      and s.sgd_srd_codigo = $codserie
                             order by  s.sgd_srd_descrip, s.sgd_srd_codigo
                           ";
                                         $rsD = $db->conn->Execute($querySerie);
                                         $comentarioDev = "Muestra las Series Docuementales";
                                         include "$ruta_raiz/include/tx/ComentarioTx.php";
-                                        print $rsD->GetMenu2("codserie", $codserie, "0:-- Seleccione --", false, "", "onChange='submit()' class='select'");
+                                        print $rsD->GetMenu2("codserie", $codserie, "", false, "", "onChange='submit()' class='select'");
                                         ?><i></i>
                                     </label></small>
                             </td>
@@ -450,13 +482,14 @@ if (is_array($arrParametro)) {
                               and m.sgd_srd_codigo = '$codserie'
                               and su.sgd_srd_codigo = '$codserie'
                               and su.sgd_sbrd_codigo = m.sgd_sbrd_codigo
-                              and " . $db->sysdate() . " between su.sgd_sbrd_fechini and su.sgd_sbrd_fechfin
+			      and " . $db->sysdate() . " between su.sgd_sbrd_fechini and su.sgd_sbrd_fechfin
+			      and su.sgd_sbrd_codigo = $tsub
                             order by detalle
-                            ";
+			    ";
                                         $rsSub = $db->conn->Execute($querySub);
 					include "$ruta_raiz/include/tx/ComentarioTx.php";
 					
-					print $rsSub->GetMenu2("tsub", $tsub, "0:-- Seleccione --", false, "", "onChange='submit()' class='select'");
+					print $rsSub->GetMenu2("tsub", $tsub, "", false, "", "onChange='submit()' class='select'");
 
                                         if (!$codiSRD) {
                                             $codiSRD = $codserie;
@@ -475,7 +508,8 @@ if (is_array($arrParametro)) {
                                     </label>
                                 </small>
                             </td>
-                        </tr>
+			</tr>
+<?php /*
                         <tr>
                             <td>
                                 <small>Proceso</small>
@@ -515,29 +549,35 @@ if (is_array($arrParametro)) {
                                     <i></i>
                                 </label>
                             </td>
-                        </tr>
+			 </tr>
+ */ ?>
                     </table>
                   </div>
                   <div>
                       <table class="table table-bordered table-striped" style="width:850;" align=center>
 
-			<?php  ?>
+			<?php /* ?>
 <td align="center" colspan=6 >
 			<button type="button" class="btn btn-success btn-xs" id ="OcultarMostrarCampos" >Mostrar/Ocultar Descriptores</button>
 </td>
-<?php 
+<?php */
+			    $db->limit(5);
+			    $limitMsql = $db->limitMsql;
+			    $limitOci8 = $db->limitOci8;
+			    $limitPsql = $db->limitPsql; 
+
                           $sqlParExp = "SELECT SGD_PAREXP_ETIQUETA, SGD_PAREXP_ORDEN,";
                           $sqlParExp .= " SGD_PAREXP_EDITABLE";
                           $sqlParExp .= " FROM SGD_PAREXP_PARAMEXPEDIENTE PE";
                           $sqlParExp .= " WHERE PE.DEPE_CODI = " . $dependenciaExp;
-			  $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN ASC";
+			  $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN ASC $limitPsql";
 
 
                           #$db->conn->debug=true;
                           $rsParExp = $db->conn->Execute($sqlParExp);
                             $auxiliar_formulario = 0;
                           while (!$rsParExp->EOF) { ?>
-                              <tr align="center" <?php if($auxiliar_formulario>=0){echo 'class = "my_toogle" style = "display:none" ';} ?> >
+                              <tr align="center" <?php if($auxiliar_formulario>=0){echo 'class = "my_toogle" style = "" ';} ?> >
                                   <td align="left" colspan=2>
                                       <SMALL>
                                           <?php
@@ -577,11 +617,14 @@ if (is_array($arrParametro)) {
                                       if ($parExpOrden == 4) { ?>
                                           <textarea name="<?= $nombreInput ?>" rows="2"
                                                     cols="60" <?php print $readonly; ?>><?= $valorTxt ?></textarea>
-                                      <? } else {
+					<? } else {
+					if($auxiliar_formulario==2){$helpnombre = "Para contratos escriba sigla sección, consecutivos de la contratación y año. Ej CDGCID45-15";}
+					if($auxiliar_formulario==4){$helpnombre = "Escriba aquí información complementaria o No. de Tomo Ej_ TOMO 1 - Contrato CDGCID45-15";}
                                           ?>
-                                          <input type="text" name="<?= $nombreInput ?>" value="<?= $valorTxt ?>"
+					  <input type="text" name="<?= $nombreInput ?>" placeholder="<?=$helpnombre?>" title= "<?=$helpnombre?>" value="<?= $valorTxt ?>"
                                                  size="60" <?php print $readonly; ?>>
-                                      <? } ?>
+				      <? $helpnombre = "";
+ } ?>
                                   </td>
                               </tr>
                               <?php $rsParExp->MoveNext();
@@ -621,8 +664,9 @@ if (is_array($arrParametro)) {
                                       <?
                                       $queryUs = "select  ucons_nomb, ucons_id from sgd_unidad_conservacion";
                                       //  -- And D.Dep_Direccion In (Select Dep_Direccion From Dependencia Where Depe_Codi=$dependencia)
-                                      $rsUs = $db->conn->Execute($queryUs); //var_dump($rsUS);
-                                      print $rsUs->GetMenu2("coduc", "$coduc", "0:-- Seleccione --", false, "", " class='select'");
+			  	      $rsUs = $db->conn->Execute($queryUs); //var_dump($rsUS);
+					if ($coduc == ""){$coduc=1;}
+                                      print $rsUs->GetMenu2("coduc", "$coduc", "", false, "", " class='select'");
                                       ?>
                                   </label>
                                   <i></i>
@@ -657,6 +701,7 @@ if (is_array($arrParametro)) {
 			 </tr>
 
                          <tr>
+                              <td></td>
                               <td>
                                   <SMALL>No. Caja</SMALL>
                               </td>
@@ -674,17 +719,46 @@ if (is_array($arrParametro)) {
 				</small>		
                               </td>
 			  </tr>
-
                          <tr>
-                             <td>
-                                 <small>Ubicación</small>
-                             </td>
-                             <td align="left" colspan="6" >
-                                 <small>
-				 <textarea class="form-control" rows="3" name="ubicacion"><?=$ubicacion?></textarea>
-                                 </small>
-                             </td>
-			 </tr>
+                              <td></td>
+                              <td>
+                                  <SMALL>No. Estante</SMALL>
+                              </td>
+                              <td>
+				<small>
+				<input type="text" size="5" name="num_estante" onkeypress="return justNumbers(event);" maxlength="5" value="<?=$num_estante?>" >
+				</small>		
+			      </td>
+
+                              <td>
+                                  <small>No. Fila</small>
+                              </td>
+			      <td>
+				<small>
+				<input type="text" size="5" name="num_fila" onkeypress="return justNumbers(event);" maxlength="5" value="<?=$num_fila?>" >
+				</small>		
+                              </td>
+			  </tr>
+                         <tr>
+                              <td></td>
+                              <td>
+                                  <SMALL>No. Columna</SMALL>
+                              </td>
+                              <td>
+				<small>
+				<input type="text" size="5" name="num_columna" onkeypress="return justNumbers(event);" maxlength="5" value="<?=$num_columna?>" >
+				</small>		
+                              </td>
+                              <td>
+                                  <small>No. Bandeja</small>
+                              </td>
+			      <td>
+				<small>
+				<input type="text" size="5" name="num_bandeja" onkeypress="return justNumbers(event);" maxlength="5" value="<?=$num_bandeja?>" >
+				</small>		
+                              </td>
+			  </tr>
+
           <tr>
              <td colspan="6">
                  <center>
