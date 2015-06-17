@@ -1,7 +1,6 @@
 <?php
   session_start();
   $ruta_raiz = "..";
-  ini_set("display_errors",1);
 
   if($_POST["codeForm"]) $codeForm = $_POST["codeForm"];
   if($_GET["codeForm"])  $codeForm = $_GET["codeForm"];
@@ -11,7 +10,7 @@
 
   $form = new genForm($db);
   $form->getForm($codeForm);
-  $form->dataSave = $data;
-  $result = $form->putFormRegister();
+  $form->dataDelete = $data;
+  $result = $form->deleteFormRegister();
   echo $result;
 ?>

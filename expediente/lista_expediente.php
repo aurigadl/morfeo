@@ -317,7 +317,7 @@ if ($descPExpediente) {
                 $vartochange = $aristasSig[$key]["FRM_LINKSELECT"];
                 $frm[$iA]["FRM_NOMBRE"]     = $arista["FRM_NOMBRE"];
                 $vartochange = str_replace("{numeroRadicado}"   , "$numRad"          , $vartochange);
-                $vartochange = str_replace("{numeroExpediente}" , "$numeroExpediente", $vartochange);
+                $vartochange = str_replace("{numeroExpediente}" , "$num_expediente"  , $vartochange);
                 $vartochange = str_replace("{dependencia}"      , "$dependencia"     , $vartochange);
                 $vartochange = str_replace("{documentoUsuario}" , "$usua_doc"        , $vartochange);
                 $vartochange = str_replace("{usuarioDoc}"       , "$usua_doc"        , $vartochange);

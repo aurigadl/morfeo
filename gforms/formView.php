@@ -1,28 +1,12 @@
-<HTML>
-<HEAD>
-    <title>Sistema de informaci&oacute;n <?= $entidad_largo ?></title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php
-    session_start();
-    $ruta_raiz = "..";
-    include_once "../htmlheader.inc.php";
-    ?>
-    <script type="text/javascript" src="<?= $ruta_raiz ?>/js/plugin/datatables/jquery.dataTables.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery.ui.combogrid.css">
-
-</HEAD>
-<BODY>
-
 <?php
-
 //Importamos las variables que generan el formulario y los
 //datos con los cuales se llenaran algunos de los campos.
+session_start();
+$ruta_raiz = "..";
 
 if ($_POST["codeForm"])
     $codeForm = $_POST["codeForm"];
+
 if ($_GET["codeForm"])
     $codeForm = $_GET["codeForm"];
 
@@ -31,14 +15,77 @@ include "$ruta_raiz/conn.php";
 include "$ruta_raiz/gforms/genForm.class.php";
 
 $form = new genForm($db);
-$db->conn->debug = false;
 $form->getForm($codeForm);
-$fields = $form->getFormFields();
+$fields  = $form->getFormFields();
 
-$nameForm = $form->nameForm;
-$descForm = $form->descriptionForm;
-$scriptJs = "";
+$nameForm   = $form->nameForm;
+$descForm   = $form->descriptionForm;
+$fromAccion = $form->fromAccion;
+$namevar    = $form->varsparam;
+$scriptJs   = "";
+
+//Si llegan variables iguales a las que el formulario
+//necesita para precargar inforción estas son procesadas
+//y se genera un arreglo con los nombres de los campos y
+//los valores respectivos.
+//Cargamos datos del formulario si este los tiene configurados
+//para esto preguntamos por la tabla, variables a cargar
+//a cada uno de los campos posteriormente.
+if($namevar){
+
+  if ($_SESSION[$namevar]){
+    $vaVar = $_SESSION[$namevar];
+  }
+
+  if ($_GET[$namevar]){
+    $vaVar = $_GET[$namevar];
+  }
+
+  if ($_POST[$namevar]){
+    $vaVar = $_POST[$namevar];
+  }
+
+  //Datos del formulario resultado de la consulta precargada
+  //para el formulario en la tabla frm_form
+  $arrDataForm = $form->loadDataForm($vaVar);
+}
+
+
+//Acciones a mostrar al inicio o final del formulario
+foreach ($fromAccion as $showaction) {
+
+  if($showaction == "limpiar") {
+    $accionbutton .= "<button class=\"btn btn-default\" onclick=\"cleanForm()\" type=\"button\">Limpiar</button>";
+  }
+
+  if($showaction == "borrar"){
+    $accionbutton .= "<button class=\"btn btn-danger\" type=\"button\" onCLick=\"deleteForm();\" id=\"deletefor\"> Borrar</button>";
+  }
+
+  if($showaction == "grabar"){
+    $accionbutton .="<button class=\"btn btn-primary\" type=\"button\" onCLick=\"saveForm();\" id=\"grabar\"> Grabar</button>";
+  }
+
+}
+
+if (!empty($accionbutton)) {
+  $accionbutton = "<footer>".$accionbutton."</footer>";
+}
 ?>
+
+<HTML>
+<HEAD>
+    <title>Sistema de informaci&oacute;n <?= $entidad_largo ?></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php include_once "../htmlheader.inc.php"; ?>
+    <script type="text/javascript" src="<?= $ruta_raiz ?>/js/plugin/datatables/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery.ui.combogrid.css">
+</HEAD>
+<BODY>
+
 
 <br>
 
@@ -52,6 +99,7 @@ $scriptJs = "";
 <header>
     <h2><?= $nameForm ?> </h2>
 </header>
+
 <!-- widget edit box -->
 <div class="jarviswidget-editbox">
     <!-- This area used as dropdown edit box -->
@@ -67,10 +115,8 @@ $scriptJs = "";
 <form class="smart-form">
 <header><?= $descForm ?></header>
 
-<footer>
-    <button class="btn btn-primary" type="button" onCLick="saveForm();" id=grabar> Grabar</button>
-    <button class="btn btn-default" onclick="cleanForm()" type="button">Limpiar</button>
-</footer>
+  <!--Mostramos los botones -->
+  <?=$accionbutton ?>
 
 <input type=hidden id=paramAjax>
 <fieldset>
@@ -78,37 +124,46 @@ $scriptJs = "";
 <?php
 $arrFieldsSave = array();
 $i = 1;
+
+//Cargamos datos por cada uno de las entradas del formulario
+//desde los variables enviadas hasta el contenido dinamico
+//generado por consultas directas y por interaccion con otros
+//campos
 foreach ($fields as $fieldCode => $field){
-$fieldName =  strtolower($field["FIELD_NAME"]);
-$fieldPk = $field["FIELD_PK"];
-$fieldDesc = $field["FIELD_DESC"];
-$fieldType = $field["FIELD_TYPE"];
-$fieldTypeCode = $field["FIELD_TYPE_CODE"];
-$fieldNull = $field["FIELD_NULL"];
-$fieldHtml = $field["FIELD_HTML"];
-$fieldHelp = $field["FIELD_HELP"];
-$fieldCol = $field["FIELD_COL"];
-$fieldOrder = $field["FIELD_ORDER"];
-$fieldColspan = $field["FIELD_COLSPAN"];
-$fieldLabel = $field["FIELD_LABEL"];
-$fieldJS = $field["FIELD_JS"];
-$fieldSql = $field["FIELD_SQL"];
-$fieldClass = $field["FIELD_CLASS"];
-$fieldMask = $field["FIELD_MASK"];
-$fieldSave = $field["FIELD_SAVE"];
-$tableSave = $field["TABLE_SAVE"];
-$tablePkSearch = $field["TABLE_PKSEARCH"];
-$fieldPkSearch = $field["FIELD_PKSEARCH"];
+$fieldName      = strtolower($field["FIELD_NAME"]);
+$fieldPk        = $field["FIELD_PK"];
+$fieldDesc      = $field["FIELD_DESC"];
+$fieldType      = $field["FIELD_TYPE"];
+$fieldTypeCode  = $field["FIELD_TYPE_CODE"];
+$fieldNull      = $field["FIELD_NULL"];
+$fieldHtml      = $field["FIELD_HTML"];
+$fieldHelp      = $field["FIELD_HELP"];
+$fieldCol       = $field["FIELD_COL"];
+$fieldOrder     = $field["FIELD_ORDER"];
+$fieldColspan   = $field["FIELD_COLSPAN"];
+$fieldLabel     = $field["FIELD_LABEL"];
+$fieldJS        = $field["FIELD_JS"];
+$fieldSql       = $field["FIELD_SQL"];
+$fieldClass     = $field["FIELD_CLASS"];
+$fieldMask      = $field["FIELD_MASK"];
+$fieldSave      = $field["FIELD_SAVE"];
+$tableSave      = $field["TABLE_SAVE"];
+$tablePkSearch  = $field["TABLE_PKSEARCH"];
+$fieldPkSearch  = $field["FIELD_PKSEARCH"];
 $fieldPkSearch1 = $field["FIELD_PKSEARCH1"];
-$fieldPkSave = $field["FIELD_PKSAVE"];
-$fieldDefault = $field["FIELD_DEFAULT"];
-$fieldRowspan = $field["FIELD_ROWSPAN"];
-$fieldParams = $field["FIELD_PARAMS"];
+$fieldPkSave    = $field["FIELD_PKSAVE"];
+$fieldDefault   = $field["FIELD_DEFAULT"];
+$fieldRowspan   = $field["FIELD_ROWSPAN"];
+$fieldParams    = $field["FIELD_PARAMS"];
+
+$valfromsearch  = $arrDataForm[strtoupper($fieldSave)];
+
+
 
 //Datos a pasar al formulario pasados por
 //variables de envio $_get $_post $_session
 $fieldVarsparam = $field["FIELD_VARSPARAM"];
-$fieldVars = $field["FIELD_VARS"];
+$fieldVars      = $field["FIELD_VARS"];
 
 if ($orderOld != $fieldOrder) {
     if ($orderOld) {
@@ -116,7 +171,6 @@ if ($orderOld != $fieldOrder) {
     }
     echo "<tr>";
 }
-
 
 /*
  * Busca las variables configuradas desde datos externos
@@ -153,11 +207,15 @@ if ($fieldVars == 0 && trim($fieldVarsparam)) {
 if ($valueVar){
     $addValue = " readonly='readonly' value='$valueVar' ";
 }
+if($valfromsearch){
+  $valueVar = $valfromsearch;
+  $addValue = " value='$valfromsearch' ";
+}
+
 
 $arrPkSearch = preg_split("/[\s||]+/", $fieldPkSearch);
 
 foreach ($arrPkSearch as $value) {
-
     //Se utilizan la estructura BARMANPRE->BarManPre y
     //en ocasiones  BARMANPRE->BarManPre->345
     //El primer parametro es el campo de la base de datos el segundo
@@ -204,10 +262,12 @@ if (trim($fieldClass == "datefield")) {
                                                                                  placeholder="<?= $fieldDesc ?>"
                                                                                  name="<?= $fieldName ?>"
                                                                                  id="<?= $fieldName?>"   <?= $tFieldMask ?> <?= $addValue ?> > <?php } ?>
+
 <?php if ($fieldTypeCode == 3) { ?><textarea <?= $addAttr ?> fieldSave="<?= $fieldSave ?>"
                                                              placeholder="<?= $fieldDesc ?>" rows="3"
                                                              name="<?= $fieldName ?>"
                                                              id="<?= $fieldName ?>"  ><?= $valueVar ?></textarea><?php } ?>
+
 <?php if ($fieldTypeCode == 4) { ?><input <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= $fieldName ?>"
                                                           class="datepicker" type="text" data-dateformat="yy-mm-dd"
                                                           placeholder="Select a date"
@@ -239,7 +299,7 @@ if (trim($fieldClass == "datefield")) {
 } ?>
 
 <?php if ($fieldTypeCode == 8) {
-    if ($fieldSql) {
+    if ($fieldSql){
         $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
         $db->conn->SetFetchMode(ADODB_FETCH_NUM);
         $rsSel = $db->conn->query($fieldSql);
@@ -336,6 +396,7 @@ if (trim($fieldClass == "datefield")) {
     <?php
     }
 }
+
 $ADODB_FETCH_MODE = ADODB_FETCH_ASOC;
 $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
 
@@ -412,8 +473,6 @@ if ($fieldTypeCode == 11) {
 if ($fieldTypeCode == 12) {
     define('ADODB_ASSOC_CASE', 1);
     $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
-    ?>
-    <?php
     $datosSelect = "";
     if ($fieldParams) {
         $datosSelect = explode('||', $fieldParams);
@@ -430,13 +489,6 @@ if ($fieldTypeCode == 12) {
                 $fieldsInsertValueId .= "";
             }
             list($field, $fieldId, $sel) = preg_split("/[\s->]+/", $value);
-            if (!$cod and trim($cod) == "")
-                $cod = $val;
-            if (trim($sel) == "*") {
-                $datoss = " selected";
-            } else {
-                $datoss = "";
-            }
             $fieldsView .= "$field";
             $fieldsViewObject .= '{"columnName":"' . $field . '","width":"30","label":"' . $field . '"}';
             $fieldsInsertValueId .= '$( "#' . $fieldId . '" ).val( ui.item.' . $field . ' );';
@@ -456,8 +508,7 @@ if ($fieldTypeCode == 15) {
     $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
     ?>
     <?php
-    $scriptJS .= " function cargarLink$fieldName (pagina,target,vars){
-                           ";
+    $scriptJS .= " function cargarLink$fieldName (pagina,target,vars){";
     $datosSelect = "";
     if ($fieldParams) {
         $datosSelect = explode('||', $fieldParams);
@@ -507,10 +558,8 @@ if ($fieldTypeCode == 15) {
 </table>
 </fieldset>
 
-<footer>
-    <button class="btn btn-primary" type="button" onCLick="saveForm();" id=grabar> Grabar</button>
-    <button class="btn btn-default" onclick="cleanForm()" type="button">Limpiar</button>
-</footer>
+<!--Mostramos los botones -->
+<?=$accionbutton ?>
 
 </form>
 </div>
@@ -544,12 +593,44 @@ if ($fieldTypeCode == 15) {
 		pagina = "formUpdate.php";
 		$.post( pagina,{data:arrJ}, function( data ) {
             $('#resultadoFrm').html(data);
-
-            function my_function(){
-                window.location = location.href;
+            if($('#resultadoFrm').hasClass('alert-success')){
+              setInterval(function (){
+                  window.location = location.href;
+              },5000);
             }
+        });
+		// alert(JSON.stringify(arrJ));
+ }
 
-            setInterval("my_function();",5000);
+ function deleteForm(){
+  var arrF = new Array();
+  var arrJ = new Array();
+  var arrJson = "";
+
+  $($('[tablesave]')).each(function( index ) {
+    fieldId = $($('[tablesave]')[index]).attr('id');
+    arrF[index] = new Array(5);
+    arrF[index]['tableSave']  =  $($('[tablesave]')[index]).attr('tablesave');
+    arrF[index]['fieldSave']  =  $($('[fieldsave]')[index]).attr('fieldsave');
+    arrF[index]['fieldPk']    =  $($('[fieldpk]')[index]).attr('fieldpk');
+    arrF[index]['fieldValue'] =  $($('[tablesave]')[index]).val();
+
+    var item = {
+        "tableSave":arrF[index]['tableSave'],
+        "fieldSave":arrF[index]['fieldSave'],
+        "fieldValue":arrF[index]['fieldValue'],
+        "fieldPk":arrF[index]['fieldPk'],
+    };
+      arrJ.push(item);
+		});
+		pagina = "formDelete.php";
+    $.post( pagina,{data:arrJ, codeForm:<?=$codeForm?>}, function( data ) {
+            $('#resultadoFrm').html(data);
+            if($('#resultadoFrm').hasClass('alert-success')){
+              setInterval(function (){
+                  window.location = location.href;
+              },5000);
+            }
         });
 		// alert(JSON.stringify(arrJ));
  }
@@ -583,7 +664,8 @@ function cargarPagina(pagina,nombreDiv){
 function cargarLink(pagina,target,vars){
     window.open(pagina,target,vars);
 }
- <?= $scriptJS ?>
+
+<?= $scriptJS ?>
 
 </script>
 </HTML>

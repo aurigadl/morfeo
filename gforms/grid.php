@@ -1,24 +1,24 @@
 <?php
 //session_start();
-//ini_set("display_errors",1);
-
-    $ruta_raiz = "..";
+$ruta_raiz = "..";
 if (!$db) {
-    include_once("$ruta_raiz/conn.php");
+  include_once("$ruta_raiz/conn.php");
 }
 
 include_once("$ruta_raiz/js/inc/init.php");
 
-if ($fieldsView) {
-    $fieldsView = mb_strtoupper($fieldsView);
-}
-
-
-
 if (isset($tablePkSearch)) {
 
-    if (!trim($fieldParams)) {
-        $fieldsView = " * ";
+    if (empty($fieldSql)){
+      $fieldsView = " * ";
+    }else{
+      unset($fieldsView);
+      $selects = explode('||',$fieldSql);
+      foreach ($selects as $key => $value){
+        list($field, $toshowfield) = preg_split("/[\s->]+/", $value, 2);
+        $fieldsView .= empty($fieldsView)? $field : ", ".$field;
+        $fieldshow[strtoupper($field)] = $toshowfield;
+      }
     }
 
     //Filtro generado si existe de variables get post session
@@ -32,9 +32,9 @@ if (isset($tablePkSearch)) {
                     $tablePkSearch
                     $filtertable
                  ORDER BY 1";
-}
 
-$rs = $db->conn->query($fieldSql);
+    $rs = $db->conn->query($fieldSql);
+}
 
 unset($colsNames_1);
 $arraydata = array();
@@ -43,37 +43,59 @@ $dataarray = array();
 $k = 1;
 while (!$rs->EOF) {
     unset($dataFields);
-    foreach ($rs->fields as $nameField => $valueField) {
+    //Como los datos son dinamicos los campos de la consulta tambien.
+    //Buscamos por lugares y no por nombres.
+    //Cada campo retornado por la consulta esta con su respectivo nombre
+    //de la tabla y este mismo nombre puede tener un representante para el campo
+    //de la columna
+    foreach ($rs->fields as $nameField => $valueField){
+        unset($texttoshow, $formattoshow);
+        list($texttoshow, $formattoshow) = explode(',', $fieldshow[$nameField], 2);
+
         if ($k == 1) {
             if(!is_numeric($nameField)){
                 if (empty($colsNames_1)) {
-                    $colsNames_1 = "<th> $nameField </th>";
+                    $colsNames_1  = "<th> $texttoshow </th>";
                 } else {
-                    $colsNames_1 .= "<th> $nameField </th>";
+                    $colsNames_1 .= "<th> $texttoshow </th>";
                 }
             }
         }
 
         if(!is_numeric($nameField)){
-            $nameField_l = strtolower($nameField);
-            if (empty($dataFields)) {
-                $dataFields    = "<td><a data-idvalue='$valueField' class='buttonid'>$valueField</a></td>";
-                $idRegistro    = $valueField;
-            } else {
-                $dataFields .= "<td>$valueField</td>";
+          if(empty($dataFields)){
+            if(empty($formattoshow)){
+              $dataFields    = "<td>$valueField</td>";
+            }else{
+              list($name, $format) = preg_split("/[\s->]+/", $formattoshow);
+              switch ($name){
+              case 'form':
+                $varToSend = explode('&', $format);
+                foreach ($varToSend as $key => $cambio) {
+                  list($namevar, $valuevar) = explode('=', $cambio);
+                  if($valuevar == '?'){
+                    $varToSend[$key] = $namevar.'='.$rs->fields[strtoupper($namevar)];
+                  }
+                }
+                $param =  implode('&',$varToSend);
+                $dataFields    = "<td><a href=\"formView.php?$param\" data-idvalue='$valueField' class='buttonid'>$valueField</a></td>";
+                break;
+              }
             }
-            $arraydata[$nameField_l] = $valueField;
-            $arraykeys[]           = $nameField_l;
+          } else {
+            $dataFields .= "<td>$valueField</td>";
+          }
         }
     }
 
-    $dataarray[$idRegistro] = $arraydata;
+    $dataarray[$valueField] = $arraydata;
     $totaldata .= "<tr>$dataFields</tr>";
 
     $k++;
     $rs->MoveNext();
 }
 
+//Variables que son utilizadas en el javascript para formar la tabla dinamica
 $dataarray = empty($dataarray)? '{}' : json_encode($dataarray);
 $arraykeys = empty($arraykeys)? '[]' : json_encode(array_unique($arraykeys));
 ?>
@@ -90,8 +112,6 @@ $arraykeys = empty($arraykeys)? '[]' : json_encode(array_unique($arraykeys));
     </table>
 
 <?php
-
-
 //Script que permite formatear la tabla construida desde php
 $scriptJS .= "
 //vefificamos si el objeto de la tabla creada desde php tiene elementos

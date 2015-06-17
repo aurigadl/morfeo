@@ -7,16 +7,16 @@ if (!$ruta_raiz){
 
 include "$ruta_raiz/conn.php";
 
-$page = $_GET['page']; // get the requested page
-$limit = $_GET['rows']; // get how many rows we want to have into the grid
-$sidx = $_GET['sidx']; // get index row - i.e. user click to sort
-$sord = $_GET['sord']; // get the direction
-$dat = $_GET['dat']; // get the direction
-$tx = $_GET['tx'];
+$page        = $_GET['page']; // get the requested page
+$limit       = $_GET['rows']; // get how many rows we want to have into the grid
+$sidx        = $_GET['sidx']; // get index row - i.e. user click to sort
+$sord        = $_GET['sord']; // get the direction
+$dat         = $_GET['dat']; // get the direction
+$tx          = $_GET['tx'];
 $tableSearch = $_GET['tableSearch'];
 $fieldSearch = $_GET['fieldSearch'];
-$fieldsView = $_GET['fieldsView'];
-$searchTerm = $_GET['searchTerm'];
+$fieldsView  = $_GET['fieldsView'];
+$searchTerm  = $_GET['searchTerm'];
 
 switch ($tx) {
 
