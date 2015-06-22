@@ -65,12 +65,12 @@ foreach ($fromAccion as $showaction) {
   if($showaction == "grabar"){
     $accionbutton .="<button class=\"btn btn-primary\" type=\"button\" onCLick=\"saveForm();\" id=\"grabar\"> Grabar</button>";
   }
-
 }
 
 if (!empty($accionbutton)) {
   $accionbutton = "<footer>".$accionbutton."</footer>";
 }
+
 ?>
 
 <HTML>
@@ -258,27 +258,60 @@ if (trim($fieldClass == "datefield")) {
 }
 ?>"></i>
 
-<?php if ($fieldTypeCode == 1 || $fieldTypeCode == 2) { ?><input <?= $addAttr ?> type="<?= $feildType ?>"
-                                                                                 placeholder="<?= $fieldDesc ?>"
-                                                                                 name="<?= $fieldName ?>"
-                                                                                 id="<?= $fieldName?>"   <?= $tFieldMask ?> <?= $addValue ?> > <?php } ?>
+<?php
+/************************************************************
+ ************************************************************
+ *********************** TIPO 1 - TIPO 2 ********************
+ ************************************************************
+ ***********************************************************/
+  if ($fieldTypeCode == 1 || $fieldTypeCode == 2){
+    echo "<input $addAttr type=\"$feildType\"
+      placeholder=\"$fieldDesc\" name=\"$fieldName\"
+      id=\"$fieldName\" $tFieldMask $addValue>";
+  }
 
-<?php if ($fieldTypeCode == 3) { ?><textarea <?= $addAttr ?> fieldSave="<?= $fieldSave ?>"
-                                                             placeholder="<?= $fieldDesc ?>" rows="3"
-                                                             name="<?= $fieldName ?>"
-                                                             id="<?= $fieldName ?>"  ><?= $valueVar ?></textarea><?php } ?>
+/************************************************************
+ ************************************************************
+ ***************************  TIPO 3  ***********************
+ ************************************************************
+ ***********************************************************/
+  if ($fieldTypeCode == 3){
+    echo "<textarea $addAttr fieldSave=\"$fieldSave\"
+      placeholder=\"$fieldDesc\" rows=\"3\"
+      name=\"$fieldName\"
+      id=\"$fieldName\">$valueVar</textarea>";
+  }
 
-<?php if ($fieldTypeCode == 4) { ?><input <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= $fieldName ?>"
-                                                          class="datepicker" type="text" data-dateformat="yy-mm-dd"
-                                                          placeholder="Select a date"
-                                                          name="<?= $fieldName ?>"><?php } ?>
+/************************************************************
+ ************************************************************
+ ***************************  TIPO 4  ***********************
+ ************************************************************
+ ***********************************************************/
+  if ($fieldTypeCode == 4) {
+    echo "<input $addAttr fieldSave=\"$fieldSave\" id=\"$fieldName\"
+      class=\"datepicker\" type=\"text\" data-dateformat=\"yy-mm-dd\"
+      placeholder=\"Select a date\"
+      name=\"$fieldName\">";
+  }
 
-<?php if ($fieldTypeCode == 5) { ?><label id="<?= $fieldLabel ?>" class="label"><?= $fieldDesc ?></label>
-<?php } ?>
-<?php if ($fieldTypeCode == 7) {
-    if ($fieldParams) {
-        $datosSelect = explode('||', $fieldParams);
-    }
+/************************************************************
+ ************************************************************
+ ***************************  TIPO 5  ***********************
+ ************************************************************
+ ***********************************************************/
+  if ($fieldTypeCode == 5){
+    echo "<label id=\"$fieldLabel\" class=\"label\">$fieldDesc</label>";
+  }
+
+/************************************************************
+ ************************************************************
+ ***************************  TIPO 7  ***********************
+ ************************************************************
+ ***********************************************************/
+  if ($fieldTypeCode == 7) {
+     if ($fieldParams) {
+         $datosSelect = explode('||', $fieldParams);
+     }
     ?>
     <select <?= $addAttr ?> fieldSave="<?= $fieldSave ?>" id="<?= $fieldName ?>" name="<?= $fieldName ?>">
         <?php
@@ -296,9 +329,15 @@ if (trim($fieldClass == "datefield")) {
         <?php } ?>
     </select>
 <?php
-} ?>
+} 
 
-<?php if ($fieldTypeCode == 8) {
+/************************************************************
+ ************************************************************
+ ***************************  TIPO 8  ***********************
+ ************************************************************
+ ***********************************************************/
+
+  if ($fieldTypeCode == 8) {
     if ($fieldSql){
         $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
         $db->conn->SetFetchMode(ADODB_FETCH_NUM);
@@ -324,9 +363,14 @@ if (trim($fieldClass == "datefield")) {
         }  ?>
     </select>
 <?php
-} ?>
+} 
 
-<?php if ($fieldTypeCode == 9) { ?>
+/************************************************************
+ ************************************************************
+ ***************************  TIPO 9  ***********************
+ ************************************************************
+ ***********************************************************/
+if ($fieldTypeCode == 9) { ?>
     <div>
         <div style="float:left"><input size="30" id="<?= $fieldName ?>" <?= $addAttr ?> <?= $addValue ?>
                 /></div>
@@ -400,6 +444,11 @@ if (trim($fieldClass == "datefield")) {
 $ADODB_FETCH_MODE = ADODB_FETCH_ASOC;
 $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
 
+/************************************************************
+ ************************************************************
+ ***************************  TIPO 10 ***********************
+ ************************************************************
+ ***********************************************************/
 if ($fieldTypeCode == 10) {
     $year = Date('Y');
     $pathfile = "../bodega/$year/formFiles/";
@@ -422,31 +471,35 @@ if ($fieldTypeCode == 10) {
         }
     }
 
-    $scriptJS .= "
-                                    $urlattach
-                                    $imageattach
-                                    var uploaderId = '$norandom';
-                                    $('#$norandom').uploadFile({
-                                        url:'./server.php?tx=2',
-                                        fileName:'fileFormDinamic',
-                                        onSuccess:function(files,data,xhr){
-                                            $('#inp_$norandom').val(JSON.parse(data)[0]);
+    $scriptJS .= " $urlattach
+                   $imageattach
+                   var uploaderId = '$norandom';
+                   $('#$norandom').uploadFile({
+                       url:'./server.php?tx=2',
+                       fileName:'fileFormDinamic',
+                       onSuccess:function(files,data,xhr){
+                           $('#inp_$norandom').val(JSON.parse(data)[0]);
 
-                                            if(idurlattach !== undefined){
-                                                $('#' + idurlattach).html('<a href=\"$pathfile'+ JSON.parse(data)[0] +'\">Descarga ' + JSON.parse(data)[0] + '</a>')
-                                            }
+                           if(idurlattach !== undefined){
+                               $('#' + idurlattach).html('<a href=\"$pathfile'+ JSON.parse(data)[0] +'\">Descarga ' + JSON.parse(data)[0] + '</a>')
+                           }
 
-                                            if(idimageattach !== undefined){
-                                                enviar = /.(gif|jpg|png|jpeg)$/i.test(JSON.parse(data)[0]);
-                                                if(enviar){
-                                                    $('#' + idimageattach).html('<img src=\"$pathfile'+ JSON.parse(data)[0] +'\" width=\"100%\">');
-                                                }
-                                            }
-                                        }
-                                    });
-                                ";
+                           if(idimageattach !== undefined){
+                               enviar = /.(gif|jpg|png|jpeg)$/i.test(JSON.parse(data)[0]);
+                               if(enviar){
+                                   $('#' + idimageattach).html('<img src=\"$pathfile'+ JSON.parse(data)[0] +'\" width=\"100%\">');
+                               }
+                           }
+                       }
+                   });
+                  ";
 }
 
+/************************************************************
+ ************************************************************
+ ***************************  TIPO 11 ***********************
+ ************************************************************
+ ***********************************************************/
 if ($fieldTypeCode == 11) {
     $norandom = fileuploader . rand();
     echo("<div $addAttr id='$norandom'>Subir archivo</div>
@@ -463,6 +516,12 @@ if ($fieldTypeCode == 11) {
                                     });
                                 ";
 }
+
+/************************************************************
+ ************************************************************
+ ***************************  TIPO 12  **********************
+ ************************************************************
+ ***********************************************************/
 /*
  * Generacion de tabla.
  * Esta tabla se genera desde php y se le da el formato con javascript el cual
@@ -503,6 +562,11 @@ if ($fieldTypeCode == 12) {
     }
 }
 
+/************************************************************
+ ************************************************************
+ ***************************  TIPO 15  **********************
+ ************************************************************
+ ***********************************************************/
 if ($fieldTypeCode == 15) {
     define('ADODB_ASSOC_CASE', 1);
     $db->conn->SetFetchMode(ADODB_FETCH_ASOC);
