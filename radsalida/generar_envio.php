@@ -29,7 +29,7 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 if(!$fecha_busq) $fecha_busq=date("Y-m-d");
 ?>
 <head>
-<link rel="stylesheet" href="../estilos/orfeo.css">
+<?php include_once("$ruta_raiz/htmlheader.inc.php") ?>
 </head>
 <script>
 function validar(action)
@@ -69,20 +69,19 @@ function solonumeros()
 <script language="javascript">
   var dateAvailable = new ctlSpiffyCalendarBox("dateAvailable", "new_product", "fecha_busq","btnDate1","<?=$fecha_busq?>",scBTNMODE_CUSTOMBLUE);
 </script>
-<table class=borde_tab width='100%' cellspacing="1"><tr><td class=titulos2><center>GENERACION PLANILLAS Y GUIAS DE CORREO</center></td></tr></table>
+<table class="table table-hover dataTable no-footer smart-form" ><tr><td ><center>GENERACION PLANILLAS Y GUIAS DE CORREO</center></td></tr></table>
 <table><tr><td></td></tr></table>
   <form name="new_product"  action='generar_envio.php?<?=session_name()."=".session_id()."&krd=$krd&fecha_h=$fechah"?>' method=post>
 <center>
-<TABLE width="450" class="borde_tab" cellspacing="1">
+<TABLE class="table table-bordered table-hover dataTable no-footer smart-form" cellspacing="1" width="200">
   <!--DWLayoutTable-->
   <TR>
-    <TD width="125" height="21"  class='titulos2'> Fecha<br>
+    <TD width="125" height="21"  > Fecha<br>
 	<?
 	  echo "(".date("Y-m-d").")";
 	?>
 	</TD>
-    <TD width="225" align="right" valign="top" class='listado2'>
-
+      <td width=30>
       <script language="javascript">
 	dateAvailable.date = "2003-08-05";
 	dateAvailable.writeControl();
@@ -91,8 +90,8 @@ function solonumeros()
 </TD>
 </TR>
 <TR>
-	<TD height="26" class='titulos2'> Desde la Hora</TD>
-	<TD valign="top" class='listado2'>
+	<TD height="26" > Desde la Hora</TD>
+	<TD valign="top" >
 <?
     if(!$hora_ini) $hora_ini = 01;
     if(!$hora_fin) $hora_fin = date("H");
@@ -101,7 +100,8 @@ function solonumeros()
     if(!$segundos_ini) $segundos_ini = 01;
     if(!$segundos_fin) $segundos_fin = date("s");
 ?>
-  <select name=hora_ini class='select'>
+  <table><tr><td>
+  <select name=hora_ini >
   <?
     for($i=0;$i<=23;$i++)
     {
@@ -112,7 +112,7 @@ function solonumeros()
       <?
       }
       ?>
-</select>:<select name=minutos_ini class='select'>
+</select></td><td>:</td><td><select name=minutos_ini >
   <?
     for($i=0;$i<=59;$i++)
     {
@@ -123,12 +123,14 @@ function solonumeros()
     <?
     }
     ?>
-  </select>
+  </select></td></tr></table>
   </TD>
   </TR>
   <Tr>
-    <TD height="26" class='titulos2'> Hasta</TD>
-    <TD valign="top" class='listado2'><select name=hora_fin class=select>
+    <TD height="26" > Hasta</TD>
+    <TD valign="top" >
+ <table><tr><td>
+  <select name=hora_fin >
     <?
       for($i=0;$i<=23;$i++)
       {
@@ -139,7 +141,7 @@ function solonumeros()
         <?
 	}
 	?>
-      </select>:<select name=minutos_fin class=select>
+      </select></td><td>:</td><td><select name=minutos_fin class=select>
         <?
 	for($i=0;$i<=59;$i++)
 	{
@@ -150,12 +152,12 @@ function solonumeros()
     <?
       }
       ?>
-      </select>
+      </select></td></tr></table>
       </TD>
   </TR>
   <tr>
-    <TD height="26" class='titulos2'>Tipo de Salida</TD>
-    <TD valign="top" align="left" class='listado2'>
+    <TD height="26" >Tipo de Salida</TD>
+    <TD valign="top" align="left" >
 <?
   $iSql = "select sgd_fenv_descrip,sgd_fenv_codigo from  sgd_fenv_frmenvio order by sgd_fenv_descrip";
 
@@ -166,7 +168,7 @@ $codigo_envio=$tipo_envio;
  </TD>
   </tr>
  <tr>
-    <TD height="26" class='titulos2'>Numero de Planilla</TD>
+    <TD height="26" >Numero de Planilla</TD>
     <TD valign="top" align="left" class='listado2'>
     	<input type="text" name="no_planilla" id="no_planilla" value='<?=$no_planilla?>' class='tex_area' size=11 maxlength="9" >
 <?
@@ -197,12 +199,12 @@ $codigo_envio=$tipo_envio;
 ?>
 	</TD>
   <tr>
-    <td height="26" colspan="2" valign="top" class='titulos2'> <center>
+    <td height="26" colspan="2" valign="top" > <center>
 		<INPUT TYPE=button name=generar_listado_existente Value=' Generar Plantilla existente ' class='botones_funcion' onClick="validar(1);">
 		</center>
 		</td>
 	</tr>
-	<tr><td height="26" colspan="2" valign="top" class='titulos2'> <center>
+	<tr><td height="26" colspan="2" valign="top" > <center>
         <INPUT TYPE=button name=generar_listado Value=' Generar Nuevo Envio ' class='botones_largo' onClick="validar(2);">
       </center></td>
   </tr>
@@ -222,17 +224,17 @@ $no_planilla_Inicial = $no_planilla;
 		if($generar_listado_existente)  
 		{
 			$generar_listado = "Genzzz";
-			echo "<table class=borde_tab width='100%'><tr><td class=listado2><CENTER>Generar Listado Existente</td></tr></table>";
+			echo "<table class=borde_tab width=80%'><tr><td class=listado2><CENTER>Generar Listado Existente</td></tr></table>";
 		}
 		include "./listado_planillas.php";
-		echo "<table class=borde_tab width='100%'><tr><td class=titulos2><CENTER>FECHA DE BUSQUEDA $fecha_busq</cebter></td></tr></table>";
+		echo "<table class=borde_tab width='80%'><tr><td class=titulos2><CENTER>FECHA DE BUSQUEDA $fecha_busq</cebter></td></tr></table>";
                
 	}
 	if($tipo_envio==2222)
 	{
 
 		include "./listado_guias.php";
-	 	echo "<table class=borde_tab width='100%'><tr><td class=listado2><CENTER>FECHA DE BUSQUEDA $fecha_busq </center></td></tr></table>";
+	 	echo "<table class=borde_tab width='80%'><tr><td ><CENTER>FECHA DE BUSQUEDA $fecha_busq </center></td></tr></table>";
 	 }
 	if($tipo_envio==1108)
 	{

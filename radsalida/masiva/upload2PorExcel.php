@@ -21,6 +21,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 session_start();
 
 foreach ($_GET  as $key => $val){ ${$key} = $val;}
@@ -44,11 +45,11 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
  * @param char $var
  * @return numeric
  */
-function return_bytes($val)
-{	$val = trim($val);
+function return_bytes($val){
+    $val = trim($val);
 	$ultimo = strtolower($val{strlen($val)-1});
-	switch($ultimo)
-	{	// El modificador 'G' se encuentra disponible desde PHP 5.1.0
+	switch($ultimo){
+	    // El modificador 'G' se encuentra disponible desde PHP 5.1.0
 		case 'g':	$val *= 1024;
 		case 'm':	$val *= 1024;
 		case 'k':	$val *= 1024;
@@ -56,6 +57,7 @@ function return_bytes($val)
 	return $val;
 }
 ?>
+
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -64,7 +66,6 @@ function return_bytes($val)
 <body>
 <script language="JavaScript" type="text/JavaScript">
     function validar() {
-
       archDocto = document.formAdjuntarArchivos.archivoPlantilla.value;
       codserie  = document.getElementsByName("codserie")[0].value;
       codsubser = document.getElementsByName("tsub")[0].value;
@@ -86,28 +87,24 @@ function return_bytes($val)
         return false;
       }
 
-      if (confirm("Tenga cuidado con esta opción ya que se realizarán\n" +
+      if (confirm("Tenga cuidado con esta opci\u00F3n ya que se realizar\u00E1n\n" +
               "cambios irreversibles en el sistema.")) {
           return true;
-      }
-      else {
+      } else {
           return false;
       }
-
       return true;
     }
 
     function enviar() {
-
       if (!validar())
         return;
-
       document.formAdjuntarArchivos.accion.value="PRUEBA";
       document.formAdjuntarArchivos.submit();
     }
 </script>
-<?
 
+<?
 include "tipificar_masivaExcel.php";
 $params="dependencia=$dependencia&codiTRD=$codiTRD&tipoRad=$tipoRad&depe_codi_territorial=$depe_codi_territorial&usua_nomb=$usua_nomb&depe_nomb=$depe_nomb&usua_doc=$usua_doc&tipo=$tipo&codusuario=$codusuario";
 ?>
@@ -130,7 +127,7 @@ $params="dependencia=$dependencia&codiTRD=$codiTRD&tipoRad=$tipoRad&depe_codi_te
 
               <header>
                 <h2>
-					        Adjuntar archivo con combinaci&oacute;n
+		            Adjuntar archivo con combinaci&oacute;n
                 </h2>
               </header>
               <!-- widget div-->

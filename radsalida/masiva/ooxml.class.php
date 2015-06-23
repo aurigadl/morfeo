@@ -176,7 +176,7 @@
 		{
 			( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr><td class=info>No existe DIR: " . $this->cacheDir . $nombreDir[0]. " luego se crea</td></tr></table>" ) : $error = '' ;
 			echo $error;
-			$creoDir = mkdir($this->cacheDir,0777);
+			@$creoDir = mkdir($this->cacheDir,0777);
 			$creoDir = mkdir($this->cacheDir . $nombreDir[0], 0777);
 			if ($creoDir)
 			{	( $this->debug == true) ? ( $error = "<CENTER><table class=borde_tab><tr><td class=titulos2>Cre&oacute el directorio: " . $this->cacheDir . $nombreDir[0]. " todo ok</td></tr></table>" ) : $error = '' ;
@@ -323,7 +323,7 @@
           
             if(is_file($this->cabecerasXml2)) {
                   $this->fp2 = fopen($this->cabecerasXml2 ,'r+');
-                  $this->contenidoCabeceras2 = fread ($this->fp2, filesize($this->cabecerasXml2));
+                  @$this->contenidoCabeceras2 = fread ($this->fp2, filesize($this->cabecerasXml2));
                   fclose( $this->fp2 ) ;
             }
             if(is_file($this->cabecerasXml3)) {

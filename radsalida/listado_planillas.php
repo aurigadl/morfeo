@@ -130,7 +130,7 @@ Se han Generado <b><?=$total_registros?> </b>Registros para Imprimir en <?=$pagi
 <?
 if ((strtoupper($_SESSION["entidad"]) != "MINSALUD")){
 ?>
-<a href='<?=$arpdf_tmp?>' target='<?=date("dmYh").time("his")?>'>Abrir Archivo PDF</a></center>
+<!-- <a href='<?=$arpdf_tmp?>' target='<?=date("dmYh").time("his")?>'>Abrir Archivo PDF</a></center> -->
 <? }
 ?>
 </td>
