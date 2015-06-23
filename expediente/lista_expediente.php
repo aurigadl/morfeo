@@ -109,7 +109,7 @@ if ($usuaPermExpediente) {
 
 			<?php if ($usuaPermExpediente >= 1) { ?>
                         <li>
-                            <a onClick="verFormularioFUID('<?= $numExpediente ?>',<?= $codserie ?>,<?= $tsub ?>,<?= $tdoc ?>,'MODIFICAR');">Fromulario FUID</a>
+                            <a onClick="verFormularioFUID('<?= $numExpediente ?>',<?= $codserie ?>,<?= $tsub ?>,<?= $tdoc ?>,'MODIFICAR');">Formulario FUID</a>
                         </li>
 			<?php } ?>
 
