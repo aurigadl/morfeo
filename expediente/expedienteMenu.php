@@ -23,6 +23,9 @@
 				<li>
 					<a href="#" onClick="seguridadExp('<?=$num_expediente?>','<?=$nivelExp?>');">Seguridad</a>
 				</li>
+				<li>
+					<a href="#" onClick="verFormularioFUID('<?=$num_expediente?>',<?=$codserie?>,<?=$tsub?>,<?=$tdoc?>,'MODIFICAR');">Formulario FUID</a>
+				</li>
 			</ul>
     </td>
     <td width=300>

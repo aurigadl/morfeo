@@ -932,7 +932,7 @@ class Expediente {
      */
     function getDatosParamExp($numExp, $depeCodi){
 
-         $this->db->limit(10);
+         $this->db->limit(5);
          $limitMsql = $this->db->limitMsql;
          $limitOci8 = $this->db->limitOci8;
          $limitPsql = $this->db->limitPsql;

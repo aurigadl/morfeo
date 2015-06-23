@@ -98,7 +98,7 @@ foreach ($_POST as $elementos => $valor) {
 	//Cargo los datos si existen
 
 	//comprobar si es actualizar o insertar uno nuevo.
-	$isql = "select nume_exp,codigo_trd,serie,subserie,proceso,fecha_ini,fecha_fin,cons_id,folio_ini,folio_fin,observaciones,num_caja,num_carpeta,num_estante,num_fila,num_columna,num_bandeja, descriptor from sgd_exp_fuid where nume_exp = '$numeroExpediente';"; 
+	$isql = "select nume_exp,codigo_trd,serie,subserie,proceso,fecha_ini,fecha_fin,cons_id,folio_ini,folio_fin,observaciones,num_caja,num_carpeta,num_estante,num_fila,num_columna,num_bandeja  from sgd_exp_fuid where nume_exp = '$numeroExpediente';"; 
 	
 	$rs = $db->conn->Execute($isql);
 	$nume_exp = $rs->fields['NUME_EXP'];
@@ -232,7 +232,6 @@ if ($nume_exp == ''){
 		observaciones, 
 		num_caja, 
 		num_carpeta, 
-		descriptor,
 		num_estante, 
 		num_fila,
 		num_columna,
@@ -676,7 +675,7 @@ if (is_array($arrParametro)) {
                               </td>
 			      <td>
 				<small>
-				<input type="text" size="5" name="folio_ini" onkeypress="return justNumbers(event);" maxlength="3" value="<?=$folio_ini?>" >
+				<input type="text" size="5" name="folio_ini" onkeypress="return justNumbers(event);" maxlength="5" value="<?=$folio_ini?>" >
 				</small>		
                               </td>
                               <td>
@@ -684,7 +683,7 @@ if (is_array($arrParametro)) {
                               </td>
 			      <td>
 				<small>
-				<input type="text" size="5" name="folio_fin" onkeypress="return justNumbers(event);" maxlength="3" value="<?=$folio_fin?>" >
+				<input type="text" size="5" name="folio_fin" onkeypress="return justNumbers(event);" maxlength="5" value="<?=$folio_fin?>" >
 				</small>		
                               </td>
 			  </tr>

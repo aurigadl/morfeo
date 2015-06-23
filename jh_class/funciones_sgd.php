@@ -95,7 +95,9 @@ function GET_NOMBRE_PAIS($codigo,$db)
 		$this->pais="";
 	}
 	else
-	{	$isql =	"SELECT NOMBRE_PAIS FROM SGD_DEF_PAISES WHERE ID_PAIS=".$codigo;
+	{	
+		if(strtoupper(trim($codigo))=='COLOMBIA') $codigo=170;
+		$isql =	"SELECT NOMBRE_PAIS FROM SGD_DEF_PAISES WHERE ID_PAIS=".$codigo;
 		$rs1 = $db->query($isql);
 		$this->pais=trim($rs1->fields["NOMBRE_PAIS"]);
 		unset($rs1);

@@ -105,12 +105,13 @@ if ($usuaPermExpediente) {
                             <a href="javascript:void(0);"
                                onClick="window.open ('expediente/stickerExp/index.php?numExp=<?= $numExpediente ?>','sticker<?= $nurad ?>','menubar=0,resizable=0,scrollbars=0,width=450,height=180,toolbar=0,location=0');"
                                class="btn btn-link">Sticker Expediente</a>
-                            </li><? } ?>
+			    </li><? } ?>
 
+			<?php if ($usuaPermExpediente >= 1) { ?>
                         <li>
                             <a onClick="verFormularioFUID('<?= $numExpediente ?>',<?= $codserie ?>,<?= $tsub ?>,<?= $tdoc ?>,'MODIFICAR');">Fromulario FUID</a>
                         </li>
-
+			<?php } ?>
 
                     <?
                     }

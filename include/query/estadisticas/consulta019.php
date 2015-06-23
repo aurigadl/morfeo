@@ -1,5 +1,5 @@
 <?php    
-
+//echo "@@@@@"; exit;
 /** CONSUTLA 001 
   * Estadiscas por usuario
   * @autor JAIRO H LOSADA Correlibre.org

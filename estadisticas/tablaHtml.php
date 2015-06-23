@@ -47,14 +47,16 @@
               $tituloGraph = $tituloE[$tipoEstadistica];
               //include "genBarras1.php";
             }
+  	  ?>
 
-            ?>
-            <? if ($tipoEstadistica!=1000 )  {
+          <? if ($block_details !=1 )  {
+             if ($tipoEstadistica!=1000 )  {
                 if ($genTodosDetalle != 1 or $genDetalle != 1) {
                 echo "<center><a href=\"genEstadistica.php?$datosEnvioDetalle&genTodosDetalle=1&$datosaenviar\" Target=\"VerDetalle".date("dmYHis")."\" class=\"btn btn-sm btn-primary\"> Ver todos los detalles</a></center><br/>";
                 }
               }
-            }
+	     }
+	    }
             ?>
           </div>
         </div>

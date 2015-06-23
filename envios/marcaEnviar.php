@@ -43,7 +43,7 @@ $db = new ConnectionHandler("$ruta_raiz");
 $objFirma = new  FirmaRadicado($db);
 $radObjeto = new Radicado($db);
 $servBodega = $servWebOrfeo . "/bodega";
-
+//$db->conn->debug = true;
 $servBodega = str_replace("/", "|", $servBodega);
 ?>
 

@@ -157,8 +157,8 @@ if($rs)
 	?>
   </tr>
   <?
-  $sqlFecha = $db->conn->SQLDate("d-m-Y H:i A","he.SGD_HFLD_FECH");
-	$sqlFecha = $db->conn->SQLDate("Y-m-d","he.SGD_HFLD_FECH");
+	$sqlFecha = $db->conn->SQLDate("d-m-Y H:i A","he.SGD_HFLD_FECH");
+//	$sqlFecha = $db->conn->SQLDate("Y-m-d","he.SGD_HFLD_FECH");
  	$isql = "select $sqlFecha as HIST_FECH
 			, he.DEPE_CODI
 			, he.USUA_CODI

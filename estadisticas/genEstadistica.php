@@ -61,6 +61,8 @@ if($_GET["fecSel"])       $fecSel=$_GET["fecSel"];
 if($_GET["genDetalle"])   $genDetalle=$_GET["genDetalle"];
 if($_GET["generarOrfeo"]) $generarOrfeo=$_GET["generarOrfeo"];
 if($_GET["dependencia_busqOri"]) $dependencia_busqOri=$_GET["dependencia_busqOri"];
+if($_GET["codserie"]) $codserie=$_GET["codserie"];
+if($_GET["tsub"]) $tsub=$_GET["tsub"];
 
 if(!$tipoEstadistica) $tipoEstadistica = $_SESSION["tipoEstadistica"];
 
@@ -84,10 +86,10 @@ if(!$db){
 
 	$objUsuario = new Usuario($db);
 
-	$datosaenviar = "fechaf=$fechaf&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&condiRep=$condiRep";
+	$datosaenviar = "fechaf=$fechaf&codserie=$codserie&tsub=$tsub&genDetalle=$genDetalle&tipoEstadistica=$tipoEstadistica&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&condiRep=$condiRep";
 
 }
-$datosaenviar = "fechaf=$fechaf&genDetalle=$genDetalle&tipoEstadistica=".$_GET['tipoEstadistica']."&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&condiRep=$condiRep";
+	$datosaenviar = "fechaf=$fechaf&codserie=$codserie&tsub=$tsub&genDetalle=$genDetalle&tipoEstadistica=".$_GET['tipoEstadistica']."&codus=$codus&dependencia_busq=$dependencia_busq&dependencia_busqOri=$dependencia_busqOri&ruta_raiz=$ruta_raiz&fecha_ini=$fecha_ini&fecha_fin=$fecha_fin&tipoRadicado=$tipoRadicado&tipoDocumento=$tipoDocumento&codUs=$codUs&fecSel=$fecSel&condiRep=$condiRep";
 
 $seguridad =",R.SGD_SPUB_CODIGO,B.CODI_NIVEL as  USUA_NIVEL";
 $whereTipoRadicado = "";
@@ -212,7 +214,7 @@ switch($tipoEstadistica){
 	  include "$ruta_raiz/include/query/estadisticas/consulta014.php";
 	  $generar = "ok";
 	  break;
-       case "17";
+        case "17";
 	  include "$ruta_raiz/include/query/estadisticas/consulta017.php";
 	  $generar = "ok";
 	  break;
@@ -220,8 +222,14 @@ switch($tipoEstadistica){
 	  include "$ruta_raiz/include/query/estadisticas/consulta018.php";
 	  $generar = "ok";
 	  break;
+        case "19";
+	  include "$ruta_raiz/include/query/estadisticas/consulta019.php";
+	  $generar = "ok";
+	  $titulo="Reporte FUID";
+//	  $block_details = 1 ;
+	  break;
   }
-
+	
 	if($tipoReporte==1){
     include "$ruta_raiz/include/query/archivo/queryReportePorRadicados.php";
     $generar = "ok";
@@ -230,12 +238,14 @@ switch($tipoEstadistica){
 	if($generar == "ok") {
 		if($genDetalle==1) $queryE = $queryEDetalle;
 		if($genTodosDetalle==1) $queryE = $queryETodosDetalle;
+		//$db->conn->debug = true;
 		$rsE = $db->conn->query($queryE);
+		//exit;
 		include ("tablaHtml.php");
-		Exportar($ruta_raiz,$queryE,$titulo);
+		Exportar($ruta_raiz,$queryE,$titulo,$datosaenviar,$tipoEstadistica);
 	}
 
-	function Exportar($ruta_raiz,$queryE,$titulo){ ?>
+	function Exportar($ruta_raiz,$queryE,$titulo,$datosaenviar,$tipoEstadistica){ ?>
       <table align="center" class="table table-bordered table-striped"><tr>
         <td align="center">
           <?
@@ -243,8 +253,10 @@ switch($tipoEstadistica){
           $_SESSION ['xheader'] = "<center><b>$titulo</b></center><br><br>"; // ENCABEZADO DEL REPORTE
           $_SESSION ['xsql'] = $xsql; // SUBO A SESION EL QUERY// CREO LOS LINKS PARA LOS REPORTES
             echo "<b><a href='$ruta_raiz/adodb/adodb-doc.inc.php' target='_blank'><img src='$ruta_raiz/adodb/compfile.png' width='40' heigth='40' border='0'></a></b> - "; //
-            echo "<a href='$ruta_raiz/adodb/adodb-xls.inc.php' target='_blank'><img src='$ruta_raiz/adodb/spreadsheet.png' width='40' heigth='40' border='0'></a>";
-          ?>
+	    echo "<a href='$ruta_raiz/adodb/adodb-xls.inc.php' target='_blank'><img src='$ruta_raiz/adodb/spreadsheet.png' width='40' heigth='40' border='0'></a>";
+if ($tipoEstadistica == 19){
+	?>
+		<a href="<?=$ruta_raiz?>estadisticas/exportarpdf.php?<?=$datosaenviar?>">Exportar a PDF</a> <?php } ?>	
         </td>
       </tr>
       </table><?php

@@ -79,6 +79,7 @@ if(!$dependencia_busqOri) $dependencia_busqOri = $dependencia;
 	$tituloE[11] = "ESTADISTICA DE DIGITALIZACION";
 	$tituloE[17] = "ESTADISTICA POR RADICADOS Y SUS RESPUESTAS";
 	//$tituloE[18] = "SEGUIMIENTO TRAMITE";
+	$tituloE[19] = "REPORTE FUID";
 
 	$subtituloE[1] = "ORFEO - Generada el: " . date("Y/m/d H:i:s"). "\n Parametros de Fecha: Entre $fecha_ini y $fecha_fin";
 	$subtituloE[2] = "ORFEO - Fecha: " . date("Y/m/d H:i:s"). "\n Parametros de Fecha: Entre $fecha_ini y $fecha_fin";
@@ -89,6 +90,7 @@ if(!$dependencia_busqOri) $dependencia_busqOri = $dependencia;
 	$subtituloE[8] = "ORFEO - Fecha: " . date("Y/m/d H:i:s"). "\n Parametros de Fecha: Entre $fecha_ini y $fecha_fin";
 	$subtituloE[17] = "ORFEO - Fecha: " . date("Y/m/d H:i:s"). "\n Parametros de Fecha: Entre $fecha_ini y $fecha_fin";
 	$subtituloE[18] = "ORFEO - Fecha: " . date("Y/m/d H:i:s"). "\n Parametros de Fecha: Entre $fecha_ini y $fecha_fin";
+	$subtituloE[19] = "ORFEO - Fecha: " . date("Y/m/d H:i:s"). "\n Parametros de Fecha: Entre $fecha_ini y $fecha_fin";
 
 	$helpE[1] = "Este reporte genera la cantidad de radicados por usuario. Se puede discriminar por tipo de radicaci&oacute;n. " ;
 	$helpE[2] = "Este reporte genera la cantidad de radicados de acuerdo al medio de recepci&oacute;n o envio realizado al momento de la radicaci&oacute;n. " ;
@@ -108,6 +110,7 @@ if(!$dependencia_busqOri) $dependencia_busqOri = $dependencia;
 	$helpE[17] = "Este reporte genera la cantidad de documentos que han llegado al area o usuarios sin importar su origen. " ;
 	$helpE[18] = "Este reporte refleja el Tramite que se les ha dado a los Radicados HASTA EL DIA INMEDIATAMENTE ANTERIOR
                       Puede filtrarse por la fecha de REASIGNACION y la dependencia ORIGEN y DESTINO " ;
+	$helpE[19] = "Este reporte genera El listado de Expediente que tiene el FUID actualizado." ;
 ?>
 
 <html>
@@ -204,7 +207,10 @@ function noPermiso(){
                           </select>
                         </label>
                       </td>
-                    </tr>
+		    </tr>
+
+		<?  if($tipoEstadistica!=19) { ?>
+
                     <tr>
                       <td width="30%" class="titulos2">Dependencia</td>
                       <td class="listado2">
@@ -261,7 +267,8 @@ function noPermiso(){
                           </select>
                         </label>
                       </td>
-                  </tr>
+		  </tr>
+			<? } ?>
                   <?php
                   if ($tipoEstadistica==18){?>
                       <tr>
@@ -473,12 +480,79 @@ function noPermiso(){
                       </td>
                     </tr>
                     <?
-                    }
-                    if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
+		      }?>
+<?php if($tipoEstadistica==19){ ?>
+<tr >
+<td>Serie</td>
+<td><label class=select>
+<?php
+
+ 	      if(!$tdoc) $tdoc = 0;
+		    if(!$codserie) $codserie = 0;
+		    if(!$tsub) $tsub = 0;
+		    $fechah=date("dmy") . " ". time("h_m_s");
+		    $fecha_hoy = Date("Y-m-d");
+		    $sqlFechaHoy=$db->conn->DBDate($fecha_hoy);
+		    $sqlFechaHoy2 = $db->conn->SQLDate('Y-m-d',$db->conn->sysTimeStamp);
+		    $check=1;
+		    $fechaf=date("dmy") . "_" . time("hms");
+		    $num_car = 4;
+		    $nomb_varc = "s.sgd_srd_codigo";
+		    $nomb_varde = "s.sgd_srd_descrip";
+		    include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
+		    $querySerie = "select distinct($sqlConcat) as detalle, s.sgd_srd_codigo 
+			    from sgd_mrd_matrird m, sgd_srd_seriesrd s
+			    where 
+			    s.sgd_srd_codigo = m.sgd_srd_codigo
+			    and CAST(m.sgd_mrd_esta AS numeric(1) )       = 1 
+			    and ".$db->sysdate()." between s.sgd_srd_fechini and s.sgd_srd_fechfin";
+		    if($seriesVistaTodos!=1){
+			    $querySerie .= " and (cast(m.depe_codi as varchar(5)) = '$coddepe' or m.depe_codi_aplica like '%$coddepe%' or cast(m.depe_codi as varchar(5))='$depDireccion') ";
+		    }else{
+
+		    }
+
+		    $querySerie .= " order by 1 ";
+		    $rsD=$db->conn->query($querySerie);
+		    $comentarioDev = "Muestra las Series Docuementales";
+		    include "$ruta_raiz/include/tx/ComentarioTx.php";
+		    print $rsD->GetMenu2("codserie", $codserie, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
+?>
+</label></td>
+</tr>
+<tr>
+<td>Subserie</td>
+<td ><label class=select>
+<?php
+		    $nomb_varc = "su.sgd_sbrd_codigo";
+		    $nomb_varde = "su.sgd_sbrd_descrip";
+		    include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
+		    $querySub = "select distinct ($sqlConcat) as detalle, su.sgd_sbrd_codigo 
+			    from sgd_mrd_matrird m, sgd_sbrd_subserierd su
+			    where
+			    cast(m.sgd_mrd_esta as numeric(1))       = 1
+			    and m.sgd_srd_codigo = $codserie
+			    and su.sgd_srd_codigo = $codserie
+			    and su.sgd_sbrd_codigo = m.sgd_sbrd_codigo
+			    and ".$db->sysdate()." between su.sgd_sbrd_fechini and su.sgd_sbrd_fechfin ";
+		    if($seriesVistaTodos!=1){
+			    $querySub .= " and (cast(m.depe_codi as varchar(5)) = '$coddepe' or m.depe_codi_aplica  like '%$coddepe%' or cast(m.depe_codi as varchar(5))='$depDireccion') ";
+		    }
+		    $querySub .= " order by 1
+			    ";
+		    $rsSub=$db->conn->query($querySub);
+		    include "$ruta_raiz/include/tx/ComentarioTx.php";
+		    print $rsSub->GetMenu2("tsub", $tsub, "0:-- Seleccione --", false,"","onChange='submit()' class='select'" );
+?>
+</select></label>
+</td>
+</tr>
+<?php } ?> 
+			<? if($tipoEstadistica==1 or $tipoEstadistica==2 or $tipoEstadistica==3 or
                         $tipoEstadistica==4 or $tipoEstadistica==5 or $tipoEstadistica==7 or
                         $tipoEstadistica==8 or $tipoEstadistica==9 or $tipoEstadistica==10 or
                         $tipoEstadistica==11 or $tipoEstadistica==12 or $tipoEstadistica==14 or
-                                  $tipoEstadistica==17  ) { ?>
+                                  $tipoEstadistica==17 or  $tipoEstadistica==19 ) { ?>
                     <tr>
                       <td width="30%" class="titulos2">Desde fecha (aaaa/mm/dd) </td>
                       <td class="listado2">

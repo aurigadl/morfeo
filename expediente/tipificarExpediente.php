@@ -52,7 +52,6 @@ include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
-
 include_once "$ruta_raiz/include/tx/Historico.php";
 include_once("$ruta_raiz/class_control/TipoDocumental.php");
 include_once "$ruta_raiz/include/tx/Expediente.php";
@@ -447,12 +446,17 @@ if ($Actualizar && $tsub != 0 && $codserie != 0) {
                                  <button type="button" class="btn btn-success btn-xs" id ="OcultarMostrarCampos" >Mostrar/Ocultar</button>
                                </td>
                           </tr>
-                          <?php
+			<?php
+			$db->limit(5);
+			$limitMsql = $db->limitMsql;
+			$limitOci8 = $db->limitOci8;
+			$limitPsql = $db->limitPsql;
+
                           $sqlParExp = "SELECT SGD_PAREXP_ETIQUETA, SGD_PAREXP_ORDEN,";
                           $sqlParExp .= " SGD_PAREXP_EDITABLE";
                           $sqlParExp .= " FROM SGD_PAREXP_PARAMEXPEDIENTE PE";
                           $sqlParExp .= " WHERE PE.DEPE_CODI = " . $dependenciaExp;
-                          $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN ASC";
+                          $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN ASC $limitPsql";
                           #$db->conn->debug=true;
                           $rsParExp = $db->conn->Execute($sqlParExp);
                             $auxiliar_formulario = 0;

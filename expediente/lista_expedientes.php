@@ -44,6 +44,21 @@ if($_POST['saveEtiq']){
         ?>
         window.open("./expediente/tipificarExpediente.php?opcionExp=" + opcionExp + "&numeroExpediente=" + numeroExpediente + "&nurad=<?=$verrad?>&codserie=" + codserie + "&tsub=" + tsub + "&tdoc=" + tdoc + "&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>", "MflujoExp<?=$fechaH?>", "height=850,width=970,scrollbars=yes");
     }
+    function verFormularioFUID(numeroExpediente, codserie, tsub, tdoc, opcionExp) {
+        <?php
+              $isqlDepR = "SELECT RADI_DEPE_ACTU,
+                      RADI_USUA_ACTU
+                      FROM radicado
+                      WHERE RADI_NUME_RADI = '$numrad'";
+                      // $db->conn->debug = true;
+              $rsDepR = $db->conn->Execute($isqlDepR);
+              $coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
+              $codusua = $rsDepR->fields['RADI_USUA_ACTU'];
+              $ind_ProcAnex = "N";
+                $fechaH = Date("Ymdhis");
+        ?>
+        window.open("./expediente/insertarfuid.php?opcionExp=" + opcionExp + "&numeroExpediente=" + numeroExpediente + "&nurad=<?=$verrad?>&codserie=" + codserie + "&tsub=" + tsub + "&tdoc=" + tdoc + "&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>", "MflujoExp<?=$fechaH?>", "height=850,width=970,scrollbars=yes");
+    }
     function verHistExpediente(numeroExpediente, codserie, tsub, tdoc, opcionExp) {
         <?php
               $isqlDepR = "SELECT RADI_DEPE_ACTU,RADI_USUA_ACTU from radicado
