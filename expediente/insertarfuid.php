@@ -208,6 +208,8 @@ if($num_estante==""){$num_estante=0;}
 if($num_fila==""){$num_fila=0;}
 if($num_columna==""){$num_columna=0;}
 if($num_bandeja==""){$num_bandeja=0;}
+if($fecha_inicio==""){$fecha_inicio="";}
+if($fecha_final==""){$fecha_final="";}
 
 
 //comprobar si es actualizar o insertar uno nuevo.
@@ -251,7 +253,6 @@ if ($nume_exp == ''){
 		'".$observaciones ."', 
 		".$num_caja .", 
 		".$num_carpeta .", 
-		0,
 		".$num_estante .",
 		".$num_fila .",
 		".$num_columna .",
@@ -638,7 +639,7 @@ if (is_array($arrParametro)) {
                              </td>
                              <td align="left" colspan="5" >
 				 <small>
-				 <input type="text" name ="fecha_inicio" id="fecha_inicio" value="<?=$fecha_inicio?>" ><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+				 <input type="text" name ="fecha_inicio" id="fecha_inicio" value="<?=$fecha_inicio?>" required><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                                  </small>
                              </td>
                          </tr>
@@ -649,7 +650,7 @@ if (is_array($arrParametro)) {
                              </td>
                              <td align="left" colspan="5" >
                                  <small>
-				 <input type="text" name ="fecha_final" id="fecha_final" value="<?=$fecha_final?>" ><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+				 <input type="text" name ="fecha_final" id="fecha_final" value="<?=$fecha_final?>" required><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                                  </small>
                              </td>
                          </tr>
