@@ -90,6 +90,11 @@ switch($db->driver)
 		f.codigo_trd as CODIGO_TRD, 
 		t.SGD_TPR_DESCRIP as TIPO_DOCUMENTO, 
 		f.nume_exp as EXPEDIENTE, 
+		s.SGD_SEXP_PAREXP1 as nombre_exp,
+		s.SGD_SEXP_PAREXP2 as cc_o_nit,
+		s.SGD_SEXP_PAREXP3 as id_expediente,
+		s.SGD_SEXP_PAREXP4 as objeto_cto,
+		s.SGD_SEXP_PAREXP5 as descriptor5,
 		TO_CHAR(f.fecha_ini,'YYYY/MM/DD') as fecha_inicial, 
 		TO_CHAR(f.fecha_fin,'YYYY/MM/DD') as fecha_final,
 		c.UCONS_NOMB as TIPO_CONSERVACION, 
@@ -103,7 +108,7 @@ switch($db->driver)
 		f.num_fila as No_Fila,
 		f.num_columna as No_Columna,
 		f.num_bandeja as No_Bandeja
-		FROM SGD_EXP_FUID f 
+		FROM SGD_EXP_FUID f
 		INNER JOIN SGD_SEXP_SECEXPEDIENTES s ON f.nume_exp = s.sgd_exp_numero  
 		LEFT OUTER JOIN SGD_UNIDAD_CONSERVACION c ON f.cons_id = c.ucons_id  
 		LEFT OUTER JOIN SGD_TPR_TPDCUMENTO t ON f.TDOC_CODI = t.SGD_TPR_CODIGO
@@ -116,13 +121,13 @@ switch($db->driver)
 		))
 		$condicion_serie  
 		$condicion_subserie  
-		GROUP BY f.nume_exp,c.UCONS_NOMB,t.SGD_TPR_DESCRIP 
+		GROUP BY f.nume_exp,c.UCONS_NOMB,t.SGD_TPR_DESCRIP,s.SGD_SEXP_PAREXP1, s.SGD_SEXP_PAREXP2, s.SGD_SEXP_PAREXP3, s.SGD_SEXP_PAREXP4, s.SGD_SEXP_PAREXP5 
 		ORDER BY $orno $ascdesc  
 		";
 
 	//echo $queryEDetalle; exit;
 		
-//        echo "<pre>$queryE</pre>"; exit;         
+//        echo "<pre>$queryETodosDetalle</pre>"; exit;         
 	}break;
 	case 'oracle':
 	case 'oci8':
@@ -132,7 +137,7 @@ switch($db->driver)
 	}break;
 }
 if(isset($_GET['genDetalle'])&& $_GET['denDetalle']=1){
-	$titulos=array("1#ORDEN","2#CODIGO TRD","3#NOMBRE DE LA SERIE, SUBSERIE O ASUNTO","4#DESCRIPTORES","5#FECHA INICIAL","6#FECHA FINAL","7#UNIDAD DE CONSERVACION","8#FOLIO INICIAL","9#FOLIO FINAL","10#SOPORTE","11#OBSERVACIONES","12#NUMERO CAJA","13#NUMERO CARPETA","14#NUMERO ESTANTE","15#NUMERO FILA","16#NUMERO COLUMNA","17#NUMERO BANDEJA");
+$titulos= array("1#ORDEN","2#CODIGO TRD","3#NOMBRE DE LA SERIE, SUBSERIE O ASUNTO","4#NUMERO EXPEDIENTE","5#NOMBRE EXPEDIENTE","6#CC O NIT","7#ID EXPEDIENTE","8#OBJETO CTO","9#DESCRIPTOR5","10#FECHA INICIAL","11#FECHA FINAL","12#UNIDAD DE CONSERVACION","13#FOLIO INICIAL","14#FOLIO FINAL","15#SOPORTE","16#OBSERVACIONES","17#NUMERO CAJA","18#NUMERO CARPETA","19#NUMERO ESTANTE","20#NUMERO FILA","21#NUMERO COLUMNA","22#NUMERO BANDEJA");
 }
 else 		
 	$titulos=array("#","1#Expediente","2#Proceso");
@@ -180,42 +185,57 @@ function pintarEstadisticaDetalle($fila,$indice,$numColumna)
 		$salida="<center class=\"leidos\">".$fila['EXPEDIENTE']."</center>";		
 		break;
 	case 4:
-		$salida="<center class=\"leidos\">".$fila['FECHA_INICIAL']."</center>";
+		$salida="<center class=\"leidos\">".$fila['NOMBRE_EXP']."</center>";		
 		break;
 	case 5:
-		$salida="<center class=\"leidos\">".$fila['FECHA_FINAL']."</center>";			
-		break;	
+		$salida="<center class=\"leidos\">".$fila['CC_O_NIT']."</center>";		
+		break;
 	case 6:
-		$salida="<center class=\"leidos\">".$fila['TIPO_CONSERVACION']."</center>";			
-		break;	
+		$salida="<center class=\"leidos\">".$fila['ID_EXPEDIENTE']."</center>";		
+		break;
 	case 7:
-		$salida="<center class=\"leidos\">".$fila['FOLIO_INICIAL']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['OBJETO_CTO']."</center>";		
 		break;
 	case 8:
-		$salida="<center class=\"leidos\">".$fila['FOLIO_FINAL']."</center>";			
-		break;		
+		$salida="<center class=\"leidos\">".$fila['DESCRIPTOR5']."</center>";		
+		break;
 	case 9:
-		$salida="<center class=\"leidos\">".$fila['SOPORTE']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['FECHA_INICIAL']."</center>";
 		break;
 	case 10:
-		$salida="<center class=\"leidos\">".$fila['OBSERVACIONES']."</center>";			
-		break;
+		$salida="<center class=\"leidos\">".$fila['FECHA_FINAL']."</center>";			
+		break;	
 	case 11:
-		$salida="<center class=\"leidos\">".$fila['NUMERO_CAJA']."</center>";			
-		break;
+		$salida="<center class=\"leidos\">".$fila['TIPO_CONSERVACION']."</center>";			
+		break;	
 	case 12:
-		$salida="<center class=\"leidos\">".$fila['NUMERO_CARPETA']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['FOLIO_INICIAL']."</center>";			
 		break;
 	case 13:
-		$salida="<center class=\"leidos\">".$fila['NO_ESTANTE']."</center>";			
-		break;
+		$salida="<center class=\"leidos\">".$fila['FOLIO_FINAL']."</center>";			
+		break;		
 	case 14:
-		$salida="<center class=\"leidos\">".$fila['NO_FILA']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['SOPORTE']."</center>";			
 		break;
 	case 15:
-		$salida="<center class=\"leidos\">".$fila['NO_COLUMNA']."</center>";			
+		$salida="<center class=\"leidos\">".$fila['OBSERVACIONES']."</center>";			
 		break;
 	case 16:
+		$salida="<center class=\"leidos\">".$fila['NUMERO_CAJA']."</center>";			
+		break;
+	case 17:
+		$salida="<center class=\"leidos\">".$fila['NUMERO_CARPETA']."</center>";			
+		break;
+	case 18:
+		$salida="<center class=\"leidos\">".$fila['NO_ESTANTE']."</center>";			
+		break;
+	case 19:
+		$salida="<center class=\"leidos\">".$fila['NO_FILA']."</center>";			
+		break;
+	case 20:
+		$salida="<center class=\"leidos\">".$fila['NO_COLUMNA']."</center>";			
+		break;
+	case 21:
 		$salida="<center class=\"leidos\">".$fila['NO_BANDEJA']."</center>";			
 		break;
 	}
