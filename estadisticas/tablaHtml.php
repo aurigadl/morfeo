@@ -1,8 +1,8 @@
 <div class="col-sm-12">
   <section id="widget-grid">
-      <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-1" data-widget-editbutton="false">
-            <div class="widget-body">
+      <article>
+        <div>
+            <div>
             <?php
             foreach ($_GET as $key => $valor)   ${$key} = $valor;
               require_once($ruta_raiz."/include/myPaginador.inc.php");
