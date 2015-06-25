@@ -83,12 +83,14 @@ switch($db->driver)
          * Se incluye una nueva restriccion para que en el detalle unicamente 
          * muestre la direccion remitente/destinatario
          * Junio 14 2012
-	 	*/
+		 */
+	$concatb = $db->conn->Concat('SRD.SGD_SRD_DESCRIP',"' / '",'SBRD.SGD_SBRD_DESCRIP');
+
 	$queryETodosDetalle = "
 		SELECT 
-		ROW_NUMBER() OVER(ORDER BY $orno $ascdesc ) AS Order, 
-		f.codigo_trd as CODIGO_TRD, 
-		t.SGD_TPR_DESCRIP as TIPO_DOCUMENTO, 
+		ROW_NUMBER() OVER(ORDER BY $orno $ascdesc ) AS Orden, 
+		f.codigo_trd as CODIGO_TRD,
+	        $concatb as TIPO_DOCUMENTO,	
 		f.nume_exp as EXPEDIENTE, 
 		s.SGD_SEXP_PAREXP1 as nombre_exp,
 		s.SGD_SEXP_PAREXP2 as cc_o_nit,
@@ -111,8 +113,13 @@ switch($db->driver)
 		FROM SGD_EXP_FUID f
 		INNER JOIN SGD_SEXP_SECEXPEDIENTES s ON f.nume_exp = s.sgd_exp_numero  
 		LEFT OUTER JOIN SGD_UNIDAD_CONSERVACION c ON f.cons_id = c.ucons_id  
-		LEFT OUTER JOIN SGD_TPR_TPDCUMENTO t ON f.TDOC_CODI = t.SGD_TPR_CODIGO
+		LEFT OUTER JOIN SGD_TPR_TPDCUMENTO t ON f.TDOC_CODI = t.SGD_TPR_CODIGO,
+	       	SGD_SRD_SERIESRD SRD, SGD_SBRD_SUBSERIERD SBRD
 		WHERE 
+		s.SGD_SRD_CODIGO = SRD.SGD_SRD_CODIGO 
+		AND s.SGD_SBRD_CODIGO = SBRD.SGD_SBRD_CODIGO 
+		AND SRD.SGD_SRD_CODIGO = SBRD.SGD_SRD_CODIGO 
+		AND	
 		((
 			".$db->conn->SQLDate('Y/m/d', 'f.fecha_ini')." BETWEEN '$fecha_ini' AND '$fecha_fin' 
 		) 
@@ -121,7 +128,7 @@ switch($db->driver)
 		))
 		$condicion_serie  
 		$condicion_subserie  
-		GROUP BY f.nume_exp,c.UCONS_NOMB,t.SGD_TPR_DESCRIP,s.SGD_SEXP_PAREXP1, s.SGD_SEXP_PAREXP2, s.SGD_SEXP_PAREXP3, s.SGD_SEXP_PAREXP4, s.SGD_SEXP_PAREXP5 
+		GROUP BY f.nume_exp,c.UCONS_NOMB,t.SGD_TPR_DESCRIP,s.SGD_SEXP_PAREXP1, s.SGD_SEXP_PAREXP2, s.SGD_SEXP_PAREXP3, s.SGD_SEXP_PAREXP4, s.SGD_SEXP_PAREXP5,$concatb 
 		ORDER BY $orno $ascdesc  
 		";
 
@@ -173,7 +180,7 @@ function pintarEstadisticaDetalle($fila,$indice,$numColumna)
 	switch ($numColumna)
 	{
 	case 0:
-		$salida="<center class=\"leidos\">".$fila['ORDER']."</center>";		
+		$salida="<center class=\"leidos\">".$fila['ORDEN']."</center>";		
 		break;
 	case 1:
 		$salida="<center class=\"leidos\">".$fila['CODIGO_TRD']."</center>";		
