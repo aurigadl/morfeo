@@ -27,45 +27,43 @@ session_start();
 
 $str = <<<EOF
 
-      <title>..:: $entidad - Caliope ::..</title>
+    <title>..:: $entidad - Caliope ::..</title>
 
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" type="text/css" media="screen" rel="shortcut icon" href="$ruta_raiz/img/favicon.png">
-      <!-- Bootstrap core CSS -->
-      <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/bootstrap.min.css">
-      <!-- font-awesome CSS -->
-      <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/font-awesome.css">
-      <!-- Bootstrap core CSS -->
-      <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/font-awesome.min.css">
-      <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-production.css">
-      <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-skins.css">
-      <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/demo.css">
-      <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/siim_temp.css">
-      <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/uploadfile.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" rel="shortcut icon" href="$ruta_raiz/img/favicon.png">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/bootstrap.min.css">
+    <!-- font-awesome CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/font-awesome.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-production.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-skins.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/demo.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/siim_temp.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/uploadfile.css">
 
 	  <script type="text/javascript" src="$ruta_raiz/js/jquery.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/jsplumb/lib/jquery-1.9.0.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/libs/jquery-ui-1.10.4.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/jarvis.widget.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/notification/SmartNotification.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/plugin/sparkline/jquery.sparkline.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/plugin/jquery-validate/jquery.validate.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/plugin/select2/select2.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/plugin/smartclick/smartclick.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/demo.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/app.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/plugin/fuelux/wizard/wizard.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-      <script type="text/javascript" src="$ruta_raiz/js/bootstrap.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/jsplumb/lib/jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/libs/jquery-ui-1.10.4.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/jarvis.widget.min.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/notification/SmartNotification.min.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/plugin/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/plugin/jquery-validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/plugin/select2/select2.min.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/plugin/smartclick/smartclick.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/demo.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/app.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/plugin/fuelux/wizard/wizard.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script type="text/javascript" src="$ruta_raiz/js/bootstrap.js"></script>
 
-      <script src="$ruta_raiz/js/jsplumb/lib/jquery.ui.touch-punch.min.js"></script>
-		<!-- /DEP -->
-		<!-- JS -->
+    <script src="$ruta_raiz/js/jsplumb/lib/jquery.ui.touch-punch.min.js"></script>
 
 		<!-- support lib for bezier stuff -->
 		<script src="$ruta_raiz/js/jsplumb/lib/jsBezier-0.6.js"></script>
@@ -76,26 +74,26 @@ $str = <<<EOF
 		<!-- jsplumb util -->
 		<script src="$ruta_raiz/js/jsplumb/src/util.js"></script>
 
-        <!-- base DOM adapter -->
+    <!-- base DOM adapter -->
 		<script src="$ruta_raiz/js/jsplumb/src/dom-adapter.js"></script>
 
 		<!-- main jsplumb engine -->
 		<script src="$ruta_raiz/js/jsplumb/src/jsPlumb.js"></script>
 
-        <!-- endpoint -->
+    <!-- endpoint -->
 		<script src="$ruta_raiz/js/jsplumb/src/endpoint.js"></script>
 
-        <!-- connection -->
+    <!-- connection -->
 		<script src="$ruta_raiz/js/jsplumb/src/connection.js"></script>
 
-        <!-- anchors -->
+    <!-- anchors -->
 		<script src="$ruta_raiz/js/jsplumb/src/anchors.js"></script>
 
 		<!-- connectors, endpoint and overlays  -->
 		<script src="$ruta_raiz/js/jsplumb/src/defaults.js"></script>
 
-        <!-- bezier connectors -->
-        <script src="$ruta_raiz/js/jsplumb/src/connectors-bezier.js"></script>
+    <!-- bezier connectors -->
+    <script src="$ruta_raiz/js/jsplumb/src/connectors-bezier.js"></script>
 
 		<!-- state machine connectors -->
 		<script src="$ruta_raiz/js/jsplumb/src/connectors-statemachine.js"></script>
@@ -109,13 +107,14 @@ $str = <<<EOF
 		<!-- vml renderer -->
 		<script src="$ruta_raiz/js/jsplumb/src/renderers-vml.js"></script>
 
-        <!-- jquery jsPlumb adapter -->
+    <!-- jquery jsPlumb adapter -->
 		<script src="$ruta_raiz/js/jsplumb/src/jquery.jsPlumb.js"></script>
 
 		<!-- jquery combogrid -->
 		<script src="$ruta_raiz/js/jqgrid/resources/plugin/jquery.ui.combogrid-1.6.3.js"></script>
 
 		<!-- jquery uploadfile permite subir archivos masivamente o Individuales -->
+		<script src="$ruta_raiz/js/jquery.form.js"></script>
 		<script src="$ruta_raiz/js/jquery.uploadfile.js"></script>
 EOF;
 echo  $str;

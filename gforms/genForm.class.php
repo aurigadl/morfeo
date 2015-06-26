@@ -41,6 +41,7 @@ class genForm {
     var $tablepksearch;
     var $fieldpksearch;
     var $varsparam;
+    var $js_data_array = Array();
 
     function genForm($db) {
         // Constructor de la clase
@@ -221,65 +222,70 @@ class genForm {
         $fields = array();
         $i = 0;
         if ($rs) {
-            while (!$rs->EOF) {
-                $nameField      = $rs->fields["FRMF_NAME"];
-                $pkField        = $rs->fields["FRMF_PK"];
-                $codeField      = $rs->fields["FRMF_CODE"];
-                $descField      = $rs->fields["FRMF_DESCRIPTION"];
-                $sqlField       = $rs->fields["FRMF_SQL"];
-                $nullField      = $rs->fields["FRMF_NULL"];
-                $colField       = $rs->fields["FRMF_COLUMN"];
-                $orderField     = $rs->fields["FRMF_ORDER"];
-                $colspanField   = $rs->fields["FRMF_COLSPAN"];
-                $typeField      = $rs->fields["FRMT_TYPE"];
-                $codeTypeField  = $rs->fields["FRMT_CODE"];
-                $classField     = $rs->fields["FRMT_CLASS"];
-                $jsField        = $rs->fields["FRMT_JS"];
-                $htmlField      = $rs->fields["FRMT_HTML"];
-                $helpField      = $rs->fields["FRMF_HELP"];
-                $labelField     = $rs->fields["FRMF_LABEL"];
-                $maskField      = $rs->fields["FRMF_MASK"];
-                $saveField      = $rs->fields["FRMF_FIELD"];
-                $fieldPkSearch1 = $rs->fields["FRMF_FIELDPK"];
-                $fieldPkSearch  = $rs->fields["FRMF_FIELDPKSEARCH"];
-                $tablePkSearch  = $rs->fields["FRMF_TABLEPKSEARCH"];
-                $tableSave      = $rs->fields["FRMF_TABLESAVE"];
-                $tablePkSave    = $rs->fields["FRMF_TABLEPKSAVE"];
-                $rowspanField   = $rs->fields["FRMF_ROWSPAN"];
-                $defaultField   = $rs->fields["FRMF_DEFAULT"];
-                $paramsField    = $rs->fields["FRMF_PARAMS"];
-                $varsparamField = $rs->fields["FRMF_VARSPARAM"];
-                $varsField      = $rs->fields["FRMF_VARS"];
+          while (!$rs->EOF) {
+            $nameField      = $rs->fields["FRMF_NAME"];
+            $pkField        = $rs->fields["FRMF_PK"];
+            $codeField      = $rs->fields["FRMF_CODE"];
+            $descField      = $rs->fields["FRMF_DESCRIPTION"];
+            $sqlField       = $rs->fields["FRMF_SQL"];
+            $nullField      = $rs->fields["FRMF_NULL"];
+            $colField       = $rs->fields["FRMF_COLUMN"];
+            $orderField     = $rs->fields["FRMF_ORDER"];
+            $colspanField   = $rs->fields["FRMF_COLSPAN"];
+            $typeField      = $rs->fields["FRMT_TYPE"];
+            $codeTypeField  = $rs->fields["FRMT_CODE"];
+            $classField     = $rs->fields["FRMT_CLASS"];
+            $jsField        = $rs->fields["FRMT_JS"];
+            $htmlField      = $rs->fields["FRMT_HTML"];
+            $helpField      = $rs->fields["FRMF_HELP"];
+            $labelField     = $rs->fields["FRMF_LABEL"];
+            $maskField      = $rs->fields["FRMF_MASK"];
+            $saveField      = $rs->fields["FRMF_FIELD"];
+            $fieldPkSearch1 = $rs->fields["FRMF_FIELDPK"];
+            $fieldPkSearch  = $rs->fields["FRMF_FIELDPKSEARCH"];
+            $tablePkSearch  = $rs->fields["FRMF_TABLEPKSEARCH"];
+            $tableSave      = $rs->fields["FRMF_TABLESAVE"];
+            $tablePkSave    = $rs->fields["FRMF_TABLEPKSAVE"];
+            $rowspanField   = $rs->fields["FRMF_ROWSPAN"];
+            $defaultField   = $rs->fields["FRMF_DEFAULT"];
+            $paramsField    = $rs->fields["FRMF_PARAMS"];
+            $varsparamField = $rs->fields["FRMF_VARSPARAM"];
+            $varsField      = $rs->fields["FRMF_VARS"];
 
-                $fields[$i]["FIELD_NAME"]      = $nameField;
-                $fields[$i]["FIELD_LABEL"]     = $labelField;
-                $fields[$i]["FIELD_PK"]        = $pkField;
-                $fields[$i]["FIELD_TYPE"]      = $typeField;
-                $fields[$i]["FIELD_TYPE_CODE"] = $codeTypeField;
-                $fields[$i]["FIELD_DESC"]      = $descField;
-                $fields[$i]["FIELD_NULL"]      = $nullField;
-                $fields[$i]["FIELD_CLASS"]     = $classField;
-                $fields[$i]["FIELD_ORDER"]     = $orderField;
-                $fields[$i]["FIELD_COL"]       = $colField;
-                $fields[$i]["FIELD_COLSPAN"]   = $colspanField;
-                $fields[$i]["FIELD_SQL"]       = $sqlField;
-                $fields[$i]["FIELD_HTML"]      = $sqlField;
-                $fields[$i]["FIELD_HELP"]      = $helpField;
-                $fields[$i]["FIELD_MASK"]      = $maskField;
-                $fields[$i]["FIELD_SAVE"]      = $saveField;
-                $fields[$i]["FIELD_PKSAVE"]    = $saveField;
-                $fields[$i]["TABLE_SAVE"]      = $tableSave;
-                $fields[$i]["TABLE_PKSEARCH"]  = $tablePkSearch;
-                $fields[$i]["FIELD_PKSEARCH1"] = $fieldPkSearch1;
-                $fields[$i]["FIELD_PKSEARCH"]  = $fieldPkSearch;
-                $fields[$i]["FIELD_ROWSPAN"]   = $rowspanField;
-                $fields[$i]["FIELD_DEFAULT"]   = $defaultField;
-                $fields[$i]["FIELD_PARAMS"]    = $paramsField;
-                $fields[$i]["FIELD_VARSPARAM"] = $varsparamField;
-                $fields[$i]["FIELD_VARS"]      = $varsField;
-                $rs->MoveNext();
-                $i++;
-            }
+            $fields[$i]["FIELD_NAME"]      = $nameField;
+            $fields[$i]["FIELD_LABEL"]     = $labelField;
+            $fields[$i]["FIELD_PK"]        = $pkField;
+            $fields[$i]["FIELD_TYPE"]      = $typeField;
+            $fields[$i]["FIELD_TYPE_CODE"] = $codeTypeField;
+            $fields[$i]["FIELD_DESC"]      = $descField;
+            $fields[$i]["FIELD_NULL"]      = $nullField;
+            $fields[$i]["FIELD_CLASS"]     = $classField;
+            $fields[$i]["FIELD_ORDER"]     = $orderField;
+            $fields[$i]["FIELD_COL"]       = $colField;
+            $fields[$i]["FIELD_COLSPAN"]   = $colspanField;
+            $fields[$i]["FIELD_SQL"]       = $sqlField;
+            $fields[$i]["FIELD_HTML"]      = $sqlField;
+            $fields[$i]["FIELD_HELP"]      = $helpField;
+            $fields[$i]["FIELD_MASK"]      = $maskField;
+            $fields[$i]["FIELD_SAVE"]      = $saveField;
+            $fields[$i]["FIELD_PKSAVE"]    = $saveField;
+            $fields[$i]["TABLE_SAVE"]      = $tableSave;
+            $fields[$i]["TABLE_PKSEARCH"]  = $tablePkSearch;
+            $fields[$i]["FIELD_PKSEARCH1"] = $fieldPkSearch1;
+            $fields[$i]["FIELD_PKSEARCH"]  = $fieldPkSearch;
+            $fields[$i]["FIELD_ROWSPAN"]   = $rowspanField;
+            $fields[$i]["FIELD_DEFAULT"]   = $defaultField;
+            $fields[$i]["FIELD_PARAMS"]    = $paramsField;
+            $fields[$i]["FIELD_VARSPARAM"] = $varsparamField;
+            $fields[$i]["FIELD_VARS"]      = $varsField;
+
+            //Datos para la realización
+            $datatojs[strtolower($labelField)] = $nameField;
+
+            $rs->MoveNext();
+            $i++;
+          }
+          $this->js_data_array = json_encode($datatojs, JSON_UNESCAPED_UNICODE);
         } else {
             return -1;
         }

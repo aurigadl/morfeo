@@ -22,6 +22,9 @@ $nameForm   = $form->nameForm;
 $descForm   = $form->descriptionForm;
 $fromAccion = $form->fromAccion;
 $namevar    = $form->varsparam;
+//Variables para javascript se incorporan al codigo
+//para manipular los campos del formulario
+$js_var     = 'var js_var = '.$form->js_data_array.';';
 $scriptJs   = "";
 
 //Si llegan variables iguales a las que el formulario
@@ -65,6 +68,7 @@ foreach ($fromAccion as $showaction) {
   if($showaction == "grabar"){
     $accionbutton .="<button class=\"btn btn-primary\" type=\"button\" onCLick=\"saveForm();\" id=\"grabar\"> Grabar</button>";
   }
+
 }
 
 if (!empty($accionbutton)) {
@@ -131,6 +135,7 @@ $i = 1;
 //campos
 foreach ($fields as $fieldCode => $field){
 $fieldName      = strtolower($field["FIELD_NAME"]);
+$fieldLabel     = $field["FIELD_LABEL"];
 $fieldPk        = $field["FIELD_PK"];
 $fieldDesc      = $field["FIELD_DESC"];
 $fieldType      = $field["FIELD_TYPE"];
@@ -141,7 +146,6 @@ $fieldHelp      = $field["FIELD_HELP"];
 $fieldCol       = $field["FIELD_COL"];
 $fieldOrder     = $field["FIELD_ORDER"];
 $fieldColspan   = $field["FIELD_COLSPAN"];
-$fieldLabel     = $field["FIELD_LABEL"];
 $fieldJS        = $field["FIELD_JS"];
 $fieldSql       = $field["FIELD_SQL"];
 $fieldClass     = $field["FIELD_CLASS"];
@@ -155,10 +159,7 @@ $fieldPkSave    = $field["FIELD_PKSAVE"];
 $fieldDefault   = $field["FIELD_DEFAULT"];
 $fieldRowspan   = $field["FIELD_ROWSPAN"];
 $fieldParams    = $field["FIELD_PARAMS"];
-
 $valfromsearch  = $arrDataForm[strtoupper($fieldSave)];
-
-
 
 //Datos a pasar al formulario pasados por
 //variables de envio $_get $_post $_session
@@ -188,7 +189,6 @@ unset($valueVar,$addValue);
 if ($fieldVars == 0 && trim($fieldVarsparam)) {
     if ($_SESSION[$fieldVarsparam])
         $valueVar = $_SESSION[$fieldVarsparam];
-
     if ($_GET[$fieldVarsparam])
         $valueVar = $_GET[$fieldVarsparam];
     if ($_POST[$fieldVarsparam])
@@ -329,7 +329,7 @@ if (trim($fieldClass == "datefield")) {
         <?php } ?>
     </select>
 <?php
-} 
+}
 
 /************************************************************
  ************************************************************
@@ -363,7 +363,7 @@ if (trim($fieldClass == "datefield")) {
         }  ?>
     </select>
 <?php
-} 
+}
 
 /************************************************************
  ************************************************************
@@ -473,12 +473,15 @@ if ($fieldTypeCode == 10) {
 
     $scriptJS .= " $urlattach
                    $imageattach
+
                    var uploaderId = '$norandom';
                    $('#$norandom').uploadFile({
                        url:'./server.php?tx=2',
                        fileName:'fileFormDinamic',
                        onSuccess:function(files,data,xhr){
-                           $('#inp_$norandom').val(JSON.parse(data)[0]);
+                           var datareturn = JSON.parse(data);
+
+                           $('#inp_$norandom').val(datareturn[0]);
 
                            if(idurlattach !== undefined){
                                $('#' + idurlattach).html('<a href=\"$pathfile'+ JSON.parse(data)[0] +'\">Descarga ' + JSON.parse(data)[0] + '</a>')
@@ -490,6 +493,7 @@ if ($fieldTypeCode == 10) {
                                    $('#' + idimageattach).html('<img src=\"$pathfile'+ JSON.parse(data)[0] +'\" width=\"100%\">');
                                }
                            }
+
                        }
                    });
                   ";
@@ -503,18 +507,36 @@ if ($fieldTypeCode == 10) {
 if ($fieldTypeCode == 11) {
     $norandom = fileuploader . rand();
     echo("<div $addAttr id='$norandom'>Subir archivo</div>
-                              <input  type='hidden' value='' id='inp_$norandom' $addAttr />");
-    $scriptJS .= "
-                                    var uploaderId = '$norandom';
-                                    $('#$norandom').uploadFile({
-                                        url:'./server.php?tx=2',
-                                        fileName:'fileFormDinamic',
-                                        multiple:true,
-                                        onSuccess:function(files,data,xhr){
-                                            $('#inp_$norandom').val(JSON.parse(data)[0]);
-                                        }
-                                    });
-                                ";
+          <input  type='hidden' value='' id='inp_$norandom' $addAttr />");
+
+    $scriptJS .= "  $js_var
+                    var uploaderId = '$norandom';
+                    $('#$norandom').uploadFile({
+                        url:'./server.php?tx=2',
+                        fileName:'fileFormDinamic',
+                        multiple:true,
+                        onSuccess:function(files,data,xhr){
+                           var datareturn = JSON.parse(data);
+
+                           //Acciones de precarga de datos con archivos csv en el formulario
+                           //El servidor retorna arreglo con los datos de los campos a llenar
+                           //con la llave correspondiente al nonmbre del campo en el formulario
+
+                            if (typeof datareturn['loadcsv'] != undefined) {
+                              var v = datareturn['loadcsv'];
+                              var arraykeys = Object.keys(v);
+                              for(p in arraykeys){
+                                if (typeof js_var[arraykeys[p]] != \"undefined\"){
+                                  $(\"input[name=\" + js_var[arraykeys[p]]+\"]\")
+                                    .val(v[arraykeys[p]])
+                                }
+                              }
+                            }else{
+                              $('#inp_$norandom').val(datareturn);
+                            }
+                        }
+                    });
+                  ";
 }
 
 /************************************************************

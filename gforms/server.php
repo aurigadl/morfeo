@@ -70,10 +70,11 @@ switch ($tx) {
             // ORDER BY $sidx $sord";
             $SQL = "SELECT $fieldsView FROM $tableSearch WHERE $fieldSearch like '$searchTerm' $andWhere LIMIT 40";
         }
+
         $result = $db->conn->query($SQL) or die("Couldn t execute query.");
 
-        $response->page = $page;
-        $response->total = $total_pages;
+        $response->page    = $page;
+        $response->total   = $total_pages;
         $response->records = $count;
 
         $i = 0;
@@ -99,15 +100,28 @@ switch ($tx) {
             $error = $_FILES["fileFormDinamic"]["error"];
             //You need to handle  both cases
             //If Any browser does not support serializing of multiple files using FormData()
-            if (!is_array($_FILES["fileFormDinamic"]["name"])) //single file
-            {
+            if (!is_array($_FILES["fileFormDinamic"]["name"])) { //single file
+
                 $namefile = rand(9999, 99999);
                 $fileName = $namefile . '_' . $_FILES["fileFormDinamic"]["name"];
-                move_uploaded_file($_FILES["fileFormDinamic"]["tmp_name"], $output_dir . $fileName);
-                $ret[] = $fileName;
 
-            } else //Multiple files, file[]
-            {
+                if('text/csv' == $_FILES["fileFormDinamic"]['type']){
+                  $handle = fopen($_FILES["fileFormDinamic"]["tmp_name"], 'r');
+                  while (($line = fgets($handle)) !== false){
+                    list($k, $v) = explode(";", $line);
+                    if(!empty($k) && !empty(trim($v))){
+                      $datatoedit[trim(strtolower($k))] = trim($v);
+                    }
+                  }
+                  echo json_encode(array('loadcsv'=> $datatoedit), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT);
+                  fclose($handle);
+                  die();
+                }else{
+                  move_uploaded_file($_FILES["fileFormDinamic"]["tmp_name"], $output_dir . $fileName);
+                  $ret[] = $fileName;
+                }
+
+            } else { //Multiple files, file[]
                 $fileCount = count($_FILES["fileFormDinamic"]["name"]);
                 for ($i = 0; $i < $fileCount; $i++) {
                     $namefile = rand(9999, 99999);
