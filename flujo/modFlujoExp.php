@@ -68,7 +68,7 @@ function verificaModificacion(){
 	$procAutomatico = $expediente->pAutomatico;
 	$descFldExp 	= $expediente->descFldExp;
 	$texp = $expediente->codigoTipoExp;
-	//$db->conn->debug = true;
+	$db->conn->debug = false;
 	$codProceso = $texp;
 	$objFlujo = new Flujo($db, $texp, $usua_doc);
 	$codFld = $objFlujo->actualNodoExpediente($numeroExpediente);
@@ -79,13 +79,13 @@ function verificaModificacion(){
 	
 	$kk = $objFlujo->getArista($codProceso, $codFld);
 	$frmNombre = $objFlujo->frmNombre;
-	$frmLink = $objFlujo->frmLink;
+	$frmLink   = "../".$objFlujo->frmLink;
 	$frmLinkSelect = $objFlujo->frmLinkSelect;
 	
-	$frmLink = str_replace("{numeroRadicado}","$numRad", $frmLink);
+	$frmLink = str_replace("{numRad}","$numRad", $frmLink);
 	$frmLink = str_replace("{numeroExpediente}","$numeroExpediente", $frmLink);
 	$frmLink = str_replace("{dependencia}","$dependencia", $frmLink);
-	$frmLink = str_replace("{documentoUsuario}","$usua_doc", $frmLink);
+	$frmLink = str_replace("{codUsua}","$usua_doc", $frmLink);
 	$frmLink = str_replace("{nombreUsuario}","$usua_nomb", $frmLink);
 	$frmLink = $frmLink . "&PHPSESSID=".session_id();
 	
