@@ -306,20 +306,23 @@ class genForm {
         $db   = $this->db;
         $this->db->conn->debug = false;
 
-        foreach ($data as $key => $campo) {
-            $script     .= $campo["fieldSave"] . " varchar ,\n";
-            $fieldName   = strtolower($campo["fieldSave"]);
-            $fieldValue  = "'".$campo["fieldValue"]."'";
-            $fieldPk     = $campo["fieldPk"];
-            $table       = $campo["tableSave"];
-            $record[$fieldName] = $fieldValue;
+          foreach ($data as $key => $campo) {
+            $name_field = $campo["fieldSave"];
+            if(!empty($name_field)){
+              $script     .= $name_field  . " varchar ,\n";
+              $fieldName   = strtolower($name_field );
+              $fieldValue  = "'".$campo["fieldValue"]."'";
+              $fieldPk     = $campo["fieldPk"];
+              $table       = $campo["tableSave"];
+              $record[$fieldName] = $fieldValue;
 
-            if ($fieldName == 'id'){
-                $recordPk[] = $fieldName;
-            }elseif($fieldPk == 1){
-                $recordPk[] = $fieldName;
+              if ($fieldName == 'id'){
+                  $recordPk[] = $fieldName;
+              }elseif($fieldPk == 1){
+                  $recordPk[] = $fieldName;
+              }
             }
-        }
+          }
 
         $insert  = $db->conn->Replace($table, $record, $recordPk, $autoquote = true);
         $showerr = $db->conn->ErrorMsg();
