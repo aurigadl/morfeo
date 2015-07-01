@@ -116,6 +116,26 @@ $imagen="flechadesc.gif";
 ?>
 
 <script>
+
+function verFormularioFUID(numeroExpediente, codserie, tsub, tdoc, opcionExp) {
+<?php
+/* $data es una variable del radicado actual
+$numrad = "<script> document.write(data) </script>";	
+$isqlDepR = "SELECT RADI_DEPE_ACTU,
+	RADI_USUA_ACTU
+	FROM radicado
+	WHERE RADI_NUME_RADI = '$numrad'";
+$rsDepR = $db->conn->Execute($isqlDepR);
+$coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
+$codusua = $rsDepR->fields['RADI_USUA_ACTU']; */
+$ind_ProcAnex = "N";
+$fechaH = Date("Ymdhis");
+?>
+window.open("./insertarfuid.php?opcionExp=" + opcionExp + "&numeroExpediente=" + numeroExpediente + "&nurad=<?=$verrad?>&codserie=" + codserie + "&tsub=" + tsub + "&tdoc=" + tdoc + "&krd=<?=$krd?>&dependencia=<?=$dependencia?>&fechaExp=<?=$radi_fech_radi?>&codusua=<?=$codusua?>&coddepe=<?=$coddepe?>&desdearchivo=true", "MflujoExp<?=$fechaH?>", "height=850,width=970,scrollbars=yes");
+
+}
+
+
 function sel_dependencia(){
   document.write("<form name=forma_b_correspondencia action='cuerpo_exp.php?<?=$encabezado?>'  method=post>");
   depsel = form1.dep_sel.value ;
@@ -393,6 +413,11 @@ Expediente</a> </td>
 		Ubicacion </a></td>
 		<?
 	}
+
+	if($_SESSION["usua_admin_archivo"]>=1) { ?>
+		<td  width='15%' align="center">  <a href='cuerpo_exp.php?<?=$encabezado2 ?>8&ordcambio=1' class='textoOpcion'  alt='Seleccione una busqueda'>FUID </a></td>
+	<? }
+
 	if($tipo_archivo==1 or $tipo_archivo ==2){
 	?>
 	<td  width='15%' align="center">  <a href='cuerpo_exp.php?<?=$encabezado2 ?>12&ordcambio=1' class='textoOpcion'  alt='Seleccione una busqueda'>
@@ -762,6 +787,24 @@ elseif ($estado==0){
 <span class='<?php print $class; ?>'>
 <?=$ubicacion?> </span>
 </td>
+<?php if($_SESSION["usua_admin_archivo"]>=1) { 
+include_once ("$ruta_raiz/include/tx/Expediente.php");	
+$trdExp          = new Expediente($db);
+$mrdCodigo       = $trdExp->consultaTipoExpediente($num_expediente);
+$codserie        = $trdExp->codiSRD;
+$tsub            = $trdExp->codiSBRD;
+$tdoc            = $trdExp->codigoTipoDoc;
+
+if (!$tsub)
+      $tsub = "0";
+if (!$tdoc)
+      $tdoc = "0";
+if (!$codserie)
+     $codserie = "0";
+?>
+
+<td><center><a style="cursor:pointer;" onClick="verFormularioFUID('<?= $num_expediente ?>',<?= $codserie ?>,<?= $tsub ?>,<?= $tdoc ?>,'MODIFICAR');"> Actualizar </a></center></td>
+<? } ?>
 <?
  if($check<=20){
 	 $check=$check+1;

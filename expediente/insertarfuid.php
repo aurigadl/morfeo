@@ -762,7 +762,8 @@ if (is_array($arrParametro)) {
           <tr>
              <td colspan="6">
                  <center>
-                     <input name="crear" type="submit" class="btn btn-success" id="inserta" value="Grabar / Actualizar" >
+		     <input name="crear" type="submit" class="btn btn-success" id="inserta" value="Grabar / Actualizar" >
+                     <input type="hidden" name="desdearchivo" value="<?php echo $_GET['desdearchivo'];?>" >
                  </center>
              </td>
          </tr>
@@ -794,6 +795,8 @@ if (is_array($arrParametro)) {
                                    value="Confirmar" >
                             <input name="Actualizar" type=button class="btn btn-success btn-xs"
                                    value=" Cancelar Actualizaci&oacute;n " onclick="ocultarConfirmaExp();">
+			    <input type="hidden" name="desdearchivo" value="<?php echo $_POST['desdearchivo'];?>" >
+				<?php  $_GET['desdearchivo']=$_POST['desdearchivo']; ?>
                         </footer>
                     </td>
             </table>
@@ -833,10 +836,16 @@ if (is_array($arrParametro)) {
                 </center>
             </td>
             <td width="750">
-                <center>
+		<center>
+
+  		    <?php if ($_POST['desdearchivo'] == true or $_GET['desdearchivo'] == true) { ?>
+                    <input name="cerrar" type="button" class="btn btn-primary btn-xs" id="envia22" onClick="window.close();" value=" Cerrar ">
+	   	    <?php }else{ ?>
                     <input name="cerrar" type="button" class="btn btn-primary btn-xs" id="envia22"
                            onClick="window.opener.$.fn.cargarPagina('expediente/lista_expedientes.php','tabs-a'); window.close();"
-                           value=" Cerrar ">
+			   value=" Cerrar ">
+		    <?php } ?>
+
                 </center>
             </td>
         </tr>
