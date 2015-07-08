@@ -7,6 +7,8 @@ $dependencia  = $_SESSION["dependencia"];
 $usua_doc     = $_SESSION["usua_doc"];
 $codusuario   = $_SESSION["codusuario"];
 $depe_codi_territorial = $_SESSION["depe_codi_territorial"];
+$depe_nomb = $_SESSION["depe_nomb"];
+$usua_nomb = $_SESSION["usua_nomb"];
 
 include_once "../include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("..");
@@ -174,7 +176,13 @@ $db = new ConnectionHandler("$ruta_raiz");
 	 				  or (a.sgd_renv_planilla is not null and a.sgd_renv_planilla != '00'))
 		";
                 }
-                $query_t = $query . $where_isql . $where_tipo . $where_depe . $order_isql;
+		$query_t = $query . $where_isql . $where_tipo . $where_depe . $order_isql;
+
+		$rs_reg = $db->conn->Execute($query_t);
+                    while (!$rs_reg->EOF) {
+                        $no_registros = $rs_reg->fields["CANTIDAD"];
+                        $rs_reg->MoveNext();
+                    }
                 $ruta_raiz = "..";
                 error_reporting(7);
                 define('ADODB_FETCH_NUM', 1);
@@ -182,10 +190,10 @@ $db = new ConnectionHandler("$ruta_raiz");
                 require "../anulacion/class_control_anu.php";
                 $db->conn->SetFetchMode(ADODB_FETCH_NUM);
                 $btt = new CONTROL_ORFEO($db);
-                $campos_align = array("C", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L");
-                $campos_tabla = array("depe_nomb", "radi_nume_sal", "sgd_renv_nombre", "sgd_renv_dir", "sgd_renv_mpio", "sgd_renv_depto", "sgd_renv_fech", "sgd_fenv_descrip");
-                $campos_vista = array("Dependencia", "Radicado", "Destinatario", "Direccion", "Municipio", "Departamento", "Fecha de envio", "Forma de envio");
-                $campos_width = array(200, 100, 250, 250, 80, 80, 80, 80);
+                $campos_align = array("C","C", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L","C");
+                $campos_tabla = array("cantidad","depe_nomb", "radi_nume_sal", "sgd_renv_nombre", "sgd_renv_dir", "sgd_renv_mpio", "sgd_renv_depto", "sgd_renv_fech", "sgd_fenv_descrip","");
+                $campos_vista = array("Cantidad","Dependencia", "Radicado", "Destinatario", "Direccion", "Municipio", "Departamento", "Fecha de envio", "Forma de envio","Firma");
+                $campos_width = array(30,160, 95, 210, 220, 80, 80, 80, 80, 95);
                 $btt->campos_align = $campos_align;
                 $btt->campos_tabla = $campos_tabla;
                 $btt->campos_vista = $campos_vista;
@@ -197,11 +205,11 @@ $db = new ConnectionHandler("$ruta_raiz");
 	<b>Listado de documentos Enviados</b><br>
 	Fecha Inicial <?= $fecha_busq . "  00:00:00" ?> <br>
 	Fecha Final   <?= $fecha_busq2 . "  23:59:59" ?> <br>
-	Fecha Generado <? echo date("Ymd - H:i:s"); ?>
+	Fecha Generado <? echo date("Ymd - H:i:s"); ?> 
         <?
         $btt->tabla_sql($query_t);
         error_reporting(7);
-
+	$fecha_dia = date("Ymd - H:i:s");
         $html = $btt->tabla_html;
         error_reporting(7);
         define(FPDF_FONTPATH, '../fpdf/font/');
@@ -211,23 +219,31 @@ $db = new ConnectionHandler("$ruta_raiz");
         $pdf->AddPage();
         $pdf->SetFont('Arial', '', 7);
         $entidad = $db->entidad;
-        $encabezado = "<table class='table table-bordered table-striped'>
-			<tr>
-			<td width=1120 height=30>$entidad</td>
-			</tr>
-			<tr>
-			<td width=1120 height=30>REPORTE DE DOCUMENTOS ENVIADOS ENTRE $fecha_busq   00:00:00  y $fecha_busq2   23:59:59 </td>
-			</tr>
-			</table>";
-        $fin = "<table class='table table-bordered table-striped'>
-			<tr>
-			<td width=1120 height=60 bgcolor='#CCCCCC'>FUNCIONARIO CORRESPONDENCIA</td>
-			</tr>
-			<tr>
-			<td width=1120 height=60></td>
-			</tr>
+	$encaenti = "../img/banerPDF.jpg";
+	$encabezado = " 
+		<table class='table table-bordered table-striped'>
+		<tr><td width=1120 height=70><img src=$encaenti width=750 height=65></td></tr>
+		<tr><td width=1120 height=40> </td></tr>
+		<tr><td width=1120 height=40> </td></tr>
+		<tr><td width=1120 height=40> </td></tr>
+		<tr><td width=1120 height=80> </td></tr> 
+		<tr><td width=1120 height=20>Dependencia         : $depe_nomb </td></tr>
+		<tr><td width=1120 height=20>Usuario responsable : $usua_nomb </td></tr>
+		<tr><td width=1120 height=20>Fecha Generado      : $fecha_dia </td></tr>
+		<tr><td width=1120 height=20>Numero de Registros : $no_registros </td></tr>
+		<tr><td width=1120 height=40></td></tr>
+		<tr><td width=1120 height=40 align='center'>PLANILLA DE CORRESPONDENCIA ENVIADA</td></tr>
 		</table>";
-
+	$fin = " 
+		<table class='table table-bordered table-striped'>
+		<tr><td width=1120 height=40></td></tr>
+		<tr><td width=1120 height=40 >Fecha de Entrega         ________________________________________________</td></tr>
+		<tr><td width=560 height=40 > Funcionario que Entrega  ________________________________________________</td>
+		<td width=560 height=30 > Funcionario que Recibe   ______________________________________________</td></tr>
+		<tr><td width=1120 height=40 >Observaciones       __________________________________________________________________________________________________________________
+		<tr><td width=1120 height=40></td></tr>
+		</table>
+	<br>";
         $pdf->WriteHTML($encabezado . $html . $fin);
         $arpdf_tmp = "../bodega/pdfs/planillas/envios/$dependencia_$krd" . date("Ymd_hms") . "_envio.pdf";
         $pdf->Output($arpdf_tmp);
