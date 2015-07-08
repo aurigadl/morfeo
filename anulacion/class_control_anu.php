@@ -295,7 +295,7 @@
 					$width = $this->campos_width[$iii];
 					$width_max = intval(36 * $width / 250);
 					if(!$jh_db->fields($campos_d)) $dato = "-"; else $dato=substr($jh_db->fields($campos_d),0,$width_max);
-					$tabla_html .=  "<td  align=$align width=".$this->campos_width[$iii]." height=23>$dato</td>";
+					$tabla_html .=  "<td  align=$align width=".$this->campos_width[$iii]." height=50>$dato</td>";
 					echo "<td class='listado2' align=$align>".$jh_db->fields($campos_d)."</td>";
 					$iii++;
 				}
