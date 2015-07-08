@@ -145,15 +145,14 @@ if(trim($linkarchivo))
 	}
 	if(trim($linkarchivo)){
         //Codigo solo para la migracion de acapella ---- Ini----
-        preg_match("/d\/20/", $linkarchivo, $matches, PREG_OFFSET_CAPTURE);
-        $acapella = substr($linkarchivo, $matches[0][1]+2);
-        if (preg_match("/d\/20/", $linkarchivo)){
-              echo "<b><a class=\"vinculos\" href=\"./bodega/b/$acapella \"> $cod_radi </a>";
+        if (preg_match("/\/b\/[0-9]{4}\/[0-9]{2}\//", $linkarchivo)){
+	      $acapella = preg_replace("/\/[0-9]{4}\/[0-9]\/docs\//", "", $linkarchivo );
+              echo "<b><a class=\"vinculos\" href=\"$acapella\"> $cod_radi </a>";
         }else{
           if($valImg == "SI" or $verradPermisos == "Full" ){
-              echo "<b><a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$coddocu','$ruta_raiz');\"> $cod_radi </a>";
+            echo "<b><a class=\"vinculos\" href=\"#2\" onclick=\"funlinkArchivo('$coddocu','$ruta_raiz');\"> $cod_radi </a>";
           }else{
-                echo "<a class='vinculos' href='javascript:noPermiso()' > $cod_radi </a>";
+            echo "<a class='vinculos' href='javascript:noPermiso()' > $cod_radi </a>";
           }
         }
         //Codigo solo para la migracion de acapella ---- Fin ----
