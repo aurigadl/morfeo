@@ -51,11 +51,8 @@ switch($db->driver)
 			a.RADI_NUME_SAL      as REGISTRO,
 			".$db->conn->substr."(a.SGD_RENV_NOMBRE,1,50) 	as DESTINATARIO,
                         ".$db->conn->substr."(a.SGD_RENV_DIR,1,63) 	as DIRECCION,
-                        a.SGD_RENV_DEPTO                        as DEPARTAMENTO,
-			a.SGD_RENV_MPIO 			as DESTINO,
-			a.SGD_RENV_PESO			 	as PESO,
-			a.SGD_RENV_VALOR 			as VALOR_ENVIO,
-			(TO_NUMBER(a.SGD_RENV_VALOR, '999999999') * a.SGD_RENV_CANTIDAD) as VALOR_TOTAL
+			a.SGD_RENV_DEPTO                        as DEPARTAMENTO,
+			'' as FIRMA
 			from SGD_RENV_REGENVIO a,  SGD_FENV_FRMENVIO d 
                          ";
 		$where_isql1 = " WHERE (a.DEPE_CODI= " . $dependencia .
