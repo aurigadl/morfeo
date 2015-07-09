@@ -34,7 +34,8 @@
 	case 'oci8':
 	case 'oci805':
         case 'postgres':
-		$query = 'select  
+		$query = 'select 
+		       ROW_NUMBER() OVER(ORDER BY a.depe_codi, a.SGD_RENV_FECH DESC,a.SGD_RENV_PLANILLA DESC ) AS cantidad,	
 			c.depe_nomb,
 			a.radi_nume_sal,
 			a.sgd_renv_nombre,
