@@ -119,7 +119,7 @@ $db = new ConnectionHandler($ruta_raiz);
 
 
    // Procesamiento de los registros seleccionados
-   echo $encabezado="&krd=".tourl($krd)."&s_PRES_ID=".tourl($setFiltroSelect)."&dependencia=".tourl($dependencia).
+   $encabezado="&krd=".tourl($krd)."&s_PRES_ID=".tourl($setFiltroSelect)."&dependencia=".tourl($dependencia).
                "&radicado=".tourl($fldRADICADO)."&s_PRES_REQUERIMIENTO=&snoExpDev=$snoExpDev&FormAction=";
    $enviar=0;
 

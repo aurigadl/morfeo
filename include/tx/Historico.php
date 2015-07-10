@@ -167,13 +167,13 @@ function insertarHistoricoArch($id,$radicados,  $depeOrigen , $usCodOrigen, $obs
       $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
       $this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
       $sql = "SELECT
-          USUA_DOC
-          ,USUA_LOGIN
-          FROM
-          USUARIO
-          WHERE
-          DEPE_CODI=$dependencia
-          AND USUA_CODI=$codUsuario";
+                     USUA_DOC
+                    ,USUA_LOGIN
+                   FROM
+                      USUARIO
+                   WHERE
+                      DEPE_CODI    = $dependencia
+                      AND USUA_CODI= $codUsuario";
       # Busca el usuairo Origen para luego traer sus datos.
       $rs = $this->db->conn->Execute($sql);
       $usDoc     = $rs->fields['USUA_DOC'];

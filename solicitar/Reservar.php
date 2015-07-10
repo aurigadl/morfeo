@@ -41,10 +41,8 @@ $tip3img     = $_SESSION["tip3img"];   $verrad = "";
 $ruta_raiz = "..";
 
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-include_once "$ruta_raiz/include/tx/Historico.php";
 
 $db   = new ConnectionHandler($ruta_raiz);
-$hist = new Historico($db);
 
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $db->conn->debug = false;
@@ -168,7 +166,10 @@ function PRESTAMO_action($sAction) {
     $krd         = $_SESSION["krd"];
     $dependencia = $_SESSION["dependencia"];
     $codusuario  = $_SESSION["codusuario"];
+    $setHisExp   = true;
 
+    include_once "$ruta_raiz/include/tx/Historico.php";
+    $hist = new Historico($db);
     // Modificado Infometrika 14-Julio-2009
     // Se mantiene la funcion get_param().
     //$fldradicado=$_GET["radicado"];
@@ -288,21 +289,23 @@ function PRESTAMO_action($sAction) {
           $nombTx    ="Devolver Documento prestado";
           $titError  ="El registro de la devolucion no pudo ser realizado";
           $estadoOld ="in (2,5)";
-          var_dump($snoExpDev);
+
           if($snoExpDev){
             $expToChang = implode(",", $snoExpDev);
 
             $sSQL = "update prestamo set $setFecha, pres_estado=$estadoNew where sgd_exp_numero in ($expToChang)";
-            var_dump($sSQL);
             $db->conn->query($sSQL);
 
             $sSqlE= "update sgd_sexp_secexpedientes set sgd_sexp_prestamo = false where sgd_exp_numero in ($expToChang)";
-            var_dump($sSqlE);
             $db->conn->query($sSqlE);
 
-            foreach ($snoExpDev as $key){
-              $hist->insertarHistoricoExp($key, $fldradicado, $dependencia, $codusuario, $nombTx, 91,1);
+            if($setHisExp){
+              foreach ($snoExpDev as $key){
+                $hist->insertarHistoricoExp($key, $fldradicado, $dependencia, $codusuario, $nombTx, 91,1);
+              }
+              $setHisExp = false;
             }
+
           }
         }
 
@@ -639,7 +642,7 @@ function PRESTAMO_show() {
                      </tr>
 	                 <tr>
                         <td colspan=2><footer><input type="submit" class="btn btn-primary" value="Solicitar" align=left>&nbsp;&nbsp;
-	            	                         <input type="submit" class='btn btn-default' value="Regresar" onClick="javascript: regresar();"></footer></td>
+                        <input type="submit" class='btn btn-default' value="Regresar" onClick="javascript: regresar();"></footer></td>
 	                 </tr>
                   </table>
                </form> <?

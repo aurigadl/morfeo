@@ -5,7 +5,6 @@ $query = "select u.USUA_EMAIL
 	where u.USUA_CODI ='$usuaCodiMail' and  u.depe_codi='$depeCodiMail'";
 $rs=$db->conn->query($query);
 $mailDestino = $rs->fields["USUA_EMAIL"];
-//echo "$mailDestino";
 include $ruta_raiz."/conf/configPHPMailer.php";
 
 $queryPath = "select RADI_NUME_RADI, RADI_PATH

@@ -2,14 +2,14 @@
 session_start();
 
 
-if(!$ruta_raiz) $ruta_raiz = ".."; 
+if(!$ruta_raiz) $ruta_raiz = "..";
 if (!$_SESSION['dependencia'])
     header ("Location: $ruta_raiz/cerrar_session.php");
 
 $systemDate = $db->conn->sysTimeStamp;
 $tmp_substr = $db->conn->substr;
 switch($db->driver)
-{	
+{
  case 'mssql':
 	// Ejecuta la consulta por defecto si no es DNP
 	$radi_nume_radi		= " convert(varchar(14), r.radi_nume_radi) ";
@@ -34,7 +34,7 @@ switch($db->driver)
 		}break;
 	case 'postgres':
 	case 'postgres7':
-	{	
+	{
 		$radi_nume_radi		= "cast(r.radi_nume_radi as varchar(20)) ";
 		$usua_doc_c		= "cast(c.USUA_DOC as varchar(8)) ";
 		$radi_nume_salida	= "cast(RADI_NUME_SALIDA as varchar(20)) ";

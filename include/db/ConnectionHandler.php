@@ -245,8 +245,7 @@ function getResult($sql) {
 
 	$temp = array();
 
-	foreach($record as $fieldName=>$field )
-	{
+	foreach($record as $fieldName=>$field ){
 	$tmpWhere[] = "  " . $fieldName . "=" . $field;
 	}
 	$sql = "delete from " . $table . " where " . join(" and ",$tmpWhere);
