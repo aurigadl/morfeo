@@ -33,6 +33,7 @@ $krd         = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $codusuario  = $_SESSION["codusuario"];
 $noExp       = 0 ;
+$onlyonehist = true;
 $expediente  = $_SESSION['dataPresExpediente']['expediente'];
 $dataExpRadi = $_SESSION['dataPresExpediente'];
 
@@ -156,13 +157,13 @@ foreach ($radiprestar as $fldradicado) {
       tosql($expediente,"Text")."," .
       tosql($valSolPrest,"Number").
       ")";
-
-      $hist->insertarHistoricoExp($expediente,$radiprestar,$dependencia,$codusuario,$observacion, 91,1);
+      if($onlyonehist){
+        $hist->insertarHistoricoExp($expediente,$radiprestar,$dependencia,$codusuario,$observacion, 91,1);
+        $onlyonehist = false;
+      }
     // Execute SQL statement
     $rs = $db->query($sSQL);
-
   }
-
 }
 
 if(!empty(count($radiprestar))){

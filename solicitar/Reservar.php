@@ -34,23 +34,26 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 define('ADODB_ASSOC_CASE', 1);
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
-$codusuario = $_SESSION["codusuario"];
-$tip3Nombre=$_SESSION["tip3Nombre"];
-$tip3desc = $_SESSION["tip3desc"];
-$tip3img =$_SESSION["tip3img"];   $verrad = "";
+$codusuario  = $_SESSION["codusuario"];
+$tip3Nombre  = $_SESSION["tip3Nombre"];
+$tip3desc    = $_SESSION["tip3desc"];
+$tip3img     = $_SESSION["tip3img"];   $verrad = "";
 $ruta_raiz = "..";
-include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-$db = new ConnectionHandler($ruta_raiz);
-$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
+include_once "$ruta_raiz/include/db/ConnectionHandler.php";
+include_once "$ruta_raiz/include/tx/Historico.php";
+
+$db   = new ConnectionHandler($ruta_raiz);
+$hist = new Historico($db);
+
+$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+$db->conn->debug = false;
 /*********************************************************************************
- *       Filename: Reservar.php
- *       Modificado:
- *          1/3/2006  IIAC  Facilita la interfaz para que el usuario cancele o
- *                          solicite un documento fisico y realiza las
- *                          actualizaciones relacionadas con el modulo de
- *                          prestamos en la base de datos.
- *********************************************************************************/
+  Facilita la interfaz para que el usuario cancele o
+  solicite un documento fisico y realiza las
+  actualizaciones relacionadas con el modulo de
+  prestamos en la base de datos.
+*********************************************************************************/
 // Reservar CustomIncludes begin
    include "common.php";
 // Save Page and File Name available into variables
@@ -164,15 +167,15 @@ function PRESTAMO_action($sAction) {
 
     $krd         = $_SESSION["krd"];
     $dependencia = $_SESSION["dependencia"];
-    $codusuario = $_SESSION["codusuario"];
+    $codusuario  = $_SESSION["codusuario"];
 
     // Modificado Infometrika 14-Julio-2009
     // Se mantiene la funcion get_param().
     //$fldradicado=$_GET["radicado"];
-    $fldradicado=get_param("radicado");
+    $fldradicado= get_param("radicado");
+    $snoExpDev  = explode(",",get_param("snoExpDev"));
     $fldexpediente=$GLOBALS["numExpediente"];
     $krd = $_SESSION["krd"];
-    $dependencia = $_SESSION["dependencia"];
     //if(!$fldradicado) $fldradicado=$_POST["radicado"];
     // Regresa al menu del radicado
     if ($sAction=="cancelar") {
@@ -238,6 +241,7 @@ function PRESTAMO_action($sAction) {
 
     // Cancelacion, prestamo o devolucion de un documento
     elseif ($sAction=="prestamo" || $sAction=="prestamoIndefinido" || $sAction=="delete" || $sAction=="devolucion") {
+        $fecha=date("d-m-Y  h:i A");
         // Inicializa parametros para SQL
         $fldPRES_FECH=$db->conn->OffsetDate(0,$db->conn->sysTimeStamp);
         // Modificado Infometrika 14-Julio-2009
@@ -275,29 +279,44 @@ function PRESTAMO_action($sAction) {
             $setFecha="PRES_FECH_CANC=".$fldPRES_FECH.", USUA_LOGIN_CANC='".$krd."'";
             $nombTx="Cancelar Solicitud de Pr&eacute;stamo";
         }
+
         // Devolucion
         elseif($sAction=="devolucion") {
-            $estadoNew=3;
-            // Modificado Infometrika 14-Julio-2009
-            // Se mantiene la funcion get_param().
-            //$fldDESC=tosql($_GET["observa"],"Text");
-            $fldDESC=tosql(get_param("observa"),"Text");
-            $setFecha="PRES_FECH_DEVO=".$fldPRES_FECH.", DEV_DESC=".$fldDESC.", USUA_LOGIN_RX='".$krd."' ";
-            $nombTx="Devolver Documento";
-            $titError="El registro de la devolucion no pudo ser realizado";
-            $estadoOld="in (2,5)";
+          $estadoNew=3;
+          $fldDESC   =tosql(get_param("observa"),"Text");
+          $setFecha  ="PRES_FECH_DEVO=".$fldPRES_FECH.", DEV_DESC=".$fldDESC.", USUA_LOGIN_RX='".$krd."' ";
+          $nombTx    ="Devolver Documento prestado";
+          $titError  ="El registro de la devolucion no pudo ser realizado";
+          $estadoOld ="in (2,5)";
+          var_dump($snoExpDev);
+          if($snoExpDev){
+            $expToChang = implode(",", $snoExpDev);
+
+            $sSQL = "update prestamo set $setFecha, pres_estado=$estadoNew where sgd_exp_numero in ($expToChang)";
+            var_dump($sSQL);
+            $db->conn->query($sSQL);
+
+            $sSqlE= "update sgd_sexp_secexpedientes set sgd_sexp_prestamo = false where sgd_exp_numero in ($expToChang)";
+            var_dump($sSqlE);
+            $db->conn->query($sSqlE);
+
+            foreach ($snoExpDev as $key){
+              $hist->insertarHistoricoExp($key, $fldradicado, $dependencia, $codusuario, $nombTx, 91,1);
+            }
+          }
         }
-        $fecha=date("d-m-Y  h:i A");
+
         // Create SQL statement
         $sSQL = "update PRESTAMO set ".$setFecha.",PRES_ESTADO=".$estadoNew."
-		 where PRES_ID in (".$sfldPRES_ID.") and PRES_ESTADO ".$estadoOld;
+		             where PRES_ID in (".$sfldPRES_ID.") and PRES_ESTADO ".$estadoOld;
+
         // Execute SQL statement
         if($db->conn->query($sSQL)){
             $codTx               = 10;
             $usuaCodiMail        = $codusuario ;
             $depeCodiMail        = $dependencia;
             $radicadosSelText    = $fldradicado;
-            $asuntoMailPrestamo  = "Se realizo el prestamo de un documento ($fldradicado)";
+            $asuntoMailPrestamo  = "Se realizo una  acción de prestamo de un documento ($fldradicado)";
             include "$ruta_raiz/include/mail/mailInformar.php";
             // some statement that removes all printed/echoed items
             ob_end_clean();
@@ -307,15 +326,13 @@ function PRESTAMO_action($sAction) {
         }
     }
 }
-//-------------------------------
-
-
 
 //===============================
 // ESTADO_PRESTAMO_show begin
-//                      Presenta el estado del documento y
-//                      sus anexos.
+// Presenta el estado del documento
+// y sus anexos.
 //-------------------------------
+
 function ESTADO_PRESTAMO_show() {
    global $db;
    global $sFileName;

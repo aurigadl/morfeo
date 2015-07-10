@@ -10,7 +10,7 @@ include $ruta_raiz."/conf/configPHPMailer.php";
 
 $queryPath = "select RADI_NUME_RADI, RADI_PATH
 	from RADICADO
-	where RADI_NUME_RADI IN($radicadosSelText 0)";
+	where RADI_NUME_RADI IN($radicadosSelText)";
 $rsPath = $db->conn->query($queryPath);
 $linkImagenesTmp = "";
 if($rsPath){

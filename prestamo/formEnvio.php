@@ -29,18 +29,19 @@ header ("Location: $ruta_raiz/cerrar_session.php");
 
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
-?>
-<HTML>
-<?
+
 $krd          = $_SESSION["krd"];
 $dependencia  = $_SESSION["dependencia"];
 $usua_nomb    = $_SESSION["usua_nomb"];
 $depe_nomb    = $_SESSION["depe_nomb"];
 $usua_doc     = $_SESSION["usua_doc"];
 $codusuario   = $_SESSION["codusuario"];
+$snoExpDev    = implode(",",array_unique(explode(",",$snoExpDev)));
 
 $ruta_raiz = "..";
 $mensaje_error = false;
+
+echo "<HTML>";
 
 $verrad="";
 define('ADODB_ASSOC_CASE', 1);
@@ -77,26 +78,26 @@ $db = new ConnectionHandler($ruta_raiz);
         }
     }
    // Inicializa la identificacion del usuario solicitante
-   $usua_codi=strip($_POST["usua_codi"]);   
+   $usua_codi=strip($_POST["usua_codi"]);
 
    $query="select USUA_LOGIN_ACTU from PRESTAMO where PRES_ID in ($setFiltroSelect)";  //primer usuario de los registros
-   $rs = $db->conn->query($query);		 
-   
-   if($rs && !$rs->EOF){ $usua_codi_n=$rs->fields("USUA_LOGIN_ACTU"); } //primer usuario de los registros    		
+   $rs = $db->conn->query($query);
+
+   if($rs && !$rs->EOF){ $usua_codi_n=$rs->fields("USUA_LOGIN_ACTU"); } //primer usuario de los registros
    $cant=0;   //cantidad de registros solicitados por el mismo usuario
    if($pageAnt==$sFileName && $ordenar==0) {
       $query=" select count(PRES_ID) as TOTAL from PRESTAMO where PRES_ID in ($setFiltroSelect) and USUA_LOGIN_ACTU='".$usua_codi."'";
-      $rs = $db->conn->query($query);		 
+      $rs = $db->conn->query($query);
       if ($rs && !$rs->EOF) { $cant=$rs->fields("TOTAL"); }
    }
    if($cant==0){ $usua_codi=$usua_codi_n; }
    // Recupera radicado e identificador de los registros seleccionados
-   include("$ruta_raiz/include/query/busqueda/busquedaPiloto1.php");    
-   if($pageAnt==$sFileName && $ordenar==0){  
+   include("$ruta_raiz/include/query/busqueda/busquedaPiloto1.php");
+   if($pageAnt==$sFileName && $ordenar==0){
       $query="select PRES_ID,$radi_nume_radi AS RADI_NUME_RADI from PRESTAMO r where PRES_ID in ($setFiltroSelect) and USUA_LOGIN_ACTU='".$usua_codi."'";
    }
    else{
-      $query="select PRES_ID,$radi_nume_radi AS RADI_NUME_RADI from PRESTAMO r where PRES_ID in ($setFiltroSelect)"; 
+      $query="select PRES_ID,$radi_nume_radi AS RADI_NUME_RADI from PRESTAMO r where PRES_ID in ($setFiltroSelect)";
    }
    $rs = $db->conn->query($query);
    $fldRADICADO="";  //RADI_NUME_RADI separados por coma
@@ -106,51 +107,51 @@ $db = new ConnectionHandler($ruta_raiz);
    while($rs && !$rs->EOF) {
       $x=$rs->fields("RADI_NUME_RADI");
 	  $y=$rs->fields("PRES_ID");
-	  if ($j!=0) { 
-	     $fldRADICADO.=","; 
+	  if ($j!=0) {
+	     $fldRADICADO.=",";
 		 $setFiltroSelect.=",";
 	  }
-	  $setFiltroSelect.=$y;		 
+	  $setFiltroSelect.=$y;
 	  $fldRADICADO.=$x;
-      $j++; 
+      $j++;
       $rs->MoveNext();
-   }  
-   
-   
-   // Procesamiento de los registros seleccionados 
-   $encabezado="&krd=".tourl($krd)."&s_PRES_ID=".tourl($setFiltroSelect)."&dependencia=".tourl($dependencia).
-               "&radicado=".tourl($fldRADICADO)."&s_PRES_REQUERIMIENTO=&FormAction=";
+   }
+
+
+   // Procesamiento de los registros seleccionados
+   echo $encabezado="&krd=".tourl($krd)."&s_PRES_ID=".tourl($setFiltroSelect)."&dependencia=".tourl($dependencia).
+               "&radicado=".tourl($fldRADICADO)."&s_PRES_REQUERIMIENTO=&snoExpDev=$snoExpDev&FormAction=";
    $enviar=0;
 
    if($opcionMenu==3) {  //cancelar
-      $encabezado.="delete&";	  
-      $enviar=1; 	  
-   }			   
+      $encabezado.="delete&";
+      $enviar=1;
+   }
    elseif ($opcionMenu==1 || $opcionMenu==2) {  //prestamo y devoluci�n
-      $query="select PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_PASW'"; 
+      $query="select PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_PASW'";
       $rs = $db->conn->query($query);
-      if ($rs && !$rs->EOF) { $verClave = $rs->fields("PARAM_VALOR"); }         
-      // Inicializa las variables   
-      $flds_PRES_ESTADO=strip($_POST["s_PRES_ESTADO"]);    
+      if ($rs && !$rs->EOF) { $verClave = $rs->fields("PARAM_VALOR"); }
+      // Inicializa las variables
+      $flds_PRES_ESTADO=strip($_POST["s_PRES_ESTADO"]);
       if ($opcionMenu==1) { //Pr�stamo
 	     if($flds_PRES_ESTADO==5){ $encabezado.="prestamoIndefinido&"; }
-	     else                    { $encabezado.="prestamo&"; }	  
-         $titCaj="Prestar Documento"; 	  
+	     else                    { $encabezado.="prestamo&"; }
+         $titCaj="Prestar Documento";
          // Inicializacion de la fecha de vencimiento
-         if ($fechaVencimiento=="") {	  	  	  
-            $query="select PARAM_VALOR,PARAM_NOMB from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_DIAS_PREST'"; 
+         if ($fechaVencimiento=="") {
+            $query="select PARAM_VALOR,PARAM_NOMB from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_DIAS_PREST'";
             $rs = $db->conn->query($query);
-            if(!$rs->EOF) { 
+            if(!$rs->EOF) {
                $x = $rs->fields("PARAM_VALOR");  // d�as por defecto
-			   $hastaXDias = strtotime("+".$x." day"); 
-	           $fechaVencimiento=date("Y-m-d",$hastaXDias);	
+			   $hastaXDias = strtotime("+".$x." day");
+	           $fechaVencimiento=date("Y-m-d",$hastaXDias);
 			}
-		 }		 
+		 }
       }
-      else { // Devoluci�n		
+      else { // Devolucion
          $encabezado.="devolucion&";
-         $titCaj="Devolver Documento"; 	  
-      }	  
+         $titCaj="Devolver Documento";
+      }
       // Procesa la solicitud
       if ($pageAnt==$sFileName){
          $enviar     = 1;
@@ -171,25 +172,14 @@ $db = new ConnectionHandler($ruta_raiz);
          if ($ordenar==0 && $opcionMenu ==1){
             $dat=date("Y-m-d");
 	        if ($fechaVencimiento > $dat){
-			   $encabezado.="&fechaVencimiento=".tourl($fechaVencimiento)."&"; 
+			   $encabezado.="&fechaVencimiento=".tourl($fechaVencimiento)."&";
 			     } else {
-			   echo "<script> alert('La fecha de vencimiento no puede ser menor o igual que la actual'); </script>"; 
+			   echo "<script> alert('La fecha de vencimiento no puede ser menor o igual que la actual'); </script>";
 			   $nover   = 1;
          $enviar  = 0;
 			       }
   	     }
-         /*// Validaci�n de la contrase�a
-	     $flds_CONTRASENA=strip($_POST["s_CONTRASENA"]);
-		 if ($ordenar==0 && $verClave==1 && $nover!=1) {
-            $query="select USUA_CODI from USUARIO where USUA_LOGIN='".$usua_codi."' and USUA_PASW='".SUBSTR(md5($flds_CONTRASENA),1,26)."'"; 
-            $rs = $db->conn->query($query);		 
-            if($rs && !$rs->EOF) { $enviar=1; }
-	        else { 
-			   echo "<script> alert('La contraseña del usuario solicitante es incorrecta'); </script>"; 
-               $enviar=0;
-			}			
-		 } */
-	  }    
+	    }
    }
 
     // Oculta o hace visible el campo que solicita la contrase�a
@@ -200,41 +190,41 @@ $db = new ConnectionHandler($ruta_raiz);
         echo "<form action='".$ruta_raiz."/solicitar/Reservar.php?<?=$encabezado?>' method='post' name='go'> </form>";
         echo "<script>document.go.submit();</script>";
     }
-   
-   
+
+
    // Build SQL
-   $sSQLsele=" and P.PRES_ID in (".$setFiltroSelect.") ";   
-   include $ruta_raiz."/include/query/prestamo/builtSQL1.inc";   
-   include $ruta_raiz."/include/query/prestamo/builtSQL3.inc";       
-   // Build ORDER statement	  	  
+   $sSQLsele=" and P.PRES_ID in (".$setFiltroSelect.") ";
+   include $ruta_raiz."/include/query/prestamo/builtSQL1.inc";
+   include $ruta_raiz."/include/query/prestamo/builtSQL3.inc";
+   // Build ORDER statement
    $iSort=strip($_POST["FormPedidos_Sorting"]);
-   $iSorted=strip($_POST["FormPedidos_Sorted"]); 
-   $sDirection=strip($_POST["s_Direction"]); 
+   $iSorted=strip($_POST["FormPedidos_Sorted"]);
+   $sDirection=strip($_POST["s_Direction"]);
    if($pageAnt!=$sFileName) {
-      if($iSorted==$iSort && $sDirection=" DESC "){ $sDirection=" ASC "; }   
-	  else{ $sDirection=" DESC "; }   
+      if($iSorted==$iSort && $sDirection=" DESC "){ $sDirection=" ASC "; }
+	  else{ $sDirection=" DESC "; }
    }
    if($iSorted!=$iSort){ $sDirection=" DESC ";}
-   else{ 	
+   else{
 	  if (strcasecmp($sDirection," DESC ")==0){ $sDirection=" ASC "; }
-	  else { $sDirection=" DESC "; }  
+	  else { $sDirection=" DESC "; }
    }
 
-   $sOrder=" order by ".$iSort.$sDirection.",PRESTAMO_ID";   
+   $sOrder=" order by ".$iSort.$sDirection.",PRESTAMO_ID";
    $sSQLtot=$sSQL.$sOrder;
    // Inicializa los campos de la tabla que van a ser vistos
-   
-   include "inicializarRTA.inc";		
-   // HTML column prestamo headers		 		 		 
+
+   include "inicializarRTA.inc";
+   // HTML column prestamo headers
 ?>
 <head>
-	<title>Enviar Datos</title>	  
+	<title>Enviar Datos</title>
 	<title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
 	<!-- Bootstrap core CSS -->
-	<?php include_once "../htmlheader.inc.php"; ?>	 
+	<?php include_once "../htmlheader.inc.php"; ?>
 </head>
 
 <body class="smart-form">
@@ -243,17 +233,18 @@ $db = new ConnectionHandler($ruta_raiz);
 		<td width=100%>
 			<form action='<?=$ruta_raiz?>/solicitar/Reservar.php?<?=$encabezado?>' method=post name="rta" class="smart-form" >
 			<input type="hidden" value='<?=$krd?>' name="krd">
-            <input type="hidden" value='0' name="process">
-			<input type="hidden" value=" " name="radicado">  	 
-			<input type="hidden" value="<?=$cantRegistros?>" name="prestado">  	 								
-			<input type="hidden" value="<?=$sFileName?>" name="sFileName">  				 								
-			<input type="hidden" name="opcionMenu" value="<?= $opcionMenu ?>">	  						
-			<input type="hidden" name="usua_codi" value="<?=$usua_codi?>">				
+      <input type="hidden" value='0' name="process">
+			<input type="hidden" value=" " name="radicado">
+			<input type="hidden" value="<?=$cantRegistros?>" name="prestado">
+			<input type="hidden" value="<?=$snoExpDev?>"     name="snoExpDev">
+			<input type="hidden" value="<?=$sFileName?>"     name="sFileName">
+			<input type="hidden" name="opcionMenu" value="<?= $opcionMenu ?>">
+			<input type="hidden" name="usua_codi" value="<?=$usua_codi?>">
 			<input type="hidden" name="FormPedidos_Sorting" value="<?=$iSort?>">
 			<input type="hidden" name="FormPedidos_Sorted" value="<?=$iSorted?>">
-			<input type="hidden" name="s_Direction" value="<?=$sDirection?>">				         
+			<input type="hidden" name="s_Direction" value="<?=$sDirection?>">
 			<input type="hidden" name="ordenar" value="0"> <!-- no ordena !-->
-			<input type="hidden" name="s_PRES_ID" value="<?=$setFiltroSelect?>">				                 	  								
+			<input type="hidden" name="s_PRES_ID" value="<?=$setFiltroSelect?>">
 		<table width="100%" class="table table-bordered">
             <tr>
                 <TD width=30% ><SMALL>USUARIO:<?=$usua_nomb?><br></SMALL></TD>
@@ -271,25 +262,25 @@ $db = new ConnectionHandler($ruta_raiz);
 					<i class="icon-append fa fa-comment"></i>
 					<textarea placeholder="Comentario . . . " name="observa" rows="1"><?=$observa?></textarea>
 					</label>
-				</tr>  			             
+				</tr>
 <? if ($opcionMenu==1) {  // Prestamo?>
 	<tr bgcolor="White">
 	<td width="100" align="right" ><small>Estado:</small></td>
 		<td align="left"><label class=select><select class="select" name="s_PRES_ESTADO" onChange="javascript: ver(); ">
-<?    $query="select PARAM_CODI, PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' and PARAM_CODI in (2,5,6) ORDER BY PARAM_CODI"; 
+<?    $query="select PARAM_CODI, PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_ESTADO' and PARAM_CODI in (2,5,6) ORDER BY PARAM_CODI";
 	$rs = $db->conn->query($query);
 	while($rs && !$rs->EOF) {
 			$idEstado =$rs->fields("PARAM_CODI");
-			$txtEstado=$rs->fields("PARAM_VALOR");	
-		$x="";	  	  		 
-	if ($flds_PRES_ESTADO==$idEstado) { $x=" selected "; } 
-			echo " <option ".$x." value=".$idEstado.">".strtoupper($txtEstado)."</option> ";	   
+			$txtEstado=$rs->fields("PARAM_VALOR");
+		$x="";
+	if ($flds_PRES_ESTADO==$idEstado) { $x=" selected "; }
+			echo " <option ".$x." value=".$idEstado.">".strtoupper($txtEstado)."</option> ";
 			$rs->MoveNext();
 	} ?>
 	</select></td>
-	</tr>						  									  					  
+	</tr>
 		<tr bgcolor="White" id="fecha">
-			<td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Fecha de Vencimiento(aaaa/mm/dd)</td>	 
+			<td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Fecha de Vencimiento(aaaa/mm/dd)</td>
             <td align="left">
                 <section class="col col-3">
                     <label class="input">
@@ -309,18 +300,18 @@ $db = new ConnectionHandler($ruta_raiz);
 	else {           fecha.style.display = 'none'; }
 	}
 			ver();
-	</script>					  					  
+	</script>
 <? }
-?> 
+?>
       <tr bgcolor="White" id="psduserw">
-      <td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Contraseña del usuario:</td>   
+      <td width="100" align="right" class="titulosError2" title="(aaaa-mm-dd)">Contraseña del usuario:</td>
             <td align="left">
                 <input id="passrwduser" type="password"  autocomplete="off"  placeholder="" name="paswrduser">
                  <input type="button" class="btn btn-primary" value="Comprobar" onclick="compararpassword();">
          </td>
       </tr>
 <?php
-   if ($verClave==1) {  ?>					  
+   if ($verClave==1) {  ?>
 			<tr bgcolor="White">
 			<td width="100" align="right"><small>Contrase&ntilde;a<br><?=$usua_codi?></small></td>
 			<td align="left"><input type="password" name="s_CONTRASENA" value="<?=$flds_CONTRASENA?>"></td>
@@ -332,49 +323,49 @@ $db = new ConnectionHandler($ruta_raiz);
 			<td colspan="4" class="celdaGris" align=center><center>
 			<table width="100%"  align="center" bgcolor="White">
 					<TR bgcolor="White">
-			<TD width="100%" align="center">					 
-	<table align="center" class="table table-bordered" width="100%">	   
-<?PHP      
-   include "inicializarTabla.inc";     
-   // Execute SQL statement	
+			<TD width="100%" align="center">
+	<table align="center" class="table table-bordered" width="100%">
+<?PHP
+   include "inicializarTabla.inc";
+   // Execute SQL statement
    $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
    $rs=$db->query($sSQLtot);
-   $db->conn->SetFetchMode(ADODB_FETCH_NUM);           
+   $db->conn->SetFetchMode(ADODB_FETCH_NUM);
    // Display grid based on recordset
-   $y=0; // Cantidad de registros presentados 
+   $y=0; // Cantidad de registros presentados
    include_once "getRtaSQLAntIn.inc"; //Une en un solo campo los expedientes
    while($rs && !$rs->EOF) {
       // Inicializa las variables con los resultados
-	  include "getRtaSQL.inc";		
+	  include "getRtaSQL.inc";
 	  if ($antfldPRESTAMO_ID!=$fldPRESTAMO_ID) {
 		 if ($y!=0) {  include "cuerpoTabla.inc"; } // Fila de la tabla con los resultados
 		 include "getRtaSQLAnt.inc";
 		 $y++;
-	  }else {		 
-		 if ($antfldEXP!=""){ 
-			$antfldEXP.="<br>"; 
-   	        $antfldARCH.="<br>"; 
+	  }else {
+		 if ($antfldEXP!=""){
+			 $antfldEXP.="<br>";
+   	    $antfldARCH.="<br>";
 		 }
 		 $antfldEXP.=$fldEXP;
 		 if ($fldARCH=='SI') {
   			$encabARCH = session_name()."=".session_id()."&buscar_exp=".tourl($fldEXP)."&krd=$krd&tipo_archivo=&nomcarpeta=";
 		    $antfldARCH.="<a href='".$ruta_raiz."/expediente/datos_expediente.php?".$encabARCH."&num_expediente=".tourl($fldEXP)."&nurad=".tourl($antfldRADICADO)."' class='vinculos'>".$fldARCH."</a>";
 		 }
-	     else { $antfldARCH.=$fldARCH; }		 		 
+	     else { $antfldARCH.=$fldARCH; }
 	  }
-      $rs->MoveNext(); 			
+      $rs->MoveNext();
    }
-   if ($y!=0) {	  		 
-      include "cuerpoTabla.inc";  // Fila de la tabla con lso resultados						 
-      $y++;	  
-   } 
+   if ($y!=0) {
+      include "cuerpoTabla.inc";  // Fila de la tabla con lso resultados
+      $y++;
+   }
    $iCounter=$y-1;  //cantidad de registros
  ?>
 	</table>
 		</TD>
 		</tr>
 	</table></center></td>
-	</tr>			 
+	</tr>
 </TABLE><br>
 		</form></td>
 	</tr>
@@ -386,7 +377,7 @@ $db = new ConnectionHandler($ruta_raiz);
     $(document).ready(function() {
       $("#REALIZAR").hide();
       $("#passrwduser").prop('disabled', false);
-    }); 
+    });
  		// START AND FINISH DATE
 		$('#startdate').datepicker({
 			dateFormat : 'yy/mm/dd',
@@ -401,9 +392,9 @@ $db = new ConnectionHandler($ruta_raiz);
 		document.rta.action="formEnvio.php";
 		document.rta.FormPedidos_Sorting.value=i;
 		document.rta.FormPedidos_Sorted.value=<?=$iSort?>;
-		document.rta.ordenar.value=1;	  	  
+		document.rta.ordenar.value=1;
 		document.rta.submit();
-	} 
+	}
     // Marca todas las casillas si la del titulo es marcada
 	function seleccionarRta() {
 	   valor=document.rta.rta_.checked;
@@ -411,84 +402,101 @@ $db = new ConnectionHandler($ruta_raiz);
        $v = $j + 1 ;?>
        document.rta.rta_<?=$v?>.checked=valor;
 <? } ?>
-    } 
+    }
 
-    // Verifica que el navegador soporte las funciones de Javascript 
+    // Verifica que el navegador soporte las funciones de Javascript
     function setSel(start,end){
-       document.rta.observa.focus();	
+       document.rta.observa.focus();
        var t=document.rta.observa;
        if(t.setSelectionRange){
           t.setSelectionRange(start,end);
           t.focus();
      }else{ alert('Su browser no soporta las funciones Javascript de esta pagina.'); }
-    } 	
+    }
     // Verifica el maximo numero de caracteres permitido
     function valMaxChars(maxchars) {
-      document.rta.observa.focus();		
+      document.rta.observa.focus();
       if(document.rta.observa.value.length > maxchars) {
    	     alert('Demasiados caracteres en el texto, solo se permiten '+ maxchars);
  	     setSel(maxchars,document.rta.observa.value.length);
-         return false; 
+         return false;
 	  }
       else { return true; }
     }
-	// Valida los campos antes de enviar el formulario 
+    // Valida los campos antes de enviar el formulario
     function okTx() {
-       valCheck = $( "input:checked" ).length - 1;
-	   if(valCheck==0) {
-     	  alert('Debe seleccionar al menos un radicado');	   	   
-	      return 0;
-	   }
-       verClave=<?=$verClave?>;
-	   if (verClave==1) {
-		  if (document.rta.s_CONTRASENA.value=="") { 
-		     alert('Digite la contraseña del usuario solicitante');
-			 return 0;
-		  }
-	   }
-	   numCaracteres = document.rta.observa.value.length;
-	   if(numCaracteres>=6){
-		 if (valMaxChars(550)) {
-	        document.rta.prestado.value=<?=$iCounter?>;
-            document.rta.action  ='<?=$sFileName?>?';
-            document.rta.process.value = 1;
-		    document.rta.submit(); 
-		 }
-	   }else{ 
-	      alert("Atencion: El numero de Caracteres minimo en la Observacion es de 6. (Digito :"+numCaracteres+")"); 
-		  return 0;
-	   }	 	     
+      var valCheck = $( "input:checked" ).length - 1;
+      var verClave =<?=$verClave?>;
+      var dataExp = new Array();
+      var numCaracteres = document.rta.observa.value.length;
+
+      if(valCheck==0) {
+        alert('Debe seleccionar al menos un radicado');
+        return 0;
+      }
+
+      if (verClave==1) {
+        if (document.rta.s_CONTRASENA.value=="") {
+          alert('Digite la contraseña del usuario solicitante');
+          return 0;
+        }
+      }
+
+      $("input[name^='rta']:checked").each(
+        function(){
+          if($(this).data('expediente') !== undefined){
+            dataExp.push($(this).data('expediente'));
+          }
+        }
+      );
+
+      if(numCaracteres>=6){
+        if (valMaxChars(550)) {
+          if(dataExp.length > 0){
+            /*Se envian los numeros de expedientes de los cuales
+            * se deben devolver cada uno de los radicados*/
+            document.rta.snoExpDev.value=dataExp.toString();
+          }
+          document.rta.prestado.value=<?=$iCounter?>;
+          document.rta.action  ='<?=$sFileName?>?';
+          document.rta.process.value = 1;
+          document.rta.submit();
+        }
+      }else{
+        alert("Atencion: El numero de Caracteres minimo en la Observacion es de 6. (Digito :"+numCaracteres+")");
+        return 0;
+      }
     }
-	// Marca todas las cajas de seleccion arrancando la pagina
+	  // Marca todas las cajas de seleccion arrancando la pagina
     document.rta.rta_.checked=true;
- 	seleccionarRta();
+ 	  seleccionarRta();
 
 
-      function compararpassword() {
-         // var passhtml = md5($("#passrwduser").val());
-        var passhtml = $("#passrwduser").val();
-        var passphp = $("#use_paswor_dmd5").html();
+    function compararpassword() {
+      // var passhtml = md5($("#passrwduser").val());
+      var passhtml = $("#passrwduser").val();
+      var passphp = $("#use_paswor_dmd5").html();
 
-        var strMD5 = $().crypt({ method: "md5", source: passhtml });
-        var strMD5 = strMD5.substring(1,27);
+      var strMD5 = $().crypt({ method: "md5", source: passhtml });
+      var strMD5 = strMD5.substring(1,27);
 
-        //console.log(passphp);
-        //console.log(strMD5);
+      //console.log(passphp);
+      //console.log(strMD5);
 
-         // passhtml.toString();
-          passphp.toString();
+      // passhtml.toString();
+      passphp.toString();
 
-   if (strMD5==passphp){
-    $("#REALIZAR").show();
-    $("#passrwduser").css("border", "1px solid green");
-    $("#passrwduser").prop('disabled', true);
-    $("#passrwduser").val("");
-  }else{
-    //alert ('la contraseña es incorrecta');
-  $("#passrwduser").css("border", "1px solid red");
-  $("#passrwduser").val("");
-  }
-  }
+      if (strMD5==passphp){
+        $("#REALIZAR").show();
+        $("#passrwduser").css("border", "1px solid green");
+        $("#passrwduser").prop('disabled', true);
+        $("#passrwduser").val("");
+      }else{
+        //alert ('la contraseña es incorrecta');
+        $("#passrwduser").css("border", "1px solid red");
+        $("#passrwduser").val("");
+      }
+    }
 
   </script>
  </body>

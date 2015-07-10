@@ -1,7 +1,7 @@
 <?php
 #echo "hello"; exit;
 /**
- * @author Jairo Losada   
+ * @author Jairo Losada
  * @author Cesar Gonzalez <aurigadl@gmail.com>
  * @license  GNU AFFERO GENERAL PUBLIC LICENSE
  * @copyright
@@ -49,6 +49,7 @@ $ruta_raiz    = "..";
 $verrad = "";
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
+$db->conn->debug = false;
 
 if (!$tipo_archivo)
     $tipo_archivo = 0; //Para la consulta a archivados
@@ -557,9 +558,9 @@ function Pedidos_Show() {
         "&s_DEPE_NOMB=" . tourl($ps_DEPE_NOMB) . "&s_USUA_NOMB=" . tourl($ps_USUA_NOMB) . "&s_PRES_REQUERIMIENTO=" .
         tourl($ps_PRES_REQUERIMIENTO) . "&s_PRES_ESTADO=" . tourl($ps_PRES_ESTADO) . "&fechaInicial=" .
         tourl($fechaInicial) . "&fechaFinal=" . tourl($fechaFinal) . "&s_hora_limite=" . tourl($ps_hora_limite) .
-        "&s_minuto_limite=" . tourl($ps_minuto_limite) . "&s_meridiano=" . tourl($ps_meridiano); 
+        "&s_minuto_limite=" . tourl($ps_minuto_limite) . "&s_meridiano=" . tourl($ps_meridiano);
 
- 
+
 /**/
         $form_params_page = "&FormPedidos_Page=1&FormStarPage=1&FormSiguiente=0";
         $form_params = $form_params_search . $form_params_page . "&opcionMenu=" . tourl($opcionMenu) . "&krd=" . tourl($krd) .
@@ -656,7 +657,7 @@ function Pedidos_Show() {
                                 }
                                 kk++;
                             }
-                        } 
+                        }
                         if (cant == 0) {
                             alert("Debe seleccionar al menos un radicado");
                         } else {
@@ -759,7 +760,7 @@ function Pedidos_Show() {
                     <td colspan="11" align="center">
                         <input type="button" class="btn btn-primary" value="Prestar" onclick="enviar();">
                         <input type="button" class="btn btn-primary" value="Cancelar" title="Regresa al menú de préstamo y control de documentos" onclick="javascript:regresar();"></center>
-                    </td>       
+                    </td>
                 </tr>
             </table>
                      <?php } else { #SI el documento se va a devolver
@@ -768,7 +769,7 @@ function Pedidos_Show() {
                     <td colspan="11" align="center">
                         <input type="button" class="botones" value="Devolver" onclick="enviar();">
                         <input type="button" class="botones" value="Cancelar" title="Regresa al menú de préstamo y control de documentos" onclick="javascript:regresar();"></center>
-                    </td>       
+                    </td>
                 </tr>
                     <?php  } } }  ?>
             <?php  if ($_POST['genearreporte']=="Generar") {  ?>

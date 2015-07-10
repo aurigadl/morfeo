@@ -79,7 +79,7 @@ $sWhere=" where
   RE.PARAM_CODI=P.PRES_REQUERIMIENTO and
   RE.PARAM_NOMB='PRESTAMO_REQUERIMIENTO' and
   DA.DEPE_CODI=P.PRES_DEPE_ARCH and
-  P.PRES_ESTADO = 1 and";
+  P.PRES_ESTADO <= 2 and";
 
 if(!$ps_numeroExpediente){
   $sWhere .= " P.RADI_NUME_RADI=R.RADI_NUME_RADI  ";

@@ -718,7 +718,6 @@ if ($fieldTypeCode == 15) {
               },5000);
             }
         });
-		// alert(JSON.stringify(arrJ));
  }
 
 function cleanForm(){
