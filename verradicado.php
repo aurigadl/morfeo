@@ -204,7 +204,7 @@ function ver_temas(){
       <a class="vinculos" href='./solicitar/Reservas.php?radicado=<?="$verrad"?>'><small>Solicitados</small></a>
     </td>
     <td >
-      <a class="vinculos" href='./solicitar/Reservar.php?radicado=<?="$verrad&sAction=insert"?>&numExpediente=<?=$numExpediente?>'><small>Solicitar Fisico</small></a>
+      <a class="vinculos" href='./solicitar/Reservar.php?radicado=<?="$verrad&sAction=insert"?>&numExpediente=<?=$numExpediente?>'><small>Solicitar radicado Fisico</small></a>
     </td>
   </tr>
 </table>

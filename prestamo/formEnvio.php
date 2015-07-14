@@ -48,7 +48,7 @@ define('ADODB_ASSOC_CASE', 1);
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
 
-   if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
+if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
 
 /*********************************************************************************
  *       Filename: formEnvio.php
@@ -67,18 +67,20 @@ $db = new ConnectionHandler($ruta_raiz);
     // Recupera el identificador de los registros seleccionados
     $cantRegistros =intval($_POST["prestado"]); //cantidad de registros listados en la consulta
 
-    if($ordenar=="1"){
-       //Recupera todos los registros presentados si se da ordenar
-       $setFiltroSelect=strip($_POST["s_PRES_ID"]);
-    } else {
-        foreach ($_POST as $key => $valor){
-            if (preg_match('/rta.[0-9]/',$key)){
-                $setFiltroSelect .= empty($setFiltroSelect)? $valor : ", ".$valor ;
-            }
+    //Recupera todos los registros presentados si se da ordenar
+    if($_POST["s_PRES_ID"]){
+      $setFiltroSelect=strip($_POST["s_PRES_ID"]);
+    }else{
+      foreach ($_POST as $key => $valor){
+        if (preg_match('/rta.[0-9]/',$key)){
+          $setFiltroSelect .= empty($setFiltroSelect)? $valor : ", ".$valor ;
         }
+      }
     }
-   // Inicializa la identificacion del usuario solicitante
-   $usua_codi=strip($_POST["usua_codi"]);
+
+
+    // Inicializa la identificacion del usuario solicitante
+    $usua_codi=strip($_POST["usua_codi"]);
 
    $query="select USUA_LOGIN_ACTU from PRESTAMO where PRES_ID in ($setFiltroSelect)";  //primer usuario de los registros
    $rs = $db->conn->query($query);
@@ -100,23 +102,18 @@ $db = new ConnectionHandler($ruta_raiz);
       $query="select PRES_ID,$radi_nume_radi AS RADI_NUME_RADI from PRESTAMO r where PRES_ID in ($setFiltroSelect)";
    }
    $rs = $db->conn->query($query);
-   $fldRADICADO="";  //RADI_NUME_RADI separados por coma
-   $setFiltroSelect=""; //PRES_ID separados por coma
    $j=0;
 
    while($rs && !$rs->EOF) {
-      $x=$rs->fields("RADI_NUME_RADI");
-	  $y=$rs->fields("PRES_ID");
-	  if ($j!=0) {
-	     $fldRADICADO.=",";
-		 $setFiltroSelect.=",";
-	  }
-	  $setFiltroSelect.=$y;
-	  $fldRADICADO.=$x;
-      $j++;
-      $rs->MoveNext();
+     if(empty($fldRADICADO)){
+       $fldRADICADO     = $rs->fields("RADI_NUME_RADI");
+       $setFiltroSelect = $rs->fields("PRES_ID");
+     }else{
+       $fldRADICADO     .= ','.$rs->fields("RADI_NUME_RADI");
+       $setFiltroSelect .= ','.$rs->fields("PRES_ID");
+     }
+     $rs->MoveNext();
    }
-
 
    // Procesamiento de los registros seleccionados
    $encabezado="&krd=".tourl($krd)."&s_PRES_ID=".tourl($setFiltroSelect)."&dependencia=".tourl($dependencia).
@@ -126,14 +123,13 @@ $db = new ConnectionHandler($ruta_raiz);
    if($opcionMenu==3) {  //cancelar
       $encabezado.="delete&";
       $enviar=1;
-   }
-   elseif ($opcionMenu==1 || $opcionMenu==2) {  //prestamo y devoluci�n
+   } elseif ($opcionMenu == 1 || $opcionMenu == 2) {  //prestamo y devoluci�n
       $query="select PARAM_VALOR from SGD_PARAMETRO where PARAM_NOMB='PRESTAMO_PASW'";
       $rs = $db->conn->query($query);
       if ($rs && !$rs->EOF) { $verClave = $rs->fields("PARAM_VALOR"); }
       // Inicializa las variables
       $flds_PRES_ESTADO=strip($_POST["s_PRES_ESTADO"]);
-      if ($opcionMenu==1) { //Pr�stamo
+      if ($opcionMenu==1) { //Prestamo
 	     if($flds_PRES_ESTADO==5){ $encabezado.="prestamoIndefinido&"; }
 	     else                    { $encabezado.="prestamo&"; }
          $titCaj="Prestar Documento";

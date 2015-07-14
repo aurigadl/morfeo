@@ -179,6 +179,8 @@ function Search_Show() {
     }
     // Set variables with search parameters
     $flds_PRES_ESTADO = strip($_POST["s_PRES_ESTADO"]);
+
+
     $flds_RADI_NUME_RADI = strip($_POST["s_RADI_NUME_RADI"]);
     $flds_numeroExpediente = strip($_POST["s_numeroExpediente"]);
     $flds_USUA_LOGIN = strip($_POST["s_USUA_LOGIN"]);
@@ -203,7 +205,7 @@ function Search_Show() {
     ?>
     <form method="post" action="prestamo.php" name="busqueda" class="smart-form">
     <!-- de sesion !-->
-    <input type="hidden" value=" " name="radicado">
+    <input type="hidden" value="" name="radicado">
     <input type="hidden" value="" name="s_sql">
     <!-- control de visualizacion !-->
     <input type="hidden" name="opcionMenu" value="<?= $opcionMenu ?>">
@@ -525,6 +527,20 @@ function Pedidos_Show() {
 
     if (strlen($pageAnt) == 0) {
         include_once("$ruta_raiz/include/query/prestamo/builtSQL1.inc");
+        //se codiciona para que el prestamos filtre por distintos estados
+        //del prestamos.
+        // PRESTAMO_ESTADO 1 Solicitado
+        // PRESTAMO_ESTADO 2 Prestado
+        // PRESTAMO_ESTADO 3 Devuelto
+        // PRESTAMO_ESTADO 4 Cancelado
+        // PRESTAMO_ESTADO 5 Prestamo Indefinido
+        // PRESTAMO_ESTADO 6 Devolver al Proveedor
+        if($opcionMenu == 1 or $opcionMenu == 3){
+          $sWhere .= " AND P.PRES_ESTADO = 1 ";
+        } elseif($opcionMenu == 2){
+          $sWhere .= " AND P.PRES_ESTADO = 2 ";
+        }
+
         include_once("$ruta_raiz/include/query/prestamo/builtSQL2.inc");
         include_once("$ruta_raiz/include/query/prestamo/builtSQL3.inc");
         $iSort = strip(get_param("FormPedidos_Sorting"));

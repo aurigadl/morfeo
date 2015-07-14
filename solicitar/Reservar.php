@@ -45,7 +45,6 @@ include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db   = new ConnectionHandler($ruta_raiz);
 
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-$db->conn->debug = false;
 /*********************************************************************************
   Facilita la interfaz para que el usuario cancele o
   solicite un documento fisico y realiza las
@@ -162,6 +161,7 @@ function PRESTAMO_action($sAction) {
     global $krd; //usuario actual
     global $dependencia; //dependencia del usuario actual
     $ruta_raiz = "..";
+    $db->conn->debug = false;
 
     $krd         = $_SESSION["krd"];
     $dependencia = $_SESSION["dependencia"];
@@ -170,24 +170,23 @@ function PRESTAMO_action($sAction) {
 
     include_once "$ruta_raiz/include/tx/Historico.php";
     $hist = new Historico($db);
-    // Modificado Infometrika 14-Julio-2009
-    // Se mantiene la funcion get_param().
-    //$fldradicado=$_GET["radicado"];
-    $fldradicado= get_param("radicado");
-    $snoExpDev  = explode(",",get_param("snoExpDev"));
-    $fldexpediente=$GLOBALS["numExpediente"];
+
+    $fldradicado   = get_param("radicado");
+    $snoExpDev     = explode(",",get_param("snoExpDev"));
+    $fldexpediente = $GLOBALS["numExpediente"];
+    $arrRadicado   = explode(",",get_param("radicado"));
+    if(!is_array($arrRadicado)){
+      $arrRadicado[] = $arrRadicado;
+    }
+
     $krd = $_SESSION["krd"];
-    //if(!$fldradicado) $fldradicado=$_POST["radicado"];
     // Regresa al menu del radicado
     if ($sAction=="cancelar") {
         echo ".."; // dejar esto para que el navegador deje hacer el submit
         echo "<form name=Atras action='../verradicado.php?&verrad=$fldradicado' method=post class='smart-form'> </form>";
         echo "<script>document.Atras.submit();</script>";
-
-
         // Registro de una nueva solicitud
     }elseif ($sAction=="insert") {
-        // Modificado 14-Julio-2009
         // Se mantiene la funcion get_param().
         //$fldPRES_REQUERIMIENTO = $_POST["s_PRES_REQUERIMIENTO"];
         $fldPRES_REQUERIMIENTO = get_param("s_PRES_REQUERIMIENTO");
@@ -234,7 +233,7 @@ function PRESTAMO_action($sAction) {
             $asuntoMailPrestamo  = "Se realizo el prestamo de un documento ($fldradicado)";
             include "$ruta_raiz/include/mail/mailInformar.php";
             // some statement that removes all printed/echoed items
-            ob_end_clean();
+            //ob_end_clean();
         }else{
             echo "<script> alert(\" El registro no pudo ser realizado\"); </script>";
         }
@@ -290,28 +289,37 @@ function PRESTAMO_action($sAction) {
           $titError  ="El registro de la devolucion no pudo ser realizado";
           $estadoOld ="in (2,5)";
 
-          if($snoExpDev){
-            $expToChang = implode(",", $snoExpDev);
+          if(!empty($snoExpDev)){
+            $sqlformatExp = $sqlformatExp2 = implode(",", $snoExpDev);
+            if(is_array($sqlformatExp)){
+              foreach($sqlformatExp as $key){
+                $sqlformatExp .= empty($sqlformat)? "'$key'" : ",'$key'";
+              }
+            }else{
+              $sqlformatExp = "'$sqlformatExp'";
+            }
 
-            $sSQL = "update prestamo set $setFecha, pres_estado=$estadoNew where sgd_exp_numero in ($expToChang)";
+            $sSQL = "update prestamo set $setFecha, pres_estado=$estadoNew where sgd_exp_numero in ($sqlformatExp)";
             $db->conn->query($sSQL);
 
-            $sSqlE= "update sgd_sexp_secexpedientes set sgd_sexp_prestamo = false where sgd_exp_numero in ($expToChang)";
+            $sSqlE= "update sgd_sexp_secexpedientes set sgd_sexp_prestamo = false where sgd_exp_numero in ($sqlformatExp)";
             $db->conn->query($sSqlE);
 
             if($setHisExp){
-              foreach ($snoExpDev as $key){
-                $hist->insertarHistoricoExp($key, $fldradicado, $dependencia, $codusuario, $nombTx, 91,1);
+              if(is_array($sqlformatExp2)){
+                foreach($sqlformatExp2 as $key){
+                  $hist->insertarHistoricoExp($key, $arrRadicado, $dependencia, $codusuario, $nombTx, 92,1);
+                }
+              }else{
+                $hist->insertarHistoricoExp($sqlformatExp2, $arrRadicado, $dependencia, $codusuario, $nombTx, 92,1);
               }
               $setHisExp = false;
             }
-
           }
         }
-
         // Create SQL statement
-        $sSQL = "update PRESTAMO set ".$setFecha.",PRES_ESTADO=".$estadoNew."
-		             where PRES_ID in (".$sfldPRES_ID.") and PRES_ESTADO ".$estadoOld;
+        $sSQL = "UPDATE PRESTAMO SET ".$setFecha.",PRES_ESTADO=".$estadoNew."
+		             WHERE PRES_ID IN (".$sfldPRES_ID.") AND PRES_ESTADO ".$estadoOld;
 
         // Execute SQL statement
         if($db->conn->query($sSQL)){
@@ -322,7 +330,7 @@ function PRESTAMO_action($sAction) {
             $asuntoMailPrestamo  = "Se realizo una  acción de prestamo de un documento ($fldradicado)";
             include "$ruta_raiz/include/mail/mailInformar.php";
             // some statement that removes all printed/echoed items
-            ob_end_clean();
+            //ob_end_clean();
             verMensaje($nombTx,$fecha);
         }else{
             echo "<script> alert(".$titError."); </script>";
@@ -342,17 +350,13 @@ function ESTADO_PRESTAMO_show() {
    global $sPRESTAMOErr;
    // Modificado Infometrika 14-Julio-2009
    // Se mantiene la funcion get_param().
-   //$fldradicado=$_GET["radicado"];
+   $db->conn->debug = false;
    $fldradicado=get_param("radicado");
    $fldexpediente=$GLOBALS["numExpediente"];
    $krd = $_SESSION["krd"];
    $dependencia = $_SESSION["dependencia"];
    // Modificado Infometrika 14-Julio-2009
    // Esta operacion se realiza en el script solicitar/common.php, funcion get_param().
-   /*
-   $fldradicado=$_GET["radicado"];
-    IF(!$fldradicado) $fldradicado=$_POST["radicado"];
-    */
    include_once("../include/query/busqueda/busquedaPiloto1.php");
    if ($sPRESTAMOErr=="") {
       // Build SQL statement
@@ -484,7 +488,7 @@ function PRESTAMO_show() {
    global $db;
    global $sFileName;
    global $sPRESTAMOErr;
-   //$fldradicado=$_GET["radicado"];
+   $db->conn->debug = false;
    $fldradicado=get_param("radicado");
    $fldexpediente=$GLOBALS["numExpediente"];
    $krd = $_SESSION["krd"];
@@ -575,7 +579,7 @@ function PRESTAMO_show() {
                   <input type="hidden" value="insert" name="FormAction">
                   <input type="hidden" value="<?=$dependencia?>" name="dependencia">
                   <input type="hidden" value="<?=$GLOBALS["numExpediente"]?>" name="numExpediente">
-		  <input type="hidden" name="radicado" value="<?= tohtml($fldradicado) ?>">
+                  <input type="hidden" name="radicado" value="<?= tohtml($fldradicado) ?>">
 <?    // Usuario que no puede solicitar
          if ($sPRESTAMOErr!="") {
             $lookup_s = db_fill_array($sqlReq);

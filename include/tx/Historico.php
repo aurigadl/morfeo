@@ -41,72 +41,72 @@ class Historico
    * @return void
    *
    */
-  function insertarHistorico($radicados,  $depeOrigen , $usCodOrigen, $depeDestino,$usCodDestino, $observacion, $tipoTx)
-  {
-		//Arreglo que almacena los nombres de columna
-		#==========================
+   function insertarHistorico($radicados,  $depeOrigen , $usCodOrigen, $depeDestino,$usCodDestino, $observacion, $tipoTx){
+     //Arreglo que almacena los nombres de columna
+     #==========================
 
-		# Busca el Documento del usuario Origen
-		$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-		$this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-		// Modificado Infom�trika 18-Septiembre-2009
-                // Se agreg� AS \"USUA_DOC\" y AS \"USUA_LOGIN\"
-		$sql = "SELECT
-					 USUA_DOC 
-					,USUA_LOGIN 
-				FROM
-					USUARIO
-				WHERE
-					DEPE_CODI=$depeOrigen
-					AND USUA_CODI=$usCodOrigen";
-		# Busca el usuairo Origen para luego traer sus datos.
-		//$thia->db->conn->debug = true;
-		$rs = $this->db->conn->Execute($sql);
+     # Busca el Documento del usuario Origen
+     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+     $this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
+     $this->db->conn->debug = true;
+     // Modificado Infom�trika 18-Septiembre-2009
+     // Se agreg� AS \"USUA_DOC\" y AS \"USUA_LOGIN\"
+     $sql = "SELECT
+       USUA_DOC
+       ,USUA_LOGIN
+       FROM
+       USUARIO
+       WHERE
+       DEPE_CODI=$depeOrigen
+       AND USUA_CODI=$usCodOrigen";
+     # Busca el usuairo Origen para luego traer sus datos.
+     //$thia->db->conn->debug = true;
+     $rs = $this->db->conn->Execute($sql);
 
-		$usDocOrigen = $rs->fields["USUA_DOC"];
-		$usuAnte  = $rs->fields["USUA_LOGIN"];
+     $usDocOrigen = $rs->fields["USUA_DOC"];
+     $usuAnte     = $rs->fields["USUA_LOGIN"];
 
-        if(empty($usDocOrigen)) $usDocOrigen = $rs->fields["usua_doc"];
-        if(empty($usuAnte))     $usuAnte     = $rs->fields["usua_login"];
+     if(empty($usDocOrigen)) $usDocOrigen = $rs->fields["usua_doc"];
+     if(empty($usuAnte))     $usuAnte     = $rs->fields["usua_login"];
 
-		$sql = "SELECT
-					USUA_DOC AS \"USUA_DOC\"
-					,USUA_LOGIN AS \"USUA_LOGIN\"
-				FROM
-					USUARIO
-				WHERE
-					DEPE_CODI=$depeDestino
-					AND USUA_CODI=$usCodDestino";
-		$rs = $this->db->conn->Execute($sql);
-		$usDocDestino = $rs->fields["USUA_DOC"];
-		$usuActu  = $rs->fields["USUA_LOGIN"];
+     $sql = "SELECT
+       USUA_DOC AS \"USUA_DOC\"
+       ,USUA_LOGIN AS \"USUA_LOGIN\"
+       FROM
+       USUARIO
+       WHERE
+       DEPE_CODI=$depeDestino
+       AND USUA_CODI=$usCodDestino";
+     $rs = $this->db->conn->Execute($sql);
+     $usDocDestino = $rs->fields["USUA_DOC"];
+     $usuActu  = $rs->fields["USUA_LOGIN"];
 
-		$record = array(); # Inicializa el arreglo que contiene los datos a insertar
-		if ($radicados) {
-		foreach($radicados as $noRadicado)
-		{	# Asignar el valor de los campos en el registro
-			# Observa que el nombre de los campos pueden ser mayusculas o minusculas
-			$observacion = str_replace("'",'&#39', $observacion);
-			if(!$usDocDestino) $usDocDestino = "0";
-			$record["RADI_NUME_RADI"] = $noRadicado;
-			$record["DEPE_CODI"] = $depeOrigen;
-			$record["USUA_CODI"] = $usCodOrigen;
-			$record["USUA_CODI_DEST"] = $usCodDestino;
-			$record["DEPE_CODI_DEST"] = $depeDestino;
-			$record["USUA_DOC"] = $usDocOrigen;
-			$record["HIST_DOC_DEST"] = $usDocDestino;
-			$record["SGD_TTR_CODIGO"] = $tipoTx;
-			$record["HIST_OBSE"] = "'$observacion'";
-			$record["HIST_FECH"] = $this->db->conn->OffsetDate(0,$this->db->conn->sysTimeStamp);
-			# Mandar como parametro el recordset vacio y el arreglo conteniendo los datos a insertar
-			# a la funcion GetInsertSQL. Esta procesara los datos y regresara un enunciado SQL
-			# para procesar el INSERT.
-			$insertSQL = $this->db->insert("HIST_EVENTOS", $record, "true");
+     $record = array(); # Inicializa el arreglo que contiene los datos a insertar
+     if ($radicados) {
+       foreach($radicados as $noRadicado){
+         # Asignar el valor de los campos en el registro
+         # Observa que el nombre de los campos pueden ser mayusculas o minusculas
+         $observacion = str_replace("'",'&#39', $observacion);
+         if(!$usDocDestino) $usDocDestino = "0";
+         $record["RADI_NUME_RADI"] = $noRadicado;
+         $record["DEPE_CODI"] = $depeOrigen;
+         $record["USUA_CODI"] = $usCodOrigen;
+         $record["USUA_CODI_DEST"] = $usCodDestino;
+         $record["DEPE_CODI_DEST"] = $depeDestino;
+         $record["USUA_DOC"] = $usDocOrigen;
+         $record["HIST_DOC_DEST"] = $usDocDestino;
+         $record["SGD_TTR_CODIGO"] = $tipoTx;
+         $record["HIST_OBSE"] = "'$observacion'";
+         $record["HIST_FECH"] = $this->db->conn->OffsetDate(0,$this->db->conn->sysTimeStamp);
+         # Mandar como parametro el recordset vacio y el arreglo conteniendo los datos a insertar
+         # a la funcion GetInsertSQL. Esta procesara los datos y regresara un enunciado SQL
+         # para procesar el INSERT.
+         $insertSQL = $this->db->insert("HIST_EVENTOS", $record, "true");
 
-		}
-		return ($radicados);
-	}
-  } // end of member function insertarHistorico
+       }
+       return ($radicados);
+     }
+   } // end of member function insertarHistorico
 
 function insertarHistoricoArch($id,$radicados,  $depeOrigen , $usCodOrigen, $observacion, $tipoTx)
   {
