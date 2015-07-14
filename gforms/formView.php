@@ -458,7 +458,7 @@ if ($fieldTypeCode == 10) {
          <input  type='hidden' value='' id='inp_$norandom' $addAttr />
          ");
 
-    if ($fieldParams){
+    if ($fieldParams && $valueVar){
       if ($fieldParams == 'link') {
         $urlattach = " var idurlattach ='get_" . $norandom . "'; ";
         echo "<a target=\"_blank\" id='get_$norandom' href=\"$pathfile".$valueVar."\">Archivo $valueVar</a>";
