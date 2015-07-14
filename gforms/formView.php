@@ -205,7 +205,7 @@ if ($fieldVars == 0 && trim($fieldVarsparam)) {
 }
 
 if ($valueVar){
-    $addValue = " readonly='readonly' value='$valueVar' ";
+  $addValue = " readonly='readonly' value='$valueVar' ";
 }
 if($valfromsearch){
   $valueVar = $valfromsearch;
@@ -453,22 +453,19 @@ if ($fieldTypeCode == 10) {
     $year = Date('Y');
     $pathfile = "../bodega/$year/formFiles/";
     $norandom = fileuploader . rand();
-    echo("<div $addAttr id='$norandom'>Subir archivo</div>
-                              <input  type='hidden' value='' id='inp_$norandom' $addAttr />");
+    echo("
+         <div $addAttr id='$norandom'>Subir archivo</div>
+         <input  type='hidden' value='' id='inp_$norandom' $addAttr />
+         ");
 
-    if ($fieldParams) {
-        $datosSelect = explode('||', $fieldParams);
-        foreach ($datosSelect as $key => $value) {
-            list($val, $cod) = preg_split("/[\s->]+/", $value);
-            if ($val == 'link') {
-                $urlattach = " var idurlattach ='" . $cod . "'; ";
-            }
-
-            if ($val == 'image') {
-                $imageattach = " var idimageattach ='" . $cod . "'; ";
-            }
-
-        }
+    if ($fieldParams){
+      if ($fieldParams == 'link') {
+        $urlattach = " var idurlattach ='get_" . $norandom . "'; ";
+        echo "<a target=\"_blank\" id='get_$norandom' href=\"$pathfile".$valueVar."\">Archivo $valueVar</a>";
+      }
+      if ($fieldParams == 'image') {
+        $imageattach = " var idimageattach ='get_" . $norandom . "'; ";
+      }
     }
 
     $scriptJS .= " $urlattach
@@ -483,13 +480,15 @@ if ($fieldTypeCode == 10) {
 
                            $('#inp_$norandom').val(datareturn[0]);
 
-                           if(idurlattach !== undefined){
+                           if (typeof idurlattach !== 'undefined'){
+                               $('#' + idurlattach).empty();
                                $('#' + idurlattach).html('<a href=\"$pathfile'+ JSON.parse(data)[0] +'\">Descarga ' + JSON.parse(data)[0] + '</a>')
                            }
 
-                           if(idimageattach !== undefined){
+                           if (typeof idimageattach !== 'undefined'){
                                enviar = /.(gif|jpg|png|jpeg)$/i.test(JSON.parse(data)[0]);
                                if(enviar){
+                                   $('#' + idimageattach).empty();
                                    $('#' + idimageattach).html('<img src=\"$pathfile'+ JSON.parse(data)[0] +'\" width=\"100%\">');
                                }
                            }
