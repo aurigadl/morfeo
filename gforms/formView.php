@@ -66,7 +66,7 @@ foreach ($fromAccion as $showaction) {
   }
 
   if($showaction == "grabar"){
-    $accionbutton .="<button class=\"btn btn-primary\" type=\"button\" onCLick=\"saveForm();\" id=\"grabar\"> Grabar</button>";
+    $accionbutton .="<button class=\"btn btn-primary\"  type=\"submit\" onCLick=\"saveForm();\" id=\"grabar\"> Grabar</button>";
   }
 
 }
@@ -138,8 +138,8 @@ $fieldName      = strtolower($field["FIELD_NAME"]);
 $fieldLabel     = $field["FIELD_LABEL"];
 $fieldPk        = $field["FIELD_PK"];
 $fieldDesc      = $field["FIELD_DESC"];
-$fieldType      = $field["FIELD_TYPE"];
 $fieldTypeCode  = $field["FIELD_TYPE_CODE"];
+$typeField      = $field["FIELD_TYPE"];
 $fieldNull      = $field["FIELD_NULL"];
 $fieldHtml      = $field["FIELD_HTML"];
 $fieldHelp      = $field["FIELD_HELP"];
@@ -233,7 +233,20 @@ if ($i = 1)
         $addColspan = " colspan=$fieldColspan "; else $addColspan = "";
 if ($fieldRowspan)
     $addRowspan = " rowspan=$fieldRowspan "; else $addRowspan = "";
+
 $addAttr = " fieldSave='$fieldSave'  tableSave='$tableSave' fieldPk='$fieldPk' ";
+
+if($fieldNull){
+  $addAttr .= ' required ';
+}
+
+if($typeField){
+  $addAttr .= " type=\"$typeField\"";
+}else{
+  $addAttr .= " type=\"text\"";
+}
+
+
 
 if (trim($fieldClass == "datefield")) {
     $scriptJS .= '
@@ -265,8 +278,7 @@ if (trim($fieldClass == "datefield")) {
  ************************************************************
  ***********************************************************/
   if ($fieldTypeCode == 1 || $fieldTypeCode == 2){
-    echo "<input $addAttr type=\"$feildType\"
-      placeholder=\"$fieldDesc\" name=\"$fieldName\"
+    echo "<input $addAttr placeholder=\"$fieldDesc\" name=\"$fieldName\"
       id=\"$fieldName\" $tFieldMask $addValue>";
   }
 
@@ -289,7 +301,7 @@ if (trim($fieldClass == "datefield")) {
  ***********************************************************/
   if ($fieldTypeCode == 4) {
     echo "<input $addAttr fieldSave=\"$fieldSave\" id=\"$fieldName\"
-      class=\"datepicker\" type=\"text\" data-dateformat=\"yy-mm-dd\"
+      class=\"datepicker\"  data-dateformat=\"yy-mm-dd\"
       placeholder=\"Select a date\"
       name=\"$fieldName\">";
   }

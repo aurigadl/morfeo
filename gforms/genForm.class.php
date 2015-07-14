@@ -204,12 +204,12 @@ class genForm {
             ft.FRMT_CLASS,
             ft.FRMT_HTML,
             ft.FRMT_Js,
-            ft.FRMT_TYPE,
             f.FRMf_HELP,
             ft.FRMT_CODE,
             f.FRMF_ROWSPAN,
             f.FRMF_DEFAULT,
-            f.FRMF_PARAMS
+            f.FRMF_PARAMS,
+            f.FRMF_TYPE
         FROM
             FRMF_FRMFIELDS f,
             FRMT_FIELDTYPE  ft
@@ -232,7 +232,7 @@ class genForm {
             $colField       = $rs->fields["FRMF_COLUMN"];
             $orderField     = $rs->fields["FRMF_ORDER"];
             $colspanField   = $rs->fields["FRMF_COLSPAN"];
-            $typeField      = $rs->fields["FRMT_TYPE"];
+            $typeField      = $rs->fields["FRMF_TYPE"];
             $codeTypeField  = $rs->fields["FRMT_CODE"];
             $classField     = $rs->fields["FRMT_CLASS"];
             $jsField        = $rs->fields["FRMT_JS"];
