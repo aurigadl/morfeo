@@ -158,7 +158,7 @@ foreach ($radiprestar as $fldradicado) {
       tosql($valSolPrest,"Number").
       ")";
       if($onlyonehist){
-        $hist->insertarHistoricoExp($expediente,$radiprestar,$dependencia,$codusuario,$observacion, 91,1);
+        $hist->insertarHistoricoExp($expediente,$radiprestar,$dependencia,$codusuario,$observacion, 191,1);
         $onlyonehist = false;
       }
     // Execute SQL statement

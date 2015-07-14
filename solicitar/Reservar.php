@@ -308,10 +308,10 @@ function PRESTAMO_action($sAction) {
             if($setHisExp){
               if(is_array($sqlformatExp2)){
                 foreach($sqlformatExp2 as $key){
-                  $hist->insertarHistoricoExp($key, $arrRadicado, $dependencia, $codusuario, $nombTx, 92,1);
+                  $hist->insertarHistoricoExp($key, $arrRadicado, $dependencia, $codusuario, $nombTx, 192,1);
                 }
               }else{
-                $hist->insertarHistoricoExp($sqlformatExp2, $arrRadicado, $dependencia, $codusuario, $nombTx, 92,1);
+                $hist->insertarHistoricoExp($sqlformatExp2, $arrRadicado, $dependencia, $codusuario, $nombTx, 192,1);
               }
               $setHisExp = false;
             }
