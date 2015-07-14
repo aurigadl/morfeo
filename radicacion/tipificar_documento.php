@@ -332,11 +332,11 @@ function regresar(){
    <tr>
      <td><small>TIPO DE DOCUMENTO</small></td>
  	 <td><label class=select>
-<?php
+<?php 
 	$nomb_varc = "t.sgd_tpr_codigo";
 	$nomb_varde = "t.sgd_tpr_descrip";
 	include "$ruta_raiz/include/query/trd/queryCodiDetalle.php"; 
-	if($ent) $queryTrad = " and sgd_tpr_tp$ent >= 1";
+	if($ent == "" or $ent == null or $ent == " ") {}else{$queryTrad = " and sgd_tpr_tp$ent >= 1";}
 	$queryTip = "select distinct ($sqlConcat) as detalle, t.sgd_tpr_codigo 
 	        from sgd_mrd_matrird m, sgd_tpr_tpdcumento t, sgd_sbrd_subserierd sb
 		 where cast(m.sgd_mrd_esta as numeric(1))       = 1
@@ -349,7 +349,7 @@ function regresar(){
                     $queryTrad
  		    and ".$db->sysdate()." between sb.sgd_sbrd_fechini 
 		    and sb.sgd_sbrd_fechfin ";
- 	$queryTip .= " order by detalle";
+	$queryTip .= " order by detalle";
         $rsTip=$db->conn->query($queryTip);
 	$ruta_raiz = "..";
 	include "$ruta_raiz/include/tx/ComentarioTx.php";

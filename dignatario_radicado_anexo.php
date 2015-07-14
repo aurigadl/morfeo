@@ -35,8 +35,6 @@
  $record['SGD_DIR_CODIGO']    = $nextval;
  $record['RADI_NUME_RADI']    = $noRad;
 
-	#$db->conn->debug = true;
-
      $insertSQL = $db->conn->Replace("SGD_DIR_DRECCIONES",
      $record,
      'SGD_DIR_CODIGO, RADI_NUME_RADI',
