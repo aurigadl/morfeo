@@ -470,6 +470,7 @@ $dep_nom  = $exte->fields["DEPE_NOMB"];
 
 require_once($ruta_raiz."/respuestaRapida/gencodebar/html/BCGcode128.php");
 
+ $barcodeobj = new TCPDFBarcode($nurad, 'C128');
 /* EN ESTA PARTE CREO EL CODIGO DE BARRAS MEDIANTE DE FUENTES
  $barcodeobj = new TCPDFBarcode($nurad, 'C128');
  $barcode = $barcodeobj->getBarcodeHTML(1, 20, 'black'); 

@@ -20,6 +20,26 @@ $dependencia = $_SESSION["dependencia"];
 $ln          = $_SESSION["digitosDependencia"];
 $lnr         = 11+$ln;
 
+//Comprobamos si llega del post grabar usuario.
+//var_dump(is_null($_POST['_tpradicu'])); 
+//echo "->".$_POST['_tpradicu']; 
+//echo "->".$_GET['tpradicu']; exit;
+if ($_POST['_tpradicu'] != "" ){
+	$_GET['tpradic'] = $_POST['_tpradicu'];
+	$_POST['tpradic'] = $_POST['_tpradicu'];
+}else{
+	if ($_GET['tpradicu']){
+		$_GET['tpradic'] = $_GET['tpradicu'];
+		$_POST['tpradic'] = $_GET['tpradicu'];
+	}
+}
+
+if($_POST['tpradic'] == 0 or $_GET['tpradic'] == 0){
+$NO_RADICAR = true;
+}
+
+//echo "POST->".$_POST['tpradic'];
+//echo "<br> GET->".$_GET['tpradic']; exit;
 
     /** * Retorna la cantidad de bytes de una expresion como 7M, 4G u 8K.
      *

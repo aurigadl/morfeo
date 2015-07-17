@@ -58,7 +58,9 @@ $fecha_fin = mktime($hora_fin,$minutos_fin,59,substr($fecha_fin,5,2),substr($fec
 			$where_isql = $where_isql1;
 	}
 
-	$query_t = $query . $where_isql . $order_isql;
+		$query_t = $query . $where_isql . $order_isql;
+		//Query para CSV
+		$query_for_csv = $query_t;
 
        	$pdf->oracle_report($db,$query_t,false,$attr,$head_table,$head_table_size,$arpdf_tmp,0,31);
 	

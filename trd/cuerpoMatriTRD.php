@@ -93,7 +93,8 @@
 	$nomb_varde = "sgd_srd_descrip";
    	include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
 	$querySerie = "select distinct ($sqlConcat) as detalle, sgd_srd_codigo 
-	   from sgd_srd_seriesrd 
+		from sgd_srd_seriesrd 
+		where sgd_srd_codigo < 4000
 	 order by detalle
 	";
 	$rsD=$db->conn->query($querySerie);
@@ -115,7 +116,8 @@
    	$querySub = "select distinct ($sqlConcat) as detalle, sgd_sbrd_codigo 
 	         from sgd_sbrd_subserierd 
 			 where sgd_srd_codigo = '$codserie'
- 			       and $sqlFechaHoy between $sgd_sbrd_fechini and $sgd_sbrd_fechfin
+			 and $sqlFechaHoy between $sgd_sbrd_fechini and $sgd_sbrd_fechfin
+			 and sgd_srd_codigo < 4000
 			 order by detalle
 			  ";
 	$rsSub=$db->conn->query($querySub);

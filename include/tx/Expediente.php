@@ -161,7 +161,7 @@ class Expediente {
         }
 
 
-        $query = "SELECT
+	        $query = "SELECT
                     e.SGD_EXP_NUMERO,
                     e.SGD_EXP_ESTADO,
                     sexp.SGD_SEXP_PRESTAMO,
@@ -172,7 +172,7 @@ class Expediente {
                   WHERE
                     e.RADI_NUME_RADI = $radicado AND
                     e.sgd_exp_numero=sexp.sgd_exp_numero AND
-                    SGD_EXP_ESTADO <> 2";
+                    SGD_EXP_ESTADO <> 2"; 
 
         $rs = $this->db->conn->query($query);
         if ($rs)
@@ -208,7 +208,7 @@ class Expediente {
                           where
                                   exp.sgd_exp_numero='" . $numExpediente . "'
                               and exp.radi_nume_radi = r.radi_nume_radi
-                              and r.tdoc_codi=t.sgd_tpr_codigo  AND exp.sgd_exp_estado <>2 ";
+                              and r.tdoc_codi=t.sgd_tpr_codigo  AND exp.sgd_exp_estado <>2 "; 
 
                 $rsRad = $this->db->conn->query($query);
 
@@ -907,7 +907,7 @@ class Expediente {
         if(!empty($descrip)){
             $q_datosParametro .= $descrip . " WHERE sgd_exp_numero = '$numExp'";
         };
-
+//echo "<pre>$q_datosParametro</pre>"; exit;
         if ($this->db->conn->query($q_datosParametro) === false) {
             return false;
         }
@@ -932,7 +932,7 @@ class Expediente {
      */
     function getDatosParamExp($numExp, $depeCodi){
 
-         $this->db->limit(5);
+         $this->db->limit(10);
          $limitMsql = $this->db->limitMsql;
          $limitOci8 = $this->db->limitOci8;
          $limitPsql = $this->db->limitPsql;
@@ -953,10 +953,10 @@ class Expediente {
          FROM SGD_SEXP_SECEXPEDIENTES SEXP,
          SGD_PAREXP_PARAMEXPEDIENTE PAREXP
          WHERE SEXP.SGD_EXP_NUMERO = '$numExp'
-         AND parexp.DEPE_CODI = '$depeExp' $limitOci8
+         AND parexp.DEPE_CODI = '900' $limitOci8
          ORDER BY SEXP.SGD_SEXP_FECH desc $limitPsql";
          #$db->conn->debug=true;
-         #echo "<pre>$q_datosParametro</pre>"; exit;
+//         echo "<pre>$q_datosParametro</pre>"; exit;
          $rs_datosParametro = $this->db->conn->query($q_datosParametro);
 
         $p = 0;

@@ -91,12 +91,15 @@ else
 							<?php
 							include_once "$ruta_raiz/include/query/envios/queryPaencabeza.php";
 							$sqlConcat = $db->conn->Concat($conversion, "'-'", depe_nomb);
-							$sql       = "select $sqlConcat ,depe_codi from dependencia where depe_estado = 1
-																			order by depe_codi";
+							$sql       = "select $sqlConcat ,depe_codi from dependencia 
+								where depe_estado = 1
+								order by depe_codi";
+
 							$rsDep     = $db->conn->Execute($sql);
 							if (!$depeBuscada)
 									$depeBuscada = $dependencia;
-							print $rsDep->GetMenu2("dep_sel", "$dep_sel", false, false, 0, " onChange='submit();' class='select'");
+				//			print $rsDep->GetMenu2("dep_sel", "$dep_sel", false, false, 0, " onChange='submit();' class='select'");
+						            print $rsDep->GetMenu2("dep_sel","$dep_sel","9999:TODAS LAS DEPENDENCIAS", false, 0," onChange='submit();' class='select'");
 							?>
 							</label>
 						</td>

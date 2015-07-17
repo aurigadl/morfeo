@@ -45,18 +45,30 @@ if($generar_listado){
   }
 
   $isqlSipos         = $isqlSipos . " order by sgd_renv_depto, sgd_renv_mpio";
-  $rsSipos         = $db->conn->Execute($isqlSipos);
+
+  //Por solicitud, se cambia el query ;
+  // $rsSipos         = $db->conn->Execute($isqlSipos);
+
+//echo "->".$query_for_csv; exit;
+
+  $rsSipos         = $db->conn->Execute($query_for_csv);
   //$encabezado = 'NOMBRE;DIRECCION DESTINATARIO;CIUDAD DESTINATARIO;DEPARTAMENTO;PESO;ADICIONAL 1;ADICIONAL 2';
   //NOMBRE DESTINATARIO	DIRECCION	CIUDAD	DEPARTAMENTO	PESO	Observaciones	Referencia No
-  $encabezado = 'NOMBRE DESTINATARIO;DIRECCION;CIUDAD;PESO;Observaciones;Referencia No';
+  //$encabezado = 'NOMBRE DESTINATARIO;DIRECCION;CIUDAD;PESO;Observaciones;Referencia No';
+  $encabezado = 'CANTIDAD;CATEGORIA;REGISTRO;DESTINATARIO;DIRECCION;DEPARTAMENTO;FIRMA';
   
   while(!$rsSipos->EOF){
-      $nom  = $rsSipos->fields['sgd_renv_nombre'];
-      $pais = $rsSipos->fields['sgd_renv_pais'];
+//      $nom  = $rsSipos->fields['sgd_renv_nombre'];
+//      $pais = $rsSipos->fields['sgd_renv_pais'];
 
-      $data[] = array('NOMBRE DESTINATARIO' => $rsSipos->fields['sgd_renv_nombre'], 'DIRECCION' => $rsSipos->fields['sgd_renv_dir'],
+     /*data[] = array('NOMBRE DESTINATARIO' => $rsSipos->fields['sgd_renv_nombre'], 'DIRECCION' => $rsSipos->fields['sgd_renv_dir'],
                 'CIUDAD'=> $rsSipos->fields['sgd_renv_mpio'] ."-". $rsSipos->fields['sgd_renv_depto'],
                 'PESO' => $rsSipos->fields['sgd_renv_peso'],'Observaciones' => $rsSipos->fields['radi_nume_sal'] ,'Referencia No' => $rsSipos->fields['sgd_dir_tipo']);
+      */
+
+      $data[] = array('CANTIDAD' => $rsSipos->fields['cantidad'], 'CATEGORIA' => $rsSipos->fields['categoria'],
+                'REGISTRO'=> $rsSipos->fields['registro'] ,
+                'DESTINATARIO' => $rsSipos->fields['destinatario'],'DIRECCION' => $rsSipos->fields['direccion'] ,'DEPARTAMENTO' => $rsSipos->fields['departamento']);
  
      $rsSipos->MoveNext();
   }

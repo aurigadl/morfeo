@@ -256,7 +256,7 @@ switch($tipoEstadistica){
 	    echo "<a href='$ruta_raiz/adodb/adodb-xls.inc.php' target='_blank'><img src='$ruta_raiz/adodb/spreadsheet.png' width='40' heigth='40' border='0'></a>";
 if ($tipoEstadistica == 19){
 	?>
-		<a href="<?=$ruta_raiz?>estadisticas/exportarpdf.php?<?=$datosaenviar?>">Exportar a PDF</a> <?php } ?>	
+		<!--<a href="<?=$ruta_raiz?>estadisticas/exportarpdf.php?<?=$datosaenviar?>">Exportar a PDF</a>--> <?php } ?>	
         </td>
       </tr>
       </table><?php

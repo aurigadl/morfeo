@@ -1,4 +1,9 @@
 <?
+session_start();
+
+if ($dep_sel == '9999'){
+	$dependencia_busq2= '';}
+
 //MODIFICADO POR SKINA PARA POSTGRES
 switch($db->driver)
 {

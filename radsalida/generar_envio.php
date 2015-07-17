@@ -23,6 +23,7 @@ $codusuario     = $_SESSION["codusuario"];
 $codigo_envio = $tipo_envio;
 include_once  "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("..");
+$db->conn->debug=false;
 if (!defined('ADODB_FETCH_ASSOC'))	define('ADODB_FETCH_ASSOC',2);
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
