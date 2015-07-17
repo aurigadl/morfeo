@@ -4,11 +4,17 @@
 session_start();
 $ruta_raiz = "..";
 
-if ($_POST["codeForm"])
+if ($_POST["codeForm"]){
     $codeForm = $_POST["codeForm"];
+}
 
-if ($_GET["codeForm"])
+if ($_GET["codeForm"]){
     $codeForm = $_GET["codeForm"];
+}
+
+$dataToH  = "{'permalink':'" .$_SERVER["QUERY_STRING"];
+$dataToH .= "','frm_code':'" .$codeForm;
+$dataToH .= "','expediente':'".$_SESSION['frmh_expediente'].'\'};';
 
 define('ADODB_ASSOC_CASE', 1);
 include "$ruta_raiz/conn.php";
@@ -116,7 +122,7 @@ if (!empty($accionbutton)) {
 <div class="">
 
 <!-- Success states for elements -->
-<form class="smart-form">
+<form id="formdinamic" class="smart-form">
 <header><?= $descForm ?></header>
 
   <!--Mostramos los botones -->
@@ -250,13 +256,13 @@ if($typeField){
 
 if (trim($fieldClass == "datefield")) {
     $scriptJS .= '
-					$(\'#' . $fieldName . '\').datepicker({
-							dateFormat: \'yy/mm/dd\',
-							prevText: \'<i class="fa fa-chevron-left"></i>\',
-							nextText: \'<i class="fa fa-chevron-right"></i>\',
-							onSelect: function (selectedDate) {
-												}
-					});';
+          $(\'#' . $fieldName . '\').datepicker({
+              dateFormat: \'yy/mm/dd\',
+              prevText: \'<i class="fa fa-chevron-left"></i>\',
+              nextText: \'<i class="fa fa-chevron-right"></i>\',
+              onSelect: function (selectedDate) {
+                        }
+          });';
     $i++;
 }
 ?>
@@ -419,29 +425,29 @@ if ($fieldTypeCode == 9) { ?>
     }
 
     $scriptJS .= ' jQuery(document).ready(function(){
-								$( "#' . $fieldName . '" ).combogrid({
-								url: "server.php?tx=1&tableSearch=' . $tablePkSearch . '&fieldSearch=' .  $fieldPkSearch1 . '&fieldsView=' . $fieldsView . '",
-								minLength : 4,
-								colModel: [' . $fieldsViewObject . '],
-								select: function( event, ui ) {
-								  cargarParametros(),
-									' . $fieldsInsertValueId . '
-									return false;
-								}
-							});
-						});
+                $( "#' . $fieldName . '" ).combogrid({
+                url: "server.php?tx=1&tableSearch=' . $tablePkSearch . '&fieldSearch=' .  $fieldPkSearch1 . '&fieldsView=' . $fieldsView . '",
+                minLength : 4,
+                colModel: [' . $fieldsViewObject . '],
+                select: function( event, ui ) {
+                  cargarParametros(),
+                  ' . $fieldsInsertValueId . '
+                  return false;
+                }
+              });
+            });
 
-					 function cargarParametros(){
+           function cargarParametros(){
                          val = $( "#' . $val2 . '" ).val();
                          param = "' . $val1 . '="+val;
-					 } ';
+           } ';
 } else { ?>
     <?php
     if ($fieldTypeCode == 4) {
         ?>
         <span class="input-group-addon">
-						<i class="fa fa-calendar"></i>
-						</span>
+            <i class="fa fa-calendar"></i>
+            </span>
     <?php
     } elseif (trim($fieldHelp) and $fieldTypeCode != 4) {
         ?>
@@ -666,9 +672,14 @@ if ($fieldTypeCode == 15) {
 </BODY>
 <script type="text/javascript">
 
+  $( "#formdinamic"  ).submit(function( event  ) {
+    event.preventDefault();
+  });
+
  function saveForm(){
-  var arrF = new Array();
-  var arrJ = new Array();
+  var datah   = <?=$dataToH?>
+  var arrF    = new Array();
+  var arrJ    = new Array();
   var arrJson = "";
 
   $($('[tablesave]')).each(function( index ) {
@@ -686,9 +697,12 @@ if ($fieldTypeCode == 15) {
         "fieldPk":arrF[index]['fieldPk'],
     };
       arrJ.push(item);
-		});
-		pagina = "formUpdate.php";
-		$.post( pagina,{data:arrJ}, function( data ) {
+    });
+
+    arrJ.push(datah);
+
+    pagina = "formUpdate.php";
+    $.post( pagina,{data:arrJ}, function( data ) {
             $('#resultadoFrm').html(data);
             if($('#resultadoFrm').hasClass('alert-success')){
               setInterval(function (){
@@ -696,7 +710,6 @@ if ($fieldTypeCode == 15) {
               },5000);
             }
         });
-		// alert(JSON.stringify(arrJ));
  }
 
  function deleteForm(){
@@ -713,14 +726,14 @@ if ($fieldTypeCode == 15) {
     arrF[index]['fieldValue'] =  $($('[tablesave]')[index]).val();
 
     var item = {
-        "tableSave":arrF[index]['tableSave'],
-        "fieldSave":arrF[index]['fieldSave'],
-        "fieldValue":arrF[index]['fieldValue'],
-        "fieldPk":arrF[index]['fieldPk'],
+      "tableSave":arrF[index]['tableSave'],
+      "fieldSave":arrF[index]['fieldSave'],
+      "fieldValue":arrF[index]['fieldValue'],
+      "fieldPk":arrF[index]['fieldPk'],
     };
-      arrJ.push(item);
-		});
-		pagina = "formDelete.php";
+    arrJ.push(item);
+    });
+    pagina = "formDelete.php";
     $.post( pagina,{data:arrJ, codeForm:<?=$codeForm?>}, function( data ) {
             $('#resultadoFrm').html(data);
             if($('#resultadoFrm').hasClass('alert-success')){

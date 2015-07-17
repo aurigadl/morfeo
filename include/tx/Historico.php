@@ -48,7 +48,6 @@ class Historico
      # Busca el Documento del usuario Origen
      $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
      $this->db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-     $this->db->conn->debug = true;
      // Modificado Infom�trika 18-Septiembre-2009
      // Se agreg� AS \"USUA_DOC\" y AS \"USUA_LOGIN\"
      $sql = "SELECT

@@ -304,28 +304,38 @@ class genForm {
     function putFormRegister() {
         $data = $this->dataSave;
         $db   = $this->db;
-        $this->db->conn->debug = false;
 
-          foreach ($data as $key => $campo) {
-            $name_field = $campo["fieldSave"];
-            if(!empty($name_field)){
-              $script     .= $name_field  . " varchar ,\n";
-              $fieldName   = strtolower($name_field );
-              $fieldValue  = "'".$campo["fieldValue"]."'";
-              $fieldPk     = $campo["fieldPk"];
-              $table       = $campo["tableSave"];
-              $record[$fieldName] = $fieldValue;
+        foreach ($data as $key => $campo) {
 
-              if ($fieldName == 'id'){
-                  $recordPk[] = $fieldName;
-              }elseif($fieldPk == 1){
-                  $recordPk[] = $fieldName;
-              }
+          $name_field = $campo["fieldSave"];
+          if(!empty($name_field)){
+            $script     .= $name_field  . " varchar ,\n";
+            $fieldName   = strtolower($name_field );
+            $fieldValue  = "'".$campo["fieldValue"]."'";
+            $fieldPk     = $campo["fieldPk"];
+            $table       = $campo["tableSave"];
+            $record[$fieldName] = $fieldValue;
+
+            if ($fieldName == 'id'){
+                $recordPk[] = $fieldName;
+            }elseif($fieldPk == 1){
+                $recordPk[] = $fieldName;
             }
+            $insert  = $db->conn->Replace($table, $record, $recordPk, $autoquote = true);
+            $showerr = $db->conn->ErrorMsg();
+          }elseif(!empty($campo['permalink'])){
+              //Gurardamos la direccion desde donde se llama al formulario y datos
+              //de procesamiento
+              $recordh['frm_code']       = $campo['frm_code'];
+              $recordh['expediente']     = "'".$campo['expediente']."'";
+              $recordh['frmh_permalink'] = "'".$campo['permalink']."'";
+              $recordh['frmh_date']      = $db->conn->sysTimeStamp;
+              $recordPkh[] = 'frmh_permalink';
+              $recordPkh[] = 'expediente';
+              $insert  = $db->conn->Replace('frmh_frmlog',$recordh, $recordPkh);
+              $showerr = $db->conn->ErrorMsg();
           }
-
-        $insert  = $db->conn->Replace($table, $record, $recordPk, $autoquote = true);
-        $showerr = $db->conn->ErrorMsg();
+        }
 
         if ($insert) {
           echo '<div class="alert alert-block alert-success">

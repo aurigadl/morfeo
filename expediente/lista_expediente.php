@@ -1,6 +1,8 @@
 <div>
-    <?php // include "./proceso/workFlowParcial.php"; 
-    $_SESSION['_aux_edit'] = 0;
+<?php
+$_SESSION['_aux_edit'] = 0;
+$_SESSION['frmh_expediente'] = $numExpediente;
+
 ?>
 </div>
 <input type="hidden" name="menu_ver_tmp" value=4>
@@ -45,9 +47,31 @@ if (!$tdoc)
     $tdoc = "0";
 if (!$codserie)
     $codserie = "0";
-?>
 
-<?php
+//Generamos los enlaces de los formularios de procesos guardados
+$sqlconForm = "select initcap(fo.frm_name) as name,
+                      fr.frmh_permalink as link,
+                      frmh_date as datef
+                    from
+                      frmh_frmlog fr,
+                      frm_forms fo
+                    where
+                      fr.frm_code   = fo.frm_code and
+                      fr.expediente = '$numExpediente'";
+
+$result = $db->conn->Execute($sqlconForm);
+$e      = 0;
+while($result && !$result->EOF){
+  $linkh = $result->fields['LINK'];
+  $nameh = $result->fields['NAME'];
+  $dateh = $result->fields['DATEF'];
+  $restulh .= "<li><a href=\"./gforms/formView.php?$linkh\">"
+              .$dateh."_".$nameh.
+            "</a></li>";
+  $result->MoveNext();
+  $e++;
+}
+
 if ($usuaPermExpediente) {
 ?>
 <table class="table table-bordered table-striped" colspacing=0 cellspacing=0>
@@ -139,23 +163,24 @@ if ($usuaPermExpediente) {
     $codserie = "";
     $tsub = "";
     include_once("$ruta_raiz/include/tx/Expediente.php");
-    $trdExp = new Expediente($db);
-    $mrdCodigo = $trdExp->consultaTipoExpediente("$numExpediente");
-    $trdExpediente = $trdExp->descSerie . " / " . $trdExp->descSubSerie;
+    $trdExp          = new Expediente($db);
+    $mrdCodigo       = $trdExp->consultaTipoExpediente("$numExpediente");
+    $trdExpediente   = $trdExp->descSerie . " / " . $trdExp->descSubSerie;
     $descPExpediente = $trdExp->descTipoExp;
-    $procAutomatico = $trdExpediente->pAutomatico;
-    $codserie = $trdExp->codiSRD;
-    $tsub = $trdExp->codiSBRD;
-    $tdoc = $trdExp->codigoTipoDoc;
-    $texp = $trdExp->codigoTipoExp;
-    $descFldExp = $trdExp->descFldExp;
-    $codigoFldExp = $trdExp->codigoFldExp;
+    $procAutomatico  = $trdExpediente->pAutomatico;
+    $codserie        = $trdExp->codiSRD;
+    $tsub            = $trdExp->codiSBRD;
+    $tdoc            = $trdExp->codigoTipoDoc;
+    $texp            = $trdExp->codigoTipoExp;
+    $descFldExp      = $trdExp->descFldExp;
+    $codigoFldExp    = $trdExp->codigoFldExp;
+
     if (!$codserie)
         $codserie = 0;
     if (!$tsub)
-        $tsub = 0;
+        $tsub     = 0;
     if (!$tdoc)
-        $tdoc = 0;
+        $tdoc     = 0;
 
     $resultadoExp = 0;
     if ($funExpediente == "INSERT_EXP") {
@@ -352,9 +377,7 @@ if ($descPExpediente) {
                 <li>
                     <a onClick="seguridadExp('<?= $num_expediente ?>','<?= $nivelExp ?>');">Seguridad</a>
                 </li>
-            <?
-            }
-            ?>
+            <? } ?>
             <li>
                 <a onClick="modFlujo('<?= $num_expediente ?>',<?= $texp ?>,<?= $codigoFldExp ?>,'<?= $ventana ?>')">Modificar
                     Estado</a>
@@ -363,35 +386,40 @@ if ($descPExpediente) {
 	</span>
     </Td>
     <td>
-        <?
-        if ($frms == 1){
-        ?>
+      <? if(!empty($restulh)){ ?>
         <span class="dropdown">
- 	 <a class="dropdown-toggle" data-toggle="dropdown">
-         <small><?= ucwords(strtolower($descFldExp)) ?></small>
-         <b class="caret"></b>
-     </a>
-		<ul class="dropdown-menu dropdown-menu-large row">
-            <?
-            foreach ($frm as $arista) {
-                ?>
-                <li>
-                    <a onClick="window.open('<?= $arista["FRM_LINK"] ?>','frm<?= date('ymdhis') ?>','fullscreen=yes, scrollbars=auto')"><?= trim($arista["FRM_NOMBRE"]) ?>
-                    </a>
-                </li>
-            <?php
-            }
-            ?>
-        </ul>
-	 </span>
+          <a class="dropdown-toggle" data-toggle="dropdown">
+            <small>Procesos Creados</small>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-large row">
+              <?= $restulh ?>
+          </ul>
+        </span>
+      <?php
+      }
+
+      if ($frms == 1){ ?>
+        <span class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+                <small><?= ucwords(strtolower($descFldExp)) ?></small>
+                <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-large row">
+              <?  foreach ($frm as $arista) { ?>
+                  <li>
+                      <a onClick="window.open('<?= $arista["FRM_LINK"] ?>','frm<?= date('ymdhis') ?>','fullscreen=yes, scrollbars=auto')"><?= trim($arista["FRM_NOMBRE"]) ?>
+                      </a>
+                  </li>
+              <?php } ?>
+          </ul>
+        </span>
+      <?php
+      } else {
+          ?>
+          <small><?= ucwords(strtolower($descFldExp)) ?></small>
+      <? } ?>
     </td>
-    <?php
-    } else {
-        ?>
-        <small><?= ucwords(strtolower($descFldExp)) ?></small>
-        </td><?
-    }
-    ?>
 </tr>
 <tr>
     <td>
@@ -434,7 +462,7 @@ $( "#grabadorapidoexpediente" ).hide();
 	setTimeout(function(){ parent.frames.location.reload();top.location.reload(); }, 90);
 //	parent.frames.location.reload();top.location.reload();
     })
-	    
+
 
 $( "#grabadorapidoexpediente" ).click(function() {
 	/*location.reload();*/
