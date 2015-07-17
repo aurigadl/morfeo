@@ -1117,7 +1117,7 @@ $linkInfGeneral="<a class='vinculos' href='javascript:noPermiso()' > ";
 if(strlen( $ps_SGD_EXP_SUBEXPEDIENTE ) == 0 ){
 $consultaExpediente="SELECT exp.SGD_EXP_NUMERO, sexp.sgd_exp_privado  , u.usua_doc DOC_RESPONSABLE, u.DEPE_CODI DEPE_RESPONSABLE
                      FROM SGD_EXP_EXPEDIENTE exp,
-			sgd_sexp_secexpedientes sexp left join usuario u
+			sgd_sexp_secexpedientes sexp right join usuario u
                            on sexp.usua_doc_responsable=u.usua_doc
 		     WHERE
 		      exp.radi_nume_radi= $fldRADI_NUME_RADI
