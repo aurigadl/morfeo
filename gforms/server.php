@@ -105,7 +105,7 @@ switch ($tx) {
                 $namefile = rand(9999, 99999);
                 $fileName = $namefile . '_' . $_FILES["fileFormDinamic"]["name"];
 
-                if('text/csv' == $_FILES["fileFormDinamic"]['type']){
+                if('text/csv' == $_FILES["fileFormDinamic"]['type'] || 'application/vnd.ms-excel' == $_FILES["fileFormDinamic"]['type']){
                   $handle = fopen($_FILES["fileFormDinamic"]["tmp_name"], 'r');
                   while (($line = fgets($handle)) !== false){
                     list($k, $v) = explode(";", $line);

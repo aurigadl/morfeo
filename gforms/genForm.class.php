@@ -333,7 +333,7 @@ class genForm {
               $recordPkh[] = 'frmh_permalink';
               $recordPkh[] = 'expediente';
               $insert  = $db->conn->Replace('frmh_frmlog',$recordh, $recordPkh);
-              $showerr = $db->conn->ErrorMsg();
+              $showerr .= $db->conn->ErrorMsg();
           }
         }
 

@@ -65,7 +65,7 @@ while($result && !$result->EOF){
   $linkh = $result->fields['LINK'];
   $nameh = $result->fields['NAME'];
   $dateh = $result->fields['DATEF'];
-  $restulh .= "<li><a href=\"./gforms/formView.php?$linkh\">"
+  $restulh .= "<li><a href=\"./gforms/formView.php?$linkh\" target=\"_blank\">"
               .$dateh."_".$nameh.
             "</a></li>";
   $result->MoveNext();
