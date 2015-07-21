@@ -1121,8 +1121,11 @@ $consultaExpediente="SELECT exp.SGD_EXP_NUMERO, sexp.sgd_exp_privado  , u.usua_d
                            on sexp.usua_doc_responsable=u.usua_doc
 		     WHERE
 		      exp.radi_nume_radi= $fldRADI_NUME_RADI
+		      AND exp.sgd_exp_estado != 2
 		      AND exp.sgd_exp_numero=sexp.sgd_exp_numero
-		      AND exp.sgd_exp_fech=(SELECT MIN(exp2.SGD_EXP_FECH) as minFech from sgd_exp_expediente exp2 where exp2.radi_nume_radi= $fldRADI_NUME_RADI)";
+		      AND exp.sgd_exp_fech=(SELECT MIN(exp2.SGD_EXP_FECH) as minFech from sgd_exp_expediente exp2 where exp2.radi_nume_radi= $fldRADI_NUME_RADI and exp2.sgd_exp_estado != 2)";
+
+
 //$db->debug = true;
         $rsE=$db->query($consultaExpediente);
 	$fldsSGD_EXP_SUBEXPEDIENTE=$rsE->fields["SGD_EXP_NUMERO"];
