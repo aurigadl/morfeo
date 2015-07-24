@@ -62,7 +62,7 @@ class Usuario {
                 $record = array();
                 $record['sgd_ciu_codigo']     = $nextval;
                 $record['sgd_ciu_nombre']     = trim($datos['nombre']);
-				if(strlen($datos['apellido'])>=49){$datos['apellido']= substr($datos['apellido'],0,49);}
+				        if(strlen($datos['apellido'])>=49){$datos['apellido']= substr($datos['apellido'],0,49);}
                 $record['sgd_ciu_apell1']     = trim($datos['apellido']);
                 $record['sgd_ciu_direccion']  = $datos['direccion'];
                 $record['sgd_ciu_telefono']   = $datos['telef'];
@@ -84,6 +84,7 @@ class Usuario {
                     $this->result = $nextval;
                     return true;
 		}else{
+			$this->db->log_error ("001-- $nurad ","Error en usuarioCreaEdita (usuario)",$record,1);
 			echo "NO inserto destinatario"; exit;
 		}
 		
@@ -124,7 +125,9 @@ class Usuario {
                 if($insertSQL){
                     $this->result = $codigo;
                     return true;
-                }
+                }else{
+				$this->db->log_error ("001-- $nurad ","Error en usuarioCreaEdita EMpresas",$record,1);
+}
 
                 break;
 
@@ -250,24 +253,37 @@ class Usuario {
         $record['SGD_DIR_DIRECCION'] = $user['direccion'];
         $record['SGD_DIR_TELEFONO']  = $user['telef'];
         $record['SGD_DIR_MAIL']      = $user['email'];
-        //$record['SGD_DIR_TIPO']      = $user['cont_tmp'];
         $record['SGD_DIR_TIPO']      = 1; //Este es el tipo de direcciones, uno es primera vez.
 	$record['SGD_DIR_CODIGO']    = $nextval; // Identificador unico
 
-	$sgd_dir_nombre_var = $user['nombre'].' '.$user['apellido']; 
+  if(strlen($user['apellido'])>=999){$user['apellido']= substr($user['apellido'],0,999);}
+  $sgd_dir_apellido_var  = $user['apellido'];
+  $record['SGD_DIR_APELLIDO'] =  $sgd_dir_apellido_var;
+
+	$sgd_dir_nombre_var = $user['nombre'];
 	if(strlen($sgd_dir_nombre_var)>=149){$sgd_dir_nombre_var= substr($sgd_dir_nombre_var,0,149);}
 
         $record['SGD_DIR_NOMBRE']    = trim($sgd_dir_nombre_var);
-        if($user['dignatario']){
+
+###############
+  if($user['dignatario']){
+
 		$sgd_dir_nombre_var = $user['dignatario']; 
 		if(strlen($sgd_dir_nombre_var)>=999){$sgd_dir_nombre_var= substr($sgd_dir_nombre_var,0,999);}
-            $record['SGD_DIR_NOMREMDES'] = $sgd_dir_nombre_var;
+        $record['SGD_DIR_NOMREMDES'] = $sgd_dir_nombre_var;
         }else{
-		$sgd_dir_nombre_var = $user['nombre'].' '.$user['apellido']; 
-		if(strlen($sgd_dir_nombre_var)>=999){$sgd_dir_nombre_var= substr($sgd_dir_nombre_var,0,999);}
-  	    $record['SGD_DIR_NOMREMDES'] =  $sgd_dir_nombre_var;
-	}
 
+		if(strlen($user['nombre'])>=139){$user['nombre']= substr($user['nombre'],0,139);}
+    if(strlen($user['apellido'])>=999){$user['apellido']= substr($user['apellido'],0,999);}
+
+      $sgd_dir_nombre_var = $user['nombre'];
+      $sgd_dir_apellido_var  = $user['apellido']; 
+
+  	    $record['SGD_DIR_NOMREMDES'] =  $sgd_dir_nombre_var;
+        $record['SGD_DIR_APELLIDO'] =  $sgd_dir_apellido_var;
+        $record['SGD_DIR_NOMREMDES'] = $sgd_dir_nombre_var.' '.$sgd_dir_apellido_var;
+	}
+################
         $record['SGD_DIR_DOC']       = empty($user['cedula'])?  '0' : $user['cedula'];
 
         $record['RADI_NUME_RADI']    = $nurad; // No de radicado
@@ -487,6 +503,7 @@ class Usuario {
             select
                 s.SGD_DIR_CODIGO    as codigo
               , s.SGD_DIR_NOMBRE    as nombre
+              , s.SGD_DIR_APELLIDO  as apellido
               , s.SGD_DIR_NOMREMDES as dignatario
               , s.SGD_DIR_DIRECCION as direccion
               , s.SGD_DIR_TELEFONO  as telef
