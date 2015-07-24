@@ -389,7 +389,7 @@ if ($descPExpediente) {
       <? if(!empty($restulh)){ ?>
         <span class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown">
-            <small>Procesos Creados</small>
+            <small> _Formularios_ </small>
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu dropdown-menu-large row">

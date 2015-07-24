@@ -32,3 +32,4 @@ README
 *.tpl.php
 instalacion/qsql.php
 estilos/login.css
+include/tx/error.log
