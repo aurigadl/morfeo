@@ -73,7 +73,11 @@ try {
 	$mensaje = str_replace("*NOM_R*", $nom_r, $mensaje);
 	$mensaje = str_replace("*RADICADO_PADRE*", $radicadopadre, $mensaje);
 	$mensaje = str_replace("*MENSAJE*", $observa, $mensaje);
-	$mensaje .= "<hr>$entidad_largo<br>Sistema de Gestion. http://www.correlibre.org";
+	$mensaje .= "<br/>
+		     <hr>$entidad_largo<br>Sistema de Gesti&oacute;n. 
+	             <br/>Creado por 
+		     <a href=\"http://www.correlibre.org\">http://www.correlibre.org</a>";
+	var_dump($mensaje);
 	$mail->MsgHTML($mensaje);
 	//$mail->AddAttachment('images/phpmailer.gif');      // attachment
 	//$mail->AddAttachment('images/phpmailer_mini.gif'); // attachment
