@@ -46,7 +46,7 @@ class genForm {
     function genForm($db) {
         // Constructor de la clase
         $this->db = $db;
-        $this->db->conn->debug = false;
+        $this->db->conn->debug = true;
     }
 
     /** Metodo que permite iniciar la clase del formularios
@@ -304,6 +304,7 @@ class genForm {
     function putFormRegister() {
         $data = $this->dataSave;
         $db   = $this->db;
+        $this->db->conn->debug = true;
 
         foreach ($data as $key => $campo) {
 
@@ -321,8 +322,6 @@ class genForm {
             }elseif($fieldPk == 1){
                 $recordPk[] = $fieldName;
             }
-            $insert  = $db->conn->Replace($table, $record, $recordPk, $autoquote = true);
-            $showerr = $db->conn->ErrorMsg();
           }elseif(!empty($campo['permalink'])){
               //Gurardamos la direccion desde donde se llama al formulario y datos
               //de procesamiento
@@ -336,6 +335,9 @@ class genForm {
               $showerr .= $db->conn->ErrorMsg();
           }
         }
+
+        $insert  = $db->conn->Replace($table, $record, $recordPk, $autoquote = true);
+        $showerr = $db->conn->ErrorMsg();
 
         if ($insert) {
           echo '<div class="alert alert-block alert-success">

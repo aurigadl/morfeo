@@ -95,10 +95,7 @@ if (!empty($accionbutton)) {
     <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery.ui.combogrid.css">
 </HEAD>
 <BODY>
-
-
 <br>
-
 <div id="resultadoFrm">
 </div>
 

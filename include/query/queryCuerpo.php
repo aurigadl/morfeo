@@ -1,7 +1,7 @@
 <?php
 $coltp3Esp = '"'.$tip3Nombre[3][2].'"';
         #LLAMO UNA FUNCIÓN CONNECCIÓN HANDLER LLAMADA LIMIT LA CUAL ME DEVUELVE LA ESTRUCTURA CORRECTA
-$db->limit(1000);
+$db->limit(50);
 $limitMsql = $db->limitMsql;
 $limitOci8 = $db->limitOci8;
 $limitPsql = $db->limitPsql;

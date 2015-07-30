@@ -19,7 +19,7 @@ if($rsPath){
 		if(trim($radicadoPath)){
 			$linkImagenesTmp .= "<a href='".$servidorOrfeoBodega."$radicadoPath'>Imagen Radicado $radicado </a><br>";
 		}else{
-			$linkImagenesTmp .= "Radicado $radicado sin documetno Asociado<br>";
+			$linkImagenesTmp .= "Radicado $radicado sin documento Asociado<br>";
 		}
 		$rsPath->MoveNext();
 	}
@@ -77,7 +77,6 @@ try {
 		     <hr>$entidad_largo<br>Sistema de Gesti&oacute;n. 
 	             <br/>Creado por 
 		     <a href=\"http://www.correlibre.org\">http://www.correlibre.org</a>";
-	var_dump($mensaje);
 	$mail->MsgHTML($mensaje);
 	//$mail->AddAttachment('images/phpmailer.gif');      // attachment
 	//$mail->AddAttachment('images/phpmailer_mini.gif'); // attachment
