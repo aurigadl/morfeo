@@ -46,7 +46,7 @@ class genForm {
     function genForm($db) {
         // Constructor de la clase
         $this->db = $db;
-        $this->db->conn->debug = true;
+        $this->db->conn->debug = false;
     }
 
     /** Metodo que permite iniciar la clase del formularios
@@ -304,7 +304,7 @@ class genForm {
     function putFormRegister() {
         $data = $this->dataSave;
         $db   = $this->db;
-        $this->db->conn->debug = true;
+        $this->db->conn->debug = false;
 
         foreach ($data as $key => $campo) {
 

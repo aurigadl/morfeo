@@ -230,7 +230,7 @@ function PRESTAMO_action($sAction) {
             $usuaCodiMail        = $codusuario ;
             $depeCodiMail        = $dependencia;
             $radicadosSelText    = $fldradicado;
-	    $observa = "prestamo;
+	    $observa = "prestamo";
             $asuntoMailPrestamo  = "Se realizo el prestamo de un documento ($fldradicado)";
             include "$ruta_raiz/include/mail/mailInformar.php";
             // some statement that removes all printed/echoed items
