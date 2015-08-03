@@ -62,6 +62,8 @@ $select  = $select1.$select2.$select3;
 // Filtro de datos
 
  if(!$codTx) $codTx = $AccionCaliope;
+$EnviaraV=($codTx==14)?'VoBo':$EnviaraV;
+$codTx=($codTx==14)?9:$codTx;
 if($checkValue)
 {	$num = count($checkValue);
 	reset($checkValue);
