@@ -306,19 +306,36 @@ class Usuario {
                 $record['SGD_DOC_FUN']       = $coduser;
                 break;
         }
-	
+//$this->db->conn->debug= true;
+
 	$insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
         $record,
         'SGD_DIR_CODIGO, RADI_NUME_RADI',
-        $autoquote = true);
+	$autoquote = true);
+
+//	echo "->".$insertSQL; exit;
 
 	if(!empty($insertSQL)){
             $this->result =  array( "state"  => true, "value" => $nextval);
             return true;
 	}else{
- 	     echo "No se puedo agregar usuario al radicado en SGD_DIR_DRECCIONES"; exit;
-            $this->result = array( "error"  => 'No se puedo agregar usuario al radicado');
-            return false;
+		$record['SGD_DIR_CODIGO'] = $this->db->nextId("sec_dir_drecciones"); 
+		//CREO UN NUEVO USUARIO PARA ESTE RADICADO EN SGD_DIR_DRECCIONES
+		
+		$insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
+	        $record,
+	        'SGD_DIR_CODIGO, RADI_NUME_RADI',
+		$autoquote = true);
+
+		if(!empty($insertSQL)){
+		            $this->result =  array( "state"  => true, "value" => $nextval);
+		            return true;
+		}else{
+
+		 	     echo "No se puedo generar include/tx/usuario.php :335"; exit;
+		            $this->result = array( "error"  => 'No se puedo agregar usuario al radicado');
+			     return false;
+		}
         }
     }
 
