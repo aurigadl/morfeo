@@ -95,10 +95,7 @@ if (!empty($accionbutton)) {
     <link rel="stylesheet" type="text/css" media="screen" href="<?= $ruta_raiz ?>/estilos/jquery.ui.combogrid.css">
 </HEAD>
 <BODY>
-
-
 <br>
-
 <div id="resultadoFrm">
 </div>
 
@@ -473,7 +470,7 @@ if ($fieldTypeCode == 10) {
     $norandom = fileuploader . rand();
     echo("
          <div $addAttr id='$norandom'>Subir archivo</div>
-         <input  type='hidden' value='' id='inp_$norandom' $addAttr />
+         <input  type='hidden' value='$valueVar' id='inp_$norandom' $addAttr />
          ");
 
     if ($fieldParams && $valueVar){

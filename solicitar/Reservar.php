@@ -230,10 +230,11 @@ function PRESTAMO_action($sAction) {
             $usuaCodiMail        = $codusuario ;
             $depeCodiMail        = $dependencia;
             $radicadosSelText    = $fldradicado;
+	    $observa = "prestamo";
             $asuntoMailPrestamo  = "Se realizo el prestamo de un documento ($fldradicado)";
             include "$ruta_raiz/include/mail/mailInformar.php";
             // some statement that removes all printed/echoed items
-            //ob_end_clean();
+            ob_end_clean();
         }else{
             echo "<script> alert(\" El registro no pudo ser realizado\"); </script>";
         }
@@ -328,9 +329,10 @@ function PRESTAMO_action($sAction) {
             $depeCodiMail        = $dependencia;
             $radicadosSelText    = $fldradicado;
             $asuntoMailPrestamo  = "Se realizo una  acción de prestamo de un documento ($fldradicado)";
+	    $observa = "devoluci&oacute;n";
             include "$ruta_raiz/include/mail/mailInformar.php";
             // some statement that removes all printed/echoed items
-            //ob_end_clean();
+            ob_end_clean();
             verMensaje($nombTx,$fecha);
         }else{
             echo "<script> alert(".$titError."); </script>";
