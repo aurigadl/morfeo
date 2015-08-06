@@ -244,6 +244,12 @@ class Usuario {
 
         $record = array();
 
+#COMPROBAR QUE LAS VARIABLES LLEGEN COMPLETAS.
+        if(strlen($user['email'])>=49){$user['email']= substr($user['email'],0,49);}
+        if(strlen($user['direccion'])>=149){$user['direccion']= substr($user['direccion'],0,149);}
+        if(strlen($user['telef'])>=49){$user['telef']= substr($user['telef'],0,49);}
+
+
         $record['MUNI_CODI']         = $user['muni_tmp'];
         $record['DPTO_CODI']         = $user['dpto_tmp'];
         $record['ID_PAIS']           = $user['pais_tmp'];
