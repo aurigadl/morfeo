@@ -777,6 +777,10 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
                   $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP3 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
                   $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP4 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
                   $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP5 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
+                  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP6 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
+                  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP7 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
+                  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP8 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
+                  $sWhere = $sWhere . " OR SEXP.SGD_SEXP_PAREXP9 LIKE UPPER( '%".str_replace( '\'', '', tosql( trim( $ps_SGD_EXP_SUBEXPEDIENTE ), "Text" ) )."%' )";
                   $sWhere = $sWhere . " )";
                 }
 
@@ -951,7 +955,8 @@ SGD_EXP_SUBEXPEDIENTE=".$_GET["s_SGD_EXP_SUBEXPEDIENTE"]."&";
             $sSQL .= $sWhere . $whereTrd . $sOrder;
             //-------------------------------
             // Execute SQL statement
-            //-------------------------------
+	    //-------------------------------
+//	    echo "<pre>".$sSQL."</pre>"; exit;
             $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
             $rs=$db->query($sSQL);
 
@@ -1545,7 +1550,11 @@ function buscar_prueba($nivelus, $tpRemDes, $whereFlds){
             OR SEXP.SGD_SEXP_PAREXP2 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
             OR SEXP.SGD_SEXP_PAREXP3 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
             OR SEXP.SGD_SEXP_PAREXP4 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
-            OR SEXP.SGD_SEXP_PAREXP5 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%'))";
+            OR SEXP.SGD_SEXP_PAREXP5 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
+            OR SEXP.SGD_SEXP_PAREXP6 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
+            OR SEXP.SGD_SEXP_PAREXP7 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
+            OR SEXP.SGD_SEXP_PAREXP8 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%')
+            OR SEXP.SGD_SEXP_PAREXP9 LIKE UPPER( '%".str_replace( '\'', '', tosql($ps_SGD_EXP_SUBEXPEDIENTE,"Text"))."%'))";
     }
     else
     {

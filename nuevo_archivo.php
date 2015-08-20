@@ -420,6 +420,7 @@ if(!$tpradic) $tpradic=$ent;
 //Si el radicado es una entrada, SIEMPRE se radica una salida, no deben aparecer mas opciones.
 $tip_rest = substr($verrad,-1);if ($tip_rest == 2){$tpradic = 1 ;}else{$tpradic = $tip_rest;}
 ?><script>var aux_puede_r=0;</script><?php
+
 foreach ($tpNumRad as $key => $valueTp){
 
     if(strcmp(trim($tpradic),trim($valueTp))==0){
@@ -428,7 +429,7 @@ foreach ($tpNumRad as $key => $valueTp){
     }
         //Si se definio prioridad en algun tipo de radicacion
         $valueDesc = $tpDescRad[$key];
-	if ($tpPerRad[$valueTp]>=2){
+	if ($tpPerRad[$valueTp]>=1){
 
         if ($is_edit == $valueTp ){$sel="selected";}else{$sel="";}
 	?><script>var aux_puede_r=aux_puede_r+1;</script><?php

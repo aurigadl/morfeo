@@ -172,9 +172,13 @@ class Expediente {
                   WHERE
                     e.RADI_NUME_RADI = $radicado AND
                     e.sgd_exp_numero=sexp.sgd_exp_numero AND
-                    SGD_EXP_ESTADO <> 2"; 
+		    SGD_EXP_ESTADO <> 2
+		    LIMIT 10
+		    "; 
+	
+//	echo "<pre>$query</pre>"; exit;
 
-        $rs = $this->db->conn->query($query);
+	$rs = $this->db->conn->query($query);
         if ($rs)
             $this->num_expediente = $rs->fields['SGD_EXP_NUMERO'];
         if ($rs->EOF) {
@@ -235,6 +239,7 @@ class Expediente {
                                        on ( a.sgd_tpr_codigo=t.sgd_tpr_codigo   )
 				where a.anex_radi_nume='" . $numRadicado . "'
 				ORDER BY a.anex_fech_anex";
+
                         $rsAnex = $this->db->conn->query($query);
 
                         $arrAnexos = array();
@@ -282,10 +287,12 @@ class Expediente {
                         }
                         $iRr++;
                         $rsRad->MoveNext();
-                    }
+		    }
+		    
                     $iE++;
                     $rs->MoveNext();
-                }
+		}
+		
                 $this->expedientes = $expArr;
             }
         }
