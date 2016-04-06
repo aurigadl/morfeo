@@ -1,16 +1,11 @@
 <?
 session_start();
 define('ADODB_ASSOC_CASE', 2);
-/**
-  * Se aÃ±adio compatibilidad con variables globales en Off
-  * @autor Infometrika 2009-05
-  * @licencia GNU/GPl V3
-  */
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
 $usua_doc = $_SESSION["usua_doc"];
 $codusuario = $_SESSION["codusuario"];
- 
+
 $nomcarpeta=$_GET["carpeta"];
 $tipo_carpt=$_GET["tipo_carpt"];
 $adodb_next_page=$_GET["adodb_next_page"];
@@ -23,7 +18,7 @@ if(!isset($_SESSION['dependencia'])) include "./rec_session.php";
 $verrad = "";
 define('ADODB_ASSOC_CASE', 1);
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
-$db = new ConnectionHandler($ruta_raiz);	 
+$db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 ?>
 <html>
@@ -32,14 +27,11 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 <link rel="stylesheet" href="estilos/orfeo.css">
 </head>
 <script language="javascript">
-//Esta funciï¿½n de Javascript valida el texto introducido por el usuario y evita que este ingrese carï¿½cteres especiales
-//Evitando de este modo el error que por esto se esta presentando
-//Realizado por: Brayan Gabriel Plazas Riaï¿½o - DNP
-//Fecha: 13 de Julio de 2005
+//Esta funcion de Javascript valida el texto introducido por el usuario y evita que este ingrese caracteres especiales
 function validar_nombre()
 {
 var iChars = "ABCDEFGHIJKLMNï¿½OPQRSTUVWXYZï¿½ï¿½ï¿½ï¿½ï¿½abcdefghijklmnï¿½opqrstuvwxyzï¿½ï¿½ï¿½ï¿½ï¿½_-1234567890";
-  for (var i = 0; i < document.form1.nombcarp.value.length; i++) 
+  for (var i = 0; i < document.form1.nombcarp.value.length; i++)
   {
   	if ((iChars.indexOf(document.form1.nombcarp.value.charAt(i)) == -1))
 	{
@@ -64,17 +56,17 @@ var iChars = "ABCDEFGHIJKLMNï¿½OPQRSTUVWXYZï¿½ï¿½ï¿½ï¿½ï¿½abcdefghijklmnï¿½opqrs
 		</tr>
 		</table>
 		<br>
-		<? 	
+		<?
   $nombcarp = trim($nombcarp);
   if(!$nombcarp and $crear){
-     echo "<center>DEBE ESCRIBIR UN NOMBRE DE CARPETA</CENTER>";	
+     echo "<center>DEBE ESCRIBIR UN NOMBRE DE CARPETA</CENTER>";
      $crear = "";
-	  
+
   }
-  if(!$crear ){	
+  if(!$crear ){
  ?>
   <table width='98%' border='0' cellpadding='0' cellspacing='5' class='borde_tab'>
-  <tr> 
+  <tr>
   <td  class='titulos2' align='right'>
   Nombre de carpeta</strong></td>
   <td class='listado2' >
@@ -84,7 +76,7 @@ var iChars = "ABCDEFGHIJKLMNï¿½OPQRSTUVWXYZï¿½ï¿½ï¿½ï¿½ï¿½abcdefghijklmnï¿½opqrs
     <td class='titulos2' align='right'>Descripci&oacute;n</td>
     <td class='listado2'><input name='desccarp' type='text' class='tex_area' size='25' maxlength='30'></td>
   </tr>
-  <tr> 
+  <tr>
    <td colspan='2'>
    <div align='center'>
     <input type='submit' class='botones' value='Crear Ahora!' name=crear>
@@ -99,18 +91,18 @@ var iChars = "ABCDEFGHIJKLMNï¿½OPQRSTUVWXYZï¿½ï¿½ï¿½ï¿½ï¿½abcdefghijklmnï¿½opqrs
 	// Cambió select CODI_CARP por
 	// select CODI_CARP AS \"CODI_CARP\" para solucionar
 	// el error en carpetas personales.
-	 $isql = "select CODI_CARP AS \"CODI_CARP\" from carpeta_per 
+	 $isql = "select CODI_CARP AS \"CODI_CARP\" from carpeta_per
      where depe_codi=$dependencia and usua_codi=$codusuario and codi_carp!=99 order by codi_carp desc ";
 	 error_reporting(7);
 	 $rs=$db->conn->query($isql);
-	 $isql = "select CODI_CARP from carpeta_per 
+	 $isql = "select CODI_CARP from carpeta_per
      where depe_codi=$dependencia and usua_codi=$codusuario and codi_carp!=99 and nomb_carp='$nombcarp' order by codi_carp desc ";
-	 $rs1=$db->conn->query($isql);	 
+	 $rs1=$db->conn->query($isql);
 	 $codigocarpeta = (intval($rs->fields["CODI_CARP"]) + 1);
-	 IF ($codigocarpeta==99) 
+	 IF ($codigocarpeta==99)
 	 {
 	   $codigocarpeta=100;
-	 } 
+	 }
 	 if ($rs1->EOF)
 	 	{
 		$isql = "INSERT INTO CARPETA_PER(codi_carp,depe_codi,usua_codi,nomb_carp,desc_carp)
@@ -121,15 +113,15 @@ var iChars = "ABCDEFGHIJKLMNï¿½OPQRSTUVWXYZï¿½ï¿½ï¿½ï¿½ï¿½abcdefghijklmnï¿½opqrs
 		}
 	else
 		echo "<center><span class='alarmas'>No se ha podido crear la carpeta por Nombres Duplicados</span>";
-	
+
   }
  ?>
-</form> 
+</form>
 
 <table width='98%' border='0' cellpadding='0' cellspacing='5' class='borde_tab'>
-  <tr> 
-    <td  class="listado2_center" height="25" >La descripci&oacute;n de la carpeta le recordara 
-      el destino final de la misma. Esto se puede ver pasando el mouse sobre cada 
+  <tr>
+    <td  class="listado2_center" height="25" >La descripci&oacute;n de la carpeta le recordara
+      el destino final de la misma. Esto se puede ver pasando el mouse sobre cada
       una de las carpetas. </td>
   </tr>
 </table>
