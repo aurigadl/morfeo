@@ -1,61 +1,54 @@
 <?php 
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-
+error_reporting(7);
 require_once('nusoap/lib/nusoap.php');
 
-$wsdl="http://localhost/orfeo-3.8.0/webServices/servidor.php?wsdl"; 
-echo "Llego aka";
-$client=new soapclient2($wsdl, 'wsdl');  
-echo "Llego aka";
+$wsdl="http://localhost/orfeo-3.7.2/webServices2/servidor.php?wsdl"; 
 
+$client=new soapclient2($wsdl, 'wsdl');  
+//$extension = explode(".",$archivo_name);
+//copy($archivo, "../bodega/tmp/visitas/".$archivo_name);
+echo "Paso 1 <hr>";
 $arregloDatos = array();
 
-$arregloDatos[0] = 10402;                  /* Destino Valores:
-							  -10404:Sustancias – Control Nacional
-							  -12875:Sustancias Control Especial
-							  -10403:Aerocivil
-							  -10402:DIMAR */
-$arregloDatos[1] = "Observaciones de la Solicitud";      // Observaciones 
-$arregloDatos[2] = "N";                      // Tipo de Persona  ---  -J si es jurídica
-					      //       	              -N si es natural
-$arregloDatos[3] = "CC";                  // TI: Tarjeta de identidad.
-						/* CC: Cédula de Ciudadanía
-						CE: Cédula de extranjería
-						PA: Pasaporte
-						RE: Registro civil
-						CX: Cédula extranjero
-						NI:  Nit
-						NE: Nit de extranjería
-						PJ: Personería Jurídica
-						EO: Entidad oficial
-						RM: Registro mercantil */
-$arregloDatos[4] = "79802120";
-$arregloDatos[5] = "JairoP";
-$arregloDatos[6] = "LosadaP";
-$arregloDatos[7] = "CardonaP";
-$arregloDatos[8] = "";
-$arregloDatos[9] = "";
-$arregloDatos[10] = "Cra 13 no 54 67 dd";
-$arregloDatos[11] = "11";
-$arregloDatos[12] = "1";
-$arregloDatos[13] = "jlosada@correlibre.org";
-$arregloDatos[14] = "1";
-$arregloDatos[15] = "79";
-$arregloDatos[16] = "0";
-$arregloDatos[17] = "15";
-$arregloDatos[18] = "Probando la radicadion por ws";
-$arregloDatos[19] = "2010-09-11";
-$arregloDatos[20] = "100";
-$arregloDatos[21] = "GED";
-$arregloDatos[22] = "S";
-$arregloDatos[23] = "99999";
-$a = $client->call('DNEradicarDocumento',$arregloDatos);
-echo "Probando Salida";
-var_dump($a);
+//$a = $client->call('darUsuario',$arregloDatos);
+/*$arregloDatos[0] = 'jgonzal@superservicios.gov.co';
+$correo = 'jgonzal@superservicios.gov.co';
 
+print_r($client->call( 'getUsuarioCorreo', $correo ));
+$a = $client->call( 'getUsuarioCorreo', $correo );
+*/
 
+$filename = '799822761_2007_08_27_14_30_14.doc';
+//$filename = '799822761_2007_08_10_18_04_05.odt';
+$strFile =  file_get_contents ( $filename );
+$strFileEncoded64 = base64_encode($strFile);
+echo "Paso 2 <hr>";
+//var_dump($strFileEncoded64);
+$radiNume = '20099000000032';
+
+$correo = 'jgonzal@superservicios.gov.co';
+$descripcion = 'OOOO BBB Prueba de Webservice Creación anexo.';
+//$a = $client->call( 'getUsuarioCorreo', $correo );
+$arregloDatos[0] = $radiNume;
+$arregloDatos[1] = $strFileEncoded64;
+$arregloDatos[2] = $filename;
+$arregloDatos[3] = $correo;
+$arregloDatos[4] = $descripcion;
+
+//var_dump( $arregloDatos);
+$a = $client->call( 'crearAnexo', $arregloDatos );
+echo "Paso 3 <hr>";
+// Display the result
+//print_r($a);
+var_dump( $a );
+echo "Paso 4 <hr>";
+// Display the request and response
+/*echo '<h2>Request:</h2>';
+echo '<pre>' . htmlspecialchars($client->request, ENT_QUOTES) . '</pre>';
+echo '<h2>Response:</h2>';
+echo '<pre>' . htmlspecialchars($client->response, ENT_QUOTES) . '</pre>';
+*/
+//var_dump( $a );
+//die($a);
 
 ?>
-
-
-
