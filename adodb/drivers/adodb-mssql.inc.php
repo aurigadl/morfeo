@@ -211,7 +211,6 @@ class ADODB_mssql extends ADOConnection {
 	}
 	
 	//Función para redondear
-	//Realizada por Brayan Plazas - DNP
 	function round($dato)
 	{
 		return "CONVERT(float, ROUND(convert(float, $dato),0))";
