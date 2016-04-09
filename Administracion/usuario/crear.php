@@ -288,19 +288,19 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
         Correo Electr&oacute;nico (Principal) <strong>(*)</strong>
       </label>
       <label class="input">
-        <input type="text" name="email" id="email" value="<?=$email?>" size="40" placeholder="usuario@metrovivienda.gov.co">
+        <input type="text" name="email" id="email" value="<?=$email?>" size="40" placeholder="usuario@dominio.co">
       </label>
     </section>
 		<section class="col col-4">
       <label class="label">Correo Electr&oacute;nico Secundario</label>
       <label class="input">
-        <input type="email" name="email1" id="email1" value="<?=$email1?>" size="40" placeholder="usuario@metrovivienda.gov.co">
+        <input type="email" name="email1" id="email1" value="<?=$email1?>" size="40" placeholder="usuario@dominio.co">
       </label>
     </section>
 		<section class="col col-4">
       <label class="label">Correo Electr&oacute;nico opcional</label>
       <label class="input">
-        <input type="email" name="email2" id="email2" value="<?=$email2?>" size="40" placeholder="usuario@metrovivienda.gov.co">
+        <input type="email" name="email2" id="email2" value="<?=$email2?>" size="40" placeholder="usuario@dominio.co">
       </label>
     </section>
 	</div>

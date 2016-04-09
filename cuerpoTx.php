@@ -82,11 +82,7 @@ if ($swLog==1)
     foreach ($textElements as $item){
       $item = trim ( $item );
       if ( strlen ( $item ) != 0) {
-        if ($entidad != "DNP") {
-                $busqRadicadosTmp .= " cast(b.radi_nume_radi as varchar) like '%$item%' or";
-        } else {
           $busqRadicadosTmp .= " r.radi_nume_radi like '%$item%' or";
-        }
       }
     }
 

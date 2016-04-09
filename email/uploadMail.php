@@ -4,7 +4,7 @@ include "../envios/class.phpmailer.php";
 //para el envío en formato HTML
   $mail = new PHPMailer();
   $cuerpo = "<br>$texto
-                <br> ha dado respuesta a su solicitud No. " . $nurad . " mediante el oficio No." . $verradicado2 . ", la cual también puede ser consultada en el portal Web del DNP.</p>
+                <br> ha dado respuesta a su solicitud No. " . $nurad . " mediante el oficio No." . $verradicado2 . ", la cual también puede ser consultada en el portal Web.</p>
                  <br><br><b><center>Si no puede visualizar bien el correo, o no llegaron bien los Adjuntos, puede Consultarlos en :
                  <a href='http://orfeo.correlibre.org/pqr/consulta.php?rad=$nurad'>http://orfeo.correlibre.org/pqr/consulta.php</a><br><br><br>".$respuesta."</b></center><BR>
                  ";

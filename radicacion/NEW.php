@@ -52,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   $showtable       = 'hide';
   $hidetable       = '';
   $modificar       = 'hide';
-  $radMail	   = $_GET["radMail"];
+  $radMail	       = $_GET["radMail"];
   $ddate           = date('d');
   $mdate           = date('m');
   $adate           = date('Y');
@@ -66,33 +66,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   //valor necesario para crear enlaces de los distintos elementos
   //como el sticker
   $idsession       = session_id(); //valor necesario para crear enlaces
-
-
-//CONFIGURACIONES ESPECIFICAS PARA METRO VIVIENDA
- if($_SESSION['entidad']=="METROVIVIENDA"){ 
-	$_TIPO_INFORMADO = 1;
-	$_enable_1 = false;
-	$_enable_2 = false;
-	$_name_2 = "Empresas";
-	$_name_6 = "Usuario SIIM2";
-
-	//el tipo documental solo lo muestra si es un radicado de Entrada
-	if ( $ent == 2 ){
-	$_show_type_doc = true;
-	}else{
-	$_show_type_doc = false;
-	}
-}
-
-//CONFIGURACIONES ESPECIFICAS PARA CRA
-if($_SESSION['entidad']=="CRA"){
-	$_TIPO_INFORMADO = 2;
-        $_enable_1 = true;
-	$_enable_2 = true;
-	$_name_2 = "Otras Empresas"; 
-	$_name_6 = "Usuario";
-	$_show_type_doc = true;
-} 
 
   //Mostrar el tipo de radicacion que se esta realizando
   $selTipoRad = "select
@@ -111,7 +84,7 @@ if($_SESSION['entidad']=="CRA"){
   }
 
   $med = null;
-  
+
   if ($ent == MEMORANDO) {
     $usuario_selected = 'selected';
     $med = SIIM2_RECEPCION;
@@ -165,53 +138,53 @@ if($_SESSION['entidad']=="CRA"){
   //CARGAR INFORMACION SI SE ENVIA NUMERO DE RADICADO PARA MODIFICAR
   if($nurad){
 
-     $query = "SELECT
-                a.*
-              FROM
-                RADICADO A
-              WHERE
-                A.RADI_NUME_RADI = $nurad";
+    $query = "SELECT
+      a.*
+      FROM
+      RADICADO A
+      WHERE
+      A.RADI_NUME_RADI = $nurad";
 
     $rs    = $db->conn->query($query);
 
-      if(!$rs->EOF){
-          $asu             = $rs->fields["RA_ASUN"];
-          $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
-          $ane             = $rs->fields["RADI_DESC_ANEX"];
-          $cuentai         = $rs->fields["RADI_CUENTAI"];
-          $tdoc            = $rs->fields["TDOC_CODI"];
-          $med             = $rs->fields["MREC_CODI"];
-          $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
-          $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
-          $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
-          $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
-          $guia            = $rs->fields["RADI_NUME_GUIA"];
-          $numFolio        = $rs->fields["RADI_NUME_FOLIO"];
-          $numAnexo        = $rs->fields["RADI_NUME_ANEXO"];
-          $esta_fisico     = $rs->fields["ESTA_FISICO"];
-      }
+    if(!$rs->EOF){
+      $asu             = $rs->fields["RA_ASUN"];
+      $radicadopadre   = $rs->fields["RADI_NUME_DERI"];
+      $ane             = $rs->fields["RADI_DESC_ANEX"];
+      $cuentai         = $rs->fields["RADI_CUENTAI"];
+      $tdoc            = $rs->fields["TDOC_CODI"];
+      $med             = $rs->fields["MREC_CODI"];
+      $coddepe         = $rs->fields["RADI_DEPE_ACTU"];
+      $codusuarioActu  = $rs->fields["RADI_USUA_RADI"];
+      $radi_fecha      = $rs->fields["RADI_FECH_RADI"];
+      $fecha_gen_doc   = $rs->fields["RADI_FECH_OFIC"];
+      $guia            = $rs->fields["RADI_NUME_GUIA"];
+      $numFolio        = $rs->fields["RADI_NUME_FOLIO"];
+      $numAnexo        = $rs->fields["RADI_NUME_ANEXO"];
+      $esta_fisico     = $rs->fields["ESTA_FISICO"];
+    }
 
-      $date1 = date_create($radi_fecha);
+    $date1 = date_create($radi_fecha);
 
-      list($adate, $mdate, $ddate)    = explode( '-', date_format($date1, 'Y-m-d') );
-      list($adate1, $mdate1, $ddate1) = explode( '-', substr($fecha_gen_doc,0,10));
-      $fecha_gen_doc = "$ddate1-$mdate1-$adate1";
+    list($adate, $mdate, $ddate)    = explode( '-', date_format($date1, 'Y-m-d') );
+    list($adate1, $mdate1, $ddate1) = explode( '-', substr($fecha_gen_doc,0,10));
+    $fecha_gen_doc = "$ddate1-$mdate1-$adate1";
 
     $ent = substr($nurad,-1);
 
-      //Filtro por el tipo de usuario
-      $result = $usuario->usuarioPorRadicado($nurad);
+    //Filtro por el tipo de usuario
+    $result = $usuario->usuarioPorRadicado($nurad);
 
-      if($result){
-          $showUsers = $usuario->resRadicadoHtml();
-          $hidetable = 'hide';
-          $modificar = '';
-          $showtable = '';
-      }
+    if($result){
+      $showUsers = $usuario->resRadicadoHtml();
+      $hidetable = 'hide';
+      $modificar = '';
+      $showtable = '';
+    }
 
-      $varEnvio  = session_name()."=".session_id()."&nurad=$nurad&ent=$ent";
-      $senddata  = "<input name='nurad' value='$nurad' type=hidden>";
-      $senddata .= "<input name='idCodigo' value='$nurad' type=hidden>";
+    $varEnvio  = session_name()."=".session_id()."&nurad=$nurad&ent=$ent";
+    $senddata  = "<input name='nurad' value='$nurad' type=hidden>";
+    $senddata .= "<input name='idCodigo' value='$nurad' type=hidden>";
   }
 
   if($ent == 2){
@@ -241,19 +214,19 @@ if($_SESSION['entidad']=="CRA"){
 
   $rs = $db->conn->query($query);
 
-if($_TIPO_INFORMADO==1){
- $depselect = $rs->GetMenu2("coddepe", $coddepe, "0:-- Seleccione una Dependencia --",false,false,"class='select'");
-}else if ($_TIPO_INFORMADO==2){
- $depselect = $rs->GetMenu2("coddepe", $coddepe, false,false, "class='select'");
-}
+  if($_TIPO_INFORMADO==1){
+  $depselect = $rs->GetMenu2("coddepe", $coddepe, "0:-- Seleccione una Dependencia --",false,false,"class='select'");
+  }else if ($_TIPO_INFORMADO==2){
+  $depselect = $rs->GetMenu2("coddepe", $coddepe, false,false, "class='select'");
+  }
 
-    $queryData  = "SELECT ".
-                    $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
-                FROM
-                DEPENDENCIA d 
-		where depe_estado = 1 ";
+  $queryData  = "SELECT ".
+                  $db->conn->Concat( "d.DEPE_CODI", "'-'", "d.DEPE_NOMB" ).", d.DEPE_CODI
+                 FROM
+                   DEPENDENCIA d
+                 where depe_estado = 1 ";
 
-    $rs = $db->conn->query($queryData);
+  $rs = $db->conn->query($queryData);
 
 if($_TIPO_INFORMADO==1){
  $depselectInf = $rs->GetMenu2 ("coddepe",$coddepe,"0:-- Seleccione una Dependencia --",false, false, "class='form-control custom-scroll' id='informar'");
@@ -587,7 +560,7 @@ if($_TIPO_INFORMADO==1){
 
 		<? if ($entidad=="CRA"){?>
 		<label class="label">
-			Nivel de Seguridad: 
+			Nivel de Seguridad:
 			<div>
 			  <label>
 			    <input type="radio" name="nivelSeguridad" id="publico" value="0" checked>
@@ -1100,7 +1073,7 @@ function justNumbers(e)
           pass = false;
         };
 
-	//DIRECCION Ò EMAIL EN UN USUARIO NUEVO	
+	//DIRECCION Ò EMAIL EN UN USUARIO NUEVO
 	var inc = 0;
 	$("tr[name='item_usuario']").each(function(){
 

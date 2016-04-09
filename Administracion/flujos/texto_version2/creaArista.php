@@ -31,7 +31,7 @@ session_start();
   */
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
-  
+
 if($_GET["crear"]) $crear = $_GET["crear"];
 if($_GET["proceso"]) $proceso = $_GET["proceso"];
 if($_GET["etapaCreaArista"]) $etapaCreaArista = $_GET["etapaCreaArista"];
@@ -80,7 +80,7 @@ if ( $tipificacion ) $deshabilitado =  ""; else $deshabilitado =  "disabled=true
 	}elseif ( $_POST['proceso'] != ''){
 		$procesoSelected = $_POST['proceso'];
 	}
-	include_once "$ruta_raiz/include/query/flujos/queryAristas.php";	
+	include_once "$ruta_raiz/include/query/flujos/queryAristas.php";
 	$rsDepMax = $db->conn->Execute( $sqlMax );
 	$idEtapas = $rsDepMax->fields['MAXETAPAS'];
 ?>
@@ -88,7 +88,7 @@ if ( $tipificacion ) $deshabilitado =  ""; else $deshabilitado =  "disabled=true
 <html>
 
 <head>
-  <title>Sistema de informaci&oacute;n integrado de Metrovivienda</title>
+  <title>Sistema de informaci&oacute;n integrado</title>
   <meta charset="utf-8">
   <!-- Bootstrap core CSS -->
   <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
@@ -116,7 +116,7 @@ var nodo  =0;
 	}
 	function $(elemento){
 		return document.getElementById(elemento);
-		
+
 	}
 
 
@@ -126,7 +126,7 @@ function consulta(componente){
 		var nodo="";
 		var nomcompo=componente.id.substr( 0, 4 );
 		if( nomcompo == "tsub" ){
-			
+
 			nodo=componente.id.substr( 4 );
 			compon="tipo";
 			param="&tsub="+componente.value;
@@ -148,18 +148,18 @@ function consulta(componente){
 
 
 	function validarDatos()
-	{ 
+	{
 		if(document.frmCrearArista.descripcionArista.value == "")
         {       alert("Debe ingresar la descripcion de la Conexion." );
                 document.frmCrearArista.descripcionArista.focus();
                 return false;
         }
-        
+
 		var minimo = document.frmCrearArista.diasMinimo.value;
 		var maximo = document.frmCrearArista.diasMaximo.value;
 		var enteroMin = parseInt(minimo);
 		var enteroMax = parseInt(maximo);
-			
+
         if( enteroMin < 0 || enteroMin > 999 )
         {       alert("El valor para Dias Minimo debe estar entre 0 y 999" );
                 document.frmCrearArista.diasMinimo.focus();
@@ -170,7 +170,7 @@ function consulta(componente){
                 document.frmCrearArista.diasMaximo.focus();
                 return false;
         }
-        
+
         if( minimo != '' && isNaN(enteroMin) )
         {
                alert( "Solo debe ingresar numeros en dias minimo" );
@@ -184,21 +184,21 @@ function consulta(componente){
                 document.frmCrearArista.diasMaxnimo.focus();
                 return false;
         }
-        
+
         var tipifica = document.frmCrearArista.tipificacion.checked;
         var serieDoc = document.frmCrearArista.codserie.value;
         var subserieDoc = document.frmCrearArista.tsub.value;
         var tipoDoc = document.frmCrearArista.tipo.value;
-        
+
         if( tipifica  && ( serieDoc == 0 || subserieDoc == 0 || tipoDoc == 0 ))
         {       alert("Si selecciona tipificacion, debe seleccionar la serie, subserie y tipo documental." );
-                
+
                 return false;
         }
-        
+
 	 	document.frmCrearArista.submit();
 	}
-	
+
 function Start(URL, WIDTH, HEIGHT)
 {
  windowprops = "top=0,left=0,location=no,status=no, menubar=no,scrollbars=yes, resizable=yes,width=700,height=500";
@@ -217,47 +217,47 @@ function regresar(){
 }
 
 	function verificaEliminacion( aristaParaEliminacion, form ){
-		
+
 				var confirmaEliminacion = confirm("Seguro que desea eliminar la conexion: " + aristaParaEliminacion);
 				if( confirmaEliminacion ){
 					form.submit();
 					return true;
 				}else{
-					
-						if (form.aristaAEliminar.length) 
-						{ 
-							 
-							for (var b = 0; b < form.aristaAEliminar.length; b++) 
-								if (form.aristaAEliminar[b].checked) 
-								{ 
-									form.aristaAEliminar[b].checked = false; break; 
-								} 
-						} else 
-							form.aristaAEliminar.checked = false; 
-					
+
+						if (form.aristaAEliminar.length)
+						{
+
+							for (var b = 0; b < form.aristaAEliminar.length; b++)
+								if (form.aristaAEliminar[b].checked)
+								{
+									form.aristaAEliminar[b].checked = false; break;
+								}
+						} else
+							form.aristaAEliminar.checked = false;
+
 					return false;
 				}
 	}
 
 	function verificaEtapas(){
 		//Verificar primero si hay etapas para el flujo, si no hay no se pueden crear aristas
-		<?	
-			
+		<?
+
 			if( $idEtapas < 1 ){
 		?>
 		alert("El flujo para el Proceso seleccionado no tiene Etapas,\npor lo tanto no puede crear Conexiones. \nSera redireccionado a la pagina de creacion de etapas.");
 			window.location = 'creaEtapa.php?proceso=<?=$procesoSelected?>';
-		<?	
+		<?
 			}else {
-				
+
 		?>
-		
+
 			return true;
 		<?
 			}
 		?>
 	}
-	
+
 //-->
 </script>
 
@@ -272,28 +272,28 @@ function regresar(){
 		 }else {
 		 	$resultadoInsercion = "Error eliminando la conexi&oacute;n";
 		 }
-		
+
 	}
 	if ($_GET['etapaCreaArista']) {
-		$etapaInicial = $_GET['etapaCreaArista'];	
+		$etapaInicial = $_GET['etapaCreaArista'];
 	}elseif ($_POST['etapaCreaArista']) {
 		$etapaInicial = $_POST['etapaCreaArista'];
 	}
-	
-	if( ( $_POST['descripcionArista'] != '' &&  $_POST['codserie'] != null &&  $_POST['tsub'] != null &&  $_POST['tipo'] != null  &&  $_POST['codserie'] != 0 &&  $_POST['tsub'] != 0 &&  $_POST['tipo'] != 0 &&  $_POST['tipificacion'] != null &&  $_POST['tipificacion'] != '' && !$aristaAEliminar  && $ClickCrea == 'Crear') 
+
+	if( ( $_POST['descripcionArista'] != '' &&  $_POST['codserie'] != null &&  $_POST['tsub'] != null &&  $_POST['tipo'] != null  &&  $_POST['codserie'] != 0 &&  $_POST['tsub'] != 0 &&  $_POST['tipo'] != 0 &&  $_POST['tipificacion'] != null &&  $_POST['tipificacion'] != '' && !$aristaAEliminar  && $ClickCrea == 'Crear')
 	||  ( $_POST['descripcionArista'] != '' &&  $_POST['codserie'] == 0 &&  $_POST['tsub'] == 0 &&  $_POST['tipo'] == 0 &&  $_POST['tipificacion'] == null && !$aristaAEliminar   && $ClickCrea == 'Crear')
 			 ){
 			include "$ruta_raiz/include/tx/Proceso.php";
 	 		$flujo = new AristaFlujo( $db );
 			if( $_POST['tipificacion'] != ''){
 		 		$serieArista = $codserie;
-		 		$subserieArista = $tsub;				
+		 		$subserieArista = $tsub;
 			}else {
 		 		$serieArista = 0;
-		 		$subserieArista = 0;								
+		 		$subserieArista = 0;
 			}
 
-	 		$flujo->initArista( $etapaInicial, $etapaFinal, $descripcionArista, $diasMinimo, $diasMaximo, $trad,$serieArista,$subserieArista, $tipo, $procesoSelected, $_POST['automatico'], $tipificacion );	
+	 		$flujo->initArista( $etapaInicial, $etapaFinal, $descripcionArista, $diasMinimo, $diasMaximo, $trad,$serieArista,$subserieArista, $tipo, $procesoSelected, $_POST['automatico'], $tipificacion );
 
 			$resultadoInsercion = $flujo-> insertaArista(  );
 	}
@@ -316,7 +316,7 @@ function regresar(){
 				<?
 				$rsDep = $db->conn->Execute( $sql );
 				print $rsDep->GetMenu2( "etapaInicial", $etapaInicial, false, false, 0," class='select'" );
-				
+
 				?>
 			</select>
 		</td>
@@ -365,12 +365,12 @@ function regresar(){
             </td>
             <td    width="25%"><label class="select state-success">
             	<?
-				
-			 	include_once "$ruta_raiz/include/query/flujos/queryTiposDoc.php";									
+
+			 	include_once "$ruta_raiz/include/query/flujos/queryTiposDoc.php";
 				$rsDep = $db->conn->Execute( $sql );
-				
+
 				print $rsDep->GetMenu2( "trad", $trad, "0:-- Ninguno --", false, ""," class='select'" );
-				
+
 				?></label>
             </td>
             <td   width="25%">
@@ -388,7 +388,7 @@ function regresar(){
                 <input type="checkbox" name="tipificacion" <? if ($tipificacion) echo "checked"; else echo "";?> onchange="submit();">
             </td>
             <td    width="25%">
-            	
+
             </td>
         </tr>
 </table>
@@ -403,7 +403,7 @@ function regresar(){
 		<td width="36%" ><small>SERIE</small></td>
 		<td width="64%" height="35" ><label class="select state-success">
 		<?php
-    include "$ruta_raiz/trd/actu_matritrd.php";  
+    include "$ruta_raiz/trd/actu_matritrd.php";
     if(!$codserie) $codserie = 0;
 	$fechah=date("dmy") . " ". time("h_m_s");
 	$fecha_hoy = Date("Y-m-d");
@@ -414,10 +414,10 @@ function regresar(){
 	$nomb_varc = "sgd_srd_codigo";
 	$nomb_varde = "sgd_srd_descrip";
    	include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
-   	
+
 //   	$sqlConcat = $db->conn->Concat("$nomb_varde","' -- '","$nomb_varc");
-	$querySerie = "select distinct ($sqlConcat) as detalle, sgd_srd_codigo 
-	         from sgd_srd_seriesrd 
+	$querySerie = "select distinct ($sqlConcat) as detalle, sgd_srd_codigo
+	         from sgd_srd_seriesrd
 			 order by detalle
 			  ";
 	$rsD=$db->conn->query($querySerie);
@@ -453,7 +453,7 @@ function regresar(){
 <table border=1 width=93% class="table table-bordered" align="center">
 	<tr >
 	<td height="30" colspan="2" >
-	<center> <input class="btn btn-primary btn-xs" type="submit" Value="Crear"  onClick=" return validarDatos();"  name="ClickCrea"> </center> 
+	<center> <input class="btn btn-primary btn-xs" type="submit" Value="Crear"  onClick=" return validarDatos();"  name="ClickCrea"> </center>
 	</td>
 	<td height="30" colspan="2" ><span class="celdaGris">
 	<center><input class="btn btn-primary btn-xs" type=button name=Cerrar id=Cerrar Value=Cerrar onclick='cerrar();'></a></center>  </span>

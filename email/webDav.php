@@ -5,7 +5,7 @@ require_once("class_http.php");
 require_once("class_xml.php");
 
 // Change these values for your Exchange Server.
-$exchange_server = "http://CLUSTERDNP.dnp.ad";
+$exchange_server = "http://miip";
 $exchange_username = "YourExchangeUsername";
 $exchange_password = "YourExchangePassword";
 

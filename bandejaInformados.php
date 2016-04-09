@@ -145,11 +145,11 @@ $_SESSION['numExpedienteSelected'] = null;
 <html>
 
 <head>
-  <title>Sistema de informaci&oacute;n integrado de Metrovivienda</title>
+  <title>Sistema de informaci&oacute;n integrado</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="SIIM2">
-  <meta name="keywords" content="siim, metrovivienda, gestion, misional">
+  <meta name="keywords" content="siim, gestion, misional">
   <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
   <!-- Bootstrap core CSS -->
   <?php include_once "htmlheader.inc.php"; ?>

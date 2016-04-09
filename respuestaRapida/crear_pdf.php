@@ -3,21 +3,21 @@
   require '../tcpdf/config/lang/eng.php';
   require '../tcpdf/tcpdf.php';
   require '../config.php';
-  
+
   define ('AUTOR_PDF',    'Sistema de Gesti&oacute;n Documental Caliope');
   define ('TITULO_PDF',   'Respuesta a solicitud');
-  define ('ASUNTO_PDF',   'Metrovivienda');
-  define ('KEYWORDS_PDF', 'metrovivienda, respuesta, salida, generar');
+  define ('ASUNTO_PDF',   'asunto');
+  define ('KEYWORDS_PDF', 'respuesta, salida, generar');
   define ('IMAGEN_PDF', '../img/banerPDF.JPG');
   define ('ENTIDAD_DIR', $entidad_dir);
   define ('ENTIDAD_TEL', $entidad_tel);
-  
+
   // Extend the TCPDF class to create custom Header and Footer
   class MYPDF extends TCPDF {
     //Page header
     public function Header() {
       // Logo
-      $this->Image(LOGO_METROVIVIENDA,
+      $this->Image(LOGO,
                     100,
                     10,
                     25,
@@ -34,8 +34,8 @@
                     false,
                     false,
                     false);
-      
-      $this->Image(PIE_METROVIVIENDA,
+
+      $this->Image(PIE,
                     25,
                     250,
                     167,
@@ -102,7 +102,7 @@
   // Add a page
   // This method has several options, check the source code documentation for more information.
   $pdf->AddPage();
-  
+
   // output the HTML content
   $pdf->writeHTML($respuesta, true, false, true, false, '');
 

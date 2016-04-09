@@ -16,7 +16,7 @@ echo "<pre>";
 echo  $cuerpo = "<br>$texto
                 <br> Se ha recibido su correo y se ha radicado con el 
 		$numeroRadicado, el cual tambien puede ser consultado en 
-		el portal Web del DNP.</p>
+		el portal Web.</p>
                 <br><br><b><center>Puede Consultarlos el estado en:
                 <a href='http://www.correlibre.org'>
 
@@ -46,9 +46,6 @@ echo  $cuerpo = "<br>$texto
   $mail->AddAddress($destinatario, $destinatario);
   $mail->AddAddress("aurigadl@gmail.com");
   $mail->MsgHTML($cuerpo);
-
-  //$mail->From = $usuaEmail;
-  //$mail->FromName = $usuaEmail;
 
   echo "Destino : ".$destinatario;
   echo "<hr>";

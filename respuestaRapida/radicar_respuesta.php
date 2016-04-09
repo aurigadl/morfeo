@@ -92,8 +92,8 @@
   $usuario        = $_SESSION["usua_nomb"];
   $setAutor       = 'Sistema de Gestion Documental Orfeo';
   $SetTitle       = 'Respuesta a solicitud';
-  $SetSubject     = 'Metrovivienda';
-  $SetKeywords    = 'metrovivienda, respuesta, salida, generar';
+  $SetSubject     = 'Respuesta de la entidad';
+  $SetKeywords    = 'respuesta, salida, generar';
 
   //DATOS EMPRESA
   $sigla          = 'null';
@@ -514,7 +514,7 @@ class MYPDF extends TCPDF {
   //Page header
   public function Header() {
     // Logo
-    $this->Image(LOGO_METROVIVIENDA,
+    $this->Image(LOGO,
                   100,
                   10,
                   25,
@@ -532,7 +532,7 @@ class MYPDF extends TCPDF {
                   false,
                   false);
     
-    $this->Image(PIE_METROVIVIENDA,
+    $this->Image(PIE,
                   25,
                   250,
                   167,

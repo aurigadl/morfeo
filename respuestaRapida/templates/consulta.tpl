@@ -17,7 +17,7 @@
 		<table width="60%" border="0" align="center" cellpadding="0" cellspacing="5">
 		<tr>
 			<td class="consulta2" align="center">N&uacute;mero de Radicado </td>
-			<td width="11%" rowspan="2" align="center"><img src="../imagenes/tickDnp.jpg" alt="ticket" width="179" height="68" longdesc="Imagen del numero de radicado"></td>
+			<td width="11%" rowspan="2" align="center"><img src="../imagenes/tick.jpg" alt="ticket" width="179" height="68" longdesc="Imagen del numero de radicado"></td>
 		</tr>
 		<tr align="left">
 			<td width="89%" align="left" valign="top">

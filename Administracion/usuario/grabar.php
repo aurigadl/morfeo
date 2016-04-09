@@ -1,31 +1,9 @@
-<?php 
+<?php
 session_start();
-//ini_set("display_errors",1);
-	$ruta_raiz = "../..";
-    if (!$_SESSION['dependencia'])
-        header ("Location: $ruta_raiz/cerrar_session.php");
-/*********************************************************************************/
-/* ORFEO GPL:Sistema de Gestion Documental		http://www.orfeogpl.org	     */
-/*	Idea Original de la SUPERINTENDENCIA DE SERVICIOS PUBLICOS DOMICILIARIOS     */
-/*				COLOMBIA TEL. (57) (1) 6913005  orfeogpl@gmail.com   */
-/* ===========================                                                       */
-/*                                                                                   */
-/* Este programa es software libre. usted puede redistribuirlo y/o modificarlo       */
-/* bajo los terminos de la licencia GNU General Public publicada por                 */
-/* la "Free Software Foundation"; Licencia version 2. 			             */
-/*                                                                                   */
-/* Copyright (c) 2005 por :	  	  	                                     */
-/* SSPS "Superintendencia de Servicios Publicos Domiciliarios"                       */
-/*   Jairo Hernan Losada  jlosada@gmail.com                Desarrollador             */
-/* C.R.A.  "COMISION DE REGULACION DE AGUAS Y SANEAMIENTO AMBIENTAL"                 */
-/*   Lucia Ojeda          lojedaster@gmail.com             Desarrolladora            */
-/* D.N.P. "Departamento Nacional de Planeación"                                      */
-/*   Hollman Ladino       hollmanlp@gmail.com              Desarrollador             */
-/*                                                                                   */
-/* Colocar desde esta lInea las Modificaciones Realizadas Luego de la Version 3.5    */
-/*  Nombre Desarrollador   Correo     Fecha   Modificacion                           */
-/*************************************************************************************/
-    
+$ruta_raiz = "../..";
+if (!$_SESSION['dependencia'])
+  header ("Location: $ruta_raiz/cerrar_session.php");
+
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler("$ruta_raiz");
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
@@ -47,7 +25,7 @@ $sqlFechaHoy=$db->conn->DBTimeStamp(time());
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="SIIM2">
-  <meta name="keywords" content="siim, metrovivienda, gestion, misional">
+  <meta name="keywords" content="siim,  gestion, misional">
   <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
   <!-- Bootstrap core CSS -->
   <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
@@ -55,12 +33,6 @@ $sqlFechaHoy=$db->conn->DBTimeStamp(time());
 <body>
 
 <?php
-/*$isql = "SELECT USUA_LOGIN FROM USUARIO WHERE USUA_LOGIN = '" .$usuLogin ."'";
-			$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-	$rs = $db->query($isql);
-if($rs->fields["USUA_LOGIN"] <> $usuLogin){
-	$rst=$db->conn->Execute("update usuario set usua_login='".$usuLogin."' where usua_login='".$rs->fields["USUA_LOGIN"]."'");
-}*/
 if($usModo==2){
 
 	$isql = "SELECT USUA_DOC, USUA_NOMB, DEPE_CODI, USUA_LOGIN, USUA_NACIM, USUA_AT, USUA_PISO, USUA_EXT,
@@ -75,7 +47,7 @@ if($usModo==2){
 
     //Cambio de usuairo de dependencia
     if(!trim($radicado) && (($rs->fields["DEPE_CODI"] != $dep_sel) || ($perfilOrig != $perfil))){
-        if(($perfilOrig == "Jefe" && $perfil == "Normal") || ($rs->fields["DEPE_CODI"] != $dep_sel)){	
+        if(($perfilOrig == "Jefe" && $perfil == "Normal") || ($rs->fields["DEPE_CODI"] != $dep_sel)){
             $isqlCod = "SELECT MAX(USUA_CODI) AS NUMERO FROM USUARIO WHERE DEPE_CODI = ".$dep_sel;
             $rs7= $db->query($isqlCod);
             $nusua_codi = $rs7->fields["NUMERO"] + 1;
@@ -83,7 +55,7 @@ if($usModo==2){
             if($nusua_codi==1)  $nusua_codi++;
         }
         if($perfilOrig == "Normal" && $perfil == "Jefe" ){
-            $nusua_codi = 1;	
+            $nusua_codi = 1;
         }
         if($nusua_codi==1){
             $rolCodigo=1;
@@ -94,25 +66,25 @@ if($usModo==2){
         $isql1 = $isql1." DEPE_CODI = ".$dep_sel.", ";
         $isql1 = $isql1." USUA_CODI = ".$nusua_codi.",SGD_ROL_CODIGO=".$rolCodigo.", ";
 
-        $isql = "INSERT 
+        $isql = "INSERT
             INTO SGD_USH_USUHISTORICO (
-                SGD_USH_ADMCOD, 
-                SGD_USH_ADMDEP, 
-                SGD_USH_ADMDOC, 
-                SGD_USH_USUCOD, 
-                SGD_USH_USUDEP, 
-                SGD_USH_USUDOC, 
+                SGD_USH_ADMCOD,
+                SGD_USH_ADMDEP,
+                SGD_USH_ADMDOC,
+                SGD_USH_USUCOD,
+                SGD_USH_USUDEP,
+                SGD_USH_USUDOC,
                 SGD_USH_MODCOD,
-                SGD_USH_FECHEVENTO, 
-                SGD_USH_USULOGIN) 
-                VALUES ($codusuario, 
-                $dependencia, 
-                '".$usua_doc."', 
-                '".$rs->fields["USUA_CODI"]."', 
-                $dep_sel, 
-                '".$cedula."', 
-                50, 
-                ".$sqlFechaHoy.", 
+                SGD_USH_FECHEVENTO,
+                SGD_USH_USULOGIN)
+                VALUES ($codusuario,
+                $dependencia,
+                '".$usua_doc."',
+                '".$rs->fields["USUA_CODI"]."',
+                $dep_sel,
+                '".$cedula."',
+                50,
+                ".$sqlFechaHoy.",
                 '".$usuLogin."')";
         $db->conn->Execute($isql);
     }elseif(trim($radicado) && (($rs->fields["DEPE_CODI"] != $dep_sel) || ($perfilOrig != $perfil))){
@@ -178,7 +150,7 @@ if($usModo==2){
 	}
 
 	if ($isql1 != "")
-    {	
+    {
 		$isql1 = substr ($isql1, 0, strlen($isql1)-2);
         $isql1 = "UPDATE USUARIO SET " .$isql1. " WHERE USUA_LOGIN = '".$usuLogin."'";
 		$db->conn->Execute($isql1);
@@ -223,7 +195,7 @@ if($usModo==2){
 else
 {
   if($perfil=="Normal")
-  {	
+  {
       $isql = "SELECT MAX(USUA_CODI) AS NUMERO FROM USUARIO WHERE DEPE_CODI = ".$dep_sel;
 		$rs7= $db->query($isql);
 		if($rs7->fields["NUMERO"]) $nusua_codi = $rs7->fields["NUMERO"] + 1;
@@ -233,10 +205,10 @@ else
 	$isql_inicial = "INSERT INTO USUARIO (USUA_CODI,SGD_ROL_CODIGO, DEPE_CODI,USUA_LOGIN,USUA_FECH_CREA,USUA_NOMB, USUA_DOC, USUA_NACIM, ";
 	$isql_final = " VALUES ($nusua_codi,$rolCodigo, $dep_sel, '".strtoupper($usuLogin)."', $sqlFechaHoy, '".$nombre."', $cedula, ";
 	if (($dia == "") && ($mes == "") && ($ano == ""))
-		//Modificado idrd	
+		//Modificado idrd
 		$isql_final = $isql_final . "null, ";
 	else
-	{	
+	{
 		//Modificado carlos barrero - hospital fontibon
 		$fenac = " TO_DATE('" .$ano."-".$mes."-".$dia. ",  01:01:01 AM','RRRR-MM-DD, HH:MI:SS AM') ,";
 		$fNac = "$ano-$mes-$dia";
@@ -268,7 +240,7 @@ else
 	{	$isql_inicial = $isql_inicial . " USUA_EXT, ";
 		$isql_final = $isql_final.$extension.", ";
 	}
-	
+
 	$isql_inicial = $isql_inicial . " USUA_PASW, PERM_RADI_SAL, ";
 	$isql_final = $isql_final."123, 2,";
 	include "acepPermisosNuevo.php";
@@ -295,28 +267,28 @@ else
 	$rs = $db->query($isql);
 
 	if ($masiva)
-    {	
-        //validamos si existe la carpeta 5, si existe movemos 
+    {
+        //validamos si existe la carpeta 5, si existe movemos
         //el contenido y creamos la carpeta de masiva
         $carpExis = True;
 
-        $conCap = "SELECT 
-                        NOMB_CARP AS NOMBRE, 
-                        CODI_CARP AS CODIGO 
-                    FROM 
-                        CARPETA_PER 
-                    WHERE 
+        $conCap = "SELECT
+                        NOMB_CARP AS NOMBRE,
+                        CODI_CARP AS CODIGO
+                    FROM
+                        CARPETA_PER
+                    WHERE
                         USUA_CODI = ". $rs->fields["USUA_CODI"] .
                         " AND DEPE_CODI = " . $dep_sel ."order by codi_carp desc";
 
 	    $res      = $db->query($conCap);
-        $tempCod  = 0; 
-        
+        $tempCod  = 0;
+
         //Si existe la carpeta numero 5 creo una nueva carpeta
-        //con el numero mayor de carpetas existentes y 
-        //cambio los radicados actuales de lugar a  
-        //esta carpeta 
-        
+        //con el numero mayor de carpetas existentes y
+        //cambio los radicados actuales de lugar a
+        //esta carpeta
+
         while(!$res->EOF)
         {
             $exNombre = $res->fields["NOMBRE"];
@@ -325,45 +297,45 @@ else
 
             if($exiCodig ==  5 and $exNombre != 'Masiva'){
                 //Creo una carpeta para los radicados que estan en
-                //la carpeta numero 5 
+                //la carpeta numero 5
                 $carpExis = False;
 
-                $isql   = "INSERT INTO 
-                                CARPETA_PER 
-                                (USUA_CODI, 
-                                DEPE_CODI, 
-                                NOMB_CARP, 
-                                DESC_CARP, 
-                                CODI_CARP) 
-                           VALUES (" . 
-                                $rs->fields["USUA_CODI"] . 
-                                ", " . $dep_sel . 
-                                ", '$exNombre', 
-                                'Radicacion Masiva', 
-                                $tempCod )"; 
+                $isql   = "INSERT INTO
+                                CARPETA_PER
+                                (USUA_CODI,
+                                DEPE_CODI,
+                                NOMB_CARP,
+                                DESC_CARP,
+                                CODI_CARP)
+                           VALUES (" .
+                                $rs->fields["USUA_CODI"] .
+                                ", " . $dep_sel .
+                                ", '$exNombre',
+                                'Radicacion Masiva',
+                                $tempCod )";
 
                 $db->conn->Execute($isql);
 
                 //Paso los radicados a la nueva carpeta
-                $actRad = "UPDATE 
-                                RADICADO 
-                           SET CARP_CODI = $tempCod 
-                           WHERE 
-                               CARP_CODI = 5 AND 
-                               RADI_DEPE_ACTU = $dep_sel AND 
-                               RADI_USUA_ACTU = ". $rs->fields["USUA_CODI"]; 
+                $actRad = "UPDATE
+                                RADICADO
+                           SET CARP_CODI = $tempCod
+                           WHERE
+                               CARP_CODI = 5 AND
+                               RADI_DEPE_ACTU = $dep_sel AND
+                               RADI_USUA_ACTU = ". $rs->fields["USUA_CODI"];
 
                 $db->conn->Execute($actRad);
 
-                //Cambio el nombre de la carpeta numero 5 con el 
+                //Cambio el nombre de la carpeta numero 5 con el
                 //nombre de masiva
-                $actMas = "UPDATE 
-                                CARPETA_PER 
+                $actMas = "UPDATE
+                                CARPETA_PER
                            SET NOMB_CARP = 'Masiva'
-                           WHERE 
-                               CARP_CODI = 5 AND 
-                               RADI_DEPE_ACTU = $dep_sel AND 
-                               RADI_USUA_ACTU = ". $rs->fields["USUA_CODI"]; 
+                           WHERE
+                               CARP_CODI = 5 AND
+                               RADI_DEPE_ACTU = $dep_sel AND
+                               RADI_USUA_ACTU = ". $rs->fields["USUA_CODI"];
 
                 $db->conn->Execute($actMas);
             }
@@ -373,19 +345,19 @@ else
 
         if($carpExis){
             //Si la carpeta numero 5 no existe la creo
-            $isql   = "INSERT INTO 
-                            CARPETA_PER 
-                            (USUA_CODI, 
-                            DEPE_CODI, 
-                            NOMB_CARP, 
-                            DESC_CARP, 
-                            CODI_CARP) 
-                       VALUES (" . 
-                            $rs->fields["USUA_CODI"] . 
-                            ", " . $dep_sel . 
-                            ", 'Masiva', 
-                            'Radicacion Masiva', 
-                            5 )"; 
+            $isql   = "INSERT INTO
+                            CARPETA_PER
+                            (USUA_CODI,
+                            DEPE_CODI,
+                            NOMB_CARP,
+                            DESC_CARP,
+                            CODI_CARP)
+                       VALUES (" .
+                            $rs->fields["USUA_CODI"] .
+                            ", " . $dep_sel .
+                            ", 'Masiva',
+                            'Radicacion Masiva',
+                            5 )";
 
             $db->conn->Execute($isql);
         }

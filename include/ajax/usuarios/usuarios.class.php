@@ -3,23 +3,10 @@ include("../../../config.php");
 require_once 'HTML/AJAX/Action.php';
 /**
  * Clase Usuarios desde AJAX
- *
  * Permite Traer los usuarios de una dependencia a un Select
  * Permite Informar un radicado
- *
- * @autor Jairo Losada 2009 - Correlibre.org, OrfeoGPL.org
- *                          -> Modificacion para DNP 10/2009  Tomada de Version Original
- *                          de Correlibre.org y OrfeoGPL.org
- *                          Basada en Ejemplo de la Libreria HTML_AJAX
- *
- * @Copyright GNU/GPL v3
  * @param object $db Objeto conexion a la base de Datos de Orfeo
- *
  * @package OrfeoGPL
- * Require the action class
- *
- * * @autor Modificado Jairo Losada Correlibre.org - 2009
- *          Adaptado por  DNP 2010 - jlosada
  */
 
 class usuarios{
@@ -48,11 +35,7 @@ class usuarios{
 	 *
 	 * Metodo que funciona como costructor e inicializa la Clase recibiendo la conexion a Orfeo
 	 * en la Variable $db
-	 *
-	 * @autor Jairo Losada -  2009 - DNP
-	 * @Copyright GNU/GPL v3
 	 * @param object $db Objeto conexion a la base de Datos de Orfeo
-	 *
 	  */
 
 
@@ -303,13 +286,8 @@ function borrarInformado($idObjetoHtml,$radicado,$depeCodi,$usuaCodi,$depeCodiBo
 }
 /**
  * Metodo que borrar Derivados de Un Radicado
- *
- *
  * @param string $radicado Numero de Radicado o Registro al cual se le buscaran los Usuarios Informados
  * @return string Retorna la cadena con la tabla de los informados.
- * @autor Jairo Losada 2009 - Correlibre.org
- *        Modificado en DNP 2010
- *
  **/
 function borrarDerivado($idObjetoHtml,$radicado,$depeCodi,$usuaCodi,$depeCodiBorrar,$usuaCodiBorrar,$idDerivado,$observacion) {
 	$response = new HTML_AJAX_Action();
@@ -321,8 +299,6 @@ function borrarDerivado($idObjetoHtml,$radicado,$depeCodi,$usuaCodi,$depeCodiBor
 	$this->depeCodi = $depeCodi;
 	$this->usuaCodi = $usuaCodi;
 	$ruta_raiz = $this->ruta_raiz;
-	//$depeCodi = $this->depeCodi;
-	//$usuaCodi = $this->usuaCodi;
 	$isql = "DELETE FROM SGD_RG_MULTIPLE where ID=$idDerivado AND RADI_NUME_RADI in($radicado)";
 	$ruta_raiz = $this->ruta_raiz;
 	$this->db->conn->Execute($isql);

@@ -1,8 +1,6 @@
 bodega/*
 bodega
 config.php
-conf/configPHPMailer.php
-img/login_background.jpeg
 respuestaRapida/templates_c/*
 Administracion/usuario/templates_c/*.php
 .idea
@@ -27,4 +25,3 @@ include/tx/error.log
 kint/
 instalacion
 config.php
-conf/configPHPMailer.php

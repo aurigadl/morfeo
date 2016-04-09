@@ -79,8 +79,8 @@
   $usuario        = $_SESSION["usua_nomb"];
   $setAutor       = 'Sistema de Gestion Documental Orfeo';
   $SetTitle       = 'Respuesta a solicitud';
-  $SetSubject     = 'Metrovivienda';
-  $SetKeywords    = 'metrovivienda, respuesta, salida, generar';
+  $SetSubject     = 'Respuesta';
+  $SetKeywords    = 'respuesta, salida, generar';
 
   //DATOS EMPRESA
   $sigla          = 'null';
@@ -264,7 +264,7 @@
     //Page header
     public function Header() {
       // Logo
-      $this->Image(LOGO_METROVIVIENDA,
+      $this->Image(LOGO,
                     100,
                     10,
                     25,
@@ -282,7 +282,7 @@
                     false,
                     false);
       
-      $this->Image(PIE_METROVIVIENDA,
+      $this->Image(PIE,
                     25,
                     250,
                     167,
