@@ -239,7 +239,6 @@
             $usua_perm_modifica    = $rs->fields["USUA_PERM_MODIFICA"];
             $usuario_reasignacion  = $rs->fields["USUARIO_REASIGNAR"];
             $usua_perm_sancionad   = $rs->fields["USUA_PERM_SANCIONADOS"];
-            $usua_perm_intergapps  = isset($rs->fields["USUA_PERM_INTERGAPPS"])?$rs->fields["USUA_PERM_INTERGAPPS"]:"";
             $usua_perm_firma       = $rs->fields["USUA_PERM_FIRMA"];
             $usua_perm_prestamo    = $rs->fields["USUA_PERM_PRESTAMO"];
             $usua_perm_notifica    = $rs->fields["USUA_PERM_NOTIFICA"];
@@ -298,24 +297,6 @@
                 $descCarpetasPer[$iC] = $rs->fields["DESC_CARP"];
                 $rs->MoveNext();
               }
-
-              //Busca si el usuario puede integrar aplicativos
-                $sqlIntegraApp ="   SELECT
-                                        a.SGD_APLI_DESCRIP,
-                                a.SGD_APLI_CODI,
-                                u.SGD_APLUS_PRIORIDAD
-                                    FROM
-                                        SGD_APLI_APLINTEGRA a,
-                                        SGD_APLUS_PLICUSUA  u
-                                    WHERE
-                                        u.USUA_DOC = '$usua_doc' AND
-                                a.SGD_APLI_CODI <> 0 AND
-                                a.SGD_APLI_CODI =  u.SGD_APLI_CODI";
-
-              $rsIntegra=$db->conn->Execute($sqlIntegraApp);
-
-              if ($rsIntegra && !$rsIntegra->EOF)
-                $usua_perm_intergapps=1;
 
               // Fin Consulta de carpetas
 
@@ -428,7 +409,6 @@
               $_SESSION["perm_radi"]             = $perm_radi;
               $_SESSION["usua_perm_sancionad"]   = $usua_perm_sancionad;
               $_SESSION["usua_perm_impresion"]   = $usua_perm_impresion;
-              $_SESSION["usua_perm_intergapps"]  = $usua_perm_intergapps;
               $_SESSION["usua_perm_estadistica"] = $usua_perm_estadistica;
                 $_SESSION["usua_perm_archi"]       = $usua_perm_archi;
               $_SESSION["usua_perm_trd"]         = $usua_perm_trd;
