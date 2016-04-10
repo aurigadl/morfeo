@@ -86,23 +86,6 @@ function pasar_datos(fecha)
 		opener.document.formulario.direccion_us$i.value = document.formu1.direccion_us$i.value;
 		opener.document.formulario.tipo_emp_us$i.value = document.formu1.tipo_emp_us$i.value;
 		opener.document.formulario.cc_documento_us$i.value = document.formu1.cc_documento_us$i.value;";
-		if($ent==2)
-		{
-		switch( $db->entidad )
-		{
-		case 'SES':
-		/** Modificado Supersolidaria 01-Nov-2006
-			* Pasa al formulario de radicaci�n los datos del funcionario que tiene a
-			* cargo una entidad y la dependencia a la que pertenece.
-			*/
-		print "if(documento)
-		{
-			opener.document.formulario.supervisor_us.value = document.getElementById('supervisor_us1').value;
-
-		}";
-			break;
-		}
-		}
 		if ($_GET['tipoval'])
 		{	echo "	opener.document.formulario.idcont$i.value = document.formu1.idcont$i.value;
 			opener.document.formulario.idpais$i.value = document.formu1.idpais$i.value;
@@ -143,22 +126,7 @@ codigo_dpto = new Array();
 codigo_pais = new Array();
 codigo_cont = new Array();
 
-<?php
-switch( $db->entidad )
-{
-    case 'SES':
-        /** Modificado Supersolidaria 01-Nov-2006
-          * Define el arreglo que almacenar� los datos del funcionario que tiene a cargo una
-          * entidad y la dependencia a la que pertenece.
-          */
-?>
-        supervisor = new Array();
-<?php
-        break;
-}
-?>
-function pasar(indice,tipo_us)
-{
+function pasar(indice,tipo_us) {
 <?
 	$nombre_essp = strtoupper($nombre_essp);
 
@@ -202,24 +170,6 @@ function pasar(indice,tipo_us)
 		setTimeout(function(){ $('html, body').animate({ scrollTop: $(document).height() }, 1); }, 90);
 		return;
 		";
-
-	/** Modificado Supersolidaria 01-Nov-2006
-		* Pasa al campo oculto los datos del funcionario que tiene a cargo una
-		* entidad y la dependencia a la que pertenece.
-		*/
-
-	switch( $db->entidad )
-	{
-		case 'SES':
-		//print "if( tipo_us==$i )
-		//	{
-		//			document.formu1.supervisor_us$i.value = supervisor[indice];
-		//	}";
-		break;
-	}
-	echo "	}";
-	}
-	?>
 }
 
 function activa_chk(forma)
@@ -686,18 +636,6 @@ if(!$formulario)
                       $codigo_dpto = $codigo_pais."-".$rs->fields["DPTO_CODI"];
                       $codigo_muni = $codigo_dpto."-".$rs->fields["MUNI_CODI"];
                       $cc_documento = trim($rs->fields["SGD_CIU_CEDULA"]) ;
-                      switch( $db->entidad )
-                      {
-                      case 'SES':
-                        /** Modificado Supersolidaria 01-Nov-2006
-                          * Almacena los datos del supervisor de la entidad y el grupo
-                          * al que pertenece.
-                          */
-                        $supervisor1 = $rs->fields["DEPE_NOMB"]." - ".$rs->fields["USUA_NOMB"];
-                        //echo "<hr> $supervisor1 <hr>";
-                        if($supervisor1) $supervisor = $supervisor1;
-                        break;
-                      }
                         ?>
                           tipo_emp[<?=$i?>]= "<?=$tbusqueda?>";
                           documento[<?=$i?>]= "<?=$codigo?>";
@@ -713,20 +651,6 @@ if(!$formulario)
                           codigo_dpto[<?=$i?>]= "<?=$codigo_dpto?>";
                           codigo_pais[<?=$i?>]= "<?=$codigo_pais?>";
                           codigo_cont[<?=$i?>]= "<?=$codigo_cont?>";
-                    <?
-                    switch( $db->entidad )
-                      {
-                        case 'SES':
-                        /** Modificado Supersolidaria 01-Nov-2006
-                          * Almacena los datos del supervisor de la entidad y el grupo
-                          * al que pertenece.
-                          */
-                        $supervisor = $rs->fields["DEPE_NOMB"]." - ".$rs->fields["USUA_NOMB"];
-                      ?>
-                        supervisor[<?=$i?>]= "<?=$supervisor?>";
-                      <?
-                        break;
-                    } ?>
                         </script>
                       <?
                             $i++;
@@ -852,15 +776,8 @@ if(!$formulario)
 <?
 	}
 	?>
-<BR>
-<!--
-/** Modificado Supersolidaria 01-Nov-2006
-	* Campo oculto para almacenar los datos del supervisor de la entidad y el grupo
-	* al que pertenece.
-	*/
--->
+<br>
 	<?php
-//echo "<hr> akiii llego...". $db->conn->entidad;
 	switch( $db->entidad )
 	{
 		case 'SES':

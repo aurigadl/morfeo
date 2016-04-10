@@ -342,13 +342,6 @@ if($tipo_archivo==1){
 	if ($tipo_archivo==1)  echo "<b>"; else echo "</b>";
 	?>
 	Archivados</span></a><span class='tparr'>
-    <!--
-    /*
-     *  Modificado: 21-Septiembre-2006 Supersolidaria
-     *  Ajuste para ver los radicados excluidos de un expediente.
-     */
-    -->
-
     <a href='cuerpo_exp.php?<?=$encabezado.$orno?>&tipo_archivo=2' alt='Ordenar Por Leidos'><span class='porExcluir'>
 	<?
 	if ($tipo_archivo==2) echo  "$img7";
@@ -424,12 +417,6 @@ Expediente</a> </td>
 	<?=$img12 ?>
 		Fecha de Archivo </a></td>
 	<?}?>
-    <!--
-    /*
-     *  Modificado: 22-Septiembre-2006 Supersolidaria
-     *  Ajuste para incluir un bot� que permite confirmar la exclusi� de un radicado.
-     */
-    -->
     <?php
     if( $tipo_archivo == 2 )
     {
@@ -515,12 +502,6 @@ if($Buscar=='Buscar'){
             }
 
 
-    /*
-     *  Modificado: 22-Septiembre-2006 Supersolidaria
-     *  Ajuste para determinar si un radicado hab� sido archivado antes de ser excluido de
-     *  un expediente.
-     */
-
 	if( $estado == 0 )
     	{
         $estado_nomb = "No";
@@ -558,7 +539,6 @@ if($Buscar=='Buscar'){
 	  $ref_pdf_salida = "<a href='../$ref_pdf' alt='Radicado de Salida $rad_salida'>$img_estado</a>";
 	}
 
-	//$ref_pdf_salida = "<a href='imprimir_pdf_frame?".session_name()."=".session_id() . "&ref_pdf=$ref_pdf&numrad=$numrad'>$img_estado </a>";
 
     if($data =="") $data = "NULL";
 	error_reporting(0);
@@ -571,11 +551,6 @@ if($Buscar=='Buscar'){
 	    $leido ="listado2";
 	    $i=1;
 	 }
-     /*
-     *  Modificado: 22-Septiembre-2006 Supersolidaria
-     *  Ajuste para identifiar con otro color los radicados excluidos de un expediene.
-     */
-     // Por Archivar
      if( $estado == 0 )
      {
         $class = "leidos";

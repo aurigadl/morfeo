@@ -4,11 +4,6 @@ extract($_GET);
 extract($_POST);
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
-/**
-  *Pagina Inicio para Consulta Web
-	*@autor Jairo Losada - SuperSolidaria
-	*@fecha 2009/06
-  */
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,20 +12,9 @@ foreach ($_POST as $key => $valor)   ${$key} = $valor;
 <title>ORFEO : : : : Consulta web de estado de documentos</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <style type="text/css">
-<!--
-body {
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	background-color: #FFFFFF;
-}
-.Estilo1 {color: #999999}
--->
 </style>
 <script>
-function loginTrue()
-{
+function loginTrue() {
 	document.formulario.submit();
 }
 </script>
@@ -42,7 +26,7 @@ function loginTrue()
 error_reporting(7);
 define('ADODB_ASSOC_CASE', 1);
 $ruta_raiz = "..";
-if(session_id()) 
+if(session_id())
 session_destroy();
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 $db = new ConnectionHandler($ruta_raiz);
@@ -61,7 +45,7 @@ if ($numeroExpediente)
 //.....................Consulta de usuario para verificacion de password........................//
 $queryRec = "AND (USUA_PASW ='". SUBSTR(md5($drd),1,26) ."' or USUA_NUEVO='0')";
 $krdx=strtoupper($krdx);
-$query = "select a.*, 
+$query = "select a.*,
 			b.DEPE_NOMB,
 			a.USUA_ESTA,
 			a.USUA_CODI,
@@ -174,7 +158,7 @@ if(!$numrad and $flag==0){
 
                     <p>&nbsp;</p>
 
-                 
+
               </div></td>
               <td height="90"><div align="right"></div></td>
             </tr>
