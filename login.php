@@ -1,69 +1,69 @@
 <?php
 /**
-* @module index_frame
-*
-* @author Jairo Losada   <jlosada@gmail.com>
-* @author Cesar Gonzalez <aurigadl@gmail.com>
-* @license  GNU AFFERO GENERAL PUBLIC LICENSE
-* @copyright
+ * @module index_frame
+ *
+ * @author Jairo Losada   <jlosada@gmail.com>
+ * @author Cesar Gonzalez <aurigadl@gmail.com>
+ * @license  GNU AFFERO GENERAL PUBLIC LICENSE
+ * @copyright
 
-SIIM2 Models are the data definition of SIIM2 Information System
-Copyright (C) 2013 Infometrika Ltda.
+ SIIM2 Models are the data definition of SIIM2 Information System
+ Copyright (C) 2013 Infometrika Ltda.
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ You should have received a copy of the GNU Affero General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-  $drd = false;
-  $krd = false;
-  if (isset($_POST["krd"])){
-      $krd = $_POST["krd"];
+$drd = false;
+$krd = false;
+if (isset($_POST["krd"])){
+  $krd = $_POST["krd"];
+}
+if (isset($_POST["drd"])){
+  $drd = $_POST["drd"];
+}
+
+if (isset($_POST["autenticaPorLDAP"]))
+  $autenticaPorLDAP = $_POST["autenticaPorLDAP"];
+
+$fechah        = date("dmy")."_".time("hms");
+$ruta_raiz     = ".";
+$usua_nuevo    = 3;
+$ValidacionKrd  = "";
+
+include ("config.php");
+$serv = str_replace(".", ".", $_SERVER['REMOTE_ADDR']);
+
+if ($krd) {
+  //session_orfeo retorna mensaje de error
+  include "$ruta_raiz/session_orfeo.php";
+  require_once ("$ruta_raiz/class_control/Mensaje.php");
+
+  if ($usua_nuevo == 0 &&  !$autenticaPorLDAP) {
+    include ($ruta_raiz."/contraxx.php");
+    $ValidacionKrd = "NOOOO";
+    if ($j = 1)
+      die("<center> -- </center>");
   }
-  if (isset($_POST["drd"])){
-      $drd = $_POST["drd"];
-  }
+}
 
-  if (isset($_POST["autenticaPorLDAP"]))
-      $autenticaPorLDAP = $_POST["autenticaPorLDAP"];
+$krd = strtoupper($krd);
+$datosEnvio = session_name()."=".trim(session_id())."&fechah=$fechah&krd=$krd&swLog=1&orno=1";
 
-  $fechah        = date("dmy")."_".time("hms");
-  $ruta_raiz     = ".";
-  $usua_nuevo    = 3;
-  $ValidacionKrd  = "";
-
-  include ("config.php");
-  $serv = str_replace(".", ".", $_SERVER['REMOTE_ADDR']);
-
-  if ($krd) {
-      //session_orfeo retorna mensaje de error
-      include "$ruta_raiz/session_orfeo.php";
-      require_once ("$ruta_raiz/class_control/Mensaje.php");
-
-      if ($usua_nuevo == 0 &&  !$autenticaPorLDAP) {
-          include ($ruta_raiz."/contraxx.php");
-          $ValidacionKrd = "NOOOO";
-          if ($j = 1)
-              die("<center> -- </center>");
-      }
-  }
-
-  $krd = strtoupper($krd);
-  $datosEnvio = session_name()."=".trim(session_id())."&fechah=$fechah&krd=$krd&swLog=1&orno=1";
-
-  if ($ValidacionKrd == "Si") {
-      header ("Location: $ruta_raiz/index_frames.php?$datosEnvio");
-      exit();
-  }
+if ($ValidacionKrd == "Si") {
+  header ("Location: $ruta_raiz/index_frames.php?$datosEnvio");
+  exit();
+}
 
 ?>
 
@@ -102,7 +102,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     Los datos suministrados no son correctos.
                   </div>
 
-                  <form action="./login.php??fecha=250314_1395788602&amp;PHPSESSID=&amp;krd=&amp;swLog=1" method="post">
+                  <form action="./login.php" method="post">
                     <input name="krd" placeholder="Usuario" required="" type="text">
                     <input name="drd" placeholder="Password" required="" type="password">
                     <button type="submit" class="btn btn-login">Entrar</button>
@@ -115,16 +115,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   <?}?>
                 </div>
                 <div>
-                <span id="signinButton">
-                    <span
-                      class="g-signin"
-                      data-callback="signinCallback"
-                      data-clientid="CLIENT_ID"
-                      data-cookiepolicy="single_host_origin"
-                      data-requestvisibleactions="http://schemas.google.com/AddActivity"
-                      data-scope="https://www.googleapis.com/auth/plus.login">
-                    </span>
-                  </span>
+                <span id="signinButton"></span>
                 </div>
              </div>
           </div>
@@ -132,26 +123,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </div>
       <!-- End Login box -->
 <div>
-      
+
 </div>
-      
+
       <footer class="container">
-        <p id="footer-text"><small>Copyleft 2014, basado en Caliope 0.9 de la fundaci&oacute;n <a href="http://www.correlibre.org/">Correlibre</a></small></p>
+        <p id="footer-text"><small>Copyleft 2016, basado en Orfeo de la fundaci&oacute;n <a href="http://www.correlibre.org/">Correlibre</a></small></p>
       </footer>
 
       <script src="./js/jquery.min.js"></script>
       <script src="./js/bootstrap.js"></script>
 
-      <script>
-        /* Custom JavaScript */
-        $(document).ready(function($) {
-            $('input, textarea').placeholder();
-            if(window.self !== window.top){
-                top.location.reload();
+<script>
+/* Custom JavaScript */
+$(document).ready(function($) {
+  if(window.self !== window.top){
+    top.location.reload();
             };
         });
       </script>
-
-    <script src="js/placeholder-shim.min.js"></script>
 </body>
 </html>

@@ -44,13 +44,10 @@ class ConnectionHandler {
     $this->entidad_tel = $entidad_tel;
     $this->entidad_dir = $entidad_dir;
   }
-  function imagen()
-  {
-    switch($this->entidad)
-    {
-      $imagen = "png/escudoColombia.jpg";
-    }
-    return($imagen);
+
+  //retorna imagen para uso en el menu
+  function imagen(){
+      return "png/escudoColombia.jpg";
   }
   //  Retorna False en caso de ocurrir error;
   function query($sql)
