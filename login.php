@@ -7,7 +7,7 @@
  * @license  GNU AFFERO GENERAL PUBLIC LICENSE
  * @copyright
 
- SIIM2 Models are the data definition of SIIM2 Information System
+ Orfeo Models are the data definition of Orfeo Information System
  Copyright (C) 2013 Infometrika Ltda.
 
  This program is free software: you can redistribute it and/or modify
@@ -33,13 +33,13 @@ if (isset($_POST["drd"])){
   $drd = $_POST["drd"];
 }
 
-if (isset($_POST["autenticaPorLDAP"]))
+if (isset($_POST["autenticaPorLDAP"])){
   $autenticaPorLDAP = $_POST["autenticaPorLDAP"];
+}
 
-$fechah        = date("dmy")."_".time("hms");
-$ruta_raiz     = ".";
-$usua_nuevo    = 3;
-$ValidacionKrd  = "";
+$fechah         = date("dmy")."_".time("hms");
+$ruta_raiz      = ".";
+$usua_nuevo     = 3;
 
 include ("config.php");
 $serv = str_replace(".", ".", $_SERVER['REMOTE_ADDR']);
@@ -51,16 +51,12 @@ if ($krd) {
 
   if ($usua_nuevo == 0 &&  !$autenticaPorLDAP) {
     include ($ruta_raiz."/contraxx.php");
-    $ValidacionKrd = "NOOOO";
-    if ($j = 1)
-      die("<center> -- </center>");
+    $validacionKrd = false;
   }
 }
 
-$krd = strtoupper($krd);
-$datosEnvio = session_name()."=".trim(session_id())."&fechah=$fechah&krd=$krd&swLog=1&orno=1";
-
-if ($ValidacionKrd == "Si") {
+$datosEnvio = session_name()."=".trim(session_id())."&krd=$krd&&orno=1";
+if ($validacionKrd == true) {
   header ("Location: $ruta_raiz/index_frames.php?$datosEnvio");
   exit();
 }
@@ -74,7 +70,7 @@ if ($ValidacionKrd == "Si") {
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="SIIM2">
+  <meta name="description" content="Orfeo">
   <meta name="keywords" content="">
     <link rel="shortcut icon" href="./img/favicon.png">
 
@@ -138,8 +134,8 @@ if ($ValidacionKrd == "Si") {
 $(document).ready(function($) {
   if(window.self !== window.top){
     top.location.reload();
-            };
-        });
-      </script>
+  };
+});
+</script>
 </body>
 </html>

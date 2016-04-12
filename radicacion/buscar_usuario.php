@@ -239,7 +239,7 @@ if(!$formulario)
                           if($tbusqueda==0){$datos = "selected";$tbusqueda=0;}else{$datos= "";}
                           ?>
                         <option value=0 <?=$datos ?>>CIUDADANO</option>
-                        <option value=6 <?=$datos ?>>USUARIO SIIM2</option>
+                        <option value=6 <?=$datos ?>>USUARIO Orfeo</option>
                       </select>
                     </td>
                     <td width="20%" rowspan="2" align="center" class="titulos5" >

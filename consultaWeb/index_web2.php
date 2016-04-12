@@ -66,7 +66,7 @@ if(isset($numeroRadicado) && isset($codigoverificacion) && isset($captcha)){
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="SIIM2">
+<meta name="description" content="Orfeo">
 <meta name="keywords" content="">
 <link rel="shortcut icon" href="../img/favicon.png">
 

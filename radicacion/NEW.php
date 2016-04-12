@@ -10,7 +10,7 @@ error_reporting(0);
 * @license  GNU AFFERO GENERAL PUBLIC LICENSE
 * @copyright
 
-SIIM2 Models are the data definition of SIIM2 Information System
+Orfeo Models are the data definition of Orfeo Information System
 Copyright (C) 2013 Infometrika Ltda.
 
 This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
   session_start();
   define('MEMORANDO', 3);
-  define('SIIM2_RECEPCION', 10);
+  define('Orfeo_RECEPCION', 10);
 
   //VARIABLE INCREMENTAL PARA CONTROLAR LOS CAMPOS DE LOS USUARIOS
   unset($_SESSION['INCREMENTAL1']);
@@ -87,7 +87,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   if ($ent == MEMORANDO) {
     $usuario_selected = 'selected';
-    $med = SIIM2_RECEPCION;
+    $med = Orfeo_RECEPCION;
   } else {
     $ciudadano_selected = 'selected';
   }

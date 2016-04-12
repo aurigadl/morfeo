@@ -64,7 +64,7 @@ function mensaje(vari)
   <title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="SIIM2">
+  <meta name="description" content="Orfeo">
   <meta name="keywords" content="siim, gestion, misional">
   <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
   <!-- Bootstrap core CSS -->

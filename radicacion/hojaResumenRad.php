@@ -7,7 +7,7 @@
 * @license  GNU AFFERO GENERAL PUBLIC LICENSE
 * @copyright
 
-SIIM2 Models are the data definition of SIIM2 Information System
+Orfeo Models are the data definition of Orfeo Information System
 Copyright (C) 2013 Infometrika Ltda.
 
 This program is free software: you can redistribute it and/or modify

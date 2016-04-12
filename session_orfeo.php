@@ -6,7 +6,7 @@
  * @license  GNU AFFERO GENERAL PUBLIC LICENSE
  * @copyright
 
-SIIM2 Models are the data definition of SIIM2 Information System
+Orfeo Models are the data definition of Orfeo Information System
 Copyright (C) 2013 Infometrika Ltda.
 
 This program is free software: you can redistribute it and/or modify
@@ -40,8 +40,6 @@ if ($_POST['password']) {
 }
 
 $db = new ConnectionHandler("$ruta_raiz");
-$db->conn->debug = true;
-
 $roles = new Roles($db);
 $db->conn->SetFetchMode(ADODB_FETCH_NUM);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -68,7 +66,6 @@ $query = " SELECT
             order by a.SGD_TRAD_CODIGO";
 
 $rs                = $db->conn->Execute($query);
-$varQuery          = $query;
 $comentarioDev     = ' Busca todos los tipos de Radicado Existentes ';
 $validacionUsuario = false;
 
@@ -172,7 +169,7 @@ if ($roles->activoLdap($krd)) {
 if (!$validacionUsuario) {
     if (!isset($tpDependencias))
         $tpDependencias = "";
-echo
+
       $query = "SELECT
         a.*,
         b.DEPE_NOMB,
