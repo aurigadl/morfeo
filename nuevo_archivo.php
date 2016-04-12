@@ -130,7 +130,7 @@ $tip_rest = substr($verrad,-1);if ($tip_rest == 2){$inptpradic = 1 ;}else{$inptp
 <title>Informaci&oacute;n de Anexos</title>
 	<meta charset="utf-8">
   
-	<link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
+	<link rel="shortcut icon" href="<?=$ruta_raiz?>/imagenes/favicon.png">
 	<!-- Bootstrap core CSS -->
 	<?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
   <SCRIPT Language="JavaScript" SRC="js/crea_combos_2.js"></SCRIPT>

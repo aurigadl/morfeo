@@ -218,7 +218,7 @@ if(!$tipo_archivo) $tipo_archivo = 0;   //Para la consulta a archivados
 	<title>Sistema de informaci&oacute;n <?=$entidad_largo?></title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
+	<link rel="shortcut icon" href="<?=$ruta_raiz?>/imagenes/favicon.png">
 	<!-- Bootstrap core CSS -->
 	<?php include_once "../htmlheader.inc.php"; ?>
 </head>

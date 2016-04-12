@@ -146,23 +146,26 @@ if ($roles->activoLdap($krd)) {
     if (empty($correoUsuario)) {
         //No tiene correo, entonces error LDAP
         $validacionUsuario = true;
+        $mensajeError = 'La direcci&oacute;n de correo electr&oacute;nico
+                         que has introducido no coinciden LDAP.';
     } else {
         //Autentica  por email si $autLDAPmail existe y es igual a 1 (se configura en config.php)
         $autentica = ($autLDAPmail == 1) ? current(explode("@", $correoUsuario)) : $krd;
         //Tiene correo, luego lo verificamos por LDAP
         $res_id = Utils::checkldapuser($autentica, $drd, $userBind);
         if ($res_id == 1) {
-            //$roles->listadoDePermisosPorUsuario($krd);
             $roles->traerPermisos($krd);
         } else {
             $validacionUsuario = true;
-            $recOrfeo          = "loginWeb";
-            $mensajeError      = $res_id;
+            $mensajeError = 'La direcci&oacute;n de correo electr&oacute;nico y la contrase&ntilde;a
+                             que has introducido no coinciden LDAP.';
         }
     }
 } else {
     if (!$roles->traerPermisos($krd, $drd)) {
         $validacionUsuario = true;
+        $mensajeError = 'La direcci&oacute;n de correo electr&oacute;nico y la contrase&ntilde;a
+                         que has introducido no coinciden.';
     };
 }
 
@@ -477,9 +480,7 @@ if (!$validacionUsuario) {
         $cod_local = 0;
         $depe_municipio = "CONFIGURAR EN SESSION_ORFEO.PHP";
     }
-    if (!isset($recOrfeo)) {
-        $recOrfeo = "";
-    }
+
     $nombSession = date("ymdhis") . "o" . str_replace(".", "", $_SERVER['REMOTE_ADDR']) . "$krd";
 
     session_id($nombSession);

@@ -26,7 +26,7 @@ $sqlFechaHoy=$db->conn->DBTimeStamp(time());
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Orfeo">
   <meta name="keywords" content="siim,  gestion, misional">
-  <link rel="shortcut icon" href="<?=$ruta_raiz?>/img/favicon.png">
+  <link rel="shortcut icon" href="<?=$ruta_raiz?>/imagenes/favicon.png">
   <!-- Bootstrap core CSS -->
   <?php include_once "$ruta_raiz/htmlheader.inc.php"; ?>
 </head>

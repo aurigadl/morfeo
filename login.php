@@ -23,7 +23,6 @@
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 $drd = false;
 $krd = false;
 if (isset($_POST["krd"])){
@@ -54,7 +53,6 @@ if ($krd) {
     $validacionKrd = false;
   }
 }
-
 $datosEnvio = session_name()."=".trim(session_id())."&krd=$krd&&orno=1";
 if ($validacionKrd == true) {
   header ("Location: $ruta_raiz/index_frames.php?$datosEnvio");
@@ -72,9 +70,9 @@ if ($validacionKrd == true) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Orfeo">
   <meta name="keywords" content="">
-    <link rel="shortcut icon" href="./img/favicon.png">
+    <link rel="shortcut icon" href="./imagenes/favicon.png">
 
-  <title>..:: <?=$entidad?> fwCaliope  ::..</title>
+  <title>..:: <?=$entidad?> Morfeo ::..</title>
     <!-- Bootstrap core CSS -->
     <link href="./estilos/bootstrap.min.css" rel="stylesheet">
 
@@ -91,12 +89,6 @@ if ($validacionKrd == true) {
              <h3 class="animated bounceInDown"><?=$entidad_largo?></h3>
                 <hr>
                 <div class="login-form">
-
-                  <div class="alert alert-error hide">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <h4>Error!</h4>
-                    Los datos suministrados no son correctos.
-                  </div>
 
                   <form action="./login.php" method="post">
                     <input name="krd" placeholder="Usuario" required="" type="text">

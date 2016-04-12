@@ -67,7 +67,7 @@ if(isset($numeroRadicado) && isset($codigoverificacion) && isset($captcha)){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Orfeo">
 <meta name="keywords" content="">
-<link rel="shortcut icon" href="../img/favicon.png">
+<link rel="shortcut icon" href="../imagenes/favicon.png">
 
 <title>..:: <?=$entidad?>  ::..</title>
 <!-- Bootstrap core CSS -->

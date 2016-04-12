@@ -31,7 +31,7 @@ $str = <<<EOF
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" rel="shortcut icon" href="$ruta_raiz/img/favicon.png">
+    <link rel="stylesheet" type="text/css" media="screen" rel="shortcut icon" href="$ruta_raiz/imagenes/favicon.png">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/bootstrap.min.css">
     <!-- font-awesome CSS -->
@@ -40,7 +40,6 @@ $str = <<<EOF
     <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-production.css">
     <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-skins.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/demo.css">
     <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/siim_temp.css">
     <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/uploadfile.css">
 
@@ -57,7 +56,6 @@ $str = <<<EOF
     <script type="text/javascript" src="$ruta_raiz/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
     <script type="text/javascript" src="$ruta_raiz/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
     <script type="text/javascript" src="$ruta_raiz/js/plugin/smartclick/smartclick.js"></script>
-    <script type="text/javascript" src="$ruta_raiz/js/demo.js"></script>
     <script type="text/javascript" src="$ruta_raiz/js/app.js"></script>
     <script type="text/javascript" src="$ruta_raiz/js/plugin/fuelux/wizard/wizard.js"></script>
     <script type="text/javascript" src="$ruta_raiz/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
