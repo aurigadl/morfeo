@@ -70,49 +70,36 @@ if ($validacionKrd == true) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Orfeo">
   <meta name="keywords" content="">
-    <link rel="shortcut icon" href="./imagenes/favicon.png">
+  <link rel="shortcut icon" href="./imagenes/favicon.png">
 
   <title>..:: <?=$entidad?> Morfeo ::..</title>
-    <!-- Bootstrap core CSS -->
-    <link href="./estilos/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="./estilos/login.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="./estilos/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="./estilos/login.css" rel="stylesheet">
 
   </head>
     <body>
-      <!-- start Login box -->
-      <div class="container" id="login-block">
-        <div class="row">
-          <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 col-lg-12">
-             <div class="login-box clearfix animated flipInY">
-             <h3 class="animated bounceInDown"><?=$entidad_largo?></h3>
-                <hr>
-                <div class="login-form">
-
-                  <form action="./login.php" method="post">
-                    <input name="krd" placeholder="Usuario" required="" type="text">
-                    <input name="drd" placeholder="Password" required="" type="password">
-                    <button type="submit" class="btn btn-login">Entrar</button>
-                  </form>
-
-                  <?if(!empty($mensajeError)){ ?>
-                  <div class="login-links text-error">
-                    <?=$mensajeError?>
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-6 col-md-4 col-md-offset-4">
+                  <h1 class="text-center login-title"><?=$entidad_largo?></h1>
+                  <div class="account-wall">
+                      <img class="profile-img" src="http://placekitten.com/120/120" alt="">
+                      <form class="form-signin" action="./login.php" method="post">
+                        <input name="krd" type="text"     class="form-control" placeholder="Usuario" required autofocus>
+                        <input name="drd" type="password" class="form-control" placeholder="Contrasena" required>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit"> Ingresar </button>
                   </div>
-                  <?}?>
-                </div>
-                <div>
-                <span id="signinButton"></span>
-                </div>
-             </div>
+                        <?if(!empty($mensajeError)){ ?>
+                          <div class="pull-left alert alert-danger" role="alert">
+                            <?=$mensajeError?>
+                          </div>
+                        <?}?>
+                      </form>
+              </div>
           </div>
-        </div>
       </div>
-      <!-- End Login box -->
-<div>
-
-</div>
 
       <footer class="container">
         <p id="footer-text"><small>Copyleft 2016, basado en Orfeo de la fundaci&oacute;n <a href="http://www.correlibre.org/">Correlibre</a></small></p>
