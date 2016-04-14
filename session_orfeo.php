@@ -29,7 +29,7 @@ include_once("$ruta_raiz/include/tx/roles.php");
 //contiene función que verifica usuario y Password en LDAP
 include("$ruta_raiz/autenticaMail.php");
 $path_raiz = realpath(dirname(__FILE__));
-include("$ruta_raiz/include/utils/Utils.php");
+include("$ruta_raiz/include/Utils.php");
 
 if ($_POST['krd']) {
    $krd = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', strtoupper($_POST['krd'])));
