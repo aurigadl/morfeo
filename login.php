@@ -23,8 +23,11 @@
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-$drd = false;
-$krd = false;
+
+$drd           = false;
+$krd           = false;
+$validacionKrd = false; 
+
 if (isset($_POST["krd"])){
   $krd = $_POST["krd"];
 }
@@ -87,8 +90,10 @@ if ($validacionKrd == true) {
                   <div class="account-wall">
                       <img class="profile-img" src="http://placekitten.com/120/120" alt="">
                       <form class="form-signin" action="./login.php" method="post">
-                        <input name="krd" type="text"     class="form-control" placeholder="Usuario" required autofocus>
-                        <input name="drd" type="password" class="form-control" placeholder="Contrasena" required>
+			<label for="Usuario">Usuario</label>
+                        <input id="Usuario" name="krd" type="text" class="form-control" placeholder="Usuario" required autofocus>
+			<label for="password">Contrase&ntilde;a</label>
+                        <input id="password" name="drd" type="password" class="form-control" placeholder="Contrase&ntilde;a" required>
                         <button class="btn btn-lg btn-primary btn-block" type="submit"> Ingresar </button>
                   </div>
                         <?if(!empty($mensajeError)){ ?>
