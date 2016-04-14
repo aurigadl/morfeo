@@ -26,7 +26,7 @@
 
 $drd           = false;
 $krd           = false;
-$validacionKrd = false; 
+$validacionKrd = false;
 
 if (isset($_POST["krd"])){
   $krd = $_POST["krd"];
@@ -90,18 +90,22 @@ if ($validacionKrd == true) {
                   <div class="account-wall">
                       <img class="profile-img" src="http://placekitten.com/120/120" alt="">
                       <form class="form-signin" action="./login.php" method="post">
-			<label for="Usuario">Usuario</label>
-                        <input id="Usuario" name="krd" type="text" class="form-control" placeholder="Usuario" required autofocus>
-			<label for="password">Contrase&ntilde;a</label>
-                        <input id="password" name="drd" type="password" class="form-control" placeholder="Contrase&ntilde;a" required>
+                        <div class="form-group">
+                          <label for="Usuario">Usuario</label>
+                          <input id="Usuario" name="krd" type="text" class="form-control" placeholder="Usuario" required autofocus>
+                        </div>
+                        <div class="form-group">
+                          <label for="password">Contrase&ntilde;a</label>
+                          <input id="password" name="drd" type="password" class="form-control" placeholder="Contrase&ntilde;a" required>
+                        </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit"> Ingresar </button>
-                  </div>
-                        <?if(!empty($mensajeError)){ ?>
-                          <div class="pull-left alert alert-danger" role="alert">
-                            <?=$mensajeError?>
-                          </div>
-                        <?}?>
                       </form>
+                  </div>
+                  <?if(!empty($mensajeError)){ ?>
+                    <div class="pull-left alert alert-danger" role="alert">
+                      <?=$mensajeError?>
+                    </div>
+                  <?}?>
               </div>
           </div>
       </div>
