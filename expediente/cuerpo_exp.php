@@ -430,7 +430,7 @@ Expediente</a> </td>
 </tr>
 <?
 if($Buscar=='Buscar'){
-   // $rs->debug=true;
+   
 	$row = array();
 	$i = 1;
 	$ki=0;

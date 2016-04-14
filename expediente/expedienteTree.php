@@ -104,7 +104,7 @@ foreach($datosExp as $key2 => $value){
 		$iSql = "select *, se.ID ID_EXPEDIENTE
 						from modelourbanistico mu, sgd_sexp_secexpedientes se
 						where mu.expediente_id = se.id and se.sgd_exp_numero like '$numExpediente'";
-		//$db->conn->debug = true;
+		
 		$rsMU = $db->conn->Execute($iSql);
 		if(!$rsMU->EOF){
 		 $nombreReporte = "modeloUrbanistico";

@@ -120,7 +120,7 @@ class Flujo{
 					FROM SGD_FEXP_FLUJOEXPEDIENTES 
 					WHERE SGD_PEXP_CODIGO=$tProc 
 					ORDER BY SGD_FEXP_ORDEN";
-		//$this->db->conn->debug=true;
+		
 		$rs = $this->db->conn->query($query);
 		
 		$nodos = array();
@@ -179,7 +179,7 @@ class Flujo{
 	 */
 	function actualNodoExpediente($expNume){
 		$query = "SELECT * FROM SGD_SEXP_SECEXPEDIENTES WHERE SGD_EXP_NUMERO='$expNume' and SGD_PEXP_CODIGO = " . $this->codProceso;
-		//$this->db->conn->debug = true;
+		
 		$rs = $this->db->conn->query($query);
 		if($rs){
 			$nodoActual = $rs->fields["SGD_FEXP_CODIGO"];
@@ -273,7 +273,7 @@ class Flujo{
 		SGD_PEXP_CODIGO=$codProceso
 		AND SGD_FEXP_CODIGOINI=$codFld
 		ORDER BY SGD_FEXP_CODIGOINI,SGD_FEXP_CODIGOFIN";	
-		//$this->db->conn->debug = true;
+		
 		$rs = $this->db->conn->query($query);
 		$aristasArray = "";
 		if($rs){

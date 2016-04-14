@@ -46,7 +46,7 @@ $db     = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $trdExp = new Expediente($db);
 $hist   = new Historico($db);
-$db->conn->debug = false;
+
 //====================================
 // Cancelar solicitud
 // Esta solicitud es enviada por ajax

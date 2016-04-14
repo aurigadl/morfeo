@@ -291,7 +291,7 @@ if ($nume_exp == ''){
 
 //ejecuto 
 //echo "<pre>$isql</pre>"; exit;
-//$db->conn->debug = true; 
+ 
 $rs = $db->conn->Execute($isql);
 //$rs = true;
 if ($rs){
@@ -356,7 +356,7 @@ if (is_array($arrParametro)) {
 	}
 
 //	echo $query; exit;
-//	$db->conn->debug = true;
+
 	$rsf = $db->conn->Execute($query);
 	
 	if($rsf){
@@ -573,7 +573,7 @@ if (is_array($arrParametro)) {
 			  $sqlParExp .= " ORDER BY SGD_PAREXP_ORDEN ASC $limitPsql";
 
 
-                          #$db->conn->debug=true;
+                          
                           $rsParExp = $db->conn->Execute($sqlParExp);
                             $auxiliar_formulario = 0;
                           while (!$rsParExp->EOF) { ?>

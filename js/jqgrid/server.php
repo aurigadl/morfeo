@@ -33,7 +33,7 @@ if ($page > $total_pages) $page=$total_pages;
 $start = $limit*$page - $limit; // do not put $limit*($page - 1)
 if($total_pages!=0) $SQL = "SELECT $fieldsView FROM  $table WHERE $field like '$searchTerm' LIMIT 30 "; // ORDER BY $sidx $sord LIMIT $start , $limit";
 else $SQL = "SELECT $fieldsView FROM $table WHERE $field like '$searchTerm' LIMIT 30"; //  ORDER BY $sidx $sord";
-//$db->conn->debug = true;
+
 $result = $db->conn->query( $SQL ) or die("Couldn t execute query.");
 
 $response->page = $page;

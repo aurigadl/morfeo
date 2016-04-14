@@ -277,7 +277,7 @@ define('ADODB_ERROR_LOG_TYPE',3);
 	}
 	$sqlFecha = $db->conn->SQLDate("d-m-Y H:i A","b.RADI_FECH_RADI");
 	include ($ruta_raiz."/include/query/anulacion/querySolAnulacion.php");
-	//$db->debug = false;
+	
 	$pager = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);
 	$pager->checkAll = true;
 	$pager->checkTitulo = true;

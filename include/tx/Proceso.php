@@ -276,7 +276,7 @@ var $estiloExito = "class=titulos>";
 		$queryAristMod .= ", sgd_fars_frmnombre =  '" . trim($frmNombre) ."' " ;
 		$queryAristMod .= ", sgd_fars_frmlink = '" . trim($frmUrl) ."' ";
 		$queryAristMod .= "  where  sgd_fars_codigo = " . $aristaAModificar;
-    //$this->db->conn->debug = true;
+    
 		if ( !$rs = $this->db->conn->query( $queryAristMod ) ){
         return  $this->mensajeResultadoHeader . $this->estiloError .' Lo siento no se pudo modificar la Arista '. $this->mensajeResultadoFooter;
     }else{

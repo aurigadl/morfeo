@@ -35,8 +35,6 @@ require_once("$ruta_raiz/include/db/ConnectionHandler.php");
 if (!$db)
 	$db = new ConnectionHandler("$ruta_raiz");
   $db->conn->SetFetchMode( ADODB_FETCH_ASSOC );
-	// $db->conn->SetFetchMode(ADODB_FETCH_NUM);
-	//b->conn->debug = true;
 
     // Consulta los par�etros creados para la dependencia
     $sqlBuscarPor  = "SELECT SGD_PAREXP_CODIGO, SGD_PAREXP_ETIQUETA, SGD_PAREXP_ORDEN";

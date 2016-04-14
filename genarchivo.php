@@ -282,7 +282,7 @@ if ($radicar_documento) {
         $archUpdateRad = substr_replace($archivoFinal, "", 0, strpos($archivoFinal, "bodega") + strlen("bodega"));
     }
     //****************************************************************************************************
-//    $db->conn->debug = true;
+
     $tipo_docto = $anex->get_sgd_tpr_codigo();
     if (!$tipo_docto) $tipo_docto = 0;
 

@@ -32,7 +32,7 @@ include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 
 if (!$db) $db = new ConnectionHandler($ruta_raiz);
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-	//$db->conn->debug = true;
+	
   include_once ("$ruta_raiz/include/tx/Flujo.php");
   include_once ("$ruta_raiz/include/tx/Proceso.php");
 	//$objFlujo = new Flujo($db, $texp, $usua_doc);

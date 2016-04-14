@@ -165,7 +165,7 @@
   $sql_update .= 'WHERE ' . $filtro;
   
   // Si es nuevo insertar de otra forma actualizar.
-  #$db->conn->debug=true;
+  
   $result = ($nuevo == 'si')? $db->conn->Execute($sql_insert) : $db->conn->Execute($sql_update);
   
   $enviar_editar = "index.php?PHPSESSID=" . session_id() .

@@ -41,6 +41,7 @@ if ($_POST['password']) {
 
 $db = new ConnectionHandler("$ruta_raiz");
 $roles = new Roles($db);
+
 $db->conn->SetFetchMode(ADODB_FETCH_NUM);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
@@ -632,4 +633,5 @@ if (!$validacionUsuario) {
     $validacionKrd = true;
 
 }
+die;
 ?>

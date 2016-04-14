@@ -197,7 +197,7 @@ $linkPagina = $_SERVER['PHP_SELF']."?$encabezado&orderTipo=$orderTipo&orderNo=$o
 							<tbody>
 							<?php
                 include "$ruta_raiz/include/query/anulacion/querycuerpo_anulacion.php";
-								// $db->conn->debug = true;
+								
 								$rs = $db->conn->Execute($isql);
 
 							 while(!$rs->EOF){

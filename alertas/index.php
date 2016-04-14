@@ -240,7 +240,7 @@ if($tipo_alerta == 1){
 if($tipo_alerta == 2){
   $sql_uxd = "SELECT * FROM SES_USUARIOXDEPENDENCIA WHERE USUA_CODI = '$usua_codi' AND DEPE_CODI = '$depe_codi'";
   $rs_uxd = $db->query($sql_uxd);
-  //  $db->debug = true;
+  
   if(!$rs_uxd->EOF){
     $uxd_verdependencia = $rs_uxd->fields["UXD_VERDEPENDENCIA"];
     $where_usu = " AND (";

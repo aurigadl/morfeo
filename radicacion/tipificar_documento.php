@@ -269,7 +269,7 @@ function regresar(){
   }
 
       //     and ".$sqlFechaHoy." between $sgd_srd_fechini and $sgd_srd_fechfin
-      //  $db->conn->debug=true;
+      
   $querySerie .= " order by 1 ";
   $rsD=$db->conn->query($querySerie);
   $comentarioDev = "Muestra las Series Docuementales";

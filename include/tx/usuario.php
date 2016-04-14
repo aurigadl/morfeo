@@ -74,7 +74,7 @@ class Usuario {
                 $record['id_cont']            = $datos['cont_tmp'];
                 $record['id_pais']            = $datos['pais_tmp'];
 
-		//$this->db->conn->debug= true;
+
 
                 $insertSQL = $this->db->conn->Replace("sgd_ciu_ciudadano",$record,'sgd_ciu_codigo',$autoquote = true);
 
@@ -312,7 +312,7 @@ class Usuario {
                 $record['SGD_DOC_FUN']       = $coduser;
                 break;
         }
-//$this->db->conn->debug= true;
+
 
 	$insertSQL =  $this->db->conn->Replace("SGD_DIR_DRECCIONES",
         $record,
@@ -797,7 +797,7 @@ class Usuario {
 
                 break;
         }
-#$this->db->conn->debug=true;
+
         $rs = $this->db->query($isql);
 
         while(!$rs->EOF){

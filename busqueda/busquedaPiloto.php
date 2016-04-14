@@ -540,7 +540,7 @@ function Ciudadano_show($nivelus, $tpRemDes, $whereFlds) {
   $sOrder = "";
   $sSQL = "";
   $db = new ConnectionHandler($ruta_raiz);
-  //$db->conn->debug = true;
+  
 	if($tpRemDes==1){
 		$tpRemDesNombre = "Por Ciudadano";
 	}if($tpRemDes==2){
@@ -1131,7 +1131,7 @@ $consultaExpediente="SELECT exp.SGD_EXP_NUMERO, sexp.sgd_exp_privado  , u.usua_d
 		      AND exp.sgd_exp_fech=(SELECT MIN(exp2.SGD_EXP_FECH) as minFech from sgd_exp_expediente exp2 where exp2.radi_nume_radi= $fldRADI_NUME_RADI and exp2.sgd_exp_estado != 2)";
 
 
-//$db->debug = true;
+
         $rsE=$db->query($consultaExpediente);
 	$fldsSGD_EXP_SUBEXPEDIENTE=$rsE->fields["SGD_EXP_NUMERO"];
         $fldsSGD_EXP_PRIVADO=$rsE->fields["SGD_EXP_PRIVADO"];

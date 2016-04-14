@@ -29,7 +29,7 @@ include_once	("confSmarty.php");
 	      AND M.SGD_MRD_ESTA 		= '1'
 	      AND $sqlFechaHoy BETWEEN S.SGD_SRD_FECHINI AND S.SGD_SRD_FECHFIN
 		      ORDER BY DETALLE";
-//  $db->conn->debug = true;
+
   $rs	= $db->conn->Execute($sql1);
   while(!$rs->EOF){
     $serieArray[$rs->fields["CODIGO_SERIE"]] = $rs->fields["DETALLE"];

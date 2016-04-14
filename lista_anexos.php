@@ -11,7 +11,7 @@ include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $ln          = $_SESSION["digitosDependencia"];
 $db = new ConnectionHandler("$ruta_raiz");
 define('ADODB_ASSOC_CASE', 1);
-//$db->conn->debug = true;
+
 $objTipoDocto  = new TipoDocumento($db);
 $objTipoDocto->TipoDocumento_codigo($tdoc);
 $num_archivos=0;
@@ -86,7 +86,7 @@ include_once "$ruta_raiz/tx/verLinkArchivo.php";
 $verLinkArchivo = new verLinkArchivo($db);
 $rowan = array();
 $rs = $db->conn->query($isql);
-//$db->conn->debug = true;
+
 if (!$ruta_raiz_archivo) $ruta_raiz_archivo = $ruta_raiz;
 $directoriobase="$ruta_raiz_archivo/bodega/";
 //Flag que indica si el radicado padre fue generado desde esta area de anexos

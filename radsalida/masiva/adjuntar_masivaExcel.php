@@ -19,7 +19,6 @@ require_once("$ruta_raiz/class_control/CombinaError.php");
 include_once "$ruta_raiz/config.php";
 
 $db = new ConnectionHandler($ruta_raiz);
-$db->conn->debug = false;
 
 $hora  = date("H")."_".date("i")."_".date("s");
 // var que almacena el dia de la fecha

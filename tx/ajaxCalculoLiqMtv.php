@@ -27,7 +27,7 @@
   //  changeFolder( $radicados, $usuaLogin,$carpetaDestino,$carpetaTipo,$tomarNivel,$observa)
 
   if(trim( $_SESSION["chips"])) {
-	//  $db->conn->debug = true;
+	
     //$isql = "SELECT * FROM predial2014_20140819 WHERE CHIP in (". $_SESSION["chips"]."'0') order by CAST(VAL_M2_T AS NUMERIC) DESC";
     $isql = "SELECT * FROM (SELECT DISTINCT CHIP, VAL_M2_T, A_TER_CAT, DIR_REAL, DIR_CORR, FMI FROM habitat_predios WHERE CHIP in (". $_SESSION["chips"]."'0')) a order by CAST(VAL_M2_T AS NUMERIC) DESC";
     $rs = $db->conn->query($isql);

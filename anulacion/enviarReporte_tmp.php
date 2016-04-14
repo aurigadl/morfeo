@@ -13,7 +13,7 @@
 <?
 /*  RADICADOS SELECCIONADOS
  *  @$setFiltroSelect  Contiene los valores digitados por el usuario separados por coma.
- *  @$filtroSelect Si SetfiltoSelect contiene algunvalor la siguiente rutina realiza el arreglo de la condición para la consulta a la base de datos y lo almacena en whereFiltro.
+ *  @$filtroSelect Si SetfiltoSelect contiene algunvalor la siguiente rutina realiza el arreglo de la condiciï¿½n para la consulta a la base de datos y lo almacena en whereFiltro.
  *  @$whereFiltro  Si filtroSelect trae valor la rutina del where para este filtro es almacenado aqui.
  *  
  */
@@ -55,13 +55,11 @@ if($checkValue)
 	include('../adodb/tohtml.inc.php');
 	include_once('../adodb/adodb-paginacion.inc.php');
 	include('../config.php');
-	error_reporting(7);
 	include_once "Anulacion.php";
 	include_once "Historico.php";
 	$db = ADONewConnection('oracle'); 
 	$db->Connect($servidor, $usuario, $contrasena, $servicio);	
-	error_reporting(7);
-	$db->debug=true;
+
   $Historico = new Historico($db);
 	/** Funcion Insertar Historico 
 	 *

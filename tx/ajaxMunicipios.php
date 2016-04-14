@@ -19,7 +19,7 @@
   $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
   if($dptoCodi && $idPais && $idCont){
     $iSql = "select * from MUNICIPIO WHERE dpto_codi=$dptoCodi and id_pais=$idPais and id_cont=$idCont order by muni_nomb";
-    //$db->conn->debug = true;
+    
     $rs = $db->conn->query($iSql);
     
     $script = "<script>  $('#$selectIdMuni').empty();";

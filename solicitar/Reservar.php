@@ -161,7 +161,7 @@ function PRESTAMO_action($sAction) {
     global $krd; //usuario actual
     global $dependencia; //dependencia del usuario actual
     $ruta_raiz = "..";
-    $db->conn->debug = false;
+
 
     $krd         = $_SESSION["krd"];
     $dependencia = $_SESSION["dependencia"];
@@ -352,7 +352,6 @@ function ESTADO_PRESTAMO_show() {
    global $sPRESTAMOErr;
    // Modificado Infometrika 14-Julio-2009
    // Se mantiene la funcion get_param().
-   $db->conn->debug = false;
    $fldradicado=get_param("radicado");
    $fldexpediente=$GLOBALS["numExpediente"];
    $krd = $_SESSION["krd"];
@@ -490,7 +489,6 @@ function PRESTAMO_show() {
    global $db;
    global $sFileName;
    global $sPRESTAMOErr;
-   $db->conn->debug = false;
    $fldradicado=get_param("radicado");
    $fldexpediente=$GLOBALS["numExpediente"];
    $krd = $_SESSION["krd"];

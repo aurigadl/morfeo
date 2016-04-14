@@ -6,13 +6,13 @@ $usua_doc = $_SESSION["usua_doc"];
 $codusuario = $_SESSION["codusuario"];
 $adodb_next_page=$_GET["adodb_next_page"];
 /**
-  *  ANULACION DE RADICADOS.  Función es presentar a los usuarios segun sus permisos el listado de radicados para realizar solicitud de anulacion de los radicados.
+  *  ANULACION DE RADICADOS.  Funciï¿½n es presentar a los usuarios segun sus permisos el listado de radicados para realizar solicitud de anulacion de los radicados.
 	*  Este permiso depende del campo existente en la tabla usuario llamado sgd_panu_codi
 	*
 	*/
 ?>
 <html>
-<Head><TITLE>Anulación de Radicados</TITLE>
+<Head><TITLE>Anulaciï¿½n de Radicados</TITLE>
 
 <?
 /*  INICILAIZACION DE VARIABLES
@@ -31,7 +31,7 @@ if(!$depeBuscada)
 }
 /*  FILTRO DE DATOS
  *  @$setFiltroSelect  Contiene los valores digitados por el usuario separados por coma.
- *  @$filtroSelect Si SetfiltoSelect contiene algunvalor la siguiente rutina realiza el arreglo de la condición para la consulta a la base de datos y lo almacena en whereFiltro.
+ *  @$filtroSelect Si SetfiltoSelect contiene algunvalor la siguiente rutina realiza el arreglo de la condiciï¿½n para la consulta a la base de datos y lo almacena en whereFiltro.
  *  @$whereFiltro  Si filtroSelect trae valor la rutina del where para este filtro es almacenado aqui.
  *  
  */
@@ -317,7 +317,7 @@ function markAll()
 						'.$whereTpAnulacion.'
 						'.$whereFiltro.'
 					  order by '.$order .' ' .$orderTipo;
-	//$db->debug = true;
+	
 	$pager = new ADODB_Pager($db,$isql,'adodb', true,$orderNo,$orderTipo);
 	$pager->toRefLinks = $linkPagina;
 	//$pager->Render($rows_per_page=10,$linkPagina,$checkbox=chkAnulados);
@@ -337,7 +337,7 @@ function  prueba(Button)
 {
 	if (event.button == 2)
 	{
-		alert("Botón derecho pulsado");
+		alert("Botï¿½n derecho pulsado");
 	}
 }
  </script>

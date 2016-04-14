@@ -71,7 +71,7 @@ include_once "$ruta_raiz/tx/verLinkArchivo.php";
 $verLinkArchivo = new verLinkArchivo($db);
 $rowan = array();
 $rs = $db->conn->query($isql);
-//$db->conn->debug = true;
+
 
 if (!$ruta_raiz_archivo) $ruta_raiz_archivo = $ruta_raiz;
 $directoriobase="$ruta_raiz_archivo/bodega/";

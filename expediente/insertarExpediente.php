@@ -178,7 +178,7 @@ function cambia_Exp(expId, expNo){
 /* Ejecucion de los QUERYS respectivos para		*/
 /* filtrar los expedientes coincidentes			*/
 /************************************************/
-//$db->conn->debug = true;
+
 $btnBuscaExp = $_POST['btnBuscaExp'];
 if($btnBuscaExp){
 	$criterio = strtoupper($_POST['criterio']);

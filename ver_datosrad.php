@@ -10,7 +10,7 @@ if (!$db) $db = new ConnectionHandler("$ruta_raiz");
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 $objTipoDocto = new TipoDocumento($db);
 
-//$db->conn->debug = true;
+
 
 $nombre_us1 = "";$nombre_us2 = "";$nombre_us3 = "";
 $prim_apel_us1 = ""; $prim_apel_us2 = ""; $prim_apel_us3 = "";

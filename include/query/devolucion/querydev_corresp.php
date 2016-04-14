@@ -2,7 +2,7 @@
 	/**
 	  * CONSULTA VERIFICACION PREVIA A LA RADICACION
 	  */
-        //$db->con->debug = true;
+        
         $ln= $_SESSION["digitosDependencia"];
 	switch($db->driver)
 	{  

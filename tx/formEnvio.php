@@ -16,7 +16,6 @@ $mensaje_error = false;
 include_once "$ruta_raiz/include/db/ConnectionHandler.php";
 if (!isset($db))  $db = new ConnectionHandler($ruta_raiz);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-$db->conn->debug = false;
 require_once("$ruta_raiz/class_control/Dependencia.php");
 
 $objDep = new Dependencia($db);

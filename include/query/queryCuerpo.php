@@ -92,7 +92,7 @@ switch($db->driver)
 		'.$limitOci8 .'
 	  order by '.$order .' ' .$orderTipo
 	  . ' ' . $limitPsql . ' ' ;
-	//$db->conn->debug = true;
+	
 	break;
 	
 	}

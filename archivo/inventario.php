@@ -11,7 +11,7 @@ $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&num_exp=$num_exp";
 include_once "$ruta_raiz/include/tx/Historico.php";
 include_once "$ruta_raiz/include/tx/Expediente.php";
 	$db = new ConnectionHandler("$ruta_raiz");
-$db->debug=true;
+
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia&krd=$krd&tipo=$tipo&sel=$sel&ano=$ano";
 static $sel;
 $numInv=1;

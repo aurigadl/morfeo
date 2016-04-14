@@ -335,7 +335,7 @@ function marcar(){
                     */
 
                             include "$ruta_raiz/include/query/envios/queryCuerpoMarcaEnviar.php";
-//$db->conn->debug = true;
+
 
                             $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
                             $rs=$db->conn->query($isql);

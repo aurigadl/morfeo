@@ -315,7 +315,7 @@ if($documento_us1 and $cc)
   $dir_codigo_new = $nextval;
   $nextval++;
 //  echo $isql; exit;
-//  $db->conn->debug=true;
+
   $rsg=$conexion->query($isql);
 //exit;
 	if (!$rsg)

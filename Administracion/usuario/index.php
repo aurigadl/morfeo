@@ -33,7 +33,6 @@ $smarty->right_delimiter = '}->';
 $db    = new ConnectionHandler($ruta_raiz);
 $roles = new Roles($db);
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->conn->debug = true;
 
 //Traemos los permisos
 if($roles->retornarPermisos()){

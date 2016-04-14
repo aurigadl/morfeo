@@ -44,7 +44,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   $db = new ConnectionHandler($ruta_raiz);
   $db->conn->SetFetchMode(3);
-  $db->conn->debug = true;
   include "$ruta_raiz/ver_datosrad.php";
 ?>
 

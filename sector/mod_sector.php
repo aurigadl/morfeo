@@ -16,7 +16,7 @@ $isql = "SELECT PAR_SERV_NOMBRE, PAR_SERV_SECUE FROM PAR_SERV_SERVICIOS";
 if (count($recordSet)>=1)	array_splice($recordSet, 0);
 if (count($recordWhere)>=1)	array_splice($recordWhere, 0);
 $rs = $db->conn->query($isql);
-//$db->conn->debug = true;
+
 echo $rs->GetMenu2('sector',$sector,'0:No aplica.',false,1,' class="select" onChange="submit();"');
 if($grabar_causal){
 	// Intenta actualizar la causal, si esta no esta entonces simplemente la inserta

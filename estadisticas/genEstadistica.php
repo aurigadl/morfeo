@@ -238,7 +238,7 @@ switch($tipoEstadistica){
 	if($generar == "ok") {
 		if($genDetalle==1) $queryE = $queryEDetalle;
 		if($genTodosDetalle==1) $queryE = $queryETodosDetalle;
-		//$db->conn->debug = true;
+		
 		$rsE = $db->conn->query($queryE);
 		//exit;
 		include ("tablaHtml.php");

@@ -128,7 +128,7 @@ class Expediente {
 				from SGD_EXP_EXPEDIENTE e
 				where e.RADI_NUME_RADI = $radicado
 				AND SGD_EXP_ESTADO <> 2";
-	//$this->db->conn->debug = true;
+	
 	$rs = $this->db->conn->query($query);
 	if ($rs) {
 		$iE = 1;
@@ -150,7 +150,7 @@ class Expediente {
     }
 
     function consultaExp($radicado) {
-        $this->db->conn->debug = false;
+        
         switch ($this->db->driver){
             case 'mssql':
                 $radi_nume_radi = "convert(varchar(14), e.radi_nume_radi)";
@@ -962,7 +962,7 @@ class Expediente {
          WHERE SEXP.SGD_EXP_NUMERO = '$numExp'
          AND parexp.DEPE_CODI = '900' $limitOci8
          ORDER BY SEXP.SGD_SEXP_FECH desc $limitPsql";
-         #$db->conn->debug=true;
+         
 //         echo "<pre>$q_datosParametro</pre>"; exit;
          $rs_datosParametro = $this->db->conn->query($q_datosParametro);
 

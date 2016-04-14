@@ -8,7 +8,6 @@ include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler("$ruta_raiz");
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&num_exp=$num_exp";
 
-$db->debug = false;
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia&krd=$krd";
 ?>
 <script>

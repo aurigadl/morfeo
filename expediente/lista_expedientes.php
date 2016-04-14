@@ -35,7 +35,7 @@ if($_POST['saveEtiq']){
                       RADI_USUA_ACTU
                       FROM radicado
                       WHERE RADI_NUME_RADI = '$numrad'";
-                      // $db->conn->debug = true;
+                      
               $rsDepR = $db->conn->Execute($isqlDepR);
               $coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
               $codusua = $rsDepR->fields['RADI_USUA_ACTU'];
@@ -50,7 +50,7 @@ if($_POST['saveEtiq']){
                       RADI_USUA_ACTU
                       FROM radicado
                       WHERE RADI_NUME_RADI = '$numrad'";
-                      // $db->conn->debug = true;
+                      
               $rsDepR = $db->conn->Execute($isqlDepR);
               $coddepe = $rsDepR->fields['RADI_DEPE_ACTU'];
               $codusua = $rsDepR->fields['RADI_USUA_ACTU'];

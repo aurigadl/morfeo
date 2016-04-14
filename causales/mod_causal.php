@@ -20,7 +20,7 @@ header ("Location: $ruta_raiz/cerrar_session.php");
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 define('ADODB_ASSOC_CASE', 2);
-//$db->conn->debug=true;
+
 $krd            = $_SESSION["krd"];
 $dependencia    = $_SESSION["dependencia"];
 $usua_doc       = $_SESSION["usua_doc"];
@@ -38,7 +38,7 @@ $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	vecSubseccionE = new Array (
 <?php
 // For para el javascript
-//$db->conn->debug=true;
+
 $rs = $db->conn->query("SELECT * FROM SGD_DCAU_CAUSAL");
 $cont = 0;
 while(!$rs->EOF)
@@ -285,12 +285,11 @@ include_once($ruta_raiz."/sector/mod_sector.php");
 					FROM SGD_CAUX_CAUSALES 
 					WHERE RADI_NUME_RADI = $verrad
 					GROUP BY SGD_CAUX_CODIGO";
-//$rs =
-//$db->conn->debug=true ;echo "2222222222222222";
+
 			//select para saber habia registro por actualizar
 			$rs = $db->conn->Execute($sqlSelect);
 
-//$db->conn->debug=true;
+
 			if (!$rs->EOF) $actualizo = $rs->fields["COUNT_RADI"];
 
 			// Verifica banderas de actualizacion o de insercion para actulizar los nuevos datos

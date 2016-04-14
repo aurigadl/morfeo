@@ -68,7 +68,6 @@ function verificaModificacion(){
 	$procAutomatico = $expediente->pAutomatico;
 	$descFldExp 	= $expediente->descFldExp;
 	$texp = $expediente->codigoTipoExp;
-	$db->conn->debug = false;
 	$codProceso = $texp;
 	$objFlujo = new Flujo($db, $texp, $usua_doc);
 	$codFld = $objFlujo->actualNodoExpediente($numeroExpediente);

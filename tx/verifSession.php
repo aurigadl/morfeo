@@ -6,7 +6,7 @@
          from INFORMADOS
          where cast(RADI_NUME_RADI as varchar)='$verrad'
          and USUA_DOC= '" .$_SESSION[ 'usua_doc' ]. "' ";
-    // $db->conn->debug = true;
+    
     $rsI=$db->conn->Execute($isqlI);
 
     if (!$rsI->EOF){

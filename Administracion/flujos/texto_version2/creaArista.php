@@ -72,7 +72,6 @@ if ( $tipificacion ) $deshabilitado =  ""; else $deshabilitado =  "disabled=true
  include "$ruta_raiz/config.php";
 	include_once "$ruta_raiz/include/db/ConnectionHandler.php";
     $db = new ConnectionHandler( "$ruta_raiz" );
-    //$db->conn->debug = true;
     if (!defined('ADODB_FETCH_ASSOC'))define('ADODB_FETCH_ASSOC',2);
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	if( $_GET['proceso'] != '' ){
@@ -314,7 +313,7 @@ function regresar(){
 			<td  ><small>Etapa Inicial</small></td>
 			<td  colspan=3><label class="select state-success">
 				<?
-				$rsDep = $db->conn->Execute( $sql );
+				$rsDep = $db->conn->query( $sql );
 				print $rsDep->GetMenu2( "etapaInicial", $etapaInicial, false, false, 0," class='select'" );
 
 				?>
@@ -325,7 +324,7 @@ function regresar(){
 			<td  ><small>Etapa Final</small></td>
 			<td  colspan=3><label class="select state-success">
 				<?
-				$rsDep = $db->conn->Execute( $sql );
+				$rsDep = $db->conn->query( $sql );
 				print $rsDep->GetMenu2( "etapaFinal", $etapaFinal, false, false, 0," class='select'" );
 				?>
 				</label>

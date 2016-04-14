@@ -147,7 +147,7 @@ if(!$fecha_fin) $fecha_fin = $fecha_busq;
   <label class=select>  
 	<select name="dependencia_busq"  class="select"  onChange="formulario.submit();">
 	<?
-	// $db->debug = true;
+	
 	if($usua_perm_estadistica>1){
 		$datoss=($dependencia_busq==99999)? " selected ":"";
 		?>
@@ -169,7 +169,7 @@ if(!$fecha_fin) $fecha_fin = $fecha_busq;
 	}
 	//if($codusuario!=1) $isqlus .= " and a.usua_codi=$codusuario "; 
     //echo "--->".$isqlus;
-//$db->conn->debug = true;
+
 $rs1=$db->query($isqlus);
 
 do{

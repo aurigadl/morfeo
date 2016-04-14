@@ -185,7 +185,6 @@ where SGD_TRAD_CODIGO=$ent";
 
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $rs=$db->conn->query($query);
-$db->conn->debug=true;
 $tRadicacionDesc = " - " .strtoupper($rs->fields["SGD_TRAD_DESCR"]);
 $datos_enviar = session_name()."=".trim(session_id())."&krd=$krd&fechah=$fechah&faxPath=$faxPath";
 ?>

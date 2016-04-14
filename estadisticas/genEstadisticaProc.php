@@ -19,7 +19,6 @@ define('ADODB_ASSOC_CASE', 2);
 $db = &new ConnectionHandler($ruta_raiz);	 
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
-$db->conn->debug = true;
 $objUsuario = new Usuario($db);
 error_reporting(7);
 ?>
@@ -72,7 +71,7 @@ switch($tipoEstadistica){
 }
 if($generar == "ok") {
 	require_once($ruta_raiz."/include/myPaginador.inc.php");
-	//$db->conn->debug=true;
+	
 	if($genDetalle==1) $queryE = $queryEDetalle;
 	if($genTodosDetalle==1) $queryE = $queryETodosDetalle;
 	$rsE = $db->conn->query($queryE);

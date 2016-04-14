@@ -21,7 +21,7 @@ $codusuario     = $_SESSION["codusuario"];
 	include_once "$ruta_raiz/htmlheader.inc.php";
 }
 if(!$numeroExpediente) $numeroExpediente = $numExpediente;
-//$db->conn->debug=true;
+
 
 
   if(!$ruta_raiz) $ruta_raiz="..";
@@ -35,7 +35,7 @@ if(!$numeroExpediente) $numeroExpediente = $numExpediente;
 	$expediente->consultaTipoExpediente($numeroExpediente);
 	$procAutomatico = $expediente->pAutomatico;
 	$descFldExp 	= $expediente->descFldExp;
-	//$db->conn->debug = true;
+	
 	$texp = $expediente->codigoTipoExp;
 	
 	$codProceso = $texp;

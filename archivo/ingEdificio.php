@@ -21,7 +21,7 @@ include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 include_once "$ruta_raiz/include/tx/Historico.php";
 include_once "$ruta_raiz/include/tx/Expediente.php";
 $db = new ConnectionHandler( "$ruta_raiz" );
-$db->debug = true;
+
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia";
 ?>
 <script>
@@ -200,7 +200,7 @@ function mostrarCampos()
                   ID_PAIS=170
                   ORDER BY DPTO_NOMB
                 ";
-        $db->debug = true;
+        
         $rs = $db->query( $isql );
 		while( $rs && !$rs->EOF )
         {

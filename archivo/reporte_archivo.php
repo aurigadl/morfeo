@@ -90,7 +90,7 @@ else
         include("$ruta_raiz/include/query/expediente/queryReporte.php");
 
 	$queryUs = "select depe_codi from usuario where USUA_LOGIN='$krd' AND USUA_ESTA=1";
-	//$db->debug=true;
+	
 	$rsUs = $db->query($queryUs);
 	$depe = $rsUs->fields["DEPE_CODI"];
 	if ($dependencia_busq != 99999)  {

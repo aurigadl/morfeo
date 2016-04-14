@@ -20,7 +20,7 @@ $codusuario     = $_SESSION["codusuario"];
 
 if (!$ruta_raiz) $ruta_raiz= "..";    include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 	$db = new ConnectionHandler("$ruta_raiz");
-  //$db->conn->debug = true;
+  
 	
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	include_once "$ruta_raiz/include/tx/Historico.php";

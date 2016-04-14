@@ -35,7 +35,7 @@ include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 
 if (!$db) $db = new ConnectionHandler($ruta_raiz);
 
-//$db->conn->debug = true;
+
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 
 $isql = "select * from radicado where radi_nume_radi=$radicadopadre";

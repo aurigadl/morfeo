@@ -132,7 +132,6 @@ if(!$fecha_busq) $fecha_busq=date("Y-m-d");
 			<label class="select"></i>
 				<?php
 				$sql="SELECT COUNT(1) AS EXISTE FROM USUARIO WHERE DEPE_CODI = $dep_sel AND USUA_CODI = 1";
-				//$db->conn->debug = true;
 				$rsDep  = $db->conn->Execute($sql);
 				$existe = $rsDep->fields["EXISTE"];
 				if(empty($existe) || $perfil == "Jefe"){

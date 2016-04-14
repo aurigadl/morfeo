@@ -175,7 +175,7 @@ Creacion de poceso Asociado al Expediente No. <?=$numeroExpediente?>
 	$nomb_varc = "su.sgd_sbrd_codigo";
 	$nomb_varde = "su.sgd_sbrd_descrip";
 	include "$ruta_raiz/include/query/trd/queryCodiDetalle.php";
-	//$db->conn->debug=true;
+	
 	$querySub = "select distinct ($sqlConcat) as detalle, su.sgd_sbrd_codigo
 		from sgd_mrd_matrird m, sgd_sbrd_subserierd su
 		where m.depe_codi = '$coddepe'

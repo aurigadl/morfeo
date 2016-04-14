@@ -126,7 +126,6 @@ class usuarios{
 	ob_end_clean();
     }
 
-    $this->db->conn->debug = false;
     $rsUs = $this->db->conn->Execute($iSql);
     $radicados = array_filter(explode(",", $radicado));
 

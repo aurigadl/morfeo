@@ -43,7 +43,6 @@ class Roles {
 
     function __construct($db){
         $this->db=$db;
-        $this->db->conn->debug=false;
     }
 
     /**

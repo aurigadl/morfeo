@@ -2,7 +2,6 @@
 session_start();
 $krd = $_SESSION["krd"];
 $dependencia = $_SESSION["dependencia"];
-error_reporting(0);
 foreach ($_GET as $key => $valor)   ${$key} = $valor;
 foreach ($_POST as $key => $valor)   ${$key} = $valor;
 if (!$ruta_raiz) $ruta_raiz = "..";
@@ -10,7 +9,7 @@ define('ADODB_ASSOC_CASE',1);
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler( "$ruta_raiz" );
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-$db->conn->debug = true;
+
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia";
 ?>
 <script>

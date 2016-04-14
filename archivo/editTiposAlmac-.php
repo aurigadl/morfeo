@@ -7,7 +7,7 @@ if (!$ruta_raiz) $ruta_raiz = "..";
 include "$ruta_raiz/rec_session.php";
 include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 $db = new ConnectionHandler( "$ruta_raiz" );
-//$db->debug = true;
+
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&dependencia=$dependencia&krd=$krd&cod=$cod&codp=$codp&tipo=2";
 
 ?>

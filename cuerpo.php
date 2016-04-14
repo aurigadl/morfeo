@@ -48,7 +48,7 @@ $_SESSION['numExpedienteSelected'] = null;
 
   include_once    ("$ruta_raiz/include/db/ConnectionHandler.php");
 	if (!$db) $db = new ConnectionHandler($ruta_raiz);
-	//$db->conn->debug = true;
+	
 	$db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
 	$sqlFecha = $db->conn->SQLDate("Y-m-d H:i A","b.RADI_FECH_RADI");
 	  if(strlen($orderNo)==0){
@@ -230,7 +230,7 @@ $_SESSION['numExpedienteSelected'] = null;
                   <?php
                     include "$ruta_raiz/include/query/queryCuerpo.php";
 
-			      //$db->conn->debug = true;
+			      
 			      $rs = $db->conn->Execute($isql);
                       
                   while(!$rs->EOF){

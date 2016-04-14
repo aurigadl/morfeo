@@ -59,7 +59,7 @@ class Historico
        DEPE_CODI=$depeOrigen
        AND USUA_CODI=$usCodOrigen";
      # Busca el usuairo Origen para luego traer sus datos.
-     //$thia->db->conn->debug = true;
+     
      $rs = $this->db->conn->Execute($sql);
 
      $usDocOrigen = $rs->fields["USUA_DOC"];

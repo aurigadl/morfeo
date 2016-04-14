@@ -9,7 +9,7 @@ include_once("$ruta_raiz/include/db/ConnectionHandler.php");
 include_once "$ruta_raiz/include/tx/Historico.php";
 $db = new ConnectionHandler( "$ruta_raiz" );
 $db->conn->SetFetchMode(ADODB_FETCH_ASSOC);
-//$db->debug = false;
+
 $encabezadol = "$PHP_SELF?".session_name()."=".session_id()."&codig=$codig&cod=$cod";
 ?>
 <script>

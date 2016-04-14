@@ -55,7 +55,7 @@ function get_param($param_name)
     $param_value = $HTTP_POST_VARS[$param_name];
   else if(isset($HTTP_GET_VARS[$param_name]))
     $param_value = $HTTP_GET_VARS[$param_name];
-  // Modificado Infométrika 14-Julio-2009
+  // Modificado Infomï¿½trika 14-Julio-2009
   // Se agregan los arreglos $_GET y $_POST
   else if ( isset( $_POST[ $param_name ] ) ) {
 	$param_value = $_POST[ $param_name ];
@@ -73,7 +73,7 @@ function get_session($param_name)
   global ${$param_name};
 
   $param_value = "";
-  // Modificado Infométrika 14-Julio-2009
+  // Modificado Infomï¿½trika 14-Julio-2009
   // Se agregan los arreglos $_GET y $_POST
   //if(!isset($HTTP_POST_VARS[$param_name]) && !isset($HTTP_GET_VARS[$param_name]) && session_is_registered($param_name)) 
   if(!isset($HTTP_POST_VARS[$param_name]) && !isset($HTTP_GET_VARS[$param_name]) && !isset( $_POST[ $param_name ] ) && !isset( $_GET[ $param_name ] ) && session_is_registered($param_name))
@@ -138,7 +138,7 @@ function db_fill_array($sql_query)
 {
   global  $ruta_raiz;
   $db = new ConnectionHandler($ruta_raiz);
-  //$db->conn->debug = true;
+  
 
   $rs=$db->query($sql_query);
   if ($rs && !$rs->EOF  )

@@ -54,7 +54,6 @@ function CONTROL_ORFEO(& $db)
 	$this->db = & $db;	 
 	$this->fecha_hoy = Date("Y-m-d");
 	$this->sqlFechaHoy=$this->db->conn->OffsetDate(0,$this->db->conn->sysTimeStamp);
-	$this->cursor->debug=true;
 }
 
 function consulta_per_arch($nombusuario)
