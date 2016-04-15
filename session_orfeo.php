@@ -633,5 +633,5 @@ if (!$validacionUsuario) {
     $validacionKrd = true;
 
 }
-die;
+
 ?>
