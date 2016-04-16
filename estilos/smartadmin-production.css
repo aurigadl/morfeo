@@ -49,7 +49,6 @@ ul,ol{
     top: 4px;
     z-index: 1;
     left: 196px;
-
 }
 
 .actions div{
@@ -18804,7 +18803,7 @@ img.away {
 }
 #sparks li {
   display: inline-block;
-  max-height: 47px;
+  max-height: 30px;
   overflow: hidden;
   text-align: left;
   box-sizing: content-box;
@@ -18816,7 +18815,7 @@ img.away {
   float: left;
   font-size: 11px;
   font-weight: normal;
-  margin: -3px 0 0 0;
+  margin:  0;
   padding: 0;
   border: none;
   text-transform: uppercase;
