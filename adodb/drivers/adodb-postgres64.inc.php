@@ -564,8 +564,11 @@ WHERE c2.relname=\'%s\' or c2.relname=lower(\'%s\')';
 	// 	$db->Connect('host1','user1','secret');
 	function _connect($str,$user='',$pwd='',$db='',$ctype=0)
 	{
+
+		if (!function_exists('pg_pconnect')) return null;
+
 		$this->_errorMsg = false;
-		
+
 		if ($user || $pwd || $db) {
 			$user = adodb_addslashes($user);
 			$pwd = adodb_addslashes($pwd);
@@ -582,7 +585,11 @@ WHERE c2.relname=\'%s\' or c2.relname=lower(\'%s\')';
 				if ($db)   $str .= " dbname=".$db;
 		}
 
-		if ($ctype !== 1) { // persistent
+		//if ($user) $linea = "user=$user host=$linea password=$pwd dbname=$db port=5432";
+
+		if ($ctype === 1) { // persistent
+			$this->_connectionID = pg_pconnect($str);
+		} else {
 			if ($ctype === -1) { // nconnect, we trick pgsql ext by changing the connection str
 			static $ncnt;
 			
