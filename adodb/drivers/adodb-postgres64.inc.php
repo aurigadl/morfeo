@@ -557,14 +557,10 @@ WHERE c2.relname=\'%s\' or c2.relname=lower(\'%s\')';
                 return $indexes;
         }
 
-	// returns true or false
-	//
 	// examples:
 	// 	$db->Connect("host=host1 user=user1 password=secret port=4341");
-	// 	$db->Connect('host1','user1','secret');
 	function _connect($str,$user='',$pwd='',$db='',$ctype=0)
 	{
-
 		if (!function_exists('pg_pconnect')) return null;
 
 		$this->_errorMsg = false;
