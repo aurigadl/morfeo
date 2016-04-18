@@ -491,7 +491,7 @@ class Roles {
      * @return bool
      */
     public function borrarUsuario($id){
-        $sql_sel_id = "delete from autu_usuarios where id = $id";
+        $sql_sel_id = "delete from usuario where id = $id";
         $sql_sel    = $this->db->conn->query($sql_sel_id);
 
         if(!$sql_sel->EOF){

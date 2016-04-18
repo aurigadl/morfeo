@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.1
 -- Dumped by pg_dump version 9.5.2
 
--- Started on 2016-04-13 11:36:54 COT
+-- Started on 2016-04-18 12:37:22 COT
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -77,7 +77,7 @@ CREATE TABLE anexos (
 ALTER TABLE anexos OWNER TO postgres;
 
 --
--- TOC entry 3041 (class 0 OID 0)
+-- TOC entry 3043 (class 0 OID 0)
 -- Dependencies: 180
 -- Name: COLUMN anexos.anex_sha1; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -101,7 +101,7 @@ CREATE SEQUENCE anexos_id_seq
 ALTER TABLE anexos_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3043 (class 0 OID 0)
+-- TOC entry 3045 (class 0 OID 0)
 -- Dependencies: 181
 -- Name: anexos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -158,18 +158,16 @@ ALTER TABLE autm_membresias OWNER TO postgres;
 
 CREATE TABLE autp_permisos (
     id integer NOT NULL,
-    autg_id integer,
     nombre character varying(250),
     descripcion character varying(500),
-    crud integer,
-    dependencia character varying(150)
+    crud integer
 );
 
 
 ALTER TABLE autp_permisos OWNER TO postgres;
 
 --
--- TOC entry 3044 (class 0 OID 0)
+-- TOC entry 3046 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: COLUMN autp_permisos.descripcion; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -178,7 +176,7 @@ COMMENT ON COLUMN autp_permisos.descripcion IS 'Descripción del permiso';
 
 
 --
--- TOC entry 3045 (class 0 OID 0)
+-- TOC entry 3047 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: COLUMN autp_permisos.crud; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -190,24 +188,12 @@ Crear y Borrar 3';
 
 
 --
--- TOC entry 3046 (class 0 OID 0)
--- Dependencies: 185
--- Name: COLUMN autp_permisos.dependencia; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON COLUMN autp_permisos.dependencia IS 'Permite seleccionar el alcanze del elemento, acceso a la pripia depedendencia, todsas las depedencias o ninguna. 
-0 ninguna
-1 propia
-2 todas';
-
-
---
 -- TOC entry 186 (class 1259 OID 17505)
 -- Name: autr_restric_grupo; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE autr_restric_grupo (
-    id integer,
+    id integer NOT NULL,
     autg_id integer,
     autp_id integer
 );
@@ -216,43 +202,7 @@ CREATE TABLE autr_restric_grupo (
 ALTER TABLE autr_restric_grupo OWNER TO postgres;
 
 --
--- TOC entry 187 (class 1259 OID 17508)
--- Name: autu_usuarios; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE autu_usuarios (
-    id integer NOT NULL,
-    nombres character varying(250),
-    apellidos character varying(250),
-    correo character varying(250),
-    contrasena character varying(300),
-    usuario character varying(150),
-    estado character varying
-);
-
-
-ALTER TABLE autu_usuarios OWNER TO postgres;
-
---
--- TOC entry 3047 (class 0 OID 0)
--- Dependencies: 187
--- Name: COLUMN autu_usuarios.usuario; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON COLUMN autu_usuarios.usuario IS 'Identificacion del usuario';
-
-
---
--- TOC entry 3048 (class 0 OID 0)
--- Dependencies: 187
--- Name: COLUMN autu_usuarios.estado; Type: COMMENT; Schema: public; Owner: postgres
---
-
-COMMENT ON COLUMN autu_usuarios.estado IS 'Estado de los usuarios, nos indican si estan activos o no. ';
-
-
---
--- TOC entry 188 (class 1259 OID 17514)
+-- TOC entry 187 (class 1259 OID 17514)
 -- Name: bodega_empresas; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -281,7 +231,7 @@ CREATE TABLE bodega_empresas (
 ALTER TABLE bodega_empresas OWNER TO postgres;
 
 --
--- TOC entry 189 (class 1259 OID 17547)
+-- TOC entry 188 (class 1259 OID 17547)
 -- Name: carpeta; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -294,7 +244,7 @@ CREATE TABLE carpeta (
 ALTER TABLE carpeta OWNER TO postgres;
 
 --
--- TOC entry 190 (class 1259 OID 17550)
+-- TOC entry 189 (class 1259 OID 17550)
 -- Name: carpeta_per; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -310,7 +260,7 @@ CREATE TABLE carpeta_per (
 ALTER TABLE carpeta_per OWNER TO postgres;
 
 --
--- TOC entry 191 (class 1259 OID 17701)
+-- TOC entry 190 (class 1259 OID 17701)
 -- Name: departamento; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -325,7 +275,7 @@ CREATE TABLE departamento (
 ALTER TABLE departamento OWNER TO postgres;
 
 --
--- TOC entry 192 (class 1259 OID 17709)
+-- TOC entry 191 (class 1259 OID 17709)
 -- Name: dependencia; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -353,7 +303,7 @@ CREATE TABLE dependencia (
 ALTER TABLE dependencia OWNER TO postgres;
 
 --
--- TOC entry 193 (class 1259 OID 17715)
+-- TOC entry 192 (class 1259 OID 17715)
 -- Name: dependencia_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -368,8 +318,8 @@ CREATE SEQUENCE dependencia_id_seq
 ALTER TABLE dependencia_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3049 (class 0 OID 0)
--- Dependencies: 193
+-- TOC entry 3048 (class 0 OID 0)
+-- Dependencies: 192
 -- Name: dependencia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -377,7 +327,7 @@ ALTER SEQUENCE dependencia_id_seq OWNED BY dependencia.id;
 
 
 --
--- TOC entry 194 (class 1259 OID 17717)
+-- TOC entry 193 (class 1259 OID 17717)
 -- Name: dependencia_visibilidad; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -391,7 +341,7 @@ CREATE TABLE dependencia_visibilidad (
 ALTER TABLE dependencia_visibilidad OWNER TO postgres;
 
 --
--- TOC entry 195 (class 1259 OID 17720)
+-- TOC entry 194 (class 1259 OID 17720)
 -- Name: estado; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -404,7 +354,7 @@ CREATE TABLE estado (
 ALTER TABLE estado OWNER TO postgres;
 
 --
--- TOC entry 196 (class 1259 OID 17744)
+-- TOC entry 195 (class 1259 OID 17744)
 -- Name: hist_eventos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -427,7 +377,7 @@ CREATE TABLE hist_eventos (
 ALTER TABLE hist_eventos OWNER TO postgres;
 
 --
--- TOC entry 197 (class 1259 OID 17750)
+-- TOC entry 196 (class 1259 OID 17750)
 -- Name: hist_eventos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -442,8 +392,8 @@ CREATE SEQUENCE hist_eventos_id_seq
 ALTER TABLE hist_eventos_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3050 (class 0 OID 0)
--- Dependencies: 197
+-- TOC entry 3049 (class 0 OID 0)
+-- Dependencies: 196
 -- Name: hist_eventos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -451,7 +401,7 @@ ALTER SEQUENCE hist_eventos_id_seq OWNED BY hist_eventos.id;
 
 
 --
--- TOC entry 198 (class 1259 OID 17752)
+-- TOC entry 197 (class 1259 OID 17752)
 -- Name: informados; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -472,7 +422,7 @@ CREATE TABLE informados (
 ALTER TABLE informados OWNER TO postgres;
 
 --
--- TOC entry 199 (class 1259 OID 17760)
+-- TOC entry 198 (class 1259 OID 17760)
 -- Name: medio_recepcion; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -485,7 +435,7 @@ CREATE TABLE medio_recepcion (
 ALTER TABLE medio_recepcion OWNER TO postgres;
 
 --
--- TOC entry 200 (class 1259 OID 17763)
+-- TOC entry 199 (class 1259 OID 17763)
 -- Name: municipio; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -504,7 +454,7 @@ CREATE TABLE municipio (
 ALTER TABLE municipio OWNER TO postgres;
 
 --
--- TOC entry 201 (class 1259 OID 17789)
+-- TOC entry 200 (class 1259 OID 17789)
 -- Name: par_serv_servicios; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -519,7 +469,7 @@ CREATE TABLE par_serv_servicios (
 ALTER TABLE par_serv_servicios OWNER TO postgres;
 
 --
--- TOC entry 202 (class 1259 OID 17792)
+-- TOC entry 201 (class 1259 OID 17792)
 -- Name: prestamo; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -548,7 +498,7 @@ CREATE TABLE prestamo (
 ALTER TABLE prestamo OWNER TO postgres;
 
 --
--- TOC entry 203 (class 1259 OID 17798)
+-- TOC entry 202 (class 1259 OID 17798)
 -- Name: radicado; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -622,7 +572,7 @@ CREATE TABLE radicado (
 ALTER TABLE radicado OWNER TO postgres;
 
 --
--- TOC entry 204 (class 1259 OID 17816)
+-- TOC entry 203 (class 1259 OID 17816)
 -- Name: radicado_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -637,8 +587,8 @@ CREATE SEQUENCE radicado_id_seq
 ALTER TABLE radicado_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3051 (class 0 OID 0)
--- Dependencies: 204
+-- TOC entry 3050 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: radicado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -646,7 +596,7 @@ ALTER SEQUENCE radicado_id_seq OWNED BY radicado.id;
 
 
 --
--- TOC entry 205 (class 1259 OID 17876)
+-- TOC entry 204 (class 1259 OID 17876)
 -- Name: series; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -663,7 +613,7 @@ CREATE TABLE series (
 ALTER TABLE series OWNER TO postgres;
 
 --
--- TOC entry 206 (class 1259 OID 17882)
+-- TOC entry 205 (class 1259 OID 17882)
 -- Name: sgd_agen_agendados; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -682,7 +632,7 @@ CREATE TABLE sgd_agen_agendados (
 ALTER TABLE sgd_agen_agendados OWNER TO postgres;
 
 --
--- TOC entry 207 (class 1259 OID 17888)
+-- TOC entry 206 (class 1259 OID 17888)
 -- Name: sgd_agen_agendados_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -697,8 +647,8 @@ CREATE SEQUENCE sgd_agen_agendados_id_seq
 ALTER TABLE sgd_agen_agendados_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3052 (class 0 OID 0)
--- Dependencies: 207
+-- TOC entry 3051 (class 0 OID 0)
+-- Dependencies: 206
 -- Name: sgd_agen_agendados_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -706,7 +656,7 @@ ALTER SEQUENCE sgd_agen_agendados_id_seq OWNED BY sgd_agen_agendados.id;
 
 
 --
--- TOC entry 208 (class 1259 OID 17890)
+-- TOC entry 207 (class 1259 OID 17890)
 -- Name: sgd_anar_anexarg; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -721,7 +671,7 @@ CREATE TABLE sgd_anar_anexarg (
 ALTER TABLE sgd_anar_anexarg OWNER TO postgres;
 
 --
--- TOC entry 209 (class 1259 OID 17893)
+-- TOC entry 208 (class 1259 OID 17893)
 -- Name: sgd_anu_anulados; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -746,7 +696,7 @@ CREATE TABLE sgd_anu_anulados (
 ALTER TABLE sgd_anu_anulados OWNER TO postgres;
 
 --
--- TOC entry 210 (class 1259 OID 17922)
+-- TOC entry 209 (class 1259 OID 17922)
 -- Name: sgd_argd_argdoc; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -764,7 +714,7 @@ CREATE TABLE sgd_argd_argdoc (
 ALTER TABLE sgd_argd_argdoc OWNER TO postgres;
 
 --
--- TOC entry 211 (class 1259 OID 17931)
+-- TOC entry 210 (class 1259 OID 17931)
 -- Name: sgd_auditoria; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -781,7 +731,7 @@ CREATE TABLE sgd_auditoria (
 ALTER TABLE sgd_auditoria OWNER TO postgres;
 
 --
--- TOC entry 212 (class 1259 OID 17937)
+-- TOC entry 211 (class 1259 OID 17937)
 -- Name: sgd_camexp_campoexpediente; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -800,7 +750,7 @@ CREATE TABLE sgd_camexp_campoexpediente (
 ALTER TABLE sgd_camexp_campoexpediente OWNER TO postgres;
 
 --
--- TOC entry 213 (class 1259 OID 17944)
+-- TOC entry 212 (class 1259 OID 17944)
 -- Name: sgd_carp_descripcion; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -814,7 +764,7 @@ CREATE TABLE sgd_carp_descripcion (
 ALTER TABLE sgd_carp_descripcion OWNER TO postgres;
 
 --
--- TOC entry 214 (class 1259 OID 17947)
+-- TOC entry 213 (class 1259 OID 17947)
 -- Name: sgd_cau_causal; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -827,7 +777,7 @@ CREATE TABLE sgd_cau_causal (
 ALTER TABLE sgd_cau_causal OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 17950)
+-- TOC entry 214 (class 1259 OID 17950)
 -- Name: sgd_caux_causales; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -845,7 +795,7 @@ CREATE TABLE sgd_caux_causales (
 ALTER TABLE sgd_caux_causales OWNER TO postgres;
 
 --
--- TOC entry 216 (class 1259 OID 17954)
+-- TOC entry 215 (class 1259 OID 17954)
 -- Name: sgd_ciu_ciudadano; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -873,7 +823,7 @@ CREATE TABLE sgd_ciu_ciudadano (
 ALTER TABLE sgd_ciu_ciudadano OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 17962)
+-- TOC entry 216 (class 1259 OID 17962)
 -- Name: sgd_clta_clstarif; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -890,7 +840,7 @@ CREATE TABLE sgd_clta_clstarif (
 ALTER TABLE sgd_clta_clstarif OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 17965)
+-- TOC entry 217 (class 1259 OID 17965)
 -- Name: sgd_cob_campobliga; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -905,7 +855,7 @@ CREATE TABLE sgd_cob_campobliga (
 ALTER TABLE sgd_cob_campobliga OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 17974)
+-- TOC entry 218 (class 1259 OID 17974)
 -- Name: sgd_dcau_causal; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -919,7 +869,7 @@ CREATE TABLE sgd_dcau_causal (
 ALTER TABLE sgd_dcau_causal OWNER TO postgres;
 
 --
--- TOC entry 220 (class 1259 OID 17977)
+-- TOC entry 219 (class 1259 OID 17977)
 -- Name: sgd_ddca_ddsgrgdo; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -934,7 +884,7 @@ CREATE TABLE sgd_ddca_ddsgrgdo (
 ALTER TABLE sgd_ddca_ddsgrgdo OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 17980)
+-- TOC entry 220 (class 1259 OID 17980)
 -- Name: sgd_def_contactos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -951,7 +901,7 @@ CREATE TABLE sgd_def_contactos (
 ALTER TABLE sgd_def_contactos OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 17983)
+-- TOC entry 221 (class 1259 OID 17983)
 -- Name: sgd_def_continentes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -964,7 +914,7 @@ CREATE TABLE sgd_def_continentes (
 ALTER TABLE sgd_def_continentes OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 17986)
+-- TOC entry 222 (class 1259 OID 17986)
 -- Name: sgd_def_paises; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -978,7 +928,7 @@ CREATE TABLE sgd_def_paises (
 ALTER TABLE sgd_def_paises OWNER TO postgres;
 
 --
--- TOC entry 224 (class 1259 OID 17990)
+-- TOC entry 223 (class 1259 OID 17990)
 -- Name: sgd_deve_dev_envio; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -991,7 +941,7 @@ CREATE TABLE sgd_deve_dev_envio (
 ALTER TABLE sgd_deve_dev_envio OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 17995)
+-- TOC entry 224 (class 1259 OID 17995)
 -- Name: sgd_dir_drecciones; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1029,7 +979,7 @@ CREATE TABLE sgd_dir_drecciones (
 ALTER TABLE sgd_dir_drecciones OWNER TO postgres;
 
 --
--- TOC entry 226 (class 1259 OID 18003)
+-- TOC entry 225 (class 1259 OID 18003)
 -- Name: sgd_dir_drecciones_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1044,8 +994,8 @@ CREATE SEQUENCE sgd_dir_drecciones_id_seq
 ALTER TABLE sgd_dir_drecciones_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3053 (class 0 OID 0)
--- Dependencies: 226
+-- TOC entry 3052 (class 0 OID 0)
+-- Dependencies: 225
 -- Name: sgd_dir_drecciones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1053,7 +1003,7 @@ ALTER SEQUENCE sgd_dir_drecciones_id_seq OWNED BY sgd_dir_drecciones.id;
 
 
 --
--- TOC entry 227 (class 1259 OID 18005)
+-- TOC entry 226 (class 1259 OID 18005)
 -- Name: sgd_dnufe_docnufe; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1073,7 +1023,7 @@ CREATE TABLE sgd_dnufe_docnufe (
 ALTER TABLE sgd_dnufe_docnufe OWNER TO postgres;
 
 --
--- TOC entry 228 (class 1259 OID 18014)
+-- TOC entry 227 (class 1259 OID 18014)
 -- Name: sgd_einv_inventario; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1106,7 +1056,7 @@ CREATE TABLE sgd_einv_inventario (
 ALTER TABLE sgd_einv_inventario OWNER TO postgres;
 
 --
--- TOC entry 229 (class 1259 OID 18020)
+-- TOC entry 228 (class 1259 OID 18020)
 -- Name: sgd_eit_items; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1123,7 +1073,7 @@ CREATE TABLE sgd_eit_items (
 ALTER TABLE sgd_eit_items OWNER TO postgres;
 
 --
--- TOC entry 230 (class 1259 OID 18027)
+-- TOC entry 229 (class 1259 OID 18027)
 -- Name: sgd_empus_empusuario; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1138,7 +1088,7 @@ CREATE TABLE sgd_empus_empusuario (
 ALTER TABLE sgd_empus_empusuario OWNER TO postgres;
 
 --
--- TOC entry 231 (class 1259 OID 18033)
+-- TOC entry 230 (class 1259 OID 18033)
 -- Name: sgd_enve_envioespecial; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1153,7 +1103,7 @@ CREATE TABLE sgd_enve_envioespecial (
 ALTER TABLE sgd_enve_envioespecial OWNER TO postgres;
 
 --
--- TOC entry 232 (class 1259 OID 18045)
+-- TOC entry 231 (class 1259 OID 18045)
 -- Name: sgd_exp_expediente; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1201,7 +1151,7 @@ CREATE TABLE sgd_exp_expediente (
 ALTER TABLE sgd_exp_expediente OWNER TO postgres;
 
 --
--- TOC entry 233 (class 1259 OID 18053)
+-- TOC entry 232 (class 1259 OID 18053)
 -- Name: sgd_exp_expediente_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1216,8 +1166,8 @@ CREATE SEQUENCE sgd_exp_expediente_id_seq
 ALTER TABLE sgd_exp_expediente_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3054 (class 0 OID 0)
--- Dependencies: 233
+-- TOC entry 3053 (class 0 OID 0)
+-- Dependencies: 232
 -- Name: sgd_exp_expediente_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1225,7 +1175,7 @@ ALTER SEQUENCE sgd_exp_expediente_id_seq OWNED BY sgd_exp_expediente.id;
 
 
 --
--- TOC entry 234 (class 1259 OID 18055)
+-- TOC entry 233 (class 1259 OID 18055)
 -- Name: sgd_fenv_frmenvio; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1240,7 +1190,7 @@ CREATE TABLE sgd_fenv_frmenvio (
 ALTER TABLE sgd_fenv_frmenvio OWNER TO postgres;
 
 --
--- TOC entry 235 (class 1259 OID 18060)
+-- TOC entry 234 (class 1259 OID 18060)
 -- Name: sgd_fexp_flujoexpedientes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1259,7 +1209,7 @@ CREATE TABLE sgd_fexp_flujoexpedientes (
 ALTER TABLE sgd_fexp_flujoexpedientes OWNER TO postgres;
 
 --
--- TOC entry 236 (class 1259 OID 18063)
+-- TOC entry 235 (class 1259 OID 18063)
 -- Name: sgd_firrad_firmarads; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1278,7 +1228,7 @@ CREATE TABLE sgd_firrad_firmarads (
 ALTER TABLE sgd_firrad_firmarads OWNER TO postgres;
 
 --
--- TOC entry 237 (class 1259 OID 18069)
+-- TOC entry 236 (class 1259 OID 18069)
 -- Name: sgd_fld_flujodoc; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1294,7 +1244,7 @@ CREATE TABLE sgd_fld_flujodoc (
 ALTER TABLE sgd_fld_flujodoc OWNER TO postgres;
 
 --
--- TOC entry 238 (class 1259 OID 18075)
+-- TOC entry 237 (class 1259 OID 18075)
 -- Name: sgd_fun_funciones; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1309,7 +1259,7 @@ CREATE TABLE sgd_fun_funciones (
 ALTER TABLE sgd_fun_funciones OWNER TO postgres;
 
 --
--- TOC entry 239 (class 1259 OID 18081)
+-- TOC entry 238 (class 1259 OID 18081)
 -- Name: sgd_hfld_histflujodoc; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1335,7 +1285,7 @@ CREATE TABLE sgd_hfld_histflujodoc (
 ALTER TABLE sgd_hfld_histflujodoc OWNER TO postgres;
 
 --
--- TOC entry 240 (class 1259 OID 18087)
+-- TOC entry 239 (class 1259 OID 18087)
 -- Name: sgd_hfld_histflujodoc_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1350,8 +1300,8 @@ CREATE SEQUENCE sgd_hfld_histflujodoc_id_seq
 ALTER TABLE sgd_hfld_histflujodoc_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3055 (class 0 OID 0)
--- Dependencies: 240
+-- TOC entry 3054 (class 0 OID 0)
+-- Dependencies: 239
 -- Name: sgd_hfld_histflujodoc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1359,7 +1309,7 @@ ALTER SEQUENCE sgd_hfld_histflujodoc_id_seq OWNED BY sgd_hfld_histflujodoc.id;
 
 
 --
--- TOC entry 241 (class 1259 OID 18089)
+-- TOC entry 240 (class 1259 OID 18089)
 -- Name: sgd_hmtd_hismatdoc; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1378,7 +1328,7 @@ CREATE TABLE sgd_hmtd_hismatdoc (
 ALTER TABLE sgd_hmtd_hismatdoc OWNER TO postgres;
 
 --
--- TOC entry 242 (class 1259 OID 18104)
+-- TOC entry 241 (class 1259 OID 18104)
 -- Name: sgd_masiva_excel; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1397,7 +1347,7 @@ CREATE TABLE sgd_masiva_excel (
 ALTER TABLE sgd_masiva_excel OWNER TO postgres;
 
 --
--- TOC entry 243 (class 1259 OID 18107)
+-- TOC entry 242 (class 1259 OID 18107)
 -- Name: sgd_mat_matriz; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1413,7 +1363,7 @@ CREATE TABLE sgd_mat_matriz (
 ALTER TABLE sgd_mat_matriz OWNER TO postgres;
 
 --
--- TOC entry 244 (class 1259 OID 18113)
+-- TOC entry 243 (class 1259 OID 18113)
 -- Name: sgd_mrd_matrird; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1433,7 +1383,7 @@ CREATE TABLE sgd_mrd_matrird (
 ALTER TABLE sgd_mrd_matrird OWNER TO postgres;
 
 --
--- TOC entry 245 (class 1259 OID 18118)
+-- TOC entry 244 (class 1259 OID 18118)
 -- Name: sgd_msdep_msgdep; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1446,7 +1396,7 @@ CREATE TABLE sgd_msdep_msgdep (
 ALTER TABLE sgd_msdep_msgdep OWNER TO postgres;
 
 --
--- TOC entry 246 (class 1259 OID 18121)
+-- TOC entry 245 (class 1259 OID 18121)
 -- Name: sgd_msg_mensaje; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1466,8 +1416,8 @@ CREATE TABLE sgd_msg_mensaje (
 ALTER TABLE sgd_msg_mensaje OWNER TO postgres;
 
 --
--- TOC entry 3056 (class 0 OID 0)
--- Dependencies: 246
+-- TOC entry 3055 (class 0 OID 0)
+-- Dependencies: 245
 -- Name: COLUMN sgd_msg_mensaje.sgd_msg_etiqueta; Type: COMMENT; Schema: public; Owner: postgres
 --
 
@@ -1475,7 +1425,7 @@ COMMENT ON COLUMN sgd_msg_mensaje.sgd_msg_etiqueta IS 'Nombre corto para mostrar
 
 
 --
--- TOC entry 247 (class 1259 OID 18124)
+-- TOC entry 246 (class 1259 OID 18124)
 -- Name: sgd_mtd_matriz_doc; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1489,7 +1439,7 @@ CREATE TABLE sgd_mtd_matriz_doc (
 ALTER TABLE sgd_mtd_matriz_doc OWNER TO postgres;
 
 --
--- TOC entry 248 (class 1259 OID 18133)
+-- TOC entry 247 (class 1259 OID 18133)
 -- Name: sgd_noh_nohabiles; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1501,7 +1451,7 @@ CREATE TABLE sgd_noh_nohabiles (
 ALTER TABLE sgd_noh_nohabiles OWNER TO postgres;
 
 --
--- TOC entry 249 (class 1259 OID 18136)
+-- TOC entry 248 (class 1259 OID 18136)
 -- Name: sgd_not_notificacion; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1514,7 +1464,7 @@ CREATE TABLE sgd_not_notificacion (
 ALTER TABLE sgd_not_notificacion OWNER TO postgres;
 
 --
--- TOC entry 250 (class 1259 OID 18139)
+-- TOC entry 249 (class 1259 OID 18139)
 -- Name: sgd_novedad_usuario; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1531,7 +1481,7 @@ CREATE TABLE sgd_novedad_usuario (
 ALTER TABLE sgd_novedad_usuario OWNER TO postgres;
 
 --
--- TOC entry 251 (class 1259 OID 18145)
+-- TOC entry 250 (class 1259 OID 18145)
 -- Name: sgd_ntrd_notifrad; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1551,7 +1501,7 @@ CREATE TABLE sgd_ntrd_notifrad (
 ALTER TABLE sgd_ntrd_notifrad OWNER TO postgres;
 
 --
--- TOC entry 252 (class 1259 OID 18148)
+-- TOC entry 251 (class 1259 OID 18148)
 -- Name: sgd_oem_oempresas; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1574,7 +1524,7 @@ CREATE TABLE sgd_oem_oempresas (
 ALTER TABLE sgd_oem_oempresas OWNER TO postgres;
 
 --
--- TOC entry 253 (class 1259 OID 18159)
+-- TOC entry 252 (class 1259 OID 18159)
 -- Name: sgd_param_admin; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1589,7 +1539,7 @@ CREATE TABLE sgd_param_admin (
 ALTER TABLE sgd_param_admin OWNER TO postgres;
 
 --
--- TOC entry 254 (class 1259 OID 18165)
+-- TOC entry 253 (class 1259 OID 18165)
 -- Name: sgd_parametro; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1603,7 +1553,7 @@ CREATE TABLE sgd_parametro (
 ALTER TABLE sgd_parametro OWNER TO postgres;
 
 --
--- TOC entry 255 (class 1259 OID 18168)
+-- TOC entry 254 (class 1259 OID 18168)
 -- Name: sgd_parexp_paramexpediente; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1621,7 +1571,7 @@ CREATE TABLE sgd_parexp_paramexpediente (
 ALTER TABLE sgd_parexp_paramexpediente OWNER TO postgres;
 
 --
--- TOC entry 256 (class 1259 OID 18172)
+-- TOC entry 255 (class 1259 OID 18172)
 -- Name: sgd_parexp_paramexpediente_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1636,8 +1586,8 @@ CREATE SEQUENCE sgd_parexp_paramexpediente_id_seq
 ALTER TABLE sgd_parexp_paramexpediente_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3057 (class 0 OID 0)
--- Dependencies: 256
+-- TOC entry 3056 (class 0 OID 0)
+-- Dependencies: 255
 -- Name: sgd_parexp_paramexpediente_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1645,7 +1595,7 @@ ALTER SEQUENCE sgd_parexp_paramexpediente_id_seq OWNED BY sgd_parexp_paramexpedi
 
 
 --
--- TOC entry 257 (class 1259 OID 18174)
+-- TOC entry 256 (class 1259 OID 18174)
 -- Name: sgd_pexp_procexpedientes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1663,7 +1613,7 @@ CREATE TABLE sgd_pexp_procexpedientes (
 ALTER TABLE sgd_pexp_procexpedientes OWNER TO postgres;
 
 --
--- TOC entry 258 (class 1259 OID 18182)
+-- TOC entry 257 (class 1259 OID 18182)
 -- Name: sgd_plan_plantillas; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1681,7 +1631,7 @@ CREATE TABLE sgd_plan_plantillas (
 ALTER TABLE sgd_plan_plantillas OWNER TO postgres;
 
 --
--- TOC entry 259 (class 1259 OID 18188)
+-- TOC entry 258 (class 1259 OID 18188)
 -- Name: sgd_plan_plantillas_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1696,8 +1646,8 @@ CREATE SEQUENCE sgd_plan_plantillas_id_seq
 ALTER TABLE sgd_plan_plantillas_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3058 (class 0 OID 0)
--- Dependencies: 259
+-- TOC entry 3057 (class 0 OID 0)
+-- Dependencies: 258
 -- Name: sgd_plan_plantillas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1705,7 +1655,7 @@ ALTER SEQUENCE sgd_plan_plantillas_id_seq OWNED BY sgd_plan_plantillas.id;
 
 
 --
--- TOC entry 260 (class 1259 OID 18190)
+-- TOC entry 259 (class 1259 OID 18190)
 -- Name: sgd_pnufe_procnumfe; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1720,7 +1670,7 @@ CREATE TABLE sgd_pnufe_procnumfe (
 ALTER TABLE sgd_pnufe_procnumfe OWNER TO postgres;
 
 --
--- TOC entry 261 (class 1259 OID 18193)
+-- TOC entry 260 (class 1259 OID 18193)
 -- Name: sgd_pnun_procenum; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1734,7 +1684,7 @@ CREATE TABLE sgd_pnun_procenum (
 ALTER TABLE sgd_pnun_procenum OWNER TO postgres;
 
 --
--- TOC entry 262 (class 1259 OID 18196)
+-- TOC entry 261 (class 1259 OID 18196)
 -- Name: sgd_prc_proceso; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1747,7 +1697,7 @@ CREATE TABLE sgd_prc_proceso (
 ALTER TABLE sgd_prc_proceso OWNER TO postgres;
 
 --
--- TOC entry 263 (class 1259 OID 18199)
+-- TOC entry 262 (class 1259 OID 18199)
 -- Name: sgd_prd_prcdmentos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1761,7 +1711,7 @@ CREATE TABLE sgd_prd_prcdmentos (
 ALTER TABLE sgd_prd_prcdmentos OWNER TO postgres;
 
 --
--- TOC entry 264 (class 1259 OID 18202)
+-- TOC entry 263 (class 1259 OID 18202)
 -- Name: sgd_rda_retdoca; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1788,7 +1738,7 @@ CREATE TABLE sgd_rda_retdoca (
 ALTER TABLE sgd_rda_retdoca OWNER TO postgres;
 
 --
--- TOC entry 265 (class 1259 OID 18205)
+-- TOC entry 264 (class 1259 OID 18205)
 -- Name: sgd_rdf_retdocf; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1806,7 +1756,7 @@ CREATE TABLE sgd_rdf_retdocf (
 ALTER TABLE sgd_rdf_retdocf OWNER TO postgres;
 
 --
--- TOC entry 266 (class 1259 OID 18208)
+-- TOC entry 265 (class 1259 OID 18208)
 -- Name: sgd_rdf_retdocf_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1821,8 +1771,8 @@ CREATE SEQUENCE sgd_rdf_retdocf_id_seq
 ALTER TABLE sgd_rdf_retdocf_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3059 (class 0 OID 0)
--- Dependencies: 266
+-- TOC entry 3058 (class 0 OID 0)
+-- Dependencies: 265
 -- Name: sgd_rdf_retdocf_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1830,7 +1780,7 @@ ALTER SEQUENCE sgd_rdf_retdocf_id_seq OWNED BY sgd_rdf_retdocf.id;
 
 
 --
--- TOC entry 267 (class 1259 OID 18210)
+-- TOC entry 266 (class 1259 OID 18210)
 -- Name: sgd_renv_regenvio; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1878,7 +1828,7 @@ CREATE TABLE sgd_renv_regenvio (
 ALTER TABLE sgd_renv_regenvio OWNER TO postgres;
 
 --
--- TOC entry 268 (class 1259 OID 18225)
+-- TOC entry 267 (class 1259 OID 18225)
 -- Name: sgd_renv_regenvio_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1893,8 +1843,8 @@ CREATE SEQUENCE sgd_renv_regenvio_id_seq
 ALTER TABLE sgd_renv_regenvio_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3060 (class 0 OID 0)
--- Dependencies: 268
+-- TOC entry 3059 (class 0 OID 0)
+-- Dependencies: 267
 -- Name: sgd_renv_regenvio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -1902,7 +1852,7 @@ ALTER SEQUENCE sgd_renv_regenvio_id_seq OWNED BY sgd_renv_regenvio.id;
 
 
 --
--- TOC entry 269 (class 1259 OID 18233)
+-- TOC entry 268 (class 1259 OID 18233)
 -- Name: sgd_rmr_radmasivre; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1915,7 +1865,7 @@ CREATE TABLE sgd_rmr_radmasivre (
 ALTER TABLE sgd_rmr_radmasivre OWNER TO postgres;
 
 --
--- TOC entry 270 (class 1259 OID 18236)
+-- TOC entry 269 (class 1259 OID 18236)
 -- Name: sgd_san_sancionados; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1942,7 +1892,7 @@ CREATE TABLE sgd_san_sancionados (
 ALTER TABLE sgd_san_sancionados OWNER TO postgres;
 
 --
--- TOC entry 271 (class 1259 OID 18242)
+-- TOC entry 270 (class 1259 OID 18242)
 -- Name: sgd_sbrd_subserierd; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1963,8 +1913,8 @@ CREATE TABLE sgd_sbrd_subserierd (
 ALTER TABLE sgd_sbrd_subserierd OWNER TO postgres;
 
 --
--- TOC entry 3061 (class 0 OID 0)
--- Dependencies: 271
+-- TOC entry 3060 (class 0 OID 0)
+-- Dependencies: 270
 -- Name: TABLE sgd_sbrd_subserierd; Type: COMMENT; Schema: public; Owner: postgres
 --
 
@@ -1972,8 +1922,8 @@ COMMENT ON TABLE sgd_sbrd_subserierd IS 'Tabla que contiene  las Subseries docum
 
 
 --
--- TOC entry 3062 (class 0 OID 0)
--- Dependencies: 271
+-- TOC entry 3061 (class 0 OID 0)
+-- Dependencies: 270
 -- Name: COLUMN sgd_sbrd_subserierd.sgd_srd_codigo; Type: COMMENT; Schema: public; Owner: postgres
 --
 
@@ -1981,8 +1931,8 @@ COMMENT ON COLUMN sgd_sbrd_subserierd.sgd_srd_codigo IS 'Codigo de Serie Documen
 
 
 --
--- TOC entry 3063 (class 0 OID 0)
--- Dependencies: 271
+-- TOC entry 3062 (class 0 OID 0)
+-- Dependencies: 270
 -- Name: COLUMN sgd_sbrd_subserierd.sgd_sbrd_fechini; Type: COMMENT; Schema: public; Owner: postgres
 --
 
@@ -1990,8 +1940,8 @@ COMMENT ON COLUMN sgd_sbrd_subserierd.sgd_sbrd_fechini IS 'Fecha en la cual inic
 
 
 --
--- TOC entry 3064 (class 0 OID 0)
--- Dependencies: 271
+-- TOC entry 3063 (class 0 OID 0)
+-- Dependencies: 270
 -- Name: COLUMN sgd_sbrd_subserierd.sgd_sbrd_fechfin; Type: COMMENT; Schema: public; Owner: postgres
 --
 
@@ -1999,7 +1949,7 @@ COMMENT ON COLUMN sgd_sbrd_subserierd.sgd_sbrd_fechfin IS 'Fecha en la cual fina
 
 
 --
--- TOC entry 272 (class 1259 OID 18251)
+-- TOC entry 271 (class 1259 OID 18251)
 -- Name: sgd_senuf_secnumfe; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2013,7 +1963,7 @@ CREATE TABLE sgd_senuf_secnumfe (
 ALTER TABLE sgd_senuf_secnumfe OWNER TO postgres;
 
 --
--- TOC entry 273 (class 1259 OID 18254)
+-- TOC entry 272 (class 1259 OID 18254)
 -- Name: sgd_sexp_secexpedientes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2054,8 +2004,8 @@ CREATE TABLE sgd_sexp_secexpedientes (
 ALTER TABLE sgd_sexp_secexpedientes OWNER TO postgres;
 
 --
--- TOC entry 3065 (class 0 OID 0)
--- Dependencies: 273
+-- TOC entry 3064 (class 0 OID 0)
+-- Dependencies: 272
 -- Name: COLUMN sgd_sexp_secexpedientes.sgd_sexp_prestamo; Type: COMMENT; Schema: public; Owner: postgres
 --
 
@@ -2063,7 +2013,7 @@ COMMENT ON COLUMN sgd_sexp_secexpedientes.sgd_sexp_prestamo IS 'Boolenao para pr
 
 
 --
--- TOC entry 274 (class 1259 OID 18263)
+-- TOC entry 273 (class 1259 OID 18263)
 -- Name: sgd_sexp_secexpedientes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2078,8 +2028,8 @@ CREATE SEQUENCE sgd_sexp_secexpedientes_id_seq
 ALTER TABLE sgd_sexp_secexpedientes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3066 (class 0 OID 0)
--- Dependencies: 274
+-- TOC entry 3065 (class 0 OID 0)
+-- Dependencies: 273
 -- Name: sgd_sexp_secexpedientes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -2087,7 +2037,7 @@ ALTER SEQUENCE sgd_sexp_secexpedientes_id_seq OWNED BY sgd_sexp_secexpedientes.i
 
 
 --
--- TOC entry 275 (class 1259 OID 18272)
+-- TOC entry 274 (class 1259 OID 18272)
 -- Name: sgd_srd_seriesrd; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2102,7 +2052,7 @@ CREATE TABLE sgd_srd_seriesrd (
 ALTER TABLE sgd_srd_seriesrd OWNER TO postgres;
 
 --
--- TOC entry 276 (class 1259 OID 18275)
+-- TOC entry 275 (class 1259 OID 18275)
 -- Name: sgd_tar_tarifas; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2121,7 +2071,7 @@ CREATE TABLE sgd_tar_tarifas (
 ALTER TABLE sgd_tar_tarifas OWNER TO postgres;
 
 --
--- TOC entry 277 (class 1259 OID 18278)
+-- TOC entry 276 (class 1259 OID 18278)
 -- Name: sgd_tdec_tipodecision; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2140,7 +2090,7 @@ CREATE TABLE sgd_tdec_tipodecision (
 ALTER TABLE sgd_tdec_tipodecision OWNER TO postgres;
 
 --
--- TOC entry 278 (class 1259 OID 18293)
+-- TOC entry 277 (class 1259 OID 18293)
 -- Name: sgd_tip3_tipotercero; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2162,7 +2112,7 @@ CREATE TABLE sgd_tip3_tipotercero (
 ALTER TABLE sgd_tip3_tipotercero OWNER TO postgres;
 
 --
--- TOC entry 279 (class 1259 OID 18302)
+-- TOC entry 278 (class 1259 OID 18302)
 -- Name: sgd_tma_temas; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2177,7 +2127,7 @@ CREATE TABLE sgd_tma_temas (
 ALTER TABLE sgd_tma_temas OWNER TO postgres;
 
 --
--- TOC entry 280 (class 1259 OID 18305)
+-- TOC entry 279 (class 1259 OID 18305)
 -- Name: sgd_tme_tipmen; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2189,7 +2139,7 @@ CREATE TABLE sgd_tme_tipmen (
 ALTER TABLE sgd_tme_tipmen OWNER TO postgres;
 
 --
--- TOC entry 281 (class 1259 OID 18308)
+-- TOC entry 280 (class 1259 OID 18308)
 -- Name: sgd_tpr_tpdcumento; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2215,7 +2165,7 @@ CREATE TABLE sgd_tpr_tpdcumento (
 ALTER TABLE sgd_tpr_tpdcumento OWNER TO postgres;
 
 --
--- TOC entry 282 (class 1259 OID 18317)
+-- TOC entry 281 (class 1259 OID 18317)
 -- Name: sgd_trad_tiporad; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2230,7 +2180,7 @@ CREATE TABLE sgd_trad_tiporad (
 ALTER TABLE sgd_trad_tiporad OWNER TO postgres;
 
 --
--- TOC entry 283 (class 1259 OID 18325)
+-- TOC entry 282 (class 1259 OID 18325)
 -- Name: sgd_ttr_transaccion; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2243,7 +2193,7 @@ CREATE TABLE sgd_ttr_transaccion (
 ALTER TABLE sgd_ttr_transaccion OWNER TO postgres;
 
 --
--- TOC entry 284 (class 1259 OID 18334)
+-- TOC entry 283 (class 1259 OID 18334)
 -- Name: tipo_doc_identificacion; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2256,7 +2206,7 @@ CREATE TABLE tipo_doc_identificacion (
 ALTER TABLE tipo_doc_identificacion OWNER TO postgres;
 
 --
--- TOC entry 285 (class 1259 OID 18337)
+-- TOC entry 284 (class 1259 OID 18337)
 -- Name: tipo_remitente; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2269,7 +2219,7 @@ CREATE TABLE tipo_remitente (
 ALTER TABLE tipo_remitente OWNER TO postgres;
 
 --
--- TOC entry 286 (class 1259 OID 18340)
+-- TOC entry 285 (class 1259 OID 18340)
 -- Name: ubicacion_fisica; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2282,7 +2232,7 @@ CREATE TABLE ubicacion_fisica (
 ALTER TABLE ubicacion_fisica OWNER TO postgres;
 
 --
--- TOC entry 287 (class 1259 OID 18343)
+-- TOC entry 286 (class 1259 OID 18343)
 -- Name: usuario; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -2318,7 +2268,7 @@ CREATE TABLE usuario (
 ALTER TABLE usuario OWNER TO postgres;
 
 --
--- TOC entry 288 (class 1259 OID 18373)
+-- TOC entry 287 (class 1259 OID 18373)
 -- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2333,8 +2283,8 @@ CREATE SEQUENCE usuario_id_seq
 ALTER TABLE usuario_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3067 (class 0 OID 0)
--- Dependencies: 288
+-- TOC entry 3066 (class 0 OID 0)
+-- Dependencies: 287
 -- Name: usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -2342,7 +2292,7 @@ ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
 
 
 --
--- TOC entry 2498 (class 2604 OID 18435)
+-- TOC entry 2493 (class 2604 OID 18435)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2350,7 +2300,7 @@ ALTER TABLE ONLY anexos ALTER COLUMN id SET DEFAULT nextval('anexos_id_seq'::reg
 
 
 --
--- TOC entry 2507 (class 2604 OID 18442)
+-- TOC entry 2502 (class 2604 OID 18442)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2358,7 +2308,7 @@ ALTER TABLE ONLY dependencia ALTER COLUMN id SET DEFAULT nextval('dependencia_id
 
 
 --
--- TOC entry 2508 (class 2604 OID 18446)
+-- TOC entry 2503 (class 2604 OID 18446)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2366,7 +2316,7 @@ ALTER TABLE ONLY hist_eventos ALTER COLUMN id SET DEFAULT nextval('hist_eventos_
 
 
 --
--- TOC entry 2520 (class 2604 OID 18447)
+-- TOC entry 2515 (class 2604 OID 18447)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2374,7 +2324,7 @@ ALTER TABLE ONLY radicado ALTER COLUMN id SET DEFAULT nextval('radicado_id_seq':
 
 
 --
--- TOC entry 2527 (class 2604 OID 18448)
+-- TOC entry 2522 (class 2604 OID 18448)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2382,7 +2332,7 @@ ALTER TABLE ONLY sgd_agen_agendados ALTER COLUMN id SET DEFAULT nextval('sgd_age
 
 
 --
--- TOC entry 2535 (class 2604 OID 18449)
+-- TOC entry 2530 (class 2604 OID 18449)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2390,7 +2340,7 @@ ALTER TABLE ONLY sgd_dir_drecciones ALTER COLUMN id SET DEFAULT nextval('sgd_dir
 
 
 --
--- TOC entry 2539 (class 2604 OID 18450)
+-- TOC entry 2534 (class 2604 OID 18450)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2398,7 +2348,7 @@ ALTER TABLE ONLY sgd_exp_expediente ALTER COLUMN id SET DEFAULT nextval('sgd_exp
 
 
 --
--- TOC entry 2542 (class 2604 OID 18451)
+-- TOC entry 2537 (class 2604 OID 18451)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2406,7 +2356,7 @@ ALTER TABLE ONLY sgd_hfld_histflujodoc ALTER COLUMN id SET DEFAULT nextval('sgd_
 
 
 --
--- TOC entry 2546 (class 2604 OID 18452)
+-- TOC entry 2541 (class 2604 OID 18452)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2414,7 +2364,7 @@ ALTER TABLE ONLY sgd_parexp_paramexpediente ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
--- TOC entry 2549 (class 2604 OID 18453)
+-- TOC entry 2544 (class 2604 OID 18453)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2422,7 +2372,7 @@ ALTER TABLE ONLY sgd_plan_plantillas ALTER COLUMN id SET DEFAULT nextval('sgd_pl
 
 
 --
--- TOC entry 2550 (class 2604 OID 18454)
+-- TOC entry 2545 (class 2604 OID 18454)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2430,7 +2380,7 @@ ALTER TABLE ONLY sgd_rdf_retdocf ALTER COLUMN id SET DEFAULT nextval('sgd_rdf_re
 
 
 --
--- TOC entry 2560 (class 2604 OID 18455)
+-- TOC entry 2555 (class 2604 OID 18455)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2438,7 +2388,7 @@ ALTER TABLE ONLY sgd_renv_regenvio ALTER COLUMN id SET DEFAULT nextval('sgd_renv
 
 
 --
--- TOC entry 2564 (class 2604 OID 18456)
+-- TOC entry 2559 (class 2604 OID 18456)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2446,7 +2396,7 @@ ALTER TABLE ONLY sgd_sexp_secexpedientes ALTER COLUMN id SET DEFAULT nextval('sg
 
 
 --
--- TOC entry 2584 (class 2604 OID 18457)
+-- TOC entry 2579 (class 2604 OID 18457)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2454,7 +2404,7 @@ ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::r
 
 
 --
--- TOC entry 2925 (class 0 OID 17470)
+-- TOC entry 2928 (class 0 OID 17470)
 -- Dependencies: 180
 -- Data for Name: anexos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2464,7 +2414,7 @@ COPY anexos (id, anex_radi_nume, anex_codigo, anex_tipo, anex_tamano, anex_solo_
 
 
 --
--- TOC entry 3068 (class 0 OID 0)
+-- TOC entry 3067 (class 0 OID 0)
 -- Dependencies: 181
 -- Name: anexos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2473,7 +2423,7 @@ SELECT pg_catalog.setval('anexos_id_seq', 1, true);
 
 
 --
--- TOC entry 2927 (class 0 OID 17487)
+-- TOC entry 2930 (class 0 OID 17487)
 -- Dependencies: 182
 -- Data for Name: anexos_tipo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2505,471 +2455,158 @@ COPY anexos_tipo (anex_tipo_codi, anex_tipo_ext, anex_tipo_desc) FROM stdin;
 
 
 --
--- TOC entry 2928 (class 0 OID 17490)
+-- TOC entry 2931 (class 0 OID 17490)
 -- Dependencies: 183
 -- Data for Name: autg_grupos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY autg_grupos (id, nombre, descripcion) FROM stdin;
-5	Radicación Entrada	Radicación del Sistema
-6	Envíos	Usuario para envíos de Correspondencia
-2	Administrador	Administrador del sistema
-3	Digitalizador	Digitaliza oficios entrada, salida y fondos. 
-4	Secretaria	Secretaria por dependencia
-7	Archivo Fisico	Archivo Fisico del proceso de gestion documental
-8	Jefe	Jefes de dependencia.
-9	Asistente	Asiste al jefe en diversas tareas
-10	funcionario	usuario que radica internos y salidas
+1	Administrador	Administrador del sistema
+2	Digitalizador	Digitaliza oficios entrada, salida y fondos. 
+3	Secretaria	Secretaria por dependencia
+4	Radicación Entrada	Radicación del Sistema
+5	Envíos	Usuario para envíos de Correspondencia
+6	Archivo Fisico	Archivo Fisico del proceso de gestion documental
+7	Jefe	Jefes de dependencia.
+8	Asistente	Asiste al jefe en diversas tareas
+9	funcionario	usuario que radica internos y salidas
 \.
 
 
 --
--- TOC entry 2929 (class 0 OID 17496)
+-- TOC entry 2932 (class 0 OID 17496)
 -- Dependencies: 184
 -- Data for Name: autm_membresias; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY autm_membresias (id, autg_id, autu_id) FROM stdin;
-1	1	148
-2	1	95
-3	1	90
-4	1	81
-5	1	116
-6	1	164
-7	1	162
-8	1	143
-10	3	204
-11	2	4
-13	2	2
-14	8	205
-15	5	205
-18	2	207
-19	8	208
-20	7	209
-21	7	211
-22	7	212
-23	7	214
-24	4	215
-25	7	216
-26	6	217
-27	4	217
-28	5	217
-30	5	206
-31	5	210
-32	4	210
-33	5	212
-34	5	218
-35	4	219
-36	3	220
-38	3	218
-39	4	221
-40	8	232
-41	9	234
-43	8	242
-44	4	244
-45	9	244
-46	8	245
-47	8	250
-48	7	250
-49	7	251
-50	7	252
-51	7	253
-52	7	254
-53	7	249
-54	8	255
-56	8	260
-58	6	218
-59	4	218
-60	9	218
-61	8	271
-64	4	288
-65	9	288
-66	8	276
-67	8	292
-68	8	297
-69	4	304
-70	9	304
-71	9	321
-72	4	321
-73	8	326
-74	5	328
-75	5	329
-76	5	330
-77	6	328
-78	6	329
-79	6	330
-80	3	328
-81	3	329
-82	3	330
-83	4	329
-84	4	328
-85	4	330
-86	9	328
-87	9	329
-88	9	330
-92	8	333
-93	5	2
-94	6	2
-95	3	2
-96	4	2
-97	7	2
-98	8	2
-99	9	2
-101	6	334
-102	8	331
-103	2	334
-104	8	335
-105	8	336
-106	8	337
-107	8	338
-108	8	339
-109	8	340
-110	10	269
-111	10	332
-112	10	233
-113	10	219
-114	10	220
-115	10	169
-116	10	234
-117	10	232
-118	10	242
-119	10	319
-120	10	295
-121	10	252
-122	10	268
-123	10	243
-124	10	241
-125	10	259
-126	10	208
-127	10	270
-128	10	212
-129	10	206
-130	10	245
-131	10	213
-132	10	217
-133	10	287
-134	10	304
-135	10	286
-136	10	278
-137	10	311
-138	10	228
-139	10	263
-140	10	272
-141	10	244
-142	10	323
-143	10	253
-144	10	236
-145	10	254
-146	10	266
-147	10	214
-148	10	316
-149	10	334
-150	10	20
-151	10	126
-152	10	215
-153	10	117
-154	10	225
-155	10	257
-156	10	265
-157	10	280
-158	10	282
-159	10	281
-160	10	314
-161	10	313
-162	10	299
-163	10	306
-164	10	307
-165	10	312
-166	10	315
-167	10	309
-168	10	264
-169	10	224
-170	10	238
-171	10	239
-172	10	273
-173	10	328
-174	10	240
-175	10	318
-176	10	329
-177	10	204
-178	10	218
-179	10	202
-180	10	210
-181	10	211
-182	10	205
-183	10	327
-184	10	258
-185	10	226
-186	10	216
-187	10	249
-188	10	294
-189	10	275
-190	10	321
-191	10	267
-192	10	283
-193	10	284
-194	10	302
-199	10	227
-195	10	285
-197	10	325
-196	10	303
-198	10	262
-200	10	293
-201	10	237
-202	10	231
-203	10	261
-204	10	256
-205	10	255
-206	10	246
-207	10	229
-208	10	222
-209	10	248
-210	10	251
-211	10	296
-212	10	317
-213	10	274
-214	10	320
-215	10	250
-216	10	277
-217	10	291
-218	10	289
-219	10	279
-220	10	308
-221	10	298
-222	10	300
-223	10	301
-224	10	322
-225	10	305
-226	10	230
-227	10	331
-228	10	336
-229	10	337
-230	10	2
-231	10	330
-232	10	335
-233	10	290
-234	10	340
-235	10	288
-236	10	339
-237	10	310
-238	10	338
-239	9	332
-240	4	234
-241	4	332
-242	10	341
-243	8	342
-244	8	343
-245	5	253
-246	5	252
-247	5	254
-248	5	216
-249	5	250
-250	5	251
-251	6	252
-252	6	253
-253	6	254
-254	6	216
-255	6	250
-256	6	251
-257	3	252
-258	3	253
-259	3	254
-260	3	216
-261	3	250
-262	3	251
-263	4	252
-264	4	253
-265	4	254
-266	4	216
-267	4	250
-268	4	251
-269	7	328
-270	7	218
-271	7	329
-272	9	252
-273	9	253
-274	9	254
-275	9	216
-276	9	250
-277	9	251
-278	10	344
-279	7	330
-280	9	249
-281	3	249
-282	6	249
-283	5	249
-284	8	345
+1	1	1
 \.
 
 
 --
--- TOC entry 2930 (class 0 OID 17499)
+-- TOC entry 2933 (class 0 OID 17499)
 -- Dependencies: 185
 -- Data for Name: autp_permisos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY autp_permisos (id, autg_id, nombre, descripcion, crud, dependencia) FROM stdin;
-44	\N	USUARIO_PRUEBA	PRUEBA	3	\N
-45	\N	USUARIO_PUBLICO	Habilita la visibilidad de un usuario	1	\N
-46	\N	USUARIO_REASIGNA	Usuario reasigna	1	\N
-36	\N	USUA_AUTH_LDAP	Autentica por LDAP	0	\N
-18	0	USUARIO_REASIGNAR	reasignar	1	
-15	0	SGD_PANU_CODI	Anulacion	1	
-37	\N	USUA_NUEVO	El usuario que tenga este permiso, se le resetea la contraseña	1	\N
-47	\N	USUA_SCAN	PERMISO DIGITALIZACION 	1	\N
-48	\N	USUA_SCAN	PERMISO DIGITALIZACION 	1	\N
-33	\N	USUA_PERM_OWNCLOUD	DIGITALIZADOR_OwnCloud	1	\N
-32	\N	CODI_NIVEL	Codigo del nivel	5	\N
-12	0	DEPE_CODI_PADRE	codigo padre	1	
-27	0	PERM_ARCHI	permiso archivo	1	
-10	0	PERM_BORRAR_ANEXO	borrar anexo	1	
-9	0	PERM_TIPIF_ANEXO	anexo	1	
-28	0	PERM_VOBO	permiso visto bueno	1	
-7	0	PERM_RADI	radicacion	1	
-34	\N	SGD_PERM_ESTADISTICA	Estadistica Nivel 2	2	\N
-35	\N	SGD_PERM_ESTADISTICA	Estadistica nivel Maximo	5	\N
-1	0	USUA_ADM_PLANTILLA	Uso de plantillas	1	
-2	0	USUA_ADMIN_ARCHIVO	Administrador Archivo	1	
-5	0	USUA_ADMIN_ARCHIVO	ARCHIVO EDITAR	2	
-6	0	USUA_ADMIN_SISTEMA	Administrador del sistema	1	
-11	0	USUA_MASIVA	radicacion masiva	1	
-30	0	USUA_PERM_ADMINFLUJOS	FLUJOS	1	
-14	0	USUA_PERM_DEV	DESCRIPCION	1	
-21	0	USUA_PERM_FIRMA	FIRMA	1	
-8	0	USUA_PERM_IMPRESION	Permiso para marcar como impreso	2	
-20	0	USUA_PERM_INTERGAPPS	DESCRIPCION	1	
-17	0	USUA_PERM_MODIFICA	modificacion	1	
-23	0	USUA_PERM_NOTIFICA	DESCRIPCION	1	
-22	0	USUA_PERM_PRESTAMO	DESCRIPCION	1	
-25	0	USUA_PERM_RADEMAIL	DESCRIPCION	1	
-26	0	USUA_PERM_RADFAX	DESCRIPCION	1	
-13	0	USUA_PERM_NUMERA_RES	numeracion	0	
-29	0	USUA_PERM_RESPUESTA	DESCRIPCION	1	
-19	0	USUA_PERM_SANCIONADOS	DESCRIPCION	1	
-3	0	USUA_PERM_TRD	Administrador TRD	3	
-38	\N	USUA_PERM_TRD	TRD	1	\N
-40	\N	USUA_PRAD_REPRAD	Permiso reporte de Radicación de Entrada	1	\N
-42	\N	USUA_PRAD_TP2	Permiso Radicación de Entrada	1	\N
-49	\N	USUA_PERM_STICKER	Permiso de STICKER	1	\N
-50	\N	a	a	0	\N
-51	\N	Dpruebas	Pruebas D	1	\N
-16	0	USUA_PERM_ENVIOS	ENVIOS	1	
-41	\N	USUA_PRAD_TP1	Radica Salida	3	\N
-43	\N	USUA_PRAD_TP3	Radicar Interno	1	\N
-24	0	USUA_PERM_EXPEDIENTE	EXPEDIENTE	3	
-31	\N	USUA_ADMIN_ARCHIVO	ARCHIVO	0	\N
-4	0	SGD_PERM_ESTADISTICA	permisos estadistica	2	
-39	\N	USUA_PERM_TRD	TRD	5	\N
+COPY autp_permisos (id, nombre, descripcion, crud) FROM stdin;
+44	USUARIO_PRUEBA	Prueba	3
+45	USUARIO_PUBLICO	Habilita La Visibilidad De Un Usuario	1
+46	USUARIO_REASIGNA	Usuario Reasigna	1
+36	USUA_AUTH_LDAP	Autentica Por Ldap	0
+18	USUARIO_REASIGNAR	Reasignar	1
+15	SGD_PANU_CODI	Anulacion	1
+37	USUA_NUEVO	El Usuario Que Tenga Este Permiso, Se Le Resetea La Contraseña	1
+47	USUA_SCAN	Permiso Digitalizacion 	1
+48	USUA_SCAN	Permiso Digitalizacion 	1
+33	USUA_PERM_OWNCLOUD	Digitalizador_Owncloud	1
+32	CODI_NIVEL	Codigo Del Nivel	5
+12	DEPE_CODI_PADRE	Codigo Padre	1
+27	PERM_ARCHI	Permiso Archivo	1
+10	PERM_BORRAR_ANEXO	Borrar Anexo	1
+9	PERM_TIPIF_ANEXO	Anexo	1
+28	PERM_VOBO	Permiso Visto Bueno	1
+7	PERM_RADI	Radicacion	1
+34	SGD_PERM_ESTADISTICA	Estadistica Nivel 2	2
+35	SGD_PERM_ESTADISTICA	Estadistica Nivel Maximo	5
+1	USUA_ADM_PLANTILLA	Uso De Plantillas	1
+2	USUA_ADMIN_ARCHIVO	Administrador Archivo	1
+5	USUA_ADMIN_ARCHIVO	Archivo Editar	2
+6	USUA_ADMIN_SISTEMA	Administrador Del Sistema	1
+11	USUA_MASIVA	Radicacion Masiva	1
+30	USUA_PERM_ADMINFLUJOS	Flujos	1
+14	USUA_PERM_DEV	Descripcion	1
+21	USUA_PERM_FIRMA	Firma	1
+8	USUA_PERM_IMPRESION	Permiso Para Marcar Como Impreso	2
+20	USUA_PERM_INTERGAPPS	Descripcion	1
+17	USUA_PERM_MODIFICA	Modificacion	1
+23	USUA_PERM_NOTIFICA	Descripcion	1
+22	USUA_PERM_PRESTAMO	Descripcion	1
+25	USUA_PERM_RADEMAIL	Descripcion	1
+26	USUA_PERM_RADFAX	Descripcion	1
+13	USUA_PERM_NUMERA_RES	Numeracion	0
+29	USUA_PERM_RESPUESTA	Descripcion	1
+19	USUA_PERM_SANCIONADOS	Descripcion	1
+3	USUA_PERM_TRD	Administrador Trd	3
+38	USUA_PERM_TRD	Trd	1
+40	USUA_PRAD_REPRAD	Permiso Reporte De Radicación De Entrada	1
+42	USUA_PRAD_TP2	Permiso Radicación De Entrada	1
+49	USUA_PERM_STICKER	Permiso De Sticker	1
+16	USUA_PERM_ENVIOS	Envios	1
+41	USUA_PRAD_TP1	Radica Salida	3
+43	USUA_PRAD_TP3	Radicar Interno	1
+24	USUA_PERM_EXPEDIENTE	Expediente	3
+31	USUA_ADMIN_ARCHIVO	Archivo	0
+4	SGD_PERM_ESTADISTICA	Permisos Estadistica	2
+39	USUA_PERM_TRD	Trd	5
 \.
 
 
 --
--- TOC entry 2931 (class 0 OID 17505)
+-- TOC entry 2934 (class 0 OID 17505)
 -- Dependencies: 186
 -- Data for Name: autr_restric_grupo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY autr_restric_grupo (id, autg_id, autp_id) FROM stdin;
-2	6	\N
-106	5	42
-107	2	42
-108	5	49
-109	2	49
-14	2	18
-20	4	32
-21	4	12
-22	4	27
-23	2	10
-24	7	10
-30	7	9
-31	4	28
-38	2	7
-39	3	7
-40	4	7
-41	5	7
-42	6	7
-43	4	34
-44	4	35
-45	2	1
-46	4	1
-47	7	2
-51	2	5
-52	7	5
-54	2	6
-55	2	36
-56	2	11
-57	4	11
-59	4	30
-60	4	14
-63	4	21
-64	4	8
-65	4	20
-66	4	17
-67	4	23
-69	4	22
-70	4	25
-71	4	26
-72	2	13
-73	4	13
-74	4	29
-75	4	19
-76	7	3
-77	2	38
-79	4	40
-86	4	44
-87	4	45
-88	2	46
-89	4	46
-93	2	15
-94	8	15
-95	4	37
-96	7	37
-103	3	47
-104	3	48
-105	3	33
-110	5	50
-117	2	51
-121	6	16
-122	4	16
-123	2	41
-124	4	41
-125	8	41
-126	9	41
-127	10	41
-128	6	43
-129	2	43
-130	4	43
-131	10	43
-132	2	24
-133	8	24
-134	9	24
-135	2	31
-136	7	31
-137	5	4
-138	6	4
-139	2	4
-140	3	4
-141	4	4
-142	7	4
-143	8	4
-144	2	39
-145	7	39
+1	1	1
+2	1	2
+3	1	3
+4	1	4
+5	1	5
+6	1	6
+7	1	7
+8	1	8
+9	1	9
+10	1	10
+11	1	11
+12	1	12
+13	1	13
+14	1	14
+15	1	15
+16	1	16
+17	1	17
+18	1	18
+19	1	19
+20	1	20
+21	1	21
+22	1	22
+23	1	23
+24	1	24
+25	1	25
+26	1	26
+27	1	27
+28	1	28
+29	1	29
+30	1	30
+31	1	31
+32	1	32
+33	1	33
+34	1	34
+35	1	35
+36	1	36
+37	1	37
+38	1	38
+39	1	39
+40	1	40
+41	1	41
+42	1	42
+43	1	43
+44	1	44
+45	1	45
+46	1	46
+47	1	47
+48	1	48
+49	1	49
+50	1	50
+51	1	51
 \.
 
 
 --
--- TOC entry 2932 (class 0 OID 17508)
+-- TOC entry 2935 (class 0 OID 17514)
 -- Dependencies: 187
--- Data for Name: autu_usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY autu_usuarios (id, nombres, apellidos, correo, contrasena, usuario, estado) FROM stdin;
-\.
-
-
---
--- TOC entry 2933 (class 0 OID 17514)
--- Dependencies: 188
 -- Data for Name: bodega_empresas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -2978,8 +2615,8 @@ COPY bodega_empresas (nombre_de_la_empresa, nuir, nit_de_la_empresa, sigla_de_la
 
 
 --
--- TOC entry 2934 (class 0 OID 17547)
--- Dependencies: 189
+-- TOC entry 2936 (class 0 OID 17547)
+-- Dependencies: 188
 -- Data for Name: carpeta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -2996,8 +2633,8 @@ COPY carpeta (carp_codi, carp_desc) FROM stdin;
 
 
 --
--- TOC entry 2935 (class 0 OID 17550)
--- Dependencies: 190
+-- TOC entry 2937 (class 0 OID 17550)
+-- Dependencies: 189
 -- Data for Name: carpeta_per; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3006,8 +2643,8 @@ COPY carpeta_per (usua_codi, depe_codi, nomb_carp, desc_carp, codi_carp) FROM st
 
 
 --
--- TOC entry 2936 (class 0 OID 17701)
--- Dependencies: 191
+-- TOC entry 2938 (class 0 OID 17701)
+-- Dependencies: 190
 -- Data for Name: departamento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3059,8 +2696,8 @@ COPY departamento (dpto_codi, dpto_nomb, id_cont, id_pais) FROM stdin;
 
 
 --
--- TOC entry 2937 (class 0 OID 17709)
--- Dependencies: 192
+-- TOC entry 2939 (class 0 OID 17709)
+-- Dependencies: 191
 -- Data for Name: dependencia; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3072,8 +2709,8 @@ COPY dependencia (id, depe_codi, depe_nomb, dpto_codi, depe_codi_padre, muni_cod
 
 
 --
--- TOC entry 3069 (class 0 OID 0)
--- Dependencies: 193
+-- TOC entry 3068 (class 0 OID 0)
+-- Dependencies: 192
 -- Name: dependencia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -3081,8 +2718,8 @@ SELECT pg_catalog.setval('dependencia_id_seq', 4, true);
 
 
 --
--- TOC entry 2939 (class 0 OID 17717)
--- Dependencies: 194
+-- TOC entry 2941 (class 0 OID 17717)
+-- Dependencies: 193
 -- Data for Name: dependencia_visibilidad; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3540,8 +3177,8 @@ COPY dependencia_visibilidad (codigo_visibilidad, dependencia_visible, dependenc
 
 
 --
--- TOC entry 2940 (class 0 OID 17720)
--- Dependencies: 195
+-- TOC entry 2942 (class 0 OID 17720)
+-- Dependencies: 194
 -- Data for Name: estado; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3551,8 +3188,8 @@ COPY estado (esta_codi, esta_desc) FROM stdin;
 
 
 --
--- TOC entry 2941 (class 0 OID 17744)
--- Dependencies: 196
+-- TOC entry 2943 (class 0 OID 17744)
+-- Dependencies: 195
 -- Data for Name: hist_eventos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3561,8 +3198,8 @@ COPY hist_eventos (id, depe_codi, hist_fech, usua_codi, radi_nume_radi, hist_obs
 
 
 --
--- TOC entry 3070 (class 0 OID 0)
--- Dependencies: 197
+-- TOC entry 3069 (class 0 OID 0)
+-- Dependencies: 196
 -- Name: hist_eventos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -3570,8 +3207,8 @@ SELECT pg_catalog.setval('hist_eventos_id_seq', 1, true);
 
 
 --
--- TOC entry 2943 (class 0 OID 17752)
--- Dependencies: 198
+-- TOC entry 2945 (class 0 OID 17752)
+-- Dependencies: 197
 -- Data for Name: informados; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3580,8 +3217,8 @@ COPY informados (radi_nume_radi, usua_codi, depe_codi, info_desc, info_fech, inf
 
 
 --
--- TOC entry 2944 (class 0 OID 17760)
--- Dependencies: 199
+-- TOC entry 2946 (class 0 OID 17760)
+-- Dependencies: 198
 -- Data for Name: medio_recepcion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3600,8 +3237,8 @@ COPY medio_recepcion (mrec_codi, mrec_desc) FROM stdin;
 
 
 --
--- TOC entry 2945 (class 0 OID 17763)
--- Dependencies: 200
+-- TOC entry 2947 (class 0 OID 17763)
+-- Dependencies: 199
 -- Data for Name: municipio; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4753,8 +4390,8 @@ COPY municipio (muni_codi, dpto_codi, muni_nomb, id_cont, id_pais, homologa_muni
 
 
 --
--- TOC entry 2946 (class 0 OID 17789)
--- Dependencies: 201
+-- TOC entry 2948 (class 0 OID 17789)
+-- Dependencies: 200
 -- Data for Name: par_serv_servicios; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4772,8 +4409,8 @@ COPY par_serv_servicios (par_serv_secue, par_serv_codigo, par_serv_nombre, par_s
 
 
 --
--- TOC entry 2947 (class 0 OID 17792)
--- Dependencies: 202
+-- TOC entry 2949 (class 0 OID 17792)
+-- Dependencies: 201
 -- Data for Name: prestamo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4782,8 +4419,8 @@ COPY prestamo (pres_id, radi_nume_radi, usua_login_actu, depe_codi, usua_login_p
 
 
 --
--- TOC entry 2948 (class 0 OID 17798)
--- Dependencies: 203
+-- TOC entry 2950 (class 0 OID 17798)
+-- Dependencies: 202
 -- Data for Name: radicado; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4792,8 +4429,8 @@ COPY radicado (id, radi_nume_radi, radi_fech_radi, tdoc_codi, trte_codi, mrec_co
 
 
 --
--- TOC entry 3071 (class 0 OID 0)
--- Dependencies: 204
+-- TOC entry 3070 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: radicado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -4801,8 +4438,8 @@ SELECT pg_catalog.setval('radicado_id_seq', 1, true);
 
 
 --
--- TOC entry 2950 (class 0 OID 17876)
--- Dependencies: 205
+-- TOC entry 2952 (class 0 OID 17876)
+-- Dependencies: 204
 -- Data for Name: series; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4811,8 +4448,8 @@ COPY series (depe_codi, seri_nume, seri_tipo, seri_ano, dpto_codi, bloq) FROM st
 
 
 --
--- TOC entry 2951 (class 0 OID 17882)
--- Dependencies: 206
+-- TOC entry 2953 (class 0 OID 17882)
+-- Dependencies: 205
 -- Data for Name: sgd_agen_agendados; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4821,8 +4458,8 @@ COPY sgd_agen_agendados (id, sgd_agen_fech, sgd_agen_observacion, radi_nume_radi
 
 
 --
--- TOC entry 3072 (class 0 OID 0)
--- Dependencies: 207
+-- TOC entry 3071 (class 0 OID 0)
+-- Dependencies: 206
 -- Name: sgd_agen_agendados_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -4830,8 +4467,8 @@ SELECT pg_catalog.setval('sgd_agen_agendados_id_seq', 1, true);
 
 
 --
--- TOC entry 2953 (class 0 OID 17890)
--- Dependencies: 208
+-- TOC entry 2955 (class 0 OID 17890)
+-- Dependencies: 207
 -- Data for Name: sgd_anar_anexarg; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4840,8 +4477,8 @@ COPY sgd_anar_anexarg (sgd_anar_codi, anex_codigo, sgd_argd_codi, sgd_anar_argco
 
 
 --
--- TOC entry 2954 (class 0 OID 17893)
--- Dependencies: 209
+-- TOC entry 2956 (class 0 OID 17893)
+-- Dependencies: 208
 -- Data for Name: sgd_anu_anulados; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4850,8 +4487,8 @@ COPY sgd_anu_anulados (sgd_anu_id, sgd_anu_desc, radi_nume_radi, sgd_eanu_codi, 
 
 
 --
--- TOC entry 2955 (class 0 OID 17922)
--- Dependencies: 210
+-- TOC entry 2957 (class 0 OID 17922)
+-- Dependencies: 209
 -- Data for Name: sgd_argd_argdoc; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4860,8 +4497,8 @@ COPY sgd_argd_argdoc (sgd_argd_codi, sgd_pnufe_codi, sgd_argd_tabla, sgd_argd_tc
 
 
 --
--- TOC entry 2956 (class 0 OID 17931)
--- Dependencies: 211
+-- TOC entry 2958 (class 0 OID 17931)
+-- Dependencies: 210
 -- Data for Name: sgd_auditoria; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4964,12 +4601,144 @@ COPY sgd_auditoria (usua_doc, tipo, tabla, isql, fecha, ip) FROM stdin;
 1999999	u	USUARIO	2016-04-13 10:51:33> UPDATE USUARIO SET USUA_SESION=^160413105133O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460562693	127.0.0.1 - 
 1999999	u		2016-04-13 10:51:37> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:13 10:0451:37^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160413105133O127001ADMON%^	1460562697	127.0.0.1 - 
 1999999	u		2016-04-13 10:51:38> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:13 10:0451:37^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160413105133O127001ADMON%^	1460562698	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-13 12:06:44> UPDATE USUARIO SET USUA_SESION=^160413120644O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460567204	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-13 12:06:45> UPDATE USUARIO SET USUA_SESION=^160413120644O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460567205	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-13 12:16:57> UPDATE USUARIO SET USUA_SESION=^160413121657O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460567817	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-13 12:16:57> UPDATE USUARIO SET USUA_SESION=^160413121657O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460567817	127.0.0.1 - 
+1999999	u		2016-04-13 12:17:02> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:13 12:0417:02^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160413121657O127001ADMON%^	1460567822	127.0.0.1 - 
+1999999	u		2016-04-13 12:17:02> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:13 12:0417:02^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160413121657O127001ADMON%^	1460567822	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-13 12:22:31> UPDATE USUARIO SET USUA_SESION=^160413122231O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460568151	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-13 12:22:31> UPDATE USUARIO SET USUA_SESION=^160413122231O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460568151	127.0.0.1 - 
+1999999	u		2016-04-13 12:22:35> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:13 12:0422:35^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160413122231O127001ADMON%^	1460568155	127.0.0.1 - 
+1999999	u		2016-04-13 12:22:35> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:13 12:0422:35^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160413122231O127001ADMON%^	1460568155	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 09:43:37> UPDATE USUARIO SET USUA_SESION=^160414094337O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460645017	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 09:43:37> UPDATE USUARIO SET USUA_SESION=^160414094337O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460645017	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 09:47:24> UPDATE USUARIO SET USUA_SESION=^160414094724O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460645244	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 09:47:25> UPDATE USUARIO SET USUA_SESION=^160414094724O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460645245	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 09:55:40> UPDATE USUARIO SET USUA_SESION=^160414095540O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460645740	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 09:55:40> UPDATE USUARIO SET USUA_SESION=^160414095540O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460645740	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:29:23> UPDATE USUARIO SET USUA_SESION=^160414102923O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460647763	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:29:23> UPDATE USUARIO SET USUA_SESION=^160414102923O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460647763	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:30:27> UPDATE USUARIO SET USUA_SESION=^160414103027O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460647827	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:30:27> UPDATE USUARIO SET USUA_SESION=^160414103027O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460647827	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:32:59> UPDATE USUARIO SET USUA_SESION=^160414103259O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460647979	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:32:59> UPDATE USUARIO SET USUA_SESION=^160414103259O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460647979	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:33:26> UPDATE USUARIO SET USUA_SESION=^160414103326O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648006	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:33:26> UPDATE USUARIO SET USUA_SESION=^160414103326O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648006	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:38:28> UPDATE USUARIO SET USUA_SESION=^160414103828O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648308	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:38:28> UPDATE USUARIO SET USUA_SESION=^160414103828O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648308	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:38:37> UPDATE USUARIO SET USUA_SESION=^160414103837O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648317	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:38:37> UPDATE USUARIO SET USUA_SESION=^160414103837O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648317	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:39:10> UPDATE USUARIO SET USUA_SESION=^160414103910O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648350	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:39:10> UPDATE USUARIO SET USUA_SESION=^160414103910O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648350	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:39:23> UPDATE USUARIO SET USUA_SESION=^160414103923O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648363	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:39:23> UPDATE USUARIO SET USUA_SESION=^160414103923O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648363	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:43:33> UPDATE USUARIO SET USUA_SESION=^160414104333O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648613	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 10:43:34> UPDATE USUARIO SET USUA_SESION=^160414104333O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460648614	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 11:12:21> UPDATE USUARIO SET USUA_SESION=^160414111221O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460650341	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 11:12:21> UPDATE USUARIO SET USUA_SESION=^160414111221O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460650341	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 11:12:28> UPDATE USUARIO SET USUA_SESION=^160414111228O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460650348	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 11:12:28> UPDATE USUARIO SET USUA_SESION=^160414111228O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460650348	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 11:35:36> UPDATE USUARIO SET USUA_SESION=^160414113536O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460651736	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 11:35:36> UPDATE USUARIO SET USUA_SESION=^160414113536O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460651736	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 12:57:15> UPDATE USUARIO SET USUA_SESION=^160414125715O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460656635	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-14 12:57:15> UPDATE USUARIO SET USUA_SESION=^160414125715O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460656635	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:40:06> UPDATE USUARIO SET USUA_SESION=^160415114006O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738406	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:40:06> UPDATE USUARIO SET USUA_SESION=^160415114006O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738406	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:46:06> UPDATE USUARIO SET USUA_SESION=^160415114606O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738766	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:46:07> UPDATE USUARIO SET USUA_SESION=^160415114606O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738767	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:46:42> UPDATE USUARIO SET USUA_SESION=^160415114642O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738802	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:46:42> UPDATE USUARIO SET USUA_SESION=^160415114642O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738802	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:47:27> UPDATE USUARIO SET USUA_SESION=^160415114727O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738847	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:47:27> UPDATE USUARIO SET USUA_SESION=^160415114727O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738847	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:47:36> UPDATE USUARIO SET USUA_SESION=^160415114736O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738856	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:47:36> UPDATE USUARIO SET USUA_SESION=^160415114736O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738856	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:47:51> UPDATE USUARIO SET USUA_SESION=^160415114751O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738871	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:47:51> UPDATE USUARIO SET USUA_SESION=^160415114751O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460738871	127.0.0.1 - 
+1999999	u		2016-04-15 11:47:56> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:15 11:0447:56^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160415114751O127001ADMON%^	1460738876	127.0.0.1 - 
+1999999	u		2016-04-15 11:47:56> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:15 11:0447:56^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160415114751O127001ADMON%^	1460738876	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:59:33> UPDATE USUARIO SET USUA_SESION=^160415115933O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460739573	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 11:59:33> UPDATE USUARIO SET USUA_SESION=^160415115933O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460739573	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 12:12:30> UPDATE USUARIO SET USUA_SESION=^160415121230O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460740350	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 12:12:30> UPDATE USUARIO SET USUA_SESION=^160415121230O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460740350	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 19:36:56> UPDATE USUARIO SET USUA_SESION=^160415073656O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460767016	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 19:36:56> UPDATE USUARIO SET USUA_SESION=^160415073656O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460767016	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 19:55:17> UPDATE USUARIO SET USUA_SESION=^160415075517O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460768117	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 19:55:17> UPDATE USUARIO SET USUA_SESION=^160415075517O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460768117	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:31:23> UPDATE USUARIO SET USUA_SESION=^160415083123O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770283	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:31:23> UPDATE USUARIO SET USUA_SESION=^160415083123O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770283	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:34:22> UPDATE USUARIO SET USUA_SESION=^160415083422O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770462	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:34:22> UPDATE USUARIO SET USUA_SESION=^160415083422O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770462	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:35:43> UPDATE USUARIO SET USUA_SESION=^160415083543O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770543	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:35:43> UPDATE USUARIO SET USUA_SESION=^160415083543O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770543	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:37:33> UPDATE USUARIO SET USUA_SESION=^160415083733O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770653	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:37:33> UPDATE USUARIO SET USUA_SESION=^160415083733O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770653	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:41:09> UPDATE USUARIO SET USUA_SESION=^160415084109O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770869	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:41:09> UPDATE USUARIO SET USUA_SESION=^160415084109O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770869	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:41:22> UPDATE USUARIO SET USUA_SESION=^160415084122O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770882	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:41:22> UPDATE USUARIO SET USUA_SESION=^160415084122O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770882	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:41:35> UPDATE USUARIO SET USUA_SESION=^160415084135O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770895	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-15 20:41:35> UPDATE USUARIO SET USUA_SESION=^160415084135O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460770895	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 12:58:05> UPDATE USUARIO SET USUA_SESION=^160416125805O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460829485	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 12:58:05> UPDATE USUARIO SET USUA_SESION=^160416125805O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460829485	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 13:00:29> UPDATE USUARIO SET USUA_SESION=^160416010029O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460829629	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 13:00:29> UPDATE USUARIO SET USUA_SESION=^160416010029O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460829629	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 13:01:09> UPDATE USUARIO SET USUA_SESION=^160416010109O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460829669	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 13:01:09> UPDATE USUARIO SET USUA_SESION=^160416010109O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460829669	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 13:02:01> UPDATE USUARIO SET USUA_SESION=^160416010201O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460829721	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 13:02:01> UPDATE USUARIO SET USUA_SESION=^160416010201O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460829721	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 13:02:14> UPDATE USUARIO SET USUA_SESION=^160416010214O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460829734	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 13:02:15> UPDATE USUARIO SET USUA_SESION=^160416010214O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460829735	127.0.0.1 - 
+1999999	u		2016-04-16 13:20:40> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:16 13:0420:40^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160416010214O127001ADMON%^	1460830840	127.0.0.1 - 
+1999999	u		2016-04-16 13:20:40> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:16 13:0420:40^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160416010214O127001ADMON%^	1460830840	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 13:20:45> UPDATE USUARIO SET USUA_SESION=^160416012045O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460830845	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 13:20:45> UPDATE USUARIO SET USUA_SESION=^160416012045O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460830845	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:07:50> UPDATE USUARIO SET USUA_SESION=^160416020750O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460833670	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:07:50> UPDATE USUARIO SET USUA_SESION=^160416020750O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460833670	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:08:47> UPDATE USUARIO SET USUA_SESION=^160416020847O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460833727	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:08:47> UPDATE USUARIO SET USUA_SESION=^160416020847O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460833727	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:11:33> UPDATE USUARIO SET USUA_SESION=^160416021133O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460833893	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:11:33> UPDATE USUARIO SET USUA_SESION=^160416021133O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460833893	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:11:57> UPDATE USUARIO SET USUA_SESION=^160416021157O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460833917	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:11:57> UPDATE USUARIO SET USUA_SESION=^160416021157O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460833917	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:14:18> UPDATE USUARIO SET USUA_SESION=^160416021418O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460834058	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:14:18> UPDATE USUARIO SET USUA_SESION=^160416021418O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460834058	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:25:45> UPDATE USUARIO SET USUA_SESION=^160416022545O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460834745	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:25:45> UPDATE USUARIO SET USUA_SESION=^160416022545O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460834745	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:30:07> UPDATE USUARIO SET USUA_SESION=^160416023007O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835007	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:30:07> UPDATE USUARIO SET USUA_SESION=^160416023007O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835007	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:30:18> UPDATE USUARIO SET USUA_SESION=^160416023018O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835018	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:30:18> UPDATE USUARIO SET USUA_SESION=^160416023018O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835018	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:32:12> UPDATE USUARIO SET USUA_SESION=^160416023212O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835132	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:32:12> UPDATE USUARIO SET USUA_SESION=^160416023212O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835132	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:32:19> UPDATE USUARIO SET USUA_SESION=^160416023219O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835139	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:32:19> UPDATE USUARIO SET USUA_SESION=^160416023219O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835139	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:32:36> UPDATE USUARIO SET USUA_SESION=^160416023236O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835156	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:32:36> UPDATE USUARIO SET USUA_SESION=^160416023236O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835156	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:33:11> UPDATE USUARIO SET USUA_SESION=^160416023311O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835191	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:33:11> UPDATE USUARIO SET USUA_SESION=^160416023311O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835191	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:34:18> UPDATE USUARIO SET USUA_SESION=^160416023418O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835258	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:34:18> UPDATE USUARIO SET USUA_SESION=^160416023418O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835258	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:37:48> UPDATE USUARIO SET USUA_SESION=^160416023748O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835468	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:37:48> UPDATE USUARIO SET USUA_SESION=^160416023748O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835468	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:44:09> UPDATE USUARIO SET USUA_SESION=^160416024409O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835849	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:44:09> UPDATE USUARIO SET USUA_SESION=^160416024409O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835849	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:45:10> UPDATE USUARIO SET USUA_SESION=^160416024510O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835910	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 14:45:10> UPDATE USUARIO SET USUA_SESION=^160416024510O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460835910	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 15:05:02> UPDATE USUARIO SET USUA_SESION=^160416030502O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460837102	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-16 15:05:02> UPDATE USUARIO SET USUA_SESION=^160416030502O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460837102	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-18 10:36:59> UPDATE USUARIO SET USUA_SESION=^160418103659O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460993819	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-18 10:36:59> UPDATE USUARIO SET USUA_SESION=^160418103659O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1460993819	127.0.0.1 - 
+	u		2016-04-18 12:36:09> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:18 12:0436:09^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160418103659O127001ADMON%^	1461000969	127.0.0.1 - 
+	u		2016-04-18 12:36:09> UPDATE\r\n                    USUARIO\r\n               SET\r\n                    USUA_SESION =^FIN  2016:04:18 12:0436:09^\r\n               WHERE\r\n                    USUA_SESION LIKE ^%160418103659O127001ADMON%^	1461000969	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-18 12:36:12> UPDATE USUARIO SET USUA_SESION=^160418123612O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1461000972	127.0.0.1 - 
+1999999	u	USUARIO	2016-04-18 12:36:12> UPDATE USUARIO SET USUA_SESION=^160418123612O127001ADMON^,USUA_FECH_SESION=(CURRENT_TIMESTAMP+INTERVAL^0 DAYS^)    WHERE  USUA_LOGIN = ^ADMON^ 	1461000972	127.0.0.1 - 
 \.
 
 
 --
--- TOC entry 2957 (class 0 OID 17937)
--- Dependencies: 212
+-- TOC entry 2959 (class 0 OID 17937)
+-- Dependencies: 211
 -- Data for Name: sgd_camexp_campoexpediente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4978,8 +4747,8 @@ COPY sgd_camexp_campoexpediente (sgd_camexp_codigo, sgd_camexp_campo, sgd_parexp
 
 
 --
--- TOC entry 2958 (class 0 OID 17944)
--- Dependencies: 213
+-- TOC entry 2960 (class 0 OID 17944)
+-- Dependencies: 212
 -- Data for Name: sgd_carp_descripcion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -4988,8 +4757,8 @@ COPY sgd_carp_descripcion (sgd_carp_depecodi, sgd_carp_tiporad, sgd_carp_descr) 
 
 
 --
--- TOC entry 2959 (class 0 OID 17947)
--- Dependencies: 214
+-- TOC entry 2961 (class 0 OID 17947)
+-- Dependencies: 213
 -- Data for Name: sgd_cau_causal; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5002,8 +4771,8 @@ COPY sgd_cau_causal (sgd_cau_codigo, sgd_cau_descrip) FROM stdin;
 
 
 --
--- TOC entry 2960 (class 0 OID 17950)
--- Dependencies: 215
+-- TOC entry 2962 (class 0 OID 17950)
+-- Dependencies: 214
 -- Data for Name: sgd_caux_causales; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5012,8 +4781,8 @@ COPY sgd_caux_causales (sgd_caux_codigo, radi_nume_radi, sgd_dcau_codigo, sgd_dd
 
 
 --
--- TOC entry 2961 (class 0 OID 17954)
--- Dependencies: 216
+-- TOC entry 2963 (class 0 OID 17954)
+-- Dependencies: 215
 -- Data for Name: sgd_ciu_ciudadano; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5022,8 +4791,8 @@ COPY sgd_ciu_ciudadano (tdid_codi, sgd_ciu_codigo, sgd_ciu_nombre, sgd_ciu_direc
 
 
 --
--- TOC entry 2962 (class 0 OID 17962)
--- Dependencies: 217
+-- TOC entry 2964 (class 0 OID 17962)
+-- Dependencies: 216
 -- Data for Name: sgd_clta_clstarif; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5036,8 +4805,8 @@ COPY sgd_clta_clstarif (sgd_fenv_codigo, sgd_clta_codser, sgd_tar_codigo, sgd_cl
 
 
 --
--- TOC entry 2963 (class 0 OID 17965)
--- Dependencies: 218
+-- TOC entry 2965 (class 0 OID 17965)
+-- Dependencies: 217
 -- Data for Name: sgd_cob_campobliga; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5052,8 +4821,8 @@ COPY sgd_cob_campobliga (sgd_cob_codi, sgd_cob_desc, sgd_cob_label, sgd_tidm_cod
 
 
 --
--- TOC entry 2964 (class 0 OID 17974)
--- Dependencies: 219
+-- TOC entry 2966 (class 0 OID 17974)
+-- Dependencies: 218
 -- Data for Name: sgd_dcau_causal; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5062,8 +4831,8 @@ COPY sgd_dcau_causal (sgd_dcau_codigo, sgd_cau_codigo, sgd_dcau_descrip) FROM st
 
 
 --
--- TOC entry 2965 (class 0 OID 17977)
--- Dependencies: 220
+-- TOC entry 2967 (class 0 OID 17977)
+-- Dependencies: 219
 -- Data for Name: sgd_ddca_ddsgrgdo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5072,8 +4841,8 @@ COPY sgd_ddca_ddsgrgdo (sgd_ddca_codigo, sgd_dcau_codigo, par_serv_secue, sgd_dd
 
 
 --
--- TOC entry 2966 (class 0 OID 17980)
--- Dependencies: 221
+-- TOC entry 2968 (class 0 OID 17980)
+-- Dependencies: 220
 -- Data for Name: sgd_def_contactos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5082,8 +4851,8 @@ COPY sgd_def_contactos (ctt_id, ctt_nombre, ctt_cargo, ctt_telefono, ctt_id_tipo
 
 
 --
--- TOC entry 2967 (class 0 OID 17983)
--- Dependencies: 222
+-- TOC entry 2969 (class 0 OID 17983)
+-- Dependencies: 221
 -- Data for Name: sgd_def_continentes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5093,8 +4862,8 @@ COPY sgd_def_continentes (id_cont, nombre_cont) FROM stdin;
 
 
 --
--- TOC entry 2968 (class 0 OID 17986)
--- Dependencies: 223
+-- TOC entry 2970 (class 0 OID 17986)
+-- Dependencies: 222
 -- Data for Name: sgd_def_paises; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5109,8 +4878,8 @@ COPY sgd_def_paises (id_pais, id_cont, nombre_pais) FROM stdin;
 
 
 --
--- TOC entry 2969 (class 0 OID 17990)
--- Dependencies: 224
+-- TOC entry 2971 (class 0 OID 17990)
+-- Dependencies: 223
 -- Data for Name: sgd_deve_dev_envio; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5139,8 +4908,8 @@ COPY sgd_deve_dev_envio (sgd_deve_codigo, sgd_deve_desc) FROM stdin;
 
 
 --
--- TOC entry 2970 (class 0 OID 17995)
--- Dependencies: 225
+-- TOC entry 2972 (class 0 OID 17995)
+-- Dependencies: 224
 -- Data for Name: sgd_dir_drecciones; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5149,8 +4918,8 @@ COPY sgd_dir_drecciones (id, sgd_dir_codigo, sgd_dir_tipo, sgd_oem_codigo, sgd_c
 
 
 --
--- TOC entry 3073 (class 0 OID 0)
--- Dependencies: 226
+-- TOC entry 3072 (class 0 OID 0)
+-- Dependencies: 225
 -- Name: sgd_dir_drecciones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -5158,8 +4927,8 @@ SELECT pg_catalog.setval('sgd_dir_drecciones_id_seq', 1, true);
 
 
 --
--- TOC entry 2972 (class 0 OID 18005)
--- Dependencies: 227
+-- TOC entry 2974 (class 0 OID 18005)
+-- Dependencies: 226
 -- Data for Name: sgd_dnufe_docnufe; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5168,8 +4937,8 @@ COPY sgd_dnufe_docnufe (sgd_dnufe_codi, sgd_pnufe_codi, sgd_tpr_codigo, sgd_dnuf
 
 
 --
--- TOC entry 2973 (class 0 OID 18014)
--- Dependencies: 228
+-- TOC entry 2975 (class 0 OID 18014)
+-- Dependencies: 227
 -- Data for Name: sgd_einv_inventario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5178,8 +4947,8 @@ COPY sgd_einv_inventario (sgd_einv_codigo, sgd_depe_nomb, sgd_depe_codi, sgd_ein
 
 
 --
--- TOC entry 2974 (class 0 OID 18020)
--- Dependencies: 229
+-- TOC entry 2976 (class 0 OID 18020)
+-- Dependencies: 228
 -- Data for Name: sgd_eit_items; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5188,8 +4957,8 @@ COPY sgd_eit_items (sgd_eit_codigo, sgd_eit_cod_padre, sgd_eit_nombre, sgd_eit_s
 
 
 --
--- TOC entry 2975 (class 0 OID 18027)
--- Dependencies: 230
+-- TOC entry 2977 (class 0 OID 18027)
+-- Dependencies: 229
 -- Data for Name: sgd_empus_empusuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5198,8 +4967,8 @@ COPY sgd_empus_empusuario (sgd_empus_codigo, sgd_empus_estado, usua_login, ident
 
 
 --
--- TOC entry 2976 (class 0 OID 18033)
--- Dependencies: 231
+-- TOC entry 2978 (class 0 OID 18033)
+-- Dependencies: 230
 -- Data for Name: sgd_enve_envioespecial; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5208,8 +4977,8 @@ COPY sgd_enve_envioespecial (sgd_fenv_codigo, sgd_enve_valorl, sgd_enve_valorn, 
 
 
 --
--- TOC entry 2977 (class 0 OID 18045)
--- Dependencies: 232
+-- TOC entry 2979 (class 0 OID 18045)
+-- Dependencies: 231
 -- Data for Name: sgd_exp_expediente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5218,8 +4987,8 @@ COPY sgd_exp_expediente (id, sgd_exp_numero, radi_nume_radi, sgd_exp_fech, sgd_e
 
 
 --
--- TOC entry 3074 (class 0 OID 0)
--- Dependencies: 233
+-- TOC entry 3073 (class 0 OID 0)
+-- Dependencies: 232
 -- Name: sgd_exp_expediente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -5227,8 +4996,8 @@ SELECT pg_catalog.setval('sgd_exp_expediente_id_seq', 1, true);
 
 
 --
--- TOC entry 2979 (class 0 OID 18055)
--- Dependencies: 234
+-- TOC entry 2981 (class 0 OID 18055)
+-- Dependencies: 233
 -- Data for Name: sgd_fenv_frmenvio; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5250,8 +5019,8 @@ COPY sgd_fenv_frmenvio (sgd_fenv_codigo, sgd_fenv_descrip, sgd_fenv_estado, sgd_
 
 
 --
--- TOC entry 2980 (class 0 OID 18060)
--- Dependencies: 235
+-- TOC entry 2982 (class 0 OID 18060)
+-- Dependencies: 234
 -- Data for Name: sgd_fexp_flujoexpedientes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5260,8 +5029,8 @@ COPY sgd_fexp_flujoexpedientes (sgd_fexp_codigo, sgd_pexp_codigo, sgd_fexp_orden
 
 
 --
--- TOC entry 2981 (class 0 OID 18063)
--- Dependencies: 236
+-- TOC entry 2983 (class 0 OID 18063)
+-- Dependencies: 235
 -- Data for Name: sgd_firrad_firmarads; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5270,8 +5039,8 @@ COPY sgd_firrad_firmarads (sgd_firrad_id, radi_nume_radi, usua_doc, sgd_firrad_f
 
 
 --
--- TOC entry 2982 (class 0 OID 18069)
--- Dependencies: 237
+-- TOC entry 2984 (class 0 OID 18069)
+-- Dependencies: 236
 -- Data for Name: sgd_fld_flujodoc; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5280,8 +5049,8 @@ COPY sgd_fld_flujodoc (sgd_fld_codigo, sgd_fld_desc, sgd_tpr_codigo, sgd_fld_ima
 
 
 --
--- TOC entry 2983 (class 0 OID 18075)
--- Dependencies: 238
+-- TOC entry 2985 (class 0 OID 18075)
+-- Dependencies: 237
 -- Data for Name: sgd_fun_funciones; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5290,8 +5059,8 @@ COPY sgd_fun_funciones (sgd_fun_codigo, sgd_fun_descrip, sgd_fun_fech_ini, sgd_f
 
 
 --
--- TOC entry 2984 (class 0 OID 18081)
--- Dependencies: 239
+-- TOC entry 2986 (class 0 OID 18081)
+-- Dependencies: 238
 -- Data for Name: sgd_hfld_histflujodoc; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5300,8 +5069,8 @@ COPY sgd_hfld_histflujodoc (id, sgd_hfld_codigo, sgd_fexp_codigo, sgd_exp_fechfl
 
 
 --
--- TOC entry 3075 (class 0 OID 0)
--- Dependencies: 240
+-- TOC entry 3074 (class 0 OID 0)
+-- Dependencies: 239
 -- Name: sgd_hfld_histflujodoc_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -5309,8 +5078,8 @@ SELECT pg_catalog.setval('sgd_hfld_histflujodoc_id_seq', 1, true);
 
 
 --
--- TOC entry 2986 (class 0 OID 18089)
--- Dependencies: 241
+-- TOC entry 2988 (class 0 OID 18089)
+-- Dependencies: 240
 -- Data for Name: sgd_hmtd_hismatdoc; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5319,8 +5088,8 @@ COPY sgd_hmtd_hismatdoc (sgd_hmtd_codigo, sgd_hmtd_fecha, radi_nume_radi, usua_c
 
 
 --
--- TOC entry 2987 (class 0 OID 18104)
--- Dependencies: 242
+-- TOC entry 2989 (class 0 OID 18104)
+-- Dependencies: 241
 -- Data for Name: sgd_masiva_excel; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5329,8 +5098,8 @@ COPY sgd_masiva_excel (sgd_masiva_dependencia, sgd_masiva_usuario, sgd_masiva_ti
 
 
 --
--- TOC entry 2988 (class 0 OID 18107)
--- Dependencies: 243
+-- TOC entry 2990 (class 0 OID 18107)
+-- Dependencies: 242
 -- Data for Name: sgd_mat_matriz; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5339,8 +5108,8 @@ COPY sgd_mat_matriz (sgd_mat_codigo, depe_codi, sgd_fun_codigo, sgd_prc_codigo, 
 
 
 --
--- TOC entry 2989 (class 0 OID 18113)
--- Dependencies: 244
+-- TOC entry 2991 (class 0 OID 18113)
+-- Dependencies: 243
 -- Data for Name: sgd_mrd_matrird; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5349,8 +5118,8 @@ COPY sgd_mrd_matrird (sgd_mrd_codigo, depe_codi, depe_codi_aplica, sgd_srd_codig
 
 
 --
--- TOC entry 2990 (class 0 OID 18118)
--- Dependencies: 245
+-- TOC entry 2992 (class 0 OID 18118)
+-- Dependencies: 244
 -- Data for Name: sgd_msdep_msgdep; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5359,8 +5128,8 @@ COPY sgd_msdep_msgdep (depe_codi, sgd_msg_codi) FROM stdin;
 
 
 --
--- TOC entry 2991 (class 0 OID 18121)
--- Dependencies: 246
+-- TOC entry 2993 (class 0 OID 18121)
+-- Dependencies: 245
 -- Data for Name: sgd_msg_mensaje; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5376,8 +5145,8 @@ COPY sgd_msg_mensaje (sgd_msg_codi, sgd_tme_codi, sgd_msg_desc, sgd_msg_fechdesp
 
 
 --
--- TOC entry 2992 (class 0 OID 18124)
--- Dependencies: 247
+-- TOC entry 2994 (class 0 OID 18124)
+-- Dependencies: 246
 -- Data for Name: sgd_mtd_matriz_doc; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5386,8 +5155,8 @@ COPY sgd_mtd_matriz_doc (sgd_mtd_codigo, sgd_mat_codigo, sgd_tpr_codigo) FROM st
 
 
 --
--- TOC entry 2993 (class 0 OID 18133)
--- Dependencies: 248
+-- TOC entry 2995 (class 0 OID 18133)
+-- Dependencies: 247
 -- Data for Name: sgd_noh_nohabiles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5396,8 +5165,8 @@ COPY sgd_noh_nohabiles (noh_fecha) FROM stdin;
 
 
 --
--- TOC entry 2994 (class 0 OID 18136)
--- Dependencies: 249
+-- TOC entry 2996 (class 0 OID 18136)
+-- Dependencies: 248
 -- Data for Name: sgd_not_notificacion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5409,8 +5178,8 @@ COPY sgd_not_notificacion (sgd_not_codi, sgd_not_descrip) FROM stdin;
 
 
 --
--- TOC entry 2995 (class 0 OID 18139)
--- Dependencies: 250
+-- TOC entry 2997 (class 0 OID 18139)
+-- Dependencies: 249
 -- Data for Name: sgd_novedad_usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5419,8 +5188,8 @@ COPY sgd_novedad_usuario (usua_doc, nov_infor, nov_reasig, nov_vobo, nov_dev, no
 
 
 --
--- TOC entry 2996 (class 0 OID 18145)
--- Dependencies: 251
+-- TOC entry 2998 (class 0 OID 18145)
+-- Dependencies: 250
 -- Data for Name: sgd_ntrd_notifrad; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5429,8 +5198,8 @@ COPY sgd_ntrd_notifrad (radi_nume_radi, sgd_not_codi, sgd_ntrd_notificador, sgd_
 
 
 --
--- TOC entry 2997 (class 0 OID 18148)
--- Dependencies: 252
+-- TOC entry 2999 (class 0 OID 18148)
+-- Dependencies: 251
 -- Data for Name: sgd_oem_oempresas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5439,8 +5208,8 @@ COPY sgd_oem_oempresas (sgd_oem_codigo, tdid_codi, sgd_oem_oempresa, sgd_oem_rep
 
 
 --
--- TOC entry 2998 (class 0 OID 18159)
--- Dependencies: 253
+-- TOC entry 3000 (class 0 OID 18159)
+-- Dependencies: 252
 -- Data for Name: sgd_param_admin; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5450,8 +5219,8 @@ COPY sgd_param_admin (param_codigo, param_nombre, param_desc, param_valor) FROM 
 
 
 --
--- TOC entry 2999 (class 0 OID 18165)
--- Dependencies: 254
+-- TOC entry 3001 (class 0 OID 18165)
+-- Dependencies: 253
 -- Data for Name: sgd_parametro; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5473,8 +5242,8 @@ PRESTAMO_PASW	1	123
 
 
 --
--- TOC entry 3000 (class 0 OID 18168)
--- Dependencies: 255
+-- TOC entry 3002 (class 0 OID 18168)
+-- Dependencies: 254
 -- Data for Name: sgd_parexp_paramexpediente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5483,8 +5252,8 @@ COPY sgd_parexp_paramexpediente (sgd_parexp_codigo, depe_codi, sgd_parexp_tabla,
 
 
 --
--- TOC entry 3076 (class 0 OID 0)
--- Dependencies: 256
+-- TOC entry 3075 (class 0 OID 0)
+-- Dependencies: 255
 -- Name: sgd_parexp_paramexpediente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -5492,8 +5261,8 @@ SELECT pg_catalog.setval('sgd_parexp_paramexpediente_id_seq', 1, true);
 
 
 --
--- TOC entry 3002 (class 0 OID 18174)
--- Dependencies: 257
+-- TOC entry 3004 (class 0 OID 18174)
+-- Dependencies: 256
 -- Data for Name: sgd_pexp_procexpedientes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5502,8 +5271,8 @@ COPY sgd_pexp_procexpedientes (sgd_pexp_codigo, sgd_pexp_descrip, sgd_pexp_termi
 
 
 --
--- TOC entry 3003 (class 0 OID 18182)
--- Dependencies: 258
+-- TOC entry 3005 (class 0 OID 18182)
+-- Dependencies: 257
 -- Data for Name: sgd_plan_plantillas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5512,8 +5281,8 @@ COPY sgd_plan_plantillas (id, plan_nombre, plan_fecha, depe_codi, usua_codi, pla
 
 
 --
--- TOC entry 3077 (class 0 OID 0)
--- Dependencies: 259
+-- TOC entry 3076 (class 0 OID 0)
+-- Dependencies: 258
 -- Name: sgd_plan_plantillas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -5521,8 +5290,8 @@ SELECT pg_catalog.setval('sgd_plan_plantillas_id_seq', 1, true);
 
 
 --
--- TOC entry 3005 (class 0 OID 18190)
--- Dependencies: 260
+-- TOC entry 3007 (class 0 OID 18190)
+-- Dependencies: 259
 -- Data for Name: sgd_pnufe_procnumfe; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5531,8 +5300,8 @@ COPY sgd_pnufe_procnumfe (sgd_pnufe_codi, sgd_tpr_codigo, sgd_pnufe_descrip, sgd
 
 
 --
--- TOC entry 3006 (class 0 OID 18193)
--- Dependencies: 261
+-- TOC entry 3008 (class 0 OID 18193)
+-- Dependencies: 260
 -- Data for Name: sgd_pnun_procenum; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5541,8 +5310,8 @@ COPY sgd_pnun_procenum (sgd_pnufe_codi, depe_codi, sgd_pnun_prepone) FROM stdin;
 
 
 --
--- TOC entry 3007 (class 0 OID 18196)
--- Dependencies: 262
+-- TOC entry 3009 (class 0 OID 18196)
+-- Dependencies: 261
 -- Data for Name: sgd_prc_proceso; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5551,8 +5320,8 @@ COPY sgd_prc_proceso (sgd_prc_codigo, sgd_prc_descrip) FROM stdin;
 
 
 --
--- TOC entry 3008 (class 0 OID 18199)
--- Dependencies: 263
+-- TOC entry 3010 (class 0 OID 18199)
+-- Dependencies: 262
 -- Data for Name: sgd_prd_prcdmentos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5561,8 +5330,8 @@ COPY sgd_prd_prcdmentos (sgd_prd_codigo, sgd_prc_codigo, sgd_prd_descrip) FROM s
 
 
 --
--- TOC entry 3009 (class 0 OID 18202)
--- Dependencies: 264
+-- TOC entry 3011 (class 0 OID 18202)
+-- Dependencies: 263
 -- Data for Name: sgd_rda_retdoca; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5571,8 +5340,8 @@ COPY sgd_rda_retdoca (anex_radi_nume, anex_codigo, radi_nume_salida, anex_borrad
 
 
 --
--- TOC entry 3010 (class 0 OID 18205)
--- Dependencies: 265
+-- TOC entry 3012 (class 0 OID 18205)
+-- Dependencies: 264
 -- Data for Name: sgd_rdf_retdocf; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5581,8 +5350,8 @@ COPY sgd_rdf_retdocf (id, sgd_mrd_codigo, radi_nume_radi, depe_codi, usua_codi, 
 
 
 --
--- TOC entry 3078 (class 0 OID 0)
--- Dependencies: 266
+-- TOC entry 3077 (class 0 OID 0)
+-- Dependencies: 265
 -- Name: sgd_rdf_retdocf_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -5590,8 +5359,8 @@ SELECT pg_catalog.setval('sgd_rdf_retdocf_id_seq', 1, true);
 
 
 --
--- TOC entry 3012 (class 0 OID 18210)
--- Dependencies: 267
+-- TOC entry 3014 (class 0 OID 18210)
+-- Dependencies: 266
 -- Data for Name: sgd_renv_regenvio; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5600,8 +5369,8 @@ COPY sgd_renv_regenvio (id, sgd_renv_codigo, sgd_fenv_codigo, sgd_renv_fech, rad
 
 
 --
--- TOC entry 3079 (class 0 OID 0)
--- Dependencies: 268
+-- TOC entry 3078 (class 0 OID 0)
+-- Dependencies: 267
 -- Name: sgd_renv_regenvio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -5609,8 +5378,8 @@ SELECT pg_catalog.setval('sgd_renv_regenvio_id_seq', 1, true);
 
 
 --
--- TOC entry 3014 (class 0 OID 18233)
--- Dependencies: 269
+-- TOC entry 3016 (class 0 OID 18233)
+-- Dependencies: 268
 -- Data for Name: sgd_rmr_radmasivre; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5619,8 +5388,8 @@ COPY sgd_rmr_radmasivre (sgd_rmr_grupo, sgd_rmr_radi) FROM stdin;
 
 
 --
--- TOC entry 3015 (class 0 OID 18236)
--- Dependencies: 270
+-- TOC entry 3017 (class 0 OID 18236)
+-- Dependencies: 269
 -- Data for Name: sgd_san_sancionados; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5629,8 +5398,8 @@ COPY sgd_san_sancionados (sgd_san_ref, sgd_san_decision, sgd_san_cargo, sgd_san_
 
 
 --
--- TOC entry 3016 (class 0 OID 18242)
--- Dependencies: 271
+-- TOC entry 3018 (class 0 OID 18242)
+-- Dependencies: 270
 -- Data for Name: sgd_sbrd_subserierd; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5639,8 +5408,8 @@ COPY sgd_sbrd_subserierd (sgd_srd_codigo, sgd_sbrd_codigo, sgd_sbrd_descrip, sgd
 
 
 --
--- TOC entry 3017 (class 0 OID 18251)
--- Dependencies: 272
+-- TOC entry 3019 (class 0 OID 18251)
+-- Dependencies: 271
 -- Data for Name: sgd_senuf_secnumfe; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5649,8 +5418,8 @@ COPY sgd_senuf_secnumfe (sgd_pnufe_codi, depe_codi, sgd_senuf_sec) FROM stdin;
 
 
 --
--- TOC entry 3018 (class 0 OID 18254)
--- Dependencies: 273
+-- TOC entry 3020 (class 0 OID 18254)
+-- Dependencies: 272
 -- Data for Name: sgd_sexp_secexpedientes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5659,8 +5428,8 @@ COPY sgd_sexp_secexpedientes (sgd_exp_numero, sgd_srd_codigo, sgd_sbrd_codigo, s
 
 
 --
--- TOC entry 3080 (class 0 OID 0)
--- Dependencies: 274
+-- TOC entry 3079 (class 0 OID 0)
+-- Dependencies: 273
 -- Name: sgd_sexp_secexpedientes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -5668,8 +5437,8 @@ SELECT pg_catalog.setval('sgd_sexp_secexpedientes_id_seq', 1, true);
 
 
 --
--- TOC entry 3020 (class 0 OID 18272)
--- Dependencies: 275
+-- TOC entry 3022 (class 0 OID 18272)
+-- Dependencies: 274
 -- Data for Name: sgd_srd_seriesrd; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5678,8 +5447,8 @@ COPY sgd_srd_seriesrd (sgd_srd_codigo, sgd_srd_descrip, sgd_srd_fechini, sgd_srd
 
 
 --
--- TOC entry 3021 (class 0 OID 18275)
--- Dependencies: 276
+-- TOC entry 3023 (class 0 OID 18275)
+-- Dependencies: 275
 -- Data for Name: sgd_tar_tarifas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5692,8 +5461,8 @@ COPY sgd_tar_tarifas (sgd_fenv_codigo, sgd_tar_codigo, sgd_tar_valenv1, sgd_tar_
 
 
 --
--- TOC entry 3022 (class 0 OID 18278)
--- Dependencies: 277
+-- TOC entry 3024 (class 0 OID 18278)
+-- Dependencies: 276
 -- Data for Name: sgd_tdec_tipodecision; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5702,8 +5471,8 @@ COPY sgd_tdec_tipodecision (sgd_apli_codi, sgd_tdec_codigo, sgd_tdec_descrip, sg
 
 
 --
--- TOC entry 3023 (class 0 OID 18293)
--- Dependencies: 278
+-- TOC entry 3025 (class 0 OID 18293)
+-- Dependencies: 277
 -- Data for Name: sgd_tip3_tipotercero; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5716,8 +5485,8 @@ COPY sgd_tip3_tipotercero (sgd_tip3_codigo, sgd_dir_tipo, sgd_tip3_nombre, sgd_t
 
 
 --
--- TOC entry 3024 (class 0 OID 18302)
--- Dependencies: 279
+-- TOC entry 3026 (class 0 OID 18302)
+-- Dependencies: 278
 -- Data for Name: sgd_tma_temas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5726,8 +5495,8 @@ COPY sgd_tma_temas (sgd_tma_codigo, depe_codi, sgd_prc_codigo, sgd_tma_descrip) 
 
 
 --
--- TOC entry 3025 (class 0 OID 18305)
--- Dependencies: 280
+-- TOC entry 3027 (class 0 OID 18305)
+-- Dependencies: 279
 -- Data for Name: sgd_tme_tipmen; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5737,8 +5506,8 @@ COPY sgd_tme_tipmen (sgd_tme_codi) FROM stdin;
 
 
 --
--- TOC entry 3026 (class 0 OID 18308)
--- Dependencies: 281
+-- TOC entry 3028 (class 0 OID 18308)
+-- Dependencies: 280
 -- Data for Name: sgd_tpr_tpdcumento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -6705,8 +6474,8 @@ COPY sgd_tpr_tpdcumento (sgd_tpr_codigo, sgd_tpr_descrip, sgd_tpr_termino, sgd_t
 
 
 --
--- TOC entry 3027 (class 0 OID 18317)
--- Dependencies: 282
+-- TOC entry 3029 (class 0 OID 18317)
+-- Dependencies: 281
 -- Data for Name: sgd_trad_tiporad; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -6721,8 +6490,8 @@ COPY sgd_trad_tiporad (sgd_trad_codigo, sgd_trad_descr, sgd_trad_icono, sgd_trad
 
 
 --
--- TOC entry 3028 (class 0 OID 18325)
--- Dependencies: 283
+-- TOC entry 3030 (class 0 OID 18325)
+-- Dependencies: 282
 -- Data for Name: sgd_ttr_transaccion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -6785,8 +6554,8 @@ COPY sgd_ttr_transaccion (sgd_ttr_codigo, sgd_ttr_descrip) FROM stdin;
 
 
 --
--- TOC entry 3029 (class 0 OID 18334)
--- Dependencies: 284
+-- TOC entry 3031 (class 0 OID 18334)
+-- Dependencies: 283
 -- Data for Name: tipo_doc_identificacion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -6801,8 +6570,8 @@ COPY tipo_doc_identificacion (tdid_codi, tdid_desc) FROM stdin;
 
 
 --
--- TOC entry 3030 (class 0 OID 18337)
--- Dependencies: 285
+-- TOC entry 3032 (class 0 OID 18337)
+-- Dependencies: 284
 -- Data for Name: tipo_remitente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -6816,8 +6585,8 @@ COPY tipo_remitente (trte_codi, trte_desc) FROM stdin;
 
 
 --
--- TOC entry 3031 (class 0 OID 18340)
--- Dependencies: 286
+-- TOC entry 3033 (class 0 OID 18340)
+-- Dependencies: 285
 -- Data for Name: ubicacion_fisica; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -6826,22 +6595,22 @@ COPY ubicacion_fisica (ubic_depe_radi, ubic_depe_arch) FROM stdin;
 
 
 --
--- TOC entry 3032 (class 0 OID 18343)
--- Dependencies: 287
+-- TOC entry 3034 (class 0 OID 18343)
+-- Dependencies: 286
 -- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY usuario (id, usua_codi, depe_codi, usua_login, usua_fech_crea, usua_pasw, usua_esta, usua_nomb, usua_admin, usua_nuevo, usua_doc, codi_nivel, usua_sesion, usua_fech_sesion, usua_ext, usua_nacim, usua_email, usua_at, usua_piso, usu_telefono1, id_pais, id_cont, sgd_rol_codigo, usua_email_1, usua_email_2) FROM stdin;
 4	4	900	PRUEBAS200	2014-06-04 20:21:03	02cb962ac59075b964b07152d2	1	Pruebas200	0	0	4999999	1	FIN  2014:06:11 20:0650:32	2014-06-11 20:33:23.794507	\N	0001-02-03	pruebas200orfeo@midominio.com	\N	\N	\N	170	1	0	\N	\N
+1	1	900	ADMON	2007-09-21 00:00:00	27ccb0eea8a706c4c34a16891f	1	Administrador	1	1	1999999	5	160418123612o127001ADMON	2016-04-18 12:36:13.012531	1111	\N	admonorfeo@midominio.com	\N	4	\N	170	1	0	\N	\N
 2	2	900	PRUEBAS100	2008-08-13 10:10:31.822753	02cb962ac59075b964b07152d2	1	Pruebas100 	1	0	2999999	1	40412084406o186116247141PRUEBA	2014-04-12 20:44:06.300562	\N	2008-05-09	pruebas100orfeo@midominio.com	\N	\N	\N	170	1	0	\N	\N
 3	3	900	RADICADOR	2014-04-03 16:33:51	1521322cd50f15e9c3293b3b0f	1	Radicador	0	0	3999999	1	140723031526o19216810186RADICADOR	2014-07-23 15:15:26.542792	\N	\N	radicadororfeo@midominio.com	\N	\N	\N	170	1	1	\N	\N
-1	1	900	ADMON	2007-09-21 00:00:00	27ccb0eea8a706c4c34a16891f	1	Administrador	1	1	1999999	5	FIN  2016:04:13 10:0451:37	2016-04-13 10:51:33.605501	1111	\N	admonorfeo@midominio.com	\N	4	\N	170	1	0	\N	\N
 \.
 
 
 --
--- TOC entry 3081 (class 0 OID 0)
--- Dependencies: 288
+-- TOC entry 3080 (class 0 OID 0)
+-- Dependencies: 287
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -6849,7 +6618,7 @@ SELECT pg_catalog.setval('usuario_id_seq', 4, true);
 
 
 --
--- TOC entry 2586 (class 2606 OID 18465)
+-- TOC entry 2581 (class 2606 OID 18465)
 -- Name: anex_pk_anex_codigo; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6858,7 +6627,7 @@ ALTER TABLE ONLY anexos
 
 
 --
--- TOC entry 2589 (class 2606 OID 18467)
+-- TOC entry 2584 (class 2606 OID 18467)
 -- Name: anex_pk_anex_tipo_codi; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6867,7 +6636,7 @@ ALTER TABLE ONLY anexos_tipo
 
 
 --
--- TOC entry 2595 (class 2606 OID 18485)
+-- TOC entry 2598 (class 2606 OID 18485)
 -- Name: carpetas_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6876,7 +6645,7 @@ ALTER TABLE ONLY carpeta
 
 
 --
--- TOC entry 2597 (class 2606 OID 18493)
+-- TOC entry 2600 (class 2606 OID 18493)
 -- Name: departamento_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6885,7 +6654,7 @@ ALTER TABLE ONLY departamento
 
 
 --
--- TOC entry 2602 (class 2606 OID 18495)
+-- TOC entry 2605 (class 2606 OID 18495)
 -- Name: dependencia_visibilidad_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6894,7 +6663,7 @@ ALTER TABLE ONLY dependencia_visibilidad
 
 
 --
--- TOC entry 2604 (class 2606 OID 18497)
+-- TOC entry 2607 (class 2606 OID 18497)
 -- Name: estados_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6903,7 +6672,7 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 2709 (class 2606 OID 18505)
+-- TOC entry 2712 (class 2606 OID 18505)
 -- Name: pk_Parexp_Id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6912,7 +6681,7 @@ ALTER TABLE ONLY sgd_parexp_paramexpediente
 
 
 --
--- TOC entry 2626 (class 2606 OID 18507)
+-- TOC entry 2629 (class 2606 OID 18507)
 -- Name: pk_anu_naludos; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6921,7 +6690,34 @@ ALTER TABLE ONLY sgd_anu_anulados
 
 
 --
--- TOC entry 2593 (class 2606 OID 18509)
+-- TOC entry 2586 (class 2606 OID 20195)
+-- Name: pk_autg_grupos; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY autg_grupos
+    ADD CONSTRAINT pk_autg_grupos PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2592 (class 2606 OID 20197)
+-- Name: pk_autp_permisos; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY autp_permisos
+    ADD CONSTRAINT pk_autp_permisos PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2594 (class 2606 OID 20199)
+-- Name: pk_autr_restric_grupo; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY autr_restric_grupo
+    ADD CONSTRAINT pk_autr_restric_grupo PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2596 (class 2606 OID 18509)
 -- Name: pk_bodega_empresas_secue; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6930,16 +6726,7 @@ ALTER TABLE ONLY bodega_empresas
 
 
 --
--- TOC entry 2591 (class 2606 OID 18511)
--- Name: pk_constrain_id; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY autg_grupos
-    ADD CONSTRAINT pk_constrain_id PRIMARY KEY (id);
-
-
---
--- TOC entry 2600 (class 2606 OID 18513)
+-- TOC entry 2603 (class 2606 OID 18513)
 -- Name: pk_depe; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6948,7 +6735,16 @@ ALTER TABLE ONLY dependencia
 
 
 --
--- TOC entry 2608 (class 2606 OID 18517)
+-- TOC entry 2588 (class 2606 OID 20191)
+-- Name: pk_id_membresias; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY autm_membresias
+    ADD CONSTRAINT pk_id_membresias PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2611 (class 2606 OID 18517)
 -- Name: pk_medio_recepcion; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6957,7 +6753,7 @@ ALTER TABLE ONLY medio_recepcion
 
 
 --
--- TOC entry 2611 (class 2606 OID 18519)
+-- TOC entry 2614 (class 2606 OID 18519)
 -- Name: pk_municipio; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6966,7 +6762,7 @@ ALTER TABLE ONLY municipio
 
 
 --
--- TOC entry 2613 (class 2606 OID 18521)
+-- TOC entry 2616 (class 2606 OID 18521)
 -- Name: pk_par_serv_servicios; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6975,7 +6771,7 @@ ALTER TABLE ONLY par_serv_servicios
 
 
 --
--- TOC entry 2615 (class 2606 OID 18525)
+-- TOC entry 2618 (class 2606 OID 18525)
 -- Name: pk_prestamo; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6984,7 +6780,7 @@ ALTER TABLE ONLY prestamo
 
 
 --
--- TOC entry 2622 (class 2606 OID 18527)
+-- TOC entry 2625 (class 2606 OID 18527)
 -- Name: pk_seri; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6993,7 +6789,7 @@ ALTER TABLE ONLY series
 
 
 --
--- TOC entry 2624 (class 2606 OID 18531)
+-- TOC entry 2627 (class 2606 OID 18531)
 -- Name: pk_sgd_anar_anexarg; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7002,7 +6798,7 @@ ALTER TABLE ONLY sgd_anar_anexarg
 
 
 --
--- TOC entry 2628 (class 2606 OID 18543)
+-- TOC entry 2631 (class 2606 OID 18543)
 -- Name: pk_sgd_argd_argdoc; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7011,7 +6807,7 @@ ALTER TABLE ONLY sgd_argd_argdoc
 
 
 --
--- TOC entry 2630 (class 2606 OID 18547)
+-- TOC entry 2633 (class 2606 OID 18547)
 -- Name: pk_sgd_camexp_campoexpediente; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7020,7 +6816,7 @@ ALTER TABLE ONLY sgd_camexp_campoexpediente
 
 
 --
--- TOC entry 2634 (class 2606 OID 18549)
+-- TOC entry 2637 (class 2606 OID 18549)
 -- Name: pk_sgd_cau_causal; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7029,7 +6825,7 @@ ALTER TABLE ONLY sgd_cau_causal
 
 
 --
--- TOC entry 2636 (class 2606 OID 18551)
+-- TOC entry 2639 (class 2606 OID 18551)
 -- Name: pk_sgd_caux_causales; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7038,7 +6834,7 @@ ALTER TABLE ONLY sgd_caux_causales
 
 
 --
--- TOC entry 2639 (class 2606 OID 18553)
+-- TOC entry 2642 (class 2606 OID 18553)
 -- Name: pk_sgd_ciu_ciudadano; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7047,7 +6843,7 @@ ALTER TABLE ONLY sgd_ciu_ciudadano
 
 
 --
--- TOC entry 2641 (class 2606 OID 18555)
+-- TOC entry 2644 (class 2606 OID 18555)
 -- Name: pk_sgd_cob_campobliga; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7056,7 +6852,7 @@ ALTER TABLE ONLY sgd_cob_campobliga
 
 
 --
--- TOC entry 2643 (class 2606 OID 18557)
+-- TOC entry 2646 (class 2606 OID 18557)
 -- Name: pk_sgd_dcau_causal; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7065,7 +6861,7 @@ ALTER TABLE ONLY sgd_dcau_causal
 
 
 --
--- TOC entry 2645 (class 2606 OID 18559)
+-- TOC entry 2648 (class 2606 OID 18559)
 -- Name: pk_sgd_ddca_ddsgrgdo; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7074,7 +6870,7 @@ ALTER TABLE ONLY sgd_ddca_ddsgrgdo
 
 
 --
--- TOC entry 2647 (class 2606 OID 18561)
+-- TOC entry 2650 (class 2606 OID 18561)
 -- Name: pk_sgd_def_continentes; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7083,7 +6879,7 @@ ALTER TABLE ONLY sgd_def_continentes
 
 
 --
--- TOC entry 2649 (class 2606 OID 18563)
+-- TOC entry 2652 (class 2606 OID 18563)
 -- Name: pk_sgd_def_paises; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7092,7 +6888,7 @@ ALTER TABLE ONLY sgd_def_paises
 
 
 --
--- TOC entry 2651 (class 2606 OID 18565)
+-- TOC entry 2654 (class 2606 OID 18565)
 -- Name: pk_sgd_deve; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7101,7 +6897,7 @@ ALTER TABLE ONLY sgd_deve_dev_envio
 
 
 --
--- TOC entry 2655 (class 2606 OID 18567)
+-- TOC entry 2658 (class 2606 OID 18567)
 -- Name: pk_sgd_dir; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7110,7 +6906,7 @@ ALTER TABLE ONLY sgd_dir_drecciones
 
 
 --
--- TOC entry 2657 (class 2606 OID 18569)
+-- TOC entry 2660 (class 2606 OID 18569)
 -- Name: pk_sgd_dnufe_docnufe; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7119,7 +6915,7 @@ ALTER TABLE ONLY sgd_dnufe_docnufe
 
 
 --
--- TOC entry 2663 (class 2606 OID 18571)
+-- TOC entry 2666 (class 2606 OID 18571)
 -- Name: pk_sgd_empus_usuario; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7128,7 +6924,7 @@ ALTER TABLE ONLY sgd_empus_empusuario
 
 
 --
--- TOC entry 2669 (class 2606 OID 18577)
+-- TOC entry 2672 (class 2606 OID 18577)
 -- Name: pk_sgd_fenv; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7137,7 +6933,7 @@ ALTER TABLE ONLY sgd_fenv_frmenvio
 
 
 --
--- TOC entry 2671 (class 2606 OID 18579)
+-- TOC entry 2674 (class 2606 OID 18579)
 -- Name: pk_sgd_fexp_descrip; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7146,7 +6942,7 @@ ALTER TABLE ONLY sgd_fexp_flujoexpedientes
 
 
 --
--- TOC entry 2673 (class 2606 OID 18581)
+-- TOC entry 2676 (class 2606 OID 18581)
 -- Name: pk_sgd_firrad_firmarads; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7155,7 +6951,7 @@ ALTER TABLE ONLY sgd_firrad_firmarads
 
 
 --
--- TOC entry 2675 (class 2606 OID 18583)
+-- TOC entry 2678 (class 2606 OID 18583)
 -- Name: pk_sgd_fun_funciones; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7164,7 +6960,7 @@ ALTER TABLE ONLY sgd_fun_funciones
 
 
 --
--- TOC entry 2679 (class 2606 OID 18585)
+-- TOC entry 2682 (class 2606 OID 18585)
 -- Name: pk_sgd_hmtd_hismatdoc; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7173,7 +6969,7 @@ ALTER TABLE ONLY sgd_hmtd_hismatdoc
 
 
 --
--- TOC entry 2684 (class 2606 OID 18589)
+-- TOC entry 2687 (class 2606 OID 18589)
 -- Name: pk_sgd_mat_matriz; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7182,7 +6978,7 @@ ALTER TABLE ONLY sgd_mat_matriz
 
 
 --
--- TOC entry 2689 (class 2606 OID 18593)
+-- TOC entry 2692 (class 2606 OID 18593)
 -- Name: pk_sgd_mrd_matrird; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7191,7 +6987,7 @@ ALTER TABLE ONLY sgd_mrd_matrird
 
 
 --
--- TOC entry 2693 (class 2606 OID 18597)
+-- TOC entry 2696 (class 2606 OID 18597)
 -- Name: pk_sgd_msg_mensaje; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7200,7 +6996,7 @@ ALTER TABLE ONLY sgd_msg_mensaje
 
 
 --
--- TOC entry 2695 (class 2606 OID 18599)
+-- TOC entry 2698 (class 2606 OID 18599)
 -- Name: pk_sgd_mtd_matriz_doc; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7209,7 +7005,7 @@ ALTER TABLE ONLY sgd_mtd_matriz_doc
 
 
 --
--- TOC entry 2697 (class 2606 OID 18601)
+-- TOC entry 2700 (class 2606 OID 18601)
 -- Name: pk_sgd_not; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7218,7 +7014,7 @@ ALTER TABLE ONLY sgd_not_notificacion
 
 
 --
--- TOC entry 2702 (class 2606 OID 18603)
+-- TOC entry 2705 (class 2606 OID 18603)
 -- Name: pk_sgd_oem_oempresas; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7227,7 +7023,7 @@ ALTER TABLE ONLY sgd_oem_oempresas
 
 
 --
--- TOC entry 2711 (class 2606 OID 18605)
+-- TOC entry 2714 (class 2606 OID 18605)
 -- Name: pk_sgd_pexp_procexpedientes; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7236,7 +7032,7 @@ ALTER TABLE ONLY sgd_pexp_procexpedientes
 
 
 --
--- TOC entry 2713 (class 2606 OID 18607)
+-- TOC entry 2716 (class 2606 OID 18607)
 -- Name: pk_sgd_pnufe_procnumfe; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7245,7 +7041,7 @@ ALTER TABLE ONLY sgd_pnufe_procnumfe
 
 
 --
--- TOC entry 2715 (class 2606 OID 18611)
+-- TOC entry 2718 (class 2606 OID 18611)
 -- Name: pk_sgd_prc_proceso; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7254,7 +7050,7 @@ ALTER TABLE ONLY sgd_prc_proceso
 
 
 --
--- TOC entry 2717 (class 2606 OID 18613)
+-- TOC entry 2720 (class 2606 OID 18613)
 -- Name: pk_sgd_prd_prcdmentos; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7263,7 +7059,7 @@ ALTER TABLE ONLY sgd_prd_prcdmentos
 
 
 --
--- TOC entry 2721 (class 2606 OID 18615)
+-- TOC entry 2724 (class 2606 OID 18615)
 -- Name: pk_sgd_rmr_radmasivre; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7272,7 +7068,7 @@ ALTER TABLE ONLY sgd_rmr_radmasivre
 
 
 --
--- TOC entry 2723 (class 2606 OID 18617)
+-- TOC entry 2726 (class 2606 OID 18617)
 -- Name: pk_sgd_san_sancionados; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7281,7 +7077,7 @@ ALTER TABLE ONLY sgd_san_sancionados
 
 
 --
--- TOC entry 2731 (class 2606 OID 18623)
+-- TOC entry 2734 (class 2606 OID 18623)
 -- Name: pk_sgd_srd_seriesrd; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7290,7 +7086,7 @@ ALTER TABLE ONLY sgd_srd_seriesrd
 
 
 --
--- TOC entry 2735 (class 2606 OID 18625)
+-- TOC entry 2738 (class 2606 OID 18625)
 -- Name: pk_sgd_tdec_tipodecision; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7299,7 +7095,7 @@ ALTER TABLE ONLY sgd_tdec_tipodecision
 
 
 --
--- TOC entry 2737 (class 2606 OID 18629)
+-- TOC entry 2740 (class 2606 OID 18629)
 -- Name: pk_sgd_tip_tipotercero; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7308,7 +7104,7 @@ ALTER TABLE ONLY sgd_tip3_tipotercero
 
 
 --
--- TOC entry 2739 (class 2606 OID 18631)
+-- TOC entry 2742 (class 2606 OID 18631)
 -- Name: pk_sgd_tma_temas; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7317,7 +7113,7 @@ ALTER TABLE ONLY sgd_tma_temas
 
 
 --
--- TOC entry 2741 (class 2606 OID 18633)
+-- TOC entry 2744 (class 2606 OID 18633)
 -- Name: pk_sgd_tme_tipmen; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7326,7 +7122,7 @@ ALTER TABLE ONLY sgd_tme_tipmen
 
 
 --
--- TOC entry 2745 (class 2606 OID 18635)
+-- TOC entry 2748 (class 2606 OID 18635)
 -- Name: pk_sgd_tpr_tpdcumento; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7335,7 +7131,7 @@ ALTER TABLE ONLY sgd_tpr_tpdcumento
 
 
 --
--- TOC entry 2750 (class 2606 OID 18637)
+-- TOC entry 2753 (class 2606 OID 18637)
 -- Name: pk_sgd_ttr_transaccion; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7344,7 +7140,7 @@ ALTER TABLE ONLY sgd_ttr_transaccion
 
 
 --
--- TOC entry 2619 (class 2606 OID 18641)
+-- TOC entry 2622 (class 2606 OID 18641)
 -- Name: radicado_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7353,7 +7149,7 @@ ALTER TABLE ONLY radicado
 
 
 --
--- TOC entry 2632 (class 2606 OID 18643)
+-- TOC entry 2635 (class 2606 OID 18643)
 -- Name: sgd_carp_descripcion_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7362,7 +7158,7 @@ ALTER TABLE ONLY sgd_carp_descripcion
 
 
 --
--- TOC entry 2659 (class 2606 OID 18647)
+-- TOC entry 2662 (class 2606 OID 18647)
 -- Name: sgd_einv_inventario_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7371,7 +7167,7 @@ ALTER TABLE ONLY sgd_einv_inventario
 
 
 --
--- TOC entry 2661 (class 2606 OID 18649)
+-- TOC entry 2664 (class 2606 OID 18649)
 -- Name: sgd_eit_items_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7380,7 +7176,7 @@ ALTER TABLE ONLY sgd_eit_items
 
 
 --
--- TOC entry 2667 (class 2606 OID 18651)
+-- TOC entry 2670 (class 2606 OID 18651)
 -- Name: sgd_exp_expediente_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7389,7 +7185,7 @@ ALTER TABLE ONLY sgd_exp_expediente
 
 
 --
--- TOC entry 2677 (class 2606 OID 18653)
+-- TOC entry 2680 (class 2606 OID 18653)
 -- Name: sgd_hfld_histflujodoc_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7398,7 +7194,7 @@ ALTER TABLE ONLY sgd_hfld_histflujodoc
 
 
 --
--- TOC entry 2681 (class 2606 OID 18655)
+-- TOC entry 2684 (class 2606 OID 18655)
 -- Name: sgd_masiva_codigo; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7407,7 +7203,7 @@ ALTER TABLE ONLY sgd_masiva_excel
 
 
 --
--- TOC entry 2700 (class 2606 OID 18659)
+-- TOC entry 2703 (class 2606 OID 18659)
 -- Name: sgd_novedad_usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7416,7 +7212,7 @@ ALTER TABLE ONLY sgd_novedad_usuario
 
 
 --
--- TOC entry 2705 (class 2606 OID 18661)
+-- TOC entry 2708 (class 2606 OID 18661)
 -- Name: sgd_param_admin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7425,7 +7221,7 @@ ALTER TABLE ONLY sgd_param_admin
 
 
 --
--- TOC entry 2707 (class 2606 OID 18663)
+-- TOC entry 2710 (class 2606 OID 18663)
 -- Name: sgd_parametro_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7434,7 +7230,7 @@ ALTER TABLE ONLY sgd_parametro
 
 
 --
--- TOC entry 2728 (class 2606 OID 18665)
+-- TOC entry 2731 (class 2606 OID 18665)
 -- Name: sgd_sexp_secexpedientes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7443,7 +7239,7 @@ ALTER TABLE ONLY sgd_sexp_secexpedientes
 
 
 --
--- TOC entry 2747 (class 2606 OID 18671)
+-- TOC entry 2750 (class 2606 OID 18671)
 -- Name: sgd_trad_tiporad_codigo_inx; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7452,7 +7248,7 @@ ALTER TABLE ONLY sgd_trad_tiporad
 
 
 --
--- TOC entry 2752 (class 2606 OID 18675)
+-- TOC entry 2755 (class 2606 OID 18675)
 -- Name: tipo_doc_identificacion_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7461,7 +7257,7 @@ ALTER TABLE ONLY tipo_doc_identificacion
 
 
 --
--- TOC entry 2754 (class 2606 OID 18677)
+-- TOC entry 2757 (class 2606 OID 18677)
 -- Name: tipo_remitente_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7470,7 +7266,16 @@ ALTER TABLE ONLY tipo_remitente
 
 
 --
--- TOC entry 2686 (class 2606 OID 18681)
+-- TOC entry 2590 (class 2606 OID 20193)
+-- Name: uk_autg_autu_usuarios; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY autm_membresias
+    ADD CONSTRAINT uk_autg_autu_usuarios UNIQUE (autg_id, autu_id);
+
+
+--
+-- TOC entry 2689 (class 2606 OID 18681)
 -- Name: uk_sgd_mat; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7479,7 +7284,7 @@ ALTER TABLE ONLY sgd_mat_matriz
 
 
 --
--- TOC entry 2691 (class 2606 OID 18683)
+-- TOC entry 2694 (class 2606 OID 18683)
 -- Name: uk_sgd_mrd_matrird; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7488,7 +7293,7 @@ ALTER TABLE ONLY sgd_mrd_matrird
 
 
 --
--- TOC entry 2719 (class 2606 OID 18685)
+-- TOC entry 2722 (class 2606 OID 18685)
 -- Name: uk_sgd_rdf_retdocf; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7497,7 +7302,7 @@ ALTER TABLE ONLY sgd_rdf_retdocf
 
 
 --
--- TOC entry 2733 (class 2606 OID 18687)
+-- TOC entry 2736 (class 2606 OID 18687)
 -- Name: uk_sgd_srd_descrip; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7506,7 +7311,7 @@ ALTER TABLE ONLY sgd_srd_seriesrd
 
 
 --
--- TOC entry 2758 (class 2606 OID 18689)
+-- TOC entry 2761 (class 2606 OID 18689)
 -- Name: unique_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7515,7 +7320,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2760 (class 2606 OID 18691)
+-- TOC entry 2763 (class 2606 OID 18691)
 -- Name: unique_usua_login; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7524,7 +7329,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2762 (class 2606 OID 18693)
+-- TOC entry 2765 (class 2606 OID 18693)
 -- Name: usuario_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7533,7 +7338,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2764 (class 2606 OID 18695)
+-- TOC entry 2767 (class 2606 OID 18695)
 -- Name: usuario_uk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7542,7 +7347,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2587 (class 1259 OID 18707)
+-- TOC entry 2582 (class 1259 OID 18707)
 -- Name: idxAnexos; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7550,7 +7355,7 @@ CREATE INDEX "idxAnexos" ON anexos USING btree (anex_radi_nume, anex_codigo, ane
 
 
 --
--- TOC entry 2652 (class 1259 OID 18708)
+-- TOC entry 2655 (class 1259 OID 18708)
 -- Name: idxDirDrecciones; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7558,7 +7363,7 @@ CREATE INDEX "idxDirDrecciones" ON sgd_dir_drecciones USING btree (sgd_dir_codig
 
 
 --
--- TOC entry 2616 (class 1259 OID 18709)
+-- TOC entry 2619 (class 1259 OID 18709)
 -- Name: idxRadicado; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7566,7 +7371,7 @@ CREATE INDEX "idxRadicado" ON radicado USING btree (radi_nume_radi, radi_fech_ra
 
 
 --
--- TOC entry 2664 (class 1259 OID 18710)
+-- TOC entry 2667 (class 1259 OID 18710)
 -- Name: idxSgdExpediente; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7574,7 +7379,7 @@ CREATE INDEX "idxSgdExpediente" ON sgd_exp_expediente USING btree (sgd_exp_numer
 
 
 --
--- TOC entry 2605 (class 1259 OID 18711)
+-- TOC entry 2608 (class 1259 OID 18711)
 -- Name: idx_RadiUsuaDoc; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7582,7 +7387,7 @@ CREATE INDEX "idx_RadiUsuaDoc" ON hist_eventos USING btree (radi_nume_radi, usua
 
 
 --
--- TOC entry 2755 (class 1259 OID 18712)
+-- TOC entry 2758 (class 1259 OID 18712)
 -- Name: idx_UsuarioUsuaDoc; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7590,7 +7395,7 @@ CREATE INDEX "idx_UsuarioUsuaDoc" ON usuario USING btree (usua_doc, usua_esta, d
 
 
 --
--- TOC entry 2637 (class 1259 OID 18713)
+-- TOC entry 2640 (class 1259 OID 18713)
 -- Name: idx_ciuCodigo; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7598,7 +7403,7 @@ CREATE INDEX "idx_ciuCodigo" ON sgd_ciu_ciudadano USING btree (sgd_ciu_codigo, s
 
 
 --
--- TOC entry 2598 (class 1259 OID 18714)
+-- TOC entry 2601 (class 1259 OID 18714)
 -- Name: idx_deptoCodi; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7606,7 +7411,7 @@ CREATE INDEX "idx_deptoCodi" ON departamento USING btree (dpto_codi, id_pais, id
 
 
 --
--- TOC entry 2665 (class 1259 OID 18715)
+-- TOC entry 2668 (class 1259 OID 18715)
 -- Name: idx_expNumeroDepeUsuaMuni; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7614,7 +7419,7 @@ CREATE INDEX "idx_expNumeroDepeUsuaMuni" ON sgd_exp_expediente USING btree (sgd_
 
 
 --
--- TOC entry 2606 (class 1259 OID 18716)
+-- TOC entry 2609 (class 1259 OID 18716)
 -- Name: idx_histEventos; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7622,7 +7427,7 @@ CREATE INDEX "idx_histEventos" ON hist_eventos USING btree (radi_nume_radi, hist
 
 
 --
--- TOC entry 2682 (class 1259 OID 18717)
+-- TOC entry 2685 (class 1259 OID 18717)
 -- Name: idx_matCodigo; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7630,7 +7435,7 @@ CREATE INDEX "idx_matCodigo" ON sgd_mat_matriz USING btree (sgd_mat_codigo, sgd_
 
 
 --
--- TOC entry 2687 (class 1259 OID 18718)
+-- TOC entry 2690 (class 1259 OID 18718)
 -- Name: idx_mrd; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7638,7 +7443,7 @@ CREATE INDEX idx_mrd ON sgd_mrd_matrird USING btree (sgd_mrd_codigo, depe_codi, 
 
 
 --
--- TOC entry 2609 (class 1259 OID 18719)
+-- TOC entry 2612 (class 1259 OID 18719)
 -- Name: idx_municipio; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7646,7 +7451,7 @@ CREATE INDEX idx_municipio ON municipio USING btree (dpto_codi, muni_codi, id_co
 
 
 --
--- TOC entry 2698 (class 1259 OID 18720)
+-- TOC entry 2701 (class 1259 OID 18720)
 -- Name: idx_novedad_usuario; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7654,7 +7459,7 @@ CREATE INDEX idx_novedad_usuario ON sgd_novedad_usuario USING btree (usua_doc);
 
 
 --
--- TOC entry 2703 (class 1259 OID 18721)
+-- TOC entry 2706 (class 1259 OID 18721)
 -- Name: idx_param_admin; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7662,7 +7467,7 @@ CREATE INDEX idx_param_admin ON sgd_param_admin USING btree (param_codigo);
 
 
 --
--- TOC entry 2653 (class 1259 OID 18722)
+-- TOC entry 2656 (class 1259 OID 18722)
 -- Name: idx_radiTipoName; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7670,7 +7475,7 @@ CREATE INDEX "idx_radiTipoName" ON sgd_dir_drecciones USING btree (radi_nume_rad
 
 
 --
--- TOC entry 2617 (class 1259 OID 18723)
+-- TOC entry 2620 (class 1259 OID 18723)
 -- Name: idx_radicadoCarpetas; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7678,7 +7483,7 @@ CREATE INDEX "idx_radicadoCarpetas" ON radicado USING btree (radi_nume_radi, car
 
 
 --
--- TOC entry 2724 (class 1259 OID 18724)
+-- TOC entry 2727 (class 1259 OID 18724)
 -- Name: idx_sbrd; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7686,7 +7491,7 @@ CREATE INDEX idx_sbrd ON sgd_sbrd_subserierd USING btree (sgd_srd_codigo, sgd_sb
 
 
 --
--- TOC entry 2725 (class 1259 OID 18725)
+-- TOC entry 2728 (class 1259 OID 18725)
 -- Name: idx_sexp; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7694,7 +7499,7 @@ CREATE INDEX idx_sexp ON sgd_sexp_secexpedientes USING btree (sgd_exp_numero, sg
 
 
 --
--- TOC entry 2729 (class 1259 OID 18726)
+-- TOC entry 2732 (class 1259 OID 18726)
 -- Name: idx_srdCodi; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7702,7 +7507,7 @@ CREATE INDEX "idx_srdCodi" ON sgd_srd_seriesrd USING btree (sgd_srd_codigo, sgd_
 
 
 --
--- TOC entry 2742 (class 1259 OID 18727)
+-- TOC entry 2745 (class 1259 OID 18727)
 -- Name: idx_tpr; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7710,7 +7515,7 @@ CREATE INDEX idx_tpr ON sgd_tpr_tpdcumento USING btree (sgd_tpr_codigo, sgd_tpr_
 
 
 --
--- TOC entry 2743 (class 1259 OID 18728)
+-- TOC entry 2746 (class 1259 OID 18728)
 -- Name: idx_tprCodigoName; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7718,7 +7523,7 @@ CREATE INDEX "idx_tprCodigoName" ON sgd_tpr_tpdcumento USING btree (sgd_tpr_codi
 
 
 --
--- TOC entry 2748 (class 1259 OID 18729)
+-- TOC entry 2751 (class 1259 OID 18729)
 -- Name: idx_ttr; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7726,7 +7531,7 @@ CREATE INDEX idx_ttr ON sgd_ttr_transaccion USING btree (sgd_ttr_codigo);
 
 
 --
--- TOC entry 2756 (class 1259 OID 18730)
+-- TOC entry 2759 (class 1259 OID 18730)
 -- Name: idx_usuaCodi; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7734,7 +7539,7 @@ CREATE INDEX "idx_usuaCodi" ON usuario USING btree (usua_codi, depe_codi, usua_e
 
 
 --
--- TOC entry 2726 (class 1259 OID 18731)
+-- TOC entry 2729 (class 1259 OID 18731)
 -- Name: ndx_numero_fexp; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7742,7 +7547,7 @@ CREATE INDEX ndx_numero_fexp ON sgd_sexp_secexpedientes USING btree (sgd_fexp_co
 
 
 --
--- TOC entry 2620 (class 1259 OID 18733)
+-- TOC entry 2623 (class 1259 OID 18733)
 -- Name: radicado_radi_nume_radi_ra_asun_idx; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -7750,7 +7555,7 @@ CREATE INDEX radicado_radi_nume_radi_ra_asun_idx ON radicado USING btree (radi_n
 
 
 --
--- TOC entry 2765 (class 2606 OID 18769)
+-- TOC entry 2768 (class 2606 OID 18769)
 -- Name: fk_depe_padre; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7759,7 +7564,7 @@ ALTER TABLE ONLY dependencia
 
 
 --
--- TOC entry 2766 (class 2606 OID 18774)
+-- TOC entry 2769 (class 2606 OID 18774)
 -- Name: fk_hist_depe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7768,7 +7573,7 @@ ALTER TABLE ONLY hist_eventos
 
 
 --
--- TOC entry 2767 (class 2606 OID 18779)
+-- TOC entry 2770 (class 2606 OID 18779)
 -- Name: fk_info_depe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7777,7 +7582,7 @@ ALTER TABLE ONLY informados
 
 
 --
--- TOC entry 2768 (class 2606 OID 18784)
+-- TOC entry 2771 (class 2606 OID 18784)
 -- Name: fk_municipi_ref_128_departam; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7786,7 +7591,7 @@ ALTER TABLE ONLY municipio
 
 
 --
--- TOC entry 2783 (class 2606 OID 18789)
+-- TOC entry 2786 (class 2606 OID 18789)
 -- Name: fk_paises_continentes; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7795,7 +7600,7 @@ ALTER TABLE ONLY sgd_def_paises
 
 
 --
--- TOC entry 2769 (class 2606 OID 18794)
+-- TOC entry 2772 (class 2606 OID 18794)
 -- Name: fk_prestamo_depe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7804,7 +7609,7 @@ ALTER TABLE ONLY prestamo
 
 
 --
--- TOC entry 2770 (class 2606 OID 18799)
+-- TOC entry 2773 (class 2606 OID 18799)
 -- Name: fk_prestamo_depe_arch; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7813,7 +7618,7 @@ ALTER TABLE ONLY prestamo
 
 
 --
--- TOC entry 2771 (class 2606 OID 18809)
+-- TOC entry 2774 (class 2606 OID 18809)
 -- Name: fk_radi_esta; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7822,7 +7627,7 @@ ALTER TABLE ONLY radicado
 
 
 --
--- TOC entry 2772 (class 2606 OID 18814)
+-- TOC entry 2775 (class 2606 OID 18814)
 -- Name: fk_radi_mrec; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7831,7 +7636,7 @@ ALTER TABLE ONLY radicado
 
 
 --
--- TOC entry 2773 (class 2606 OID 18819)
+-- TOC entry 2776 (class 2606 OID 18819)
 -- Name: fk_radi_muni; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7840,7 +7645,7 @@ ALTER TABLE ONLY radicado
 
 
 --
--- TOC entry 2777 (class 2606 OID 18824)
+-- TOC entry 2780 (class 2606 OID 18824)
 -- Name: fk_radicado_nume; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7849,7 +7654,7 @@ ALTER TABLE ONLY sgd_anu_anulados
 
 
 --
--- TOC entry 2774 (class 2606 OID 18829)
+-- TOC entry 2777 (class 2606 OID 18829)
 -- Name: fk_radicado_par_serv; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7858,7 +7663,7 @@ ALTER TABLE ONLY radicado
 
 
 --
--- TOC entry 2807 (class 2606 OID 18834)
+-- TOC entry 2810 (class 2606 OID 18834)
 -- Name: fk_sexp_secexp_pexp_codigo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7867,7 +7672,7 @@ ALTER TABLE ONLY sgd_sexp_secexpedientes
 
 
 --
--- TOC entry 2776 (class 2606 OID 18839)
+-- TOC entry 2779 (class 2606 OID 18839)
 -- Name: fk_sgd_anar_anexos; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7876,7 +7681,7 @@ ALTER TABLE ONLY sgd_anar_anexarg
 
 
 --
--- TOC entry 2779 (class 2606 OID 18854)
+-- TOC entry 2782 (class 2606 OID 18854)
 -- Name: fk_sgd_caux_radicado; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7885,7 +7690,7 @@ ALTER TABLE ONLY sgd_caux_causales
 
 
 --
--- TOC entry 2780 (class 2606 OID 18859)
+-- TOC entry 2783 (class 2606 OID 18859)
 -- Name: fk_sgd_dcau_sgd_cau_; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7894,7 +7699,7 @@ ALTER TABLE ONLY sgd_dcau_causal
 
 
 --
--- TOC entry 2781 (class 2606 OID 18864)
+-- TOC entry 2784 (class 2606 OID 18864)
 -- Name: fk_sgd_ddca_ref_678_par_serv; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7903,7 +7708,7 @@ ALTER TABLE ONLY sgd_ddca_ddsgrgdo
 
 
 --
--- TOC entry 2782 (class 2606 OID 18869)
+-- TOC entry 2785 (class 2606 OID 18869)
 -- Name: fk_sgd_ddca_sgd_dcau; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7912,7 +7717,7 @@ ALTER TABLE ONLY sgd_ddca_ddsgrgdo
 
 
 --
--- TOC entry 2784 (class 2606 OID 18874)
+-- TOC entry 2787 (class 2606 OID 18874)
 -- Name: fk_sgd_dir_municipio; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7921,7 +7726,7 @@ ALTER TABLE ONLY sgd_dir_drecciones
 
 
 --
--- TOC entry 2785 (class 2606 OID 18879)
+-- TOC entry 2788 (class 2606 OID 18879)
 -- Name: fk_sgd_dir_radicado; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7930,7 +7735,7 @@ ALTER TABLE ONLY sgd_dir_drecciones
 
 
 --
--- TOC entry 2786 (class 2606 OID 18884)
+-- TOC entry 2789 (class 2606 OID 18884)
 -- Name: fk_sgd_dir_sgd_ciu; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7939,7 +7744,7 @@ ALTER TABLE ONLY sgd_dir_drecciones
 
 
 --
--- TOC entry 2787 (class 2606 OID 18889)
+-- TOC entry 2790 (class 2606 OID 18889)
 -- Name: fk_sgd_dnufe_anex_tipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7948,7 +7753,7 @@ ALTER TABLE ONLY sgd_dnufe_docnufe
 
 
 --
--- TOC entry 2788 (class 2606 OID 18899)
+-- TOC entry 2791 (class 2606 OID 18899)
 -- Name: fk_sgd_exp_dependencia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7957,7 +7762,7 @@ ALTER TABLE ONLY sgd_exp_expediente
 
 
 --
--- TOC entry 2789 (class 2606 OID 18904)
+-- TOC entry 2792 (class 2606 OID 18904)
 -- Name: fk_sgd_exp_radicado; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7966,7 +7771,7 @@ ALTER TABLE ONLY sgd_exp_expediente
 
 
 --
--- TOC entry 2790 (class 2606 OID 18909)
+-- TOC entry 2793 (class 2606 OID 18909)
 -- Name: fk_sgd_firr_ref_82_radicado; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7975,7 +7780,7 @@ ALTER TABLE ONLY sgd_firrad_firmarads
 
 
 --
--- TOC entry 2791 (class 2606 OID 18914)
+-- TOC entry 2794 (class 2606 OID 18914)
 -- Name: fk_sgd_hmtd_depe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7984,7 +7789,7 @@ ALTER TABLE ONLY sgd_hmtd_hismatdoc
 
 
 --
--- TOC entry 2792 (class 2606 OID 18919)
+-- TOC entry 2795 (class 2606 OID 18919)
 -- Name: fk_sgd_hmtd_radicado; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7993,7 +7798,7 @@ ALTER TABLE ONLY sgd_hmtd_hismatdoc
 
 
 --
--- TOC entry 2793 (class 2606 OID 18929)
+-- TOC entry 2796 (class 2606 OID 18929)
 -- Name: fk_sgd_mat_depe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8002,7 +7807,7 @@ ALTER TABLE ONLY sgd_mat_matriz
 
 
 --
--- TOC entry 2794 (class 2606 OID 18934)
+-- TOC entry 2797 (class 2606 OID 18934)
 -- Name: fk_sgd_mat_sgd_fun; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8011,7 +7816,7 @@ ALTER TABLE ONLY sgd_mat_matriz
 
 
 --
--- TOC entry 2795 (class 2606 OID 18939)
+-- TOC entry 2798 (class 2606 OID 18939)
 -- Name: fk_sgd_mrd_depe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8020,7 +7825,7 @@ ALTER TABLE ONLY sgd_mrd_matrird
 
 
 --
--- TOC entry 2796 (class 2606 OID 18944)
+-- TOC entry 2799 (class 2606 OID 18944)
 -- Name: fk_sgd_msde_ref_27_dependen; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8029,7 +7834,7 @@ ALTER TABLE ONLY sgd_msdep_msgdep
 
 
 --
--- TOC entry 2797 (class 2606 OID 18949)
+-- TOC entry 2800 (class 2606 OID 18949)
 -- Name: fk_sgd_mtd_sgd_mtd; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8038,7 +7843,7 @@ ALTER TABLE ONLY sgd_mtd_matriz_doc
 
 
 --
--- TOC entry 2798 (class 2606 OID 18954)
+-- TOC entry 2801 (class 2606 OID 18954)
 -- Name: fk_sgd_ntrd_notifrad_radicado; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8047,7 +7852,7 @@ ALTER TABLE ONLY sgd_ntrd_notifrad
 
 
 --
--- TOC entry 2799 (class 2606 OID 18959)
+-- TOC entry 2802 (class 2606 OID 18959)
 -- Name: fk_sgd_oem_municipio; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8056,7 +7861,7 @@ ALTER TABLE ONLY sgd_oem_oempresas
 
 
 --
--- TOC entry 2800 (class 2606 OID 18964)
+-- TOC entry 2803 (class 2606 OID 18964)
 -- Name: fk_sgd_pnun_depe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8065,7 +7870,7 @@ ALTER TABLE ONLY sgd_pnun_procenum
 
 
 --
--- TOC entry 2801 (class 2606 OID 18969)
+-- TOC entry 2804 (class 2606 OID 18969)
 -- Name: fk_sgd_pnun_sgd_pnufe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8074,7 +7879,7 @@ ALTER TABLE ONLY sgd_pnun_procenum
 
 
 --
--- TOC entry 2802 (class 2606 OID 18974)
+-- TOC entry 2805 (class 2606 OID 18974)
 -- Name: fk_sgd_rdf_depe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8083,7 +7888,7 @@ ALTER TABLE ONLY sgd_rdf_retdocf
 
 
 --
--- TOC entry 2803 (class 2606 OID 18979)
+-- TOC entry 2806 (class 2606 OID 18979)
 -- Name: fk_sgd_rdf_trd; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8092,7 +7897,7 @@ ALTER TABLE ONLY sgd_rdf_retdocf
 
 
 --
--- TOC entry 2804 (class 2606 OID 18984)
+-- TOC entry 2807 (class 2606 OID 18984)
 -- Name: fk_sgd_renv_dependecia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8101,7 +7906,7 @@ ALTER TABLE ONLY sgd_renv_regenvio
 
 
 --
--- TOC entry 2805 (class 2606 OID 18989)
+-- TOC entry 2808 (class 2606 OID 18989)
 -- Name: fk_sgd_renv_sgd_deve; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8110,7 +7915,7 @@ ALTER TABLE ONLY sgd_renv_regenvio
 
 
 --
--- TOC entry 2806 (class 2606 OID 18994)
+-- TOC entry 2809 (class 2606 OID 18994)
 -- Name: fk_sgd_renv_sgd_dir; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8119,7 +7924,7 @@ ALTER TABLE ONLY sgd_renv_regenvio
 
 
 --
--- TOC entry 2808 (class 2606 OID 19004)
+-- TOC entry 2811 (class 2606 OID 19004)
 -- Name: fk_sgd_tma_depe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8128,7 +7933,7 @@ ALTER TABLE ONLY sgd_tma_temas
 
 
 --
--- TOC entry 2809 (class 2606 OID 19009)
+-- TOC entry 2812 (class 2606 OID 19009)
 -- Name: fk_sgd_tma_sgd_prc; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8137,7 +7942,7 @@ ALTER TABLE ONLY sgd_tma_temas
 
 
 --
--- TOC entry 2810 (class 2606 OID 19019)
+-- TOC entry 2813 (class 2606 OID 19019)
 -- Name: fk_usua_depe; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8146,7 +7951,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 2775 (class 2606 OID 19024)
+-- TOC entry 2778 (class 2606 OID 19024)
 -- Name: sgd_agen_agendados_r01; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8155,7 +7960,7 @@ ALTER TABLE ONLY sgd_agen_agendados
 
 
 --
--- TOC entry 2778 (class 2606 OID 19034)
+-- TOC entry 2781 (class 2606 OID 19034)
 -- Name: sgd_carp_descripcion_fk1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8164,7 +7969,7 @@ ALTER TABLE ONLY sgd_carp_descripcion
 
 
 --
--- TOC entry 3040 (class 0 OID 0)
+-- TOC entry 3042 (class 0 OID 0)
 -- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -8176,7 +7981,7 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
--- TOC entry 3042 (class 0 OID 0)
+-- TOC entry 3044 (class 0 OID 0)
 -- Dependencies: 180
 -- Name: anexos; Type: ACL; Schema: public; Owner: postgres
 --
@@ -8186,7 +7991,7 @@ REVOKE ALL ON TABLE anexos FROM postgres;
 GRANT ALL ON TABLE anexos TO postgres;
 
 
--- Completed on 2016-04-13 11:36:54 COT
+-- Completed on 2016-04-18 12:37:22 COT
 
 --
 -- PostgreSQL database dump complete
