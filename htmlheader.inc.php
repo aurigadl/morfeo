@@ -37,7 +37,6 @@ $str = <<<EOF
     <!-- font-awesome CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/font-awesome.css">
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-production.css">
     <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/smartadmin-skins.css">
     <link rel="stylesheet" type="text/css" media="screen" href="$ruta_raiz/estilos/siim_temp.css">
@@ -62,55 +61,38 @@ $str = <<<EOF
     <script type="text/javascript" src="$ruta_raiz/js/bootstrap.js"></script>
 
     <script src="$ruta_raiz/js/jsplumb/lib/jquery.ui.touch-punch.min.js"></script>
-
 		<!-- support lib for bezier stuff -->
 		<script src="$ruta_raiz/js/jsplumb/lib/jsBezier-0.6.js"></script>
-
 		<!-- jsplumb geom functions -->
 		<script src="$ruta_raiz/js/jsplumb/lib/jsplumb-geom-0.1.js"></script>
-
 		<!-- jsplumb util -->
 		<script src="$ruta_raiz/js/jsplumb/src/util.js"></script>
-
     <!-- base DOM adapter -->
 		<script src="$ruta_raiz/js/jsplumb/src/dom-adapter.js"></script>
-
 		<!-- main jsplumb engine -->
 		<script src="$ruta_raiz/js/jsplumb/src/jsPlumb.js"></script>
-
     <!-- endpoint -->
 		<script src="$ruta_raiz/js/jsplumb/src/endpoint.js"></script>
-
     <!-- connection -->
 		<script src="$ruta_raiz/js/jsplumb/src/connection.js"></script>
-
     <!-- anchors -->
 		<script src="$ruta_raiz/js/jsplumb/src/anchors.js"></script>
-
 		<!-- connectors, endpoint and overlays  -->
 		<script src="$ruta_raiz/js/jsplumb/src/defaults.js"></script>
-
     <!-- bezier connectors -->
     <script src="$ruta_raiz/js/jsplumb/src/connectors-bezier.js"></script>
-
 		<!-- state machine connectors -->
 		<script src="$ruta_raiz/js/jsplumb/src/connectors-statemachine.js"></script>
-
 		<!-- SVG renderer -->
 		<script src="$ruta_raiz/js/jsplumb/src/renderers-svg.js"></script>
-
 		<!-- canvas renderer -->
 		<script src="$ruta_raiz/js/jsplumb/src/renderers-canvas.js"></script>
-
 		<!-- vml renderer -->
 		<script src="$ruta_raiz/js/jsplumb/src/renderers-vml.js"></script>
-
     <!-- jquery jsPlumb adapter -->
 		<script src="$ruta_raiz/js/jsplumb/src/jquery.jsPlumb.js"></script>
-
 		<!-- jquery combogrid -->
 		<script src="$ruta_raiz/js/jqgrid/resources/plugin/jquery.ui.combogrid-1.6.3.js"></script>
-
 		<!-- jquery uploadfile permite subir archivos masivamente o Individuales -->
 		<script src="$ruta_raiz/js/jquery.form.js"></script>
 		<script src="$ruta_raiz/js/jquery.uploadfile.js"></script>
